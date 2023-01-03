@@ -112,16 +112,16 @@ function QueriesTab(props) {
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
-          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
             All assignments ({allAssignmentCount})
           </Tab>
-          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Draft reports ({draft})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Delivery of final report({final})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
             Permission; issue to invoice({permission})
           </Tab>
         </TabList>

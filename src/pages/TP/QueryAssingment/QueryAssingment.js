@@ -124,7 +124,7 @@ console.log("done22")
    
     setTaxID(e.target.value)
     var value = taxProfessionDisplay.filter(function (item) {
-      return item.id == e.target.value
+      return item.id ===  e.target.value
     })
  
     setTeamName(value[0].name)

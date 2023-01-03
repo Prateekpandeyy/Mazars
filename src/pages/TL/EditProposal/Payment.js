@@ -65,7 +65,7 @@ export default class YourComponent extends React.Component {
     for (var i = 0; i < this.props.installment; i++) {
       fieldsArray.push(
         <div className="row">
-          {this.props.clearValue == true ? (
+          {this.props.clearValue ===  true ? (
             <div className="col-md-6 my-2">
               <input
                 type="text"
@@ -81,7 +81,7 @@ export default class YourComponent extends React.Component {
           ) : (
             ""
           )}
-          {this.props.clearValue == false ? (
+          {this.props.clearValue ===  false ? (
             <div className="col-md-6 my-2">
               <input
                 type="text"
@@ -98,7 +98,7 @@ export default class YourComponent extends React.Component {
             ""
           )}
 
-          {this.props.clearValue == true ? (
+          {this.props.clearValue ===  true ? (
             <div className="col-md-6 my-2">
               <input
                 type="date"
@@ -117,7 +117,7 @@ export default class YourComponent extends React.Component {
           ) : (
             ""
           )}
-          {this.props.clearValue == false ? (
+          {this.props.clearValue ===  false ? (
             <div className="col-md-6 my-2">
               <input
                 type="date"

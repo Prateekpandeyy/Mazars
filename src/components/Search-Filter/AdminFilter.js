@@ -101,7 +101,7 @@ function AdminFilter(props) {
     setFromDate(e.format("YYYY-MM-DD"));
   };
   const onSubmit = (data) => {
-    if (acceptedProposal == "acceptedProposal") {
+    if (acceptedProposal === "acceptedProposal") {
       axios
         .get(
           `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
@@ -117,7 +117,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (pendingAcceptedProposal == "pendingAcceptedProposal") {
+    if (pendingAcceptedProposal === "pendingAcceptedProposal") {
       if (data.p_status.length > 0) {
         axios
           .get(
@@ -149,7 +149,7 @@ function AdminFilter(props) {
       }
     }
 
-    if (declinedProposal == "declinedProposal") {
+    if (declinedProposal === "declinedProposal") {
       axios
         .get(
           `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
@@ -165,7 +165,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (declinedQueries == "declinedQueries") {
+    if (declinedQueries === "declinedQueries") {
       axios
         .get(
           `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
@@ -181,7 +181,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (pendingForProposal == "pendingForProposal") {
+    if (pendingForProposal === "pendingForProposal") {
       axios
         .get(
           `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
@@ -197,7 +197,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (allQueries == "allQueries") {
+    if (allQueries === "allQueries") {
       axios
         .get(
           `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
@@ -213,7 +213,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (pendingAlloation == "pendingAlloation") {
+    if (pendingAlloation === "pendingAlloation") {
       axios
         .get(
           `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}`,
@@ -229,7 +229,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (AllPayment == "AllPayment") {
+    if (AllPayment === "AllPayment") {
       axios
         .get(
           `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
@@ -245,7 +245,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (unpaid == "unpaid") {
+    if (unpaid === "unpaid") {
       axios
         .get(
           `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`,
@@ -261,7 +261,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (paid == "paid") {
+    if (paid === "paid") {
       axios
         .get(
           `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
@@ -277,7 +277,7 @@ function AdminFilter(props) {
         });
     }
 
-    if (allProposal == "allProposal") {
+    if (allProposal === "allProposal") {
       axios
         .get(
           `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}`,
@@ -394,7 +394,7 @@ function AdminFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  {allQueries == "allQueries" && (
+                  {allQueries === "allQueries" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -408,7 +408,7 @@ function AdminFilter(props) {
                     </select>
                   )}
 
-                  {pendingAcceptedProposal == "pendingAcceptedProposal" && (
+                  {pendingAcceptedProposal === "pendingAcceptedProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -421,7 +421,7 @@ function AdminFilter(props) {
                     </select>
                   )}
 
-                  {pendingForProposal == "pendingForProposal" && (
+                  {pendingForProposal === "pendingForProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -434,7 +434,7 @@ function AdminFilter(props) {
                     </select>
                   )}
 
-                  {allProposal == "allProposal" && (
+                  {allProposal === "allProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -448,7 +448,7 @@ function AdminFilter(props) {
                     </select>
                   )}
 
-                  {declinedQueries == "declinedQueries" && (
+                  {declinedQueries === "declinedQueries" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -463,7 +463,7 @@ function AdminFilter(props) {
                     </select>
                   )}
 
-                  {AllPayment == "AllPayment" && (
+                  {AllPayment === "AllPayment" && (
                     <select
                       className="form-select form-control"
                       name="p_status"

@@ -113,7 +113,7 @@ const handleChange = (e) => {
    
   setTeamID(e.target.value);
   var value = taxLeaderDisplay.filter(function (item) {
-    return item.id == e.target.value;
+    return item.id ===  e.target.value;
   });
   
   setTeamName(value[0].name);

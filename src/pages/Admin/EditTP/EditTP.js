@@ -542,7 +542,7 @@ function EditTP() {
             </CustomHeading>
             </Col>
             <Col md= "3">
-            {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+            {showDel ===  "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
             </Col>
           </Row>
         </CardHeader>
@@ -600,7 +600,7 @@ function EditTP() {
                           type="text"
                           name="post_name"
                           onBlur={(e) => checktlPost(e)}
-                          disabled = {showDel == "1" ? true : ""}
+                          disabled = {showDel ===  "1" ? true : ""}
                           defaultValue={data6}
                           onChange={(e) => data6= e.target.value}
                           className={classNames("form-control", {
@@ -621,7 +621,7 @@ function EditTP() {
                         type="email"
                         name="p_email"
                         ref={register}
-                        disabled = {showDel == "1" ? true : ""}
+                        disabled = {showDel ===  "1" ? true : ""}
                       defaultValue={data7}
                      
                         className={classNames("form-control", {
@@ -693,14 +693,14 @@ function EditTP() {
                               option: (styles, { data }) => {
                                 return {
                                   ...styles,
-                                  color: data.value == 2
+                                  color: data.value ===  2
                                     ? "green"
                                     : "blue"
                                 };
                               },
                               singleValue: (styles, { data }) => ({
                                 ...styles,
-                                color: data.label  == "Indirect tax"
+                                color: data.label  ===  "Indirect tax"
                                     ? "green"
                                     : "blue"
                               }),

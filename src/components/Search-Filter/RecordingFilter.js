@@ -47,7 +47,7 @@ function RecordingFilter(props) {
 
   const onSubmit = (data) => {
  
-if(SearchQuery == "adminQuery") {
+if(SearchQuery === "adminQuery") {
   const token = window.localStorage.getItem("adminToken")
   const myConfig = {
       headers : {
@@ -68,7 +68,7 @@ if(SearchQuery == "adminQuery") {
           }
         });
 }
-else if(SearchQuery == "tlQuery") {
+else if(SearchQuery === "tlQuery") {
   
   const token = window.localStorage.getItem("tlToken")
   const myConfig = {
@@ -90,7 +90,7 @@ else if(SearchQuery == "tlQuery") {
           }
         });
 }
-else if(SearchQuery == "tpQuery") {
+else if(SearchQuery === "tpQuery") {
   
   const token = window.localStorage.getItem("tptoken")
   const myConfig = {

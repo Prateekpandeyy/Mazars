@@ -156,7 +156,7 @@ function PendingForProposals({ CountPendingProposal }) {
             <div>
               {row.status}/
               {
-                row.status == "Inprogress Query" ?
+                row.status === "Inprogress Query" ?
                   <p className="inprogress">
                     {row.statusdescription}
                   </p>

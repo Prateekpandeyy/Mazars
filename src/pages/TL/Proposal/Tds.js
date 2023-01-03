@@ -64,7 +64,7 @@ const percent = {
     getServices();
   }, [])
   useEffect(() => {
-    if(props.generated == "edited"){
+    if(props.generated ===  "edited"){
     getDataild();
     }
     else {
@@ -334,7 +334,7 @@ else{
 //setPocketExp(e.target.value)
   let a;
   if(e.target.value){
-    if(basicAmount.length == "0"){
+    if(basicAmount.length ===  "0"){
        a = Math.round(e.target.value) + parseInt(0);
     }
     else{
@@ -457,7 +457,7 @@ const basicFun = (e) => {
     setDiscription(e)
    services.map((k) => {
     
-if(k.service == e) {
+if(k.service ===  e) {
 setSac(k.sac)
 setServices2(k.service)
 }

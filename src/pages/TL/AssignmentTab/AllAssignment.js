@@ -225,7 +225,7 @@ const resetData = () => {
         return (
           <>
             <div>
-            {row.paid_status == "2" &&
+            {row.paid_status ===  "2" &&
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
@@ -309,7 +309,7 @@ const resetData = () => {
         return (
           <>
             {
-              row.paid_status == "2" ? null :
+              row.paid_status ===  "2" ? null :
                 <div>
                   {row.assignement_draft_report || row.final_report ?
                     <div title="View All Report"
@@ -342,7 +342,7 @@ const resetData = () => {
               title="Add Assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
-             {row.paid_status == "2" ? null : 
+             {row.paid_status ===  "2" ? null : 
               <Link to={`/teamleader/addassingment/${row.q_id}`}>
               <i class="fa fa-tasks"></i>
             </Link> }
@@ -378,12 +378,12 @@ const resetData = () => {
                                   <ViewDiscussionIcon />
                           </div>
          {
-           row.paid_status == "2" ? 
+           row.paid_status ===  "2" ? 
           null : 
            <>
            
             {
-              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
+              row.client_discussion ===  "completed" && row.draft_report ===  "inprogress" && row.final_discussion ===  "inprogress" &&  row.paid_status !=2  ?
              
               <p
                 style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
@@ -395,7 +395,7 @@ const resetData = () => {
              : null
            }
 {
- row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "completed" && row.delivery_report == "inprogress" ?
+ row.client_discussion ===  "completed" && row.draft_report ===  "completed" && row.final_discussion ===  "completed" && row.delivery_report ===  "inprogress" ?
 
 
  <p

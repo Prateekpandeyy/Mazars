@@ -111,7 +111,7 @@ function SignUp(props) {
     var arrayState = [];
     let sta = {};
     states.filter((data) => {
-      if (data.country_id == 101) {
+      if (data.country_id ===  101) {
         sta = {
           value: data.id,
           label: data.name,
@@ -162,7 +162,7 @@ function SignUp(props) {
     setNumAvail("");
 
     // setInvalid("")
-    if (key == 101) {
+    if (key ===  101) {
       setCountryId(key);
       setPhoneLength(10);
     } else {
@@ -173,7 +173,7 @@ function SignUp(props) {
     var arrayState = [];
     let sta = {};
     states.filter((data) => {
-      if (data.country_id == key) {
+      if (data.country_id ===  key) {
         sta = {
           value: data.id,
           label: data.name,
@@ -184,7 +184,7 @@ function SignUp(props) {
     setState(arrayState);
 
     country.filter((data) => {
-      if (key == data.id) {
+      if (key ===  data.id) {
         setCountryCode(data.phoneCode);
         setCountryName(data.name);
       }
@@ -203,7 +203,7 @@ function SignUp(props) {
 
     let sta = {};
     states.filter((p) => {
-      if (p.id == key) {
+      if (p.id ===  key) {
         setStateName(p.name);
       }
     });
@@ -306,7 +306,7 @@ function SignUp(props) {
       setZipCode(e.target.value);
       setZipError("");
       setZipError1(false);
-    } else if (e.target.value == 0) {
+    } else if (e.target.value ===  0) {
       setZipCode("");
     }
 

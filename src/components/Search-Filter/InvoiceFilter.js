@@ -20,7 +20,7 @@ const InvoiceFilter = (props) => {
     formData.append("to", data.p_dateTo);
     formData.append("installment_no", data.installment_no);
     formData.append("status", data.opt);
-    if (props.invoice == "generated") {
+    if (props.invoice === "generated") {
       const token = window.localStorage.getItem("tlToken");
       axios({
         method: "POST",
@@ -35,7 +35,7 @@ const InvoiceFilter = (props) => {
           props.setRec(res.data.payment_detail.length);
         }
       });
-    } else if (props.invoice == "tlcreate") {
+    } else if (props.invoice === "tlcreate") {
       const token = window.localStorage.getItem("tlToken");
       axios({
         method: "POST",
@@ -50,7 +50,7 @@ const InvoiceFilter = (props) => {
           props.setRec(res.data.payment_detail.length);
         }
       });
-    } else if (props.invoice == "tpcreate") {
+    } else if (props.invoice === "tpcreate") {
       const token = window.localStorage.getItem("tptoken");
       axios({
         method: "POST",
@@ -65,7 +65,7 @@ const InvoiceFilter = (props) => {
           props.setRec(res.data.payment_detail.length);
         }
       });
-    } else if (props.invoice == "tpgenerated") {
+    } else if (props.invoice === "tpgenerated") {
       const token = window.localStorage.getItem("tptoken");
 
       axios({
@@ -81,7 +81,7 @@ const InvoiceFilter = (props) => {
           props.setRec(res.data.payment_detail.length);
         }
       });
-    } else if (props.invoice == "admingenerated") {
+    } else if (props.invoice === "admingenerated") {
       const token = window.localStorage.getItem("adminToken");
       axios({
         method: "POST",
@@ -96,7 +96,7 @@ const InvoiceFilter = (props) => {
           props.setRec(res.data.payment_detail.length);
         }
       });
-    } else if (props.invoice == "admincreate") {
+    } else if (props.invoice === "admincreate") {
       const token = window.localStorage.getItem("adminToken");
       axios({
         method: "POST",
@@ -169,9 +169,9 @@ const InvoiceFilter = (props) => {
         </div>
         <div className="row">
           <div className="col-md-3">
-            {props.invoice == "tpcreate" ||
-            props.invoice == "admincreate" ||
-            props.invoice == "create" ? (
+            {props.invoice === "tpcreate" ||
+            props.invoice === "admincreate" ||
+            props.invoice === "create" ? (
               ""
             ) : (
               <select
@@ -271,7 +271,7 @@ const InvoiceFilter = (props) => {
                />
              </div>
            <div className="col-lg-3 col-md-6 col-sm-12 my-sm-2">
-           {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
+           {props.invoice =="tpcreate" || props.invoice === "admincreate" || props.invoice === "create" ? "" :
        
         <select name="opt" className="form-select form-control" ref={register}  style={{ height: "33px" }}>
         <option value="">Select </option>

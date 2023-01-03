@@ -120,7 +120,7 @@ function AllQuery() {
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
 
-        if (oldDate == "0000-00-00") {
+        if (oldDate ===  "0000-00-00") {
           return null;
         } else {
           return oldDate.toString().split("-").reverse().join("-");
@@ -135,11 +135,11 @@ function AllQuery() {
           <>
             <div>
               {row.status}/
-              {row.status == "Inprogress Query" ? (
+              {row.status ===  "Inprogress Query" ? (
                 <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status == "Declined Query" ? (
+              ) : row.status ===  "Declined Query" ? (
                 <p className="declined">{row.statusdescription}</p>
-              ) : row.status == "Completed Query" ? (
+              ) : row.status ===  "Completed Query" ? (
                 <p className="completed">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -153,13 +153,13 @@ function AllQuery() {
       formatter: function (cell, row) {
         return (
           <>
-            {row.status_code == "1" ? null : (
+            {row.status_code ===  "1" ? null : (
               <div
                 style={{
                   display: "flex",
                 }}
               >
-                {row.status == "Declined Query" ? null : (
+                {row.status ===  "Declined Query" ? null : (
                   <Link
                     to={{
                       pathname: `/teamleader/chatting/${row.id}`,

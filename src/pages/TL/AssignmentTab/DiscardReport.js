@@ -57,13 +57,13 @@ function DiscardReport({
             {data.length > 0
               ? data.map((p, i) => (
                 <tbody>
-                  <tr className={p.type == "sent" ? "send" : "received"}>
+                  <tr className={p.type ===  "sent" ? "send" : "received"}>
                     <td>{i + 1}</td>
                     <td>{CommonServices.removeTime(p.setdate)}</td>
                     <td>{p.sender}</td>
                     <td style={{ width : "460px", overflow : "wrap"}}>
                       {
-                        p.type == "sent" ?
+                        p.type ===  "sent" ?
                           <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
                           :
                           <i class="fa fa-mail-reply" style={{ color: "green", marginLeft: "10px", marginRight: "10px" }}></i>

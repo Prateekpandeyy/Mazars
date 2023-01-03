@@ -52,7 +52,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
       data: formData,
     })
       .then(function (response) {
-        if (response.data.code == 1) {
+        if (response.data.code ===  1) {
           setLoading(false);
           Cookies.set("tpName", response.data.displayname);
           Alerts.SuccessLogin("Logged in successfully.");

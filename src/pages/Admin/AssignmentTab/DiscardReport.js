@@ -60,7 +60,7 @@ function DiscardReport({
             {data.length > 0
               ? data.map((p, i) => (
                 <tbody>
-                  <tr className={p.type == "sent" ? "send" : "received"}>
+                  <tr className={p.type ===  "sent" ? "send" : "received"}>
                     <td>
                       <CustomTypography>
                       {i + 1}
@@ -80,7 +80,7 @@ function DiscardReport({
                      
                      <CustomTypography>
                      {
-                     p.type == "sent" ?
+                     p.type ===  "sent" ?
                        <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
                        :
                        <i class="fa fa-mail-reply" style={{ color: "green", marginLeft: "10px", marginRight: "10px" }}></i>

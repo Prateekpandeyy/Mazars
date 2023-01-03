@@ -18,7 +18,7 @@
         var rtl;
         var compactMenu = false; // Set it to true, if you want default menu to be compact
 
-        if ($('html').data('textdirection') == 'rtl') {
+        if ($('html').data('textdirection') === 'rtl') {
             rtl = true;
         }
 
@@ -172,7 +172,7 @@
         });
 
         var menuType = $body.data('menu');
-        if (menuType == 'vertical-compact-menu') {
+        if (menuType === 'vertical-compact-menu') {
             $(".main-menu-content").find('li.active').parents('li:not(.nav-item)').addClass('open');
             $(".main-menu-content").find('li.active').parents('li').addClass('active');
         }

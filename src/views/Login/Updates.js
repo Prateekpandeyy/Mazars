@@ -112,7 +112,7 @@ function Updates() {
 
   if (
     window.location.origin === "http://masindia.live" &&
-    window.location.protocol == "http:"
+    window.location.protocol ===  "http:"
   ) {
     window.location.href = window.location.href.replace("http:", "https:");
   }

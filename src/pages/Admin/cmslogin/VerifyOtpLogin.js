@@ -62,7 +62,7 @@ function VerifyOtp({ email, uid, loading, setLoading }) {
       .then(function (response) {
       
 
-        if (response.data.code == 1) {
+        if (response.data.code ===  1) {
           var timeStampInMs = Date.now()
           localStorage.setItem("adminloginTime", timeStampInMs)
           setLoading(false)

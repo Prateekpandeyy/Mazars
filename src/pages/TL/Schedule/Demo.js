@@ -444,7 +444,7 @@ history.push(`/teamleader/meeting/${data.id}`);
       setLoading(true)
       var value;
       data.filter((data) => {
-        if (data.id == deleted) {
+        if (data.id ===  deleted) {
         
           value = data.owner
         }

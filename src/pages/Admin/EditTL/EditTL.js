@@ -681,7 +681,7 @@ const checktlPost = (e) => {
             </CustomHeading>
             </Col>
             <Col md = "3">
-            {showDel == "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
+            {showDel ===  "0" ?  <button className="btn btn-danger" onClick={(e) => del(e)}>Delete</button> : ""}
             </Col>
           </Row>
         </CardHeader>
@@ -713,7 +713,7 @@ const checktlPost = (e) => {
                           name="post_name"
                           onBlur={(e) => checktlPost(e)}
                           defaultValue={data6}
-                         disabled = {showDel == "1" ? true : ""}
+                         disabled = {showDel ===  "1" ? true : ""}
                           onChange = {(e) => tlName22(e)}
                           className={classNames("form-control", {
                             "is-invalid": errors.post_name || posError.exits,
@@ -732,7 +732,7 @@ const checktlPost = (e) => {
                           type="text"
                           name="post_email"
                           onBlur={(e) => emailValidation(e)}
-                          disabled = {showDel == "1" ? true : ""}
+                          disabled = {showDel ===  "1" ? true : ""}
                           defaultValue={data7}
                           onChange={(e) => emailHandler(e)}
                           className={classNames("form-control", {
@@ -809,14 +809,14 @@ const checktlPost = (e) => {
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value == 2
+                              color: data.value ===  2
                                 ? "green"
                                 : "blue"
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value == 2
+                            color: data.value ===  2
                               ? "green"
                               : "blue"
                           }),

@@ -67,7 +67,7 @@ function NavWrapper(props) {
                     flexDirection: "column",
                   }}
                 >
-                  {name == "customer" ? (
+                  {name ===  "customer" ? (
                     <>
                       <div className="d-flex">
                         <CustomTypography
@@ -95,9 +95,9 @@ function NavWrapper(props) {
               className="nav navbar-nav float-right"
               style={{ display: "flex", flexDirection: "row" }}
             >
-              {name == "customer" && (
+              {name ===  "customer" && (
                 <>
-                  <li>
+                  <li style={{ zIndex: "400" }}>
                     <div
                       style={{
                         display: "flex",
@@ -117,14 +117,14 @@ function NavWrapper(props) {
                 </>
               )}
 
-              {name == "admin" && (
+              {name ===  "admin" && (
                 <CustomerNotification
                   panel="admin"
                   tokenKey={adminkey}
                   name={name}
                 />
               )}
-              {name == "cms" && (
+              {name ===  "cms" && (
                 <CustomerNotification
                   panel="Cms"
                   tokenKey={cmsKey}
@@ -132,14 +132,14 @@ function NavWrapper(props) {
                 />
               )}
 
-              {name == "Team Leader" && (
+              {name ===  "Team Leader" && (
                 <CustomerNotification
                   panel="teamleader"
                   tokenKey={tlkey}
                   name={name}
                 />
               )}
-              {name == "Tax Professional" && (
+              {name ===  "Tax Professional" && (
                 <CustomerNotification
                   panel="taxprofessional"
                   tokenKey={tpkey}
@@ -165,7 +165,7 @@ function NavWrapper(props) {
 
                 <div className="dropdown-menu dropdown-menu-right changePassword">
                   <div className="arrow_box_right">
-                    {name == "customer" && (
+                    {name ===  "customer" && (
                       <>
                         <Link to="/customer/change-password">
                           <div

@@ -154,7 +154,7 @@ function AssignmentForm(props) {
           </Row>
         </CardHeader>
         <CardHeader>
-          {props.location.clients == "completed" ? (
+          {props.location.clients ===  "completed" ? (
             <div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div class="row">
@@ -327,7 +327,7 @@ function AssignmentForm(props) {
                     </div>
                   </div>
 
-                  {store == "email" && (
+                  {store ===  "email" && (
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Email</label>
@@ -341,7 +341,7 @@ function AssignmentForm(props) {
                     </div>
                   )}
 
-                  {store == "phone" && (
+                  {store ===  "phone" && (
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Phone</label>
@@ -354,7 +354,7 @@ function AssignmentForm(props) {
                       </div>
                     </div>
                   )}
-                  {store == "other" && (
+                  {store ===  "other" && (
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Notes info</label>

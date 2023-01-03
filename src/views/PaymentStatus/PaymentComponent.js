@@ -87,10 +87,10 @@ if(addPaymentModal === true){
                   </tr>
                   {kk?.map((i, e) => (
                     <tr>
-                    <td>{i == "0" ? pay.amount : i }</td>
+                    <td>{i ===  "0" ? pay.amount : i }</td>
                     <td> {CommonServices.removeTime(due_date)}</td>
                     <td><form onSubmit={handleSubmit(onSubmit)}>
-                  {+accepted_amount == +paid_amount ? <p>paid</p> : (
+                  {+accepted_amount ===  +paid_amount ? <p>paid</p> : (
                    <button type="submit" className="btn btn-primary">
                       Pay
                    </button>

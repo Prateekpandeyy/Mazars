@@ -60,7 +60,7 @@
       },
 
       updateHeight: function(){
-        if( ($body.data('menu') == 'vertical-menu' || $body.data('menu') == 'vertical-menu-modern' || $body.data('menu') == 'vertical-overlay-menu' ) && $('.main-menu').hasClass('menu-fixed')){
+        if( ($body.data('menu') ===  'vertical-menu' || $body.data('menu') ===  'vertical-menu-modern' || $body.data('menu') ===  'vertical-overlay-menu' ) && $('.main-menu').hasClass('menu-fixed')){
           $('.main-menu-content').css('height', $(window).height() - $('.header-navbar').height() - $('.main-menu-header').outerHeight() - $('.main-menu-footer').outerHeight() );
           this.update();
         }
@@ -78,7 +78,7 @@
           defMenu = 'collapsed';
         }
 
-        if($body.data('menu') == 'vertical-menu-modern') {
+        if($body.data('menu') ===  'vertical-menu-modern') {
           var menuToggle = '';
 
           if (typeof(Storage) !== "undefined") {
@@ -138,7 +138,7 @@
 
       // Dropdown submenu on large screen on hover For Large screen only
       // ---------------------------------------------------------------
-      if(currentBreakpoint.name == 'xl'){
+      if(currentBreakpoint.name ===  'xl'){
         $('body[data-open="hover"] .dropdown').on('mouseenter', function(){
           if (!($(this).hasClass('show'))) {
             $(this).addClass('show');
@@ -156,7 +156,7 @@
       if($('.header-navbar').hasClass('navbar-brand-center')){
         $('.header-navbar').attr('data-nav','brand-center');
       }
-      if(currentBreakpoint.name == 'sm' || currentBreakpoint.name == 'xs'){
+      if(currentBreakpoint.name ===  'sm' || currentBreakpoint.name ===  'xs'){
         $('.header-navbar[data-nav=brand-center]').removeClass('navbar-brand-center');
       }else{
         $('.header-navbar[data-nav=brand-center]').addClass('navbar-brand-center');
@@ -251,7 +251,7 @@
 
     expand: function() {
       if (this.expanded === false) {
-        if( $body.data('menu') == 'vertical-menu-modern' ){
+        if( $body.data('menu') ===  'vertical-menu-modern' ){
           $('.modern-nav-toggle').find('.toggle-icon')
           .removeClass('ft-circle').addClass('ft-disc');
 
@@ -270,7 +270,7 @@
 
         }, function() {
 
-          if( ($('.main-menu').hasClass('menu-native-scroll') || $body.data('menu') == 'horizontal-menu')){
+          if( ($('.main-menu').hasClass('menu-native-scroll') || $body.data('menu') ===  'horizontal-menu')){
             this.manualScroller.disable();
           }
           else{
@@ -278,7 +278,7 @@
               this.manualScroller.enable();
           }
 
-          if( ($body.data('menu') == 'vertical-menu' || $body.data('menu') == 'vertical-menu-modern') && $('.main-menu').hasClass('menu-fixed')){
+          if( ($body.data('menu') ===  'vertical-menu' || $body.data('menu') ===  'vertical-menu-modern') && $('.main-menu').hasClass('menu-fixed')){
             $('.main-menu-content').css('height', $(window).height() - $('.header-navbar').height() - $('.main-menu-header').outerHeight() - $('.main-menu-footer').outerHeight() );
             // this.manualScroller.update();
           }
@@ -289,7 +289,7 @@
 
     toOverlayMenu: function(screen){
       var menu = $body.data('menu');
-      if(screen == 'sm' || screen == 'xs'){
+      if(screen ===  'sm' || screen ===  'xs'){
         if($body.hasClass(menu)){
           $body.removeClass(menu).addClass('vertical-overlay-menu');
         }
@@ -311,7 +311,7 @@
       dropdownMenu       = $('li[data-menu="dropdown"]'),
       dropdownSubMenu    = $('li[data-menu="dropdown-submenu"]');
 
-      if(screen == 'sm' || screen == 'xs'){
+      if(screen ===  'sm' || screen ===  'xs'){
 
         // Change body classes
         $body.removeClass($body.data('menu')).addClass('vertical-layout vertical-overlay-menu fixed-navbar');
@@ -374,12 +374,12 @@
         case 'lg':
         case 'md':
           if(expanded === true){
-            if(menu == 'vertical-overlay-menu'){
+            if(menu ===  'vertical-overlay-menu'){
               this.hide();
             }
           }
           else{
-            if(menu == 'vertical-overlay-menu'){
+            if(menu ===  'vertical-overlay-menu'){
               this.open();
             }
             else{
@@ -549,7 +549,7 @@
       $('.navbar-header, .main-menu').on('mouseenter',modernMenuExpand).on('mouseleave',modernMenuCollapse);
 
       function modernMenuExpand(){
-        if( $body.data('menu') == 'vertical-menu-modern'){
+        if( $body.data('menu') ===  'vertical-menu-modern'){
           $('.main-menu, .navbar-header').addClass('expanded');
           if($body.hasClass('menu-collapsed')){
             var $listItem = $('.main-menu li.menu-collapsed-open'),
@@ -566,7 +566,7 @@
       }
 
       function modernMenuCollapse(){
-        if($body.hasClass('menu-collapsed') && $body.data('menu') == 'vertical-menu-modern'){
+        if($body.hasClass('menu-collapsed') && $body.data('menu') ===  'vertical-menu-modern'){
           setTimeout(function(){
             if($('.main-menu:hover').length === 0 && $('.navbar-header:hover').length === 0){
 

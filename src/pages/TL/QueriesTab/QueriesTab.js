@@ -131,17 +131,17 @@ function QueriesTab(props) {
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
-          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
             All queries ({allQuery})
           </Tab>
 
-          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Queries ({incomplete})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
             Pending For acceptance ({pendindForAccepttence})
           </Tab>
-          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  3 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress assignment to TP ({complete})
           </Tab>
         </TabList>

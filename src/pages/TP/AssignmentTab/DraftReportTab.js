@@ -228,7 +228,7 @@ function AssignmentTab() {
               return (
                 <>
                   <div>
-                  {row.paid_status == "2" &&
+                  {row.paid_status ===  "2" &&
                       <p>
                         <span className="declined">Payment declined</span>
                       </p>
@@ -290,7 +290,7 @@ function AssignmentTab() {
             formatter: function dateFormat(cell, row) {
             
                 var oldDate = row.final_date;
-                if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
+                if (oldDate == null || oldDate ===  "0000-00-00 00:00:00") {
                     return null;
                 }
                 return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
@@ -305,7 +305,7 @@ function AssignmentTab() {
               return (
                 <>
                   {
-                    row.paid_status == "2" ? null :
+                    row.paid_status ===  "2" ? null :
                       <div>
                         {row.assignement_draft_report || row.final_report ?
                           <div title="View All Report"
@@ -334,7 +334,7 @@ function AssignmentTab() {
                     style={{ cursor: "pointer", textAlign: "center" }}
                   >
                       {
-                 row.paid_status == "2" ? null :
+                 row.paid_status ===  "2" ? null :
                     <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
                       <i class="fa fa-tasks"></i>
                     </Link>
@@ -371,12 +371,12 @@ function AssignmentTab() {
                                         <ViewDiscussionIcon />
                                 </div>
                {
-                 row.paid_status == "2" ? 
+                 row.paid_status ===  "2" ? 
                 null : 
                  <>
                  
                   {
-                    row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
+                    row.client_discussion ===  "completed" && row.draft_report ===  "inprogress" && row.final_discussion ===  "inprogress" &&  row.paid_status !=2  ?
                    
                     <p
                       style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}

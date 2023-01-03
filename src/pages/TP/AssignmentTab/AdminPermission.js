@@ -229,7 +229,7 @@ function AdminPermission(props) {
         return (
           <>
             <div>
-              {row.paid_status == "2" && (
+              {row.paid_status ===  "2" && (
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
@@ -317,7 +317,7 @@ function AdminPermission(props) {
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
+        if (oldDate == null || oldDate ===  "0000-00-00 00:00:00") {
           return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
@@ -331,7 +331,7 @@ function AdminPermission(props) {
       formatter: function (cell, row) {
         return (
           <>
-            {row.paid_status == "2" ? null : (
+            {row.paid_status ===  "2" ? null : (
               <div>
                 {row.assignement_draft_report || row.final_report ? (
                   <div
@@ -358,7 +358,7 @@ function AdminPermission(props) {
               title="Add assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
-              {row.paid_status == "2" ? null : (
+              {row.paid_status ===  "2" ? null : (
                 <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
                   <i class="fa fa-tasks"></i>
                 </Link>
@@ -396,11 +396,11 @@ function AdminPermission(props) {
               >
                 <ViewDiscussionIcon />
               </div>
-              {row.paid_status == "2" ? null : (
+              {row.paid_status ===  "2" ? null : (
                 <>
-                  {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
+                  {row.client_discussion ===  "completed" &&
+                  row.draft_report ===  "inprogress" &&
+                  row.final_discussion ===  "inprogress" &&
                   row.paid_status != 2 ? (
                     <p
                       style={{
@@ -415,10 +415,10 @@ function AdminPermission(props) {
                       draft
                     </p>
                   ) : null}
-                  {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                  {row.client_discussion ===  "completed" &&
+                  row.draft_report ===  "completed" &&
+                  row.final_discussion ===  "completed" &&
+                  row.delivery_report ===  "inprogress" ? (
                     <p
                       style={{
                         display: "flex",

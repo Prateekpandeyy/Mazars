@@ -51,7 +51,7 @@ const UpdatesContent = () => {
               setHeading(i.heading)
               addDet(i.content)
               setDate(i.publish_date)
-              if(i.status == 1){
+              if(i.status ===  1){
                 setStats(true)
                }
                else{

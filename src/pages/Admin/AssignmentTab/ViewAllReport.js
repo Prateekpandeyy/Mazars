@@ -247,8 +247,8 @@ function ViewReport({
 
                       <td>
                         <CustomTypography>
-                          {(p.stages_type == 2 && "Draft Report") ||
-                            (p.stages_type == 3 && "Final Report")}
+                          {(p.stages_type ===  2 && "Draft Report") ||
+                            (p.stages_type ===  3 && "Final Report")}
                         </CustomTypography>
 
                         <br></br>

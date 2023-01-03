@@ -222,16 +222,16 @@ function ProposalTab() {
         return (
           <>
             <div>
-              {row.status == "Inprogress" ? (
+              {row.status ===  "Inprogress" ? (
                 <div>
                   {row.status}/
                   <p className="inprogress">{row.statusdescription}</p>
                 </div>
-              ) : row.status == "Declined; Proposal" ? (
+              ) : row.status ===  "Declined; Proposal" ? (
                 <div>
                   <p className="declined">{row.status}</p>
                 </div>
-              ) : row.status == "Accepted; Proposal" ? (
+              ) : row.status ===  "Accepted; Proposal" ? (
                 <div>
                   <p className="completed">{row.status}</p>
                 </div>
@@ -348,7 +348,7 @@ function ProposalTab() {
                   </>
                 ) : null}
 
-                {row.statuscode == 4 ? (
+                {row.statuscode ===  4 ? (
                   <span className="ml-1">
                     <Link
                       to={{

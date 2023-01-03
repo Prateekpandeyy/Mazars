@@ -51,7 +51,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
       data: formData,
     })
       .then(function (response) {
-        if (response.data.code == 1) {
+        if (response.data.code ===  1) {
           var timeStampInMs = Date.now();
           localStorage.setItem("tlloginTime", timeStampInMs);
           setLoading(false);

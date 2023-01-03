@@ -104,7 +104,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
   const onSubmit = (data) => {
 
 
-    if (AllQuery == "AllQuery") {
+    if (AllQuery === "AllQuery") {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`, myConfig
@@ -123,7 +123,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     }
 
 
-    if (pendingForAcceptence == "pendingForAcceptence") {
+    if (pendingForAcceptence === "pendingForAcceptence") {
      
       axios
         .get(
@@ -143,7 +143,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (InprogressQuery == "InprogressQuery") {
+    if (InprogressQuery === "InprogressQuery") {
 
      
       axios
@@ -161,7 +161,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (DeclinedQuery == "DeclinedQuery") {
+    if (DeclinedQuery === "DeclinedQuery") {
       axios
         .get(
           `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`
@@ -177,7 +177,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (completeAssignment == "completeAssignment") {
+    if (completeAssignment === "completeAssignment") {
       axios
         .get(
           `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
@@ -196,7 +196,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (AllProposal == "AllProposal") {
+    if (AllProposal === "AllProposal") {
       axios
         .get(
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
@@ -215,7 +215,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (InprogressProposal == "InprogressProposal") {
+    if (InprogressProposal === "InprogressProposal") {
     if(data.p_status.length > 0){
       axios
       .get(
@@ -274,7 +274,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
       }
       
   
-    if(proposal == "proposal"){
+    if(proposal === "proposal"){
       axios
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
@@ -292,7 +292,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
       });
     }
 
-    if (AllPayment == "AllPayment") {
+    if (AllPayment === "AllPayment") {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
@@ -310,7 +310,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (Unpaid == "Unpaid") {
+    if (Unpaid === "Unpaid") {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
@@ -328,7 +328,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
         });
     }
 
-    if (Paid == "Paid") {
+    if (Paid === "Paid") {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
@@ -447,7 +447,7 @@ const fromDateFun = (e) => {
 
                 <div className="form-group mx-sm-1  mb-2">
 
-                  {AllQuery == "AllQuery" && (
+                  {AllQuery === "AllQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -461,7 +461,7 @@ const fromDateFun = (e) => {
                     </select>
                   )}
 
-                  {InprogressQuery == "InprogressQuery" && (
+                  {InprogressQuery === "InprogressQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -477,7 +477,7 @@ const fromDateFun = (e) => {
                   )}
 
 
-                  {DeclinedQuery == "DeclinedQuery" && (
+                  {DeclinedQuery === "DeclinedQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -490,7 +490,7 @@ const fromDateFun = (e) => {
                     </select>
                   )}
 
-                  {AllProposal == "AllProposal" && (
+                  {AllProposal === "AllProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -504,7 +504,7 @@ const fromDateFun = (e) => {
                     </select>
                   )}
 
-                  {InprogressProposal == "InprogressProposal" && (
+                  {InprogressProposal === "InprogressProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -517,7 +517,7 @@ const fromDateFun = (e) => {
                     </select>
                   )}
 
-                  {AllPayment == "AllPayment" && (
+                  {AllPayment === "AllPayment" && (
                     <select
                       className="form-select form-control"
                       name="p_status"

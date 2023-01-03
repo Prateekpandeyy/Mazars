@@ -149,13 +149,13 @@ const [pendingData, setPendingData] = useState([])
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
     <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList className="fixedTab">
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1}>
               All queries ({allQuery})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}> 
+            <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1}> 
               Pending for acceptance ({pendindForAccepttence})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1}>
               Inprogress; queries ({incomplete})
             </Tab>
        

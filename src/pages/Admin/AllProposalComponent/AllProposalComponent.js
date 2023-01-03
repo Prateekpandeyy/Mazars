@@ -175,14 +175,14 @@ function AllProposalComponent({ allProposal }) {
         return (
           <>
             <div>
-              {row.status == "Inprogress" ? (
+              {row.status === "Inprogress" ? (
                 <div>
                   {row.status}/
                   <p className="inprogress">{row.statusdescription}</p>
                 </div>
-              ) : row.status == "Client Declined; Proposal" ? (
+              ) : row.status === "Client Declined; Proposal" ? (
                 <p className="declined">{row.status}</p>
-              ) : row.status == "Accepted; Proposal" ? (
+              ) : row.status === "Accepted; Proposal" ? (
                 <p className="completed">{row.status}</p>
               ) : null}
             </div>
@@ -261,7 +261,7 @@ function AllProposalComponent({ allProposal }) {
                 <ViewDiscussionIcon />
               </div>
 
-              {row.statuscode > "3" || row.statuscode == "10" ? (
+              {row.statuscode > "3" || row.statuscode === "10" ? (
                 <div
                   onClick={(e) => showProposalModal2(row.q_id)}
                   className="ml-1"

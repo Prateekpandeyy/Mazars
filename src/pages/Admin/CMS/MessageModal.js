@@ -35,7 +35,7 @@ const MessageModal = ({
           res.data.result.map((i) => {
             setHeading(i.heading);
             setNews(i.news);
-            if (i.status == "1") {
+            if (i.status ===  "1") {
               setStats(true);
             } else {
               setStats(false);

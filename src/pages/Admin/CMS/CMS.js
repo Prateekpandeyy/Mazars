@@ -133,7 +133,7 @@ const Cms = () => {
                 <DeleteIcon />
               </span>
 
-              {row.status == "1" ? (
+              {row.status ===  "1" ? (
                 <div>
                   <label
                     className="switch"
@@ -146,7 +146,7 @@ const Cms = () => {
               ) : (
                 ""
               )}
-              {row.status == "0" ? (
+              {row.status ===  "0" ? (
                 <div>
                   <label
                     className="switch"

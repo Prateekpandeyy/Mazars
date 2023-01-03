@@ -47,7 +47,7 @@ function ForgetPassword(props) {
 
   const valueHandler = () => {
     var item = props.location.email;
-    if (item == "null") {
+    if (item ===  "null") {
     } else {
       return item;
     }

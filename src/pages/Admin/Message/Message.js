@@ -101,7 +101,7 @@ const history = useHistory();
                     <>
                         <Link to={`/admin/view-notification/${row.id}`}>
                             {
-                                row.is_read == "0" ?
+                                row.is_read ===  "0" ?
                                     <div
                                         style={{
                                             cursor: "pointer",

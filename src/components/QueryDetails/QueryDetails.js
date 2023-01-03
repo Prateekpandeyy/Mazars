@@ -52,19 +52,19 @@ function QueryDetails({
     <>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="fixedTab">
-          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 0 ? myStyle2 : myStyle1} className="tabHover">
             Basic query information
           </Tab>
-          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 1 ? myStyle2 : myStyle1} className="tabHover">
             Proposal
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 2 ? myStyle2 : myStyle1} className="tabHover">
             Assignment
           </Tab>
-          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 3 ? myStyle2 : myStyle1} className="tabHover">
             Feedback
           </Tab>
-          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 3 ? myStyle2 : myStyle1} className="tabHover">
             Recording
           </Tab>
         </TabList>

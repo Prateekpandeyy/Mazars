@@ -105,7 +105,7 @@ const history = useHistory();
                     <>
                         <Link to={`/taxprofessional/view-notification/${row.id}`}>
                             {
-                                row.is_read == "0" ?
+                                row.is_read ===  "0" ?
                                     <div
                                         style={{
                                             cursor: "pointer",

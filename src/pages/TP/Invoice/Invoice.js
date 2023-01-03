@@ -45,10 +45,10 @@ return(
                       className="fixedTab"
                     >
 
-                        <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+                        <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
                            View Invoice
                         </Tab>
-                        <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+                        <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
                           Create Invoice
                         </Tab>
                         

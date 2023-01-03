@@ -137,7 +137,7 @@ function DeclinedQuery({ CountIncomplete }) {
             <div>
               {row.status} /
               {
-                row.status == "Declined Query" ?
+                row.status ===  "Declined Query" ?
                   <p className="declined">
                     {row.statusdescription}
                   </p>

@@ -126,16 +126,16 @@ function ProposalTab(props) {
                        <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList
 className="fixedTab">
-                        <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+                        <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
                             All proposals ({allProposal})
                         </Tab>
-                        <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+                        <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
                             Inprogress; Proposals ({inprogressProposal})
                         </Tab>
-                        <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+                        <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
                             Accepted; Proposals ({acceptedProposal})
                         </Tab>
-                        <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+                        <Tab style={tabIndex ===  3 ? myStyle2 : myStyle1} className="tabHover">
                             Client declined; Proposals ({declinedProposal})
                         </Tab>
                     </TabList>

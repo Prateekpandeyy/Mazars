@@ -28,7 +28,7 @@ function CustomerListFilter(props) {
   };
 
   const onSubmit = (data) => {
-    if (searchQuery == "SearchQuery")
+    if (searchQuery === "SearchQuery")
       axios
         .get(
           `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`,

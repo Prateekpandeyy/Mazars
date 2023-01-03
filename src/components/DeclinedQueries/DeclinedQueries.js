@@ -123,16 +123,16 @@ function DeclinedQueries({ CountPendingForPayment }) {
             <div>
               {row.status} /
               {
-                row.status == "Inprogress Query" ?
+                row.status === "Inprogress Query" ?
                 <p className="inprogress">
                     {row.statusdescription}
                   </p>
                   :
-                  row.status == "Declined Query" ?
+                  row.status === "Declined Query" ?
                   <p className="declined">
                       {row.statusdescription}
                     </p> :
-                    row.status == "Completed Query" ?
+                    row.status === "Completed Query" ?
                     <p className="completed">
                         {row.statusdescription}
                       </p> :

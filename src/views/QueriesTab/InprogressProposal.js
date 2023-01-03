@@ -102,7 +102,7 @@ function InprogressProposal({
       formatter: function dateFormat(cell, row) {
         return (
           <>
-            {row.status == "Declined Query"
+            {row.status ===  "Declined Query"
               ? null
               : row.status_code >= "1"
               ? CommonServices.removeTime(row.final_date)
@@ -123,7 +123,7 @@ function InprogressProposal({
 
         return (
           <>
-            {row.status == "Declined Query" ? (
+            {row.status ===  "Declined Query" ? (
               <>
                 <>
                   {dateMnsFive > curDate === true ? (
@@ -152,9 +152,9 @@ function InprogressProposal({
               </>
             ) : (
               <>
-                {row.status_code == "0" ||
-                row.status_code == "1" ||
-                row.status_code == "3" ? (
+                {row.status_code ===  "0" ||
+                row.status_code ===  "1" ||
+                row.status_code ===  "3" ? (
                   <>
                     <span className="ml-2">
                       <Link
@@ -182,9 +182,9 @@ function InprogressProposal({
                   </>
                 ) : null}
 
-                {row.status_code == "4" ||
+                {row.status_code ===  "4" ||
                 8 < parseInt(row.status_code) ||
-                row.status_code == "2" ? (
+                row.status_code ===  "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-2">
@@ -202,7 +202,7 @@ function InprogressProposal({
                       ""
                     )}
 
-                    {row.status_code == "10" ? null : (
+                    {row.status_code ===  "10" ? null : (
                       <span className="ml-2">
                         <Link
                           to={{

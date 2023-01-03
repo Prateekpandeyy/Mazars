@@ -794,14 +794,14 @@ ref={selectInputRef2}
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value == 2
+                              color: data.value ===  2
                                 ? "green"
                                 : "blue"
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value == 2
+                            color: data.value ===  2
                               ? "green"
                               : "blue"
                           }),

@@ -176,11 +176,11 @@ function AddAssingmentStages() {
           <div className="row mt-3 mx-2">
             {assignmentStages.map((p, i) => (
               <>
-                {p.client_discussion == "completed" &&
-                  p.delivery_report == "completed" &&
-                  p.draft_report == "completed" &&
-                  p.final_discussion == "completed" &&
-                  p.other_stage == "completed" ? (
+                {p.client_discussion ===  "completed" &&
+                  p.delivery_report ===  "completed" &&
+                  p.draft_report ===  "completed" &&
+                  p.final_discussion ===  "completed" &&
+                  p.other_stage ===  "completed" ? (
                   <div className="col-md-12">
                     <div className="col-md-8">
                       <br />
@@ -358,7 +358,7 @@ function AddAssingmentStages() {
                           </div>
                         </div>
                         {
-                          p.client_discussion == "completed" && p.draft_report === "inprogress" ?
+                          p.client_discussion ===  "completed" && p.draft_report === "inprogress" ?
                           <div className="col-md-4">
                           <div className="form-group">
                             <select
@@ -400,7 +400,7 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                      {p.client_discussion == "completed" && p.final_discussion === "inprogress" && p.draft_report === "completed" ? 
+                      {p.client_discussion ===  "completed" && p.final_discussion === "inprogress" && p.draft_report === "completed" ? 
                         <div className="col-md-4">
                         <div className="form-group">
                           <select
@@ -443,7 +443,7 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                        {p.client_discussion == "completed" && p.delivery_report === "inprogress" &&    p.draft_report === "completed" && p.final_discussion === "completed" ?
+                        {p.client_discussion ===  "completed" && p.delivery_report === "inprogress" &&    p.draft_report === "completed" && p.final_discussion === "completed" ?
                         <div className="col-md-4">
                         <div className="form-group">
                           <select
@@ -487,7 +487,7 @@ function AddAssingmentStages() {
                             </label>
                           </div>
                         </div>
-                        {p.client_discussion == "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
+                        {p.client_discussion ===  "completed"  && p.draft_report === "completed" && p.final_discussion === "completed" && p.delivery_report === "completed" 
                         ? <div className="col-md-4">
                         <div className="form-group">
                           <select

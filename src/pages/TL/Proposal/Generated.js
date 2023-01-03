@@ -205,7 +205,7 @@ const Generated = ({ updateTab }) => {
 
         return (
           <>
-            {row.is_paid == "0" ? (
+            {row.is_paid ===  "0" ? (
               <p className="rightAli"></p>
             ) : (
               <p className="rightAli">{nfObject.format(x)}</p>
@@ -223,11 +223,11 @@ const Generated = ({ updateTab }) => {
       formatter: function (cell, row) {
         return (
           <>
-            {row.is_paid == "0" ? (
+            {row.is_paid ===  "0" ? (
               <p>Unpaid</p>
             ) : (
               <>
-                {row.is_paid == "1" ? (
+                {row.is_paid ===  "1" ? (
                   <p>Paid</p>
                 ) : (
                   <p className="declined">Declined</p>
@@ -262,16 +262,16 @@ const Generated = ({ updateTab }) => {
               >
                 <DescriptionOutlinedIcon color="secondary" />
               </span>
-              {row.is_paid == "0" ? (
+              {row.is_paid ===  "0" ? (
                 <div className="mx-1" onClick={() => addTdsToggle(row)}>
                   <EditQuery title="Edit Invoice" />
                 </div>
               ) : (
                 ""
               )}
-              {row.is_paid == "0" && row.paymenturl !== null ? (
+              {row.is_paid ===  "0" && row.paymenturl !== null ? (
                 <span title={row.paymenturl}>
-                  {copy == row.id ? (
+                  {copy ===  row.id ? (
                     <span style={{ color: "red" }}>Copied</span>
                   ) : (
                     <FileCopyIcon

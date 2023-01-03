@@ -52,10 +52,10 @@ function Questionnaire(props) {
 
   const onSubmit = (value) => {
     
-    if (setPurposeOption == '') {
+    if (setPurposeOption ===  '') {
       setSelectError("Please select atleast one value")
     }
-    if (selectedOption == '') {
+    if (selectedOption ===  '') {
       setSelectError("Please select atleast one value")
     }
     else {
@@ -63,7 +63,7 @@ function Questionnaire(props) {
     }
     const a = value.p_fact;
     const b = value.p_case_name;
-    if (a == '') {
+    if (a ===  '') {
       setcustError("This feild is required");
     }
 
@@ -113,7 +113,7 @@ function Questionnaire(props) {
 
 
             var message = response.data.message
-            if (message == "") {
+            if (message ===  "") {
               Swal.fire(
                 "Success",
                 `Query successfully added.`,

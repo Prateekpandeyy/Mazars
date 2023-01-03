@@ -51,7 +51,7 @@ const Mediatextshow = () => {
         res.data.result.map((i) => {
           setHeading(i.heading);
           addDet(i.content);
-          if (i.status == 1) {
+          if (i.status ===  1) {
             setStats(true);
           } else {
             setStats(false);

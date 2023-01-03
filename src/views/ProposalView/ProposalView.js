@@ -243,13 +243,13 @@ function ProposalView(props) {
   function ordinal_suffix_of(i) {
     var j = i % 10,
       k = i % 100;
-    if (j == 1 && k != 11) {
+    if (j ===  1 && k != 11) {
       return i + "st";
     }
-    if (j == 2 && k != 12) {
+    if (j ===  2 && k != 12) {
       return i + "nd";
     }
-    if (j == 3 && k != 13) {
+    if (j ===  3 && k != 13) {
       return i + "rd";
     }
     return i + "th";
@@ -410,9 +410,9 @@ function ProposalView(props) {
                 <tr>
                   <th scope="row">Proposal status</th>
                   <td>
-                    {queryStatus == "4" && "Inprogress"}
-                    {queryStatus == "6" && "Declined"}
-                    {(queryStatus == "5" || queryStatus > 6) && "Accepted"}
+                    {queryStatus ===  "4" && "Inprogress"}
+                    {queryStatus ===  "6" && "Declined"}
+                    {(queryStatus ===  "5" || queryStatus > 6) && "Accepted"}
                   </td>
                 </tr>
               </tbody>

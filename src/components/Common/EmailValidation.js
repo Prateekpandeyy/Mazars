@@ -24,7 +24,7 @@ const EmailValidation = (props) => {
       props.setWemail("");
       props.setEmailError(false);
 
-      if (props.name === "teamleader" || props.name == "taxprofessional") {
+      if (props.name === "teamleader" || props.name === "taxprofessional") {
         let formData = new FormData();
 
         formData.append("email", email);

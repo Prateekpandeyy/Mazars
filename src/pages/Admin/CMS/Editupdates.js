@@ -60,7 +60,7 @@ const Editupdates = () => {
               setDate(i.publish_date)
               setTopage(i.type)
               setFile(i.file)
-              if(i.status == 1){
+              if(i.status ===  1){
                 setStats(true)
                }
                else{

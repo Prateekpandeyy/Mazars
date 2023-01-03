@@ -173,7 +173,7 @@ const FlashMessage = () => {
                 </div>
               
                 {
-                  row.status == "1" ?
+                  row.status ===  "1" ?
                   <div>
                   <label className="switch" onChange= {(e) => myShowValue(e, row)}>
     <input type="checkbox"  defaultChecked/>
@@ -184,7 +184,7 @@ const FlashMessage = () => {
                   ""
                 }
                 {
-                  row.status == "0" ?
+                  row.status ===  "0" ?
                   <div>
                   <label className="switch" onChange= {(e) => myShowValue(e, row)}>
     <input type="checkbox"  />

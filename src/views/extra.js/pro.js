@@ -247,7 +247,7 @@ function ProposalTab() {
         console.log("dt", row.accepted_amount);
         var p = row.paid_amount;
         var a = row.accepted_amount;
-        if (p == 0) {
+        if (p ===  0) {
           return "0";
         } else return a - p;
       },
@@ -304,9 +304,9 @@ function ProposalTab() {
                   (row.negotiated_amount === "0" || row.accepted_amount) && ""
                 )}
 
-                {row.statuscode == 5 ||
-                row.statuscode == 7 ||
-                row.statuscode == 8 ? (
+                {row.statuscode ===  5 ||
+                row.statuscode ===  7 ||
+                row.statuscode ===  8 ? (
                   <div>
                     <div style={{ cursor: "pointer" }}>
                       <i

@@ -214,7 +214,7 @@ function Paid() {
       formatter : function (cell, row) {
           return(
               <>
-              {row.paid_status == "2"  ?
+              {row.paid_status ===  "2"  ?
               <p className="declined">{row.status} </p> : 
               <p>{row.status}</p>}
               </>
@@ -425,7 +425,7 @@ function Paid() {
           <>
       
           {
-            row.paid_status == "0" ?
+            row.paid_status ===  "0" ?
               
                 
             <Link

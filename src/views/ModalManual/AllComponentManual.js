@@ -40,33 +40,33 @@ const AllComponentManual = (tar) => {
       >
         <Container maxWidth="xl">
           <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-            {tar.tar == "freshQuery" ? (
+            {tar.tar ===  "freshQuery" ? (
               <Viewer fileUrl={`${QueryPdf}`}></Viewer>
             ) : (
               ""
             )}
 
-            {tar.tar == "proposalProcessing" ? (
+            {tar.tar ===  "proposalProcessing" ? (
               <Viewer fileUrl={`${proposalPdf}`}></Viewer>
             ) : (
               ""
             )}
-            {tar.tar == "paymentProcess" ? (
+            {tar.tar ===  "paymentProcess" ? (
               <Viewer fileUrl={`${paymentPdf}`}></Viewer>
             ) : (
               ""
             )}
-            {tar.tar == "assignProcess" ? (
+            {tar.tar ===  "assignProcess" ? (
               <Viewer fileUrl={`${assignmentPdf}`}></Viewer>
             ) : (
               ""
             )}
-            {tar.tar == "schedule" ? (
+            {tar.tar ===  "schedule" ? (
               <Viewer fileUrl={`${schedulePdf}`}></Viewer>
             ) : (
               ""
             )}
-            {tar.tar == "feedback" ? (
+            {tar.tar ===  "feedback" ? (
               <Viewer fileUrl={`${feedbackPdf}`}></Viewer>
             ) : (
               ""

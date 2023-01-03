@@ -89,7 +89,7 @@ const MediaText = () => {
               <span onClick={() => del(row.id)} className="ml-2">
                 <DeleteIcon titleName="Delete media news" />
               </span>
-              {row.status == "1" ? (
+              {row.status ===  "1" ? (
                 <div>
                   <label
                     className="switch"
@@ -102,7 +102,7 @@ const MediaText = () => {
               ) : (
                 ""
               )}
-              {row.status == "0" ? (
+              {row.status ===  "0" ? (
                 <div>
                   <label
                     className="switch"

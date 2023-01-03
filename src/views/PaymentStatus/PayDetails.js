@@ -180,7 +180,7 @@ setModal(!modal)
             formatter : function(cell, row){
                 return(
                     <>
-                    {row.invoice_generated == "0" ? "" : 
+                    {row.invoice_generated ===  "0" ? "" : 
                     <p style={{fontSize : "11px"}}>{row.billno}</p>}
                     </>
                 )
@@ -243,7 +243,7 @@ setModal(!modal)
                  console.log(nfObject.format(x))
                  return(
                   <>
-                  {row.is_paid == "1" ?
+                  {row.is_paid ===  "1" ?
                    <p>{nfObject.format(x)}</p> : ""}
                   </>
                  )
@@ -265,7 +265,7 @@ setModal(!modal)
                  console.log(nfObject.format(x))
                  return(
                   <>
-                  {row.is_paid == "1" ?
+                  {row.is_paid ===  "1" ?
                    <p>{nfObject.format(x)}</p> : ""}
                   </>
                  )
@@ -282,12 +282,12 @@ setModal(!modal)
                 return(
                    <>
                   <div style={{display : "flex", alignItems: "center", justifyContent : "space-between"}}>
-                  {row.invoice_generated == "1" ? 
+                  {row.invoice_generated ===  "1" ? 
                        <span onClick={() => downloadpdf(row.assign_no, row.id, row.installment_no)} style={{cursor : "pointer"}} title="Download Invoice">
                        <DescriptionOutlinedIcon color="secondary" />
                        </span> : ""}
                           
-                          {row.is_paid == "0" && row.paymenturl !== null ? 
+                          {row.is_paid ===  "0" && row.paymenturl !== null ? 
 
            <div onClick={() => openModal(row)}>
                 <DiscussProposal titleName ="Pay"/>
@@ -312,14 +312,14 @@ setModal(!modal)
            
                return(
                 <>
-                {row.invoice_generated == "1" ? 
+                {row.invoice_generated ===  "1" ? 
               <>
-              {row.is_paid == "0" ? 
+              {row.is_paid ===  "0" ? 
                 "" :   <>
-            {row.is_paid == "1" ?  
+            {row.is_paid ===  "1" ?  
             <>
             {
-                row.payment_gateway_type == "1" ?
+                row.payment_gateway_type ===  "1" ?
                 <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
                
                 <span style = {{cursor : "pointer",  color : "#3D4775"}} onClick = {(e) => paymentFun(row)} title = "View payment">
@@ -378,7 +378,7 @@ return(
           </Row>
         </CardHeader>
           <CardBody>
-   {showTable == true ? 
+   {showTable ===  true ? 
 
 <DataTablepopulated 
                    bgColor="#2b5f55"

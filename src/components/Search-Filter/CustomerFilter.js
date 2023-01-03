@@ -95,7 +95,7 @@ function CustomerFilter(props) {
   const onSubmit = (data) => {
     setLoading(true);
 
-    if (query == "query") {
+    if (query === "query") {
       axios
         .get(
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -119,7 +119,7 @@ function CustomerFilter(props) {
         });
     }
 
-    if (InprogressAllocation == "InprogressAllocation") {
+    if (InprogressAllocation === "InprogressAllocation") {
       if (data.p_status.length > 0) {
         axios
           .get(
@@ -167,7 +167,7 @@ function CustomerFilter(props) {
       }
     }
 
-    if (InprogressQueryProposal == "InprogressQueryProposal") {
+    if (InprogressQueryProposal === "InprogressQueryProposal") {
       axios
         .get(
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -191,7 +191,7 @@ function CustomerFilter(props) {
         });
     }
 
-    if (DeclinedQuery == "DeclinedQuery") {
+    if (DeclinedQuery === "DeclinedQuery") {
       axios
         .get(
           `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
@@ -215,7 +215,7 @@ function CustomerFilter(props) {
         });
     }
 
-    if (proposal == "proposal") {
+    if (proposal === "proposal") {
       axios
         .get(
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
@@ -239,7 +239,7 @@ function CustomerFilter(props) {
         });
     }
 
-    if (inprogressProposal == "inprogressProposal") {
+    if (inprogressProposal === "inprogressProposal") {
       if (data.p_status) {
         axios
           .get(
@@ -287,7 +287,7 @@ function CustomerFilter(props) {
       }
     }
 
-    if (acceptedProposal == "acceptedProposal") {
+    if (acceptedProposal === "acceptedProposal") {
       axios
         .get(
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
@@ -311,7 +311,7 @@ function CustomerFilter(props) {
         });
     }
 
-    if (declinedProposal == "declinedProposal") {
+    if (declinedProposal === "declinedProposal") {
       axios
         .get(
           `${baseUrl}/customers/getProposals?uid=${JSON.parse(
@@ -335,7 +335,7 @@ function CustomerFilter(props) {
         });
     }
 
-    if (assignment == "assignment") {
+    if (assignment === "assignment") {
       axios
         .get(
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
@@ -358,7 +358,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (assignment == "assignmentInprogress") {
+    if (assignment === "assignmentInprogress") {
       axios
         .get(
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
@@ -381,7 +381,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (assignment == "completeAssignment") {
+    if (assignment === "completeAssignment") {
       axios
         .get(
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
@@ -404,7 +404,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (assignment == "declinedAssignment") {
+    if (assignment === "declinedAssignment") {
       axios
         .get(
           `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
@@ -427,7 +427,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (assignment == "assignmentpermission") {
+    if (assignment === "assignmentpermission") {
       axios
         .get(
           `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
@@ -450,7 +450,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (allPayment == "allPayment") {
+    if (allPayment === "allPayment") {
       axios
         .get(
           `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
@@ -473,7 +473,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (unpaid == "unpaid") {
+    if (unpaid === "unpaid") {
       axios
         .get(
           `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
@@ -496,7 +496,7 @@ function CustomerFilter(props) {
           ShowError.LoadingError(setLoading);
         });
     }
-    if (paid == "paid") {
+    if (paid === "paid") {
       axios
         .get(
           `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
@@ -608,7 +608,7 @@ function CustomerFilter(props) {
                 />
               </div>
               <div className="form-group mx-sm-1  mb-2">
-                {query == "query" && (
+                {query === "query" && (
                   <select
                     className="form-select form-control"
                     name="p_status"
@@ -622,7 +622,7 @@ function CustomerFilter(props) {
                   </select>
                 )}
 
-                {InprogressAllocation == "InprogressAllocation" && (
+                {InprogressAllocation === "InprogressAllocation" && (
                   <select
                     className="form-select form-control"
                     name="p_status"
@@ -636,7 +636,7 @@ function CustomerFilter(props) {
                   </select>
                 )}
 
-                {DeclinedQuery == "DeclinedQuery" && (
+                {DeclinedQuery === "DeclinedQuery" && (
                   <select
                     className="form-select form-control"
                     name="p_status"
@@ -651,7 +651,7 @@ function CustomerFilter(props) {
                   </select>
                 )}
 
-                {proposal == "proposal" && (
+                {proposal === "proposal" && (
                   <select
                     className="form-select form-control"
                     name="p_status"
@@ -665,7 +665,7 @@ function CustomerFilter(props) {
                   </select>
                 )}
 
-                {inprogressProposal == "inprogressProposal" && (
+                {inprogressProposal === "inprogressProposal" && (
                   <select
                     className="form-select form-control"
                     name="p_status"
@@ -678,7 +678,7 @@ function CustomerFilter(props) {
                   </select>
                 )}
 
-                {allPayment == "allPayment" && (
+                {allPayment === "allPayment" && (
                   <select
                     className="form-select form-control"
                     name="p_status"
@@ -692,7 +692,7 @@ function CustomerFilter(props) {
                   </select>
                 )}
 
-                {assignment == "assignment" && (
+                {assignment === "assignment" && (
                   <select
                     className="form-select form-control"
                     name="p_status"

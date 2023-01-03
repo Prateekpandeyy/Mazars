@@ -198,7 +198,7 @@ function AllProposal() {
                     <>
                         <div>
                             {
-                                row.status == "Inprogress" ?
+                                row.status ===  "Inprogress" ?
                                     <div>
                                         {row.status}/
                                         <p className="inprogress">
@@ -206,11 +206,11 @@ function AllProposal() {
                                         </p>
                                     </div>
                                     :
-                                    row.status == "Client Declined; Proposal" ?
+                                    row.status ===  "Client Declined; Proposal" ?
                                         <p className="declined">
                                             {row.status}
                                         </p> :
-                                        row.status == "Accepted; Proposal" ?
+                                        row.status ===  "Accepted; Proposal" ?
                                             <p className="completed">
                                                 {row.status}
                                             </p> :
@@ -294,7 +294,7 @@ function AllProposal() {
                                       
                                 
                             <div className="ml-2">
-                                {row.status_code == "4" ? (
+                                {row.status_code ===  "4" ? (
                                     <Link 
                                     to={{
                                         pathname: `/teamleader/edit-proposal/${row.id}`,
@@ -302,7 +302,7 @@ function AllProposal() {
                                         routes: "proposal" }}>
                                       <EditQuery titleName="Edit Proposal" />
                                     </Link>
-                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                ) : row.status_code ===  "2"&& row.work_by != "0" ? (
                                     <Link 
                                     to={{
                                         pathname: `/teamleader/sendproposal/${row.id}`,
@@ -313,7 +313,7 @@ function AllProposal() {
                                 ) : null}
                             </div>
 
-                            {row.status_code > "3" || row.status_code == "10" ?
+                            {row.status_code > "3" || row.status_code ===  "10" ?
                             <>
                                  <div   onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
                 

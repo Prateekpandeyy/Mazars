@@ -175,7 +175,7 @@ function AcceptedProposal({ acceptedProposal }) {
         return (
           <>
             <div>
-              {row.status == "Accepted; Proposal" ? (
+              {row.status === "Accepted; Proposal" ? (
                 <p className="completed">{row.status}</p>
               ) : null}
             </div>
@@ -253,7 +253,7 @@ function AcceptedProposal({ acceptedProposal }) {
               >
                 <ViewDiscussionIcon />
               </div>
-              {row.statuscode > "3" || row.statuscode == "10" ? (
+              {row.statuscode > "3" || row.statuscode === "10" ? (
                 <div
                   onClick={(e) => showProposalModal2(row.q_id)}
                   className="ml-1"

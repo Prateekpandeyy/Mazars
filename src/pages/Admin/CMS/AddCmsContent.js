@@ -70,7 +70,7 @@ const AddCmsContent = () => {
                 addDet(i.content);
                 setEmail(i.email);
 
-                if (i.status == 1) {
+                if (i.status ===  1) {
                   setStats(true);
                 } else {
                   setStats(false);

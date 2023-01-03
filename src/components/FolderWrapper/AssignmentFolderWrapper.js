@@ -111,7 +111,7 @@ const AssignmentFolderWrapper = (props) => {
               </>
             ) : (
               <>
-                {props.mainFolderId == i.folder_id ? (
+                {props.mainFolderId === i.folder_id ? (
                   <div className="folderCreated">
                     <span
                       onContextMenu={(e) => props.moveTo(e, i, props.basePath)}
@@ -132,7 +132,7 @@ const AssignmentFolderWrapper = (props) => {
                   ""
                 )}
                 {i.customer_files !== null &&
-                props.mainFolderId == i.customer_files_folder ? (
+                props.mainFolderId === i.customer_files_folder ? (
                   <div className="folderCreated">
                     <span
                       onContextMenu={(e) =>

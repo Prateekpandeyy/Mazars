@@ -194,7 +194,7 @@ function PendingRecevied() {
                   <tr>
                     <th scope="row">Action</th>
                     <td>
-                    {p.allocation_status == "0" || p.allocation_status == "3"  ? (
+                    {p.allocation_status ===  "0" || p.allocation_status ===  "3"  ? (
                         <Link to={`/admin/queryassing/${p.id}`}>
                         <i className="fa fa-share"></i>
                       </Link>
@@ -226,7 +226,7 @@ function PendingRecevied() {
                       <td>{p.additional_queries}</td>
                       <td>{ChangeFormateDate(p.created)}</td>
                       <td>
-                        {p.upload_doc == "" ? (
+                        {p.upload_doc ===  "" ? (
                           ""
                         ) : (
                           <p>

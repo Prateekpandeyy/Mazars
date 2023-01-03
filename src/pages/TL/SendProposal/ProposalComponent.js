@@ -122,7 +122,7 @@ function ProposalComponent(props) {
         return false;
       } else if (dateError === true) {
         Alerts.ErrorNormal("Date must be unique");
-      } else if (det && det.length == 0) {
+      } else if (det && det.length ===  0) {
         return false;
       } else {
         var lumsum = value.p_inst_date;
@@ -168,7 +168,7 @@ function ProposalComponent(props) {
           (subPlan !== "2" && store === "3")
         ) {
           if (store === "2" || store === "3") {
-            if (installment == "") {
+            if (installment ===  "") {
               Alerts.ErrorNormal(`Please select no of installment .`);
             } else if (!allAmount || !date) {
               console.log("amounts", allAmount, date);
@@ -180,15 +180,15 @@ function ProposalComponent(props) {
                   // arrAmount.push(amount[i])
                   // arrDate.push(date[i])
                   if (
-                    allAmount[i] == "" ||
-                    allAmount[i] == undefined ||
+                    allAmount[i] ===  "" ||
+                    allAmount[i] ===  undefined ||
                     allAmount[i] <= 0
                   ) {
                     Alerts.ErrorNormal(`Please enter amount`);
 
                     return false;
                   }
-                  if (date[i] == "" || date[i] == undefined) {
+                  if (date[i] ===  "" || date[i] ===  undefined) {
                     Alerts.ErrorNormal(`Please enter date`);
 
                     return false;
@@ -286,7 +286,7 @@ function ProposalComponent(props) {
   const handleChange = (e) => {
     if (isNaN(e.target.value)) {
       setdiserror("Please enter number only");
-    } else if (e.target.value == "0") {
+    } else if (e.target.value ===  "0") {
       setdiserror("Amount should be greater than zero");
     } else {
       setdiserror("");

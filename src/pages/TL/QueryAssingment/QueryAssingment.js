@@ -66,7 +66,7 @@ const QueryAssingment = (props) => {
    
     setTaxID(e.target.value)
     var value = taxProfessionDisplay.filter(function (item) {
-      return item.id == e.target.value
+      return item.id ===  e.target.value
     })
   
     setTeamName(value[0].name)

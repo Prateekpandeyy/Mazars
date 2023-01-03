@@ -110,7 +110,7 @@ function ProposalComponent(props) {
     formData.append("payment_terms", JSON.stringify(payment));
     formData.append("no_of_installment", JSON.stringify(installment));
 
-    payment.label == "Lumpsum" ?
+    payment.label ===  "Lumpsum" ?
       formData.append("due_date", lumsum) :
       formData.append("due_date", date)
 
@@ -296,7 +296,7 @@ function ProposalComponent(props) {
                   </select> */}
                 </div>
 
-                {payment.label == "Lumpsum" ? (
+                {payment.label ===  "Lumpsum" ? (
                   <div class="form-group">
                     <label>Due Dates</label>
                     <input
@@ -308,7 +308,7 @@ function ProposalComponent(props) {
                     />
                   </div>
                 ) :
-                  payment.label == "Installment" ? (
+                  payment.label ===  "Installment" ? (
                     <div class="form-group">
                       <label>No of Installments</label>
                       <Select
@@ -334,7 +334,7 @@ function ProposalComponent(props) {
                 }
 
                 {
-                  payment.label == "Lumpsum"
+                  payment.label ===  "Lumpsum"
                     ?
                     ""
                     :

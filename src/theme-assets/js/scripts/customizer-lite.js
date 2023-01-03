@@ -49,7 +49,7 @@
         semiDark = true;
     }    
 
-    if(menu_type == 'horizontal-menu'){
+    if(menu_type ===  'horizontal-menu'){
         horz_layout = true;
         $('.sidebar-color-options').hide().prev('h5').hide().prev('hr').hide();
         $('.cz-bg-image').hide().prev('h5').hide().prev('hr').hide();
@@ -292,7 +292,7 @@
     
 
     function changeLogo(logo){
-        if(logo == 'light'){
+        if(logo ===  'light'){
             $('.brand-logo').attr('src','../../../app-assets/images/logo/logo.png');
         }
         else{

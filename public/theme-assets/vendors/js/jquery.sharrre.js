@@ -124,7 +124,7 @@
         lang: self.options.buttons.googlePlus.lang
       };
       var loading = 0;
-      if(typeof gapi === 'undefined' && loading == 0){
+      if(typeof gapi === 'undefined' && loading === 0){
         loading = 1;
         (function() {
           var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -140,7 +140,7 @@
       var sett = self.options.buttons.facebook;
       $(self.element).find('.buttons').append('<div class="button facebook"><div id="fb-root"></div><div class="fb-like" data-href="'+(sett.url !== '' ? sett.url : self.options.url)+'" data-send="'+sett.send+'" data-layout="'+sett.layout+'" data-width="'+sett.width+'" data-show-faces="'+sett.faces+'" data-action="'+sett.action+'" data-colorscheme="'+sett.colorscheme+'" data-font="'+sett.font+'" data-via="'+sett.via+'"></div></div>');
       var loading = 0;
-      if(typeof FB === 'undefined' && loading == 0){
+      if(typeof FB === 'undefined' && loading === 0){
         loading = 1;
         (function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -158,7 +158,7 @@
       var sett = self.options.buttons.twitter;
       $(self.element).find('.buttons').append('<div class="button twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="'+(sett.url !== '' ? sett.url : self.options.url)+'" data-count="'+sett.count+'" data-text="'+self.options.text+'" data-via="'+sett.via+'" data-hashtags="'+sett.hashtags+'" data-related="'+sett.related+'" data-lang="'+sett.lang+'">Tweet</a></div>');
       var loading = 0;
-      if(typeof twttr === 'undefined' && loading == 0){
+      if(typeof twttr === 'undefined' && loading === 0){
         loading = 1;
         (function() {
           var twitterScriptTag = document.createElement('script');
@@ -177,7 +177,7 @@
       var sett = self.options.buttons.digg;
       $(self.element).find('.buttons').append('<div class="button digg"><a class="DiggThisButton '+sett.type+'" rel="nofollow external" href="http://digg.com/submit?url='+encodeURIComponent((sett.url !== '' ? sett.url : self.options.url))+'"></a></div>');
       var loading = 0;
-      if(typeof __DBW === 'undefined' && loading == 0){
+      if(typeof __DBW === 'undefined' && loading === 0){
         loading = 1;
         (function() {
           var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
@@ -189,7 +189,7 @@
       }
     },
     delicious : function(self){
-      if(self.options.buttons.delicious.size == 'tall'){//tall
+      if(self.options.buttons.delicious.size === 'tall'){//tall
         var css = 'width:50px;',
         cssCount = 'height:35px;width:50px;font-size:15px;line-height:35px;',
         cssShare = 'height:18px;line-height:18px;margin-top:3px;';
@@ -217,7 +217,7 @@
       var sett = self.options.buttons.stumbleupon;
       $(self.element).find('.buttons').append('<div class="button stumbleupon"><su:badge layout="'+sett.layout+'" location="'+(sett.url !== '' ? sett.url : self.options.url)+'"></su:badge></div>');
       var loading = 0;
-      if(typeof STMBLPN === 'undefined' && loading == 0){
+      if(typeof STMBLPN === 'undefined' && loading === 0){
         loading = 1;
         (function() {
           var li = document.createElement('script');li.type = 'text/javascript';li.async = true;
@@ -239,7 +239,7 @@
       var sett = self.options.buttons.linkedin;
       $(self.element).find('.buttons').append('<div class="button linkedin"><script type="in/share" data-url="'+(sett.url !== '' ? sett.url : self.options.url)+'" data-counter="'+sett.counter+'"></script></div>');
       var loading = 0;
-      if(typeof window.IN === 'undefined' && loading == 0){
+      if(typeof window.IN === 'undefined' && loading === 0){
         loading = 1;
         (function() {
           var li = document.createElement('script');li.type = 'text/javascript';li.async = true;
@@ -429,7 +429,7 @@
     var self = this;
     $(this.element).append('<div class="buttons"></div>');
     $.each(self.options.share, function(name, val) {
-      if(val == true){
+      if(val === true){
         loadButton[name](self);
         if(self.options.enableTracking === true){ //add tracking
           tracking[name]();

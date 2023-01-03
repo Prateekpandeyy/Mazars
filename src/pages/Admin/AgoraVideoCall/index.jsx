@@ -541,7 +541,7 @@ this.localStream.init(
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, this.myConfig)
       .then((res) => {
        
-        if(res.data.result.rtc_id == uid){
+        if(res.data.result.rtc_id === uid){
          
           Swal.fire({
             title: "success",
@@ -600,7 +600,7 @@ this.localStream.init(
          praticipantVar.setAttribute("disabled", true)
        }
        
-      else if(res.data.length == 0){
+      else if(res.data.length === 0){
         this.remoteShare2 = true
         var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", "Sharing");
@@ -898,7 +898,7 @@ async startRecording(key){
   if(this.state.showRecBtn === true){
 this.del();
   }
-  else if(this.state.showButton == JSON.parse(this.teamKey)){
+  else if(this.state.showButton === JSON.parse(this.teamKey)){
     
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
@@ -1117,7 +1117,7 @@ const recordingBtnOff = (
     title="Record Off"
   >
      {
-      this.state.showButton == JSON.parse(this.teamKey) ?
+      this.state.showButton === JSON.parse(this.teamKey) ?
      
      <img src = {recImg} style = {{width : "20px"}} /> : ""
     }

@@ -111,7 +111,7 @@ const [columnDefs] = useState([
       <DeleteIcon titleName="Delete Flash Update" />
                      </div>
                      {
-                  params.data.status == "1" ?
+                  params.data.status ===  "1" ?
                   <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                   <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
     <input type="checkbox"  defaultChecked/>
@@ -122,7 +122,7 @@ const [columnDefs] = useState([
                   ""
                 }
                 {
-                  params.data.status == "0" ?
+                  params.data.status ===  "0" ?
                   <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                   <label className="switch" onChange= {(e) => myShowValue(e, params.data)}>
     <input type="checkbox"  />

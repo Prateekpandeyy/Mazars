@@ -67,7 +67,7 @@ const EditProfile = () => {
         var arrayState = []
           let sta = {}
           states.filter((data) => {
-            if (data.country_id == 101) {
+            if (data.country_id ===  101) {
            
               sta = {
                 "value" : data.id,
@@ -114,7 +114,7 @@ const EditProfile = () => {
           setMyCount(i.id)
           setCountryCode(i.phoneCode)
           states.filter((data) => {
-            if (data.country_id == i.id) {
+            if (data.country_id ===  i.id) {
               sta = {
                 "value" : data.id,
                 "label" : data.name
@@ -238,7 +238,7 @@ const EditProfile = () => {
     setNumAvail("")
     
     // setInvalid("")
-    if (key == 101) {
+    if (key ===  101) {
       setCountryId(key)
       setPhoneLength(10)
     }
@@ -250,7 +250,7 @@ const EditProfile = () => {
     var arrayState = []
     let sta = {}
     states.filter((data) => {
-      if (data.country_id == key) {
+      if (data.country_id ===  key) {
         sta = {
           "value" : data.id,
           "label" : data.name
@@ -261,7 +261,7 @@ const EditProfile = () => {
     setState(arrayState)
 
     country.filter((data) => {
-      if (key == data.id) {
+      if (key ===  data.id) {
         setCountryCode(data.phoneCode)
         setCountryName(data.name)
       }
@@ -300,7 +300,7 @@ const EditProfile = () => {
   
     let sta = {}
     states.filter((p) => {
-      if (p.id == key) {
+      if (p.id ===  key) {
         setStateName(p.name)
       }
     });

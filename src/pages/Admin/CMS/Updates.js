@@ -99,7 +99,7 @@ const Updates = () =>{
        <DeleteIcon titleName="Delete Update" />
     </span>
     {
-                  row.status == "1" ?
+                  row.status ===  "1" ?
                   <div>
                   <label className="switch" onChange= {(e) => myShowValue(e, row)}>
     <input type="checkbox"  defaultChecked/>
@@ -110,7 +110,7 @@ const Updates = () =>{
                   ""
                 }
                 {
-                  row.status == "0" ?
+                  row.status ===  "0" ?
                   <div>
                   <label className="switch" onChange= {(e) => myShowValue(e, row)}>
     <input type="checkbox"  />

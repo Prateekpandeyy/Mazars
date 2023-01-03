@@ -136,8 +136,8 @@ function Sidebar({
         });
     }
     if (
-      window.location.pathname.split("/").slice(-1) == "recording" ||
-      window.location.pathname.split("/").slice(-1) == "schedule"
+      window.location.pathname.split("/").slice(-1) === "recording" ||
+      window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
     }
@@ -168,8 +168,8 @@ function Sidebar({
         });
     }
     if (
-      window.location.pathname.split("/").slice(-1) == "recording" ||
-      window.location.pathname.split("/").slice(-1) == "schedule"
+      window.location.pathname.split("/").slice(-1) === "recording" ||
+      window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
     }
@@ -202,8 +202,8 @@ function Sidebar({
         });
     }
     if (
-      window.location.pathname.split("/").slice(-1) == "recording" ||
-      window.location.pathname.split("/").slice(-1) == "schedule"
+      window.location.pathname.split("/").slice(-1) === "recording" ||
+      window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
     }

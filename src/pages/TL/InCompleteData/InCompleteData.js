@@ -139,11 +139,11 @@ function InCompleteData({ CountIncomplete }) {
             <div>
               {row.status}
               {row.statusdescription && "/"}
-              {row.status == "Inprogress Query" ? (
+              {row.status ===  "Inprogress Query" ? (
                 <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status == "Declined Query" ? (
+              ) : row.status ===  "Declined Query" ? (
                 <p className="declined">{row.statusdescription}</p>
-              ) : row.status == "Completed Query" ? (
+              ) : row.status ===  "Completed Query" ? (
                 <p className="completed">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -161,13 +161,13 @@ function InCompleteData({ CountIncomplete }) {
       formatter: function (cell, row) {
         return (
           <>
-            {row.status_code == "1" ? null : (
+            {row.status_code ===  "1" ? null : (
               <div
                 style={{
                   display: "flex",
                 }}
               >
-                {row.status == "Declined Query" ? null : (
+                {row.status ===  "Declined Query" ? null : (
                   <Link
                     to={{
                       pathname: `/teamleader/chatting/${row.id}`,

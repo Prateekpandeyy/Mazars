@@ -149,7 +149,7 @@ function QueriesTab(props) {
           >
             <TabList className="fixedTab">
               <Tab
-                style={tabIndex == 0 ? myStyle2 : myStyle1}
+                style={tabIndex ===  0 ? myStyle2 : myStyle1}
                 className="tabHover"
               >
                 All queries ({allResult.allQuery})

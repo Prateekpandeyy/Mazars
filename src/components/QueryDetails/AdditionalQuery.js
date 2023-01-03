@@ -28,7 +28,7 @@ function AdditionalQuery({ displayQuery }) {
                 {/* <td>{p.additional_queries}</td> */}
                 <td>{CommonServices.changeFormateDate(p.created)}</td>
                 <td>
-                  {p.upload_doc == "" ? (
+                  {p.upload_doc === "" ? (
                     ""
                   ) : (
                     <p style={{ display: "flex" }}>

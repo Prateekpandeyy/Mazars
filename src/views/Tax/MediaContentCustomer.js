@@ -26,6 +26,7 @@ import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
+import SearchBtn from "../../components/Common/SearchBtn";
 const MyHeading = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
@@ -36,8 +37,15 @@ const MediaContentCustomer = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [myData, setMyData] = useState();
   const [description, setDescription] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
     getMediaData();
   }, []);
@@ -68,22 +76,52 @@ const MediaContentCustomer = () => {
     setRowsPerPage(e.target.value);
   };
   const getData = (e) => {
-    setDescription(true);
-
-    setMyData(e);
+    console.log("eee", e);
+    axios
+      .get(`${baseUrl}/customers/getgalleryupdateddetail?id=${e.id}`, myConfig)
+      .then((res) => {
+        setMyData(res.data.result[0]);
+        setDescription(true);
+      });
   };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "Info",
       html: "Please login to view content",
-      icon: "warning",
     });
   };
+  const searchArticle = (e) => {
+    console.log("eee", e);
+    let formData = new FormData();
+    formData.append("content", searchText);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/customers/getgalleryupdateddetail`,
+      data: formData,
+    }).then((res) => {
+      setMyData(res.data.result[0]);
+      setDescription(true);
+    });
+  };
+
   return (
     <>
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
+            <SearchBtn>
+              <input
+                placeholder="Please enter text"
+                className="form-control"
+                type="Please enter text"
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <button
+                onClick={(e) => searchArticle()}
+                className="customBtn mx-2"
+              >
+                Search
+              </button>
+            </SearchBtn>
             <MyContainer>
               {description === false ? (
                 <div className={classesCustom.articleContent}>
@@ -242,6 +280,17 @@ const MediaContentCustomer = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
+          <SearchBtn>
+            <input
+              placeholder="Please enter text"
+              className="form-control"
+              type="Please enter text"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
+              Search
+            </button>
+          </SearchBtn>
           <MyContainer>
             {description === false ? (
               <div className={classesCustom.articleContent}>

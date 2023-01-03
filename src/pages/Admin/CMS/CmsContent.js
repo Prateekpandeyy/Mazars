@@ -74,7 +74,7 @@ const CmsContent = () => {
 
                 setEmail(i.email);
                 setFile(i.file);
-                if (i.status == 1) {
+                if (i.status ===  1) {
                   setStats(true);
                 } else {
                   setStats(false);

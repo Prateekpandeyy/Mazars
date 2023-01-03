@@ -858,15 +858,15 @@ function AssignmentDetails({
             <tr>
               <th scope="row">Time taken to complete the assignment</th>
               <td>
-                {p.client_discussion == "completed" &&
-                p.delivery_report == "completed" &&
-                p.draft_report == "completed" &&
-                p.final_discussion == "completed"
+                {p.client_discussion === "completed" &&
+                p.delivery_report === "completed" &&
+                p.draft_report === "completed" &&
+                p.final_discussion === "completed"
                   ? finalDate + " Days"
                   : null}
               </td>
             </tr>
-            {panel == "teamleader" || panel === "taxprofessional" ? (
+            {panel === "teamleader" || panel === "taxprofessional" ? (
               <tr>
                 <td
                   scope="row"

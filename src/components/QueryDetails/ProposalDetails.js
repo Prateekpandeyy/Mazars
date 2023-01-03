@@ -204,13 +204,13 @@ function ProposalDetails({
   function ordinal_suffix_of(i) {
     var j = i % 10,
       k = i % 100;
-    if (j == 1 && k != 11) {
+    if (j === 1 && k != 11) {
       return i + "st";
     }
-    if (j == 2 && k != 12) {
+    if (j === 2 && k != 12) {
       return i + "nd";
     }
-    if (j == 3 && k != 13) {
+    if (j === 3 && k != 13) {
       return i + "rd";
     }
     return i + "th";
@@ -443,7 +443,7 @@ function ProposalDetails({
             </tr>
             <tr>
               <th scope="row">Name of Tax Professional(s)</th>
-              <td>{tpStatus == "2" ? tp22 : ""}</td>
+              <td>{tpStatus === "2" ? tp22 : ""}</td>
             </tr>
             <tr>
               <th scope="row">Date of proposal</th>
@@ -812,9 +812,9 @@ function ProposalDetails({
             <tr>
               <th scope="row">Proposal status</th>
               <td>
-                {p.query_status == "4" && "Inprogress"}
-                {p.query_status == "6" && "Declined"}
-                {(p.query_status == "5" || p.query_status > 6) && "Accepted"}
+                {p.query_status === "4" && "Inprogress"}
+                {p.query_status === "6" && "Declined"}
+                {(p.query_status === "5" || p.query_status > 6) && "Accepted"}
               </td>
             </tr>
             <tr>
@@ -846,7 +846,7 @@ function ProposalDetails({
                 </tr>
                 {paymentDetails.map((pay, i) => (
                   <tr style={{ display: "flex", width: "100%" }}>
-                    {pay.is_paid == "1" ? (
+                    {pay.is_paid === "1" ? (
                       <>
                         <td style={{ display: "flex", width: "20%" }}>
                           {CommonServices.removeTime(pay.payment_receive_date)}
@@ -926,7 +926,7 @@ function ProposalDetails({
               <td>{amount_outstanding}</td>
             </tr>
 
-            {p.paid_status == "2" && (
+            {p.paid_status === "2" && (
               <>
                 <tr>
                   <th scope="row">Payment decline reason</th>

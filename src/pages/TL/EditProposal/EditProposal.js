@@ -400,7 +400,7 @@ function EditComponent(props) {
         ) {
           if (payment.length < 1) {
           } else if (store === "2" || store === "3") {
-            if (installment == "") {
+            if (installment ===  "") {
               Alerts.ErrorNormal(`Please select no of installment .`);
             } else if (!formInstallmentInfo.amount || !date) {
               Alerts.ErrorNormal(`Please enter all fields.`);
@@ -410,8 +410,8 @@ function EditComponent(props) {
 
                 for (let i = 0; i < a; i++) {
                   if (
-                    formInstallmentInfo.amount[i] == "" ||
-                    formInstallmentInfo.amount[i] == undefined ||
+                    formInstallmentInfo.amount[i] ===  "" ||
+                    formInstallmentInfo.amount[i] ===  undefined ||
                     formInstallmentInfo.amount[i] <= 0
                   ) {
                     if (formInstallmentInfo.amount.length < 0) {
@@ -499,7 +499,7 @@ function EditComponent(props) {
     if (isNaN(e.target.value)) {
       setTotalAmount("");
       setdiserror("Please enter number only");
-    } else if (e.target.value == "0") {
+    } else if (e.target.value ===  "0") {
       setTotalAmount(e.target.value);
       setdiserror("Amount should be greater than zero");
     } else {

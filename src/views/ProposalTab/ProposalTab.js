@@ -116,18 +116,18 @@ function Proposal(props) {
       <TabList
            className="fixedTab"
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
               All Proposals ({allProposalCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Proposals ({inprogressProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
               Accepted; Proposals ({acceptedProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  3 ? myStyle2 : myStyle1} className="tabHover">
               Declined; Proposals ({declinedProposalCount})
             </Tab>
           </TabList>

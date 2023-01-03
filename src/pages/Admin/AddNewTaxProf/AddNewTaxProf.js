@@ -280,7 +280,7 @@ function AddNew() {
     var a;
 
     teamleader.filter((p) => {
-      if (p.id == e) {
+      if (p.id === e) {
         setTpEmail(p.email);
         setTl(p.id);
         setPost_na(p.post_name);
@@ -463,12 +463,12 @@ function AddNew() {
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value == 2 ? "green" : "blue",
+                              color: data.value === 2 ? "green" : "blue",
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value == 2 ? "green" : "blue",
+                            color: data.value === 2 ? "green" : "blue",
                           }),
                         }}
                         onChange={category}

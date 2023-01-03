@@ -159,7 +159,7 @@ if(cname.length > 0){
         
 //         res.data.result.map((i) => {
         
-//           if(JSON.parse(userid) == i.id){
+//           if(JSON.parse(userid) ===  i.id){
 //             console.log("result", i)
 // setData(i)
 //           }
@@ -175,7 +175,7 @@ const getTeamLeader = () => {
     if (res.data.code === 1) {
       res.data.result.map((i) => {
         
-                 if(JSON.parse(userid) == i.id){
+                 if(JSON.parse(userid) ===  i.id){
                    console.log("result", i)
                    setTeamleader44(i.id)
        setData([i])
@@ -775,14 +775,14 @@ ref={selectInputRef2}
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value == 2
+                              color: data.value ===  2
                                 ? "green"
                                 : "blue"
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value == 2
+                            color: data.value ===  2
                               ? "green"
                               : "blue"
                           }),

@@ -44,7 +44,7 @@ const FlashContent = () => {
           setHeading(i.heading);
           addDet(i.news);
           setFile(i.file);
-          if (i.status == "1") {
+          if (i.status ===  "1") {
             setStats(true);
           } else {
             setStats(false);

@@ -183,7 +183,7 @@ function AcceptedProposal() {
                         <div>
 
                             {
-                                row.status == "Accepted; Proposal" ?
+                                row.status ===  "Accepted; Proposal" ?
                                     <p className="completed">
                                         {row.status}
                                     </p> :
@@ -254,7 +254,7 @@ function AcceptedProposal() {
                           </div>
                            
 
-                            {row.status_code > "3" || row.status_code == "10" ?
+                            {row.status_code > "3" || row.status_code ===  "10" ?
                             <>
                                  <div style={{ cursor: "pointer", marginLeft : "2px" }}   onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
              <EyeIcon />

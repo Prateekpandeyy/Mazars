@@ -162,11 +162,11 @@ function CompletedQuery({ updateTab }) {
           <>
             <div>
               {row.status}/
-              {row.status == "Inprogress Query" ? (
+              {row.status ===  "Inprogress Query" ? (
                 <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status == "Declined Query" ? (
+              ) : row.status ===  "Declined Query" ? (
                 <p className="declined">{row.statusdescription}</p>
-              ) : row.status == "Completed Query" ? (
+              ) : row.status ===  "Completed Query" ? (
                 <p className="completed">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -234,7 +234,7 @@ function CompletedQuery({ updateTab }) {
       console.log("resutl", result);
       if (result.value) {
         hist.push(`/teamleader/queryassing/${id}`);
-      } else if (result.dismiss == "cancel") {
+      } else if (result.dismiss ===  "cancel") {
         axios
           .get(
             `${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`,

@@ -417,7 +417,7 @@ Cookies.set("channel_2", data.question_id);
       setLoading(true)
       var value;
       data.filter((data) => {
-        if (data.id == deleted) {
+        if (data.id ===  deleted) {
         
           value = data.owner
         }

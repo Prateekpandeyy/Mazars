@@ -186,7 +186,7 @@ function BasicQuery({
     let kk = [];
     setMainFoldName(e.folder);
     clientFolder.map((i) => {
-      if (e.id == i.folder_id) {
+      if (e.id === i.folder_id) {
         kk.push(i);
       }
     });
@@ -227,7 +227,7 @@ function BasicQuery({
     setColor(Number(e.id));
     let kk = [];
     adminFolder.map((i) => {
-      if (e.id == i.folder_id) {
+      if (e.id === i.folder_id) {
         kk.push(i);
       }
     });
@@ -1025,23 +1025,23 @@ function BasicQuery({
               <th scope="row">Timelines within which opinion is required</th>
               <td colspan="1">{p.Timelines}</td>
             </tr>
-            {qstatus == "-1" || p.is_delete == "1" ? (
+            {qstatus === "-1" || p.is_delete === "1" ? (
               <tr>
                 <th scope="row">Date of decline</th>
                 <td>
-                  {qstatus == "-1" || p.is_delete == "1" ? declined2 : ""}
+                  {qstatus === "-1" || p.is_delete === "1" ? declined2 : ""}
                 </td>
               </tr>
             ) : (
               ""
             )}
-            {p.query_status == "-1" ? (
+            {p.query_status === "-1" ? (
               <tr>
                 <th scope="row">Reasons for admin decline query</th>
                 <td colspan="1">{p.decline_notes}</td>
               </tr>
             ) : null}
-            {p.is_delete == "1" ? (
+            {p.is_delete === "1" ? (
               <tr>
                 <th scope="row">Reasons for client decline query</th>
                 <td colspan="1">{p.decline_notes}</td>

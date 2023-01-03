@@ -112,17 +112,17 @@ function QueriesTab(props) {
       
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className="fixedTab">
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
               All queries ({allQueriesCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Allocation ({inprogressAllocation})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
               Inprogress; Proposals ({pendingProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  3 ? myStyle2 : myStyle1} className="tabHover">
               Declined Queries ({declined})
             </Tab>
           </TabList>

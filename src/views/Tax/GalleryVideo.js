@@ -40,6 +40,7 @@ const GalleryVideo = () => {
         .then((res) => {
           setImages(res.data.result);
           res.data.result.map((i) => {
+            setTitle(i.title);
             let a = {
               src: `${baseUrl3}/assets/gallery/${i.name}`,
               loading: "lazy",
@@ -81,72 +82,15 @@ const GalleryVideo = () => {
   console.log("Images", fullData);
   return (
     <>
-      {fullScreen === true ? (
-        <CoolLightbox setFullScreen={setFullScreen} fullData={fullData} />
-      ) : (
-        <>
-          {userId ? (
-            <Layout custDashboard="custDashboard" custUserId={userId}>
-              <OuterloginContainer>
-                <MyContainer>
-                  <div className={classes.articleContent}>
-                    <div className={classes.articlesDetails}>
-                      <>
-                        <Breadcrumbs
-                          separator=">"
-                          maxItems={3}
-                          aria-label="breadcrumb"
-                          style={{ fontSize: "18px" }}
-                        >
-                          <Link
-                            underline="hover"
-                            color="inherit"
-                            to={`/customer/media`}
-                          >
-                            Media gallery
-                          </Link>
-                          {typeof history.location.index === "object" ? (
-                            <Link
-                              underline="hover"
-                              color="inherit"
-                              to={`/customer/media`}
-                            >
-                              Photo gallery
-                            </Link>
-                          ) : (
-                            <Link
-                              underline="hover"
-                              color="inherit"
-                              to={`/customer/videogallery`}
-                            >
-                              Video gallery
-                            </Link>
-                          )}
-
-                          <Typography>{title}</Typography>
-                        </Breadcrumbs>
-                      </>
-
-                      <div className="image-container">
-                        {images.map((i) => (
-                          <div className="imgBox">
-                            <img
-                              src={`${baseUrl3}/assets/gallery/${i.name}`}
-                              alt="Images album"
-                              className="img-responsive"
-                              onClick={(e) => setFullScreen(true)}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </MyContainer>
-              </OuterloginContainer>
-            </Layout>
-          ) : (
+      <>
+        {userId ? (
+          <Layout custDashboard="custDashboard" custUserId={userId}>
+            {fullScreen === true ? (
+              <CoolLightbox setFullScreen={setFullScreen} fullData={fullData} />
+            ) : (
+              ""
+            )}
             <OuterloginContainer>
-              <Header noSign="noSign" />
               <MyContainer>
                 <div className={classes.articleContent}>
                   <div className={classes.articlesDetails}>
@@ -186,21 +130,83 @@ const GalleryVideo = () => {
                       </Breadcrumbs>
                     </>
 
-                    {images.length > 0 ? (
-                      <ImageGallery
-                        items={images}
-                        additionalClass={classes.myVideo}
-                      />
-                    ) : (
-                      ""
-                    )}
+                    <div className="image-container">
+                      {images.map((i) => (
+                        <div className="imgBox">
+                          <img
+                            src={`${baseUrl3}/assets/gallery/${
+                              i.name.split(".")[0] +
+                              "_thumb." +
+                              i.name.split(".")[1]
+                            }`}
+                            alt="Images album"
+                            className="img-responsive"
+                            onClick={(e) => setFullScreen(true)}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </MyContainer>
             </OuterloginContainer>
-          )}
-        </>
-      )}
+          </Layout>
+        ) : (
+          <OuterloginContainer>
+            <Header noSign="noSign" />
+            <MyContainer>
+              <div className={classes.articleContent}>
+                <div className={classes.articlesDetails}>
+                  <>
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
+                    >
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to={`/customer/media`}
+                      >
+                        Media gallery
+                      </Link>
+                      {typeof history.location.index === "object" ? (
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to={`/customer/media`}
+                        >
+                          Photo gallery
+                        </Link>
+                      ) : (
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to={`/customer/videogallery`}
+                        >
+                          Video gallery
+                        </Link>
+                      )}
+
+                      <Typography>{title}</Typography>
+                    </Breadcrumbs>
+                  </>
+
+                  {images.length > 0 ? (
+                    <ImageGallery
+                      items={images}
+                      additionalClass={classes.myVideo}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </MyContainer>
+          </OuterloginContainer>
+        )}
+      </>
     </>
   );
 };

@@ -89,7 +89,7 @@ function FeedbackTab() {
           <>
             <div>
               {
-                row.admin_read == "0" ?
+                row.admin_read ===  "0" ?
                   <div
                     style={{
                       cursor: "pointer", wordBreak : "break-word",

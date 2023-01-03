@@ -64,7 +64,7 @@ const getServices = () => {
     getServices();
   }, [])
   useEffect(() => {
-    if(props.generated == "edited"){
+    if(props.generated ===  "edited"){
     getDataild();
     }
     else {
@@ -344,7 +344,7 @@ const cgstFun = (e) => {
 //setPocketExp(e.target.value)
   let a;
   if(e.target.value){
-    if(basicAmount.length == "0"){
+    if(basicAmount.length ===  "0"){
        a = Math.round(e.target.value) + parseInt(0);
     }
     else{
@@ -426,7 +426,7 @@ const onSubmit= (value) => {
       //  formData.append("gstin_no", gstNum);
        formData.append("bill_no", billNo)
        formData.append("invoice_by", JSON.parse(userid))
-       {props.generated == "edited" ? formData.append("generate_status", 1) :
+       {props.generated ===  "edited" ? formData.append("generate_status", 1) :
        formData.append("generate_status" , 0)}
        axios({
            method : "POST",
@@ -464,7 +464,7 @@ const onSubmit= (value) => {
     setDiscription(e)
    services.map((k) => {
     
-if(k.service == e) {
+if(k.service ===  e) {
 setSac(k.sac)
 setServices2(k.service)
 }

@@ -545,12 +545,12 @@ function AddNew() {
                           option: (styles, { data }) => {
                             return {
                               ...styles,
-                              color: data.value == 2 ? "green" : "blue",
+                              color: data.value === 2 ? "green" : "blue",
                             };
                           },
                           multiValueLabel: (styles, { data }) => ({
                             ...styles,
-                            color: data.value == 2 ? "green" : "blue",
+                            color: data.value === 2 ? "green" : "blue",
                           }),
                         }}
                         onChange={category}

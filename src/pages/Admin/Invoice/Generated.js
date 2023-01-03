@@ -198,7 +198,7 @@ const Generated = () => {
                  
                  return(
                      <>
-                     {row.is_paid == "0" ?
+                     {row.is_paid ===  "0" ?
                      <p className="rightAli">0</p> :   <p className="rightAli">{nfObject.format(x)}</p>}
                      </>
                  
@@ -213,9 +213,9 @@ const Generated = () => {
             formatter : function(cell, row) {
                 return(
                     <>
-                    {row.is_paid == "0" ? <p>Unpaid</p> : 
+                    {row.is_paid ===  "0" ? <p>Unpaid</p> : 
                     <>
-                    {row.is_paid == "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
+                    {row.is_paid ===  "1" ? <p>Paid</p> : <p style={{color : "red"}}>Declined</p>}
                     </>}
                     </>
                 )
@@ -239,13 +239,13 @@ const Generated = () => {
                          </span>
                             
                           
-                              {row.is_paid == "0" && row.paymenturl !== null
+                              {row.is_paid ===  "0" && row.paymenturl !== null
                 ?   
                
                   
                 <span title={row.paymenturl}>
                 {
-                    copy == row.id ?
+                    copy ===  row.id ?
                     <span style={{color: 'red'}}>Copied</span>
                     
                      : 

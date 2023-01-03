@@ -118,16 +118,16 @@ function QueriesTab(props) {
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
-          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
             All Assignments ({allAssignmentCount})
           </Tab>
-          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Draft reports ({draft})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Delivery of final report ({final})
           </Tab>
-          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex ===  3 ? myStyle2 : myStyle1} className="tabHover">
             Permission; Issue to invoice ({adminCount})
           </Tab>
         </TabList>

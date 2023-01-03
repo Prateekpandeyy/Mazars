@@ -179,7 +179,7 @@ function DeclinedProposal({ declinedProposal }) {
           <>
             <div>
               {
-                row.status == "Client Declined; Proposal" ?
+                row.status ===  "Client Declined; Proposal" ?
                   <p className="declined">
                     {row.status}
                   </p> :
@@ -281,7 +281,7 @@ function DeclinedProposal({ declinedProposal }) {
                 null
               }
 {
-  row.statuscode == "6" ? 
+  row.statuscode ===  "6" ? 
   <>
 <div  onClick={(e) => retviewProposal(row.q_id)} className="ml-1">
 <DiscussProposal titleName ="Restore Proposal"/>

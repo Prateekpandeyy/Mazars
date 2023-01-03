@@ -208,7 +208,7 @@ function Customer() {
               onClick={() => show(row.id)}
             ></i>
              {
-                  row.status == "1" ?
+                  row.status ===  "1" ?
                   <span>
                   <label className="switch" onChange= {(e) => clientEnable(e, row.id)}>
     <input type="checkbox"  defaultChecked/>
@@ -219,7 +219,7 @@ function Customer() {
                   ""
                 }
                 {
-                  row.status == "0" ?
+                  row.status ===  "0" ?
                   <span>
                   <label className="switch" onChange= {(e) => clientEnable(e, row.id)}>
     <input type="checkbox"  />
@@ -241,7 +241,7 @@ function Customer() {
  
     setModal(!modal);
 
-   if(typeof(key) == "object") {
+   if(typeof(key) ===  "object") {
     
    }
    else{

@@ -103,7 +103,7 @@ function TaxProfessionalFilter(props) {
   };
 
   const onSubmit = (data) => {
-    if (AllQuery == "AllQuery") {
+    if (AllQuery === "AllQuery") {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${
@@ -121,7 +121,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (pendingForAcceptence == "pendingForAcceptence") {
+    if (pendingForAcceptence === "pendingForAcceptence") {
       axios
         .get(
           `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
@@ -139,7 +139,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (InprogressQuery == "InprogressQuery") {
+    if (InprogressQuery === "InprogressQuery") {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
@@ -157,7 +157,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (DeclinedQuery == "DeclinedQuery") {
+    if (DeclinedQuery === "DeclinedQuery") {
       axios
         .get(
           `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
@@ -175,7 +175,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (completeAssignment == "completeAssignment") {
+    if (completeAssignment === "completeAssignment") {
       axios
         .get(
           `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
@@ -193,7 +193,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (AllProposal == "AllProposal") {
+    if (AllProposal === "AllProposal") {
       axios
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
@@ -213,7 +213,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (InprogressProposal == "InprogressProposal") {
+    if (InprogressProposal === "InprogressProposal") {
       axios
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
@@ -233,7 +233,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (proposal == "proposal") {
+    if (proposal === "proposal") {
       axios
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
@@ -250,7 +250,7 @@ function TaxProfessionalFilter(props) {
           }
         });
     }
-    if (AllPayment == "AllPayment") {
+    if (AllPayment === "AllPayment") {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
@@ -270,7 +270,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (Unpaid == "Unpaid") {
+    if (Unpaid === "Unpaid") {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(
@@ -288,7 +288,7 @@ function TaxProfessionalFilter(props) {
         });
     }
 
-    if (Paid == "Paid") {
+    if (Paid === "Paid") {
       axios
         .get(
           `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
@@ -420,7 +420,7 @@ function TaxProfessionalFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  {AllQuery == "AllQuery" && (
+                  {AllQuery === "AllQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -434,7 +434,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {InprogressQuery == "InprogressQuery" && (
+                  {InprogressQuery === "InprogressQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -449,7 +449,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {DeclinedQuery == "DeclinedQuery" && (
+                  {DeclinedQuery === "DeclinedQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -462,7 +462,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {AllProposal == "AllProposal" && (
+                  {AllProposal === "AllProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -476,7 +476,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {InprogressProposal == "InprogressProposal" && (
+                  {InprogressProposal === "InprogressProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -489,7 +489,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {AllPayment == "AllPayment" && (
+                  {AllPayment === "AllPayment" && (
                     <select
                       className="form-select form-control"
                       name="p_status"

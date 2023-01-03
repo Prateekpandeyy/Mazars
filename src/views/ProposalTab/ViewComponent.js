@@ -33,7 +33,7 @@ function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
                 <th scope="row">Status</th>
                 <td>
                   {
-                    viewData.status == "Inprogress" ?
+                    viewData.status ===  "Inprogress" ?
                       <div>
                         {viewData.status}/
                         <p className="inprogress">
@@ -41,14 +41,14 @@ function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
                         </p>
                       </div>
                       :
-                      viewData.status == "Declined; Proposal" ?
+                      viewData.status ===  "Declined; Proposal" ?
                         <div>
                           {viewData.status}
                           <p className="declined">
                             {viewData.statusdescription}
                           </p>
                         </div> :
-                        viewData.status == "Accepted; Proposal" ?
+                        viewData.status ===  "Accepted; Proposal" ?
                           <div>
                             {viewData.status}
                             <p className="completed">

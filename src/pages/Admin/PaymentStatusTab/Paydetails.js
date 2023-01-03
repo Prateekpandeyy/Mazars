@@ -175,7 +175,7 @@ setModal(!modal)
             formatter : function(cell, row){
                 return(
                     <>
-                    {row.invoice_generated == "0" ? "" : 
+                    {row.invoice_generated ===  "0" ? "" : 
                     <p>{row.billno}</p>}
                     </>
                 )
@@ -224,7 +224,7 @@ setModal(!modal)
             formatter : function(cell, row){
                 return(
                     <>
-                    {row.is_paid == "1" ? 
+                    {row.is_paid ===  "1" ? 
                     <p>{row.tds_amount}</p> : ""}
                     </>
                 )
@@ -242,7 +242,7 @@ setModal(!modal)
             formatter: function (cell,row){
                 return(
                     <>
-                    {row.is_paid == "1" ? 
+                    {row.is_paid ===  "1" ? 
                     <p>{row.amount}</p> : ""}
                     </>
                 )
@@ -260,7 +260,7 @@ setModal(!modal)
             formatter: function dateFormat(cell, row) {
                 return(
                    <>
-                   {row.invoice_generated == "1" ? 
+                   {row.invoice_generated ===  "1" ? 
                       <span onClick={() => downloadpdf(row.assign_no, row.id, row.installment_no)} style={{cursor : "pointer"}} title="Download Invoice">
                       <DescriptionOutlinedIcon color="secondary" />
                       </span>
@@ -281,14 +281,14 @@ setModal(!modal)
            
                return(
                 <>
-                {row.invoice_generated == "1" ? 
+                {row.invoice_generated ===  "1" ? 
               <>
-              {row.is_paid == "0" ? 
+              {row.is_paid ===  "0" ? 
                 "" :   <>
-            {row.is_paid == "1" ?  
+            {row.is_paid ===  "1" ?  
             <>
             {
-                row.payment_gateway_type == "1" ?
+                row.payment_gateway_type ===  "1" ?
                 <a href={row.receipt_url} target = "_blank">Payment receipt</a>  : 
                
                 <span style = {{cursor : "pointer",  color : "#3D4775"}} onClick = {(e) => paymentFun(row)} title = "View payment">

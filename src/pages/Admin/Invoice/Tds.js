@@ -54,7 +54,7 @@ const percent = {
     getServices();
   }, [])
   useEffect(() => {
-    if(props.generated == "edited"){
+    if(props.generated ===  "edited"){
     getDataild();
     }
     else {
@@ -237,7 +237,7 @@ const basicFun = (e) => {
     
    services.map((k) => {
     
-if(k.id == e) {
+if(k.id ===  e) {
 setSac(k.sac)
 setServices2(k.service)
 }

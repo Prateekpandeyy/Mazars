@@ -77,7 +77,7 @@ function EditQuery(props) {
       .then((res) => {
         if (res) {
           var specific = res.data.result[0].specific_query;
-          if (specific == "undefined") {
+          if (specific ===  "undefined") {
           } else var sepData = JSON.parse(specific);
           reset({
             users: sepData,
@@ -185,7 +185,7 @@ function EditQuery(props) {
           if (response.data.code === 1) {
             setUploadOrDownloadCount(100);
             var message = response.data.message;
-            if (message == "") {
+            if (message ===  "") {
               Swal.fire("Success", `Query updated successfully.`, "success");
             } else if (message.invalid) {
               Swal.fire({

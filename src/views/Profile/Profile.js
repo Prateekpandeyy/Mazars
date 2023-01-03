@@ -83,7 +83,7 @@ const Profile = () => {
             if(result.value){
               deleteConfirm(e)
             }
-            else if(result.dismiss == 'cancel'){
+            else if(result.dismiss ===  'cancel'){
         
       };
         })
@@ -131,7 +131,7 @@ console.log("mainUser", mainUser)
 
          {/* <h6>{JSON.parse(clientId)}</h6> */}
        {
-         JSON.parse(mainUser) == "1" ? 
+         JSON.parse(mainUser) ===  "1" ? 
          <button className="profileBtn" onClick={() => history.push("/customer/editprofile")}>Edit</button>
  : " "
        }
@@ -274,7 +274,7 @@ console.log("mainUser", mainUser)
 <span id="profileInfoLabel" style={{display : "flex", margin : "5px 0px", justifyContent : "space-between"}}>
 <h4 style={{fontSize : "14px",  color : "#464646"}}>Secondary emails</h4>
 {
- JSON.parse(mainUser) == "1"  && allEmails && allEmails.length < 9 ?
+ JSON.parse(mainUser) ===  "1"  && allEmails && allEmails.length < 9 ?
   <button
       onClick={(e) => addEmailFun()}
       className="customBtn">Add</button> : ""
@@ -298,7 +298,7 @@ console.log("mainUser", mainUser)
       </div>
       <div className="col-md-2">
      {
-                JSON.parse(mainUser) == "1" ? 
+                JSON.parse(mainUser) ===  "1" ? 
        <span onClick={(e) => delEmail(i.id)} style={{display : "flex", margin : "0px 10px", width : "100%"}}>
   
                                    <DeleteIcon />

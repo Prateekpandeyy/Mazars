@@ -155,13 +155,13 @@ function TeamLeaderTab() {
          console.log("digit",digit)
 let k, pp;
 
-if(digit.direct && digit.direct.length -1 == "1"){
+if(digit.direct && digit.direct.length -1 ===  "1"){
   k = ", ";
 }
 else{
   k = "";
 }
-if(digit.indirect && digit.indirect.length -1 == "1"){
+if(digit.indirect && digit.indirect.length -1 ===  "1"){
   pp = ", ";
 }
 else{

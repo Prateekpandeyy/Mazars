@@ -215,7 +215,7 @@ rowStyle2 = (row, index) => {
             formatter : function (cell, row) {
                 return(
                     <>
-                    {row.paid_status == "2"  ?
+                    {row.paid_status ===  "2"  ?
                     <p className="declined">{row.status} </p> : 
                     <p>{row.status}</p>}
                     </>
@@ -339,7 +339,7 @@ rowStyle2 = (row, index) => {
                             </Link>
 
                           {
-                               row.paid_status == "0" ?
+                               row.paid_status ===  "0" ?
                                    <div title="Payment decline" onClick={() => rejectHandler(row)}>
                                        <PaymentDecline />
                                    </div>

@@ -87,7 +87,7 @@ const Login = (props) => {
   };
   if (
     window.location.origin === "http://advisorysolutions.mazars.co.in/" &&
-    window.location.protocol == "http:"
+    window.location.protocol ===  "http:"
   ) {
     window.location.href = window.location.href.replace("http:", "https:");
   }

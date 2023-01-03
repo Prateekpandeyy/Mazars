@@ -145,7 +145,7 @@ function CustomerDeclinedPayment() {
               return (
                 <>
                   <div>
-                  {row.paid_status == "2" &&
+                  {row.paid_status ===  "2" &&
                       <p>
                         <span className="declined">Payment Declined</span>
                       </p>

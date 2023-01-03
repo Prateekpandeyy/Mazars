@@ -83,7 +83,7 @@ function ForgetPassword(props) {
 
   const valueHandler = () => {
     var item = props.location.email;
-    if (item == "undefined") {
+    if (item ===  "undefined") {
     } else {
       return item;
     }
@@ -91,7 +91,7 @@ function ForgetPassword(props) {
   const valueHandlerUser = () => {
     console.log("props", props);
     var item = props.location.userId;
-    if (item == "undefined") {
+    if (item ===  "undefined") {
     } else {
       setUser(item);
     }

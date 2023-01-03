@@ -183,7 +183,7 @@ function PendingForAcceptence({ pendingProposal }) {
           <>
             <div>
               {row.status}/
-              {row.status == "Inprogress" ? (
+              {row.status === "Inprogress" ? (
                 <p className="inprogress">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -275,7 +275,7 @@ function PendingForAcceptence({ pendingProposal }) {
                 </div>
               ) : null}
 
-              {row.statuscode == "6" ? (
+              {row.statuscode === "6" ? (
                 <>
                   <div onClick={(e) => retviewProposal(row.q_id)}>
                     <DiscussProposal titleName="Restore Proposal" />

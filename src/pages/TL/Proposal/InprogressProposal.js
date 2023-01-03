@@ -185,18 +185,18 @@ function InprogressProposal() {
                         <div>
                             {row.status}/
                             {
-                                row.status == "Inprogress" ?
+                                row.status ===  "Inprogress" ?
                                     <p className="inprogress">
 
                                         {row.statusdescription}
                                     </p>
                                     :
-                                    row.status == "Customer Declined; Proposal" ?
+                                    row.status ===  "Customer Declined; Proposal" ?
                                         <p className="declined">
 
                                             {row.statusdescription}
                                         </p> :
-                                        row.status == "Accepted; Proposal" ?
+                                        row.status ===  "Accepted; Proposal" ?
                                             <p className="completed">
                                                 {row.statusdescription}
                                             </p> :
@@ -276,7 +276,7 @@ function InprogressProposal() {
                                        
                                 
                             <div className="ml-2">
-                                {row.status_code == "4" ? (
+                                {row.status_code ===  "4" ? (
  <Link 
  to={{
      pathname: `/teamleader/edit-proposal/${row.id}`,
@@ -284,7 +284,7 @@ function InprogressProposal() {
      routes: "proposal" }}>
      <EditQuery titleName="Edit Proposal"/>
  </Link>
-                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                ) : row.status_code ===  "2"&& row.work_by != "0" ? (
                                     <Link 
                                     to={{
                                         pathname: `/teamleader/sendproposal/${row.id}`,
@@ -295,7 +295,7 @@ function InprogressProposal() {
                                 ) : null}
                             </div>
 
-                            {row.status_code > "3" || row.status_code == "10" ?
+                            {row.status_code > "3" || row.status_code ===  "10" ?
                             <>
                                  <div   onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
                 

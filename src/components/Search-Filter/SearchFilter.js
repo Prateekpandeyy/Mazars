@@ -48,7 +48,7 @@ function SearchFilter(props) {
   const onSubmit = (data) => {
  
 
-    if (allquery == "allquery") {
+    if (allquery === "allquery") {
       axios
         .get(
           `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${fromDate}&to=${toDate}`
@@ -63,7 +63,7 @@ function SearchFilter(props) {
         });
     }
 
-    if (pendingAllocation == "pendingAllocation") {
+    if (pendingAllocation === "pendingAllocation") {
       axios
         .get(
           `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${fromDate}&date2=${toDate}`

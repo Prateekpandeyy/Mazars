@@ -102,13 +102,13 @@ function QueriesTab(props) {
         <TabList
            className="fixedTab"
           >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
               All payment ({allPayment})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
               Unpaid ({paid})
             </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
               Paid ({unpaid})
             </Tab>
 

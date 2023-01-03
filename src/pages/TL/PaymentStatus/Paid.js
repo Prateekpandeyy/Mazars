@@ -293,7 +293,7 @@ function AllPayment() {
                             </Link>
 
                           {
-                               row.paid_status == "0" ?
+                               row.paid_status ===  "0" ?
                                    <div title="Payment decline" onClick={() => rejectHandler(row)}>
                                        <PaymentDecline />
                                    </div>

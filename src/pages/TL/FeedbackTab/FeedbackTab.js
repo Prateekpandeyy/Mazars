@@ -79,7 +79,7 @@ const history = useHistory();
           <>
             <div>
               {
-                row.tl_read == "0" ?
+                row.tl_read ===  "0" ?
                   <div
                     style={{
                       cursor: "pointer", wordBreak : "break-word",

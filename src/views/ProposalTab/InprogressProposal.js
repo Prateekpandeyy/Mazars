@@ -192,7 +192,7 @@ function InprogressProposal() {
                     <>
                         <div>
                             {
-                                row.status == "Inprogress" ?
+                                row.status ===  "Inprogress" ?
                                     <div>
                                         {row.status}/
                                         <p className="inprogress">
@@ -200,14 +200,14 @@ function InprogressProposal() {
                                         </p>
                                     </div>
                                     :
-                                    row.status == "Customer Declined; Proposal" ?
+                                    row.status ===  "Customer Declined; Proposal" ?
                                         <div>
                                             {row.status}
                                             <p className="declined">
                                                 {row.statusdescription}
                                             </p>
                                         </div> :
-                                        row.status == "Accepted; Proposal" ?
+                                        row.status ===  "Accepted; Proposal" ?
                                             <div>
                                                 {row.status}
                                                 <p className="completed">
@@ -331,7 +331,7 @@ function InprogressProposal() {
                                     }
 
                                     {
-                                        row.statuscode == 4
+                                        row.statuscode ===  4
                                             ?
                                             <div style={{ cursor: "pointer" }} title="Decision on Proposal" className="ml-2">
                                                  <Link

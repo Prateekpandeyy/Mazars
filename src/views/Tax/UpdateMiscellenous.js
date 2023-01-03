@@ -21,10 +21,12 @@ import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
+import SearchBtn from "../../components/Common/SearchBtn";
 const UpdateMiscellenous = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
 
   useEffect(() => {
@@ -59,11 +61,37 @@ const UpdateMiscellenous = () => {
         setData(dataList);
       });
   };
+  const searchArticle = (e) => {
+    let dataObj = {};
+    let dataList = [];
+    let formData = new FormData();
+    formData.append("content", searchText);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/customers/getupdated?type=miscellaneous`,
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        res.data.result.map((i, e) => {
+          dataObj = {
+            sn: ++e,
+            content: i.content,
+            file: i.file,
+            heading: i.heading,
+            id: i.id,
+            publish_date: i.publish_date,
+            status: i.status,
+            type: i.type,
+          };
+          dataList.push(dataObj);
+        });
+        setData(dataList);
+      }
+    });
+  };
   const goToLogin = (e) => {
     Swal.fire({
-      title: "Info",
       html: "Please login to view full update",
-      icon: "warning",
     });
   };
   return (
@@ -71,6 +99,20 @@ const UpdateMiscellenous = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
+            <SearchBtn>
+              <input
+                placeholder="Please enter text"
+                className="form-control"
+                type="Please enter text"
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <button
+                onClick={(e) => searchArticle()}
+                className="customBtn mx-2"
+              >
+                Search
+              </button>
+            </SearchBtn>
             <MyContainer>
               <div className={classes.articleContent}>
                 <div className={classes.articlesDetails}>
@@ -189,6 +231,17 @@ const UpdateMiscellenous = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
+          <SearchBtn>
+            <input
+              placeholder="Please enter text"
+              className="form-control"
+              type="Please enter text"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
+              Search
+            </button>
+          </SearchBtn>
           <MyContainer>
             <div className={classes.articleContent}>
               <div className={classes.articlesDetails}>

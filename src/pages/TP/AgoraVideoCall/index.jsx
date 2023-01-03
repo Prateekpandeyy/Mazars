@@ -544,7 +544,7 @@ if(item.player === undefined){
       axios.get(`${baseUrl}/tl/setgetschedular?id=${this.props.id}&uid=${this.state.showButton}&chname=${this.channelName}`, this.myConfig)
       .then((res) => {
       
-        if(res.data.result.rtc_id == uid){
+        if(res.data.result.rtc_id ===  uid){
           
           Swal.fire({
             title: "success",
@@ -604,7 +604,7 @@ if(item.player === undefined){
          praticipantVar.setAttribute("disabled", true)
        }
        
-       else if(res.data.length == 0){
+       else if(res.data.length ===  0){
         this.remoteShare2 = true
          var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", "Sharing");
@@ -928,7 +928,7 @@ this.del()
 
   }
   
-  else if(this.state.showButton == JSON.parse(this.teamKey)){
+  else if(this.state.showButton ===  JSON.parse(this.teamKey)){
 
     if(resourceId === undefined){
       var resourceId = localStorage.getItem("resourceId");
@@ -1165,7 +1165,7 @@ const recordingBtnOff = (
     title="Record Off"
   >
      {
-      this.state.showButton == JSON.parse(this.teamKey) ?
+      this.state.showButton ===  JSON.parse(this.teamKey) ?
       // <FiberManualRecordIcon style={{ color: red[500] }}/> : ""
      <img src = {recImg} style = {{width : "20px"}} /> : ""
     }

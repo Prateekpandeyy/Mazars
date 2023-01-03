@@ -186,7 +186,7 @@ function DeclinedProposal() {
                     <>
                         <div>
                             {
-                                row.status == "Client Declined; Proposal" ?
+                                row.status ===  "Client Declined; Proposal" ?
                                     <p className="declined">
                                         {row.status}
                                     </p> :
@@ -258,7 +258,7 @@ function DeclinedProposal() {
                            
                                 
                             <div className="ml-2">
-                                {row.status_code == "4" ? (
+                                {row.status_code ===  "4" ? (
                                     <Link to={`/taxprofessional/edit-proposal/${row.id}`}>
                                         <i
                                             className="fa fa-edit"
@@ -269,7 +269,7 @@ function DeclinedProposal() {
                                             }}
                                         ></i>
                                     </Link>
-                                ) : row.status_code == "2"&& row.work_by != "0" ? (
+                                ) : row.status_code ===  "2"&& row.work_by != "0" ? (
                                     <Link to={`/taxprofessional/sendproposal/${row.id}`}>
                                         <i
                                             class="fa fa-mail-forward"
@@ -282,7 +282,7 @@ function DeclinedProposal() {
                                 ) : null}
                             </div>
 
-                            {row.status_code > "3" || row.status_code == "10" ?
+                            {row.status_code > "3" || row.status_code ===  "10" ?
                             <>
                              <div  onClick={(e) => showProposalModal2(row.id)} title="View Proposal">
              <EyeIcon />

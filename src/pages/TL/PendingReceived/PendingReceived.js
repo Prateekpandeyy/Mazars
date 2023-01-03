@@ -291,7 +291,7 @@ function PendingRecevied() {
                       <td>{p.additional_queries}</td>
                       <td>{ChangeFormateDate(p.created)}</td>
                       <td>
-                        {p.upload_doc == "" ? (
+                        {p.upload_doc ===  "" ? (
                           ""
                         ) : (
                           <p>

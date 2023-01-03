@@ -41,19 +41,19 @@ const MediaTab = () => {
         <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
           <TabList className="fixedTab">
             <Tab
-              style={tabIndex == 0 ? myStyle2 : myStyle1}
+              style={tabIndex ===  0 ? myStyle2 : myStyle1}
               className="tabHover"
             >
               Photo Gallery
             </Tab>
             <Tab
-              style={tabIndex == 1 ? myStyle2 : myStyle1}
+              style={tabIndex ===  1 ? myStyle2 : myStyle1}
               className="tabHover"
             >
               Video Gallery
             </Tab>
             <Tab
-              style={tabIndex == 2 ? myStyle2 : myStyle1}
+              style={tabIndex ===  2 ? myStyle2 : myStyle1}
               className="tabHover"
             >
               Media News

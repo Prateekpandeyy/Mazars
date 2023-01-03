@@ -120,11 +120,11 @@ function AllQueriesData({
           <>
             <div>
               {row.status}/
-              {row.status == "Inprogress Query" ? (
+              {row.status ===  "Inprogress Query" ? (
                 <p className="inprogress">{row.status_message}</p>
-              ) : row.status == "Declined Query" ? (
+              ) : row.status ===  "Declined Query" ? (
                 <p className="declined">{row.status_message}</p>
-              ) : row.status == "Completed Query" ? (
+              ) : row.status ===  "Completed Query" ? (
                 <p className="completed">{row.status_message}</p>
               ) : null}
             </div>
@@ -140,7 +140,7 @@ function AllQueriesData({
       formatter: function dateFormat(cell, row) {
         return (
           <>
-            {row.status == "Declined Query" ? null : row.status_code != "3" &&
+            {row.status ===  "Declined Query" ? null : row.status_code != "3" &&
               row.status_code > "1" ? (
               <>
                 {row.final_discussion === "completed"
@@ -164,7 +164,7 @@ function AllQueriesData({
 
         return (
           <>
-            {row.status == "Declined Query" ? (
+            {row.status ===  "Declined Query" ? (
               <>
                 {dateMnsFive > curDate === true ? (
                   <span className="ml-1">
@@ -191,9 +191,9 @@ function AllQueriesData({
               </>
             ) : (
               <>
-                {row.status_code == "0" ||
-                row.status_code == "1" ||
-                row.status_code == "3" ? (
+                {row.status_code ===  "0" ||
+                row.status_code ===  "1" ||
+                row.status_code ===  "3" ? (
                   <>
                     <span className="ml-1">
                       <Link to={`/customer/edit-query/${row.id}`}>
@@ -230,9 +230,9 @@ function AllQueriesData({
                   </>
                 ) : null}
 
-                {row.status_code == "4" ||
+                {row.status_code ===  "4" ||
                 8 < parseInt(row.status_code) ||
-                row.status_code == "2" ? (
+                row.status_code ===  "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-1">
@@ -249,7 +249,7 @@ function AllQueriesData({
                     ) : (
                       ""
                     )}
-                    {row.delivery_report == "completed" ? null : (
+                    {row.delivery_report ===  "completed" ? null : (
                       <span
                         className="ml-1"
                         onClick={() => additionalHandler(row.assign_no)}
@@ -257,7 +257,7 @@ function AllQueriesData({
                         <UploadDocument />
                       </span>
                     )}
-                    {row.status_code == "10" ? null : (
+                    {row.status_code ===  "10" ? null : (
                       <span className="ml-1">
                         <Link
                           to={{

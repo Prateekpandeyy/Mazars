@@ -134,7 +134,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
           <>
             <div>
               {row.status} /
-              {row.status == "Inprogress Query" ? (
+              {row.status === "Inprogress Query" ? (
                 <p className="inprogress">{row.statusdescription}</p>
               ) : null}
             </div>

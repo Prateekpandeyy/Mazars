@@ -471,7 +471,7 @@ if(item.player === undefined){
     });
     axios.get(`${baseUrl}/customers/setgetschedular?id=${this.meetdetails.id}&question_id=${this.channelName}`)
     .then((res) => {
-     if(res.data.result.rtc_id == uid){
+     if(res.data.result.rtc_id ===  uid){
       Swal.fire({
         title: "success",
         html : "Thank you for attending this meeting, this meeting is going to be ended by host",
@@ -523,7 +523,7 @@ if(item.player === undefined){
          praticipantVar.setAttribute("disabled", true)
        }
        
-      else if(res.data.length == 0){
+      else if(res.data.length ===  0){
         this.remoteShare2 = true
         var praticipantVar = document.getElementById("name" + stream.getId())
         praticipantVar.setAttribute("value", "Sharing");
