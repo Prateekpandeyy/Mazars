@@ -63,7 +63,7 @@ const UpdateDirect = () => {
     formData.append("content", searchText);
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=indirect`,
+      url: `${baseUrl}/customers/getupdated?type=direct`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {

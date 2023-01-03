@@ -83,6 +83,7 @@ import FaqList from "./pages/Admin/CMS/FaqList";
 import CmsLogin from "./pages/Admin/cmslogin/Login";
 import GroupImage from "./pages/Admin/CMS/GroupImage";
 import UploadLink from "./pages/Admin/CMS/UploadLink";
+import Enquiry from "./pages/Admin/CMS/Enauiry/Enquiry";
 //TL routes
 import TlStart from "./pages/TL/Start/Start";
 import TlLogin from "./pages/TL/Login/Login";
@@ -738,11 +739,12 @@ function WebRoutes() {
           />
 
           <PublicCms path="/cms/login" component={CmsLogin} />
-          <PrivateRouteCms path="/cms/cms" component={Cms} />
-          <PrivateRouteCms path="/cms/flash" component={FlashMessage} />
-          <PrivateRouteCms path="/cms/articles" component={CmsContent} />
-          <PrivateRouteCms path="/cms/updates" component={AdminUpdates} />
+          <PrivateRouteCms exact path="/cms/cms" component={Cms} />
+          <PrivateRouteCms exact path="/cms/flash" component={FlashMessage} />
+          <PrivateRouteCms exact path="/cms/articles" component={CmsContent} />
+          <PrivateRouteCms exact path="/cms/updates" component={AdminUpdates} />
           <PrivateRouteCms
+            exact
             path="/cms/articlesedit/:id"
             component={CmsContent}
           />
@@ -751,37 +753,83 @@ function WebRoutes() {
             component={UpdatesContent}
           />
           <PrivateRouteCms
+            exact
             path="/cms/editupdates/:id"
             component={Editupdates}
           />
-          <PrivateRouteCms path="/cms/links" component={Links} />
-          <PrivateRouteCms path="/cms/linksedit/:id" component={Links} />
-          <PrivateRouteCms path="/cms/linklist" component={Linklist} />
-          <PrivateRouteCms path="/cms/faqlist" component={FaqList} />
-          <PrivateRouteCms path="/cms/mediagallery" component={MediaGallery} />
-          <PrivateRouteCms path="/cms/mediacontent" component={MediaContent} />
-          <PrivateRouteCms path="/cms/flashcontent" component={FlashContent} />
+          <PrivateRouteCms exact path="/cms/links" component={Links} />
+          <PrivateRouteCms exact path="/cms/linksedit/:id" component={Links} />
+          <PrivateRouteCms exact path="/cms/linklist" component={Linklist} />
+          <PrivateRouteCms exact path="/cms/faqlist" component={FaqList} />
+          <PrivateRouteCms
+            exact
+            path="/cms/mediagallery"
+            component={MediaGallery}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/mediacontent"
+            component={MediaContent}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/flashcontent"
+            component={FlashContent}
+          />
           <PrivateRouteCms
             path="/cms/flashcontent/:id"
             component={FlashContent}
           />
-          <PrivateRouteCms path="/cms/faqedit/:id" component={Faq} />
-          <PrivateRouteCms path="/cms/faq" component={Faq} />
-          <PrivateRouteCms path="/cms/mediatab" component={MediaTab} />
-          <PrivateRouteCms path="/cms/videocontent" component={VideoContent} />
-          <PrivateRouteCms path="/cms/mediatext" component={Mediatextshow} />
+          <PrivateRouteCms exact path="/cms/faqedit/:id" component={Faq} />
+          <PrivateRouteCms exact path="/cms/faq" component={Faq} />
+          <PrivateRouteCms exact path="/cms/mediatab" component={MediaTab} />
           <PrivateRouteCms
+            exact
+            path="/cms/videocontent"
+            component={VideoContent}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/mediatext"
+            component={Mediatextshow}
+          />
+          <PrivateRouteCms
+            exact
             path="/cms/mediatext/:id"
             component={Mediatextshow}
           />
-          <PrivateRouteCms path="/cms/imagegallery" component={GroupImage} />
-          <PrivateRouteCms path="/cms/videogallery" component={Groupvideo} />
-          <PrivateRouteCms path="/cms/editimage/:id" component={EditImage} />
-          <PrivateRouteCms path="/cms/editvideo/:id" component={EditVideo} />
-          <PrivateRouteCms path="/cms/editfaq/:id" component={EditFaq} />
-          <PrivateRouteCms path="/cms/videolist" component={VideoMedia} />
-          <PrivateRouteCms path="/cms/addarticles" component={AddCmsContent} />
-          <PrivateRouteCms path="/cms/contentlist" component={MediaText} />
+          <PrivateRouteCms
+            exact
+            path="/cms/imagegallery"
+            component={GroupImage}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/videogallery"
+            component={Groupvideo}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/editimage/:id"
+            component={EditImage}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/editvideo/:id"
+            component={EditVideo}
+          />
+          <PrivateRouteCms exact path="/cms/editfaq/:id" component={EditFaq} />
+          <PrivateRouteCms exact path="/cms/videolist" component={VideoMedia} />
+          <PrivateRouteCms
+            exact
+            path="/cms/addarticles"
+            component={AddCmsContent}
+          />
+          <PrivateRouteCms
+            exact
+            path="/cms/contentlist"
+            component={MediaText}
+          />
           <PrivateRouteCms
             exaxt
             path="/cms/imagelist"
@@ -797,6 +845,7 @@ function WebRoutes() {
             path="/cms/uploadlinkcontent"
             component={UploadLinkContent}
           />
+          <PrivateRouteCms exactpath="/cms/enquiry" component={Enquiry} />
           <Route path="/*" component={PageNotFound} />
         </Switch>
       </BrowserRouter>
