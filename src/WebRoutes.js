@@ -371,7 +371,7 @@ function WebRoutes() {
           />
           <PrivateRouteUser
             exact
-            path="/customer/proposal_view/:id"
+            path="/customer_proposal_view/:id"
             component={ProposalView}
           />
           <PrivateRouteUser

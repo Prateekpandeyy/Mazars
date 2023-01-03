@@ -87,7 +87,7 @@ const UpdateDirect = () => {
         } else {
           setData([]);
           Swal.fire({
-            html: "NO data found",
+            html: "No data found",
           });
         }
       }
