@@ -51,43 +51,44 @@ const VideoList = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
-            <SearchBtn>
-              <input
-                placeholder="Please enter text"
-                className="form-control"
-                type="Please enter text"
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-
-              <button
-                onClick={(e) => searchArticle()}
-                className="customBtn mx-2"
-              >
-                Search
-              </button>
-            </SearchBtn>
             <MyContainer>
               <div className={classes.articleContent}>
                 {
                   <div className={classes.articlesDetails}>
-                    <Breadcrumbs
-                      separator=">"
-                      maxItems={3}
-                      aria-label="breadcrumb"
-                      style={{ fontSize: "18px" }}
-                    >
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to="/customer/media"
+                    <div className="bredcrubmWrapper">
+                      <Breadcrumbs
+                        separator=">"
+                        maxItems={3}
+                        aria-label="breadcrumb"
+                        style={{ fontSize: "18px" }}
                       >
-                        Media gallery
-                      </Link>
-                      <Typography color="text.primary">
-                        {" "}
-                        Video gallery
-                      </Typography>
-                    </Breadcrumbs>
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to="/customer/media"
+                        >
+                          Media gallery
+                        </Link>
+                        <Typography color="text.primary">
+                          {" "}
+                          Video gallery
+                        </Typography>
+                      </Breadcrumbs>
+                      <SearchBtn outer="outer">
+                        <input
+                          placeholder="Please enter text"
+                          className="form-control"
+                          type="Please enter text"
+                          onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <button
+                          onClick={(e) => searchArticle()}
+                          className="customBtn mx-2"
+                        >
+                          Search
+                        </button>
+                      </SearchBtn>
+                    </div>
 
                     <div className={classes.articlesDetailsgallery}>
                       {galleryData.map((i) => (
@@ -127,7 +128,9 @@ const VideoList = () => {
                               justifyContent: "space-between",
                             }}
                           >
-                            <CustomTypography>{i.title}</CustomTypography>
+                            <CustomTypography hover="hover" cursor="pointer">
+                              {i.title}
+                            </CustomTypography>
                             <CustomTypography>
                               {i.created_date
                                 .split(" ")[0]
@@ -171,36 +174,45 @@ const VideoList = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn outer="outer">
-            <input
-              placeholder="Please enter text"
-              className="form-control"
-              type="Please enter text"
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
-              Search
-            </button>
-          </SearchBtn>
+
           <MyContainer>
             <div className={classes.articleContent}>
               {
                 <div className={classes.articlesDetails}>
-                  <Breadcrumbs
-                    separator=">"
-                    maxItems={3}
-                    aria-label="breadcrumb"
-                    style={{ fontSize: "18px" }}
-                  >
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to="/customer/media"
+                  <div className="bredcrubmWrapper">
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
                     >
-                      Media gallery
-                    </Link>
-                    <Typography color="text.primary"> Video gallery</Typography>
-                  </Breadcrumbs>
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to="/customer/media"
+                      >
+                        Media gallery
+                      </Link>
+                      <Typography color="text.primary">
+                        {" "}
+                        Video gallery
+                      </Typography>
+                    </Breadcrumbs>
+                    <SearchBtn outer="outer">
+                      <input
+                        placeholder="Please enter text"
+                        className="form-control"
+                        type="Please enter text"
+                        onChange={(e) => setSearchText(e.target.value)}
+                      />
+                      <button
+                        onClick={(e) => searchArticle()}
+                        className="customBtn mx-2"
+                      >
+                        Search
+                      </button>
+                    </SearchBtn>
+                  </div>
 
                   <div className={classes.articlesDetailsgallery}>
                     {galleryData.map((i) => (

@@ -99,46 +99,48 @@ const UpdateIndirect = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
-            <SearchBtn>
-              <input
-                placeholder="Please enter text"
-                className="form-control"
-                type="Please enter text"
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <button
-                onClick={(e) => searchArticle()}
-                className="customBtn mx-2"
-              >
-                Search
-              </button>
-            </SearchBtn>
             <MyContainer>
               <div className={classes.articleContent}>
                 <div className={classes.articlesDetails}>
                   <TableContainer>
                     <>
-                      <Breadcrumbs
-                        separator=">"
-                        maxItems={3}
-                        aria-label="breadcrumb"
-                        style={{ fontSize: "18px" }}
-                      >
-                        <Link
-                          underline="hover"
-                          color="inherit"
-                          to="/customer/updatedirect"
+                      <div className="bredcrubmWrapper">
+                        <Breadcrumbs
+                          separator=">"
+                          maxItems={3}
+                          aria-label="breadcrumb"
+                          style={{ fontSize: "18px" }}
                         >
-                          Update
-                        </Link>
-                        <Link
-                          underline="hover"
-                          color="inherit"
-                          to={`/customer/updateindirect`}
-                        >
-                          Indirect tax
-                        </Link>
-                      </Breadcrumbs>
+                          <Link
+                            underline="hover"
+                            color="inherit"
+                            to="/customer/updatedirect"
+                          >
+                            Update
+                          </Link>
+                          <Link
+                            underline="hover"
+                            color="inherit"
+                            to={`/customer/updateindirect`}
+                          >
+                            Indirect tax
+                          </Link>
+                        </Breadcrumbs>
+                        <SearchBtn outer="outer">
+                          <input
+                            placeholder="Please enter text"
+                            className="form-control"
+                            type="Please enter text"
+                            onChange={(e) => setSearchText(e.target.value)}
+                          />
+                          <button
+                            onClick={(e) => searchArticle()}
+                            className="customBtn mx-2"
+                          >
+                            Search
+                          </button>
+                        </SearchBtn>
+                      </div>
                       <div className={classes.articleContent}>
                         <div className={classes.articlesDetails}>
                           <Table>
@@ -197,7 +199,10 @@ const UpdateIndirect = () => {
                                               </CustomTypography>
                                             </Link>
                                           ) : (
-                                            <CustomTypography cursor="pointer">
+                                            <CustomTypography
+                                              hover="hover"
+                                              cursor="pointer"
+                                            >
                                               {i.heading}
                                             </CustomTypography>
                                           )}
@@ -231,43 +236,49 @@ const UpdateIndirect = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn outer="outer">
-            <input
-              placeholder="Please enter text"
-              className="form-control"
-              type="Please enter text"
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
-              Search
-            </button>
-          </SearchBtn>
+
           <MyContainer>
             <div className={classes.articleContent}>
               <div className={classes.articlesDetails}>
                 <TableContainer>
                   <>
-                    <Breadcrumbs
-                      separator=">"
-                      maxItems={3}
-                      aria-label="breadcrumb"
-                      style={{ fontSize: "18px" }}
-                    >
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to="/customer/updatedirect"
+                    <div className="bredcrubmWrapper">
+                      <Breadcrumbs
+                        separator=">"
+                        maxItems={3}
+                        aria-label="breadcrumb"
+                        style={{ fontSize: "18px" }}
                       >
-                        Update
-                      </Link>
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to={`/customer/updateindirect`}
-                      >
-                        Indirect tax
-                      </Link>
-                    </Breadcrumbs>
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to="/customer/updatedirect"
+                        >
+                          Update
+                        </Link>
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to={`/customer/updateindirect`}
+                        >
+                          Indirect tax
+                        </Link>
+                      </Breadcrumbs>
+                      <SearchBtn outer="outer">
+                        <input
+                          placeholder="Please enter text"
+                          className="form-control"
+                          type="Please enter text"
+                          onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <button
+                          onClick={(e) => searchArticle()}
+                          className="customBtn mx-2"
+                        >
+                          Search
+                        </button>
+                      </SearchBtn>
+                    </div>
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>
@@ -318,13 +329,17 @@ const UpdateIndirect = () => {
                                               index: "indirect",
                                             }}
                                           >
-                                            <CustomTypography>
+                                            <CustomTypography
+                                              cursor="pointer"
+                                              hover="hover"
+                                            >
                                               {i.heading}
                                             </CustomTypography>
                                           </Link>
                                         ) : (
                                           <CustomTypography
                                             cursor="pointer"
+                                            hover="hover"
                                             onClick={(e) => {
                                               goToLogin(e);
                                             }}
