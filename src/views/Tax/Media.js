@@ -89,7 +89,7 @@ const Media = () => {
                     </div>
 
                     <div className={classes.articlesDetailsgallery}>
-                      {galleryData.map((i) => (
+                      {galleryData?.map((i) => (
                         <div className="galleryBoxvideo">
                           <div
                             style={{
@@ -193,7 +193,7 @@ const Media = () => {
                   </div>
 
                   <div className={classes.articlesDetailsgallery}>
-                    {galleryData.map((i) => (
+                    {galleryData?.map((i) => (
                       <div className="galleryBoxvideo">
                         <div
                           style={{

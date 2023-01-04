@@ -27,7 +27,9 @@ const VideoList = () => {
   }, []);
   const getGalleryData = () => {
     axios.get(`${baseUrl}/customers/getvideogallery`).then((res) => {
-      setGalleryData(res.data.result);
+      if (res.data.code === 1) {
+        setGalleryData(res.data.result);
+      }
     });
   };
   const searchArticle = () => {
@@ -38,7 +40,9 @@ const VideoList = () => {
       url: `${baseUrl}/customers/getvideogallery`,
       data: formData,
     }).then((res) => {
-      setGalleryData(res.data.result);
+      if (res.data.code === 1) {
+        setGalleryData(res.data.result);
+      }
     });
   };
   const goToLogin = (e) => {

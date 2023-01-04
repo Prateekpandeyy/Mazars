@@ -64,20 +64,8 @@ const Enquiry = (props) => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label>Subject</label>
-                    <input
-                      type="text"
-                      name="p_query"
-                      className="form-control"
-                      ref={register}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-group">
                     <label>
-                      Type<span className="declined">*</span>
+                      User type<span className="declined">*</span>
                     </label>
                     <select
                       className={classNames("form-control", {
@@ -102,6 +90,29 @@ const Enquiry = (props) => {
                   </div>
                 </div>
                 <div className="col-md-6">
+                  <label>Email</label>
+                  <Select isMulti options={options} />
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>Subject</label>
+                    <input
+                      type="text"
+                      name="p_query"
+                      className="form-control"
+                      ref={register}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-10">
+                  <div className="form-group">
+                    <label>
+                      Message<span className="declined">*</span>
+                    </label>
+                    <AddEditor />
+                  </div>
+                </div>
+                <div className="col-md-6">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
                   </label>
@@ -112,21 +123,10 @@ const Enquiry = (props) => {
                     />
                   </Space>
                 </div>
-                <div className="col-md-6">
-                  <label>Email</label>
-                  <Select isMulti options={options} />
-                </div>
-                <div className="col-md-10">
-                  <div className="form-group">
-                    <label>
-                      Message<span className="declined">*</span>
-                    </label>
-                    <AddEditor />
-                  </div>
-                  <button type="submit" className="customBtn">
-                    Submit
-                  </button>
-                </div>
+
+                <button type="submit" className="customBtn">
+                  Submit
+                </button>
               </div>
             </form>
           </CardBody>
