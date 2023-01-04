@@ -686,7 +686,7 @@ function SignUp(props) {
                           name="p_user"
                           value={user}
                           ref={register({ required: true })}
-                          placeholder="Enter user Id"
+                          placeholder="minimum 6 alphanumeric characters (no special character)"
                           className={classNames("form-control", {
                             "is-invalid":
                               errors.p_user ||
@@ -734,7 +734,7 @@ function SignUp(props) {
                           onBlur={(e) => checkNameError(e)}
                           onChange={(e) => checkSpecial(e)}
                           ref={register({ required: true })}
-                          placeholder="Enter name"
+                          placeholder="Enter name containing no special characters"
                           className={classNames("form-control", {
                             "is-invalid": errors.p_name || nameError === true,
                           })}

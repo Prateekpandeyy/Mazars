@@ -264,7 +264,7 @@ function Dashboard() {
                             <th>{InProgress}</th>
                           </tr>
                         </thead>
-                        <tbody classNameName="table_body">
+                        <tbody className="table_body">
                           <tr>
                             <td className="left_side">
                               Inprogress; preparation
@@ -314,7 +314,7 @@ function Dashboard() {
                             <td>{clientDeclinedp}</td>
                           </tr>
                         </tbody> */}
-                        <tbody classNameName="table_body">
+                        <tbody className="table_body">
                           <tr>
                             <td className="left_side">
                               Client declined; proposals

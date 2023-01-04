@@ -525,7 +525,7 @@ function CustomerFilter(props) {
     return (
       <>
         <button
-          type="submit"
+          type="reset"
           className="searchBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >

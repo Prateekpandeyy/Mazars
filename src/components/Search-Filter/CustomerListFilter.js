@@ -39,6 +39,7 @@ function CustomerListFilter(props) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
+              console.log("Got All list with url")
             }
           }
         });
@@ -66,9 +67,11 @@ function CustomerListFilter(props) {
 
   return (
     <>
+      <div className="container-fluid">
       <div className="row">
-        <div className="col-sm-12 d-flex">
-          <form onSubmit={handleSubmit(onSubmit)}>
+      
+        <div className="col-sm-12">
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row my-3">
               <div className="col-sm-3">
                 <input
@@ -159,20 +162,19 @@ function CustomerListFilter(props) {
                 </div>
               </div>
             </div>
-
             <div className="row my-3">
               <div className="col-sm-6">
                 <button type="submit" className="customBtn mx-sm-1 mb-2">
                   Search
                 </button>
                 <button
-                  type="submit"
+                  type="reset"
                   className="customBtn mx-sm-1 mb-2"
                   onClick={() => resetData()}
                 >
                   Reset
                 </button>
-                <div className="form-group d-inline-block">
+                <div className="form-group d-inline-block ml-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
@@ -188,8 +190,10 @@ function CustomerListFilter(props) {
                 </button>
               </div>
             </div>
-          </form>
+            </form>
         </div>
+        
+      </div>
       </div>
     </>
   );

@@ -171,7 +171,7 @@ const VideoList = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn>
+          <SearchBtn outer="outer">
             <input
               placeholder="Please enter text"
               className="form-control"

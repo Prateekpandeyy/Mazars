@@ -179,7 +179,7 @@ function Dashboard() {
     getPayment();
     getAssignment();
   }, []);
-  console.log("check git");
+  // console.log("check git");
   return (
     <>
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>
@@ -339,7 +339,7 @@ function Dashboard() {
                     <th>{InProgress}</th>
                   </tr>
                 </thead>
-                <tbody classNameName="table_body">
+                <tbody className="table_body">
                   <tr>
                     <td className="left_side">
                       <CustomTypography>
@@ -453,7 +453,7 @@ function Dashboard() {
                   </tr>
                 </thead>
 
-                <tbody classNameName="table_body">
+                <tbody className="table_body">
                   <tr>
                     <td className="left_side">
                       <CustomTypography>Client discussion</CustomTypography>

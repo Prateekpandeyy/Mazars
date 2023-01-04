@@ -225,7 +225,7 @@ function Sidebar({
       <div
         className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
         data-scroll-to-active="true"
-        data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
+        data-img="#"
       >
         <div className="navbar-header">
           <ul className="nav navbar-nav flex-row">
@@ -268,7 +268,7 @@ function Sidebar({
               <div
                 className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
                 data-scroll-to-active="true"
-                data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
+                data-img="#"
               >
                 <div className="navbar-header">
                   <ul className="nav navbar-nav flex-row">

@@ -63,26 +63,33 @@ const UpdateDirect = () => {
     formData.append("content", searchText);
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getarticles`,
+      url: `${baseUrl}/customers/getupdated?type=indirect`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
         let dataObj = {};
         let dataList = [];
-        res.data.result.map((i, e) => {
-          dataObj = {
-            sn: ++e,
-            content: i.content,
-            file: i.file,
-            heading: i.heading,
-            id: i.id,
-            publish_date: i.publish_date,
-            status: i.status,
-            type: i.type,
-          };
-          dataList.push(dataObj);
-        });
-        setData(dataList);
+        if (res.data.result.length > 0) {
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+            };
+            dataList.push(dataObj);
+          });
+          setData(dataList);
+        } else {
+          setData([]);
+          Swal.fire({
+            html: "No data found",
+          });
+        }
       }
     });
   };
@@ -228,7 +235,7 @@ const UpdateDirect = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn>
+          <SearchBtn outer="outer">
             <input
               placeholder="Please enter text"
               className="form-control"

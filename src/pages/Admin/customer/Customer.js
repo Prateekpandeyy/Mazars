@@ -43,6 +43,7 @@ function Customer() {
       if (res.data.code === 1) {
         setData(res.data.result);
         setTpCount(res.data.result.length);
+        console.log("Got All list")
       }
     });
   };

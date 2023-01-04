@@ -352,7 +352,7 @@ function ProposalTab() {
                   <span className="ml-1">
                     <Link
                       to={{
-                        pathname: `/customer/proposal_view/${row.q_id}`,
+                        pathname: `/customer_proposal_view/${row.q_id}`,
                         index: 0,
                         routes: "proposal",
                       }}

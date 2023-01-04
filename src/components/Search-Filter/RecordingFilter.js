@@ -121,7 +121,7 @@ else if(SearchQuery === "tpQuery") {
     return (
       <>
         <button
-          type="submit"
+          type="reset"
           className="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >

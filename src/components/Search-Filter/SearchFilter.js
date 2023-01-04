@@ -187,7 +187,7 @@ function SearchFilter(props) {
 
           <div>
             <button
-              type="submit"
+              type="reset"
               className="btn btn-primary mb-2 ml-3"
               onClick={resetData}
             >

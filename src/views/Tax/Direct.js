@@ -101,27 +101,35 @@ const Direct = () => {
       url: `${baseUrl}/customers/getarticles`,
       data: formData,
     }).then((res) => {
-      if (res.data.code === 0) {
+      if (res.data.code === 1) {
         let dataObj = {};
         let dataList = [];
-        res.data.result.map((i, e) => {
-          dataObj = {
-            sn: ++e,
-            content: i.content,
-            file: i.file,
-            heading: i.heading,
-            id: i.id,
-            publish_date: i.publish_date,
-            status: i.status,
-            type: i.type,
-            writer: i.writer,
-          };
-          dataList.push(dataObj);
-        });
-        setData(dataList);
+        if (res.data.result.length > 0) {
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+            };
+            dataList.push(dataObj);
+          });
+          setData(dataList);
+        } else {
+          setData([]);
+          Swal.fire({
+            html: "No data found",
+          });
+        }
       }
     });
   };
+  console.log("data", data);
   return (
     <>
       {userId ? (
@@ -252,7 +260,7 @@ const Direct = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn>
+          <SearchBtn outer="outer">
             <input
               placeholder="Please enter text"
               className="form-control"

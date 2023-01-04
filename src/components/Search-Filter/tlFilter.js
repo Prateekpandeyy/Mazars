@@ -352,7 +352,7 @@ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
     return (
       <>
         <button
-          type="submit"
+          type="reset"
           className="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
