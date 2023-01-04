@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../../../components/Layout/Layout";
 import { Container } from "@material-ui/core";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,8 @@ import { DatePicker, Space } from "antd";
 import axios from "axios";
 import { baseUrl } from "../../../../config/config";
 import Select from "react-select";
+import moment from "moment";
+import Swal from "sweetalert2";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -22,25 +24,17 @@ const Schema = yup.object().shape({
 
 const Enquiry = (props) => {
   let history = useHistory();
-  const { handleSubmit, register, errors, reset } = useForm({
-    resolver: yupResolver(Schema),
-  });
+  var minimum = moment.now();
+  const [options, setOptions] = useState([]);
+  const [type, setType] = useState("");
+  const [email, setEmail] = useState([]);
+  const [subject, setSubject] = useState("");
+  const [schDate, setSchData] = useState("");
+  const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
-  const options = [
-    {
-      label: "first",
-      value: "1",
-    },
-    {
-      label: "second",
-      value: "2",
-    },
-    {
-      label: "third",
-      value: "3",
-    },
-  ];
+
   const getEmail = (e) => {
+    setType(e);
     let formData = new FormData();
     formData.append("type", e);
     axios({
@@ -52,10 +46,56 @@ const Enquiry = (props) => {
       data: formData,
     }).then((res) => {
       console.log("response", res);
+      let val = [];
+      if (res.data.code === 1) {
+        res.data.result.map((i) => {
+          let kk = {
+            label: i.email,
+            value: i.email,
+          };
+          val.push(kk);
+        });
+        setOptions(val);
+      }
     });
   };
   const onSubmit = (value) => {
-    console.log("done");
+    let formData = new FormData();
+    var myEditor = document.querySelector("#snow-container");
+    var html = myEditor.children[0].innerHTML;
+
+    if (myEditor.children[0].innerHTML.trim() === "<p><br></p>") {
+      return false;
+    } else {
+      formData.append("subject", subject);
+      formData.append("type", type);
+      formData.append("email_list", email);
+      formData.append("message", html);
+      formData.append("schedule_date", schDate);
+      axios({
+        method: "POST",
+        url: `${baseUrl}/cms/addemailer`,
+        headers: {
+          uit: token,
+        },
+        data: formData,
+      }).then((res) => {
+        if (res.data.code === 1) {
+          Swal.fire({
+            title: "success",
+            html: "Message schedule successfully",
+            icon: "success",
+          });
+        }
+      });
+    }
+  };
+  const getSelectEmail = (e) => {
+    let email = [];
+    e.map((i) => {
+      email.push(i.label);
+    });
+    setEmail(email);
   };
   return (
     <Layout cmsDashboard="cmsDashboard">
@@ -86,15 +126,16 @@ const Enquiry = (props) => {
                     </label>
                     <select
                       className={classNames("form-control", {
-                        "is-invalid": errors.p_to,
+                        "is-invalid": errors.p_type,
                       })}
-                      name="p_to"
+                      name="type"
+                      value={type}
                       onChange={(e) => getEmail(e.target.value)}
                       ref={register}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
-                      <option value="0">From email list</option>
+                      <option value="0">Email list</option>
                       <option value="1">All clients</option>
                       <option value="2">All TL, Client, TP</option>
                       <option value="3">TL only</option>
@@ -109,15 +150,20 @@ const Enquiry = (props) => {
                 </div>
                 <div className="col-md-6">
                   <label>Email</label>
-                  <Select isMulti options={options} />
+                  <Select
+                    onChange={(e) => getSelectEmail(e)}
+                    isMulti
+                    options={options}
+                  />
                 </div>
                 <div className="col-md-10">
                   <div className="form-group">
                     <label>Subject</label>
                     <input
                       type="text"
-                      name="p_query"
+                      name="subject"
                       className="form-control"
+                      onChange={(e) => setSubject(e.target.value)}
                       ref={register}
                     />
                   </div>
@@ -136,8 +182,15 @@ const Enquiry = (props) => {
                   </label>
                   <Space direction="vertical" size={12}>
                     <DatePicker
+                      disabledDate={(d) => !d || d.isAfter(minimum)}
                       renderExtraFooter={() => "extra footer"}
-                      showTime
+                      format="YYYY-MM-DD HH:mm:ss"
+                      showTime={{
+                        defaultValue: moment("00:00:00", "HH:mm:ss"),
+                      }}
+                      onChange={(e) =>
+                        setSchData(moment(e).format("DD-MM-YYYY HH"))
+                      }
                     />
                   </Space>
                 </div>
