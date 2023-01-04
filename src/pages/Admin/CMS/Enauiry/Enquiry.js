@@ -10,6 +10,8 @@ import { useHistory } from "react-router-dom";
 import CustomHeading from "../../../../components/Common/CustomHeading";
 import AddEditor from "../AddEditor";
 import { DatePicker, Space } from "antd";
+import axios from "axios";
+import { baseUrl } from "../../../../config/config";
 import Select from "react-select";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
@@ -23,6 +25,7 @@ const Enquiry = (props) => {
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
   });
+  const token = localStorage.getItem("token");
   const options = [
     {
       label: "first",
@@ -37,6 +40,20 @@ const Enquiry = (props) => {
       value: "3",
     },
   ];
+  const getEmail = (e) => {
+    let formData = new FormData();
+    formData.append("type", e);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/cms/emaillist`,
+      headers: {
+        uit: token,
+      },
+      data: formData,
+    }).then((res) => {
+      console.log("response", res);
+    });
+  };
   const onSubmit = (value) => {
     console.log("done");
   };
@@ -55,7 +72,7 @@ const Enquiry = (props) => {
                 </button>
               </Col>
               <Col md="4" align="center">
-                <CustomHeading>Enquiry</CustomHeading>
+                <CustomHeading>Schedule email</CustomHeading>
               </Col>
             </Row>
           </CardHeader>
@@ -72,6 +89,7 @@ const Enquiry = (props) => {
                         "is-invalid": errors.p_to,
                       })}
                       name="p_to"
+                      onChange={(e) => getEmail(e.target.value)}
                       ref={register}
                       style={{ height: "33px" }}
                     >
@@ -93,7 +111,7 @@ const Enquiry = (props) => {
                   <label>Email</label>
                   <Select isMulti options={options} />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-10">
                   <div className="form-group">
                     <label>Subject</label>
                     <input
@@ -123,10 +141,13 @@ const Enquiry = (props) => {
                     />
                   </Space>
                 </div>
-
-                <button type="submit" className="customBtn">
-                  Submit
-                </button>
+              </div>
+              <div className="row">
+                <div className="col-md-12 my-2">
+                  <button type="submit" className="customBtn">
+                    Submit
+                  </button>
+                </div>
               </div>
             </form>
           </CardBody>

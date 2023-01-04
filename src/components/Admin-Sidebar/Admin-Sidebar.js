@@ -453,7 +453,7 @@ function Sidebar({
                           <HelpOutlineIcon className={classes.myTeamleader} />
                         </i>
                         <span className="menu-title" data-i18n="">
-                          Enquiry
+                          Emailer
                         </span>
                       </NavLink>
                     </li>
