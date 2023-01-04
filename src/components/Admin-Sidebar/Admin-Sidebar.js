@@ -23,6 +23,7 @@ import UnsubscribeOutlinedIcon from "@mui/icons-material/UnsubscribeOutlined";
 import PermMediaOutlinedIcon from "@mui/icons-material/PermMediaOutlined";
 import MissedVideoCallIcon from "@mui/icons-material/MissedVideoCall";
 import MediaBluetoothOffIcon from "@mui/icons-material/MediaBluetoothOff";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 function Sidebar({
   adminDashboard,
   cmsDashboard,
@@ -440,6 +441,19 @@ function Sidebar({
                         </i>
                         <span className="menu-title" data-i18n="">
                           Upload document
+                        </span>
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink
+                        to="/cms/enquiry"
+                        className={classes.myClassHover}
+                      >
+                        <i className="">
+                          <HelpOutlineIcon className={classes.myTeamleader} />
+                        </i>
+                        <span className="menu-title" data-i18n="">
+                          Enquiry
                         </span>
                       </NavLink>
                     </li>

@@ -108,39 +108,45 @@ const MediaContentCustomer = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
-            <SearchBtn>
-              <input
-                placeholder="Please enter text"
-                className="form-control"
-                type="Please enter text"
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <button
-                onClick={(e) => searchArticle()}
-                className="customBtn mx-2"
-              >
-                Search
-              </button>
-            </SearchBtn>
             <MyContainer>
               {description === false ? (
                 <div className={classesCustom.articleContent}>
                   <div className={classesCustom.articlesDetails}>
-                    <Breadcrumbs
-                      separator=">"
-                      maxItems={3}
-                      aria-label="breadcrumb"
-                      style={{ fontSize: "18px" }}
-                    >
-                      <Link
-                        underline="hover"
-                        color="inherit"
-                        to="/customer/media"
+                    <div className="bredcrubmWrapper">
+                      <Breadcrumbs
+                        separator=">"
+                        maxItems={3}
+                        aria-label="breadcrumb"
+                        style={{ fontSize: "18px" }}
                       >
-                        Media gallery
-                      </Link>
-                      <Typography color="text.primary"> Media news</Typography>
-                    </Breadcrumbs>
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          to="/customer/media"
+                        >
+                          Media gallery
+                        </Link>
+                        <Typography color="text.primary">
+                          {" "}
+                          Media news
+                        </Typography>
+                      </Breadcrumbs>
+                      <SearchBtn outer="outer">
+                        <input
+                          placeholder="Please enter text"
+                          className="form-control"
+                          type="Please enter text"
+                          onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <button
+                          onClick={(e) => searchArticle()}
+                          className="customBtn mx-2"
+                        >
+                          Search
+                        </button>
+                      </SearchBtn>
+                    </div>
+
                     <div className={classesCustom.articlesDetails}>
                       <Table>
                         <TableHead>
@@ -189,7 +195,10 @@ const MediaContentCustomer = () => {
                                         className="btnHover"
                                         style={{ cursor: "pointer" }}
                                       >
-                                        <CustomTypography cursor="pointer">
+                                        <CustomTypography
+                                          hover="hover"
+                                          cursor="pointer"
+                                        >
                                           {i.heading}
                                         </CustomTypography>
                                       </span>
@@ -280,36 +289,43 @@ const MediaContentCustomer = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn outer="outer">
-            <input
-              placeholder="Please enter text"
-              className="form-control"
-              type="Please enter text"
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <button onClick={(e) => searchArticle()} className="customBtn mx-2">
-              Search
-            </button>
-          </SearchBtn>
+
           <MyContainer>
             {description === false ? (
               <div className={classesCustom.articleContent}>
                 <div className={classesCustom.articlesDetails}>
-                  <Breadcrumbs
-                    separator=">"
-                    maxItems={3}
-                    aria-label="breadcrumb"
-                    style={{ fontSize: "18px" }}
-                  >
-                    <Link
-                      underline="hover"
-                      color="inherit"
-                      to="/customer/media"
+                  <div className="bredcrubmWrapper">
+                    <Breadcrumbs
+                      separator=">"
+                      maxItems={3}
+                      aria-label="breadcrumb"
+                      style={{ fontSize: "18px" }}
                     >
-                      Media gallery
-                    </Link>
-                    <Typography color="text.primary"> Media news</Typography>
-                  </Breadcrumbs>
+                      <Link
+                        underline="hover"
+                        color="inherit"
+                        to="/customer/media"
+                      >
+                        Media gallery
+                      </Link>
+                      <Typography color="text.primary"> Media news</Typography>
+                    </Breadcrumbs>
+                    <SearchBtn outer="outer">
+                      <input
+                        placeholder="Please enter text"
+                        className="form-control"
+                        type="Please enter text"
+                        onChange={(e) => setSearchText(e.target.value)}
+                      />
+                      <button
+                        onClick={(e) => searchArticle()}
+                        className="customBtn mx-2"
+                      >
+                        Search
+                      </button>
+                    </SearchBtn>
+                  </div>
+
                   <div className={classesCustom.articlesDetails}>
                     <Table>
                       <TableHead>
@@ -356,7 +372,10 @@ const MediaContentCustomer = () => {
                                       className="primary"
                                       style={{ cursor: "pointer" }}
                                     >
-                                      <CustomTypography cursor="pointer">
+                                      <CustomTypography
+                                        cursor="pointer"
+                                        hover="hover"
+                                      >
                                         {i.heading}
                                       </CustomTypography>
                                     </span>

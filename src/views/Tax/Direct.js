@@ -129,7 +129,7 @@ const Direct = () => {
       }
     });
   };
-  console.log("data", data);
+
   return (
     <>
       {userId ? (
@@ -260,20 +260,26 @@ const Direct = () => {
       ) : (
         <OuterloginContainer>
           <Header noSign="noSign" />
-          <SearchBtn outer="outer">
-            <input
-              placeholder="Please enter text"
-              className="form-control"
-              type="Please enter text"
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <button className="customBtn mx-2" onClick={(e) => searchArticle()}>
-              Search
-            </button>
-          </SearchBtn>
+
           <MyContainer>
             <div className={classesCustom.articleContent}>
               <div className={classesCustom.articlesDetails}>
+                <div className="bredcrubmWrapperarticle">
+                  <SearchBtn outer="outer">
+                    <input
+                      placeholder="Please enter text"
+                      className="form-control"
+                      type="Please enter text"
+                      onChange={(e) => setSearchText(e.target.value)}
+                    />
+                    <button
+                      className="customBtn mx-2"
+                      onClick={(e) => searchArticle()}
+                    >
+                      Search
+                    </button>
+                  </SearchBtn>
+                </div>
                 <TableContainer>
                   <Table>
                     <TableHead>
@@ -352,6 +358,7 @@ const Direct = () => {
                                 )} */}
                                 <CustomTypography
                                   cursor="pointer"
+                                  hover="hover"
                                   onClick={(e) => {
                                     goToLogin(e);
                                   }}
