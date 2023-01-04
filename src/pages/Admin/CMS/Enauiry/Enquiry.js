@@ -15,6 +15,7 @@ import { baseUrl } from "../../../../config/config";
 import Select from "react-select";
 import moment from "moment";
 import Swal from "sweetalert2";
+import DropDown from "../../../../components/Common/DropDown";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -28,12 +29,15 @@ const Enquiry = (props) => {
   const [options, setOptions] = useState([]);
   const [type, setType] = useState("");
   const [email, setEmail] = useState([]);
+  const [emailValue, setEmailValue] = useState([]);
   const [subject, setSubject] = useState("");
   const [schDate, setSchData] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
 
   const getEmail = (e) => {
+    setEmail([]);
+    setEmailValue([]);
     setType(e);
     let formData = new FormData();
     formData.append("type", e);
@@ -65,7 +69,9 @@ const Enquiry = (props) => {
     var html = myEditor.children[0].innerHTML;
 
     if (myEditor.children[0].innerHTML.trim() === "<p><br></p>") {
-      return false;
+      Swal.fire({
+        html: "Message box could not be empty, please enter proper message",
+      });
     } else {
       formData.append("subject", subject);
       formData.append("type", type);
@@ -86,16 +92,24 @@ const Enquiry = (props) => {
             html: "Message schedule successfully",
             icon: "success",
           });
+          history.push("/cms/emaillist");
         }
       });
     }
   };
   const getSelectEmail = (e) => {
     let email = [];
-    e.map((i) => {
-      email.push(i.label);
-    });
-    setEmail(email);
+    setEmailValue(e);
+    if (e.length === options.length) {
+      let a = "all";
+      email.push(a);
+      setEmail(email);
+    } else {
+      e.map((i) => {
+        email.push(i.label);
+      });
+      setEmail(email);
+    }
   };
   return (
     <Layout cmsDashboard="cmsDashboard">
@@ -119,7 +133,7 @@ const Enquiry = (props) => {
           <CardBody>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-5">
                   <div className="form-group">
                     <label>
                       User type<span className="declined">*</span>
@@ -135,11 +149,11 @@ const Enquiry = (props) => {
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
-                      <option value="0">Email list</option>
+                      <option value="0">All user</option>
                       <option value="1">All clients</option>
-                      <option value="2">All TL, Client, TP</option>
-                      <option value="3">TL only</option>
-                      <option value="4">TP only</option>
+
+                      <option value="2">All TL</option>
+                      <option value="3">All TP</option>
                     </select>
                     {errors.p_to && (
                       <div className="invalid-feedback">
@@ -148,13 +162,18 @@ const Enquiry = (props) => {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-5">
                   <label>Email</label>
-                  <Select
-                    onChange={(e) => getSelectEmail(e)}
-                    isMulti
-                    options={options}
-                  />
+                  <div
+                    className={emailValue.length > 0 ? "emailSelectStyle" : ""}
+                  >
+                    <DropDown
+                      value={emailValue}
+                      options={options}
+                      handleChange={(e) => getSelectEmail(e)}
+                      multi={true}
+                    />
+                  </div>
                 </div>
                 <div className="col-md-10">
                   <div className="form-group">
@@ -176,14 +195,13 @@ const Enquiry = (props) => {
                     <AddEditor />
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
                   </label>
-                  <Space direction="vertical" size={12}>
+                  <Space direction="vertical" size={24}>
                     <DatePicker
-                      disabledDate={(d) => !d || d.isAfter(minimum)}
-                      renderExtraFooter={() => "extra footer"}
+                      disabledDate={(d) => !d || d.isBefore(minimum)}
                       format="YYYY-MM-DD HH:mm:ss"
                       showTime={{
                         defaultValue: moment("00:00:00", "HH:mm:ss"),
@@ -196,7 +214,7 @@ const Enquiry = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-12 my-2">
+                <div className="col-md-12 my-4">
                   <button type="submit" className="customBtn">
                     Submit
                   </button>

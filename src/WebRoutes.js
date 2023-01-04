@@ -84,6 +84,7 @@ import CmsLogin from "./pages/Admin/cmslogin/Login";
 import GroupImage from "./pages/Admin/CMS/GroupImage";
 import UploadLink from "./pages/Admin/CMS/UploadLink";
 import Enquiry from "./pages/Admin/CMS/Enauiry/Enquiry";
+import EmailList from "./pages/Admin/CMS/Enauiry/EmailList";
 //TL routes
 import TlStart from "./pages/TL/Start/Start";
 import TlLogin from "./pages/TL/Login/Login";
@@ -845,7 +846,8 @@ function WebRoutes() {
             path="/cms/uploadlinkcontent"
             component={UploadLinkContent}
           />
-          <PrivateRouteCms exactpath="/cms/enquiry" component={Enquiry} />
+          <PrivateRouteCms exact path="/cms/enquiry" component={Enquiry} />
+          <PrivateRouteCms exact path="/cms/emaillist" component={EmailList} />
           <Route path="/*" component={PageNotFound} />
         </Switch>
       </BrowserRouter>
