@@ -32,6 +32,7 @@ const Enquiry = (props) => {
   const [emailValue, setEmailValue] = useState([]);
   const [subject, setSubject] = useState("");
   const [schDate, setSchData] = useState("");
+  const [selectType, setSelectType] = useState("1");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
 
@@ -73,8 +74,12 @@ const Enquiry = (props) => {
         html: "Message box could not be empty, please enter proper message",
       });
     } else {
+      if (selectType === "4") {
+        formData.append("user_type", type);
+      }
       formData.append("subject", subject);
-      formData.append("type", type);
+
+      formData.append("type", selectType);
       formData.append("email_list", email);
       formData.append("message", html);
       formData.append("schedule_date", schDate);
@@ -133,48 +138,116 @@ const Enquiry = (props) => {
           <CardBody>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
-                <div className="col-md-5">
-                  <div className="form-group">
-                    <label>
-                      User type<span className="declined">*</span>
-                    </label>
-                    <select
-                      className={classNames("form-control", {
-                        "is-invalid": errors.p_type,
-                      })}
-                      name="type"
-                      value={type}
-                      onChange={(e) => getEmail(e.target.value)}
-                      ref={register}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="0">All user</option>
-                      <option value="1">All clients</option>
-
-                      <option value="2">All TL</option>
-                      <option value="3">All TP</option>
-                    </select>
-                    {errors.p_to && (
-                      <div className="invalid-feedback">
-                        {errors.p_to.message}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-md-5">
-                  <label>Email</label>
+                <div className="col-md-10">
                   <div
-                    className={emailValue.length > 0 ? "emailSelectStyle" : ""}
+                    className="row"
+                    onClick={(e) => setSelectType(e.target.value)}
                   >
-                    <DropDown
-                      value={emailValue}
-                      options={options}
-                      handleChange={(e) => getSelectEmail(e)}
-                      multi={true}
-                    />
+                    <div className="col-md-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id="flexRadioDefault2"
+                          value="1"
+                          defaultChecked
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          All client
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id="flexRadioDefault2"
+                          value="2"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          All TL
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id="flexRadioDefault2"
+                          value="3"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          All TP
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id="flexRadioDefault2"
+                          value="4"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          Specific field
+                        </label>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                {selectType === "4" ? (
+                  <>
+                    <div className="col-md-5">
+                      <div className="form-group">
+                        <label>
+                          User type<span className="declined">*</span>
+                        </label>
+                        <select
+                          className={classNames("form-control", {
+                            "is-invalid": errors.p_type,
+                          })}
+                          name="type"
+                          value={type}
+                          onChange={(e) => getEmail(e.target.value)}
+                          ref={register}
+                          style={{ height: "33px" }}
+                        >
+                          <option value="">--select--</option>
+                          <option value="0">All user</option>
+                          <option value="1">All clients</option>
+
+                          <option value="2">All TL</option>
+                          <option value="3">All TP</option>
+                        </select>
+                        {errors.p_to && (
+                          <div className="invalid-feedback">
+                            {errors.p_to.message}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-md-5">
+                      <label>Email</label>
+                      <div>
+                        <DropDown
+                          value={emailValue}
+                          options={options}
+                          handleChange={(e) => getSelectEmail(e)}
+                          multi={true}
+                        />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
                 <div className="col-md-10">
                   <div className="form-group">
                     <label>Subject</label>
