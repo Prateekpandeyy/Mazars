@@ -88,52 +88,15 @@ const EmailList = () => {
         return { width: "100px" };
       },
       formatter: function CmsAction(cell, row) {
-        return (
-          <>
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-              <Link to={`/cms/articlesedit/${row.id}`}>
-                <span title="Edit Articles">
-                  <EditQuery />
-                </span>
-              </Link>
-
-              <span
-                title="Delete Articles"
-                // onClick={() => del(row.id)}
-                className="mx-2"
-              >
-                <DeleteIcon />
-              </span>
-
-              {row.status == "1" ? (
-                <div>
-                  <label
-                    className="switch"
-                    // onChange={(e) => myShowValue(e, row)}
-                  >
-                    <input type="checkbox" defaultChecked />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
-              ) : (
-                ""
-              )}
-              {row.status == "0" ? (
-                <div>
-                  <label
-                    className="switch"
-                    // onChange={(e) => myShowValue(e, row)}
-                  >
-                    <input type="checkbox" />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </>
-        );
+        let status = "";
+        if (row.status === "1") {
+          status = "Processing";
+        } else if (row.status === "2") {
+          status = "Failed";
+        } else if (row.status === "3") {
+          status = "Complete";
+        }
+        return <>{row.status === "0" ? <EditQuery /> : <p>{status}</p>}</>;
       },
     },
   ];
