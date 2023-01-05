@@ -90,7 +90,7 @@ const EmailList = () => {
       formatter: function CmsAction(cell, row) {
         let status = "";
         if (row.status === "1") {
-          status = "Processing";
+          status = "Pending";
         } else if (row.status === "2") {
           status = "Failed";
         } else if (row.status === "3") {
@@ -114,7 +114,7 @@ const EmailList = () => {
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
         <div className="headingContent">
-          <CustomHeading>Schedule Email</CustomHeading>
+          <CustomHeading>Scheduled Email</CustomHeading>
 
           <button
             className="autoWidthBtn rightAlign my-2"
