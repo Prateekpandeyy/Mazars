@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../../components/Layout/Layout";
 import { Container } from "@material-ui/core";
 import { useForm } from "react-hook-form";
@@ -130,6 +130,11 @@ const Enquiry = (props) => {
       });
     }
   };
+  useEffect(() => {
+    if (window.location.pathname === "/cms/enquiry") {
+      console.log("done");
+    }
+  });
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">

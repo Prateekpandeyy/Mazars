@@ -847,6 +847,11 @@ function WebRoutes() {
             component={UploadLinkContent}
           />
           <PrivateRouteCms exact path="/cms/enquiry" component={Enquiry} />
+          <PrivateRouteCms
+            exact
+            path="/cms/editenquiry/:id"
+            component={Enquiry}
+          />
           <PrivateRouteCms exact path="/cms/emaillist" component={EmailList} />
           <Route path="/*" component={PageNotFound} />
         </Switch>

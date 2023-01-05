@@ -96,7 +96,17 @@ const EmailList = () => {
         } else if (row.status === "3") {
           status = "Complete";
         }
-        return <>{row.status === "0" ? <EditQuery /> : <p>{status}</p>}</>;
+        return (
+          <>
+            {row.status === "0" ? (
+              <Link to={`/cms/editenquiry/${row.id}`}>
+                <EditQuery />
+              </Link>
+            ) : (
+              <p>{status}</p>
+            )}
+          </>
+        );
       },
     },
   ];
