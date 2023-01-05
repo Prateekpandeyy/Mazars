@@ -32,7 +32,8 @@ const Enquiry = (props) => {
   const [emailValue, setEmailValue] = useState([]);
   const [subject, setSubject] = useState("");
   const [schDate, setSchData] = useState("");
-  const [selectType, setSelectType] = useState("1");
+  const [selectType, setSelectType] = useState([]);
+  const [disabled, setDisabled] = useState(false);
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
 
@@ -74,12 +75,14 @@ const Enquiry = (props) => {
         html: "Message box could not be empty, please enter proper message",
       });
     } else {
-      if (selectType === "4") {
+      if (disabled === true) {
         formData.append("user_type", type);
+        formData.append("type", "4");
+      } else {
+        formData.append("type", selectType);
       }
       formData.append("subject", subject);
 
-      formData.append("type", selectType);
       formData.append("email_list", email);
       formData.append("message", html);
       formData.append("schedule_date", schDate);
@@ -116,6 +119,17 @@ const Enquiry = (props) => {
       setEmail(email);
     }
   };
+  const getSelectData = (e) => {
+    if (e.target.value === "4" && e.target.checked === true) {
+      setDisabled(true);
+      setSelectType([]);
+    } else {
+      setDisabled(false);
+      setSelectType((oldData) => {
+        return [...oldData, e.target.value];
+      });
+    }
+  };
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -138,22 +152,19 @@ const Enquiry = (props) => {
           <CardBody>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
-                <div className="col-md-10">
-                  <div
-                    className="row"
-                    onClick={(e) => setSelectType(e.target.value)}
-                  >
+                <div className="col-md-10 my-4">
+                  <div className="row" onClick={(e) => getSelectData(e)}>
                     <div className="col-md-3">
                       <div class="form-check">
                         <input
                           class="form-check-input"
-                          type="radio"
+                          type="checkbox"
                           name="flexRadioDefault"
-                          id="flexRadioDefault2"
+                          id="allClient"
                           value="1"
-                          defaultChecked
+                          disabled={disabled}
                         />
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <label class="form-check-label" htmlFor="allClient">
                           All client
                         </label>
                       </div>
@@ -162,12 +173,13 @@ const Enquiry = (props) => {
                       <div class="form-check">
                         <input
                           class="form-check-input"
-                          type="radio"
+                          type="checkbox"
                           name="flexRadioDefault"
-                          id="flexRadioDefault2"
+                          id="allTL"
                           value="2"
+                          disabled={disabled}
                         />
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <label class="form-check-label" htmlFor="allTL">
                           All TL
                         </label>
                       </div>
@@ -176,12 +188,13 @@ const Enquiry = (props) => {
                       <div class="form-check">
                         <input
                           class="form-check-input"
-                          type="radio"
+                          type="checkbox"
                           name="flexRadioDefault"
-                          id="flexRadioDefault2"
+                          id="allTP"
                           value="3"
+                          disabled={disabled}
                         />
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <label class="form-check-label" htmlFor="allTP">
                           All TP
                         </label>
                       </div>
@@ -190,19 +203,19 @@ const Enquiry = (props) => {
                       <div class="form-check">
                         <input
                           class="form-check-input"
-                          type="radio"
+                          type="checkbox"
                           name="flexRadioDefault"
-                          id="flexRadioDefault2"
+                          id="specified"
                           value="4"
                         />
-                        <label class="form-check-label" for="flexRadioDefault2">
-                          Specific field
+                        <label class="form-check-label" htmlFor="specified">
+                          Specific email
                         </label>
                       </div>
                     </div>
                   </div>
                 </div>
-                {selectType === "4" ? (
+                {disabled === true ? (
                   <>
                     <div className="col-md-5">
                       <div className="form-group">

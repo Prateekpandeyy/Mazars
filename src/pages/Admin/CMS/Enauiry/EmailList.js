@@ -104,7 +104,7 @@ const EmailList = () => {
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
         <div className="headingContent">
-          <CustomHeading>Email Schedule</CustomHeading>
+          <CustomHeading>Schedule Email</CustomHeading>
 
           <button
             className="autoWidthBtn rightAlign my-2"
