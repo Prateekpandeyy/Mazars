@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../../components/Layout/Layout";
 import { Container } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames";
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import * as yup from "yup";
@@ -36,6 +35,12 @@ const Enquiry = (props) => {
   const [disabled, setDisabled] = useState(false);
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
+  const userId = window.localStorage.getItem("cmsId");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
 
   const getEmail = (e) => {
     setEmail([]);
@@ -120,10 +125,10 @@ const Enquiry = (props) => {
     }
   };
   const getSelectData = (e) => {
-    if (e.target.value === "4" && e.target.checked === true) {
-      setDisabled(true);
+    if (e.target.value === "4") {
+      setDisabled(e.target.checked);
       setSelectType([]);
-    } else {
+    } else if (e.target.checked === true) {
       setDisabled(false);
       setSelectType((oldData) => {
         return [...oldData, e.target.value];
@@ -131,10 +136,25 @@ const Enquiry = (props) => {
     }
   };
   useEffect(() => {
-    if (window.location.pathname === "/cms/enquiry") {
-      console.log("done");
+    if (!window.location.pathname !== "/cms/enquiry") {
+      axios
+        .get(
+          `${baseUrl}/cms/emailerlist?id=${window.location.pathname
+            .split("/")
+            .at(-1)}uid=${JSON.parse(userId)}`,
+          myConfig
+        )
+
+        .then((res) => {
+          if (res.data.code === 1) {
+          } else if (res.data.code === 102) {
+            localStorage.removeItem("token");
+            history.push("/cms/login");
+            return false;
+          }
+        });
     }
-  });
+  }, []);
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">

@@ -65,6 +65,19 @@ const EmailList = () => {
       headerStyle: () => {
         return { width: "100px" };
       },
+      formatter: function (cell, row) {
+        let date = row.schedule_date
+          .split(" ")[0]
+          .split("-")
+          .reverse()
+          .join("-");
+        let time = row.schedule_date.split(" ")[1];
+        return (
+          <>
+            {date} {time}
+          </>
+        );
+      },
     },
     {
       dataField: "subject",
