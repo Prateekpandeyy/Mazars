@@ -446,14 +446,14 @@ function Sidebar({
                     </li>
                     <li className="nav-item">
                       <NavLink
-                        to="/cms/enquiry"
+                        to="/cms/emaillist"
                         className={classes.myClassHover}
                       >
                         <i className="">
                           <HelpOutlineIcon className={classes.myTeamleader} />
                         </i>
                         <span className="menu-title" data-i18n="">
-                          Enquiry
+                          Emailer
                         </span>
                       </NavLink>
                     </li>
