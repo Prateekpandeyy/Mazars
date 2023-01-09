@@ -32,7 +32,10 @@ const Enquiry = (props) => {
   const [subject, setSubject] = useState("");
   const [schDate, setSchData] = useState("");
   const [selectType, setSelectType] = useState([]);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [templeteType, setTempleteType] = useState("1");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -155,6 +158,22 @@ const Enquiry = (props) => {
         });
     }
   }, []);
+  const generateTemplate = (e) => {
+    let formData = new FormData();
+    formData.append("start_date", fromDate);
+    formData.append("end_date", toDate);
+    formData.append("templete_type", "update");
+    axios({
+      method: "POST",
+      url: `${baseUrl}/cms/getemailbody`,
+      headers: {
+        uit: token,
+      },
+      data: formData,
+    }).then((res) => {
+      console.log("response", res);
+    });
+  };
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -322,6 +341,75 @@ const Enquiry = (props) => {
                       }
                     />
                   </Space>
+                </div>
+                <div className="col-md-12">
+                  <fieldset className="my-fieldsettemplate">
+                    <legend className="login-legend">Generate template</legend>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <span className="generateTemplate">
+                          <label>Template type</label>
+                          <select
+                            value={templeteType}
+                            onChange={(e) => setTempleteType(e.target.value)}
+                            className="form-control"
+                          >
+                            <option value="1">Updates</option>
+                            <option value="2">Direct</option>
+                            <option value="3">In direct</option>
+                            <option value="4">Miscellaneous</option>
+                          </select>
+                        </span>
+                      </div>
+                      <div className="col-md-4">
+                        <span className="generateTemplate">
+                          <label className="d-block">
+                            From date<span className="declined">*</span>
+                          </label>
+                          <Space direction="vertical" size={24}>
+                            <DatePicker
+                              disabledDate={(d) => !d || d.isBefore(minimum)}
+                              format="YYYY-MM-DD HH:mm:ss"
+                              showTime={{
+                                defaultValue: moment("00:00:00", "HH:mm:ss"),
+                              }}
+                              onChange={(e) =>
+                                setFromDate(moment(e).format("DD-MM-YYYY HH"))
+                              }
+                            />
+                          </Space>
+                        </span>
+                      </div>
+                      <div className="col-md-4">
+                        <span className="generateTemplate">
+                          <label className="d-block">
+                            To date<span className="declined">*</span>
+                          </label>
+                          <Space direction="vertical" size={24}>
+                            <DatePicker
+                              disabledDate={(d) => !d || d.isBefore(minimum)}
+                              format="YYYY-MM-DD HH:mm:ss"
+                              showTime={{
+                                defaultValue: moment("00:00:00", "HH:mm:ss"),
+                              }}
+                              onChange={(e) =>
+                                setToDate(moment(e).format("DD-MM-YYYY HH"))
+                              }
+                            />
+                          </Space>
+                        </span>
+                      </div>
+                      <div className="col-md-4 my-4">
+                        <button
+                          type="button"
+                          onClick={(e) => generateTemplate(e)}
+                          className="autoWidthBtn"
+                        >
+                          Generate template
+                        </button>
+                      </div>
+                    </div>
+                  </fieldset>
                 </div>
               </div>
               <div className="row">

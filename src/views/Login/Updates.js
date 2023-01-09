@@ -85,10 +85,12 @@ function Updates() {
   let history = useHistory();
   let id = useParams();
   const getId = history.location.index;
+
   useEffect(() => {
     showLinkData();
   }, []);
   const showLinkData = () => {
+    alert("done");
     if (getId === 3) {
       axios.get(`${baseUrl}/customers/getimportantlink`).then((res) => {
         console.log("res", res);

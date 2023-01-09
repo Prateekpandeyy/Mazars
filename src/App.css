@@ -955,3 +955,12 @@ color: #ffffff;
   .picker-datetime-panel .ant-picker-time-panel .ant-picker-header{
     display: none;
   }
+  .generateTemplate{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .my-fieldsettemplate{
+    border: 1px solid #000;
+    padding: 10px;
+  }
