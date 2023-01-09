@@ -15,6 +15,11 @@ import Select from "react-select";
 import moment from "moment";
 import Swal from "sweetalert2";
 import DropDown from "../../../../components/Common/DropDown";
+import EnqTemp from "./mazaremailtemp/EnqTemp";
+import CustomQuillEditor from "../CustomQuillEditor";
+import directGif from "./mazaremailtemp/images/directax.gif";
+import indirectGif from "./mazaremailtemp/images/indirextax.gif";
+import otherGif from "./mazaremailtemp/images/othertax.gif";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -36,6 +41,8 @@ const Enquiry = (props) => {
   const [toDate, setToDate] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [templeteType, setTempleteType] = useState("1");
+  const [showTemplete, setShowTemplete] = useState(false);
+  const [templeteData, setTempleteData] = useState([]);
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -172,6 +179,10 @@ const Enquiry = (props) => {
       data: formData,
     }).then((res) => {
       console.log("response", res);
+      if (res.data.code === 1) {
+        setShowTemplete(true);
+        setTempleteData(res.data.result);
+      }
     });
   };
   return (
@@ -317,32 +328,8 @@ const Enquiry = (props) => {
                     />
                   </div>
                 </div>
+
                 <div className="col-md-10">
-                  <div className="form-group">
-                    <label>
-                      Message<span className="declined">*</span>
-                    </label>
-                    <AddEditor />
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <label className="d-block">
-                    Schedule date<span className="declined">*</span>
-                  </label>
-                  <Space direction="vertical" size={24}>
-                    <DatePicker
-                      disabledDate={(d) => !d || d.isBefore(minimum)}
-                      format="YYYY-MM-DD HH:mm:ss"
-                      showTime={{
-                        defaultValue: moment("00:00:00", "HH:mm:ss"),
-                      }}
-                      onChange={(e) =>
-                        setSchData(moment(e).format("DD-MM-YYYY HH"))
-                      }
-                    />
-                  </Space>
-                </div>
-                <div className="col-md-12">
                   <fieldset className="my-fieldsettemplate">
                     <legend className="login-legend">Generate template</legend>
                     <div className="row">
@@ -355,9 +342,6 @@ const Enquiry = (props) => {
                             className="form-control"
                           >
                             <option value="1">Updates</option>
-                            <option value="2">Direct</option>
-                            <option value="3">In direct</option>
-                            <option value="4">Miscellaneous</option>
                           </select>
                         </span>
                       </div>
@@ -368,13 +352,15 @@ const Enquiry = (props) => {
                           </label>
                           <Space direction="vertical" size={24}>
                             <DatePicker
-                              disabledDate={(d) => !d || d.isBefore(minimum)}
+                              disabledDate={(d) => !d || d.isAfter(minimum)}
                               format="YYYY-MM-DD HH:mm:ss"
                               showTime={{
                                 defaultValue: moment("00:00:00", "HH:mm:ss"),
                               }}
                               onChange={(e) =>
-                                setFromDate(moment(e).format("DD-MM-YYYY HH"))
+                                setFromDate(
+                                  moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                )
                               }
                             />
                           </Space>
@@ -387,13 +373,15 @@ const Enquiry = (props) => {
                           </label>
                           <Space direction="vertical" size={24}>
                             <DatePicker
-                              disabledDate={(d) => !d || d.isBefore(minimum)}
+                              disabledDate={(d) => !d || d.isAfter(minimum)}
                               format="YYYY-MM-DD HH:mm:ss"
                               showTime={{
                                 defaultValue: moment("00:00:00", "HH:mm:ss"),
                               }}
                               onChange={(e) =>
-                                setToDate(moment(e).format("DD-MM-YYYY HH"))
+                                setToDate(
+                                  moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                )
                               }
                             />
                           </Space>
@@ -411,6 +399,175 @@ const Enquiry = (props) => {
                     </div>
                   </fieldset>
                 </div>
+                <div className="col-md-10">
+                  <div className="form-group">
+                    <label>
+                      Message<span className="declined">*</span>
+                    </label>
+                    {showTemplete === true ? (
+                      <CustomQuillEditor
+                        content={`<div class="container tempcont">
+                        <div class="d-flex align-items-start my-3">
+                          <div class="p-0">
+                            <img
+                              src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                              alt="logo"
+                              style="width: 30%;"
+                            />
+                          </div>
+                        </div>
+                        <div class="row mt-3 mx-0 justify-content-center">
+                          <div class="col-lg-12 headingDiv">
+                            <h4 style="margin-top: 20px;">Mazars Advisory Solutions</h4>
+                            <p style="margin-bottom: 0px;">
+                              Compilation of direct tax, indirect tax and other updates.
+                            </p>
+                            <p>Edition: Date</p>
+                          </div>
+                        </div>
+                        <div class="row mt-3 justify-content-center">
+                          <div class="col-lg-12 imageDiv">
+                            <img src=${directGif} alt="directax" />
+                          </div>
+                          <div class="col-lg-12 mt-1 mb-3 contDiv">
+                            <ul>
+                              <li>Direct tax- Heading 1</li>
+                              <li>Direct tax- Heading 2</li>
+                              <li>Direct tax- Heading 3</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="row mt-3 justify-content-center">
+                          <div class="col-lg-12 imageDiv">
+                            <img src=${indirectGif} alt="indirectax" />
+                          </div>
+                          <div class="col-lg-12 mt-1 mb-3 contDiv">
+                            <ul>
+                              <li>Indirect tax- Heading 1</li>
+                              <li>Indirect tax- Heading 2</li>
+                              <li>Indirect tax- Heading 3</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="row mt-3 justify-content-center">
+                          <div class="col-lg-12 imageDiv">
+                            <img src=${otherGif} alt="othertax" />
+                          </div>
+                          <div class="col-lg-12 mt-1 mb-3 contDiv">
+                            <ul>
+                              <li>Other updates- Heading 1</li>
+                              <li>Other updates- Heading 2</li>
+                              <li>Other updates- Heading 3</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="row mt-4 justify-content-between">
+                          <div class="col-lg-4 btncol">
+                            <p class="clickp">Click here to read the full update</p>
+                            <button class="button">Read more</button>
+                          </div>
+                          <div class="col-lg-4 btncol">
+                            <p class="clickp">
+                              Click here for any further information or queries{" "}
+                            </p>
+                            <button class="button">Click here</button>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="footerdiv">
+                          <div class="d-flex mt-3 justify-content-center">
+                            <div class="p-2">
+                              <span class="awsmspan" id="linkspan">
+                                <a href="http://">
+                                  <i class="fa-solid fa-link"></i>
+                                </a>
+                              </span>
+                            </div>
+                            <div class="p-2">
+                              <span class="awsmspan" id="linkedinspan">
+                                <a href="http://">
+                                  <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                              </span>
+                            </div>
+                            <div class="p-2">
+                              <span class="awsmspan" id="instaspan">
+                                <a href="http://">
+                                  <i class="fa-brands fa-instagram"></i>
+                                </a>
+                              </span>
+                            </div>
+                            <div class="p-2">
+                              <span class="awsmspan" id="facebookspan">
+                                <a href="http://">
+                                  <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                              </span>
+                            </div>
+                            <div class="p-2">
+                              <span class="awsmspan" id="twitterspan">
+                                <a href="http://">
+                                  <i class="fa-brands fa-twitter"></i>
+                                </a>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-12 footcont">
+                              <p>
+                                Industry experts form the backbone of Mazars Advisory Solutions
+                                team, collectively possessing:
+                              </p>
+                              <p>
+                                Mazars Advisory Solutions India is backed by experts having
+                                immense experience in the taxation field collectively possessing
+                                150+ years of industry experience in direct & indirect tax
+                                matters having served 400+ domestic clients and international
+                                clients across various sectors. The expert team has a
+                                comprehensive exposure of 1,00,000+ hours of tax assessment &
+                                litigation matters including special experience of having
+                                handled search & seizure cases of 150+ business groups. They
+                                also have 20+ years of thought leadership in transfer pricing.
+                              </p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-12 footcont">
+                              <p style="margin-bottom: 2px;">Find out more on: </p>
+                              <a href="https://advisorysolutions.mazars.co.in/">
+                                <p>https://advisorysolutions.mazars.co.in/</p>
+                              </a>
+                            </div>
+                            <div class="col-lg-12 footcont">
+                              <p class="copyright">Copyright @2022 All right reserved</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>`}
+                        showEditor={showTemplete}
+                      />
+                    ) : (
+                      <AddEditor />
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-10">
+                  <label className="d-block">
+                    Schedule date<span className="declined">*</span>
+                  </label>
+                  <Space direction="vertical" size={24}>
+                    <DatePicker
+                      disabledDate={(d) => !d || d.isBefore(minimum)}
+                      format="YYYY-MM-DD HH:mm:ss"
+                      showTime={{
+                        defaultValue: moment("00:00:00", "HH:mm:ss"),
+                      }}
+                      onChange={(e) =>
+                        setSchData(moment(e).format("DD-MM-YYYY HH"))
+                      }
+                    />
+                  </Space>
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-12 my-4">
@@ -420,6 +577,7 @@ const Enquiry = (props) => {
                 </div>
               </div>
             </form>
+            <EnqTemp />
           </CardBody>
         </Card>
       </Container>

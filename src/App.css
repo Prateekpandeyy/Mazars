@@ -964,3 +964,75 @@ color: #ffffff;
     border: 1px solid #000;
     padding: 10px;
   }
+  /* enquiery cms */
+  .tempcont{
+    width: 55%!important;
+}
+.headingDiv {
+    background-color: blue;
+    color: #fff;
+}
+
+.imageDiv {
+    text-align: center;
+}
+
+.btncol {
+    text-align: center;
+}
+
+.clickp {
+    min-height: 48px;
+    color: grey;
+    font-weight: 500;
+    text-align: left;
+}
+
+
+.footcont {
+    text-align: center;
+}
+
+.awsmspan {
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
+
+.awsmspan i {
+    color: #fff;
+    margin-top: 4px;
+}
+
+#linkspan {
+    background-color: green;
+}
+
+#linkedinspan {
+    background-color: #006eff;
+}
+
+#instaspan {
+    background-color: red;
+}
+
+#facebookspan {
+    background-color: #1100ff;
+}
+
+#twitterspan {
+    background-color: #006eff;
+}
+
+.copyright {
+    color: grey;
+}
+
+@media screen and (min-width: 0px) and (max-width: 821px) {
+    .tempcont{
+        width: 100%!important;
+    }
+}
