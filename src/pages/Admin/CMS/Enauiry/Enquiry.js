@@ -42,7 +42,11 @@ const Enquiry = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [templeteType, setTempleteType] = useState("1");
   const [showTemplete, setShowTemplete] = useState(false);
-  const [templeteData, setTempleteData] = useState([]);
+  const [templeteData, setTempleteData] = useState({
+    direct: [],
+    inDirect: [],
+    other: [],
+  });
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -178,13 +182,29 @@ const Enquiry = (props) => {
       },
       data: formData,
     }).then((res) => {
-      console.log("response", res);
+      let direct = [];
+      let indirect = [];
+      let other = [];
       if (res.data.code === 1) {
         setShowTemplete(true);
-        setTempleteData(res.data.result);
+        res.data.result.map((i) => {
+          if (i.type === "direct") {
+            direct.push(i);
+          } else if (i.type === "indirect") {
+            indirect.push(i);
+          } else {
+            other.push(i);
+          }
+        });
+        setTempleteData({
+          direct: direct,
+          inDirect: indirect,
+          other: other,
+        });
       }
     });
   };
+  console.log("templete", templeteData);
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -348,7 +368,7 @@ const Enquiry = (props) => {
                       <div className="col-md-4">
                         <span className="generateTemplate">
                           <label className="d-block">
-                            From date<span className="declined">*</span>
+                            Start date<span className="declined">*</span>
                           </label>
                           <Space direction="vertical" size={24}>
                             <DatePicker
@@ -369,7 +389,7 @@ const Enquiry = (props) => {
                       <div className="col-md-4">
                         <span className="generateTemplate">
                           <label className="d-block">
-                            To date<span className="declined">*</span>
+                            End date<span className="declined">*</span>
                           </label>
                           <Space direction="vertical" size={24}>
                             <DatePicker
@@ -431,9 +451,11 @@ const Enquiry = (props) => {
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
                             <ul>
-                              <li>Direct tax- Heading 1</li>
-                              <li>Direct tax- Heading 2</li>
-                              <li>Direct tax- Heading 3</li>
+                            ${templeteData.direct.map((i) => (
+                              <li>{i.heading}</li>
+                            ))}
+                            
+                 
                             </ul>
                           </div>
                         </div>
@@ -442,10 +464,14 @@ const Enquiry = (props) => {
                             <img src=${indirectGif} alt="indirectax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
+                          
                             <ul>
-                              <li>Indirect tax- Heading 1</li>
-                              <li>Indirect tax- Heading 2</li>
-                              <li>Indirect tax- Heading 3</li>
+                            ${templeteData.inDirect.map((i) => (
+                              <li>{i.heading}</li>
+                            ))}
+                            
+                 
+                         
                             </ul>
                           </div>
                         </div>
@@ -454,11 +480,11 @@ const Enquiry = (props) => {
                             <img src=${otherGif} alt="othertax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
-                            <ul>
-                              <li>Other updates- Heading 1</li>
-                              <li>Other updates- Heading 2</li>
-                              <li>Other updates- Heading 3</li>
-                            </ul>
+                          <ul>
+                          ${templeteData.other.map((i) => <li>{i.heading}</li>)}
+                          
+               
+                          </ul>
                           </div>
                         </div>
                         <div class="row mt-4 justify-content-between">
