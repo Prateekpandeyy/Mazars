@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch,Navigate,Routes} from "react-router-dom";
 import "./App.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import PageNotFound from "./components/PageNotFound/PageNotFound";

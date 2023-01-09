@@ -48,7 +48,7 @@ function AddEditor() {
  <div className="container" style={{padding: "0px", width: "100%", margin: "0px", maxWidth : "210mm"}}>
   <div className="panel">
     <div id="snow-container"></div>
-   
+  
   </div>
 
 </div>

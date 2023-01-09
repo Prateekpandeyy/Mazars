@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import WebRoutes from "./WebRoutes";
+import {logOutAllCustTabs} from "../src/components/Admin-Header/Broadcast";
 export default function App() {
   const clearCacheData = () => {
     caches.keys().then((names) => {
@@ -10,6 +11,10 @@ export default function App() {
   };
   useEffect(() => {
     clearCacheData();
+    
+  }, []);
+  useEffect(() => {
+    logOutAllCustTabs();
   }, []);
   return (
     <>
