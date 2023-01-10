@@ -84,10 +84,10 @@ function LoginForm() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const token = localStorage.getItem("clientToken");
+  const [cookieEnable, setCookieEnable] = useState("");
   const userEmail = JSON.parse(localStorage.getItem("custEmail"));
   let history = useHistory();
   const classes = useStyle();
-  const cookieEnable = Cookies.get("accept");
 
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow);
@@ -101,6 +101,7 @@ function LoginForm() {
     latestNews();
   }, []);
   const latestNews = () => {
+    setCookieEnable(Cookies.get("accept"));
     axios.get(`${baseUrl}/customers/getnews`).then((res) => {
       let pp = [];
       if (res.data.code === 1) {
@@ -216,7 +217,7 @@ function LoginForm() {
         <MyContainer>
           {news.length > 0 ? (
             <FlashSection>
-              {cookieEnable ? (
+              {cookieEnable === "agree" ? (
                 <marquee
                   id="scroll_news"
                   onMouseOver={(e) => {
@@ -559,6 +560,7 @@ function LoginForm() {
               }}
               onAccept={(e) => {
                 Cookies.set("accept", "agree");
+                latestNews();
               }}
               overlayClasses="overlayclass"
             >
