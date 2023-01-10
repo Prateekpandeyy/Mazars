@@ -158,7 +158,7 @@ const Enquiry = (props) => {
         .get(
           `${baseUrl}/cms/emailerlist?id=${window.location.pathname
             .split("/")
-            .at(-1)}uid=${JSON.parse(userId)}`,
+            .at(-1)}&uid=${JSON.parse(userId)}`,
           myConfig
         )
 
@@ -493,7 +493,7 @@ const Enquiry = (props) => {
                         </div>
                         <div class="row mt-3 justify-content-center">
                           <div class="col-lg-12 imageDiv">
-                            <img src=${directGif} alt="directax" />
+                            <img src= "https://stagingapi.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
                            ${templeteData.direct}
@@ -501,7 +501,7 @@ const Enquiry = (props) => {
                         </div>
                         <div class="row mt-3 justify-content-center">
                           <div class="col-lg-12 imageDiv">
-                            <img src=${indirectGif} alt="indirectax" />
+                            <img src="https://stagingapi.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
                            ${templeteData.indirect}
@@ -509,7 +509,7 @@ const Enquiry = (props) => {
                         </div>
                         <div class="row mt-3 justify-content-center">
                           <div class="col-lg-12 imageDiv">
-                            <img src=${otherGif} alt="othertax" />
+                            <img src="https://stagingapi.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
                          
