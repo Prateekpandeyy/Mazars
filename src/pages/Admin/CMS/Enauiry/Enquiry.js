@@ -236,7 +236,16 @@ const Enquiry = (props) => {
       }
     });
   };
-
+  const styles = {
+    header: {
+      fontSize: 22,
+      bold: true,
+    },
+    anotherStyle: {
+      italics: true,
+      alignment: "right",
+    },
+  };
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -462,9 +471,9 @@ const Enquiry = (props) => {
                     </label>
                     {showTemplete === true ? (
                       <CustomQuillEditor
-                        content={`<div class="container tempcont">
+                        content={`<div class = container tempcont>
                         <div class="d-flex align-items-start my-3">
-                          <div class="p-0">
+                          <div class="p-0" style: [ 'header', 'anotherStyle' ]>
                             <img
                               src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
                               width = "150"
@@ -476,7 +485,7 @@ const Enquiry = (props) => {
                         <div class="row mt-3 mx-0 justify-content-center">
                           <div class="col-lg-12 headingDiv">
                             <h4 style="margin-top: 20px;">Mazars Advisory Solutions</h4>
-                            <p style="margin-bottom: 0px;">
+                            <p id = conTag>
                               Compilation of direct tax, indirect tax and other updates.
                             </p>
                             <p>Edition: Date</p>
