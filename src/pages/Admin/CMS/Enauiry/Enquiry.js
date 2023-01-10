@@ -165,11 +165,12 @@ const Enquiry = (props) => {
 
         .then((res) => {
           if (res.data.code === 1) {
+            setContent(res.data.result[0].message);
             setSubject(res.data.result[0].subject);
             setType(res.data.result[0].user_type);
             setSchData(res.data.result[0].schedule_date);
-            setContent(res.data.result[0].message);
-            setShowTemplete(false);
+
+            setShowTemplete(true);
           } else if (res.data.code === 102) {
             localStorage.removeItem("token");
             history.push("/cms/login");
@@ -252,6 +253,7 @@ const Enquiry = (props) => {
       alignment: "right",
     },
   };
+  console.log(content);
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
