@@ -49,6 +49,7 @@ const Enquiry = (props) => {
     inDirect: "",
     other: "",
   });
+  const [content, setContent] = useState("");
 
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
@@ -164,6 +165,11 @@ const Enquiry = (props) => {
 
         .then((res) => {
           if (res.data.code === 1) {
+            setSubject(res.data.result[0].subject);
+            setType(res.data.result[0].user_type);
+            setSchData(res.data.result[0].schedule_date);
+            setContent(res.data.result[0].message);
+            setShowTemplete(false);
           } else if (res.data.code === 102) {
             localStorage.removeItem("token");
             history.push("/cms/login");
@@ -386,6 +392,7 @@ const Enquiry = (props) => {
                       className="form-control"
                       onChange={(e) => setSubject(e.target.value)}
                       ref={register({ required: true })}
+                      value={subject}
                     />
                   </div>
                 </div>
@@ -464,148 +471,167 @@ const Enquiry = (props) => {
                     </div>
                   </fieldset>
                 </div>
-                <div className="col-md-10">
-                  <div className="form-group">
-                    <label>
-                      Message<span className="declined">*</span>
-                    </label>
-                    {showTemplete === true ? (
-                      <CustomQuillEditor
-                        content={`<div class = container tempcont>
-                        <div class="d-flex align-items-start my-3">
-                          <div class="p-0" style: [ 'header', 'anotherStyle' ]>
-                            <img
-                              src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-                              width = "150"
-                              alt="logo"
-                            
-                            />
-                          </div>
-                        </div>
-                        <div class="row mt-3 mx-0 justify-content-center">
-                          <div class="col-lg-12 headingDiv">
-                            <h4 style="margin-top: 20px;">Mazars Advisory Solutions</h4>
-                            <p id = conTag>
-                              Compilation of direct tax, indirect tax and other updates.
-                            </p>
-                            <p>Edition: Date</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3 justify-content-center">
-                          <div class="col-lg-12 imageDiv">
-                            <img src= "https://stagingapi.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />
-                          </div>
-                          <div class="col-lg-12 mt-1 mb-3 contDiv">
-                           ${templeteData.direct}
-                          </div>
-                        </div>
-                        <div class="row mt-3 justify-content-center">
-                          <div class="col-lg-12 imageDiv">
-                            <img src="https://stagingapi.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />
-                          </div>
-                          <div class="col-lg-12 mt-1 mb-3 contDiv">
-                           ${templeteData.indirect}
-                          </div>
-                        </div>
-                        <div class="row mt-3 justify-content-center">
-                          <div class="col-lg-12 imageDiv">
-                            <img src="https://stagingapi.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
-                          </div>
-                          <div class="col-lg-12 mt-1 mb-3 contDiv">
-                         
-                          ${templeteData.other}
-                          
-               
-                        
-                          </div>
-                        </div>
-                        <div class="row mt-4 justify-content-between">
-                          <div class="col-lg-4 btncol">
-                            <p class="clickp">Click here to read the full update</p>
-                            <button class="button">Read more</button>
-                          </div>
-                          <div class="col-lg-4 btncol">
-                            <p class="clickp">
-                              Click here for any further information or queries{" "}
-                            </p>
-                            <button class="button">Click here</button>
-                          </div>
-                        </div>
-                        <hr />
-                        <div class="footerdiv">
-                          <div class="d-flex mt-3 justify-content-center">
-                            <div class="p-2">
-                              <span class="awsmspan" id="linkspan">
-                                <a href="http://">
-                                  <i class="fa-solid fa-link"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="linkedinspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-linkedin"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="instaspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-instagram"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="facebookspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-facebook-f"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="twitterspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-twitter"></i>
-                                </a>
-                              </span>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12 footcont">
-                           
-                              <p>
-                                Mazars Advisory Solutions India is backed by industry experts having
-                                immense experience in the taxation field collectively possessing
-                                150+ years of industry experience in direct & indirect tax
-                                matters having served 400+ domestic clients and international
-                                clients across various sectors. The expert team has a
-                                comprehensive exposure of 1,00,000+ hours of tax assessment &
-                                litigation matters including special experience of having
-                                handled search & seizure cases of 150+ business groups. They
-                                also have 20+ years of thought leadership in transfer pricing.
-                              </p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12 footcont">
-                              <p style="margin-bottom: 2px;">Find out more on: </p>
-                              <a href="https://advisorysolutions.mazars.co.in/">
-                                <p>https://advisorysolutions.mazars.co.in/</p>
-                              </a>
-                            </div>
-                            <div class="col-lg-12 footcont">
-                              <p class="copyright">Copyright @2022 All right reserved</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>`}
-                        showEditor={showTemplete}
-                      />
-                    ) : (
-                      <AddEditor />
-                    )}
+                {!window.location.pathname !== "/cms/enquiry" ? (
+                  <div className="col-md-10">
+                    <div className="form-group">
+                      <label>
+                        Message<span className="declined">*</span>
+                      </label>
+                      {showTemplete === true ? (
+                        <CustomQuillEditor
+                          content={content}
+                          showEditor={showTemplete}
+                        />
+                      ) : (
+                        <AddEditor />
+                      )}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="col-md-10">
+                    <div className="form-group">
+                      <label>
+                        Message<span className="declined">*</span>
+                      </label>
+                      {showTemplete === true ? (
+                        <CustomQuillEditor
+                          content={`<div class = container tempcont>
+                       <div class="d-flex align-items-start my-3">
+                         <div class="p-0" style: [ 'header', 'anotherStyle' ]>
+                           <img
+                             src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                             width = "150"
+                             alt="logo"
+                           
+                           />
+                         </div>
+                       </div>
+                       <div class="row mt-3 mx-0 justify-content-center">
+                         <div class="col-lg-12 headingDiv">
+                           <h4 style="margin-top: 20px;">Mazars Advisory Solutions</h4>
+                           <p id = conTag>
+                             Compilation of direct tax, indirect tax and other updates.
+                           </p>
+                           <p>Edition: Date</p>
+                         </div>
+                       </div>
+                       <div class="row mt-3 justify-content-center">
+                         <div class="col-lg-12 imageDiv">
+                           <img src= "https://stagingapi.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />
+                         </div>
+                         <div class="col-lg-12 mt-1 mb-3 contDiv">
+                          ${templeteData.direct}
+                         </div>
+                       </div>
+                       <div class="row mt-3 justify-content-center">
+                         <div class="col-lg-12 imageDiv">
+                           <img src="https://stagingapi.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />
+                         </div>
+                         <div class="col-lg-12 mt-1 mb-3 contDiv">
+                          ${templeteData.indirect}
+                         </div>
+                       </div>
+                       <div class="row mt-3 justify-content-center">
+                         <div class="col-lg-12 imageDiv">
+                           <img src="https://stagingapi.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+                         </div>
+                         <div class="col-lg-12 mt-1 mb-3 contDiv">
+                        
+                         ${templeteData.other}
+                         
+              
+                       
+                         </div>
+                       </div>
+                       <div class="row mt-4 justify-content-between">
+                         <div class="col-lg-4 btncol">
+                           <p class="clickp">Click here to read the full update</p>
+                           <button class="button">Read more</button>
+                         </div>
+                         <div class="col-lg-4 btncol">
+                           <p class="clickp">
+                             Click here for any further information or queries{" "}
+                           </p>
+                           <button class="button">Click here</button>
+                         </div>
+                       </div>
+                       <hr />
+                       <div class="footerdiv">
+                         <div class="d-flex mt-3 justify-content-center">
+                           <div class="p-2">
+                             <span class="awsmspan" id="linkspan">
+                               <a href="http://">
+                                 <i class="fa-solid fa-link"></i>
+                               </a>
+                             </span>
+                           </div>
+                           <div class="p-2">
+                             <span class="awsmspan" id="linkedinspan">
+                               <a href="http://">
+                                 <i class="fa-brands fa-linkedin"></i>
+                               </a>
+                             </span>
+                           </div>
+                           <div class="p-2">
+                             <span class="awsmspan" id="instaspan">
+                               <a href="http://">
+                                 <i class="fa-brands fa-instagram"></i>
+                               </a>
+                             </span>
+                           </div>
+                           <div class="p-2">
+                             <span class="awsmspan" id="facebookspan">
+                               <a href="http://">
+                                 <i class="fa-brands fa-facebook-f"></i>
+                               </a>
+                             </span>
+                           </div>
+                           <div class="p-2">
+                             <span class="awsmspan" id="twitterspan">
+                               <a href="http://">
+                                 <i class="fa-brands fa-twitter"></i>
+                               </a>
+                             </span>
+                           </div>
+                         </div>
+                         <div class="row">
+                           <div class="col-lg-12 footcont">
+                          
+                             <p>
+                               Mazars Advisory Solutions India is backed by industry experts having
+                               immense experience in the taxation field collectively possessing
+                               150+ years of industry experience in direct & indirect tax
+                               matters having served 400+ domestic clients and international
+                               clients across various sectors. The expert team has a
+                               comprehensive exposure of 1,00,000+ hours of tax assessment &
+                               litigation matters including special experience of having
+                               handled search & seizure cases of 150+ business groups. They
+                               also have 20+ years of thought leadership in transfer pricing.
+                             </p>
+                           </div>
+                         </div>
+                         <div class="row">
+                           <div class="col-lg-12 footcont">
+                             <p style="margin-bottom: 2px;">Find out more on: </p>
+                             <a href="https://advisorysolutions.mazars.co.in/">
+                               <p>https://advisorysolutions.mazars.co.in/</p>
+                             </a>
+                           </div>
+                           <div class="col-lg-12 footcont">
+                             <p class="copyright">Copyright @2022 All right reserved</p>
+                           </div>
+                         </div>
+                       </div>
+                     </div>`}
+                          showEditor={showTemplete}
+                        />
+                      ) : (
+                        <AddEditor />
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div className="col-md-10">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
@@ -617,6 +643,7 @@ const Enquiry = (props) => {
                       showTime={{
                         defaultValue: moment("00:00:00", "HH:mm:ss"),
                       }}
+                      defaultValue={moment(schDate)}
                       onChange={(e) =>
                         setSchData(moment(e).format("DD-MM-YYYY HH"))
                       }
