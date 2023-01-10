@@ -30,6 +30,7 @@ const Schema = yup.object().shape({
 const Enquiry = (props) => {
   let history = useHistory();
   var minimum = moment.now();
+  let previousDay = moment().subtract(1, "days");
   const [options, setOptions] = useState([]);
   const [type, setType] = useState("");
   const [email, setEmail] = useState([]);
@@ -42,11 +43,13 @@ const Enquiry = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [templeteType, setTempleteType] = useState("1");
   const [showTemplete, setShowTemplete] = useState(false);
+  const [min, setMin] = useState(moment.now());
   const [templeteData, setTempleteData] = useState({
-    direct: [],
-    inDirect: [],
-    other: [],
+    direct: "",
+    inDirect: "",
+    other: "",
   });
+
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -186,7 +189,6 @@ const Enquiry = (props) => {
       let indirect = [];
       let other = [];
       if (res.data.code === 1) {
-        setShowTemplete(true);
         res.data.result.map((i) => {
           if (i.type === "direct") {
             direct.push(i);
@@ -196,15 +198,45 @@ const Enquiry = (props) => {
             other.push(i);
           }
         });
+
+        let directoutput = direct.map((i) => {
+          return `<ul>
+                    <li>${i.heading} </li>
+                    
+                  </ul>`;
+        });
+        let indirectoutput = indirect.map((i) => {
+          return `<ul>
+                    <li>${i.heading} </li>
+                    
+                  </ul>`;
+        });
+        let otheroutput = other.map((i) => {
+          return `<ul>
+                    <li>${i.heading} </li>
+                    
+                  </ul>`;
+        });
         setTempleteData({
-          direct: direct,
-          inDirect: indirect,
-          other: other,
+          direct: directoutput,
+          indirect: indirectoutput,
+          other: otheroutput,
+        });
+        setShowTemplete(true);
+      } else if (res.data.code === 0) {
+        setTempleteData({
+          direct: [],
+          indirect: [],
+          other: [],
+        });
+        setShowTemplete(false);
+        Swal.fire({
+          html: "No data found",
         });
       }
     });
   };
-  console.log("templete", templeteData);
+
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -344,7 +376,7 @@ const Enquiry = (props) => {
                       name="subject"
                       className="form-control"
                       onChange={(e) => setSubject(e.target.value)}
-                      ref={register}
+                      ref={register({ required: true })}
                     />
                   </div>
                 </div>
@@ -373,15 +405,16 @@ const Enquiry = (props) => {
                           <Space direction="vertical" size={24}>
                             <DatePicker
                               disabledDate={(d) => !d || d.isAfter(minimum)}
-                              format="YYYY-MM-DD HH:mm:ss"
+                              format="DD-MM-YYYY HH:mm:ss"
                               showTime={{
                                 defaultValue: moment("00:00:00", "HH:mm:ss"),
                               }}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setFromDate(
                                   moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                )
-                              }
+                                );
+                                setMin(moment(e));
+                              }}
                             />
                           </Space>
                         </span>
@@ -393,8 +426,11 @@ const Enquiry = (props) => {
                           </label>
                           <Space direction="vertical" size={24}>
                             <DatePicker
-                              disabledDate={(d) => !d || d.isAfter(minimum)}
-                              format="YYYY-MM-DD HH:mm:ss"
+                              disabledDate={(d) =>
+                                !d || !d.isBetween(min, minimum)
+                              }
+                              id="endDate"
+                              format="DD-MM-YYYY HH:mm:ss"
                               showTime={{
                                 defaultValue: moment("00:00:00", "HH:mm:ss"),
                               }}
@@ -431,8 +467,9 @@ const Enquiry = (props) => {
                           <div class="p-0">
                             <img
                               src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                              width = "150"
                               alt="logo"
-                              style="width: 30%;"
+                            
                             />
                           </div>
                         </div>
@@ -450,13 +487,7 @@ const Enquiry = (props) => {
                             <img src=${directGif} alt="directax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
-                            <ul>
-                            ${templeteData.direct.map((i) => (
-                              <li>{i.heading}</li>
-                            ))}
-                            
-                 
-                            </ul>
+                           ${templeteData.direct}
                           </div>
                         </div>
                         <div class="row mt-3 justify-content-center">
@@ -464,15 +495,7 @@ const Enquiry = (props) => {
                             <img src=${indirectGif} alt="indirectax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
-                          
-                            <ul>
-                            ${templeteData.inDirect.map((i) => (
-                              <li>{i.heading}</li>
-                            ))}
-                            
-                 
-                         
-                            </ul>
+                           ${templeteData.indirect}
                           </div>
                         </div>
                         <div class="row mt-3 justify-content-center">
@@ -480,11 +503,11 @@ const Enquiry = (props) => {
                             <img src=${otherGif} alt="othertax" />
                           </div>
                           <div class="col-lg-12 mt-1 mb-3 contDiv">
-                          <ul>
-                          ${templeteData.other.map((i) => <li>{i.heading}</li>)}
+                         
+                          ${templeteData.other}
                           
                
-                          </ul>
+                        
                           </div>
                         </div>
                         <div class="row mt-4 justify-content-between">
@@ -540,12 +563,9 @@ const Enquiry = (props) => {
                           </div>
                           <div class="row">
                             <div class="col-lg-12 footcont">
+                           
                               <p>
-                                Industry experts form the backbone of Mazars Advisory Solutions
-                                team, collectively possessing:
-                              </p>
-                              <p>
-                                Mazars Advisory Solutions India is backed by experts having
+                                Mazars Advisory Solutions India is backed by industry experts having
                                 immense experience in the taxation field collectively possessing
                                 150+ years of industry experience in direct & indirect tax
                                 matters having served 400+ domestic clients and international

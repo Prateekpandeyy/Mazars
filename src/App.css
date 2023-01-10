@@ -955,6 +955,9 @@ color: #ffffff;
   .picker-datetime-panel .ant-picker-time-panel .ant-picker-header{
     display: none;
   }
+  .ant-picker-now{
+    display: none !important;
+  }
   .generateTemplate{
     display: flex;
     flex-direction: column;

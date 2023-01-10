@@ -62,13 +62,10 @@ const About = () => {
                     <SubHeading margin="5px 0px 5px 0px">
                       Mazars Advisory Solutions India
                     </SubHeading>
+
                     <CustomTypography>
-                      Industry experts form the backbone of Mazars Advisory
-                      Solutions team, collectively possessing:
-                    </CustomTypography>
-                    <CustomTypography>
-                      Mazars Advisory Solutions India is backed by experts
-                      having immense experience in the taxation field
+                      Mazars Advisory Solutions India is backed by industry
+                      experts having immense experience in the taxation field
                       collectively possessing 150+ years of industry experience
                       in direct & indirect tax matters having served 400+
                       domestic clients and international clients across various
