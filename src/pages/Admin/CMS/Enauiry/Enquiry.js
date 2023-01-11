@@ -265,155 +265,133 @@ const Enquiry = (props) => {
 
 
     <body>
-        <div style="padding: 10px 30px;
-        display: flex;
+    <table>
+        <tr><img
+            src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+            alt="logo" width="150">
+    </tr>      
+    <table bgColor="#0071CE" style="display: flex; margin: 10px 0px;">
+                        
+        <tr style="display: flex;
         flex-direction: column;
-        max-width: 1000px;
+        justify-content: center;
+        margin: auto;
+        color: #fff;
+        align-items: center;
+        padding: 0px 15px;
         width: 100%;">
-            <div class="d-flex align-items-start my-3">
-                <div class="p-0"><img
-                        src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-                        alt="logo" width="150">
-                </div>
-            </div>
-            <div style = 'display:flex; margin: 15px 0px; background-color: #0071CE; color: #fff;  padding: 20px;'>
-                <div style="display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                width: 100%;">
-                    <h2 style="margin-top: 20px; text-align: center;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
-                    <p style="text-align: center;">Edition: Date</p>
-                </div>
-            </div>
-            <div style="display: flex;
-            flex-direction: column;
-            margin: 10px 0px;">
-            <table>
-            <tr align = "center">
-            <td> 
-            <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
-            </td>
-            </tr>
-            </table>
-               
-                <div>
-                ${directoutput}
-                </div>
-            </div>
-            <div style="display: flex;
-            flex-direction: column;
-            margin: 10px 0px;">
-            <table>
-            <tr align = "center">
-            <td> 
-            <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
-           
-            </td>
-            </tr>
-            </table>
-               
-                <div>
-                ${indirectoutput}
-                </div>
-            </div>
-            <div style="display: flex;
-            flex-direction: column;
-            margin: 10px 0px;">
-            <table>
-            <tr align = "center">
-            <td> 
-            <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
-         
-            </td>
-            </tr>
-            </table>
-            
-          
-                <div>
-                ${otheroutput}
-                </div>
-            </div>
-            
-            <div class="row mt-4 justify-content-between">
-                <div class="col-lg-4 btncol">
-                    <p class="clickp">Click here to read the full update</p>
-                    <button style="border-bottom-left-radius: 1.75rem;
-                    background-color: #0071ce;
-                    border: 1px solid #0071ce;
-                    color: #fff;
-                    display: inline-flex;
-                    align-items: center;
-                    cursor: pointer;
-                    font-size: 1rem;
-                    font-weight: 500;
-                    justify-content: center;
-                    line-height: 1;
-                    max-width: 100%;
-                    min-width: 100px;
-                    min-height: 3rem;
-                    overflow: hidden;
-                    padding: 0.75rem 1.5rem;
-                    position: relative;
-                    text-decoration: none;
-                    transform: all 0.3s;
-                    vertical-align: middle;">Read more</button>
-                </div>
-                <div class="col-lg-4 btncol">
-                    <p class="clickp">Click here for any further information or queries </p>
-                    <button style="border-bottom-left-radius: 1.75rem;
-                    background-color: #0071ce;
-                    border: 1px solid #0071ce;
-                    color: #fff;
-                    display: inline-flex;
-                    align-items: center;
-                    cursor: pointer;
-                    font-size: 1rem;
-                    font-weight: 500;
-                    justify-content: center;
-                    line-height: 1;
-                    max-width: 100%;
-                    min-width: 100px;
-                    min-height: 3rem;
-                    overflow: hidden;
-                    padding: 0.75rem 1.5rem;
-                    position: relative;
-                    text-decoration: none;
-                    transform: all 0.3s;
-                    vertical-align: middle;">Click here</button>
-                </div>
-            </div>
-            <hr>
-            <div>
-            
-                <div>
-                    <div>
-                      
-                        <p>Mazars Advisory Solutions India is backed by industry experts having immense experience in the taxation
-                            field collectively possessing 150+ years of industry experience in direct & indirect tax matters
-                            having served 400+ domestic clients and international clients across various sectors. The expert
-                            team has a comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters
-                            including special experience of having handled search & seizure cases of 150+ business groups.
-                            They also have 20+ years of thought leadership in transfer pricing.</p>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <p style="margin-bottom: 2px;">Find out more on: </p>
-                        <a href="https://advisorysolutions.mazars.co.in/">
-                            <p>https://advisorysolutions.mazars.co.in/</p>
-                        </a>
-                    </div>
-                    <div>
-                        <p>Copyright @2022 All right reserved</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <td>
+            <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+            <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+            <p>Edition: Date</p>
+   
+
+        </td>
+         </tr>
+</table>
+<table style="margin: auto;">
+    <tr style="display: flex;
+flex-direction: column;
+margin: 10px 0px;">
+   <td>
+   
+ <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+
+   </td>
+</tr>
+</table>
+       <tr>
+       ${directoutput}
+       </tr>
+       <table style="margin: auto;">
+        <tr style="display: flex;
+    flex-direction: column;
+    margin: 10px 0px;">
+       <td>
+       
+        <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
     
-     
-    </body>
+       </td>
+    </tr>
+    </table>
+    
+   
+ <tr>
+   ${indirectoutput}
+ </tr>
+ <table style="margin: auto;">
+    <tr style="display: flex;
+flex-direction: column;
+margin: 10px 0px;">
+   <td>
+    <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+
+   </td>
+</tr>
+</table>
+</table>
+
+<tr>
+  ${otheroutput}
+</tr>
+</hr>
+<tr>
+    <td>
+<tr>
+    <p>Click here to read the full update</p>
+    <button style="border-bottom-left-radius: 1.75rem;
+    background-color: #0071ce;
+    border: 1px solid #0071ce;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: center;
+    line-height: 1;
+    max-width: 100%;
+    min-width: 100px;
+    min-height: 3rem;
+    overflow: hidden;
+    padding: 0.75rem 1.5rem;
+    position: relative;
+    text-decoration: none;
+    transform: all 0.3s;
+    vertical-align: middle;">Read more</button>
+</tr>
+    </td>
+    <td>
+<tr>
+    <td>
+        <p>Click here for any further information or queries </p>
+        <button style="border-bottom-left-radius: 1.75rem;
+        background-color: #0071ce;
+        border: 1px solid #0071ce;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        justify-content: center;
+        line-height: 1;
+        max-width: 100%;
+        min-width: 100px;
+        min-height: 3rem;
+        overflow: hidden;
+        padding: 0.75rem 1.5rem;
+        position: relative;
+        text-decoration: none;
+        transform: all 0.3s;
+        vertical-align: middle;">Click here</button>
+    </td>
+</tr>
+    </td>
+</tr>
+</table>
+</body>
+   
     
     </html>`;
     setFinalData(JSON.stringify(data));
