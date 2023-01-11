@@ -20,6 +20,7 @@ import CustomQuillEditor from "../CustomQuillEditor";
 import directGif from "./mazaremailtemp/images/directax.gif";
 import indirectGif from "./mazaremailtemp/images/indirextax.gif";
 import otherGif from "./mazaremailtemp/images/othertax.gif";
+import { Markup } from "interweave";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -52,6 +53,12 @@ const Enquiry = (props) => {
   const [selectDirect, setSelectDirect] = useState([]);
   const [selectIndirect, setSelectInDirect] = useState([]);
   const [selectOther, setSelectOther] = useState([]);
+  const [htmldata, setHtml] = useState({
+    direct: "",
+    inDirect: "",
+    other: "",
+  });
+  const [finalData, setFinalData] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -91,43 +98,35 @@ const Enquiry = (props) => {
   };
   const onSubmit = (value) => {
     let formData = new FormData();
-    var myEditor = document.querySelector("#snow-container");
-    var html = myEditor.children[0].innerHTML;
 
-    if (myEditor.children[0].innerHTML.trim() === "<p><br></p>") {
-      Swal.fire({
-        html: "Message box could not be empty, please enter proper message",
-      });
+    if (disabled === true) {
+      formData.append("user_type", type);
+      formData.append("type", "4");
     } else {
-      if (disabled === true) {
-        formData.append("user_type", type);
-        formData.append("type", "4");
-      } else {
-        formData.append("type", selectType);
-      }
-      formData.append("subject", subject);
-
-      formData.append("email_list", email);
-      formData.append("message", html);
-      formData.append("schedule_date", schDate);
-      axios({
-        method: "POST",
-        url: `${baseUrl}/cms/addemailer`,
-        headers: {
-          uit: token,
-        },
-        data: formData,
-      }).then((res) => {
-        if (res.data.code === 1) {
-          Swal.fire({
-            title: "success",
-            html: "Message schedule successfully",
-            icon: "success",
-          });
-          history.push("/cms/emaillist");
-        }
-      });
+      formData.append("type", selectType);
     }
+    formData.append("subject", subject);
+
+    formData.append("email_list", email);
+    formData.append("message", finalData);
+    formData.append("schedule_date", schDate);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/cms/addemailer`,
+      headers: {
+        uit: token,
+      },
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        Swal.fire({
+          title: "success",
+          html: "Message schedule successfully",
+          icon: "success",
+        });
+        history.push("/cms/emaillist");
+      }
+    });
   };
   const getSelectEmail = (e) => {
     let email = [];
@@ -216,14 +215,14 @@ const Enquiry = (props) => {
         });
         setTempleteData({
           direct: direct,
-          indirect: indirect,
+          inDirect: indirect,
           other: other,
         });
         setShowTemplete(true);
       } else if (res.data.code === 0) {
         setTempleteData({
           direct: [],
-          indirect: [],
+          inDirect: [],
           other: [],
         });
         setShowTemplete(false);
@@ -233,7 +232,177 @@ const Enquiry = (props) => {
       }
     });
   };
+  console.log(selectDirect, selectIndirect, selectOther);
+  const directOnchange = (e) => {
+    setSelectDirect(e);
+  };
+  const indirectOnchange = (e) => {
+    setSelectInDirect(e);
+  };
+  const otherOnchange = (e) => {
+    setSelectOther(e);
+  };
+  const generateTemp = (e) => {
+    let directoutput = selectDirect.map((i) => {
+      return `<ul>
+                <li>${i.value} </li>
+                
+              </ul>`;
+    });
+    let indirectoutput = selectIndirect.map((i) => {
+      return `<ul>
+                <li>${i.value} </li>
+                
+              </ul>`;
+    });
+    let otheroutput = selectOther.map((i) => {
+      return `<ul>
+                <li>${i.value} </li>
+                
+              </ul>`;
+    });
+    let data = `<html lang="en">
 
+
+    <body>
+        <div style="padding: 10px 30px;
+        display: flex;
+        flex-direction: column;
+        max-width: 1000px;
+        width: 100%;">
+            <div class="d-flex align-items-start my-3">
+                <div class="p-0"><img
+                        src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                        alt="logo" width="150">
+                </div>
+            </div>
+            <div style = 'display:flex; margin: 15px 0px; background-color: #0071CE; color: #fff;  padding: 20px;'>
+                <div style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;">
+                    <h2 style="margin-top: 20px; text-align: center;">Mazars Advisory Solutions</h2>
+                    <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p style="text-align: center;">Edition: Date</p>
+                </div>
+            </div>
+            <div style="display: flex;
+            flex-direction: column;
+            margin: 10px 0px;">
+                <div style="display: flex;
+                justify-content: center;">
+             <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+            </div>
+                <div>
+                ${directoutput}
+                </div>
+            </div>
+            <div style="display: flex;
+            flex-direction: column;
+            margin: 10px 0px;">
+                <div style="display: flex;
+                justify-content: center;">
+              <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
+            </div>
+                <div>
+                ${indirectoutput}
+                </div>
+            </div>
+            <div style="display: flex;
+            flex-direction: column;
+            margin: 10px 0px;">
+                <div style="display: flex;
+                justify-content: center;">
+               <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+            </div>
+                <div>
+                ${otheroutput}
+                </div>
+            </div>
+            
+            <div class="row mt-4 justify-content-between">
+                <div class="col-lg-4 btncol">
+                    <p class="clickp">Click here to read the full update</p>
+                    <button style="border-bottom-left-radius: 1.75rem;
+                    background-color: #0071ce;
+                    border: 1px solid #0071ce;
+                    color: #fff;
+                    display: inline-flex;
+                    align-items: center;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    justify-content: center;
+                    line-height: 1;
+                    max-width: 100%;
+                    min-width: 100px;
+                    min-height: 3rem;
+                    overflow: hidden;
+                    padding: 0.75rem 1.5rem;
+                    position: relative;
+                    text-decoration: none;
+                    transform: all 0.3s;
+                    vertical-align: middle;">Read more</button>
+                </div>
+                <div class="col-lg-4 btncol">
+                    <p class="clickp">Click here for any further information or queries </p>
+                    <button style="border-bottom-left-radius: 1.75rem;
+                    background-color: #0071ce;
+                    border: 1px solid #0071ce;
+                    color: #fff;
+                    display: inline-flex;
+                    align-items: center;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    justify-content: center;
+                    line-height: 1;
+                    max-width: 100%;
+                    min-width: 100px;
+                    min-height: 3rem;
+                    overflow: hidden;
+                    padding: 0.75rem 1.5rem;
+                    position: relative;
+                    text-decoration: none;
+                    transform: all 0.3s;
+                    vertical-align: middle;">Click here</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+            
+                <div>
+                    <div>
+                      
+                        <p>Mazars Advisory Solutions India is backed by industry experts having immense experience in the taxation
+                            field collectively possessing 150+ years of industry experience in direct & indirect tax matters
+                            having served 400+ domestic clients and international clients across various sectors. The expert
+                            team has a comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters
+                            including special experience of having handled search & seizure cases of 150+ business groups.
+                            They also have 20+ years of thought leadership in transfer pricing.</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <p style="margin-bottom: 2px;">Find out more on: </p>
+                        <a href="https://advisorysolutions.mazars.co.in/">
+                            <p>https://advisorysolutions.mazars.co.in/</p>
+                        </a>
+                    </div>
+                    <div>
+                        <p>Copyright @2022 All right reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+     
+    </body>
+    
+    </html>`;
+    setFinalData(data);
+  };
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -456,7 +625,7 @@ const Enquiry = (props) => {
                           <label>Direct</label>
                           <Select
                             isMulti={true}
-                            onChange={(e) => setSelectDirect(e)}
+                            onChange={(e) => directOnchange(e)}
                             options={templeteData.direct}
                           />
                         </div>
@@ -464,17 +633,26 @@ const Enquiry = (props) => {
                           <label>Indirect</label>
                           <Select
                             isMulti={true}
-                            onChange={(e) => setSelectInDirect(e)}
-                            options={templeteData.indirect}
+                            onChange={(e) => indirectOnchange(e)}
+                            options={templeteData.inDirect}
                           />
                         </div>
                         <div>
                           <label>other</label>
                           <Select
-                            onChange={(e) => setSelectOther(e)}
+                            onChange={(e) => otherOnchange(e)}
                             isMulti={true}
                             options={templeteData.other}
                           />
+                        </div>
+                        <div className="col-md-4 my-4">
+                          <button
+                            type="button"
+                            onClick={(e) => generateTemp(e)}
+                            className="autoWidthBtn"
+                          >
+                            Send data
+                          </button>
                         </div>
                       </div>
                     ) : (
@@ -482,6 +660,7 @@ const Enquiry = (props) => {
                     )}
                   </fieldset>
                 </div>
+
                 <div className="col-md-10">
                   <div className="form-group">
                     <label>
@@ -515,7 +694,6 @@ const Enquiry = (props) => {
                 </div>
               </div>
             </form>
-            <EnqTemp />
           </CardBody>
         </Card>
       </Container>
