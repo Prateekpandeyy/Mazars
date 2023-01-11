@@ -264,80 +264,83 @@ const Enquiry = (props) => {
     let data = `<html lang="en">
 
 
-    <body>
-    <table>
-        <tr><img
-            src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-            alt="logo" width="150">
-    </tr>      
-    <table bgColor="#0071CE" style="display: flex; margin: 10px 0px;">
-                        
-        <tr style="display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: auto;
-        color: #fff;
-        align-items: center;
-        padding: 0px 15px;
-        width: 100%;">
-        <td>
-            <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-            <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
-            <p>Edition: Date</p>
-   
+ 
+<body>
+<table>
+    <tr><img
+        src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+        alt="logo" width="150">
+</tr>      
+<table bgColor="#0071CE" style="display: flex; margin: 10px 0px;">
+                    
+    <tr style="display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    color: #fff;
+    align-items: center;
+    padding: 0px 15px;
+    width: 100%;">
+    <td>
+        <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+        <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+        <p>Edition: Date</p>
 
-        </td>
-         </tr>
+
+    </td>
+     </tr>
 </table>
 <table style="margin: auto;">
+<tr style="display: flex;
+flex-direction: column;
+margin: 10px 0px;">
+<td>
+
+<img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+
+</td>
+</tr>
+</table>
+   <tr>
+    ${directoutput}
+   </tr>
+   <table style="margin: auto;">
     <tr style="display: flex;
 flex-direction: column;
 margin: 10px 0px;">
    <td>
    
- <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+    <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
 
    </td>
 </tr>
 </table>
-       <tr>
-       ${directoutput}
-       </tr>
-       <table style="margin: auto;">
-        <tr style="display: flex;
-    flex-direction: column;
-    margin: 10px 0px;">
-       <td>
-       
-        <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
-    
-       </td>
-    </tr>
-    </table>
-    
-   
- <tr>
-   ${indirectoutput}
- </tr>
- <table style="margin: auto;">
-    <tr style="display: flex;
+
+
+<tr>
+${indirectoutput}
+</tr>
+<table style="margin: auto;">
+<tr style="display: flex;
 flex-direction: column;
 margin: 10px 0px;">
-   <td>
-    <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+<td>
+<img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
 
-   </td>
+</td>
 </tr>
 </table>
 </table>
 
 <tr>
-  ${otheroutput}
+${otheroutput}
 </tr>
 </hr>
+
+<table style="width: 100%;">
 <tr>
     <td>
-<tr>
+
     <p>Click here to read the full update</p>
     <button style="border-bottom-left-radius: 1.75rem;
     background-color: #0071ce;
@@ -359,10 +362,9 @@ margin: 10px 0px;">
     text-decoration: none;
     transform: all 0.3s;
     vertical-align: middle;">Read more</button>
-</tr>
+
     </td>
-    <td>
-<tr>
+ 
     <td>
         <p>Click here for any further information or queries </p>
         <button style="border-bottom-left-radius: 1.75rem;
@@ -386,13 +388,24 @@ margin: 10px 0px;">
         transform: all 0.3s;
         vertical-align: middle;">Click here</button>
     </td>
-</tr>
-    </td>
+
+  
 </tr>
 </table>
+<table style="text-align: center;">
+<tr>
+<td>
+    Mazars Advisory Solutions India is backed by industry experts having immense experience in the taxation
+    field collectively possessing 150+ years of industry experience in direct & indirect tax matters
+    having served 400+ domestic clients and international clients across various sectors. The expert
+    team has a comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters
+    including special experience of having handled search & seizure cases of 150+ business groups.
+    They also have 20+ years of thought leadership in transfer pricing.
+</td>
+</tr>
+</table>
+</table>
 </body>
-   
-    
     </html>`;
     setFinalData(JSON.stringify(data));
   };
