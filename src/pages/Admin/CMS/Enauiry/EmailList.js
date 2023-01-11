@@ -52,13 +52,13 @@ const EmailList = () => {
         return { width: "50px" };
       },
     },
-    {
-      dataField: "email_list",
-      text: "Email",
-      headerStyle: () => {
-        return { width: "100px" };
-      },
-    },
+    // {
+    //   dataField: "email_list",
+    //   text: "Email",
+    //   headerStyle: () => {
+    //     return { width: "100px" };
+    //   },
+    // },
     {
       dataField: "schedule_date",
       text: "Date",
@@ -87,14 +87,14 @@ const EmailList = () => {
       },
     },
 
-    {
-      dataField: "Message",
-      text: "message",
+    // {
+    //   dataField: "Message",
+    //   text: "message",
 
-      formatter: function CmsMessage(cell, row) {
-        return <Markup content={row.message} />;
-      },
-    },
+    //   formatter: function CmsMessage(cell, row) {
+    //     return <Markup content={row.message} />;
+    //   },
+    // },
     {
       text: "Action",
       headerStyle: () => {

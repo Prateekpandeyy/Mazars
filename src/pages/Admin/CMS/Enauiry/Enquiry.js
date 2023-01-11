@@ -558,7 +558,7 @@ ${otheroutput}
                   <fieldset className="my-fieldsettemplate">
                     <legend className="login-legend">Generate template</legend>
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span className="generateTemplate">
                           <label>Template type</label>
                           <select
@@ -570,7 +570,7 @@ ${otheroutput}
                           </select>
                         </span>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span className="generateTemplate">
                           <label className="d-block">
                             Start date<span className="declined">*</span>
@@ -592,7 +592,7 @@ ${otheroutput}
                           </Space>
                         </span>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span className="generateTemplate">
                           <label className="d-block">
                             End date<span className="declined">*</span>
@@ -616,13 +616,13 @@ ${otheroutput}
                           </Space>
                         </span>
                       </div>
-                      <div className="col-md-4 my-4">
+                      <div className="col-md-3">
                         <button
                           type="button"
                           onClick={(e) => generateTemplate(e)}
                           className="autoWidthBtn"
                         >
-                          Go
+                          Search
                         </button>
                       </div>
                     </div>
@@ -658,7 +658,7 @@ ${otheroutput}
                             onClick={(e) => generateTemp(e)}
                             className="autoWidthBtn"
                           >
-                            Search
+                            Generate message
                           </button>
                         </div>
                       </div>
