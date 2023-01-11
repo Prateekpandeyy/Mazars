@@ -43,14 +43,15 @@ const Enquiry = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [templeteType, setTempleteType] = useState("1");
   const [showTemplete, setShowTemplete] = useState(false);
-  const [content, setContent] = useState("");
   const [min, setMin] = useState(moment.now());
   const [templeteData, setTempleteData] = useState({
     direct: "",
     inDirect: "",
     other: "",
   });
-
+  const [selectDirect, setSelectDirect] = useState([]);
+  const [selectIndirect, setSelectInDirect] = useState([]);
+  const [selectOther, setSelectOther] = useState([]);
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -159,7 +160,7 @@ const Enquiry = (props) => {
         .get(
           `${baseUrl}/cms/emailerlist?id=${window.location.pathname
             .split("/")
-            .at(-1)}uid=${JSON.parse(userId)}`,
+            .at(-1)}&uid=${JSON.parse(userId)}`,
           myConfig
         )
 
@@ -186,11 +187,45 @@ const Enquiry = (props) => {
       },
       data: formData,
     }).then((res) => {
+      let direct = [];
+      let indirect = [];
+      let other = [];
       if (res.data.code === 1) {
-        setContent(res.data.result);
+        res.data.result.direct.map((i) => {
+          let data = {
+            label: i.slice(0, 7),
+            value: i,
+          };
+          direct.push(data);
+        });
+
+        res.data.result.indirect.map((i) => {
+          let data = {
+            label: i.slice(0, 7),
+            value: i,
+          };
+          indirect.push(data);
+        });
+
+        res.data.result.miscellaneous.map((i) => {
+          let data = {
+            label: i.slice(0, 7),
+            value: i,
+          };
+          other.push(data);
+        });
+        setTempleteData({
+          direct: direct,
+          indirect: indirect,
+          other: other,
+        });
         setShowTemplete(true);
       } else if (res.data.code === 0) {
-        setContent("");
+        setTempleteData({
+          direct: [],
+          indirect: [],
+          other: [],
+        });
         setShowTemplete(false);
         Swal.fire({
           html: "No data found",
@@ -411,10 +446,40 @@ const Enquiry = (props) => {
                           onClick={(e) => generateTemplate(e)}
                           className="autoWidthBtn"
                         >
-                          Generate template
+                          Go
                         </button>
                       </div>
                     </div>
+                    {showTemplete === true ? (
+                      <div>
+                        <div>
+                          <label>Direct</label>
+                          <Select
+                            isMulti={true}
+                            onChange={(e) => setSelectDirect(e)}
+                            options={templeteData.direct}
+                          />
+                        </div>
+                        <div>
+                          <label>Indirect</label>
+                          <Select
+                            isMulti={true}
+                            onChange={(e) => setSelectInDirect(e)}
+                            options={templeteData.indirect}
+                          />
+                        </div>
+                        <div>
+                          <label>other</label>
+                          <Select
+                            onChange={(e) => setSelectOther(e)}
+                            isMulti={true}
+                            options={templeteData.other}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </fieldset>
                 </div>
                 <div className="col-md-10">
@@ -422,14 +487,6 @@ const Enquiry = (props) => {
                     <label>
                       Message<span className="declined">*</span>
                     </label>
-                    {showTemplete === true ? (
-                      <CustomQuillEditor
-                        content={content}
-                        showEditor={showTemplete}
-                      />
-                    ) : (
-                      <AddEditor />
-                    )}
                   </div>
                 </div>
                 <div className="col-md-10">
