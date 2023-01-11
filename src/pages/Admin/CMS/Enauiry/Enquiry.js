@@ -407,7 +407,7 @@ ${otheroutput}
 </table>
 </body>
     </html>`;
-    setFinalData(JSON.stringify(data));
+    setFinalData(data);
   };
   console.log("finalData", finalData);
   return (
