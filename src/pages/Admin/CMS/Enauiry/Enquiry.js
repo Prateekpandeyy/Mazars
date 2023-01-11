@@ -290,10 +290,14 @@ const Enquiry = (props) => {
             <div style="display: flex;
             flex-direction: column;
             margin: 10px 0px;">
-                <div style="display: flex;
-                justify-content: center;">
-             <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
-            </div>
+            <table>
+            <tr align = "center">
+            <td> 
+            <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+            </td>
+            </tr>
+            </table>
+               
                 <div>
                 ${directoutput}
                 </div>
@@ -301,10 +305,15 @@ const Enquiry = (props) => {
             <div style="display: flex;
             flex-direction: column;
             margin: 10px 0px;">
-                <div style="display: flex;
-                justify-content: center;">
-              <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
-            </div>
+            <table>
+            <tr align = "center">
+            <td> 
+            <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
+           
+            </td>
+            </tr>
+            </table>
+               
                 <div>
                 ${indirectoutput}
                 </div>
@@ -312,10 +321,16 @@ const Enquiry = (props) => {
             <div style="display: flex;
             flex-direction: column;
             margin: 10px 0px;">
-                <div style="display: flex;
-                justify-content: center;">
-               <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
-            </div>
+            <table>
+            <tr align = "center">
+            <td> 
+            <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+         
+            </td>
+            </tr>
+            </table>
+            
+          
                 <div>
                 ${otheroutput}
                 </div>
@@ -401,8 +416,9 @@ const Enquiry = (props) => {
     </body>
     
     </html>`;
-    setFinalData(data);
+    setFinalData(JSON.stringify(data));
   };
+  console.log("finalData", finalData);
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -695,6 +711,7 @@ const Enquiry = (props) => {
               </div>
             </form>
           </CardBody>
+          <Markup content={finalData} />
         </Card>
       </Container>
     </Layout>
