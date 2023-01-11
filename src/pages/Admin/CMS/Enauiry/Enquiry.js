@@ -192,7 +192,7 @@ const Enquiry = (props) => {
       if (res.data.code === 1) {
         res.data.result.direct.map((i) => {
           let data = {
-            label: i.slice(0, 7),
+            label: i,
             value: i,
           };
           direct.push(data);
@@ -200,7 +200,7 @@ const Enquiry = (props) => {
 
         res.data.result.indirect.map((i) => {
           let data = {
-            label: i.slice(0, 7),
+            label: i,
             value: i,
           };
           indirect.push(data);
@@ -208,7 +208,7 @@ const Enquiry = (props) => {
 
         res.data.result.miscellaneous.map((i) => {
           let data = {
-            label: i.slice(0, 7),
+            label: i,
             value: i,
           };
           other.push(data);
@@ -658,7 +658,7 @@ ${otheroutput}
                             onClick={(e) => generateTemp(e)}
                             className="autoWidthBtn"
                           >
-                            Send data
+                            Search
                           </button>
                         </div>
                       </div>
@@ -702,7 +702,6 @@ ${otheroutput}
               </div>
             </form>
           </CardBody>
-          <Markup content={finalData} />
         </Card>
       </Container>
     </Layout>
