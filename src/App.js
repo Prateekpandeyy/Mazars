@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import WebRoutes from "./WebRoutes";
-import {logOutAllCustTabs} from "../src/components/Admin-Header/Broadcast";
+import {LogOutAllCustTabs} from "./components/Admin-Header/CustLogout";
 export default function App() {
   const clearCacheData = () => {
     caches.keys().then((names) => {
@@ -14,7 +14,9 @@ export default function App() {
     
   }, []);
   useEffect(() => {
-    logOutAllCustTabs();
+    console.log("IN USE")
+    LogOutAllCustTabs();
+    console.log("......Received")
   }, []);
   return (
     <>

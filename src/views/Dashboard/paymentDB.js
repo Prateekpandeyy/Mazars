@@ -3,12 +3,9 @@ import Layout from "../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import BotqueryDB from "./BotqueryDB"
-import ProposalDB from "./proposalDB"
-
 
 import { Container, Grid, Paper, Box } from "@material-ui/core";
-function Dashboard() {
+function PaymentDB() {
   const userId = window.localStorage.getItem("userid");
   const [allQueries, setAllQueries] = useState({
     total: "",
@@ -141,64 +138,41 @@ function Dashboard() {
   }, [userId]);
 
   return (
-    <>
-      <Layout custDashboard="custDashboard" custUserId={userId}>
-        <Container maxWidth="xl">
-          <Grid container>
-            <Grid item sm={3}>
-              <Box m={1}>
-                <Paper>
-                  <table className="table table-striped  first main_table">
-                    <thead className="query_thead">
-                      <tr>
-                        <th className="left_side"> All queries</th>
-                        <th>{total}</th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <table className="table table-striped  second main_table">
-                    <thead className="query_thead query_thead1">
-                      <tr>
-                        <th className="left_side">Inprogress; queries</th>
-                        <th>{inprogress_queries}</th>
-                      </tr>
-                    </thead>
+                      <>
+                        <Grid item sm={3}>
+                          <Box m={1}>
+                            <Paper>
+                              <table className="table table-striped thirteenth main_table">
+                                <thead className="payment_thead">
+                                  <tr>
+                                    <th className="left_side">All payments</th>
+                                    <th>{totalpayment}</th>
+                                  </tr>
+                                </thead>
+                              </table>
+                              <table className="table table-striped fortheenth main_table">
+                                <thead className="payment_thead2">
+                                  <tr>
+                                    <th className="left_side">Paid</th>
+                                    <th>{paid}</th>
+                                  </tr>
+                                </thead>
+                              </table>
 
-                    <tbody className="table_body">
-                      <tr>
-                        <td className="left_side">Inprogress; allocation</td>
-                        <td>{inprogress_allocation}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; proposals</td>
-                        <td>{inprogress_proposal}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; assignments</td>
-                        <td>{inprogress_assignment}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  {inprogress_queries !== 0 || declined_queries !== 0 ? (
-                    <BotqueryDB/>
-                  ) : (
-                    ""
-                  )}
-                </Paper>
-              </Box>
-            </Grid>
-            {allproposal !== 0 ? (
-              <ProposalDB/>
-            ) : (
-              ""
-            )}
-          </Grid>
-        </Container>
-      </Layout>{" "}
-      :
-    </>
+                              <table className="table table-striped fiftheenth main_table">
+                                <thead className="payment_thead2">
+                                  <tr>
+                                    <th className="left_side">Unpaid</th>
+                                    <th>{unpaid}</th>
+                                  </tr>
+                                </thead>
+                              </table>
+                            </Paper>
+                          </Box>
+                        </Grid>
+                      </>
+                   
   );
 }
 
-export default Dashboard;
+export default PaymentDB;

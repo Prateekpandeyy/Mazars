@@ -3,12 +3,10 @@ import Layout from "../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import BotqueryDB from "./BotqueryDB"
-import ProposalDB from "./proposalDB"
 
 
 import { Container, Grid, Paper, Box } from "@material-ui/core";
-function Dashboard() {
+function BotqueryDB() {
   const userId = window.localStorage.getItem("userid");
   const [allQueries, setAllQueries] = useState({
     total: "",
@@ -141,64 +139,66 @@ function Dashboard() {
   }, [userId]);
 
   return (
-    <>
-      <Layout custDashboard="custDashboard" custUserId={userId}>
-        <Container maxWidth="xl">
-          <Grid container>
-            <Grid item sm={3}>
-              <Box m={1}>
-                <Paper>
-                  <table className="table table-striped  first main_table">
-                    <thead className="query_thead">
-                      <tr>
-                        <th className="left_side"> All queries</th>
-                        <th>{total}</th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <table className="table table-striped  second main_table">
-                    <thead className="query_thead query_thead1">
-                      <tr>
-                        <th className="left_side">Inprogress; queries</th>
-                        <th>{inprogress_queries}</th>
-                      </tr>
-                    </thead>
+                    <>
+                      <table className="table table-striped  third main_table">
+                        <thead className="query_thead query_thead1">
+                          <tr>
+                            <th className="left_side">Completed; queries</th>
+                            <th>{complete_query}</th>
+                          </tr>
+                        </thead>
+                        <tbody className="table_body">
+                          <tr>
+                            <td className="left_side">
+                              Completed; assignments
+                            </td>
+                            <td>{complete_query}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      {complete_query !== 0 || declined_queries !== 0 ? (
+                        <>
+                          <table className="table table-striped  forth main_table">
+                            <thead className="query_thead query_thead1">
+                              <tr>
+                                <th className="left_side">Declined; queries</th>
+                                <th>{declined_queries}</th>
+                              </tr>
+                            </thead>
 
-                    <tbody className="table_body">
-                      <tr>
-                        <td className="left_side">Inprogress; allocation</td>
-                        <td>{inprogress_allocation}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; proposals</td>
-                        <td>{inprogress_proposal}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; assignments</td>
-                        <td>{inprogress_assignment}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  {inprogress_queries !== 0 || declined_queries !== 0 ? (
-                    <BotqueryDB/>
-                  ) : (
-                    ""
-                  )}
-                </Paper>
-              </Box>
-            </Grid>
-            {allproposal !== 0 ? (
-              <ProposalDB/>
-            ) : (
-              ""
-            )}
-          </Grid>
-        </Container>
-      </Layout>{" "}
-      :
-    </>
+                            <tbody className="table_body">
+                              <tr>
+                                <td className="left_side">
+                                  Admin declined; queries
+                                </td>
+                                <td>{admin_declined_query}</td>
+                              </tr>
+                              <tr>
+                                <td className="left_side">
+                                  Client declined; queries
+                                </td>
+                                <td>{customer_declined_Query}</td>
+                              </tr>
+                              <tr>
+                                <td className="left_side">
+                                  Client declined; proposals
+                                </td>
+                                <td>{customer_declined_proposal}</td>
+                              </tr>
+                              <tr>
+                                <td className="left_side">
+                                  Client declined; payment
+                                </td>
+                                <td>{Customer_declined_payment}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </>
+                      ) : (
+                        ""
+                      )}{" "}
+                    </>       
   );
 }
 
-export default Dashboard;
+export default BotqueryDB;

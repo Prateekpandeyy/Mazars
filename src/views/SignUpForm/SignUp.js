@@ -9,6 +9,7 @@ import { Spinner } from "reactstrap";
 import { professionName, country, states } from "./data";
 import { cities } from "./city";
 import Alerts from "../../common/Alerts";
+import {useHistory } from "react-router-dom";
 import ResendOtp from "./ResendOtp";
 import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
@@ -85,6 +86,7 @@ function SignUp(props) {
   const [phoneLength, setPhoneLength] = useState(10);
   const [pass2, setpass2] = useState(false);
   const [nameError, setNameError] = useState(false);
+
   // cusSub
   const cusSub = {
     display: "flex",
@@ -511,7 +513,12 @@ function SignUp(props) {
       }
     }
   };
-
+  //for existing customer redirect 
+ const token = localStorage.getItem("clientToken");
+ let history = useHistory();
+ if(token !== null){
+  history.push("/");
+ }
   //setotp
   const setOtp = () => {
     setSub(true);

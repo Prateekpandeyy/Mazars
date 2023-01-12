@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch,Navigate,Routes} from "react-router-dom";
+import { BrowserRouter, Route, Switch,Link,Routes,Redirect} from "react-router-dom";
 import "./App.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import { useHistory } from "react-router";
+
+// Only Public
+// import OnlyPublicRoutes from "./Service/OnlyPublicRoutes";
 
 //user routes
 import ModalMaual from "./views/ModalManual/ModalManual";
@@ -196,13 +199,17 @@ import PublicCms from "./Service/PublicCms";
 import AdminEnquiry from "./pages/Admin/AdminEnquiry/AdminEnquiry";
 
 function WebRoutes() {
+  const token = localStorage.getItem("clientToken");
+  console.log(token);
+  // const [token, setToken] = useState([]);
+  
   return (
     <>
       <BrowserRouter>
         <Switch>
           <PublicRouteUser exact path="/" component={Login} />
 
-          <PublicRouteUser exact path="/customer/signup" component={SignUp} />
+          <PublicRouteUser exact path="/customer/signup" component={SignUp }/>
           <PublicRouteUser
             exact
             path="/customer/outerLinks"

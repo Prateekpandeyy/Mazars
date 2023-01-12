@@ -3,12 +3,11 @@ import Layout from "../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import BotqueryDB from "./BotqueryDB"
-import ProposalDB from "./proposalDB"
+import AssignmentDB from "./AssignmentDB"
 
 
 import { Container, Grid, Paper, Box } from "@material-ui/core";
-function Dashboard() {
+function ProposalDB() {
   const userId = window.localStorage.getItem("userid");
   const [allQueries, setAllQueries] = useState({
     total: "",
@@ -141,64 +140,95 @@ function Dashboard() {
   }, [userId]);
 
   return (
-    <>
-      <Layout custDashboard="custDashboard" custUserId={userId}>
-        <Container maxWidth="xl">
-          <Grid container>
-            <Grid item sm={3}>
-              <Box m={1}>
-                <Paper>
-                  <table className="table table-striped  first main_table">
-                    <thead className="query_thead">
-                      <tr>
-                        <th className="left_side"> All queries</th>
-                        <th>{total}</th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <table className="table table-striped  second main_table">
-                    <thead className="query_thead query_thead1">
-                      <tr>
-                        <th className="left_side">Inprogress; queries</th>
-                        <th>{inprogress_queries}</th>
-                      </tr>
-                    </thead>
+              <>
+                <Grid item sm={3}>
+                  <Box m={1}>
+                    <Paper>
+                      <table className="table table-striped fifth main_table">
+                        <thead className="proposal_thead">
+                          <tr>
+                            <th className="left_side">All proposals</th>
+                            <th>{allproposal}</th>
+                          </tr>
+                        </thead>
+                      </table>
 
-                    <tbody className="table_body">
-                      <tr>
-                        <td className="left_side">Inprogress; allocation</td>
-                        <td>{inprogress_allocation}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; proposals</td>
-                        <td>{inprogress_proposal}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; assignments</td>
-                        <td>{inprogress_assignment}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      <table className="table table-striped  sixth main_table">
+                        <thead className="proposal_thead3">
+                          <tr>
+                            <th className="left_side">Inprogress; proposals</th>
+                            <th>{InProgress}</th>
+                          </tr>
+                        </thead>
+                        <tbody className="table_body">
+                          <tr>
+                            <td className="left_side">
+                              Inprogress; preparation
+                            </td>
+                            <td>{inprogress_preparation}</td>
+                          </tr>
+                          <tr>
+                            <td className="left_side">
+                              Inprogress; acceptance
+                            </td>
+                            <td>{inprogress_acceptance}</td>
+                          </tr>
+                        </tbody>
+                      </table>
 
-                  {inprogress_queries !== 0 || declined_queries !== 0 ? (
-                    <BotqueryDB/>
-                  ) : (
-                    ""
-                  )}
-                </Paper>
-              </Box>
-            </Grid>
-            {allproposal !== 0 ? (
-              <ProposalDB/>
-            ) : (
-              ""
-            )}
-          </Grid>
-        </Container>
-      </Layout>{" "}
-      :
-    </>
+                      <table className="table table-striped seventh main_table">
+                        <thead className="proposal_thead3">
+                          <tr>
+                            <th className="left_side">Accepted; proposals </th>
+                            <th>{accepted_proposals}</th>
+                          </tr>
+                        </thead>
+                      </table>
+
+                      <table className="table table-striped  sixth main_table">
+                        <thead className="proposal_thead3">
+                          <tr>
+                            <th className="left_side">
+                              Client declined; proposals
+                            </th>
+                            <th>{declined}</th>
+                          </tr>
+                        </thead>
+                        <tbody className="table_body">
+                          <tr>
+                            <td className="left_side">
+                              Client declined; proposals
+                            </td>
+                            <td>{clientDeclineda}</td>
+                          </tr>
+                          <tr>
+                            <td className="left_side">
+                              client declined; assignments
+                            </td>
+                            <td>{clientDeclinedp}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table className="table table-striped eight main_table">
+                        <thead className="proposal_thead3">
+                          <tr>
+                            <th className="left_side">
+                              Permission to issue invoice
+                            </th>
+                            <th>{permission_to_issue_invoice}</th>
+                          </tr>
+                        </thead>
+                      </table>
+                    </Paper>
+                  </Box>
+                </Grid>
+                {allassignment !== 0 ? (
+                  <AssignmentDB/>
+                ) : (
+                  ""
+                )}{" "}
+              </>        
   );
 }
 
-export default Dashboard;
+export default ProposalDB;

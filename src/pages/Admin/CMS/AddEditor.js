@@ -44,20 +44,6 @@ function AddEditor() {
     }
   }, []);
   return (
-<<<<<<< HEAD
-   <>
- <div className="container" style={{padding: "0px", width: "100%", margin: "0px", maxWidth : "210mm"}}>
-  <div className="panel">
-    <div id="snow-container"></div>
-  
-  </div>
-
-</div>
-
-   </>
-  
-  
-=======
     <>
       <div
         className="container"
@@ -68,7 +54,6 @@ function AddEditor() {
         </div>
       </div>
     </>
->>>>>>> a71a5e7308eb109cb6592aac1e5a6aada1f1048e
   );
 }
 export default AddEditor;

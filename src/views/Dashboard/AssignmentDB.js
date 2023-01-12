@@ -3,12 +3,10 @@ import Layout from "../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import BotqueryDB from "./BotqueryDB"
-import ProposalDB from "./proposalDB"
-
+import PaymentDB from "./paymentDB";
 
 import { Container, Grid, Paper, Box } from "@material-ui/core";
-function Dashboard() {
+function AssignmentDB() {
   const userId = window.localStorage.getItem("userid");
   const [allQueries, setAllQueries] = useState({
     total: "",
@@ -141,64 +139,62 @@ function Dashboard() {
   }, [userId]);
 
   return (
-    <>
-      <Layout custDashboard="custDashboard" custUserId={userId}>
-        <Container maxWidth="xl">
-          <Grid container>
-            <Grid item sm={3}>
-              <Box m={1}>
-                <Paper>
-                  <table className="table table-striped  first main_table">
-                    <thead className="query_thead">
-                      <tr>
-                        <th className="left_side"> All queries</th>
-                        <th>{total}</th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <table className="table table-striped  second main_table">
-                    <thead className="query_thead query_thead1">
-                      <tr>
-                        <th className="left_side">Inprogress; queries</th>
-                        <th>{inprogress_queries}</th>
-                      </tr>
-                    </thead>
+                  <>
+                    <Grid item sm={3}>
+                      <Box m={1}>
+                        <Paper>
+                          <table className="table table-striped ninth main_table">
+                            <thead className="assignment_thead">
+                              <tr>
+                                <th className="left_side">All assignments</th>
+                                <th>{allassignment}</th>
+                              </tr>
+                            </thead>
+                          </table>
 
-                    <tbody className="table_body">
-                      <tr>
-                        <td className="left_side">Inprogress; allocation</td>
-                        <td>{inprogress_allocation}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; proposals</td>
-                        <td>{inprogress_proposal}</td>
-                      </tr>
-                      <tr>
-                        <td className="left_side">Inprogress; assignments</td>
-                        <td>{inprogress_assignment}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          <table className="table table-striped tenth main_table">
+                            <thead className="assignment_thead2">
+                              <tr>
+                                <th className="left_side">
+                                  Inprogress; assignments
+                                </th>
+                                <th>{inprogress}</th>
+                              </tr>
+                            </thead>
+                          </table>
 
-                  {inprogress_queries !== 0 || declined_queries !== 0 ? (
-                    <BotqueryDB/>
-                  ) : (
-                    ""
-                  )}
-                </Paper>
-              </Box>
-            </Grid>
-            {allproposal !== 0 ? (
-              <ProposalDB/>
-            ) : (
-              ""
-            )}
-          </Grid>
-        </Container>
-      </Layout>{" "}
-      :
-    </>
+                          <table className="table table-striped elevnth main_table">
+                            <thead className="assignment_thead2">
+                              <tr>
+                                <th className="left_side">
+                                  Completed; assignments
+                                </th>
+                                <th>{complete}</th>
+                              </tr>
+                            </thead>
+                          </table>
+
+                          <table className="table table-striped twelvth main_table">
+                            <thead className="assignment_thead2">
+                              <tr>
+                                <th className="left_side">
+                                  Client declined; payment
+                                </th>
+                                <th>{customer_declined_Pay}</th>
+                              </tr>
+                            </thead>
+                          </table>
+                        </Paper>
+                      </Box>
+                    </Grid>
+                    {totalpayment !== 0 ? (
+                      <PaymentDB/>
+                    ) : (
+                      ""
+                    )}{" "}
+                  </>
+                
   );
 }
 
-export default Dashboard;
+export default AssignmentDB;

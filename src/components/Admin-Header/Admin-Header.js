@@ -7,47 +7,36 @@ import NavWrapper from "./NavWrapper";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { WindowSharp } from "@mui/icons-material";
+import {CustLogout} from "./CustLogout";
 
 
 
 function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId, cmsDashboard, feedbackNumber }) {
   let history = useHistory();
   const logoutChannel =new BroadcastChannel('logout')
-  // const storageChange= (e) => {
-  //   if(e.key === 'logged_in'){
-  //     alert('Logged In:'+ e.newValue)
+
+  // const custLogout = () => {
+  //   const token = window.localStorage.getItem("clientToken")
+  //   const myConfig = {
+  //     headers: {
+  //       "uit": token
+  //     }
   //   }
-  // }
+  //   axios.get(`${baseUrl}/customers/logout`, myConfig)
+  //     .then((res) => {
+  //       logoutChannel.postMessage("Logout")
+  //       localStorage.removeItem("userid");
+  //       localStorage.removeItem("custEmail");
+  //       localStorage.removeItem("category");
+  //       localStorage.removeItem("clientToken")
+  //       history.push("/");
+  //       // window.addEventListner('storage',storageChange,false);
 
+  //     })
 
+  // };
 
-  const custLogout = () => {
-    const token = window.localStorage.getItem("clientToken")
-    const myConfig = {
-      headers: {
-        "uit": token
-      }
-    }
-    axios.get(`${baseUrl}/customers/logout`, myConfig)
-      .then((res) => {
-        logoutChannel.postMessage("Logout")
-        localStorage.removeItem("userid");
-        localStorage.removeItem("custEmail");
-        localStorage.removeItem("category");
-        localStorage.removeItem("clientToken")
-        history.push("/");
-        // window.addEventListner('storage',storageChange,false);
-
-      })
-
-  };
-
-   const logOutAllCustTabs = () => {
-    logoutChannel.onmessage = () => {
-      custLogout();
-      logoutChannel.close();
-    }
-  }
+   
 
   const adminLogout = () => {
 
@@ -151,8 +140,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId, cmsDashboard
     >
       {custUserId && (
         <NavWrapper
-
-          color="#fff" logout={custLogout}
+          color="#fff" logout={CustLogout}
           name="customer" email={CustEmail}
         />
       )}
