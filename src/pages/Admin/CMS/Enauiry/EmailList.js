@@ -5,16 +5,15 @@ import CustomHeading from "../../../../components/Common/CustomHeading";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { baseUrl } from "../../../../config/config";
 import DataTablepopulated from "../../../../components/DataTablepopulated/DataTabel";
-import {
-  DeleteIcon,
-  EditQuery,
-} from "../../../../components/Common/MessageIcon";
+import { EyeIcon, EditQuery } from "../../../../components/Common/MessageIcon";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Markup } from "interweave";
+import ShowHtml from "./ShowHtml";
 const EmailList = () => {
   const [list, setList] = useState([]);
+  const [viewHtml, setViewHtml] = useState(false);
+  const [mailerBody, setMailerBody] = useState("");
   let history = useHistory();
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -26,7 +25,13 @@ const EmailList = () => {
   useEffect(() => {
     getList();
   }, []);
-
+  const getHtml = (e) => {
+    setViewHtml(true);
+    setMailerBody(e);
+  };
+  const openHandler = (e) => {
+    setViewHtml(!viewHtml);
+  };
   const getList = () => {
     axios
       .get(`${baseUrl}/cms/emailerlist?uid=${JSON.parse(userId)}`, myConfig)
@@ -87,14 +92,6 @@ const EmailList = () => {
       },
     },
 
-    // {
-    //   dataField: "Message",
-    //   text: "message",
-
-    //   formatter: function CmsMessage(cell, row) {
-    //     return <Markup content={row.message} />;
-    //   },
-    // },
     {
       text: "Action",
       headerStyle: () => {
@@ -109,14 +106,26 @@ const EmailList = () => {
         } else if (row.status === "3") {
           status = "Complete";
         }
+        var finalString = row.message;
+        finalString = finalString = finalString.replace("<html>", "");
+        finalString = finalString.replace("</html>", "");
+        finalString = finalString.replace("<body>", "");
+        finalString = finalString.replace("</body>", "");
         return (
           <>
+            <span
+              title="View message"
+              className="m-2"
+              onClick={(e) => getHtml(finalString)}
+            >
+              <EyeIcon />
+            </span>
             {row.status === "0" ? (
               <Link to={`/cms/editenquiry/${row.id}`}>
                 <EditQuery />
               </Link>
             ) : (
-              <p>{status}</p>
+              <span className="completed">{status}</span>
             )}
           </>
         );
@@ -149,6 +158,15 @@ const EmailList = () => {
               ></DataTablepopulated>
             </CardBody>
           </Card>
+        )}
+        {viewHtml === true ? (
+          <ShowHtml
+            viewHtml={viewHtml}
+            openHandler={openHandler}
+            mailerBody={mailerBody}
+          />
+        ) : (
+          " "
         )}
       </Container>
     </Layout>

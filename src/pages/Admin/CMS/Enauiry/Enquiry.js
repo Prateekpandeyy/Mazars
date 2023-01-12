@@ -7,7 +7,6 @@ import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import CustomHeading from "../../../../components/Common/CustomHeading";
-import AddEditor from "../AddEditor";
 import { DatePicker, Space } from "antd";
 import axios from "axios";
 import { baseUrl } from "../../../../config/config";
@@ -15,12 +14,8 @@ import Select from "react-select";
 import moment from "moment";
 import Swal from "sweetalert2";
 import DropDown from "../../../../components/Common/DropDown";
-import EnqTemp from "./mazaremailtemp/EnqTemp";
-import CustomQuillEditor from "../CustomQuillEditor";
-import directGif from "./mazaremailtemp/images/directax.gif";
-import indirectGif from "./mazaremailtemp/images/indirextax.gif";
-import otherGif from "./mazaremailtemp/images/othertax.gif";
-import { Markup } from "interweave";
+import Loader from "react-loader-spinner";
+import ShowHtml from "./ShowHtml";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -31,6 +26,7 @@ const Schema = yup.object().shape({
 const Enquiry = (props) => {
   let history = useHistory();
   var minimum = moment.now();
+  let endData = moment(minimum, "DD-MM-YYYY HH:mm:ss").add(1, "days");
   let previousDay = moment().subtract(1, "days");
   const [options, setOptions] = useState([]);
   const [type, setType] = useState("");
@@ -53,12 +49,10 @@ const Enquiry = (props) => {
   const [selectDirect, setSelectDirect] = useState([]);
   const [selectIndirect, setSelectInDirect] = useState([]);
   const [selectOther, setSelectOther] = useState([]);
-  const [htmldata, setHtml] = useState({
-    direct: "",
-    inDirect: "",
-    other: "",
-  });
+  const [viewHtml, setViewHtml] = useState(false);
   const [finalData, setFinalData] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [mailerBody, setMailerBody] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -67,7 +61,9 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
-
+  const openHandler = (e) => {
+    setViewHtml(!viewHtml);
+  };
   const getEmail = (e) => {
     setEmail([]);
     setEmailValue([]);
@@ -232,7 +228,7 @@ const Enquiry = (props) => {
       }
     });
   };
-  console.log(selectDirect, selectIndirect, selectOther);
+
   const directOnchange = (e) => {
     setSelectDirect(e);
   };
@@ -243,6 +239,7 @@ const Enquiry = (props) => {
     setSelectOther(e);
   };
   const generateTemp = (e) => {
+    setLoading(true);
     let directoutput = selectDirect.map((i) => {
       return `<ul>
                 <li>${i.value} </li>
@@ -261,188 +258,372 @@ const Enquiry = (props) => {
                 
               </ul>`;
     });
-    let data = `<html lang="en">
-
- 
-<body>
-<table width = "70%">
+    let data = `<html>
 
 
-    <tr>
+    <body>
+    <span>
+    <table width = "65%">
 
-        <td>  <img
-            src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-            alt="logo" width="150">
 
-        </td>
-      
-</tr>    
-<tr>
-    <td>
-        <table bgColor="#0071CE" width = "100%" style="display: flex; margin: 10px 0px;">
-                    
-            <tr style="display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin: auto;
-            color: #fff;
-            align-items: center;
-            padding: 0px 15px;
-            width: 100%;">
-            <td>
-                <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
-                <p>Edition: Date</p>
-       
-    
+        <tr>
+
+            <td>  <img
+                src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                alt="logo" width="150">
+
             </td>
-             </tr>
+          
+    </tr>    
+    <tr>
+        <td>
+            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+                        
+                <tr>
+                <td style="color: #fff;">
+                    <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+                    <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p>Edition: Date</p>
+           
+        
+                </td>
+                 </tr>
+        </table>
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <table style="margin: auto;">
+                <tr>
+               <td>
+               
+             <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+            
+               </td>
+            </tr>
+            
+            </table>
+           
+        </td>
+    </tr>
+    <tr>
+        <td>
+        ${directoutput}
+        </td>
+        </tr>
+   <tr>
+    <td>
+        
+       <table style="margin: auto;">
+        <tr>
+       <td>
+       
+        <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
+    
+       </td>
+    </tr>
+  
     </table>
-    </td>
-</tr>
 
-<tr>
+    </td>
+   </tr>
+  <tr>
+       <td>
+       ${indirectoutput}
+       </td>
+     </tr>
+ <tr>
     <td>
         <table style="margin: auto;">
             <tr>
            <td>
-           
-         <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+            <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
         
            </td>
         </tr>
-        
+
         </table>
-       
     </td>
-</tr>
+ </tr>
+         
 <tr>
     <td>
-    ${directoutput}
+    ${otheroutput}
     </td>
-    </tr>
-<tr>
+ </tr>
+ <tr>
+ <td>
+ <table width = "100%">
+ <tr>
+ <td>
+     <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
+     <a href="https://staging.masindia.live/cms/updates" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+     display: inline-flex;
+     align-items: center;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     line-height: 1;
+     width: 65%;
+ 
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+     position: relative;
+     text-decoration: none;
+     transform: all 0.3s;
+     vertical-align: middle;">Read more</a>
+ 
+</td>
 <td>
+
+<p>  Click here for any further information or queries</p>
+     <a href="https://staging.masindia.live" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+     display: inline-flex;
+     align-items: center;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     line-height: 1;
+     width: 45%;
     
-   <table style="margin: auto;">
-    <tr>
-   <td>
-   
-    <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
-
-   </td>
-</tr>
-
-</table>
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+     position: relative;
+     text-decoration: none;
+     transform: all 0.3s;
+     vertical-align: middle;">Click here</a>
 
 </td>
 </tr>
-<tr>
-   <td>
- ${indirectoutput}
-   </td>
+ </table>
+ </td>
  </tr>
-<tr>
-<td>
-    <table style="margin: auto;">
-        <tr style="display: flex;
-    flex-direction: column;
-    margin: 10px 0px;">
+ 
+</table>
+<span style="display : flex; text-align : center">
+<p>
+Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
+collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
+400+ domestic clients and international clients across various sectors. The expert team has a
+comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
+experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
+of thought leadership in transfer pricing.
+
+</p>
+</br>
+<p>
+In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
+over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
+Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
+Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
+</p>
+</br>
+<p>Find out more on www.mazars.co.in</p>
+</br>
+<p>Copyright © 2023 Mazars, All rights reserved.</p>
+</span>
+</span>
+</body>
+
+    </html>`;
+    let mail = `
+    <span>
+    <table width = "65%">
+
+
+        <tr>
+
+            <td>  <img
+                src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                alt="logo" width="150">
+
+            </td>
+          
+    </tr>    
+    <tr>
+        <td>
+            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+                        
+                <tr>
+                <td style="color: #fff;">
+                    <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+                    <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p>Edition: Date</p>
+           
+        
+                </td>
+                 </tr>
+        </table>
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <table style="margin: auto;">
+                <tr>
+               <td>
+               
+             <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
+            
+               </td>
+            </tr>
+            
+            </table>
+           
+        </td>
+    </tr>
+    <tr>
+        <td>
+        ${directoutput}
+        </td>
+        </tr>
+   <tr>
+    <td>
+        
+       <table style="margin: auto;">
+        <tr>
        <td>
-        <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+       
+        <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
     
        </td>
     </tr>
-
+  
     </table>
-</td>
-</tr>
-     
-<tr>
-<td>
-${otheroutput}
-</td>
-</tr>
-<tr>
-<td>
-<table>
-<tr>
-    <td>
-        Click here to read the full update
-  </td>
-<tr>
-<td>
-    <button style="border-bottom-left-radius: 1.75rem;
-    background-color: #0071ce;
-    border: 1px solid #0071ce;
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    justify-content: center;
-    line-height: 1;
-    max-width: 100%;
-    min-width: 100px;
-    min-height: 3rem;
-    overflow: hidden;
-    padding: 0.75rem 1.5rem;
-    position: relative;
-    text-decoration: none;
-    transform: all 0.3s;
-    vertical-align: middle;">Read more</button>
 
     </td>
-</tr>
-</tr>
-</table>
+   </tr>
+  <tr>
+       <td>
+       ${indirectoutput}
+       </td>
+     </tr>
+ <tr>
+    <td>
+        <table style="margin: auto;">
+            <tr>
+           <td>
+            <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
+        
+           </td>
+        </tr>
 
-
-
-
+        </table>
+    </td>
+ </tr>
+         
+<tr>
+    <td>
+    ${otheroutput}
+    </td>
+ </tr>
+ <tr>
+ <td>
+ <table width = "100%">
+ <tr>
+ <td>
+     <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
+     <a href="https://staging.masindia.live/cms/updates" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+     display: inline-flex;
+     align-items: center;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     line-height: 1;
+     width: 65%;
+ 
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+     position: relative;
+     text-decoration: none;
+     transform: all 0.3s;
+     vertical-align: middle;">Read more</a>
+ 
 </td>
 <td>
-<table>
-<tr>
-    <td>
-        Click here for any further information or queries
-   </td>
-<tr>
-    <td>
-        <button style="border-bottom-left-radius: 1.75rem;
-        background-color: #0071ce;
-        border: 1px solid #0071ce;
-        color: #fff;
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-        font-size: 1rem;
-        font-weight: 500;
-        justify-content: center;
-        line-height: 1;
-        max-width: 100%;
-        min-width: 100px;
-        min-height: 3rem;
-        overflow: hidden;
-        padding: 0.75rem 1.5rem;
-        position: relative;
-        text-decoration: none;
-        transform: all 0.3s;
-        vertical-align: middle;">Click here</button>
-    </td>
-</tr>
-</tr>
-</table>
+
+<p>  Click here for any further information or queries</p>
+     <a href="https://staging.masindia.live" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+     display: inline-flex;
+     align-items: center;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     line-height: 1;
+     width: 45%;
+    
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+     position: relative;
+     text-decoration: none;
+     transform: all 0.3s;
+     vertical-align: middle;">Click here</a>
+
 </td>
 </tr>
+ </table>
+ </td>
+ </tr>
+ 
 </table>
+<span style="display : flex; text-align : center">
+<p>
+Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
+collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
+400+ domestic clients and international clients across various sectors. The expert team has a
+comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
+experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
+of thought leadership in transfer pricing.
 
-</body>
-    </html>`;
+</p>
+</br>
+<p>
+In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
+over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
+Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
+Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
+</p>
+</br>
+<p>Find out more on www.mazars.co.in</p>
+</br>
+<p>Copyright © 2023 Mazars, All rights reserved.</p>
+</span>
+</span>
+`;
+    console.log(mail);
+    setMailerBody(mail);
     setFinalData(data);
+    if (data) {
+      setLoading(false);
+      Swal.fire({
+        title: "success",
+        html: "Templete generate successfully",
+        icons: "success",
+      });
+    }
   };
-  console.log("finalData", finalData);
+  console.log("minimum", moment(minimum).add(1, "day").toDate());
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -633,7 +814,11 @@ ${otheroutput}
                           <Space direction="vertical" size={24}>
                             <DatePicker
                               disabledDate={(d) =>
-                                !d || !d.isBetween(min, minimum)
+                                !d ||
+                                !d.isBetween(
+                                  min,
+                                  moment(minimum).add(1, "day").toDate()
+                                )
                               }
                               id="endDate"
                               format="DD-MM-YYYY HH:mm:ss"
@@ -650,18 +835,21 @@ ${otheroutput}
                         </span>
                       </div>
                       <div className="col-md-3">
-                        <button
-                          type="button"
-                          onClick={(e) => generateTemplate(e)}
-                          className="autoWidthBtn"
-                        >
-                          Search
-                        </button>
+                        <div className="emailerBtn">
+                          <button
+                            type="button"
+                            onClick={(e) => generateTemplate(e)}
+                            className="autoWidthBtn"
+                            style={{ height: "40px" }}
+                          >
+                            Search
+                          </button>
+                        </div>
                       </div>
                     </div>
                     {showTemplete === true ? (
-                      <div>
-                        <div>
+                      <div className="row">
+                        <div className="col-md-3">
                           <label>Direct</label>
                           <Select
                             isMulti={true}
@@ -669,7 +857,7 @@ ${otheroutput}
                             options={templeteData.direct}
                           />
                         </div>
-                        <div>
+                        <div className="col-md-3">
                           <label>Indirect</label>
                           <Select
                             isMulti={true}
@@ -677,7 +865,7 @@ ${otheroutput}
                             options={templeteData.inDirect}
                           />
                         </div>
-                        <div>
+                        <div className="col-md-3">
                           <label>other</label>
                           <Select
                             onChange={(e) => otherOnchange(e)}
@@ -685,29 +873,42 @@ ${otheroutput}
                             options={templeteData.other}
                           />
                         </div>
-                        <div className="col-md-4 my-4">
-                          <button
-                            type="button"
-                            onClick={(e) => generateTemp(e)}
-                            className="autoWidthBtn"
-                          >
-                            Generate message
-                          </button>
+                        <div className="col-md-3">
+                          {loading === true ? (
+                            <Loader />
+                          ) : (
+                            <div className="emailerBtn">
+                              <button
+                                type="button"
+                                onClick={(e) => generateTemp(e)}
+                                className="customBtn"
+                                style={{ height: "40px" }}
+                              >
+                                Template
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ) : (
                       ""
                     )}
+                    {mailerBody && (
+                      <div className="row">
+                        <div className="col-md-12 my-4">
+                          <button
+                            onClick={(e) => setViewHtml(!viewHtml)}
+                            type="button"
+                            className="customBtn"
+                          >
+                            Show html
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </fieldset>
                 </div>
 
-                <div className="col-md-10">
-                  <div className="form-group">
-                    <label>
-                      Message<span className="declined">*</span>
-                    </label>
-                  </div>
-                </div>
                 <div className="col-md-10">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
@@ -734,6 +935,15 @@ ${otheroutput}
                 </div>
               </div>
             </form>
+            {viewHtml === true ? (
+              <ShowHtml
+                openHandler={openHandler}
+                mailerBody={mailerBody}
+                viewHtml={viewHtml}
+              />
+            ) : (
+              " "
+            )}
           </CardBody>
         </Card>
       </Container>
