@@ -61,6 +61,7 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
+  const dateFormat = "YYYY-MM-DD HH:mm:ss";
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
   };
@@ -327,22 +328,22 @@ const Enquiry = (props) => {
   const generateTemp = (e) => {
     setLoading(true);
     let directoutput = selectDirect.map((i) => {
-      return `<ul>
+      return `
                 <li>${i.value} </li>
                 
-              </ul>`;
+              `;
     });
     let indirectoutput = selectIndirect.map((i) => {
-      return `<ul>
+      return `
                 <li>${i.value} </li>
                 
-              </ul>`;
+              `;
     });
     let otheroutput = selectOther.map((i) => {
-      return `<ul>
+      return `
                 <li>${i.value} </li>
                 
-              </ul>`;
+              `;
     });
     let data = `<html>
 
@@ -363,11 +364,11 @@ const Enquiry = (props) => {
     </tr>    
     </br>
     <tr>
-        <td>
-            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+        <td bgColor="#0071CE">
+            <table bgColor="#0071CE" width = "100%" style="margin: 10px 0px; padding: 10px;">
                         
                 <tr>
-                <td style="color: #fff;">
+                <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
                     <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
                     <p>Edition: Date</p>
@@ -382,19 +383,25 @@ const Enquiry = (props) => {
    ${getDirectTable()}
     <tr>
         <td>
+        <ul>
         ${directoutput}
+        </ul>
         </td>
         </tr>
   ${getIndirectTable()}
   <tr>
        <td>
+       <ul>
        ${indirectoutput}
+       </ul>
        </td>
      </tr>
  ${getOtherTable()}
 <tr>
     <td>
+    <ul>
     ${otheroutput}
+    </ul>
     </td>
  </tr>
  <tr>
@@ -402,6 +409,7 @@ const Enquiry = (props) => {
  <table width = "100%">
  <tr>
  <td>
+ 
      <p>Click here to read the full update</p>
      <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
      style="border-bottom-left-radius: 1.75rem;
@@ -419,14 +427,14 @@ const Enquiry = (props) => {
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
- 
+ text-align : center;
      text-decoration: none;
-     transform: all 0.3s;">Read more</a>
+     transform: all 0.3s;"">Read more</a>
  
 </td>
-<td>
+<td style ="width :50%">
 
-<p style="float :right;">  Click here for any further information or queries</p>
+<p style="float :right; white-space : nowrap">  Click here for any further information or queries</p>
      <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
       style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
@@ -443,7 +451,7 @@ const Enquiry = (props) => {
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
- 
+ text-align : center;
      text-decoration: none;
      transform: all 0.3s;">Click here</a>
 
@@ -452,10 +460,9 @@ const Enquiry = (props) => {
  </table>
  </td>
  </tr>
- 
-</table>
-<span style="display : block; width : 65%; text-align : center">
-<p>
+ <tr>
+ <td style="display : block; text-align : center">
+ <p>
 Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
 collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
 400+ domestic clients and international clients across various sectors. The expert team has a
@@ -464,7 +471,6 @@ experience of having handled search & seizure cases of 150+ business groups. The
 of thought leadership in transfer pricing.
 
 </p>
-
 <p>
 In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
 over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
@@ -475,7 +481,10 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
 <p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
 
 <p>Copyright © 2023 Mazars, All rights reserved.</p>
-</span>
+ </td>
+ </tr>
+</table>
+
 </span>
 </body>
 
@@ -495,103 +504,104 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
             </td>
           
     </tr>    
+    </br>
     <tr>
-        <td>
-            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+        <td bgColor="#0071CE">
+            <table bgColor="#0071CE" width = "100%" style="margin: 10px 0px; padding: 10px;">
                         
                 <tr>
-                <td style="color: #fff;">
-                    <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                    <p>Edition: Date</p>
-           
-        
-                </td>
+                <td style="margin : 0px 10px; color : #fff">
+                <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+                <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
+                <p>Edition: Date</p>
+       
+    
+            </td>
                  </tr>
         </table>
         </td>
     </tr>
-    
+    </br>
    ${getDirectTable()}
     <tr>
         <td>
-        ${directoutput}
+      <ul>
+      ${directoutput}
+      </ul>
         </td>
         </tr>
   ${getIndirectTable()}
   <tr>
        <td>
-       ${indirectoutput}
+      <ul>  ${indirectoutput}</ul>
        </td>
      </tr>
-${getOtherTable()}
-         
+ ${getOtherTable()}
 <tr>
     <td>
-    ${otheroutput}
+ <ul>
+ ${otheroutput}
+ </ul>
     </td>
  </tr>
  <tr>
  <td>
  <table width = "100%">
  <tr>
- <td>
-     <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+ <td style ="width :50%">
+     <p>Click here to read the full update</p>
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
+     style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
-     display: inline-flex;
-     align-items: center;
+   float : left;
      cursor: pointer;
      font-size: 1rem;
      font-weight: 500;
-     justify-content: center;
+   
      line-height: 1;
-     width: 65%;
- 
+     width: 45%;
+    margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
-     position: relative;
+ text-align : center;
      text-decoration: none;
-     transform: all 0.3s;
-     vertical-align: middle;">Read more</a>
+     transform: all 0.3s;"">Read more</a>
  
 </td>
 <td>
 
-<p>  Click here for any further information or queries</p>
-     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+<p style="float :right; white-space : nowrap">  Click here for any further information or queries</p>
+     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
+      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
-     display: inline-flex;
-     align-items: center;
+   float : right;
      cursor: pointer;
      font-size: 1rem;
      font-weight: 500;
-     justify-content: center;
+   
      line-height: 1;
      width: 45%;
-    
+    margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
-     position: relative;
+ text-align : center;
      text-decoration: none;
-     transform: all 0.3s;
-     vertical-align: middle;">Click here</a>
+     transform: all 0.3s;">Click here</a>
 
 </td>
 </tr>
  </table>
  </td>
  </tr>
- 
-</table>
-<span style="display : block;  text-align : center">
-<p>
+ <tr>
+ <td style="display : block; text-align : center">
+ <p>
 Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
 collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
 400+ domestic clients and international clients across various sectors. The expert team has a
@@ -600,7 +610,6 @@ experience of having handled search & seizure cases of 150+ business groups. The
 of thought leadership in transfer pricing.
 
 </p>
-
 <p>
 In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
 over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
@@ -611,7 +620,10 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
 <p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
 
 <p>Copyright © 2023 Mazars, All rights reserved.</p>
-</span>
+ </td>
+ </tr>
+</table>
+
 </span>
 `;
 
@@ -902,7 +914,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                                 className="customBtn"
                                 style={{ height: "40px" }}
                               >
-                                Template
+                                Generate
                               </button>
                             </div>
                           )}
@@ -927,14 +939,14 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                   </fieldset>
                 </div>
 
-                <div className="col-md-10">
+                <div className="col-md-10 my-4">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
                   </label>
                   <Space direction="vertical" size={24}>
                     <DatePicker
                       disabledDate={(d) => !d || d.isBefore(minimum)}
-                      format="YYYY-MM-DD HH:mm:ss"
+                      format={dateFormat}
                       showTime={{
                         defaultValue: moment("00:00:00", "HH:mm:ss"),
                       }}
