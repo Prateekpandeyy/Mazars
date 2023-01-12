@@ -120,6 +120,11 @@ const Enquiry = (props) => {
           html: "Message schedule successfully",
           icon: "success",
         });
+        axios
+          .get("https://stagingapi.masindia.live/v1/autoscript/emailprocess")
+          .then((res) => {
+            console.log("ers", res);
+          });
         history.push("/cms/emaillist");
       }
     });
@@ -235,6 +240,87 @@ const Enquiry = (props) => {
   const indirectOnchange = (e) => {
     setSelectInDirect(e);
   };
+
+  const getDirectTable = () => {
+    var table;
+    if (selectDirect.length > 0) {
+      table = `  <tr>
+      <td>
+      <table style="margin: auto;">
+      <tr>
+        <td>
+          <img
+            src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
+            alt="directax"
+          />
+        </td>
+      </tr>
+    </table>
+      </td>
+  </tr>`;
+    } else {
+      table = ` <tr>
+    <td>
+       
+    </td>
+</tr>`;
+    }
+    return table;
+  };
+  const getIndirectTable = () => {
+    var table;
+    if (selectIndirect.length > 0) {
+      table = `  <tr>
+      <td>
+      <table style="margin: auto;">
+      <tr>
+        <td>
+          <img
+            src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
+            alt="indirectax"
+          />
+        </td>
+      </tr>
+    </table>
+
+      </td>
+  </tr>`;
+    } else {
+      table = ` <tr>
+    <td>
+       
+    </td>
+</tr>`;
+    }
+    return table;
+  };
+  const getOtherTable = () => {
+    var table;
+    if (selectOther.length > 0) {
+      table = `  <tr>
+      <td>
+      <table style="margin: auto;">
+      <tr>
+        <td>
+          <img
+            src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
+            alt="othertax"
+          />
+        </td>
+      </tr>
+    </table>
+
+      </td>
+  </tr>`;
+    } else {
+      table = ` <tr>
+    <td>
+       
+    </td>
+</tr>`;
+    }
+    return table;
+  };
   const otherOnchange = (e) => {
     setSelectOther(e);
   };
@@ -275,6 +361,7 @@ const Enquiry = (props) => {
             </td>
           
     </tr>    
+    </br>
     <tr>
         <td>
             <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
@@ -282,7 +369,7 @@ const Enquiry = (props) => {
                 <tr>
                 <td style="color: #fff;">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
                     <p>Edition: Date</p>
            
         
@@ -291,62 +378,20 @@ const Enquiry = (props) => {
         </table>
         </td>
     </tr>
-    
-    <tr>
-        <td>
-            <table style="margin: auto;">
-                <tr>
-               <td>
-               
-             <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
-            
-               </td>
-            </tr>
-            
-            </table>
-           
-        </td>
-    </tr>
+    </br>
+   ${getDirectTable()}
     <tr>
         <td>
         ${directoutput}
         </td>
         </tr>
-   <tr>
-    <td>
-        
-       <table style="margin: auto;">
-        <tr>
-       <td>
-       
-        <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
-    
-       </td>
-    </tr>
-  
-    </table>
-
-    </td>
-   </tr>
+  ${getIndirectTable()}
   <tr>
        <td>
        ${indirectoutput}
        </td>
      </tr>
- <tr>
-    <td>
-        <table style="margin: auto;">
-            <tr>
-           <td>
-            <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
-        
-           </td>
-        </tr>
-
-        </table>
-    </td>
- </tr>
-         
+ ${getOtherTable()}
 <tr>
     <td>
     ${otheroutput}
@@ -357,52 +402,50 @@ const Enquiry = (props) => {
  <table width = "100%">
  <tr>
  <td>
-     <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
-     <a href="https://staging.masindia.live/cms/updates" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     <p>Click here to read the full update</p>
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
+     style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
-     display: inline-flex;
-     align-items: center;
+   float : left;
      cursor: pointer;
      font-size: 1rem;
      font-weight: 500;
-     justify-content: center;
+   
      line-height: 1;
-     width: 65%;
- 
+     width: 45%;
+    margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
-     position: relative;
+ 
      text-decoration: none;
-     transform: all 0.3s;
-     vertical-align: middle;">Read more</a>
+     transform: all 0.3s;">Read more</a>
  
 </td>
 <td>
 
-<p>  Click here for any further information or queries</p>
-     <a href="https://staging.masindia.live" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+<p style="float :right;">  Click here for any further information or queries</p>
+     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
+      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
-     display: inline-flex;
-     align-items: center;
+   float : right;
      cursor: pointer;
      font-size: 1rem;
      font-weight: 500;
-     justify-content: center;
+   
      line-height: 1;
      width: 45%;
-    
+    margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
-     position: relative;
+ 
      text-decoration: none;
-     transform: all 0.3s;
-     vertical-align: middle;">Click here</a>
+     transform: all 0.3s;">Click here</a>
 
 </td>
 </tr>
@@ -411,7 +454,7 @@ const Enquiry = (props) => {
  </tr>
  
 </table>
-<span style="display : flex; text-align : center">
+<span style="display : block; width : 65%; text-align : center">
 <p>
 Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
 collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
@@ -421,7 +464,7 @@ experience of having handled search & seizure cases of 150+ business groups. The
 of thought leadership in transfer pricing.
 
 </p>
-</br>
+
 <p>
 In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
 over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
@@ -429,14 +472,15 @@ Pune. Our professionals have in-depth experience in sectors like Energy, Telecom
 Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
 </p>
 </br>
-<p>Find out more on www.mazars.co.in</p>
-</br>
+<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
+
 <p>Copyright © 2023 Mazars, All rights reserved.</p>
 </span>
 </span>
 </body>
 
     </html>`;
+
     let mail = `
     <span>
     <table width = "65%">
@@ -458,7 +502,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                 <tr>
                 <td style="color: #fff;">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px; text-align: center;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
                     <p>Edition: Date</p>
            
         
@@ -468,60 +512,19 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
         </td>
     </tr>
     
-    <tr>
-        <td>
-            <table style="margin: auto;">
-                <tr>
-               <td>
-               
-             <img src= "https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"  alt="directax" />  
-            
-               </td>
-            </tr>
-            
-            </table>
-           
-        </td>
-    </tr>
+   ${getDirectTable()}
     <tr>
         <td>
         ${directoutput}
         </td>
         </tr>
-   <tr>
-    <td>
-        
-       <table style="margin: auto;">
-        <tr>
-       <td>
-       
-        <img src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif" alt="indirectax" />  
-    
-       </td>
-    </tr>
-  
-    </table>
-
-    </td>
-   </tr>
+  ${getIndirectTable()}
   <tr>
        <td>
        ${indirectoutput}
        </td>
      </tr>
- <tr>
-    <td>
-        <table style="margin: auto;">
-            <tr>
-           <td>
-            <img src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif" alt="othertax" />
-        
-           </td>
-        </tr>
-
-        </table>
-    </td>
- </tr>
+${getOtherTable()}
          
 <tr>
     <td>
@@ -534,7 +537,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
  <tr>
  <td>
      <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
-     <a href="https://staging.masindia.live/cms/updates" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
@@ -559,7 +562,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
 <td>
 
 <p>  Click here for any further information or queries</p>
-     <a href="https://staging.masindia.live" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank" style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
@@ -587,7 +590,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
  </tr>
  
 </table>
-<span style="display : flex; text-align : center">
+<span style="display : block;  text-align : center">
 <p>
 Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
 collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
@@ -597,7 +600,7 @@ experience of having handled search & seizure cases of 150+ business groups. The
 of thought leadership in transfer pricing.
 
 </p>
-</br>
+
 <p>
 In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
 over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
@@ -605,13 +608,13 @@ Pune. Our professionals have in-depth experience in sectors like Energy, Telecom
 Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
 </p>
 </br>
-<p>Find out more on www.mazars.co.in</p>
-</br>
+<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
+
 <p>Copyright © 2023 Mazars, All rights reserved.</p>
 </span>
 </span>
 `;
-    console.log(mail);
+
     setMailerBody(mail);
     setFinalData(data);
     if (data) {
@@ -623,7 +626,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
       });
     }
   };
-  console.log("minimum", moment(minimum).add(1, "day").toDate());
+
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -648,7 +651,22 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
               <div className="row">
                 <div className="col-md-10 my-4">
                   <div className="row" onClick={(e) => getSelectData(e)}>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          name="flexRadioDefault"
+                          id="allClient"
+                          value="1"
+                          disabled={disabled}
+                        />
+                        <label class="form-check-label" htmlFor="allClient">
+                          Admin
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-2">
                       <div class="form-check">
                         <input
                           class="form-check-input"
@@ -663,7 +681,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                         </label>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <div class="form-check">
                         <input
                           class="form-check-input"
