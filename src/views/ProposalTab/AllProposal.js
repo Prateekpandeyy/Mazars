@@ -145,7 +145,7 @@ function ProposalTab() {
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.q_id}`,
+                pathname: `/customer_my-assingment/${row.q_id}`,
                 index: 0,
                 routes: "proposal",
               }}
@@ -289,7 +289,7 @@ function ProposalTab() {
                 <span className="ml-1" title="Send Message">
                   <Link
                     to={{
-                      pathname: `/customer/chatting/${row.q_id}&type=2`,
+                      pathname: `/customer_chatting/${row.q_id}&type=2`,
                       index: 0,
                       routes: "proposal",
                       obj: {
@@ -315,7 +315,7 @@ function ProposalTab() {
                 <span className="ml-1" title="Send Message">
                   <Link
                     to={{
-                      pathname: `/customer/chatting/${row.q_id}&type=2`,
+                      pathname: `/customer_chatting/${row.q_id}&type=2`,
                       index: 0,
                       routes: "proposal",
                       obj: {

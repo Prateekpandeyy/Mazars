@@ -53,6 +53,7 @@ const Enquiry = (props) => {
   const [finalData, setFinalData] = useState("");
   const [loading, setLoading] = useState(false);
   const [mailerBody, setMailerBody] = useState("");
+  const [edition, setEeition] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -121,11 +122,7 @@ const Enquiry = (props) => {
           html: "Message schedule successfully",
           icon: "success",
         });
-        axios
-          .get("https://stagingapi.masindia.live/v1/autoscript/emailprocess")
-          .then((res) => {
-            console.log("ers", res);
-          });
+
         history.push("/cms/emaillist");
       }
     });
@@ -167,6 +164,7 @@ const Enquiry = (props) => {
 
         .then((res) => {
           if (res.data.code === 1) {
+            setSubject(res.data.result[0]?.subject);
           } else if (res.data.code === 102) {
             localStorage.removeItem("token");
             history.push("/cms/login");
@@ -328,10 +326,7 @@ const Enquiry = (props) => {
   const generateTemp = (e) => {
     setLoading(true);
     let directoutput = selectDirect.map((i) => {
-      return `
-                <li>${i.value} </li>
-                
-              `;
+      return `<li>${i.value} </li>`;
     });
     let indirectoutput = selectIndirect.map((i) => {
       return `
@@ -371,7 +366,7 @@ const Enquiry = (props) => {
                 <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
                     <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                    <p>Edition: Date</p>
+                    <p>Edition: ${edition}</p>
            
         
                 </td>
@@ -513,7 +508,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                 <td style="margin : 0px 10px; color : #fff">
                 <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
                 <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                <p>Edition: Date</p>
+                <p>Edition: ${edition}</p>
        
     
             </td>
@@ -627,8 +622,9 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
 </span>
 `;
 
-    setMailerBody(mail);
-    setFinalData(data);
+    setMailerBody(mail.replace(/\,/g, " "));
+
+    setFinalData(data.replace(/\,/g, " "));
     if (data) {
       setLoading(false);
       Swal.fire({
@@ -879,24 +875,24 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                     </div>
                     {showTemplete === true ? (
                       <div className="row">
-                        <div className="col-md-3">
-                          <label>Direct</label>
+                        <div className="col-md-12">
+                          <label>Direct tax</label>
                           <Select
                             isMulti={true}
                             onChange={(e) => directOnchange(e)}
                             options={templeteData.direct}
                           />
                         </div>
-                        <div className="col-md-3">
-                          <label>Indirect</label>
+                        <div className="col-md-12">
+                          <label>Indirect tax</label>
                           <Select
                             isMulti={true}
                             onChange={(e) => indirectOnchange(e)}
                             options={templeteData.inDirect}
                           />
                         </div>
-                        <div className="col-md-3">
-                          <label>other</label>
+                        <div className="col-md-12">
+                          <label>Others</label>
                           <Select
                             onChange={(e) => otherOnchange(e)}
                             isMulti={true}
@@ -907,16 +903,30 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                           {loading === true ? (
                             <Loader />
                           ) : (
-                            <div className="emailerBtn">
-                              <button
-                                type="button"
-                                onClick={(e) => generateTemp(e)}
-                                className="customBtn"
-                                style={{ height: "40px" }}
-                              >
-                                Generate
-                              </button>
-                            </div>
+                            <>
+                              <div>
+                                <div className="form-group">
+                                  <label>Edition date</label>
+                                  <input
+                                    type="date"
+                                    name="subject"
+                                    className="form-control"
+                                    onChange={(e) => setEeition(e.target.value)}
+                                    ref={register({ required: true })}
+                                  />
+                                </div>
+                              </div>
+                              <div className="emailerBtn">
+                                <button
+                                  type="button"
+                                  onClick={(e) => generateTemp(e)}
+                                  className="customBtn"
+                                  style={{ height: "40px" }}
+                                >
+                                  Generate
+                                </button>
+                              </div>
+                            </>
                           )}
                         </div>
                       </div>
@@ -931,7 +941,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                             type="button"
                             className="customBtn"
                           >
-                            Show html
+                            Show draft
                           </button>
                         </div>
                       </div>
@@ -939,7 +949,7 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                   </fieldset>
                 </div>
 
-                <div className="col-md-10 my-4">
+                <div className="col-md-u my-4">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
                   </label>

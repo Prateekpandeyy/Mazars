@@ -955,9 +955,9 @@ color: #ffffff;
   .picker-datetime-panel .ant-picker-time-panel .ant-picker-header{
     display: none;
   }
-  /* .ant-picker-now{
+  .ant-picker-now{
     display: none !important;
-  } */
+  }
   .ant-picker{
     padding: 8px !important;
     border-radius: 4px !important;

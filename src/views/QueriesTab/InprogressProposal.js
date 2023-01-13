@@ -62,7 +62,7 @@ function InprogressProposal({
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.id}`,
+                pathname: `/customer_my-assingment/${row.id}`,
                 index: 2,
                 routes: "queries",
               }}
@@ -130,7 +130,7 @@ function InprogressProposal({
                     <span className="ml-2">
                       <Link
                         to={{
-                          pathname: `/customer/feedback/${row.assign_no}`,
+                          pathname: `/customer_feedback/${row.assign_no}`,
                           index: 2,
                           routes: "queries",
                         }}
@@ -159,7 +159,7 @@ function InprogressProposal({
                     <span className="ml-2">
                       <Link
                         to={{
-                          pathname: `/customer/chatting/${row.id}&type=4`,
+                          pathname: `/customer_chatting/${row.id}&type=4`,
                           index: 2,
                           routes: "queries",
                           obj: {
@@ -190,7 +190,7 @@ function InprogressProposal({
                       <span className="ml-2">
                         <Link
                           to={{
-                            pathname: `/customer/feedback/${row.assign_no}`,
+                            pathname: `/customer_feedback/${row.assign_no}`,
                             index: 2,
                             routes: "queries",
                           }}
@@ -206,7 +206,7 @@ function InprogressProposal({
                       <span className="ml-2">
                         <Link
                           to={{
-                            pathname: `/customer/chatting/${row.id}&type=4`,
+                            pathname: `/customer_chatting/${row.id}&type=4`,
                             index: 2,
                             routes: "queries",
                             obj: {

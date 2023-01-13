@@ -123,7 +123,7 @@ function AdminAssignment() {
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.id}`,
+                pathname: `/customer_my-assingment/${row.id}`,
                 index: 0,
                 routes: "assignment",
               }}
@@ -302,7 +302,7 @@ function AdminAssignment() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Link
                   to={{
-                    pathname: `/customer/chatting/${row.assign_id}`,
+                    pathname: `/customer_chatting/${row.assign_id}`,
                     index: 0,
                     routes: "assignment",
 

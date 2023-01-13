@@ -54,7 +54,7 @@ const OuterLinkVideo = () => {
               );
             }
             history.push(
-              `/customer/meetingouter/${res.data.result.scheduleid}`
+              `/customer_meetingouter/${res.data.result.scheduleid}`
             );
           } else {
             Swal.fire({

@@ -6,7 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
- 
   Modal,
   ModalHeader,
   ModalBody,
@@ -18,20 +17,21 @@ import CommonServices from "../../common/common";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import PaymentComponent from './PaymentComponent';
-import './index.css';
+import PaymentComponent from "./PaymentComponent";
+import "./index.css";
 import ModalManual from "../ModalManual/AllComponentManual";
-import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
-  Payment} from "../../components/Common/MessageIcon";
+import MessageIcon, {
+  ViewDiscussionIcon,
+  HelpIcon,
+  Payment,
+} from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 function Paid() {
-
   const { id } = useParams();
-  let history = useHistory()
+  let history = useHistory();
   const userId = window.localStorage.getItem("userid");
   const [records, setRecords] = useState([]);
-
 
   const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
@@ -42,7 +42,7 @@ function Paid() {
     amount: "",
     accepted_amount: "",
     paid_amount: "",
-    assign_id: '',
+    assign_id: "",
 
     amount_type: "",
     amount_fixed: "",
@@ -67,55 +67,54 @@ function Paid() {
       amount_fixed: key.amount_fixed,
       amount_hourly: key.amount_hourly,
 
-
       payment_terms: key.payment_terms,
       no_of_installment: key.no_of_installment,
       installment_amount: key.installment_amount,
       due_date: key.due_date,
-
     });
   };
 
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const [openManual, setManual] = useState(false)
-  const token = window.localStorage.getItem("clientToken")
+  const [openManual, setManual] = useState(false);
+  const token = window.localStorage.getItem("clientToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const needHelp = () => {
-      
-      setManual(!openManual)
-  }
+    setManual(!openManual);
+  };
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+  };
 
   useEffect(() => {
     getPaymentStatus();
   }, []);
 
-
   const getPaymentStatus = () => {
-    axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}&status=1`, myConfig).then((res) => {
-   
-      if (res.data.code === 1) {
-        setPayment(res.data.result);
-        setCount(res.data.result.length);
-        setRecords(res.data.result.length);
-
-      }
-      else if (res.data.code === 0){
-        CommonServices.clientLogout(history)
-      }
-    });
+    axios
+      .get(
+        `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+          userId
+        )}&status=1`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setPayment(res.data.result);
+          setCount(res.data.result.length);
+          setRecords(res.data.result.length);
+        } else if (res.data.code === 0) {
+          CommonServices.clientLogout(history);
+        }
+      });
   };
 
   const toggle = (key) => {
-  
     setModal(!modal);
 
     fetch(`${baseUrl}/admin/getPaymentDetail?id=${key}`, {
@@ -126,80 +125,73 @@ function Paid() {
     })
       .then((res) => res.json())
       .then((response) => {
-    
         setPay(response.payment_detail);
       })
       .catch((error) => console.log(error));
   };
-
 
   const columns = [
     {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-          return rowIndex + 1;
+        return rowIndex + 1;
       },
-      headerStyle : () => {
-        return( {
-            width: "50px"
-        })
-    }
-  },
-  {
-    dataField: "query_created_date",
-    text: "Date",
-    sort: true,
-   
-    formatter: function dateFormat(cell, row) {
-     
+      headerStyle: () => {
+        return {
+          width: "50px",
+        };
+      },
+    },
+    {
+      dataField: "query_created_date",
+      text: "Date",
+      sort: true,
+
+      formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created_date;
         if (oldDate == null) {
-            return null;
+          return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+      },
     },
-},
-{
-    dataField: "assign_no",
-    text: "Query No",
-   
-    formatter: function nameFormatter(cell, row) {
-     
+    {
+      dataField: "assign_no",
+      text: "Query No",
+
+      formatter: function nameFormatter(cell, row) {
         return (
-            <>
-                   <Link
-                        to={{
-                            pathname: `/customer/my-assingment/${row.assign_id}`,
-                            index : 1,
-                            routes: "paymentstatus",
-                        }}
-                    >
-                        {row.assign_no}
-                    </Link>
-            </>
+          <>
+            <Link
+              to={{
+                pathname: `/customer_my-assingment/${row.assign_id}`,
+                index: 1,
+                routes: "paymentstatus",
+              }}
+            >
+              {row.assign_no}
+            </Link>
+          </>
         );
+      },
     },
-},
     {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
       sort: true,
-      
     },
     {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-        
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
           return null;
@@ -210,89 +202,83 @@ function Paid() {
     {
       text: "Status",
       dataField: "",
-      
-      formatter : function (cell, row) {
-          return(
-              <>
-              {row.paid_status == "2"  ?
-              <p className="declined">{row.status} </p> : 
-              <p>{row.status}</p>}
-              </>
-          )
-      }
-  },
-  {
-    dataField: "accepted_amount",
-    text: "Accepted Amount ",
-    sort: true,
-   
-    sortFunc: (a, b, order, dataField) => {
-      if (order === 'asc') {
-        return b - a;
-      }
-      return a - b; // desc
-    },
-   
-    formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.accepted_amount;
-        
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
-},
-{
-    text: "Amount Paid",
-    dataField: "paid_amount",
-    sort: true,
-    
-    sortFunc: (a, b, order, dataField) => {
-      if (order === 'asc') {
-        return b - a;
-      }
-      return a - b; // desc
-    },
-   
-    formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.paid_amount;
-       
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
-},
 
-{
-    text : "Amount Outstanding",
-    dataField: "amount_outstanding",
-    sort: true,
-   
-    sortFunc: (a, b, order, dataField) => {
-      if (order === 'asc') {
-        return b - a;
-      }
-      return a - b; // desc
+      formatter: function (cell, row) {
+        return (
+          <>
+            {row.paid_status == "2" ? (
+              <p className="declined">{row.status} </p>
+            ) : (
+              <p>{row.status}</p>
+            )}
+          </>
+        );
+      },
     },
-    
-    formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.amount_outstanding;
-     
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
-},
+    {
+      dataField: "accepted_amount",
+      text: "Accepted Amount ",
+      sort: true,
+
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.accepted_amount;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+    {
+      text: "Amount Paid",
+      dataField: "paid_amount",
+      sort: true,
+
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.paid_amount;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+
+    {
+      text: "Amount Outstanding",
+      dataField: "amount_outstanding",
+      sort: true,
+
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.amount_outstanding;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
     {
       text: "Date of Payment",
       dataField: "cust_paid_date",
       sort: true,
-     
-     
+
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.cust_paid_date;
         if (oldDate == null) {
           return null;
@@ -300,212 +286,188 @@ function Paid() {
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-  //   {
-  //     text: "Action",
-  //     dataField: "",
-      
-  //     formatter: function (cell, row) {
-  //       return (
-  //         <>
-  //         {row.paid_status === "2" ?
-  //         <>
-  //      <div style={{display : "flex"}}>
-     
-  //                    <Link
-  //                           to={{
-  //                               pathname: `/customer/paydetails/${row.assign_id}`,
-  //                               index : 1,
-  //                               routes: "paymentstatus",
-  //                           }}
-  //                       >
-  //                                     <Payment />
-  //                 </Link>
-                
-  //                 <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
-  //                                 <ViewDiscussionIcon />
-  //                               </span>
-                              
-       
-  //        </div>   </>
-  //         :  <div style={{display : "flex"}}>
-        
-  //           {
-  //             row.paid_status == "0" ?
-                
-  //                   <Link
-  //                           to={{
-  //                               pathname: `/customer/paydetails/${row.assign_id}`,
-  //                               index : 1,
-  //                               routes: "paymentstatus",
-  //                           }}
-  //                       >
-  //                                     <Payment />
-  //                 </Link>   
-  //               :
-  //               null
-  //           }
+    //   {
+    //     text: "Action",
+    //     dataField: "",
 
+    //     formatter: function (cell, row) {
+    //       return (
+    //         <>
+    //         {row.paid_status === "2" ?
+    //         <>
+    //      <div style={{display : "flex"}}>
 
-         
-  //           {
-  //             row.paid_amount > 0 && row.paid_status > 0 ?
-  //                 <Link
-  //                           to={{
-  //                               pathname: `/customer/paydetails/${row.assign_id}`,
-  //                               index : 1,
-  //                               routes: "paymentstatus",
-  //                           }}
-  //                       >
-  //                                     <Payment />
-  //                 </Link>   
-              
-  //               :
-  //               null
-  //           }
-        
+    //                    <Link
+    //                           to={{
+    //                               pathname: `/customer/paydetails/${row.assign_id}`,
+    //                               index : 1,
+    //                               routes: "paymentstatus",
+    //                           }}
+    //                       >
+    //                                     <Payment />
+    //                 </Link>
 
+    //                 <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+    //                                 <ViewDiscussionIcon />
+    //                               </span>
 
-         
-  //           <Link className="ml-2"
-  //           to={{
-  //             pathname: `/customer/chatting/${row.assign_id}`,
-  //             index : 1,
-  //             routes: "paymentstatus",
-             
-              
-  //               obj: {
-  //                 message_type: "5",
-  //                 query_No: row.assign_no,
-  //                 query_id: row.assign_id,
-  //                 routes: `/customer/paymentstatus`
-  //               }
-  //             }}
-  //           >
-  //            <MessageIcon />
-  //           </Link>
-       
-  //         <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
-  //                                 <ViewDiscussionIcon />
-  //                               </span>
-                              
-  //         </div>
-  //     }
-  //         </>
-  //       );
-  //     },
-  //   },
-  // ];
-  {
-    text: "Action",
-    dataField: "",
-   
-    formatter: function (cell, row) {
-      return (
-        <>
-        {row.paid_status === "2" ?
-        <>
-   
-   
-   <Link
-                          to={{
-                              pathname: `/customer/paydetails/${row.assign_id}`,
-                              index : 1,
-                              routes: "paymentstatus",
-                          }}
-                      >
-                                    <Payment />
-                </Link>
-              
-              
-                <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
-                                <ViewDiscussionIcon />
-                              </span>
-                              </>
-        :
+    //        </div>   </>
+    //         :  <div style={{display : "flex"}}>
+
+    //           {
+    //             row.paid_status == "0" ?
+
+    //                   <Link
+    //                           to={{
+    //                               pathname: `/customer/paydetails/${row.assign_id}`,
+    //                               index : 1,
+    //                               routes: "paymentstatus",
+    //                           }}
+    //                       >
+    //                                     <Payment />
+    //                 </Link>
+    //               :
+    //               null
+    //           }
+
+    //           {
+    //             row.paid_amount > 0 && row.paid_status > 0 ?
+    //                 <Link
+    //                           to={{
+    //                               pathname: `/customer/paydetails/${row.assign_id}`,
+    //                               index : 1,
+    //                               routes: "paymentstatus",
+    //                           }}
+    //                       >
+    //                                     <Payment />
+    //                 </Link>
+
+    //               :
+    //               null
+    //           }
+
+    //           <Link className="ml-2"
+    //           to={{
+    //             pathname: `/customer/chatting/${row.assign_id}`,
+    //             index : 1,
+    //             routes: "paymentstatus",
+
+    //               obj: {
+    //                 message_type: "5",
+    //                 query_No: row.assign_no,
+    //                 query_id: row.assign_id,
+    //                 routes: `/customer/paymentstatus`
+    //               }
+    //             }}
+    //           >
+    //            <MessageIcon />
+    //           </Link>
+
+    //         <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
+    //                                 <ViewDiscussionIcon />
+    //                               </span>
+
+    //         </div>
+    //     }
+    //         </>
+    //       );
+    //     },
+    //   },
+    // ];
+    {
+      text: "Action",
+      dataField: "",
+
+      formatter: function (cell, row) {
+        return (
           <>
-      
-          {
-            row.paid_status == "0" ?
-              
-                
-            <Link
-                                     to={{
-                                         pathname: `/customer/paydetails/${row.assign_id}`,
-                                         index : 1,
-                                         routes: "paymentstatus",
-                                     }}
-                                 >
-                                               <Payment />
-                           </Link>
-              :
-              null
-          }
+            {row.paid_status === "2" ? (
+              <>
+                <Link
+                  to={{
+                    pathname: `/customer_paydetails/${row.assign_id}`,
+                    index: 1,
+                    routes: "paymentstatus",
+                  }}
+                >
+                  <Payment />
+                </Link>
 
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </>
+            ) : (
+              <>
+                {row.paid_status == "0" ? (
+                  <Link
+                    to={{
+                      pathname: `/customer_paydetails/${row.assign_id}`,
+                      index: 1,
+                      routes: "paymentstatus",
+                    }}
+                  >
+                    <Payment />
+                  </Link>
+                ) : null}
 
-       
-          {
-            row.paid_amount > 0 && row.paid_status > 0 ?
-                 
-            <Link
-                                       to={{
-                                           pathname: `/customer/paydetails/${row.assign_id}`,
-                                           index : 1,
-                                           routes: "paymentstatus",
-                                       }}
-                                   >
-                                                 <Payment />
-                             </Link>
+                {row.paid_amount > 0 && row.paid_status > 0 ? (
+                  <Link
+                    to={{
+                      pathname: `/customer_paydetails/${row.assign_id}`,
+                      index: 1,
+                      routes: "paymentstatus",
+                    }}
+                  >
+                    <Payment />
+                  </Link>
+                ) : null}
 
-            
-              :
-              null
-          }
-      
+                <Link
+                  className="ml-2"
+                  to={{
+                    pathname: `/customer/chatting/${row.assign_id}`,
+                    index: 1,
+                    routes: "paymentstatus",
 
+                    obj: {
+                      message_type: "5",
+                      query_No: row.assign_no,
+                      query_id: row.assign_id,
+                      routes: `/customer/paymentstatus`,
+                    },
+                  }}
+                >
+                  <MessageIcon />
+                </Link>
 
-       
-         
-      <Link className="ml-2"
-            to={{
-              pathname: `/customer/chatting/${row.assign_id}`,
-              index : 1,
-              routes: "paymentstatus",
-             
-              
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/customer/paymentstatus`
-                }
-              }}
-            >
-             <MessageIcon />
-            </Link>
-     
-        <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
-                                <ViewDiscussionIcon />
-                              </span>
-                            
-        </>
-    }
-        </>
-      );
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </>
+            )}
+          </>
+        );
+      },
     },
-  },
-];
-
-
-
+  ];
 
   return (
     <>
       <>
         <Card>
-
           <CardHeader>
-          <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
-              <CustomerFilter
+            <span onClick={(e) => needHelp()}>
+              {" "}
+              <HelpIcon />
+            </span>
+            <CustomerFilter
               setData={setPayment}
               getData={getPaymentStatus}
               paid="paid"
@@ -516,14 +478,13 @@ function Paid() {
           </CardHeader>
 
           <CardBody>
-          
             <Records records={records} />
-            <DataTablepopulated 
-                   bgColor="#3e8678"
-                   keyField={"assign_no"}
-                   data={payment}
-                   columns={columns}>
-                    </DataTablepopulated>
+            <DataTablepopulated
+              bgColor="#3e8678"
+              keyField={"assign_no"}
+              data={payment}
+              columns={columns}
+            ></DataTablepopulated>
 
             <Modal isOpen={modal} fade={false} toggle={toggle}>
               <ModalHeader toggle={toggle}>History</ModalHeader>
@@ -538,14 +499,14 @@ function Paid() {
                   </thead>
                   {pay.length > 0
                     ? pay.map((p, i) => (
-                      <tbody>
-                        <tr>
-                          <td>{i + 1}</td>
-                          <td>{CommonServices.removeTime(p.payment_date)}</td>
-                          <td>{p.paid_amount}</td>
-                        </tr>
-                      </tbody>
-                    ))
+                        <tbody>
+                          <tr>
+                            <td>{i + 1}</td>
+                            <td>{CommonServices.removeTime(p.payment_date)}</td>
+                            <td>{p.paid_amount}</td>
+                          </tr>
+                        </tbody>
+                      ))
                     : null}
                 </table>
               </ModalBody>
@@ -555,7 +516,6 @@ function Paid() {
                 </Button>
               </ModalFooter>
             </Modal>
-
 
             <PaymentComponent
               paymentHandler={paymentHandler}
@@ -571,12 +531,17 @@ function Paid() {
               getData={getPaymentStatus}
               headColor="#3e8678"
             />
-   <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
-                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
-                        <ModalBody>
-                            <ModalManual tar= {"paymentProcess"} />
-                        </ModalBody>
-                    </Modal>
+            <Modal
+              isOpen={openManual}
+              toggle={needHelp}
+              style={{ display: "block", position: "absolute", left: "280px" }}
+              size="lg"
+            >
+              <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+              <ModalBody>
+                <ModalManual tar={"paymentProcess"} />
+              </ModalBody>
+            </Modal>
           </CardBody>
         </Card>
       </>

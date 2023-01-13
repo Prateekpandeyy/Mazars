@@ -207,7 +207,7 @@ function Demo() {
     Cookies.set("transcode", transcode);
     Cookies.set("attendeeMode", attendeeMode);
     Cookies.set("videoProfile", videoProfile);
-    history.push(`/customer/meeting/${data.id}`);
+    history.push(`/customer_meeting/${data.id}`);
   };
 
   const messages = {

@@ -38,7 +38,7 @@ function DeclinedQueries({
     {
       text: "S.No",
 
-      formatter: (rowIndex) => {
+      formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {
@@ -69,7 +69,7 @@ function DeclinedQueries({
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.id}`,
+                pathname: `/customer_my-assingment/${row.id}`,
                 index: 3,
                 routes: "queries",
               }}
@@ -146,7 +146,7 @@ function DeclinedQueries({
                     <span className="ml-2">
                       <Link
                         to={{
-                          pathname: `/customer/feedback/${row.assign_no}`,
+                          pathname: `/customer_feedback/${row.assign_no}`,
                           index: 3,
                           routes: "queries",
                         }}
@@ -175,7 +175,7 @@ function DeclinedQueries({
                     <span className="ml-2">
                       <Link
                         to={{
-                          pathname: `/customer/chatting/${row.id}&type=4`,
+                          pathname: `/customer_chatting/${row.id}&type=4`,
                           index: 3,
                           routes: "queries",
                           obj: {
@@ -206,7 +206,7 @@ function DeclinedQueries({
                       <span className="ml-2">
                         <Link
                           to={{
-                            pathname: `/customer/feedback/${row.assign_no}`,
+                            pathname: `/customer_feedback/${row.assign_no}`,
                             index: 3,
                             routes: "queries",
                           }}
@@ -222,7 +222,7 @@ function DeclinedQueries({
                       <span className="ml-2">
                         <Link
                           to={{
-                            pathname: `/customer/chatting/${row.id}&type=4`,
+                            pathname: `/customer_chatting/${row.id}&type=4`,
                             index: 2,
                             routes: "queries",
                             obj: {

@@ -215,7 +215,7 @@ function WebRoutes() {
           />
           <PublicRouteUser
             exact
-            path="/customer/new-password/:id"
+            path="/customer_new-password/:id"
             component={NewPassword}
           />
           <PublicRouteUser
@@ -259,7 +259,7 @@ function WebRoutes() {
           />
           <PublicRouteUser
             exact
-            path="/customer/latestupdates/:id"
+            path="/customer_latestupdates/:id"
             component={LatestUpdates}
           />
           <PublicRouteUser exact path="/customer/updates" component={Updates} />
@@ -286,7 +286,7 @@ function WebRoutes() {
           />
           <PublicRouteUser
             exact
-            path="/customer/meetingouter/:id"
+            path="/customer_meetingouter/:id"
             component={OuterMeetingJoin}
           />
           <PublicRouteUser
@@ -301,7 +301,7 @@ function WebRoutes() {
           />
           <PublicRouteUser
             exact
-            path="/customer/update-details/:id"
+            path="/customer_update-details/:id"
             component={UpdateDetails}
           />
           <PublicRouteAdmin
@@ -317,7 +317,7 @@ function WebRoutes() {
           <PrivateRouteUser path="/customer/dashboard" component={Dashboard} />
           <PrivateRouteUser
             exact
-            path="/customer/my-assingment/:id"
+            path="/customer_my-assingment/:id"
             component={MyAssingment}
           />
           <PrivateRouteUser
@@ -342,7 +342,7 @@ function WebRoutes() {
           />
           <PrivateRouteUser
             exact
-            path="/customer/proposal-received/:id"
+            path="/customer_proposal-received/:id"
             component={ProposalReceived}
           />
           <PrivateRouteUser
@@ -352,7 +352,7 @@ function WebRoutes() {
           />
           <PrivateRouteUser
             exact
-            path="/customer/edit-query/:id"
+            path="/customer_edit-query/:id"
             component={EditQuery}
           />
           <PrivateRouteUser
@@ -362,13 +362,13 @@ function WebRoutes() {
           />
           <PrivateRouteUser
             exact
-            path="/customer/meeting/:id"
+            path="/customer_meeting/:id"
             component={MeetingComponent}
           />
           <PrivateRouteUser path="/customer/schedule" component={schedule} />
           <PrivateRouteUser
             exact
-            path="/customer/view-notification/:id"
+            path="/customer_view-notification/:id"
             component={ViewNotification}
           />
           <PrivateRouteUser
@@ -383,12 +383,12 @@ function WebRoutes() {
           />
           <PrivateRouteUser
             exact
-            path="/customer/chatting/:id"
+            path="/customer_chatting/:id"
             component={Chatting}
           />
           <PrivateRouteUser
             exact
-            path="/customer/feedback/:id"
+            path="/customer_feedback/:id"
             component={Feedback}
           />
           <PrivateRouteUser
@@ -409,7 +409,7 @@ function WebRoutes() {
 
           <PrivateRouteUser
             exact
-            path="/customer/paydetails/:id"
+            path="/customer_paydetails/:id"
             component={payDetails}
           />
           <PrivateRouteUser
