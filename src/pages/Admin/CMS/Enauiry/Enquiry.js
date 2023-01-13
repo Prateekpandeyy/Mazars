@@ -243,20 +243,10 @@ const Enquiry = (props) => {
   const getDirectTable = () => {
     var table;
     if (selectDirect.length > 0) {
-      table = `  <tr>
-      <td>
-      <table style="margin: auto;">
-      <tr>
-        <td>
-          <img
-            src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
-            alt="directax"
-          />
-        </td>
-      </tr>
-    </table>
-      </td>
-  </tr>`;
+      table = `  <img
+      src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
+      alt="directax"
+    />       `;
     } else {
       table = ` <tr>
     <td>
@@ -269,21 +259,10 @@ const Enquiry = (props) => {
   const getIndirectTable = () => {
     var table;
     if (selectIndirect.length > 0) {
-      table = `  <tr>
-      <td>
-      <table style="margin: auto;">
-      <tr>
-        <td>
-          <img
-            src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
-            alt="indirectax"
-          />
-        </td>
-      </tr>
-    </table>
-
-      </td>
-  </tr>`;
+      table = `<img align="center"
+      src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
+      alt="indirectax"
+    />`;
     } else {
       table = ` <tr>
     <td>
@@ -296,21 +275,10 @@ const Enquiry = (props) => {
   const getOtherTable = () => {
     var table;
     if (selectOther.length > 0) {
-      table = `  <tr>
-      <td>
-      <table style="margin: auto;">
-      <tr>
-        <td>
-          <img
-            src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
-            alt="othertax"
-          />
-        </td>
-      </tr>
-    </table>
-
-      </td>
-  </tr>`;
+      table = ` <img
+      src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
+      alt="othertax"
+    />`;
     } else {
       table = ` <tr>
     <td>
@@ -344,8 +312,8 @@ const Enquiry = (props) => {
 
 
     <body>
-    <span>
-    <table width = "65%">
+   
+    <table width = "80%" align="center">
 
 
         <tr>
@@ -357,7 +325,7 @@ const Enquiry = (props) => {
             </td>
           
     </tr>    
-    </br>
+    <tr><td>&nbsp;</td></tr>
     <tr>
         <td bgColor="#0071CE">
             <table bgColor="#0071CE" width = "100%" style="margin: 10px 0px; padding: 10px;">
@@ -365,17 +333,20 @@ const Enquiry = (props) => {
                 <tr>
                 <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                    <p>Edition: ${edition}</p>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax  indirect tax and other updates.</p>
+                    <p>Edition: 2023-01-12</p>
            
         
                 </td>
                  </tr>
         </table>
         </td>
-    </tr>
-    </br>
-   ${getDirectTable()}
+    </tr>   
+     <tr><td>&nbsp;</td></tr>
+    <tr><td style="margin: auto;text-align:center">  
+        ${getDirectTable()}
+      </td>
+  </tr>
     <tr>
         <td>
         <ul>
@@ -383,15 +354,24 @@ const Enquiry = (props) => {
         </ul>
         </td>
         </tr>
-  ${getIndirectTable()}
+    <tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr><td style="margin: auto;text-align:center">     
+          ${getIndirectTable()}
+        </td>
+  </tr>
   <tr>
        <td>
        <ul>
-       ${indirectoutput}
+       ${indirectoutput}             
        </ul>
        </td>
      </tr>
- ${getOtherTable()}
+   <tr><td>&nbsp;</td></tr>
+    <tr><td style="margin: auto;text-align:center">  
+         ${getOtherTable()}
+      </td>
+  </tr>
 <tr>
     <td>
     <ul>
@@ -401,12 +381,12 @@ const Enquiry = (props) => {
  </tr>
  <tr>
  <td>
- <table width = "100%">
- <tr>
- <td>
- 
-     <p>Click here to read the full update</p>
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
+ <table width = "100%" cellspacing="0" border="0">
+
+<tr><td width="50%"> <p>Click here to read the full update</p></td>
+<td width="50%"><p style="float :right;text-align : right">  Click here for any further information or queries</p></td></tr>
+<tr>
+ <td    <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
@@ -417,7 +397,7 @@ const Enquiry = (props) => {
      font-weight: 500;
    
      line-height: 1;
-     width: 45%;
+     width: 50%;
     margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
@@ -425,12 +405,9 @@ const Enquiry = (props) => {
  text-align : center;
      text-decoration: none;
      transform: all 0.3s;"">Read more</a>
- 
-</td>
-<td style ="width :50%">
-
-<p style="float :right; white-space : nowrap">  Click here for any further information or queries</p>
-     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
+  </td>
+<td>
+     <a href="mailto:support22@mazars.co.in" target = "_blank"
       style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
@@ -441,7 +418,7 @@ const Enquiry = (props) => {
      font-weight: 500;
    
      line-height: 1;
-     width: 45%;
+     width: 50%;
     margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
@@ -449,189 +426,54 @@ const Enquiry = (props) => {
  text-align : center;
      text-decoration: none;
      transform: all 0.3s;">Click here</a>
-
-</td>
-</tr>
+     </td></tr>
+    
  </table>
  </td>
  </tr>
+ <tr><td>&nbsp;</td></tr>
+ <tr><td><hr></td></tr>
  <tr>
  <td style="display : block; text-align : center">
  <p>
 Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
 collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
 400+ domestic clients and international clients across various sectors. The expert team has a
-comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
+comprehensive exposure of 1 00 000+ hours of tax assessment & litigation matters including special
 experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
 of thought leadership in transfer pricing.
 
 </p>
 <p>
-In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
-over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
-Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
-Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
+In India  Mazars has an ambitious growth plan and already has a national presence with a strong team of
+over 1 000 professionals with 6 offices located in Bengaluru  Chennai  Delhi  Gurugram  Mumbai and
+Pune. Our professionals have in-depth experience in sectors like Energy  Telecom  BFSI  Automobiles 
+Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 </p>
 </br>
 <p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
 
-<p>Copyright © 2023 Mazars, All rights reserved.</p>
+<p>Copyright © 2023 Mazars  All rights reserved.</p>
  </td>
  </tr>
 </table>
-
-</span>
 </body>
 
-    </html>`;
-
-    let mail = `
-    <span>
-    <table width = "65%">
-
-
-        <tr>
-
-            <td>  <img
-                src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-                alt="logo" width="150">
-
-            </td>
-          
-    </tr>    
-    </br>
-    <tr>
-        <td bgColor="#0071CE">
-            <table bgColor="#0071CE" width = "100%" style="margin: 10px 0px; padding: 10px;">
-                        
-                <tr>
-                <td style="margin : 0px 10px; color : #fff">
-                <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                <p>Edition: ${edition}</p>
-       
-    
-            </td>
-                 </tr>
-        </table>
-        </td>
-    </tr>
-    </br>
-   ${getDirectTable()}
-    <tr>
-        <td>
-      <ul>
-      ${directoutput}
-      </ul>
-        </td>
-        </tr>
-  ${getIndirectTable()}
-  <tr>
-       <td>
-      <ul>  ${indirectoutput}</ul>
-       </td>
-     </tr>
- ${getOtherTable()}
-<tr>
-    <td>
- <ul>
- ${otheroutput}
- </ul>
-    </td>
- </tr>
- <tr>
- <td>
- <table width = "100%">
- <tr>
- <td style ="width :50%">
-     <p>Click here to read the full update</p>
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
-     style="border-bottom-left-radius: 1.75rem;
-     background-color: #0071ce;
-     border: 1px solid #0071ce;
-     color: #fff;
-   float : left;
-     cursor: pointer;
-     font-size: 1rem;
-     font-weight: 500;
-   
-     line-height: 1;
-     width: 45%;
-    margin-left : auto;
-     min-height: 1.5rem;
-     overflow: hidden;
-     padding: 0.75rem 1.5rem;
- text-align : center;
-     text-decoration: none;
-     transform: all 0.3s;"">Read more</a>
- 
-</td>
-<td>
-
-<p style="float :right; white-space : nowrap">  Click here for any further information or queries</p>
-     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
-      style="border-bottom-left-radius: 1.75rem;
-     background-color: #0071ce;
-     border: 1px solid #0071ce;
-     color: #fff;
-   float : right;
-     cursor: pointer;
-     font-size: 1rem;
-     font-weight: 500;
-   
-     line-height: 1;
-     width: 45%;
-    margin-left : auto;
-     min-height: 1.5rem;
-     overflow: hidden;
-     padding: 0.75rem 1.5rem;
- text-align : center;
-     text-decoration: none;
-     transform: all 0.3s;">Click here</a>
-
-</td>
-</tr>
- </table>
- </td>
- </tr>
- <tr>
- <td style="display : block; text-align : center">
- <p>
-Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
-collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
-400+ domestic clients and international clients across various sectors. The expert team has a
-comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
-experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
-of thought leadership in transfer pricing.
-
-</p>
-<p>
-In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
-over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
-Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
-Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
-</p>
-</br>
-<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
-
-<p>Copyright © 2023 Mazars, All rights reserved.</p>
- </td>
- </tr>
-</table>
-
-</span>
+    </html>
 `;
 
-    setMailerBody(mail.replace(/\,/g, " "));
+    let mail = data.replace("<html>", "");
 
-    setFinalData(data.replace(/\,/g, " "));
+    mail = mail.replace("<body>", "");
+    mail = mail.replace("</body>", "");
+    mail = mail.replace("</html>", "");
+
+    setMailerBody(mail);
+
+    setFinalData(data);
+    setViewHtml(!viewHtml);
     if (data) {
       setLoading(false);
-      Swal.fire({
-        title: "success",
-        html: "Templete generate successfully",
-        icons: "success",
-      });
     }
   };
 
@@ -933,23 +775,10 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                     ) : (
                       ""
                     )}
-                    {mailerBody && (
-                      <div className="row">
-                        <div className="col-md-12 my-4">
-                          <button
-                            onClick={(e) => setViewHtml(!viewHtml)}
-                            type="button"
-                            className="customBtn"
-                          >
-                            Show draft
-                          </button>
-                        </div>
-                      </div>
-                    )}
                   </fieldset>
                 </div>
 
-                <div className="col-md-u my-4">
+                <div className="col-md-4 my-4">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
                   </label>
