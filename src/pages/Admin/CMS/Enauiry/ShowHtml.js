@@ -15,53 +15,57 @@ const ShowHtml = ({
   const handleClose = () => {
     setOpen(!open);
   };
-  console.log("totalType", totalType);
+  console.log("totalType", subject);
 
   return (
     <Modal isOpen={viewHtml} toggle={openHandler} scrollable size="lg">
       <ModalHeader toggle={openHandler}>
-        <>
-          {totalType?.map((i) => (
-            <>
-              {i === "0" ? (
-                <p>Admin</p>
-              ) : (
-                <>
-                  {i === "1" ? (
-                    <p>All client</p>
-                  ) : (
-                    <>
-                      {i === "2" ? (
-                        <p>All TL</p>
-                      ) : (
-                        <>
-                          {i === "3" ? (
-                            <p>All TP</p>
-                          ) : (
-                            <span
-                              style={{
-                                display: "flex",
-                                width: "100%",
-                                flexWrap: "wrap",
-                              }}
-                            >
-                              <span>To : </span>
-                              {subject.email_list.split(",").map((i) => (
-                                <span>{i}</span>
-                              ))}
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </>
-          ))}
-        </>
-        {subject && <CustomHeading>Subject : {subject}</CustomHeading>}
-        <CustomHeading>Mailer body</CustomHeading>
+        <div>
+          <>
+            {totalType?.map((i) => (
+              <>
+                {i === "0" ? (
+                  <p>Admin</p>
+                ) : (
+                  <>
+                    {i === "1" ? (
+                      <p>All client</p>
+                    ) : (
+                      <>
+                        {i === "2" ? (
+                          <p>All TL</p>
+                        ) : (
+                          <>
+                            {i === "3" ? (
+                              <p>All TP</p>
+                            ) : (
+                              <span
+                                style={{
+                                  display: "flex",
+                                  width: "100%",
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                <span>To : </span>
+                                {subject.email_list?.split(",").map((i) => (
+                                  <span>{i}</span>
+                                ))}
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ))}
+          </>
+          {subject && (
+            <CustomHeading>Subject : {subject.subject}</CustomHeading>
+          )}
+          <CustomHeading>Mailer body</CustomHeading>
+        </div>
       </ModalHeader>
       <ModalBody>
         <Markup content={mailerBody} />

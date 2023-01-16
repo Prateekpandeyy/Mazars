@@ -437,16 +437,17 @@ const Enquiry = (props) => {
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
-  display : block;
+     display: block;
      cursor: pointer;
      font-size: 1rem;
-     width : 135px;
-     height : 35px;
+     font-weight: 500; 
+     width: 50%;
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
      text-align : center;
-     vertical-align : middle;
-     padding : 0.3rem;
-     font-weight: 500;
-text-decoration: none;">Read more</a>
+     text-decoration: none;
+     transform: all 0.3s;">Read more</a>
   </td>
 <td>
      <a href="mailto:support22@mazars.co.in" target = "_blank"
@@ -454,16 +455,17 @@ text-decoration: none;">Read more</a>
      background-color: #0071ce;
      border: 1px solid #0071ce;
      color: #fff;
-  display : block;
+     display: block;
      cursor: pointer;
      font-size: 1rem;
-     width : 135px;
-     height : 35px;
+     font-weight: 500; 
+     width: 50%;
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
      text-align : center;
-     vertical-align : middle;
-     padding : 0.3rem;
-     font-weight: 500;
-text-decoration: none;">Click here</a>
+     text-decoration: none;
+     transform: all 0.3s;">Click here</a>
      </td></tr>
     
  </table>

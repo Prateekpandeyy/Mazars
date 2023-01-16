@@ -22,7 +22,7 @@ const EmailList = () => {
   const [subject, setSubject] = useState("");
   const [totalType2, setTotalType2] = useState([]);
   let history = useHistory();
-  var totalType;
+
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
   const myConfig = {
@@ -36,7 +36,8 @@ const EmailList = () => {
   const getHtml = (e, data) => {
     setViewHtml(true);
     setMailerBody(e);
-    setSubject(data.subject);
+    setSubject(data);
+    setTotalType2(data.type.split(","));
   };
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
@@ -56,7 +57,9 @@ const EmailList = () => {
       });
   };
   const getTotalType = (e) => {
-    console.log("eee", e);
+    if (e.length > 0) {
+      setTotalType2(e);
+    }
   };
   const columns = [
     {
@@ -102,12 +105,12 @@ const EmailList = () => {
       headerStyle: () => {
         return { width: "100px" };
       },
-      formatter: function (cell, row) {
-        totalType = row.type.split(",");
-        getTotalType(totalType);
+      formatter: function CmsAction(cell, row) {
+        let totalType = row.type.split(",");
+
         return (
           <>
-            {totalType.map((i) => (
+            {totalType?.map((i) => (
               <>
                 {i === "0" ? (
                   <p>Admin</p>
@@ -131,10 +134,7 @@ const EmailList = () => {
                                   flexWrap: "wrap",
                                 }}
                               >
-                                <span>To : </span>
-                                {row.email_list.split(",").map((i) => (
-                                  <span>{i}</span>
-                                ))}
+                                pecific email
                               </span>
                             )}
                           </>
@@ -148,6 +148,49 @@ const EmailList = () => {
           </>
         );
       },
+      // formatter: function (cell, row) {
+      //   let totalType = row.type.split(",");
+      //   getTotalType(totalType);
+      //   return (
+      //     <>
+      //       {totalType.map((i) => (
+      //         <>
+      //           {i === "0" ? (
+      //             <p>Admin</p>
+      //           ) : (
+      //             <>
+      //               {i === "1" ? (
+      //                 <p>All client</p>
+      //               ) : (
+      //                 <>
+      //                   {i === "2" ? (
+      //                     <p>All TL</p>
+      //                   ) : (
+      //                     <>
+      //                       {i === "3" ? (
+      //                         <p>All TP</p>
+      //                       ) : (
+      //                         <span
+      //                           style={{
+      //                             display: "flex",
+      //                             width: "100%",
+      //                             flexWrap: "wrap",
+      //                           }}
+      //                         >
+      //                           pecific email
+      //                         </span>
+      //                       )}
+      //                     </>
+      //                   )}
+      //                 </>
+      //               )}
+      //             </>
+      //           )}
+      //         </>
+      //       ))}
+      //     </>
+      //   );
+      // },
     },
     {
       dataField: "subject",
@@ -253,25 +296,25 @@ const EmailList = () => {
             New Schedule
           </button>
         </div>
-        {list && (
-          <Card>
-            <CardBody>
-              <DataTablepopulated
-                bgColor="#42566a"
-                keyField={"id"}
-                data={list}
-                columns={columns}
-              ></DataTablepopulated>
-            </CardBody>
-          </Card>
-        )}
+
+        <Card>
+          <CardBody>
+            <DataTablepopulated
+              bgColor="#42566a"
+              keyField={"id"}
+              data={list}
+              columns={columns}
+            ></DataTablepopulated>
+          </CardBody>
+        </Card>
+
         {viewHtml === true ? (
           <ShowHtml
             viewHtml={viewHtml}
             openHandler={openHandler}
             mailerBody={mailerBody}
             subject={subject}
-            totalType={totalType}
+            totalType={totalType2}
           />
         ) : (
           " "
