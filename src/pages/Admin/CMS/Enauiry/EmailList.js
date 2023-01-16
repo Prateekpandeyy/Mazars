@@ -59,16 +59,10 @@ const EmailList = () => {
       },
 
       headerStyle: () => {
-        return { width: "50px" };
+        return { width: "30px" };
       },
     },
-    // {
-    //   dataField: "email_list",
-    //   text: "Email",
-    //   headerStyle: () => {
-    //     return { width: "100px" };
-    //   },
-    // },
+
     {
       dataField: "schedule_date",
       text: "Date",
@@ -82,9 +76,41 @@ const EmailList = () => {
           .reverse()
           .join("-");
         let time = row.schedule_date.split(" ")[1];
+        let suffix = "A.M";
+        if (time.split(":")[0] > 12) {
+          suffix = "P.M.";
+        } else {
+          suffix = "A.M.";
+        }
         return (
           <>
-            {date} {time}
+            {date} {time} {suffix}
+          </>
+        );
+      },
+    },
+    {
+      dataField: "type",
+      text: "Send to",
+      headerStyle: () => {
+        return { width: "100px" };
+      },
+      formatter: function (cell, row) {
+        let type = "";
+        if (row.type === "0") {
+          type = "Admin";
+        } else if (row.type === "1") {
+          type = "All client";
+        } else if (row.type === "2") {
+          type = "All TL";
+        } else if (row.type === "3") {
+          type = "All TP";
+        } else if (row.type === "4") {
+          type = "Specific email";
+        }
+        return (
+          <>
+            <p>{type}</p>
           </>
         );
       },
@@ -100,7 +126,7 @@ const EmailList = () => {
     {
       text: "Action",
       headerStyle: () => {
-        return { width: "100px" };
+        return { width: "70px" };
       },
       formatter: function CmsAction(cell, row) {
         let status = "";
@@ -147,7 +173,7 @@ const EmailList = () => {
   const del = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Want to delete article? Yes, delete it!",
+      text: "Want to delete email? Yes, delete it!",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -161,7 +187,7 @@ const EmailList = () => {
             if (res.data.code === 1) {
               Swal.fire({
                 title: "success",
-                html: "Article deleted successfully",
+                html: "Email deleted successfully",
                 icon: "success",
               });
               getList();
