@@ -55,6 +55,9 @@ const EmailList = () => {
         }
       });
   };
+  const getTotalType = (e) => {
+    console.log("eee", e);
+  };
   const columns = [
     {
       text: "S.No",
@@ -101,7 +104,7 @@ const EmailList = () => {
       },
       formatter: function (cell, row) {
         totalType = row.type.split(",");
-
+        getTotalType(totalType);
         return (
           <>
             {totalType.map((i) => (

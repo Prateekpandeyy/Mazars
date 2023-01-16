@@ -21,7 +21,7 @@ const ShowHtml = ({
     <Modal isOpen={viewHtml} toggle={openHandler} scrollable size="lg">
       <ModalHeader toggle={openHandler}>
         <>
-          {totalType.map((i) => (
+          {totalType?.map((i) => (
             <>
               {i === "0" ? (
                 <p>Admin</p>
