@@ -14,9 +14,9 @@ export default function App() {
     
   }, []);
   useEffect(() => {
-    console.log("IN USE")
+    // console.log("IN USE")
     LogOutAllCustTabs();
-    console.log("......Received")
+    // console.log("......Received")
   }, []);
   return (
     <>

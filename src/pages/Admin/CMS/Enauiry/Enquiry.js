@@ -7,7 +7,6 @@ import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import CustomHeading from "../../../../components/Common/CustomHeading";
-import AddEditor from "../AddEditor";
 import { DatePicker, Space } from "antd";
 import axios from "axios";
 import { baseUrl } from "../../../../config/config";
@@ -15,11 +14,8 @@ import Select from "react-select";
 import moment from "moment";
 import Swal from "sweetalert2";
 import DropDown from "../../../../components/Common/DropDown";
-import EnqTemp from "./mazaremailtemp/EnqTemp";
-import CustomQuillEditor from "../CustomQuillEditor";
-import directGif from "./mazaremailtemp/images/directax.gif";
-import indirectGif from "./mazaremailtemp/images/indirextax.gif";
-import otherGif from "./mazaremailtemp/images/othertax.gif";
+import Loader from "react-loader-spinner";
+import ShowHtml from "./ShowHtml";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -30,6 +26,8 @@ const Schema = yup.object().shape({
 const Enquiry = (props) => {
   let history = useHistory();
   var minimum = moment.now();
+  let endData = moment(minimum, "DD-MM-YYYY HH:mm:ss").add(1, "days");
+  let previousDay = moment().subtract(1, "days");
   const [options, setOptions] = useState([]);
   const [type, setType] = useState("");
   const [email, setEmail] = useState([]);
@@ -42,11 +40,19 @@ const Enquiry = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [templeteType, setTempleteType] = useState("1");
   const [showTemplete, setShowTemplete] = useState(false);
+  const [min, setMin] = useState(moment.now());
   const [templeteData, setTempleteData] = useState({
-    direct: [],
-    inDirect: [],
-    other: [],
+    direct: "",
+    inDirect: "",
+    other: "",
   });
+  const [selectDirect, setSelectDirect] = useState([]);
+  const [selectIndirect, setSelectInDirect] = useState([]);
+  const [selectOther, setSelectOther] = useState([]);
+  const [viewHtml, setViewHtml] = useState(false);
+  const [finalData, setFinalData] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [mailerBody, setMailerBody] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -55,7 +61,9 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
-
+  const openHandler = (e) => {
+    setViewHtml(!viewHtml);
+  };
   const getEmail = (e) => {
     setEmail([]);
     setEmailValue([]);
@@ -86,43 +94,40 @@ const Enquiry = (props) => {
   };
   const onSubmit = (value) => {
     let formData = new FormData();
-    var myEditor = document.querySelector("#snow-container");
-    var html = myEditor.children[0].innerHTML;
 
-    if (myEditor.children[0].innerHTML.trim() === "<p><br></p>") {
-      Swal.fire({
-        html: "Message box could not be empty, please enter proper message",
-      });
+    if (disabled === true) {
+      formData.append("user_type", type);
+      formData.append("type", "4");
     } else {
-      if (disabled === true) {
-        formData.append("user_type", type);
-        formData.append("type", "4");
-      } else {
-        formData.append("type", selectType);
-      }
-      formData.append("subject", subject);
-
-      formData.append("email_list", email);
-      formData.append("message", html);
-      formData.append("schedule_date", schDate);
-      axios({
-        method: "POST",
-        url: `${baseUrl}/cms/addemailer`,
-        headers: {
-          uit: token,
-        },
-        data: formData,
-      }).then((res) => {
-        if (res.data.code === 1) {
-          Swal.fire({
-            title: "success",
-            html: "Message schedule successfully",
-            icon: "success",
-          });
-          history.push("/cms/emaillist");
-        }
-      });
+      formData.append("type", selectType);
     }
+    formData.append("subject", subject);
+
+    formData.append("email_list", email);
+    formData.append("message", finalData);
+    formData.append("schedule_date", schDate);
+    axios({
+      method: "POST",
+      url: `${baseUrl}/cms/addemailer`,
+      headers: {
+        uit: token,
+      },
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        Swal.fire({
+          title: "success",
+          html: "Message schedule successfully",
+          icon: "success",
+        });
+        axios
+          .get("https://stagingapi.masindia.live/v1/autoscript/emailprocess")
+          .then((res) => {
+            console.log("ers", res);
+          });
+        history.push("/cms/emaillist");
+      }
+    });
   };
   const getSelectEmail = (e) => {
     let email = [];
@@ -155,7 +160,7 @@ const Enquiry = (props) => {
         .get(
           `${baseUrl}/cms/emailerlist?id=${window.location.pathname
             .split("/")
-            .at(-1)}uid=${JSON.parse(userId)}`,
+            .at(-1)}&uid=${JSON.parse(userId)}`,
           myConfig
         )
 
@@ -186,25 +191,442 @@ const Enquiry = (props) => {
       let indirect = [];
       let other = [];
       if (res.data.code === 1) {
-        setShowTemplete(true);
-        res.data.result.map((i) => {
-          if (i.type === "direct") {
-            direct.push(i);
-          } else if (i.type === "indirect") {
-            indirect.push(i);
-          } else {
-            other.push(i);
-          }
+        res.data.result.direct.map((i) => {
+          let data = {
+            label: i,
+            value: i,
+          };
+          direct.push(data);
+        });
+
+        res.data.result.indirect.map((i) => {
+          let data = {
+            label: i,
+            value: i,
+          };
+          indirect.push(data);
+        });
+
+        res.data.result.miscellaneous.map((i) => {
+          let data = {
+            label: i,
+            value: i,
+          };
+          other.push(data);
         });
         setTempleteData({
           direct: direct,
           inDirect: indirect,
           other: other,
         });
+        setShowTemplete(true);
+      } else if (res.data.code === 0) {
+        setTempleteData({
+          direct: [],
+          inDirect: [],
+          other: [],
+        });
+        setShowTemplete(false);
+        Swal.fire({
+          html: "No data found",
+        });
       }
     });
   };
-  console.log("templete", templeteData);
+
+  const directOnchange = (e) => {
+    setSelectDirect(e);
+  };
+  const indirectOnchange = (e) => {
+    setSelectInDirect(e);
+  };
+
+  const getDirectTable = () => {
+    var table;
+    if (selectDirect.length > 0) {
+      table = `  <tr>
+      <td>
+      <table style="margin: auto;">
+      <tr>
+        <td>
+          <img
+            src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
+            alt="directax"
+          />
+        </td>
+      </tr>
+    </table>
+      </td>
+  </tr>`;
+    } else {
+      table = ` <tr>
+    <td>
+       
+    </td>
+</tr>`;
+    }
+    return table;
+  };
+  const getIndirectTable = () => {
+    var table;
+    if (selectIndirect.length > 0) {
+      table = `  <tr>
+      <td>
+      <table style="margin: auto;">
+      <tr>
+        <td>
+          <img
+            src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
+            alt="indirectax"
+          />
+        </td>
+      </tr>
+    </table>
+
+      </td>
+  </tr>`;
+    } else {
+      table = ` <tr>
+    <td>
+       
+    </td>
+</tr>`;
+    }
+    return table;
+  };
+  const getOtherTable = () => {
+    var table;
+    if (selectOther.length > 0) {
+      table = `  <tr>
+      <td>
+      <table style="margin: auto;">
+      <tr>
+        <td>
+          <img
+            src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
+            alt="othertax"
+          />
+        </td>
+      </tr>
+    </table>
+
+      </td>
+  </tr>`;
+    } else {
+      table = ` <tr>
+    <td>
+       
+    </td>
+</tr>`;
+    }
+    return table;
+  };
+  const otherOnchange = (e) => {
+    setSelectOther(e);
+  };
+  const generateTemp = (e) => {
+    setLoading(true);
+    let directoutput = selectDirect.map((i) => {
+      return `<ul>
+                <li>${i.value} </li>
+                
+              </ul>`;
+    });
+    let indirectoutput = selectIndirect.map((i) => {
+      return `<ul>
+                <li>${i.value} </li>
+                
+              </ul>`;
+    });
+    let otheroutput = selectOther.map((i) => {
+      return `<ul>
+                <li>${i.value} </li>
+                
+              </ul>`;
+    });
+    let data = `<html>
+
+
+    <body>
+    <span>
+    <table width = "65%">
+
+
+        <tr>
+
+            <td>  <img
+                src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                alt="logo" width="150">
+
+            </td>
+          
+    </tr>    
+    </br>
+    <tr>
+        <td>
+            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+                        
+                <tr>
+                <td style="color: #fff;">
+                    <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p>Edition: Date</p>
+           
+        
+                </td>
+                 </tr>
+        </table>
+        </td>
+    </tr>
+    </br>
+   ${getDirectTable()}
+    <tr>
+        <td>
+        ${directoutput}
+        </td>
+        </tr>
+  ${getIndirectTable()}
+  <tr>
+       <td>
+       ${indirectoutput}
+       </td>
+     </tr>
+ ${getOtherTable()}
+<tr>
+    <td>
+    ${otheroutput}
+    </td>
+ </tr>
+ <tr>
+ <td>
+ <table width = "100%">
+ <tr>
+ <td>
+     <p>Click here to read the full update</p>
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
+     style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+   float : left;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+   
+     line-height: 1;
+     width: 45%;
+    margin-left : auto;
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+ 
+     text-decoration: none;
+     transform: all 0.3s;">Read more</a>
+ 
+</td>
+<td>
+
+<p style="float :right;">  Click here for any further information or queries</p>
+     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
+      style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+   float : right;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+   
+     line-height: 1;
+     width: 45%;
+    margin-left : auto;
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+ 
+     text-decoration: none;
+     transform: all 0.3s;">Click here</a>
+
+</td>
+</tr>
+ </table>
+ </td>
+ </tr>
+ 
+</table>
+<span style="display : block; width : 65%; text-align : center">
+<p>
+Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
+collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
+400+ domestic clients and international clients across various sectors. The expert team has a
+comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
+experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
+of thought leadership in transfer pricing.
+
+</p>
+
+<p>
+In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
+over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
+Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
+Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
+</p>
+</br>
+<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
+
+<p>Copyright © 2023 Mazars, All rights reserved.</p>
+</span>
+</span>
+</body>
+
+    </html>`;
+
+    let mail = `
+    <span>
+    <table width = "65%">
+
+
+        <tr>
+
+            <td>  <img
+                src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
+                alt="logo" width="150">
+
+            </td>
+          
+    </tr>    
+    <tr>
+        <td>
+            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+                        
+                <tr>
+                <td style="color: #fff;">
+                    <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
+                    <p>Edition: Date</p>
+           
+        
+                </td>
+                 </tr>
+        </table>
+        </td>
+    </tr>
+    
+   ${getDirectTable()}
+    <tr>
+        <td>
+        ${directoutput}
+        </td>
+        </tr>
+  ${getIndirectTable()}
+  <tr>
+       <td>
+       ${indirectoutput}
+       </td>
+     </tr>
+${getOtherTable()}
+         
+<tr>
+    <td>
+    ${otheroutput}
+    </td>
+ </tr>
+ <tr>
+ <td>
+ <table width = "100%">
+ <tr>
+ <td>
+     <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+     display: inline-flex;
+     align-items: center;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     line-height: 1;
+     width: 65%;
+ 
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+     position: relative;
+     text-decoration: none;
+     transform: all 0.3s;
+     vertical-align: middle;">Read more</a>
+ 
+</td>
+<td>
+
+<p>  Click here for any further information or queries</p>
+     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank" style="border-bottom-left-radius: 1.75rem;
+     background-color: #0071ce;
+     border: 1px solid #0071ce;
+     color: #fff;
+     display: inline-flex;
+     align-items: center;
+     cursor: pointer;
+     font-size: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     line-height: 1;
+     width: 45%;
+    
+     min-height: 1.5rem;
+     overflow: hidden;
+     padding: 0.75rem 1.5rem;
+     position: relative;
+     text-decoration: none;
+     transform: all 0.3s;
+     vertical-align: middle;">Click here</a>
+
+</td>
+</tr>
+ </table>
+ </td>
+ </tr>
+ 
+</table>
+<span style="display : block;  text-align : center">
+<p>
+Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
+collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
+400+ domestic clients and international clients across various sectors. The expert team has a
+comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
+experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
+of thought leadership in transfer pricing.
+
+</p>
+
+<p>
+In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
+over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
+Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
+Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
+</p>
+</br>
+<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
+
+<p>Copyright © 2023 Mazars, All rights reserved.</p>
+</span>
+</span>
+`;
+
+    setMailerBody(mail);
+    setFinalData(data);
+    if (data) {
+      setLoading(false);
+      Swal.fire({
+        title: "success",
+        html: "Templete generate successfully",
+        icons: "success",
+      });
+    }
+  };
+
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -229,7 +651,22 @@ const Enquiry = (props) => {
               <div className="row">
                 <div className="col-md-10 my-4">
                   <div className="row" onClick={(e) => getSelectData(e)}>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          name="flexRadioDefault"
+                          id="allClient"
+                          value="1"
+                          disabled={disabled}
+                        />
+                        <label class="form-check-label" htmlFor="allClient">
+                          Admin
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-2">
                       <div class="form-check">
                         <input
                           class="form-check-input"
@@ -244,7 +681,7 @@ const Enquiry = (props) => {
                         </label>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <div class="form-check">
                         <input
                           class="form-check-input"
@@ -344,7 +781,7 @@ const Enquiry = (props) => {
                       name="subject"
                       className="form-control"
                       onChange={(e) => setSubject(e.target.value)}
-                      ref={register}
+                      ref={register({ required: true })}
                     />
                   </div>
                 </div>
@@ -353,7 +790,7 @@ const Enquiry = (props) => {
                   <fieldset className="my-fieldsettemplate">
                     <legend className="login-legend">Generate template</legend>
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span className="generateTemplate">
                           <label>Template type</label>
                           <select
@@ -365,7 +802,7 @@ const Enquiry = (props) => {
                           </select>
                         </span>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span className="generateTemplate">
                           <label className="d-block">
                             Start date<span className="declined">*</span>
@@ -373,28 +810,36 @@ const Enquiry = (props) => {
                           <Space direction="vertical" size={24}>
                             <DatePicker
                               disabledDate={(d) => !d || d.isAfter(minimum)}
-                              format="YYYY-MM-DD HH:mm:ss"
+                              format="DD-MM-YYYY HH:mm:ss"
                               showTime={{
                                 defaultValue: moment("00:00:00", "HH:mm:ss"),
                               }}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setFromDate(
                                   moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                )
-                              }
+                                );
+                                setMin(moment(e));
+                              }}
                             />
                           </Space>
                         </span>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span className="generateTemplate">
                           <label className="d-block">
                             End date<span className="declined">*</span>
                           </label>
                           <Space direction="vertical" size={24}>
                             <DatePicker
-                              disabledDate={(d) => !d || d.isAfter(minimum)}
-                              format="YYYY-MM-DD HH:mm:ss"
+                              disabledDate={(d) =>
+                                !d ||
+                                !d.isBetween(
+                                  min,
+                                  moment(minimum).add(1, "day").toDate()
+                                )
+                              }
+                              id="endDate"
+                              format="DD-MM-YYYY HH:mm:ss"
                               showTime={{
                                 defaultValue: moment("00:00:00", "HH:mm:ss"),
                               }}
@@ -407,176 +852,81 @@ const Enquiry = (props) => {
                           </Space>
                         </span>
                       </div>
-                      <div className="col-md-4 my-4">
-                        <button
-                          type="button"
-                          onClick={(e) => generateTemplate(e)}
-                          className="autoWidthBtn"
-                        >
-                          Generate template
-                        </button>
+                      <div className="col-md-3">
+                        <div className="emailerBtn">
+                          <button
+                            type="button"
+                            onClick={(e) => generateTemplate(e)}
+                            className="autoWidthBtn"
+                            style={{ height: "40px" }}
+                          >
+                            Search
+                          </button>
+                        </div>
                       </div>
                     </div>
+                    {showTemplete === true ? (
+                      <div className="row">
+                        <div className="col-md-3">
+                          <label>Direct</label>
+                          <Select
+                            isMulti={true}
+                            onChange={(e) => directOnchange(e)}
+                            options={templeteData.direct}
+                          />
+                        </div>
+                        <div className="col-md-3">
+                          <label>Indirect</label>
+                          <Select
+                            isMulti={true}
+                            onChange={(e) => indirectOnchange(e)}
+                            options={templeteData.inDirect}
+                          />
+                        </div>
+                        <div className="col-md-3">
+                          <label>other</label>
+                          <Select
+                            onChange={(e) => otherOnchange(e)}
+                            isMulti={true}
+                            options={templeteData.other}
+                          />
+                        </div>
+                        <div className="col-md-3">
+                          {loading === true ? (
+                            <Loader />
+                          ) : (
+                            <div className="emailerBtn">
+                              <button
+                                type="button"
+                                onClick={(e) => generateTemp(e)}
+                                className="customBtn"
+                                style={{ height: "40px" }}
+                              >
+                                Template
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {mailerBody && (
+                      <div className="row">
+                        <div className="col-md-12 my-4">
+                          <button
+                            onClick={(e) => setViewHtml(!viewHtml)}
+                            type="button"
+                            className="customBtn"
+                          >
+                            Show html
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </fieldset>
                 </div>
-                <div className="col-md-10">
-                  <div className="form-group">
-                    <label>
-                      Message<span className="declined">*</span>
-                    </label>
-                    {showTemplete === true ? (
-                      <CustomQuillEditor
-                        content={`<div class="container tempcont">
-                        <div class="d-flex align-items-start my-3">
-                          <div class="p-0">
-                            <img
-                              src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-                              alt="logo"
-                              style="width: 30%;"
-                            />
-                          </div>
-                        </div>
-                        <div class="row mt-3 mx-0 justify-content-center">
-                          <div class="col-lg-12 headingDiv">
-                            <h4 style="margin-top: 20px;">Mazars Advisory Solutions</h4>
-                            <p style="margin-bottom: 0px;">
-                              Compilation of direct tax, indirect tax and other updates.
-                            </p>
-                            <p>Edition: Date</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3 justify-content-center">
-                          <div class="col-lg-12 imageDiv">
-                            <img src=${directGif} alt="directax" />
-                          </div>
-                          <div class="col-lg-12 mt-1 mb-3 contDiv">
-                            <ul>
-                            ${templeteData.direct.map((i) => (
-                              <li>{i.heading}</li>
-                            ))}
-                            
-                 
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="row mt-3 justify-content-center">
-                          <div class="col-lg-12 imageDiv">
-                            <img src=${indirectGif} alt="indirectax" />
-                          </div>
-                          <div class="col-lg-12 mt-1 mb-3 contDiv">
-                          
-                            <ul>
-                            ${templeteData.inDirect.map((i) => (
-                              <li>{i.heading}</li>
-                            ))}
-                            
-                 
-                         
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="row mt-3 justify-content-center">
-                          <div class="col-lg-12 imageDiv">
-                            <img src=${otherGif} alt="othertax" />
-                          </div>
-                          <div class="col-lg-12 mt-1 mb-3 contDiv">
-                          <ul>
-                          ${templeteData.other.map((i) => <li>{i.heading}</li>)}
-                          
-               
-                          </ul>
-                          </div>
-                        </div>
-                        <div class="row mt-4 justify-content-between">
-                          <div class="col-lg-4 btncol">
-                            <p class="clickp">Click here to read the full update</p>
-                            <button class="button">Read more</button>
-                          </div>
-                          <div class="col-lg-4 btncol">
-                            <p class="clickp">
-                              Click here for any further information or queries{" "}
-                            </p>
-                            <button class="button">Click here</button>
-                          </div>
-                        </div>
-                        <hr />
-                        <div class="footerdiv">
-                          <div class="d-flex mt-3 justify-content-center">
-                            <div class="p-2">
-                              <span class="awsmspan" id="linkspan">
-                                <a href="http://">
-                                  <i class="fa-solid fa-link"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="linkedinspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-linkedin"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="instaspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-instagram"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="facebookspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-facebook-f"></i>
-                                </a>
-                              </span>
-                            </div>
-                            <div class="p-2">
-                              <span class="awsmspan" id="twitterspan">
-                                <a href="http://">
-                                  <i class="fa-brands fa-twitter"></i>
-                                </a>
-                              </span>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12 footcont">
-                              <p>
-                                Industry experts form the backbone of Mazars Advisory Solutions
-                                team, collectively possessing:
-                              </p>
-                              <p>
-                                Mazars Advisory Solutions India is backed by experts having
-                                immense experience in the taxation field collectively possessing
-                                150+ years of industry experience in direct & indirect tax
-                                matters having served 400+ domestic clients and international
-                                clients across various sectors. The expert team has a
-                                comprehensive exposure of 1,00,000+ hours of tax assessment &
-                                litigation matters including special experience of having
-                                handled search & seizure cases of 150+ business groups. They
-                                also have 20+ years of thought leadership in transfer pricing.
-                              </p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-12 footcont">
-                              <p style="margin-bottom: 2px;">Find out more on: </p>
-                              <a href="https://advisorysolutions.mazars.co.in/">
-                                <p>https://advisorysolutions.mazars.co.in/</p>
-                              </a>
-                            </div>
-                            <div class="col-lg-12 footcont">
-                              <p class="copyright">Copyright @2022 All right reserved</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>`}
-                        showEditor={showTemplete}
-                      />
-                    ) : (
-                      <AddEditor />
-                    )}
-                  </div>
-                </div>
+
                 <div className="col-md-10">
                   <label className="d-block">
                     Schedule date<span className="declined">*</span>
@@ -603,7 +953,15 @@ const Enquiry = (props) => {
                 </div>
               </div>
             </form>
-            <EnqTemp />
+            {viewHtml === true ? (
+              <ShowHtml
+                openHandler={openHandler}
+                mailerBody={mailerBody}
+                viewHtml={viewHtml}
+              />
+            ) : (
+              " "
+            )}
           </CardBody>
         </Card>
       </Container>

@@ -20,7 +20,7 @@ function CustomerNotification({ tokenKey, name, panel }) {
         uit: token,
       },
     };
-    console.log("myConfig", myConfig);
+
     axios.get(`${baseUrl}/customers/logout`, myConfig).then((res) => {
       localStorage.removeItem("userid");
       localStorage.removeItem("custEmail");

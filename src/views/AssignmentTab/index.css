@@ -39,6 +39,8 @@ h5.modal-title {
   text-transform: none;
   display: flex;
   flex-direction: row;
+  color: rgb(61, 71, 117) !important;
+  cursor: pointer;
  
 }
 .tabHover:hover {

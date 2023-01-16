@@ -199,9 +199,6 @@ import PublicCms from "./Service/PublicCms";
 import AdminEnquiry from "./pages/Admin/AdminEnquiry/AdminEnquiry";
 
 function WebRoutes() {
-  const token = localStorage.getItem("clientToken");
-  console.log(token);
-  // const [token, setToken] = useState([]);
   
   return (
     <>

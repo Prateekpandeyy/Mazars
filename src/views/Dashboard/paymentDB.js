@@ -158,7 +158,6 @@ function PaymentDB() {
                                   </tr>
                                 </thead>
                               </table>
-
                               <table className="table table-striped fiftheenth main_table">
                                 <thead className="payment_thead2">
                                   <tr>
