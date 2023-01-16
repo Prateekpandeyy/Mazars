@@ -34,7 +34,7 @@ const EmailList = () => {
   const getHtml = (e, data) => {
     setViewHtml(true);
     setMailerBody(e);
-    setSubject(data.subject);
+    setSubject(data);
   };
   const openHandler = (e) => {
     setViewHtml(!viewHtml);

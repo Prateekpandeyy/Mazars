@@ -13,10 +13,10 @@ const ShowHtml = ({ mailerBody, openHandler, viewHtml, subject }) => {
   return (
     <Modal isOpen={viewHtml} toggle={openHandler} scrollable size="lg">
       <ModalHeader toggle={openHandler}>
-        <CustomHeading>{subject}</CustomHeading>
+        {subject && <CustomHeading>Subject : {subject.subject}</CustomHeading>}
+        <CustomHeading>Mailer body</CustomHeading>
       </ModalHeader>
       <ModalBody>
-        <CustomHeading>Mailer body</CustomHeading>
         <Markup content={mailerBody} />
       </ModalBody>
     </Modal>

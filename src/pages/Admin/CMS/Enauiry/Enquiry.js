@@ -306,11 +306,7 @@ const Enquiry = (props) => {
       alt="directax"
     />       `;
     } else {
-      table = ` <tr>
-    <td>
-       
-    </td>
-</tr>`;
+      table = "";
     }
     return table;
   };
@@ -322,11 +318,7 @@ const Enquiry = (props) => {
       alt="indirectax"
     />`;
     } else {
-      table = ` <tr>
-    <td>
-       
-    </td>
-</tr>`;
+      table = "";
     }
     return table;
   };
@@ -338,11 +330,7 @@ const Enquiry = (props) => {
       alt="othertax"
     />`;
     } else {
-      table = ` <tr>
-    <td>
-       
-    </td>
-</tr>`;
+      table = "";
     }
     return table;
   };
@@ -370,7 +358,7 @@ const Enquiry = (props) => {
 
     <body>
    
-    <table width = "80%" align="center">
+    <table width = "90%" align="center">
 
 
         <tr>
@@ -391,7 +379,7 @@ const Enquiry = (props) => {
                 <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
                     <p style="margin-bottom: 0px;">Compilation of direct tax  indirect tax and other updates.</p>
-                    <p>Edition: ${edition.split("-").reverse().join("-")}</p>
+                    <p>Edition: ${edition}</p>
            
         
                 </td>
@@ -443,7 +431,8 @@ const Enquiry = (props) => {
 <tr><td width="50%"> <p>Click here to read the full update</p></td>
 <td width="50%"><p style="float :right;text-align : right">  Click here for any further information or queries</p></td></tr>
 <tr>
- <td    <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
+ <td>
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
@@ -891,7 +880,6 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                   openHandler={openHandler}
                   mailerBody={mailerBody}
                   viewHtml={viewHtml}
-                  subject={subject}
                 />
               ) : (
                 " "
