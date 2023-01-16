@@ -96,6 +96,9 @@ const MediaContentCustomer = () => {
     axios({
       method: "POST",
       url: `${baseUrl}/customers/getgalleryupdateddetail`,
+      headers: {
+        uit: token,
+      },
       data: formData,
     }).then((res) => {
       setMyData(res.data.result[0]);

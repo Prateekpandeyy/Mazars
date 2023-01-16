@@ -54,6 +54,7 @@ const Enquiry = (props) => {
   const [loading, setLoading] = useState(false);
   const [mailerBody, setMailerBody] = useState("");
   const [edition, setEeition] = useState("");
+  const [id, setId] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -62,14 +63,17 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
-  const dateFormat = "YYYY-MM-DD HH:mm:ss";
+  const dateFormat = "DD-MM-YYYY HH";
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
   };
-  const getEmail = (e) => {
+  const getEmail = (e, b) => {
     setEmail([]);
-    setEmailValue([]);
-    setType(e);
+
+    if (b === "added") {
+      setType(e);
+      setEmailValue([]);
+    }
     let formData = new FormData();
     formData.append("type", e);
     axios({
@@ -80,7 +84,6 @@ const Enquiry = (props) => {
       },
       data: formData,
     }).then((res) => {
-      console.log("response", res);
       let val = [];
       if (res.data.code === 1) {
         res.data.result.map((i) => {
@@ -102,6 +105,9 @@ const Enquiry = (props) => {
       formData.append("type", "4");
     } else {
       formData.append("type", selectType);
+    }
+    if (window.location.pathname !== "/cms/enquiry") {
+      formData.append("id", id);
     }
     formData.append("subject", subject);
 
@@ -153,7 +159,7 @@ const Enquiry = (props) => {
     }
   };
   useEffect(() => {
-    if (!window.location.pathname !== "/cms/enquiry") {
+    if (window.location.pathname !== "/cms/enquiry") {
       axios
         .get(
           `${baseUrl}/cms/emailerlist?id=${window.location.pathname
@@ -164,13 +170,48 @@ const Enquiry = (props) => {
 
         .then((res) => {
           if (res.data.code === 1) {
+            let type = [];
+            let allEmailValue = [];
             setSubject(res.data.result[0]?.subject);
+            setId(res.data.result[0]?.id);
+            setSchData(
+              moment(res.data.result[0]?.schedule_date).format("DD-MM-YYYY HH")
+            );
+            setType(res.data.result[0].user_type);
+            let emailList = res.data.result[0].email_list.split(",");
+            emailList.map((i) => {
+              let kp = {
+                label: i,
+                value: i,
+              };
+              allEmailValue.push(kp);
+            });
+            console.log("kppp", allEmailValue);
+            setEmailValue(allEmailValue);
+            type.push(res.data.result[0].type);
+            if (type.includes("4")) {
+              setDisabled(true);
+              getEmail("4", "edited");
+            } else {
+              setDisabled(false);
+            }
+            setSelectType(type);
+            setLoading(true);
           } else if (res.data.code === 102) {
             localStorage.removeItem("token");
             history.push("/cms/login");
             return false;
           }
         });
+    } else {
+      let day = new Date().getDate();
+      let month = new Date().getMonth();
+      let year = new Date().getFullYear();
+
+      let finalDate = year + "-" + month + "-" + day + " " + "05";
+
+      setSchData(moment().format(dateFormat));
+      setLoading(true);
     }
   }, []);
   const generateTemplate = (e) => {
@@ -232,7 +273,7 @@ const Enquiry = (props) => {
       }
     });
   };
-
+  console.log("console.log", emailValue);
   const directOnchange = (e) => {
     setSelectDirect(e);
   };
@@ -292,7 +333,6 @@ const Enquiry = (props) => {
     setSelectOther(e);
   };
   const generateTemp = (e) => {
-    setLoading(true);
     let directoutput = selectDirect.map((i) => {
       return `<li>${i.value} </li>`;
     });
@@ -472,350 +512,353 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 
     setFinalData(data);
     setViewHtml(!viewHtml);
-    if (data) {
-      setLoading(false);
-    }
   };
 
   return (
     <Layout cmsDashboard="cmsDashboard">
-      <Container maxWidth="xl">
-        <Card>
-          <CardHeader>
-            <Row>
-              <Col md="4">
-                <button
-                  className="autoWidthBtn ml-2"
-                  onClick={() => history.goBack()}
-                >
-                  Go Back
-                </button>
-              </Col>
-              <Col md="4" align="center">
-                <CustomHeading>Schedule email</CustomHeading>
-              </Col>
-            </Row>
-          </CardHeader>
-          <CardBody>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="row">
-                <div className="col-md-10 my-4">
-                  <div className="row" onClick={(e) => getSelectData(e)}>
-                    <div className="col-md-2">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allClient"
-                          value="1"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allClient">
-                          Admin
-                        </label>
+      {loading === true ? (
+        <Container maxWidth="xl">
+          <Card>
+            <CardHeader>
+              <Row>
+                <Col md="4">
+                  <button
+                    className="autoWidthBtn ml-2"
+                    onClick={() => history.goBack()}
+                  >
+                    Go Back
+                  </button>
+                </Col>
+                <Col md="4" align="center">
+                  <CustomHeading>Schedule email</CustomHeading>
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                  <div className="col-md-10 my-4">
+                    <div className="row" onClick={(e) => getSelectData(e)}>
+                      <div className="col-md-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            defaultChecked={selectType.includes("0")}
+                            id="allClient"
+                            value="1"
+                            disabled={disabled}
+                          />
+                          <label class="form-check-label" htmlFor="allClient">
+                            Admin
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-md-2">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allClient"
-                          value="1"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allClient">
-                          All client
-                        </label>
+                      <div className="col-md-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            defaultChecked={selectType.includes("1")}
+                            id="allClient"
+                            value="1"
+                            disabled={disabled}
+                          />
+                          <label class="form-check-label" htmlFor="allClient">
+                            All client
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-md-2">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allTL"
-                          value="2"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allTL">
-                          All TL
-                        </label>
+                      <div className="col-md-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="allTL"
+                            value="2"
+                            defaultChecked={selectType.includes("2")}
+                            disabled={disabled}
+                          />
+                          <label class="form-check-label" htmlFor="allTL">
+                            All TL
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-md-3">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allTP"
-                          value="3"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allTP">
-                          All TP
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-md-3">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="specified"
-                          value="4"
-                        />
-                        <label class="form-check-label" htmlFor="specified">
-                          Specific email
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {disabled === true ? (
-                  <>
-                    <div className="col-md-5">
-                      <div className="form-group">
-                        <label>
-                          User type<span className="declined">*</span>
-                        </label>
-                        <select
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_type,
-                          })}
-                          name="type"
-                          value={type}
-                          onChange={(e) => getEmail(e.target.value)}
-                          ref={register}
-                          style={{ height: "33px" }}
-                        >
-                          <option value="">--select--</option>
-                          <option value="0">All user</option>
-                          <option value="1">All clients</option>
-
-                          <option value="2">All TL</option>
-                          <option value="3">All TP</option>
-                        </select>
-                        {errors.p_to && (
-                          <div className="invalid-feedback">
-                            {errors.p_to.message}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-md-5">
-                      <label>Email</label>
-                      <div>
-                        <DropDown
-                          value={emailValue}
-                          options={options}
-                          handleChange={(e) => getSelectEmail(e)}
-                          multi={true}
-                        />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-                <div className="col-md-10">
-                  <div className="form-group">
-                    <label>Subject</label>
-                    <input
-                      type="text"
-                      name="subject"
-                      className="form-control"
-                      onChange={(e) => setSubject(e.target.value)}
-                      ref={register({ required: true })}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-md-10">
-                  <fieldset className="my-fieldsettemplate">
-                    <legend className="login-legend">Generate template</legend>
-                    <div className="row">
                       <div className="col-md-3">
-                        <span className="generateTemplate">
-                          <label>Template type</label>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="allTP"
+                            value="3"
+                            disabled={disabled}
+                            defaultChecked={selectType.includes("3")}
+                          />
+                          <label class="form-check-label" htmlFor="allTP">
+                            All TP
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="specified"
+                            value="4"
+                            defaultChecked={selectType.includes("4")}
+                          />
+                          <label class="form-check-label" htmlFor="specified">
+                            Specific email
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {disabled === true ? (
+                    <>
+                      <div className="col-md-5">
+                        <div className="form-group">
+                          <label>
+                            User type<span className="declined">*</span>
+                          </label>
                           <select
-                            value={templeteType}
-                            onChange={(e) => setTempleteType(e.target.value)}
-                            className="form-control"
+                            className={classNames("form-control", {
+                              "is-invalid": errors.p_type,
+                            })}
+                            name="type"
+                            value={type}
+                            onChange={(e) => getEmail(e.target.value, "added")}
+                            ref={register}
+                            style={{ height: "33px" }}
                           >
-                            <option value="1">Updates</option>
+                            <option value="">--select--</option>
+                            <option value="0">All user</option>
+                            <option value="1">All clients</option>
+
+                            <option value="2">All TL</option>
+                            <option value="3">All TP</option>
                           </select>
-                        </span>
-                      </div>
-                      <div className="col-md-3">
-                        <span className="generateTemplate">
-                          <label className="d-block">
-                            Start date<span className="declined">*</span>
-                          </label>
-                          <Space direction="vertical" size={24}>
-                            <DatePicker
-                              disabledDate={(d) => !d || d.isAfter(minimum)}
-                              format="DD-MM-YYYY HH:mm:ss"
-                              showTime={{
-                                defaultValue: moment("00:00:00", "HH:mm:ss"),
-                              }}
-                              onChange={(e) => {
-                                setFromDate(
-                                  moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                );
-                                setMin(moment(e));
-                              }}
-                            />
-                          </Space>
-                        </span>
-                      </div>
-                      <div className="col-md-3">
-                        <span className="generateTemplate">
-                          <label className="d-block">
-                            End date<span className="declined">*</span>
-                          </label>
-                          <Space direction="vertical" size={24}>
-                            <DatePicker
-                              disabledDate={(d) =>
-                                !d ||
-                                !d.isBetween(
-                                  min,
-                                  moment(minimum).add(1, "day").toDate()
-                                )
-                              }
-                              id="endDate"
-                              format="DD-MM-YYYY HH:mm:ss"
-                              showTime={{
-                                defaultValue: moment("00:00:00", "HH:mm:ss"),
-                              }}
-                              onChange={(e) =>
-                                setToDate(
-                                  moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                )
-                              }
-                            />
-                          </Space>
-                        </span>
-                      </div>
-                      <div className="col-md-3">
-                        <div className="emailerBtn">
-                          <button
-                            type="button"
-                            onClick={(e) => generateTemplate(e)}
-                            className="autoWidthBtn"
-                            style={{ height: "40px" }}
-                          >
-                            Search
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    {showTemplete === true ? (
-                      <div className="row">
-                        <div className="col-md-12">
-                          <label>Direct tax</label>
-                          <Select
-                            isMulti={true}
-                            onChange={(e) => directOnchange(e)}
-                            options={templeteData.direct}
-                          />
-                        </div>
-                        <div className="col-md-12">
-                          <label>Indirect tax</label>
-                          <Select
-                            isMulti={true}
-                            onChange={(e) => indirectOnchange(e)}
-                            options={templeteData.inDirect}
-                          />
-                        </div>
-                        <div className="col-md-12">
-                          <label>Others</label>
-                          <Select
-                            onChange={(e) => otherOnchange(e)}
-                            isMulti={true}
-                            options={templeteData.other}
-                          />
-                        </div>
-                        <div className="col-md-3">
-                          {loading === true ? (
-                            <Loader />
-                          ) : (
-                            <>
-                              <div>
-                                <div className="form-group">
-                                  <label>Edition date</label>
-                                  <input
-                                    type="date"
-                                    name="subject"
-                                    className="form-control"
-                                    onChange={(e) => setEeition(e.target.value)}
-                                    ref={register({ required: true })}
-                                  />
-                                </div>
-                              </div>
-                              <div className="emailerBtn">
-                                <button
-                                  type="button"
-                                  onClick={(e) => generateTemp(e)}
-                                  className="customBtn"
-                                  style={{ height: "40px" }}
-                                >
-                                  Generate
-                                </button>
-                              </div>
-                            </>
+                          {errors.p_to && (
+                            <div className="invalid-feedback">
+                              {errors.p_to.message}
+                            </div>
                           )}
                         </div>
                       </div>
-                    ) : (
-                      ""
-                    )}
-                  </fieldset>
-                </div>
+                      <div className="col-md-5">
+                        <label>Email</label>
+                        <div>
+                          <DropDown
+                            value={emailValue}
+                            options={options}
+                            handleChange={(e) => getSelectEmail(e)}
+                            multi={true}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div className="col-md-10">
+                    <div className="form-group">
+                      <label>Subject</label>
+                      <input
+                        type="text"
+                        name="subject"
+                        className="form-control"
+                        onChange={(e) => setSubject(e.target.value)}
+                        ref={register({ required: true })}
+                        value={subject}
+                      />
+                    </div>
+                  </div>
 
-                <div className="col-md-4 my-4">
-                  <label className="d-block">
-                    Schedule date<span className="declined">*</span>
-                  </label>
-                  <Space direction="vertical" size={24}>
-                    <DatePicker
-                      disabledDate={(d) => !d || d.isBefore(minimum)}
-                      format={dateFormat}
-                      showTime={{
-                        defaultValue: moment("00:00:00", "HH:mm:ss"),
-                      }}
-                      onChange={(e) =>
-                        setSchData(moment(e).format("DD-MM-YYYY HH"))
-                      }
-                    />
-                  </Space>
+                  <div className="col-md-10">
+                    <fieldset className="my-fieldsettemplate">
+                      <legend className="login-legend">
+                        Generate template
+                      </legend>
+                      <div className="row">
+                        <div className="col-md-3">
+                          <span className="generateTemplate">
+                            <label>Template type</label>
+                            <select
+                              value={templeteType}
+                              onChange={(e) => setTempleteType(e.target.value)}
+                              className="form-control"
+                            >
+                              <option value="1">Updates</option>
+                            </select>
+                          </span>
+                        </div>
+                        <div className="col-md-3">
+                          <span className="generateTemplate">
+                            <label className="d-block">
+                              Start date<span className="declined">*</span>
+                            </label>
+                            <Space direction="vertical" size={24}>
+                              <DatePicker
+                                disabledDate={(d) => !d || d.isAfter(minimum)}
+                                format="DD-MM-YYYY HH:mm:ss"
+                                showTime={{
+                                  defaultValue: moment("00:00:00", "HH:mm:ss"),
+                                }}
+                                onChange={(e) => {
+                                  setFromDate(
+                                    moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                  );
+                                  setMin(moment(e));
+                                }}
+                              />
+                            </Space>
+                          </span>
+                        </div>
+                        <div className="col-md-3">
+                          <span className="generateTemplate">
+                            <label className="d-block">
+                              End date<span className="declined">*</span>
+                            </label>
+                            <Space direction="vertical" size={24}>
+                              <DatePicker
+                                disabledDate={(d) =>
+                                  !d ||
+                                  !d.isBetween(
+                                    min,
+                                    moment(minimum).add(1, "day").toDate()
+                                  )
+                                }
+                                id="endDate"
+                                format="DD-MM-YYYY HH:mm:ss"
+                                showTime={{
+                                  defaultValue: moment("00:00:00", "HH:mm:ss"),
+                                }}
+                                onChange={(e) =>
+                                  setToDate(
+                                    moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                  )
+                                }
+                              />
+                            </Space>
+                          </span>
+                        </div>
+                        <div className="col-md-3">
+                          <div className="emailerBtn">
+                            <button
+                              type="button"
+                              onClick={(e) => generateTemplate(e)}
+                              className="autoWidthBtn"
+                              style={{ height: "40px" }}
+                            >
+                              Search
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      {showTemplete === true ? (
+                        <div className="row">
+                          <div className="col-md-12">
+                            <label>Direct tax</label>
+                            <Select
+                              isMulti={true}
+                              onChange={(e) => directOnchange(e)}
+                              options={templeteData.direct}
+                            />
+                          </div>
+                          <div className="col-md-12">
+                            <label>Indirect tax</label>
+                            <Select
+                              isMulti={true}
+                              onChange={(e) => indirectOnchange(e)}
+                              options={templeteData.inDirect}
+                            />
+                          </div>
+                          <div className="col-md-12">
+                            <label>Others</label>
+                            <Select
+                              onChange={(e) => otherOnchange(e)}
+                              isMulti={true}
+                              options={templeteData.other}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <div>
+                              <div className="form-group">
+                                <label>Edition date</label>
+                                <input
+                                  type="date"
+                                  name="subject"
+                                  className="form-control"
+                                  onChange={(e) => setEeition(e.target.value)}
+                                  ref={register({ required: true })}
+                                />
+                              </div>
+                            </div>
+                            <div className="emailerBtn">
+                              <button
+                                type="button"
+                                onClick={(e) => generateTemp(e)}
+                                className="customBtn"
+                                style={{ height: "40px" }}
+                              >
+                                Generate
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </fieldset>
+                  </div>
+
+                  {schDate.length > 0 ? (
+                    <div className="col-md-4 my-4">
+                      <label className="d-block">
+                        Schedule date<span className="declined">*</span>
+                      </label>
+                      <Space direction="vertical" size={24}>
+                        <DatePicker
+                          disabledDate={(d) => !d || d.isBefore(minimum)}
+                          format={dateFormat}
+                          showTime={{
+                            defaultValue: moment("00:", "HH"),
+                          }}
+                          defaultValue={moment(schDate, dateFormat)}
+                          onChange={(e) =>
+                            setSchData(moment(e).format("DD-MM-YYYY HH"))
+                          }
+                        />
+                      </Space>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12 my-4">
-                  <button type="submit" className="customBtn">
-                    Submit
-                  </button>
+                <div className="row">
+                  <div className="col-md-12 my-4">
+                    <button type="submit" className="customBtn">
+                      Submit
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-            {viewHtml === true ? (
-              <ShowHtml
-                openHandler={openHandler}
-                mailerBody={mailerBody}
-                viewHtml={viewHtml}
-              />
-            ) : (
-              " "
-            )}
-          </CardBody>
-        </Card>
-      </Container>
+              </form>
+              {viewHtml === true ? (
+                <ShowHtml
+                  openHandler={openHandler}
+                  mailerBody={mailerBody}
+                  viewHtml={viewHtml}
+                />
+              ) : (
+                " "
+              )}
+            </CardBody>
+          </Card>
+        </Container>
+      ) : (
+        ""
+      )}
     </Layout>
   );
 };
