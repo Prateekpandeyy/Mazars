@@ -20,7 +20,9 @@ const EmailList = () => {
   const [viewHtml, setViewHtml] = useState(false);
   const [mailerBody, setMailerBody] = useState("");
   const [subject, setSubject] = useState("");
+  const [totalType2, setTotalType2] = useState([]);
   let history = useHistory();
+  var totalType;
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
   const myConfig = {
@@ -34,7 +36,7 @@ const EmailList = () => {
   const getHtml = (e, data) => {
     setViewHtml(true);
     setMailerBody(e);
-    setSubject(data);
+    setSubject(data.subject);
   };
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
@@ -98,20 +100,8 @@ const EmailList = () => {
         return { width: "100px" };
       },
       formatter: function (cell, row) {
-        let totalType = row.type.split(",");
-        console.log(totalType);
-        let type = "";
-        if (row.type === "0") {
-          type = "Admin";
-        } else if (row.type === "1") {
-          type = "All client";
-        } else if (row.type === "2") {
-          type = "All TL";
-        } else if (row.type === "3") {
-          type = "All TP";
-        } else if (row.type === "4") {
-          type = "Specific email";
-        }
+        totalType = row.type.split(",");
+
         return (
           <>
             {totalType.map((i) => (
@@ -278,6 +268,7 @@ const EmailList = () => {
             openHandler={openHandler}
             mailerBody={mailerBody}
             subject={subject}
+            totalType={totalType}
           />
         ) : (
           " "
