@@ -55,6 +55,7 @@ const Enquiry = (props) => {
   const [mailerBody, setMailerBody] = useState("");
   const [edition, setEeition] = useState("");
   const [id, setId] = useState("");
+  const [today, setToday] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -63,7 +64,7 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
-  const dateFormat = "DD-MM-YYYY HH";
+  const dateFormat = "DD-MM-YYYY HH:MM";
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
   };
@@ -183,19 +184,26 @@ const Enquiry = (props) => {
 
             setMailerBody(mail);
             setSchData(
-              moment(res.data.result[0]?.schedule_date).format("DD-MM-YYYY HH")
+              moment(res.data.result[0]?.schedule_date).format(
+                "DD-MM-YYYY HH:mm"
+              )
             );
             setType(res.data.result[0].user_type);
             let emailList = res.data.result[0].email_list.split(",");
-            emailList.map((i) => {
-              let kp = {
-                label: i,
-                value: i,
-              };
-              allEmailValue.push(kp);
-            });
-            console.log("kppp", allEmailValue);
-            setEmailValue(allEmailValue);
+
+            if (emailList[0]) {
+              emailList.map((i) => {
+                let kp = {
+                  label: i,
+                  value: i,
+                };
+
+                allEmailValue.push(kp);
+              });
+
+              setEmailValue(allEmailValue);
+            }
+            console.log(res.data.result[0].type.split(","));
             type.push(res.data.result[0].type);
             if (type.includes("4")) {
               setDisabled(true);
@@ -203,7 +211,7 @@ const Enquiry = (props) => {
             } else {
               setDisabled(false);
             }
-            setSelectType(type);
+            setSelectType(res.data.result[0].type.split(","));
             setLoading(true);
           } else if (res.data.code === 102) {
             localStorage.removeItem("token");
@@ -217,7 +225,8 @@ const Enquiry = (props) => {
       let year = new Date().getFullYear();
 
       let finalDate = year + "-" + month + "-" + day + " " + "05";
-
+      let today = day + "-" + month + "+" + year;
+      setToday(today);
       setSchData(moment().format(dateFormat));
       setLoading(true);
     }
@@ -281,7 +290,7 @@ const Enquiry = (props) => {
       }
     });
   };
-  console.log("console.log", emailValue);
+
   const directOnchange = (e) => {
     setSelectDirect(e);
   };
@@ -515,13 +524,13 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
     mail = mail.replace("<body>", "");
     mail = mail.replace("</body>", "");
     mail = mail.replace("</html>", "");
+    setMailerBody(mail.replace(/\,/g, " "));
 
-    setMailerBody(mail);
-
-    setFinalData(data);
+    setFinalData(data.replace(/\,/g, " "));
     setViewHtml(!viewHtml);
   };
-
+  console.log("selectType", selectType.includes("0"));
+  console.log("selectType", selectType);
   return (
     <Layout cmsDashboard="cmsDashboard">
       {loading === true ? (
@@ -553,11 +562,11 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                             class="form-check-input"
                             type="checkbox"
                             defaultChecked={selectType.includes("0")}
-                            id="allClient"
-                            value="1"
+                            id="allAdmin"
+                            value="0"
                             disabled={disabled}
                           />
-                          <label class="form-check-label" htmlFor="allClient">
+                          <label class="form-check-label" htmlFor="allAdmin">
                             Admin
                           </label>
                         </div>
@@ -770,13 +779,23 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                             <div>
                               <div className="form-group">
                                 <label>Edition date</label>
-                                <input
+                                <Space direction="vertical" size={24}>
+                                  <DatePicker
+                                    format="DD-MM-YYYY"
+                                    onChange={(e) =>
+                                      setEeition(moment(e).format("DD-MM-YYYY"))
+                                    }
+                                  />
+                                </Space>
+                                {/* <input
                                   type="date"
                                   name="subject"
+                                  placeholder="dd-mm-yyyy"
                                   className="form-control"
                                   onChange={(e) => setEeition(e.target.value)}
                                   ref={register({ required: true })}
-                                />
+                                  min={today}
+                                /> */}
                               </div>
                             </div>
                           </div>
@@ -804,15 +823,17 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                               options={templeteData.other}
                             />
                           </div>
-                          <div className="emailerBtn">
-                            <button
-                              type="button"
-                              onClick={(e) => generateTemp(e)}
-                              className="customBtn"
-                              style={{ height: "40px" }}
-                            >
-                              Generate
-                            </button>
+                          <div className="col-md-6">
+                            <div className="emailerBtn">
+                              <button
+                                type="button"
+                                onClick={(e) => generateTemp(e)}
+                                className="customBtn"
+                                style={{ height: "40px" }}
+                              >
+                                Generate
+                              </button>
+                            </div>
                           </div>
                         </div>
                       ) : (
@@ -831,7 +852,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                           disabledDate={(d) => !d || d.isBefore(minimum)}
                           format={dateFormat}
                           showTime={{
-                            defaultValue: moment("00:", "HH"),
+                            defaultValue: moment("00", "HH"),
                           }}
                           defaultValue={moment(schDate, dateFormat)}
                           onChange={(e) =>
@@ -870,6 +891,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                   openHandler={openHandler}
                   mailerBody={mailerBody}
                   viewHtml={viewHtml}
+                  subject={subject}
                 />
               ) : (
                 " "

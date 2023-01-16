@@ -19,6 +19,7 @@ const EmailList = () => {
   const [list, setList] = useState([]);
   const [viewHtml, setViewHtml] = useState(false);
   const [mailerBody, setMailerBody] = useState("");
+  const [subject, setSubject] = useState("");
   let history = useHistory();
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -30,9 +31,10 @@ const EmailList = () => {
   useEffect(() => {
     getList();
   }, []);
-  const getHtml = (e) => {
+  const getHtml = (e, data) => {
     setViewHtml(true);
     setMailerBody(e);
+    setSubject(data.subject);
   };
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
@@ -96,6 +98,8 @@ const EmailList = () => {
         return { width: "100px" };
       },
       formatter: function (cell, row) {
+        let totalType = row.type.split(",");
+        console.log(totalType);
         let type = "";
         if (row.type === "0") {
           type = "Admin";
@@ -110,7 +114,44 @@ const EmailList = () => {
         }
         return (
           <>
-            <p>{type}</p>
+            {totalType.map((i) => (
+              <>
+                {i === "0" ? (
+                  <p>Admin</p>
+                ) : (
+                  <>
+                    {i === "1" ? (
+                      <p>All client</p>
+                    ) : (
+                      <>
+                        {i === "2" ? (
+                          <p>All TL</p>
+                        ) : (
+                          <>
+                            {i === "3" ? (
+                              <p>All TP</p>
+                            ) : (
+                              <span
+                                style={{
+                                  display: "flex",
+                                  width: "100%",
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                <span>To : </span>
+                                {row.email_list.split(",").map((i) => (
+                                  <span>{i}</span>
+                                ))}
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ))}
           </>
         );
       },
@@ -146,22 +187,24 @@ const EmailList = () => {
           <>
             <span
               title="View message"
-              className="m-2"
-              onClick={(e) => getHtml(finalString)}
+              className="mx-2"
+              onClick={(e) => getHtml(finalString, row)}
             >
               <EyeIcon />
             </span>
             <span
-              title="Delete Articles"
+              title="Delete message"
               onClick={() => del(row.id)}
               className="mx-2"
             >
               <DeleteIcon />
             </span>
             {row.status === "0" ? (
-              <Link to={`/cms/editenquiry/${row.id}`}>
-                <EditQuery />
-              </Link>
+              <span className="mx-2">
+                <Link to={`/cms/editenquiry/${row.id}`}>
+                  <EditQuery />
+                </Link>
+              </span>
             ) : (
               <span className="completed">{status}</span>
             )}
@@ -234,6 +277,7 @@ const EmailList = () => {
             viewHtml={viewHtml}
             openHandler={openHandler}
             mailerBody={mailerBody}
+            subject={subject}
           />
         ) : (
           " "
