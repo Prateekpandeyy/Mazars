@@ -174,6 +174,14 @@ const Enquiry = (props) => {
             let allEmailValue = [];
             setSubject(res.data.result[0]?.subject);
             setId(res.data.result[0]?.id);
+            let datamail = res.data.result[0].message;
+            let mail = datamail.replace("<html>", "");
+            setFinalData(datamail);
+            mail = mail.replace("<body>", "");
+            mail = mail.replace("</body>", "");
+            mail = mail.replace("</html>", "");
+
+            setMailerBody(mail);
             setSchData(
               moment(res.data.result[0]?.schedule_date).format("DD-MM-YYYY HH")
             );
@@ -374,7 +382,7 @@ const Enquiry = (props) => {
                 <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
                     <p style="margin-bottom: 0px;">Compilation of direct tax  indirect tax and other updates.</p>
-                    <p>Edition: 2023-01-12</p>
+                    <p>Edition: ${edition.split("-").reverse().join("-")}</p>
            
         
                 </td>
@@ -758,6 +766,20 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       </div>
                       {showTemplete === true ? (
                         <div className="row">
+                          <div className="col-md-3">
+                            <div>
+                              <div className="form-group">
+                                <label>Edition date</label>
+                                <input
+                                  type="date"
+                                  name="subject"
+                                  className="form-control"
+                                  onChange={(e) => setEeition(e.target.value)}
+                                  ref={register({ required: true })}
+                                />
+                              </div>
+                            </div>
+                          </div>
                           <div className="col-md-12">
                             <label>Direct tax</label>
                             <Select
@@ -782,29 +804,15 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                               options={templeteData.other}
                             />
                           </div>
-                          <div className="col-md-3">
-                            <div>
-                              <div className="form-group">
-                                <label>Edition date</label>
-                                <input
-                                  type="date"
-                                  name="subject"
-                                  className="form-control"
-                                  onChange={(e) => setEeition(e.target.value)}
-                                  ref={register({ required: true })}
-                                />
-                              </div>
-                            </div>
-                            <div className="emailerBtn">
-                              <button
-                                type="button"
-                                onClick={(e) => generateTemp(e)}
-                                className="customBtn"
-                                style={{ height: "40px" }}
-                              >
-                                Generate
-                              </button>
-                            </div>
+                          <div className="emailerBtn">
+                            <button
+                              type="button"
+                              onClick={(e) => generateTemp(e)}
+                              className="customBtn"
+                              style={{ height: "40px" }}
+                            >
+                              Generate
+                            </button>
                           </div>
                         </div>
                       ) : (
@@ -837,11 +845,24 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                   )}
                 </div>
                 <div className="row">
-                  <div className="col-md-12 my-4">
+                  <div className="col-md-6 my-4">
                     <button type="submit" className="customBtn">
                       Submit
                     </button>
                   </div>
+                  {id ? (
+                    <div className="col-md-6 my-4">
+                      <button
+                        onClick={(e) => setViewHtml(!viewHtml)}
+                        type="button"
+                        className="autoWidthBtn"
+                      >
+                        Generated html
+                      </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </form>
               {viewHtml === true ? (

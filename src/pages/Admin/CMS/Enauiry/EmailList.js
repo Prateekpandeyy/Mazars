@@ -5,11 +5,16 @@ import CustomHeading from "../../../../components/Common/CustomHeading";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { baseUrl } from "../../../../config/config";
 import DataTablepopulated from "../../../../components/DataTablepopulated/DataTabel";
-import { EyeIcon, EditQuery } from "../../../../components/Common/MessageIcon";
+import {
+  EyeIcon,
+  EditQuery,
+  DeleteIcon,
+} from "../../../../components/Common/MessageIcon";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ShowHtml from "./ShowHtml";
+import Swal from "sweetalert2";
 const EmailList = () => {
   const [list, setList] = useState([]);
   const [viewHtml, setViewHtml] = useState(false);
@@ -120,6 +125,13 @@ const EmailList = () => {
             >
               <EyeIcon />
             </span>
+            <span
+              title="Delete Articles"
+              onClick={() => del(row.id)}
+              className="mx-2"
+            >
+              <DeleteIcon />
+            </span>
             {row.status === "0" ? (
               <Link to={`/cms/editenquiry/${row.id}`}>
                 <EditQuery />
@@ -132,6 +144,38 @@ const EmailList = () => {
       },
     },
   ];
+  const del = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Want to delete article? Yes, delete it!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        axios
+          .get(`${baseUrl}/cms/deletemailer?id=${id}`, myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              Swal.fire({
+                title: "success",
+                html: "Article deleted successfully",
+                icon: "success",
+              });
+              getList();
+            } else {
+              Swal.fire({
+                title: "error",
+                html: "Something went wrong , please try again",
+                icon: "error",
+              });
+            }
+          });
+      }
+    });
+  };
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
