@@ -47,9 +47,17 @@ const ShowHtml = ({
                                 }}
                               >
                                 <span>To : </span>
-                                {subject.email_list?.split(",").map((i) => (
-                                  <span>{i}</span>
-                                ))}
+                                <span
+                                  style={{
+                                    display: "flex",
+                                    width: "70%",
+                                    flexWrap: "wrap",
+                                  }}
+                                >
+                                  {subject.email_list?.split(",").map((i) => (
+                                    <span>{i}</span>
+                                  ))}
+                                </span>
                               </span>
                             )}
                           </>
