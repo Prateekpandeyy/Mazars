@@ -228,13 +228,17 @@ const EmailList = () => {
             >
               <EyeIcon />
             </span>
-            <span
-              title="Delete message"
-              onClick={() => del(row.id)}
-              className="mx-2"
-            >
-              <DeleteIcon />
-            </span>
+            {row.status !== "3" ? (
+              <span
+                title="Delete message"
+                onClick={() => del(row.id)}
+                className="mx-2"
+              >
+                <DeleteIcon />
+              </span>
+            ) : (
+              ""
+            )}
             {row.status === "0" ? (
               <span className="mx-2">
                 <Link to={`/cms/editenquiry/${row.id}`}>

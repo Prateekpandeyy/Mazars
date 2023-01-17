@@ -65,15 +65,15 @@ const ShowHtml = ({
             <div
               style={{
                 display: "flex",
-                justifyContent: "center",
+
                 width: "100%",
                 alignItems: "center",
               }}
             >
               <span style={{ display: "flex", marginRight: "10px" }}>
-                Subject :{" "}
-              </span>{" "}
-              <CustomHeading>{` ${subject.subject}`}</CustomHeading>
+                <CustomHeading>Subject :</CustomHeading>
+              </span>
+              <span style={{ marginTop: "5px" }}>{subject.subject}</span>
             </div>
           )}
           <CustomHeading>Mailer body</CustomHeading>

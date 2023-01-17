@@ -64,7 +64,7 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
-  const dateFormat = "DD-MM-YYYY HH:MM";
+  const dateFormat = "DD-MM-YYYY HH";
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
   };
@@ -184,9 +184,7 @@ const Enquiry = (props) => {
 
             setMailerBody(mail);
             setSchData(
-              moment(res.data.result[0]?.schedule_date).format(
-                "DD-MM-YYYY HH:mm"
-              )
+              moment(res.data.result[0]?.schedule_date).format("DD-MM-YYYY HH")
             );
             setType(res.data.result[0].user_type);
             let emailList = res.data.result[0].email_list.split(",");
@@ -847,13 +845,12 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                         <DatePicker
                           disabledDate={(d) => !d || d.isBefore(minimum)}
                           format={dateFormat}
-                          showTime={{
-                            defaultValue: moment("00", "HH"),
-                          }}
-                          defaultValue={moment(schDate, dateFormat)}
+                          showTime={true}
+                          showHour
                           onChange={(e) =>
                             setSchData(moment(e).format("DD-MM-YYYY HH"))
                           }
+                          defaultValue={moment(schDate, dateFormat)}
                         />
                       </Space>
                     </div>
