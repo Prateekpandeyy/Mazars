@@ -134,7 +134,7 @@ const EmailList = () => {
                                   flexWrap: "wrap",
                                 }}
                               >
-                                pecific email
+                                Specific email
                               </span>
                             )}
                           </>
@@ -228,6 +228,16 @@ const EmailList = () => {
             >
               <EyeIcon />
             </span>
+
+            {row.status === "0" ? (
+              <span className="mx-2">
+                <Link to={`/cms/editenquiry/${row.id}`}>
+                  <EditQuery />
+                </Link>
+              </span>
+            ) : (
+              <span className="completed">{status}</span>
+            )}
             {row.status !== "3" ? (
               <span
                 title="Delete message"
@@ -238,15 +248,6 @@ const EmailList = () => {
               </span>
             ) : (
               ""
-            )}
-            {row.status === "0" ? (
-              <span className="mx-2">
-                <Link to={`/cms/editenquiry/${row.id}`}>
-                  <EditQuery />
-                </Link>
-              </span>
-            ) : (
-              <span className="completed">{status}</span>
             )}
           </>
         );

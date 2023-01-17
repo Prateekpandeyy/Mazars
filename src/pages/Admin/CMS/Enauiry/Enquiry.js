@@ -15,6 +15,8 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import DropDown from "../../../../components/Common/DropDown";
 import Loader from "react-loader-spinner";
+import clickHere from "./mazaremailtemp/images/clickHere.jpeg";
+import readMore from "./mazaremailtemp/images/readMore.jpeg";
 import ShowHtml from "./ShowHtml";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
@@ -131,6 +133,12 @@ const Enquiry = (props) => {
         });
 
         history.push("/cms/emaillist");
+      } else if (res.data.code === 0) {
+        Swal.fire({
+          title: "error",
+          html: "Something went wrong, please try again",
+          icon: "error",
+        });
       }
     });
   };
@@ -430,40 +438,13 @@ const Enquiry = (props) => {
 <td width="50%"><p style="float :right;text-align : right">  Click here for any further information or queries</p></td></tr>
 <tr>
  <td align = "left">
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
-     style="border-bottom-left-radius: 1.75rem;
-     background-color: #0071ce;
-     border: 1px solid #0071ce;
-     color: #fff;
-     display: block;
-     cursor: pointer;
-     font-size: 1rem;
-     font-weight: 500; 
-     width: 50%;
-     min-height: 1.5rem;
-     overflow: hidden;
-     padding: 0.75rem 1.5rem;
-     text-align : center;
-     text-decoration: none;
-     transform: all 0.3s;">Read more</a>
+     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" >
+     <img src = ${readMore} style= "display : flex; max-width : 150px; width : 100%"/>
+     </a>
   </td>
 <td align = "right">
-     <a href="mailto:support22@mazars.co.in" target = "_blank"
-     style="border-bottom-left-radius: 1.75rem;
-     background-color: #0071ce;
-     border: 1px solid #0071ce;
-     color: #fff;
-     display: block;
-     cursor: pointer;
-     font-size: 1rem;
-     font-weight: 500; 
-     width: 50%;
-     min-height: 1.5rem;
-     overflow: hidden;
-     padding: 0.75rem 1.5rem;
-     text-align : center;
-     text-decoration: none;
-     transform: all 0.3s;">Click here</a>
+     <a href="mailto:support22@mazars.co.in" target = "_blank">
+     <img src = ${clickHere} style= "display : flex; max-width : 150px; width : 100%" /> </a>
      </td></tr>
     
  </table>
@@ -510,8 +491,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
     setFinalData(data.replace(/\,/g, " "));
     setViewHtml(!viewHtml);
   };
-  console.log("selectType", selectType.includes("0"));
-  console.log("selectType", selectType);
+
   return (
     <Layout cmsDashboard="cmsDashboard">
       {loading === true ? (

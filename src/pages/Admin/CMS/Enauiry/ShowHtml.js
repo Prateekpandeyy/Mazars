@@ -46,17 +46,28 @@ const ShowHtml = ({
                                   flexWrap: "wrap",
                                 }}
                               >
-                                <span>To : </span>
+                                <CustomHeading font={18}>To : </CustomHeading>
                                 <span
                                   style={{
                                     display: "flex",
-                                    width: "70%",
+                                    width: "90%",
                                     flexWrap: "wrap",
                                   }}
                                 >
-                                  {subject.email_list?.split(",").map((i) => (
-                                    <span>{i}</span>
-                                  ))}
+                                  {subject.email_list
+                                    ?.split(",")
+                                    .map((i, e) => (
+                                      <>
+                                        <CustomTypography>{i}</CustomTypography>
+                                        <>
+                                          {e !==
+                                          subject.email_list.split(",").length -
+                                            1
+                                            ? ","
+                                            : ""}
+                                        </>
+                                      </>
+                                    ))}
                                 </span>
                               </span>
                             )}
@@ -79,12 +90,14 @@ const ShowHtml = ({
               }}
             >
               <span style={{ display: "flex", marginRight: "10px" }}>
-                <CustomHeading>Subject :</CustomHeading>
+                <CustomHeading font={18}>Subject :</CustomHeading>
               </span>
-              <span style={{ marginTop: "5px" }}>{subject.subject}</span>
+              <span style={{ marginTop: "5px" }}>
+                <CustomTypography>{subject.subject}</CustomTypography>
+              </span>
             </div>
           )}
-          <CustomHeading>Mailer body</CustomHeading>
+          <CustomHeading font={18}>Mailer body</CustomHeading>
         </div>
       </ModalHeader>
       <ModalBody>
