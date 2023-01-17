@@ -439,12 +439,12 @@ const Enquiry = (props) => {
 <tr>
  <td align = "left">
      <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" >
-     <img src = ${readMore} style= "display : flex; max-width : 150px; width : 100%"/>
+     <img src = "https://staging.masindia.live/static/media/readMore.c5ecf674568c1a905740.jpeg" style= "display : flex; max-width : 150px; width : 100%"/>
      </a>
   </td>
 <td align = "right">
      <a href="mailto:support22@mazars.co.in" target = "_blank">
-     <img src = ${clickHere} style= "display : flex; max-width : 150px; width : 100%" /> </a>
+     <img src = "https://staging.masindia.live/static/media/clickHere.9f83b2126f60cd72da70.jpeg" style= "display : flex; max-width : 150px; width : 100%" /> </a>
      </td></tr>
     
  </table>
