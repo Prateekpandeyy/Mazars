@@ -25,19 +25,19 @@ const ShowHtml = ({
             {totalType?.map((i) => (
               <>
                 {i === "0" ? (
-                  <p>Admin</p>
+                  <p style={{ margin: "0px" }}>Admin</p>
                 ) : (
                   <>
                     {i === "1" ? (
-                      <p>All client</p>
+                      <p style={{ margin: "0px" }}>All client</p>
                     ) : (
                       <>
                         {i === "2" ? (
-                          <p>All TL</p>
+                          <p style={{ margin: "0px" }}>All TL</p>
                         ) : (
                           <>
                             {i === "3" ? (
-                              <p>All TP</p>
+                              <p style={{ margin: "0px" }}>All TP</p>
                             ) : (
                               <span
                                 style={{
@@ -62,7 +62,19 @@ const ShowHtml = ({
             ))}
           </>
           {subject && (
-            <CustomHeading>Subject : {subject.subject}</CustomHeading>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ display: "flex", marginRight: "10px" }}>
+                Subject :{" "}
+              </span>{" "}
+              <CustomHeading>{` ${subject.subject}`}</CustomHeading>
+            </div>
           )}
           <CustomHeading>Mailer body</CustomHeading>
         </div>

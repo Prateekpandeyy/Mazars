@@ -431,7 +431,7 @@ const Enquiry = (props) => {
 <tr><td width="50%"> <p>Click here to read the full update</p></td>
 <td width="50%"><p style="float :right;text-align : right">  Click here for any further information or queries</p></td></tr>
 <tr>
- <td>
+ <td align = "left">
      <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
@@ -449,7 +449,7 @@ const Enquiry = (props) => {
      text-decoration: none;
      transform: all 0.3s;">Read more</a>
   </td>
-<td>
+<td align = "right">
      <a href="mailto:support22@mazars.co.in" target = "_blank"
      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
@@ -681,6 +681,19 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                         Generate template
                       </legend>
                       <div className="row">
+                        {id ? (
+                          <div className="col-md-12 ml-auto text-right">
+                            <button
+                              onClick={(e) => setViewHtml(!viewHtml)}
+                              type="button"
+                              className="autoWidthBtn"
+                            >
+                              Generated html
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                         <div className="col-md-3">
                           <span className="generateTemplate">
                             <label>Template type</label>
@@ -854,19 +867,6 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       Submit
                     </button>
                   </div>
-                  {id ? (
-                    <div className="col-md-6 my-4">
-                      <button
-                        onClick={(e) => setViewHtml(!viewHtml)}
-                        type="button"
-                        className="autoWidthBtn"
-                      >
-                        Generated html
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
                 </div>
               </form>
               {viewHtml === true ? (
