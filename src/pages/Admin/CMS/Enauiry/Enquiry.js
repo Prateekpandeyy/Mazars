@@ -14,9 +14,11 @@ import Select from "react-select";
 import moment from "moment";
 import Swal from "sweetalert2";
 import DropDown from "../../../../components/Common/DropDown";
-import Loader from "react-loader-spinner";
-import clickHere from "./mazaremailtemp/images/clickHere.jpeg";
-import readMore from "./mazaremailtemp/images/readMore.jpeg";
+import img1 from "./LI-Logo.png";
+import img2 from "./mazaremailtemp/images/icon2.png";
+import img3 from "./mazaremailtemp/images/icon3.png";
+import img4 from "./mazaremailtemp/images/icon4.png";
+import linked from "./mazaremailtemp/images/linked.png";
 import ShowHtml from "./ShowHtml";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
@@ -405,7 +407,7 @@ const Enquiry = (props) => {
         </ul>
         </td>
         </tr>
-    <tr>
+   
     <tr><td>&nbsp;</td></tr>
     <tr><td style="margin: auto;text-align:center">     
           ${getIndirectTable()}
@@ -437,17 +439,46 @@ const Enquiry = (props) => {
 <tr><td width="50%"> <p>Click here to read the full update</p></td>
 <td width="50%"><p style="float :right;text-align : right">  Click here for any further information or queries</p></td></tr>
 <tr>
- <td align = "left">
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" >
-     <img src = "https://staging.masindia.live/static/media/readMore.c5ecf674568c1a905740.jpeg" style= "display : flex; max-width : 150px; width : 100%"/>
-     </a>
-  </td>
-<td align = "right">
-     <a href="mailto:support22@mazars.co.in" target = "_blank">
-     <img src = "https://staging.masindia.live/static/media/clickHere.9f83b2126f60cd72da70.jpeg" style= "display : flex; max-width : 150px; width : 100%" /> </a>
-     </td></tr>
+ <td align="left" valign="top" >
+<a href="https://advisorysolutions.mazars.co.in"  target="_blank">
+<span style="color:blue;text-decoration:none">
+<img border="0" width="264" height="60" style="width:2.75in;height:.625in" src="https://staging.masindia.live/static/media/clickHere.9f83b2126f60cd72da70.jpeg" ></span></a>
+</td>
+<td align="right" valign="top" >
+<a href="mailto:support22@mazars.co.in?subject=General%20query-%20Newsletter" target="_blank">
+<span style="color:blue;text-decoration:none">
+<img border="0" width="264" height="60" style="width:2.75in;height:.625in" src="https://staging.masindia.live/static/media/readMore.c5ecf674568c1a905740.jpeg" ></span></a>
+</td></tr>
     
  </table>
+ <ul style="display : block; max-width : 450px; list-style : none; width : 100%; margin : auto;">
+ <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ <a href = "https://www.mazars.co.in/" target = "_blank">
+ <img src = "https://cdn1.iconfinder.com/data/icons/text-editing-and-copyrights/80/text_and_edit-13-64.png" style="display : block; width : 50%"/>
+ </a>
+ </li>
+ 
+ <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ <a href = "https://www.linkedin.com/company/mazars-in-india/" target = "_blank">
+ <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/LinkedIn_icon_circle.svg/72px-LinkedIn_icon_circle.svg.png?20210301220643" style="display : block; width : 50%"  />
+ </a>
+ </li>
+ <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ <a href = "https://www.instagram.com/mazarsinindia/" target = "_blank">
+ <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_instagram-64.png" style="display : block; width : 50%" />
+ </a>
+ </li>
+ <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ <a href = "https://www.facebook.com/mazarsinindia/" target = "_blank">
+ <img src = "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook_colored_svg_copy-64.png" style="display : block; width : 50%" />
+ </a>
+ </li>
+ <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ <a href = "https://twitter.com/mazarsinindia" target = "_blank">
+ <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_twitter-64.png" style="display : block; width : 50%" />
+ </a>
+ </li>
+ </ul>
  </td>
  </tr>
  <tr><td>&nbsp;</td></tr>
@@ -470,7 +501,7 @@ Pune. Our professionals have in-depth experience in sectors like Energy  Telecom
 Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 </p>
 </br>
-<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
+<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">https://staging.masindia.live</a></p>
 
 <p>Copyright © 2023 Mazars  All rights reserved.</p>
  </td>
@@ -494,6 +525,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 
   return (
     <Layout cmsDashboard="cmsDashboard">
+      <img src="./mazaremailtemp/images/clickHere.jpeg" />
       {loading === true ? (
         <Container maxWidth="xl">
           <Card>
@@ -823,7 +855,6 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       </label>
                       <Space direction="vertical" size={24}>
                         <DatePicker
-                          disabledDate={(d) => !d || d.isBefore(minimum)}
                           format={dateFormat}
                           showTime={true}
                           showHour
