@@ -73,11 +73,10 @@ const Enquiry = (props) => {
     setViewHtml(!viewHtml);
   };
   const getEmail = (e, b) => {
-    setEmail([]);
-
     if (b === "added") {
       setType(e);
       setEmailValue([]);
+      setEmail([]);
     }
     let formData = new FormData();
     formData.append("type", e);
@@ -186,6 +185,8 @@ const Enquiry = (props) => {
             setSubject(res.data.result[0]?.subject);
             setId(res.data.result[0]?.id);
             let datamail = res.data.result[0].message;
+
+            setEmail(res.data.result[0]?.email_list);
             let mail = datamail.replace("<html>", "");
             setFinalData(datamail);
             mail = mail.replace("<body>", "");
@@ -211,7 +212,7 @@ const Enquiry = (props) => {
 
               setEmailValue(allEmailValue);
             }
-            console.log(res.data.result[0].type.split(","));
+
             type.push(res.data.result[0].type);
             if (type.includes("4")) {
               setDisabled(true);
@@ -525,7 +526,6 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 
   return (
     <Layout cmsDashboard="cmsDashboard">
-      <img src="./mazaremailtemp/images/clickHere.jpeg" />
       {loading === true ? (
         <Container maxWidth="xl">
           <Card>
@@ -855,6 +855,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       </label>
                       <Space direction="vertical" size={24}>
                         <DatePicker
+                          disabledDate={(d) => !d || d.isBefore(minimum)}
                           format={dateFormat}
                           showTime={true}
                           showHour
