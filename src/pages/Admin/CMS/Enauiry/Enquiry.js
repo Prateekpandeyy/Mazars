@@ -14,12 +14,9 @@ import Select from "react-select";
 import moment from "moment";
 import Swal from "sweetalert2";
 import DropDown from "../../../../components/Common/DropDown";
-import img1 from "./LI-Logo.png";
-import img2 from "./mazaremailtemp/images/icon2.png";
-import img3 from "./mazaremailtemp/images/icon3.png";
-import img4 from "./mazaremailtemp/images/icon4.png";
-import linked from "./mazaremailtemp/images/linked.png";
 import ShowHtml from "./ShowHtml";
+import AddEditor from "../AddEditor";
+import CustomQuillEditor from "../CustomQuillEditor";
 const { RangePicker } = DatePicker;
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -60,7 +57,11 @@ const Enquiry = (props) => {
   const [edition, setEeition] = useState("");
   const [id, setId] = useState("");
   const [today, setToday] = useState("");
+  const [editorData, setEditorData] = useState("");
+  const [isTemplate, setIsTemplate] = useState(true);
+  const [showEditor, setShowEditor] = useState(true);
   const { handleSubmit, register, errors, reset } = useForm({});
+
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
   const myConfig = {
@@ -103,7 +104,17 @@ const Enquiry = (props) => {
   };
   const onSubmit = (value) => {
     let formData = new FormData();
+    if (templeteType === "2") {
+      var myEditor = document.querySelector("#snow-container");
+      var html = myEditor.children[0].innerHTML;
 
+      if (myEditor.children[0].innerHTML.trim() === "<p><br></p>") {
+        return false;
+      }
+      formData.append("message", html);
+    } else {
+      formData.append("message", finalData);
+    }
     if (disabled === true) {
       formData.append("user_type", type);
       formData.append("type", "4");
@@ -114,9 +125,9 @@ const Enquiry = (props) => {
       formData.append("id", id);
     }
     formData.append("subject", subject);
-
+    formData.append("template_type", templeteType);
     formData.append("email_list", email);
-    formData.append("message", finalData);
+
     formData.append("schedule_date", schDate);
     axios({
       method: "POST",
@@ -185,7 +196,7 @@ const Enquiry = (props) => {
             setSubject(res.data.result[0]?.subject);
             setId(res.data.result[0]?.id);
             let datamail = res.data.result[0].message;
-
+            setTempleteType(res.data.result[0].templete_type);
             setEmail(res.data.result[0]?.email_list);
             let mail = datamail.replace("<html>", "");
             setFinalData(datamail);
@@ -310,8 +321,7 @@ const Enquiry = (props) => {
   const getDirectTable = () => {
     var table;
     if (selectDirect.length > 0) {
-      table = `  <img
-      src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
+      table = `  <img src="https://advisorysolutions.mazars.co.in/static/media/directax.9f3b0b746efff10a040f.gif"
       alt="directax"
     />       `;
     } else {
@@ -323,7 +333,7 @@ const Enquiry = (props) => {
     var table;
     if (selectIndirect.length > 0) {
       table = `<img align="center"
-      src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
+      src="https://advisorysolutions.mazars.co.in/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
       alt="indirectax"
     />`;
     } else {
@@ -335,7 +345,7 @@ const Enquiry = (props) => {
     var table;
     if (selectOther.length > 0) {
       table = ` <img
-      src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
+      src = "https://advisorysolutions.mazars.co.in/static/media/othertax.c5e8aa750f5b37aab594.gif"
       alt="othertax"
     />`;
     } else {
@@ -443,25 +453,33 @@ const Enquiry = (props) => {
  <td align="left" valign="top" >
 <a href="https://advisorysolutions.mazars.co.in"  target="_blank">
 <span style="color:blue;text-decoration:none">
-<img border="0" width="264" height="60" style="width:2.75in;height:.625in" src="https://staging.masindia.live/static/media/clickHere.9f83b2126f60cd72da70.jpeg" ></span></a>
+<img border="0" width="264" height="60" style="width:2.75in;height:.625in" src="https://advisorysolutions.mazars.co.in//static/media/clickHere.9f83b2126f60cd72da70.jpeg"></span></a>
 </td>
 <td align="right" valign="top" >
 <a href="mailto:support22@mazars.co.in?subject=General%20query-%20Newsletter" target="_blank">
 <span style="color:blue;text-decoration:none">
-<img border="0" width="264" height="60" style="width:2.75in;height:.625in" src="https://staging.masindia.live/static/media/readMore.c5ecf674568c1a905740.jpeg" ></span></a>
+<img border="0" width="264" height="60" style="width:2.75in;height:.625in" src="https://advisorysolutions.mazars.co.in//static/media/readMore.c5ecf674568c1a905740.jpeg"></span></a>
 </td></tr>
-    
+   
  </table>
+
+ </td>
+ </tr>
+ <tr><td>&nbsp;</td></tr>
+ <tr><td><hr></td></tr>
+ 
+ <tr><td>
+ 
  <ul style="display : block; max-width : 450px; list-style : none; width : 100%; margin : auto;">
  <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
  <a href = "https://www.mazars.co.in/" target = "_blank">
- <img src = "https://cdn1.iconfinder.com/data/icons/text-editing-and-copyrights/80/text_and_edit-13-64.png" style="display : block; width : 50%"/>
+ <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-link-48.png" style="display : block; width : 50%"/>
  </a>
  </li>
  
  <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
  <a href = "https://www.linkedin.com/company/mazars-in-india/" target = "_blank">
- <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/LinkedIn_icon_circle.svg/72px-LinkedIn_icon_circle.svg.png?20210301220643" style="display : block; width : 50%"  />
+ <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-linkedin-48.png" style="display : block; width : 50%"  />
  </a>
  </li>
  <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
@@ -476,14 +494,12 @@ const Enquiry = (props) => {
  </li>
  <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
  <a href = "https://twitter.com/mazarsinindia" target = "_blank">
- <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_twitter-64.png" style="display : block; width : 50%" />
+ <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" style="display : block; width : 50%" />
  </a>
  </li>
  </ul>
- </td>
- </tr>
- <tr><td>&nbsp;</td></tr>
- <tr><td><hr></td></tr>
+ </td></tr>
+
  <tr>
  <td style="display : block; text-align : center">
  <p>
@@ -502,7 +518,7 @@ Pune. Our professionals have in-depth experience in sectors like Energy  Telecom
 Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 </p>
 </br>
-<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">https://staging.masindia.live</a></p>
+<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">https://advisorysolutions.mazars.co.in</a></p>
 
 <p>Copyright © 2023 Mazars  All rights reserved.</p>
  </td>
@@ -672,6 +688,17 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                     ""
                   )}
                   <div className="col-md-10">
+                    <label>Template type</label>
+                    <select
+                      value={templeteType}
+                      onChange={(e) => setTempleteType(e.target.value)}
+                      className="form-control"
+                    >
+                      <option value="1">Template</option>
+                      <option value="2">Editor</option>
+                    </select>
+                  </div>
+                  <div className="col-md-10">
                     <div className="form-group">
                       <label>Subject</label>
                       <input
@@ -684,187 +711,207 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       />
                     </div>
                   </div>
-
-                  <div className="col-md-10">
-                    <fieldset className="my-fieldsettemplate">
-                      <legend className="login-legend">
-                        Generate template
-                      </legend>
-                      <div className="row">
-                        {id ? (
-                          <div className="col-md-12 ml-auto text-right">
-                            <button
-                              onClick={(e) => setViewHtml(!viewHtml)}
-                              type="button"
-                              className="autoWidthBtn"
-                            >
-                              Generated html
-                            </button>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        <div className="col-md-3">
-                          <span className="generateTemplate">
-                            <label>Template type</label>
-                            <select
-                              value={templeteType}
-                              onChange={(e) => setTempleteType(e.target.value)}
-                              className="form-control"
-                            >
-                              <option value="1">Updates</option>
-                            </select>
-                          </span>
-                        </div>
-                        <div className="col-md-3">
-                          <span className="generateTemplate">
-                            <label className="d-block">
-                              Start date<span className="declined">*</span>
-                            </label>
-                            <Space direction="vertical" size={24}>
-                              <DatePicker
-                                disabledDate={(d) => !d || d.isAfter(minimum)}
-                                format="DD-MM-YYYY HH:mm:ss"
-                                showTime={{
-                                  defaultValue: moment("00:00:00", "HH:mm:ss"),
-                                }}
-                                onChange={(e) => {
-                                  setFromDate(
-                                    moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                  );
-                                  setMin(moment(e));
-                                }}
-                              />
-                            </Space>
-                          </span>
-                        </div>
-                        <div className="col-md-3">
-                          <span className="generateTemplate">
-                            <label className="d-block">
-                              End date<span className="declined">*</span>
-                            </label>
-                            <Space direction="vertical" size={24}>
-                              <DatePicker
-                                disabledDate={(d) =>
-                                  !d ||
-                                  !d.isBetween(
-                                    min,
-                                    moment(minimum).add(1, "day").toDate()
-                                  )
-                                }
-                                id="endDate"
-                                format="DD-MM-YYYY HH:mm:ss"
-                                showTime={{
-                                  defaultValue: moment("00:00:00", "HH:mm:ss"),
-                                }}
-                                onChange={(e) =>
-                                  setToDate(
-                                    moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                  )
-                                }
-                              />
-                            </Space>
-                          </span>
-                        </div>
-                        <div className="col-md-3">
-                          <div className="emailerBtn">
-                            <button
-                              type="button"
-                              onClick={(e) => generateTemplate(e)}
-                              className="autoWidthBtn"
-                              style={{ height: "40px" }}
-                            >
-                              Search
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      {showTemplete === true ? (
+                  {templeteType === "1" ? (
+                    <div className="col-md-10">
+                      <fieldset className="my-fieldsettemplate">
+                        <legend className="login-legend">
+                          Generate template
+                        </legend>
                         <div className="row">
-                          <div className="col-md-3">
-                            <div>
-                              <div className="form-group">
-                                <label>Edition date</label>
-                                <Space direction="vertical" size={24}>
-                                  <DatePicker
-                                    format="DD-MM-YYYY"
-                                    onChange={(e) =>
-                                      setEeition(moment(e).format("DD-MM-YYYY"))
-                                    }
-                                  />
-                                </Space>
-                                {/* <input
-                                  type="date"
-                                  name="subject"
-                                  placeholder="dd-mm-yyyy"
-                                  className="form-control"
-                                  onChange={(e) => setEeition(e.target.value)}
-                                  ref={register({ required: true })}
-                                  min={today}
-                                /> */}
-                              </div>
+                          {id ? (
+                            <div className="col-md-12 ml-auto text-right">
+                              <button
+                                onClick={(e) => setViewHtml(!viewHtml)}
+                                type="button"
+                                className="autoWidthBtn"
+                              >
+                                Show Draft
+                              </button>
                             </div>
+                          ) : (
+                            ""
+                          )}
+
+                          <div className="col-md-3">
+                            <span className="generateTemplate">
+                              <label className="d-block">
+                                Start date<span className="declined">*</span>
+                              </label>
+                              <Space direction="vertical" size={24}>
+                                <DatePicker
+                                  disabledDate={(d) => !d || d.isAfter(minimum)}
+                                  format="DD-MM-YYYY HH:mm:ss"
+                                  showTime={{
+                                    defaultValue: moment(
+                                      "00:00:00",
+                                      "HH:mm:ss"
+                                    ),
+                                  }}
+                                  onChange={(e) => {
+                                    setFromDate(
+                                      moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                    );
+                                    setMin(moment(e));
+                                  }}
+                                />
+                              </Space>
+                            </span>
                           </div>
-                          <div className="col-md-12">
-                            <label>Direct tax</label>
-                            <Select
-                              isMulti={true}
-                              onChange={(e) => directOnchange(e)}
-                              options={templeteData.direct}
-                            />
+                          <div className="col-md-3">
+                            <span className="generateTemplate">
+                              <label className="d-block">
+                                End date<span className="declined">*</span>
+                              </label>
+                              <Space direction="vertical" size={24}>
+                                <DatePicker
+                                  disabledDate={(d) =>
+                                    !d ||
+                                    !d.isBetween(
+                                      min,
+                                      moment(minimum).add(1, "day").toDate()
+                                    )
+                                  }
+                                  id="endDate"
+                                  format="DD-MM-YYYY HH:mm:ss"
+                                  showTime={{
+                                    defaultValue: moment(
+                                      "00:00:00",
+                                      "HH:mm:ss"
+                                    ),
+                                  }}
+                                  onChange={(e) =>
+                                    setToDate(
+                                      moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                    )
+                                  }
+                                />
+                              </Space>
+                            </span>
                           </div>
-                          <div className="col-md-12">
-                            <label>Indirect tax</label>
-                            <Select
-                              isMulti={true}
-                              onChange={(e) => indirectOnchange(e)}
-                              options={templeteData.inDirect}
-                            />
-                          </div>
-                          <div className="col-md-12">
-                            <label>Others</label>
-                            <Select
-                              onChange={(e) => otherOnchange(e)}
-                              isMulti={true}
-                              options={templeteData.other}
-                            />
-                          </div>
-                          <div className="col-md-6">
+                          <div className="col-md-3">
                             <div className="emailerBtn">
                               <button
                                 type="button"
-                                onClick={(e) => generateTemp(e)}
-                                className="customBtn"
+                                onClick={(e) => generateTemplate(e)}
+                                className="autoWidthBtn"
                                 style={{ height: "40px" }}
                               >
-                                Generate
+                                Search
                               </button>
                             </div>
                           </div>
                         </div>
-                      ) : (
-                        ""
-                      )}
-                    </fieldset>
-                  </div>
+                        {showTemplete === true ? (
+                          <div className="row">
+                            <div className="col-md-3">
+                              <div>
+                                <div className="form-group">
+                                  <label>Edition date</label>
+                                  <Space direction="vertical" size={24}>
+                                    <DatePicker
+                                      format="DD-MM-YYYY"
+                                      onChange={(e) =>
+                                        setEeition(
+                                          moment(e).format("DD-MM-YYYY")
+                                        )
+                                      }
+                                    />
+                                  </Space>
+                                  {/* <input
+                type="date"
+                name="subject"
+                placeholder="dd-mm-yyyy"
+                className="form-control"
+                onChange={(e) => setEeition(e.target.value)}
+                ref={register({ required: true })}
+                min={today}
+              /> */}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-md-12">
+                              <label>Direct tax</label>
+                              <Select
+                                isMulti={true}
+                                onChange={(e) => directOnchange(e)}
+                                options={templeteData.direct}
+                              />
+                            </div>
+                            <div className="col-md-12">
+                              <label>Indirect tax</label>
+                              <Select
+                                isMulti={true}
+                                onChange={(e) => indirectOnchange(e)}
+                                options={templeteData.inDirect}
+                              />
+                            </div>
+                            <div className="col-md-12">
+                              <label>Others</label>
+                              <Select
+                                onChange={(e) => otherOnchange(e)}
+                                isMulti={true}
+                                options={templeteData.other}
+                              />
+                            </div>
+                            <div className="col-md-6">
+                              <div className="emailerBtn">
+                                <button
+                                  type="button"
+                                  onClick={(e) => generateTemp(e)}
+                                  className="customBtn"
+                                  style={{ height: "40px" }}
+                                >
+                                  Generate
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </fieldset>
+                    </div>
+                  ) : (
+                    <div className="col-md-12">
+                      <div className="row">
+                        <div className="col-md-10">
+                          <AddEditor />
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {schDate.length > 0 ? (
                     <div className="col-md-4 my-4">
                       <label className="d-block">
                         Schedule date<span className="declined">*</span>
                       </label>
-                      <Space direction="vertical" size={24}>
-                        <DatePicker
-                          disabledDate={(d) => !d || d.isBefore(minimum)}
-                          format={dateFormat}
-                          showTime={true}
-                          showHour
-                          onChange={(e) =>
-                            setSchData(moment(e).format("DD-MM-YYYY HH"))
-                          }
-                          defaultValue={moment(schDate, dateFormat)}
-                        />
-                      </Space>
+                      {window.location.pathname !== "/cms/enquiry" ? (
+                        <Space direction="vertical" size={24}>
+                          <DatePicker
+                            disabledDate={(d) => !d || d.isBefore(minimum)}
+                            format={dateFormat}
+                            showTime={true}
+                            showHour
+                            onChange={(e) =>
+                              setSchData(moment(e).format("DD-MM-YYYY HH"))
+                            }
+                            defaultValue={moment(schDate, dateFormat)}
+                          />
+                        </Space>
+                      ) : (
+                        <Space direction="vertical" size={24}>
+                          <DatePicker
+                            disabledDate={(d) => !d || d.isBefore(minimum)}
+                            format={dateFormat}
+                            showTime={true}
+                            showHour
+                            onChange={(e) =>
+                              setSchData(moment(e).format("DD-MM-YYYY HH"))
+                            }
+                          />
+                        </Space>
+                      )}
                     </div>
                   ) : (
                     ""
