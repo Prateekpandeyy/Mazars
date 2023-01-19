@@ -196,7 +196,9 @@ const Enquiry = (props) => {
             setSubject(res.data.result[0]?.subject);
             setId(res.data.result[0]?.id);
             let datamail = res.data.result[0].message;
-            setTempleteType(res.data.result[0].templete_type);
+            if (res.data.result[0].templete_type) {
+              setTempleteType(res.data.result[0].templete_type);
+            }
             setEmail(res.data.result[0]?.email_list);
             let mail = datamail.replace("<html>", "");
             setFinalData(datamail);
@@ -718,20 +720,6 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                           Generate template
                         </legend>
                         <div className="row">
-                          {id ? (
-                            <div className="col-md-12 ml-auto text-right">
-                              <button
-                                onClick={(e) => setViewHtml(!viewHtml)}
-                                type="button"
-                                className="autoWidthBtn"
-                              >
-                                Show Draft
-                              </button>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-
                           <div className="col-md-3">
                             <span className="generateTemplate">
                               <label className="d-block">
@@ -800,6 +788,21 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                               </button>
                             </div>
                           </div>
+                          {id ? (
+                            <div className="col-md-3">
+                              <div className="emailerBtn">
+                                <button
+                                  onClick={(e) => setViewHtml(!viewHtml)}
+                                  type="button"
+                                  className="autoWidthBtn"
+                                >
+                                  Show Draft
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         {showTemplete === true ? (
                           <div className="row">
