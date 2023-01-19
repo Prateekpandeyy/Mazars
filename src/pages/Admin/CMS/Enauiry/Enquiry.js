@@ -196,9 +196,7 @@ const Enquiry = (props) => {
             setSubject(res.data.result[0]?.subject);
             setId(res.data.result[0]?.id);
             let datamail = res.data.result[0].message;
-            if (res.data.result[0].templete_type) {
-              setTempleteType(res.data.result[0].templete_type);
-            }
+            setTempleteType(res.data.result[0].template_type);
             setEmail(res.data.result[0]?.email_list);
             let mail = datamail.replace("<html>", "");
             setFinalData(datamail);
@@ -359,22 +357,28 @@ const Enquiry = (props) => {
     setSelectOther(e);
   };
   const generateTemp = (e) => {
-    let directoutput = selectDirect.map((i) => {
-      return `<li>${i.value} </li>`;
-    });
-    let indirectoutput = selectIndirect.map((i) => {
-      return `
-                <li>${i.value} </li>
-                
-              `;
-    });
-    let otheroutput = selectOther.map((i) => {
-      return `
-                <li>${i.value} </li>
-                
-              `;
-    });
-    let data = `<html>
+    if (
+      selectDirect.length > 0 ||
+      selectIndirect.length > 0 ||
+      selectOther.length > 0
+    ) {
+      let directoutput = selectDirect.map((i) => {
+        return `<li>${i.value} </li>`;
+      });
+      let indirectoutput = selectIndirect.map((i) => {
+        return `
+                  <li>${i.value} </li>
+                  
+                `;
+      });
+      let otheroutput = selectOther.map((i) => {
+        return `
+                  <li>${i.value} </li>
+                  
+                `;
+      });
+
+      let data = `<html>
 
 
     <body>
@@ -399,7 +403,7 @@ const Enquiry = (props) => {
                 <tr>
                 <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px;">Compilation of direct tax  indirect tax and other updates.</p>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax,  indirect tax and other updates.</p>
                     <p>Edition: ${edition}</p>
            
         
@@ -470,38 +474,39 @@ const Enquiry = (props) => {
  <tr><td>&nbsp;</td></tr>
  <tr><td><hr></td></tr>
  
- <tr><td>
+ <tr><td align="center">
  
- <ul style="display : block; max-width : 450px; list-style : none; width : 100%; margin : auto;">
- <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
- <a href = "https://www.mazars.co.in/" target = "_blank">
+ <table style="max-width : 350px; width : 100%; margin : auto;" border="0" align="center" cellspacing="0px"><tr>
+ <td>
+ <a href = "https://advisorysolutions.mazars.co.in" target = "_blank">
  <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-link-48.png" style="display : block; width : 50%"/>
  </a>
- </li>
+ </td>
  
- <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ <td >
  <a href = "https://www.linkedin.com/company/mazars-in-india/" target = "_blank">
  <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-linkedin-48.png" style="display : block; width : 50%"  />
  </a>
- </li>
- <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ </td>
+ 
+ <td >
  <a href = "https://www.instagram.com/mazarsinindia/" target = "_blank">
- <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_instagram-64.png" style="display : block; width : 50%" />
+ <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_instagram-48.png" style="display : block; width : 50%;" />
  </a>
- </li>
- <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ </td>
+ <td >
  <a href = "https://www.facebook.com/mazarsinindia/" target = "_blank">
- <img src = "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook_colored_svg_copy-64.png" style="display : block; width : 50%" />
+ <img src = "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook_colored_svg_copy-48.png" style="display : block; width : 50%" />
  </a>
- </li>
- <li style = "display : block; width : 15%; float : left; margin : 10px 0px">
+ </td>
+ <td >
  <a href = "https://twitter.com/mazarsinindia" target = "_blank">
  <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" style="display : block; width : 50%" />
  </a>
- </li>
- </ul>
+ </td>
+ </tr>
+</table>
  </td></tr>
-
  <tr>
  <td style="display : block; text-align : center">
  <p>
@@ -531,17 +536,22 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
     </html>
 `;
 
-    let mail = data.replace("<html>", "");
+      let mail = data.replace("<html>", "");
 
-    mail = mail.replace("<body>", "");
-    mail = mail.replace("</body>", "");
-    mail = mail.replace("</html>", "");
-    setMailerBody(mail.replace(/\,/g, " "));
+      mail = mail.replace("<body>", "");
+      mail = mail.replace("</body>", "");
+      mail = mail.replace("</html>", "");
+      setMailerBody(mail.replace(/\,/g, " "));
 
-    setFinalData(data.replace(/\,/g, " "));
-    setViewHtml(!viewHtml);
+      setFinalData(data.replace(/\,/g, " "));
+      setViewHtml(!viewHtml);
+    } else {
+      Swal.fire({
+        html: "Please select atleast one updates",
+      });
+    }
   };
-
+  console.log("templete type", moment(minimum).format("DD-MM-YYYY HH"));
   return (
     <Layout cmsDashboard="cmsDashboard">
       {loading === true ? (
@@ -693,10 +703,15 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                     <label>Template type</label>
                     <select
                       value={templeteType}
-                      onChange={(e) => setTempleteType(e.target.value)}
+                      onChange={(e) => {
+                        if (e.target.value === "2") {
+                          setMailerBody("");
+                        }
+                        setTempleteType(e.target.value);
+                      }}
                       className="form-control"
                     >
-                      <option value="1">Template</option>
+                      <option value="1">Updates</option>
                       <option value="2">Editor</option>
                     </select>
                   </div>
@@ -706,7 +721,9 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       <input
                         type="text"
                         name="subject"
-                        className="form-control"
+                        className={classNames("form-control", {
+                          "is-invalid": errors.subject,
+                        })}
                         onChange={(e) => setSubject(e.target.value)}
                         ref={register({ required: true })}
                         value={subject}
@@ -876,10 +893,16 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                     </div>
                   ) : (
                     <div className="col-md-12">
+                      {window.location.pathname !== "/cms/enquiry" ? (
+                        <CustomQuillEditor
+                          content={mailerBody}
+                          showEditor={showEditor}
+                        />
+                      ) : (
+                        <AddEditor />
+                      )}
                       <div className="row">
-                        <div className="col-md-10">
-                          <AddEditor />
-                        </div>
+                        <div className="col-md-10"></div>
                       </div>
                     </div>
                   )}
@@ -892,7 +915,9 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       {window.location.pathname !== "/cms/enquiry" ? (
                         <Space direction="vertical" size={24}>
                           <DatePicker
-                            disabledDate={(d) => !d || d.isBefore(minimum)}
+                            disabledDate={(d) =>
+                              !d || d.isSameOrBefore(minimum)
+                            }
                             format={dateFormat}
                             showTime={true}
                             showHour
@@ -905,7 +930,9 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                       ) : (
                         <Space direction="vertical" size={24}>
                           <DatePicker
-                            disabledDate={(d) => !d || d.isBefore(minimum)}
+                            disabledDate={(d) =>
+                              !d || d.isSameOrBefore(minimum)
+                            }
                             format={dateFormat}
                             showTime={true}
                             showHour

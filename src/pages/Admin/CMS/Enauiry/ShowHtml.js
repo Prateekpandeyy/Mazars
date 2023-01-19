@@ -50,7 +50,7 @@ const ShowHtml = ({
                                 <span
                                   style={{
                                     display: "flex",
-                                    width: "90%",
+
                                     flexWrap: "wrap",
                                   }}
                                 >
