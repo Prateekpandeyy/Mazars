@@ -57,9 +57,9 @@ const Enquiry = (props) => {
   const [edition, setEeition] = useState("");
   const [id, setId] = useState("");
   const [today, setToday] = useState("");
-  const [editorData, setEditorData] = useState("");
-  const [isTemplate, setIsTemplate] = useState(true);
+
   const [showEditor, setShowEditor] = useState(true);
+  const [hour, setHour] = useState("17");
   const { handleSubmit, register, errors, reset } = useForm({});
 
   const token = localStorage.getItem("token");
@@ -240,15 +240,9 @@ const Enquiry = (props) => {
           }
         });
     } else {
-      let day = new Date().getDate();
-      let month = new Date().getMonth();
-      let year = new Date().getFullYear();
-
-      let finalDate = year + "-" + month + "-" + day + " " + "05";
-      let today = day + "-" + month + "+" + year;
-      setToday(today);
       setSchData(moment().format(dateFormat));
       setLoading(true);
+      setToday(moment().format("DD-MM-YYYY"));
     }
   }, []);
   const generateTemplate = (e) => {
@@ -551,7 +545,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
       });
     }
   };
-  console.log("templete type", moment(minimum).format("DD-MM-YYYY HH"));
+  console.log("templete type", moment(minimum).format("DD-MM-YYYY"));
   return (
     <Layout cmsDashboard="cmsDashboard">
       {loading === true ? (
@@ -939,6 +933,10 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
                             onChange={(e) =>
                               setSchData(moment(e).format("DD-MM-YYYY HH"))
                             }
+                            defaultValue={moment(
+                              `${today} ${hour}`,
+                              dateFormat
+                            )}
                           />
                         </Space>
                       )}
