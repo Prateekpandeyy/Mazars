@@ -53,6 +53,8 @@ const Enquiry = (props) => {
   const [finalData, setFinalData] = useState("");
   const [loading, setLoading] = useState(false);
   const [mailerBody, setMailerBody] = useState("");
+  const [edition, setEeition] = useState("");
+  const [id, setId] = useState("");
   const { handleSubmit, register, errors, reset } = useForm({});
   const token = localStorage.getItem("token");
   const userId = window.localStorage.getItem("cmsId");
@@ -61,13 +63,17 @@ const Enquiry = (props) => {
       uit: token,
     },
   };
+  const dateFormat = "DD-MM-YYYY HH";
   const openHandler = (e) => {
     setViewHtml(!viewHtml);
   };
-  const getEmail = (e) => {
+  const getEmail = (e, b) => {
     setEmail([]);
-    setEmailValue([]);
-    setType(e);
+
+    if (b === "added") {
+      setType(e);
+      setEmailValue([]);
+    }
     let formData = new FormData();
     formData.append("type", e);
     axios({
@@ -78,7 +84,6 @@ const Enquiry = (props) => {
       },
       data: formData,
     }).then((res) => {
-      console.log("response", res);
       let val = [];
       if (res.data.code === 1) {
         res.data.result.map((i) => {
@@ -101,6 +106,9 @@ const Enquiry = (props) => {
     } else {
       formData.append("type", selectType);
     }
+    if (window.location.pathname !== "/cms/enquiry") {
+      formData.append("id", id);
+    }
     formData.append("subject", subject);
 
     formData.append("email_list", email);
@@ -120,11 +128,7 @@ const Enquiry = (props) => {
           html: "Message schedule successfully",
           icon: "success",
         });
-        axios
-          .get("https://stagingapi.masindia.live/v1/autoscript/emailprocess")
-          .then((res) => {
-            console.log("ers", res);
-          });
+
         history.push("/cms/emaillist");
       }
     });
@@ -155,7 +159,7 @@ const Enquiry = (props) => {
     }
   };
   useEffect(() => {
-    if (!window.location.pathname !== "/cms/enquiry") {
+    if (window.location.pathname !== "/cms/enquiry") {
       axios
         .get(
           `${baseUrl}/cms/emailerlist?id=${window.location.pathname
@@ -166,12 +170,48 @@ const Enquiry = (props) => {
 
         .then((res) => {
           if (res.data.code === 1) {
+            let type = [];
+            let allEmailValue = [];
+            setSubject(res.data.result[0]?.subject);
+            setId(res.data.result[0]?.id);
+            setSchData(
+              moment(res.data.result[0]?.schedule_date).format("DD-MM-YYYY HH")
+            );
+            setType(res.data.result[0].user_type);
+            let emailList = res.data.result[0].email_list.split(",");
+            emailList.map((i) => {
+              let kp = {
+                label: i,
+                value: i,
+              };
+              allEmailValue.push(kp);
+            });
+            console.log("kppp", allEmailValue);
+            setEmailValue(allEmailValue);
+            type.push(res.data.result[0].type);
+            if (type.includes("4")) {
+              setDisabled(true);
+              getEmail("4", "edited");
+            } else {
+              setDisabled(false);
+            }
+            setSelectType(type);
+            setLoading(true);
           } else if (res.data.code === 102) {
             localStorage.removeItem("token");
             history.push("/cms/login");
             return false;
           }
         });
+    } else {
+      let day = new Date().getDate();
+      let month = new Date().getMonth();
+      let year = new Date().getFullYear();
+
+      let finalDate = year + "-" + month + "-" + day + " " + "05";
+
+      setSchData(moment().format(dateFormat));
+      setLoading(true);
     }
   }, []);
   const generateTemplate = (e) => {
@@ -233,7 +273,7 @@ const Enquiry = (props) => {
       }
     });
   };
-
+  console.log("console.log", emailValue);
   const directOnchange = (e) => {
     setSelectDirect(e);
   };
@@ -244,20 +284,10 @@ const Enquiry = (props) => {
   const getDirectTable = () => {
     var table;
     if (selectDirect.length > 0) {
-      table = `  <tr>
-      <td>
-      <table style="margin: auto;">
-      <tr>
-        <td>
-          <img
-            src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
-            alt="directax"
-          />
-        </td>
-      </tr>
-    </table>
-      </td>
-  </tr>`;
+      table = `  <img
+      src="https://staging.masindia.live/static/media/directax.9f3b0b746efff10a040f.gif"
+      alt="directax"
+    />       `;
     } else {
       table = ` <tr>
     <td>
@@ -270,21 +300,10 @@ const Enquiry = (props) => {
   const getIndirectTable = () => {
     var table;
     if (selectIndirect.length > 0) {
-      table = `  <tr>
-      <td>
-      <table style="margin: auto;">
-      <tr>
-        <td>
-          <img
-            src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
-            alt="indirectax"
-          />
-        </td>
-      </tr>
-    </table>
-
-      </td>
-  </tr>`;
+      table = `<img align="center"
+      src="https://staging.masindia.live/static/media/indirextax.9f7d2ff61a1464eb1db6.gif"
+      alt="indirectax"
+    />`;
     } else {
       table = ` <tr>
     <td>
@@ -297,21 +316,10 @@ const Enquiry = (props) => {
   const getOtherTable = () => {
     var table;
     if (selectOther.length > 0) {
-      table = `  <tr>
-      <td>
-      <table style="margin: auto;">
-      <tr>
-        <td>
-          <img
-            src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
-            alt="othertax"
-          />
-        </td>
-      </tr>
-    </table>
-
-      </td>
-  </tr>`;
+      table = ` <img
+      src="https://staging.masindia.live/static/media/othertax.c5e8aa750f5b37aab594.gif"
+      alt="othertax"
+    />`;
     } else {
       table = ` <tr>
     <td>
@@ -325,31 +333,27 @@ const Enquiry = (props) => {
     setSelectOther(e);
   };
   const generateTemp = (e) => {
-    setLoading(true);
     let directoutput = selectDirect.map((i) => {
-      return `<ul>
-                <li>${i.value} </li>
-                
-              </ul>`;
+      return `<li>${i.value} </li>`;
     });
     let indirectoutput = selectIndirect.map((i) => {
-      return `<ul>
+      return `
                 <li>${i.value} </li>
                 
-              </ul>`;
+              `;
     });
     let otheroutput = selectOther.map((i) => {
-      return `<ul>
+      return `
                 <li>${i.value} </li>
                 
-              </ul>`;
+              `;
     });
     let data = `<html>
 
 
     <body>
-    <span>
-    <table width = "65%">
+   
+    <table width = "80%" align="center">
 
 
         <tr>
@@ -361,49 +365,68 @@ const Enquiry = (props) => {
             </td>
           
     </tr>    
-    </br>
+    <tr><td>&nbsp;</td></tr>
     <tr>
-        <td>
-            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
+        <td bgColor="#0071CE">
+            <table bgColor="#0071CE" width = "100%" style="margin: 10px 0px; padding: 10px;">
                         
                 <tr>
-                <td style="color: #fff;">
+                <td  style="margin : 0px 10px; color : #fff">
                     <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                    <p>Edition: Date</p>
+                    <p style="margin-bottom: 0px;">Compilation of direct tax  indirect tax and other updates.</p>
+                    <p>Edition: 2023-01-12</p>
            
         
                 </td>
                  </tr>
         </table>
         </td>
-    </tr>
-    </br>
-   ${getDirectTable()}
+    </tr>   
+     <tr><td>&nbsp;</td></tr>
+    <tr><td style="margin: auto;text-align:center">  
+        ${getDirectTable()}
+      </td>
+  </tr>
     <tr>
         <td>
+        <ul>
         ${directoutput}
+        </ul>
         </td>
         </tr>
-  ${getIndirectTable()}
+    <tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr><td style="margin: auto;text-align:center">     
+          ${getIndirectTable()}
+        </td>
+  </tr>
   <tr>
        <td>
-       ${indirectoutput}
+       <ul>
+       ${indirectoutput}             
+       </ul>
        </td>
      </tr>
- ${getOtherTable()}
+   <tr><td>&nbsp;</td></tr>
+    <tr><td style="margin: auto;text-align:center">  
+         ${getOtherTable()}
+      </td>
+  </tr>
 <tr>
     <td>
+    <ul>
     ${otheroutput}
+    </ul>
     </td>
  </tr>
  <tr>
  <td>
- <table width = "100%">
- <tr>
- <td>
-     <p>Click here to read the full update</p>
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
+ <table width = "100%" cellspacing="0" border="0">
+
+<tr><td width="50%"> <p>Click here to read the full update</p></td>
+<td width="50%"><p style="float :right;text-align : right">  Click here for any further information or queries</p></td></tr>
+<tr>
+ <td    <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" 
      style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
@@ -414,20 +437,17 @@ const Enquiry = (props) => {
      font-weight: 500;
    
      line-height: 1;
-     width: 45%;
+     width: 50%;
     margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
- 
+ text-align : center;
      text-decoration: none;
-     transform: all 0.3s;">Read more</a>
- 
-</td>
+     transform: all 0.3s;"">Read more</a>
+  </td>
 <td>
-
-<p style="float :right;">  Click here for any further information or queries</p>
-     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank"
+     <a href="mailto:support22@mazars.co.in" target = "_blank"
       style="border-bottom-left-radius: 1.75rem;
      background-color: #0071ce;
      border: 1px solid #0071ce;
@@ -438,463 +458,343 @@ const Enquiry = (props) => {
      font-weight: 500;
    
      line-height: 1;
-     width: 45%;
+     width: 50%;
     margin-left : auto;
      min-height: 1.5rem;
      overflow: hidden;
      padding: 0.75rem 1.5rem;
- 
+ text-align : center;
      text-decoration: none;
      transform: all 0.3s;">Click here</a>
-
-</td>
-</tr>
+     </td></tr>
+    
  </table>
  </td>
  </tr>
- 
-</table>
-<span style="display : block; width : 65%; text-align : center">
-<p>
+ <tr><td>&nbsp;</td></tr>
+ <tr><td><hr></td></tr>
+ <tr>
+ <td style="display : block; text-align : center">
+ <p>
 Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
 collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
 400+ domestic clients and international clients across various sectors. The expert team has a
-comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
+comprehensive exposure of 1 00 000+ hours of tax assessment & litigation matters including special
 experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
 of thought leadership in transfer pricing.
 
 </p>
-
 <p>
-In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
-over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
-Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
-Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
+In India  Mazars has an ambitious growth plan and already has a national presence with a strong team of
+over 1 000 professionals with 6 offices located in Bengaluru  Chennai  Delhi  Gurugram  Mumbai and
+Pune. Our professionals have in-depth experience in sectors like Energy  Telecom  BFSI  Automobiles 
+Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
 </p>
 </br>
 <p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
 
-<p>Copyright © 2023 Mazars, All rights reserved.</p>
-</span>
-</span>
+<p>Copyright © 2023 Mazars  All rights reserved.</p>
+ </td>
+ </tr>
+</table>
 </body>
 
-    </html>`;
-
-    let mail = `
-    <span>
-    <table width = "65%">
-
-
-        <tr>
-
-            <td>  <img
-                src="https://advisorysolutions.mazars.co.in/static/media/mazars-logo.dca93671c32811cdacb3.png"
-                alt="logo" width="150">
-
-            </td>
-          
-    </tr>    
-    <tr>
-        <td>
-            <table bgColor="#0071CE" width = "100%" style="display: flex; background-color : "#0071CE"; margin: 10px 0px; padding: 10px;">
-                        
-                <tr>
-                <td style="color: #fff;">
-                    <h2 style="margin-top: 20px;">Mazars Advisory Solutions</h2>
-                    <p style="margin-bottom: 0px;">Compilation of direct tax, indirect tax and other updates.</p>
-                    <p>Edition: Date</p>
-           
-        
-                </td>
-                 </tr>
-        </table>
-        </td>
-    </tr>
-    
-   ${getDirectTable()}
-    <tr>
-        <td>
-        ${directoutput}
-        </td>
-        </tr>
-  ${getIndirectTable()}
-  <tr>
-       <td>
-       ${indirectoutput}
-       </td>
-     </tr>
-${getOtherTable()}
-         
-<tr>
-    <td>
-    ${otheroutput}
-    </td>
- </tr>
- <tr>
- <td>
- <table width = "100%">
- <tr>
- <td>
-     <p style="padding : 0px 1rem 0px 0px;">Click here to read the full update</p>
-     <a href="https://advisorysolutions.mazars.co.in/customer/updatedirect" target = "_blank" style="border-bottom-left-radius: 1.75rem;
-     background-color: #0071ce;
-     border: 1px solid #0071ce;
-     color: #fff;
-     display: inline-flex;
-     align-items: center;
-     cursor: pointer;
-     font-size: 1rem;
-     font-weight: 500;
-     justify-content: center;
-     line-height: 1;
-     width: 65%;
- 
-     min-height: 1.5rem;
-     overflow: hidden;
-     padding: 0.75rem 1.5rem;
-     position: relative;
-     text-decoration: none;
-     transform: all 0.3s;
-     vertical-align: middle;">Read more</a>
- 
-</td>
-<td>
-
-<p>  Click here for any further information or queries</p>
-     <a href="https://advisorysolutions.mazars.co.in/" target = "_blank" style="border-bottom-left-radius: 1.75rem;
-     background-color: #0071ce;
-     border: 1px solid #0071ce;
-     color: #fff;
-     display: inline-flex;
-     align-items: center;
-     cursor: pointer;
-     font-size: 1rem;
-     font-weight: 500;
-     justify-content: center;
-     line-height: 1;
-     width: 45%;
-    
-     min-height: 1.5rem;
-     overflow: hidden;
-     padding: 0.75rem 1.5rem;
-     position: relative;
-     text-decoration: none;
-     transform: all 0.3s;
-     vertical-align: middle;">Click here</a>
-
-</td>
-</tr>
- </table>
- </td>
- </tr>
- 
-</table>
-<span style="display : block;  text-align : center">
-<p>
-Mazars Advisory Solutions is backed by experts having immense experience in the taxation field
-collectively possessing 150+ years of industry experience in direct & indirect tax matters having served
-400+ domestic clients and international clients across various sectors. The expert team has a
-comprehensive exposure of 1,00,000+ hours of tax assessment & litigation matters including special
-experience of having handled search & seizure cases of 150+ business groups. They also have 20+ years
-of thought leadership in transfer pricing.
-
-</p>
-
-<p>
-In India, Mazars has an ambitious growth plan and already has a national presence with a strong team of
-over 1,000 professionals with 6 offices located in Bengaluru, Chennai, Delhi, Gurugram, Mumbai and
-Pune. Our professionals have in-depth experience in sectors like Energy, Telecom, BFSI, Automobiles,
-Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
-</p>
-</br>
-<p>Find out more on <a href = "https://advisorysolutions.mazars.co.in/" target = "_blank">www.advisorysolutions.mazars.co.in/</a></p>
-
-<p>Copyright © 2023 Mazars, All rights reserved.</p>
-</span>
-</span>
+    </html>
 `;
 
+    let mail = data.replace("<html>", "");
+
+    mail = mail.replace("<body>", "");
+    mail = mail.replace("</body>", "");
+    mail = mail.replace("</html>", "");
+
     setMailerBody(mail);
+
     setFinalData(data);
-    if (data) {
-      setLoading(false);
-      Swal.fire({
-        title: "success",
-        html: "Templete generate successfully",
-        icons: "success",
-      });
-    }
+    setViewHtml(!viewHtml);
   };
 
   return (
     <Layout cmsDashboard="cmsDashboard">
-      <Container maxWidth="xl">
-        <Card>
-          <CardHeader>
-            <Row>
-              <Col md="4">
-                <button
-                  className="autoWidthBtn ml-2"
-                  onClick={() => history.goBack()}
-                >
-                  Go Back
-                </button>
-              </Col>
-              <Col md="4" align="center">
-                <CustomHeading>Schedule email</CustomHeading>
-              </Col>
-            </Row>
-          </CardHeader>
-          <CardBody>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="row">
-                <div className="col-md-10 my-4">
-                  <div className="row" onClick={(e) => getSelectData(e)}>
-                    <div className="col-md-2">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allClient"
-                          value="1"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allClient">
-                          Admin
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-md-2">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allClient"
-                          value="1"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allClient">
-                          All client
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-md-2">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allTL"
-                          value="2"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allTL">
-                          All TL
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-md-3">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="allTP"
-                          value="3"
-                          disabled={disabled}
-                        />
-                        <label class="form-check-label" htmlFor="allTP">
-                          All TP
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-md-3">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="specified"
-                          value="4"
-                        />
-                        <label class="form-check-label" htmlFor="specified">
-                          Specific email
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {disabled === true ? (
-                  <>
-                    <div className="col-md-5">
-                      <div className="form-group">
-                        <label>
-                          User type<span className="declined">*</span>
-                        </label>
-                        <select
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_type,
-                          })}
-                          name="type"
-                          value={type}
-                          onChange={(e) => getEmail(e.target.value)}
-                          ref={register}
-                          style={{ height: "33px" }}
-                        >
-                          <option value="">--select--</option>
-                          <option value="0">All user</option>
-                          <option value="1">All clients</option>
-
-                          <option value="2">All TL</option>
-                          <option value="3">All TP</option>
-                        </select>
-                        {errors.p_to && (
-                          <div className="invalid-feedback">
-                            {errors.p_to.message}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-md-5">
-                      <label>Email</label>
-                      <div>
-                        <DropDown
-                          value={emailValue}
-                          options={options}
-                          handleChange={(e) => getSelectEmail(e)}
-                          multi={true}
-                        />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-                <div className="col-md-10">
-                  <div className="form-group">
-                    <label>Subject</label>
-                    <input
-                      type="text"
-                      name="subject"
-                      className="form-control"
-                      onChange={(e) => setSubject(e.target.value)}
-                      ref={register({ required: true })}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-md-10">
-                  <fieldset className="my-fieldsettemplate">
-                    <legend className="login-legend">Generate template</legend>
-                    <div className="row">
-                      <div className="col-md-3">
-                        <span className="generateTemplate">
-                          <label>Template type</label>
-                          <select
-                            value={templeteType}
-                            onChange={(e) => setTempleteType(e.target.value)}
-                            className="form-control"
-                          >
-                            <option value="1">Updates</option>
-                          </select>
-                        </span>
-                      </div>
-                      <div className="col-md-3">
-                        <span className="generateTemplate">
-                          <label className="d-block">
-                            Start date<span className="declined">*</span>
+      {loading === true ? (
+        <Container maxWidth="xl">
+          <Card>
+            <CardHeader>
+              <Row>
+                <Col md="4">
+                  <button
+                    className="autoWidthBtn ml-2"
+                    onClick={() => history.goBack()}
+                  >
+                    Go Back
+                  </button>
+                </Col>
+                <Col md="4" align="center">
+                  <CustomHeading>Schedule email</CustomHeading>
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                  <div className="col-md-10 my-4">
+                    <div className="row" onClick={(e) => getSelectData(e)}>
+                      <div className="col-md-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            defaultChecked={selectType.includes("0")}
+                            id="allClient"
+                            value="1"
+                            disabled={disabled}
+                          />
+                          <label class="form-check-label" htmlFor="allClient">
+                            Admin
                           </label>
-                          <Space direction="vertical" size={24}>
-                            <DatePicker
-                              disabledDate={(d) => !d || d.isAfter(minimum)}
-                              format="DD-MM-YYYY HH:mm:ss"
-                              showTime={{
-                                defaultValue: moment("00:00:00", "HH:mm:ss"),
-                              }}
-                              onChange={(e) => {
-                                setFromDate(
-                                  moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                );
-                                setMin(moment(e));
-                              }}
-                            />
-                          </Space>
-                        </span>
+                        </div>
                       </div>
-                      <div className="col-md-3">
-                        <span className="generateTemplate">
-                          <label className="d-block">
-                            End date<span className="declined">*</span>
+                      <div className="col-md-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            defaultChecked={selectType.includes("1")}
+                            id="allClient"
+                            value="1"
+                            disabled={disabled}
+                          />
+                          <label class="form-check-label" htmlFor="allClient">
+                            All client
                           </label>
-                          <Space direction="vertical" size={24}>
-                            <DatePicker
-                              disabledDate={(d) =>
-                                !d ||
-                                !d.isBetween(
-                                  min,
-                                  moment(minimum).add(1, "day").toDate()
-                                )
-                              }
-                              id="endDate"
-                              format="DD-MM-YYYY HH:mm:ss"
-                              showTime={{
-                                defaultValue: moment("00:00:00", "HH:mm:ss"),
-                              }}
-                              onChange={(e) =>
-                                setToDate(
-                                  moment(e).format("DD-MM-YYYY HH:mm:ss")
-                                )
-                              }
-                            />
-                          </Space>
-                        </span>
+                        </div>
+                      </div>
+                      <div className="col-md-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="allTL"
+                            value="2"
+                            defaultChecked={selectType.includes("2")}
+                            disabled={disabled}
+                          />
+                          <label class="form-check-label" htmlFor="allTL">
+                            All TL
+                          </label>
+                        </div>
                       </div>
                       <div className="col-md-3">
-                        <div className="emailerBtn">
-                          <button
-                            type="button"
-                            onClick={(e) => generateTemplate(e)}
-                            className="autoWidthBtn"
-                            style={{ height: "40px" }}
-                          >
-                            Search
-                          </button>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="allTP"
+                            value="3"
+                            disabled={disabled}
+                            defaultChecked={selectType.includes("3")}
+                          />
+                          <label class="form-check-label" htmlFor="allTP">
+                            All TP
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="specified"
+                            value="4"
+                            defaultChecked={selectType.includes("4")}
+                          />
+                          <label class="form-check-label" htmlFor="specified">
+                            Specific email
+                          </label>
                         </div>
                       </div>
                     </div>
-                    {showTemplete === true ? (
+                  </div>
+                  {disabled === true ? (
+                    <>
+                      <div className="col-md-5">
+                        <div className="form-group">
+                          <label>
+                            User type<span className="declined">*</span>
+                          </label>
+                          <select
+                            className={classNames("form-control", {
+                              "is-invalid": errors.p_type,
+                            })}
+                            name="type"
+                            value={type}
+                            onChange={(e) => getEmail(e.target.value, "added")}
+                            ref={register}
+                            style={{ height: "33px" }}
+                          >
+                            <option value="">--select--</option>
+                            <option value="0">All user</option>
+                            <option value="1">All clients</option>
+
+                            <option value="2">All TL</option>
+                            <option value="3">All TP</option>
+                          </select>
+                          {errors.p_to && (
+                            <div className="invalid-feedback">
+                              {errors.p_to.message}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-md-5">
+                        <label>Email</label>
+                        <div>
+                          <DropDown
+                            value={emailValue}
+                            options={options}
+                            handleChange={(e) => getSelectEmail(e)}
+                            multi={true}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div className="col-md-10">
+                    <div className="form-group">
+                      <label>Subject</label>
+                      <input
+                        type="text"
+                        name="subject"
+                        className="form-control"
+                        onChange={(e) => setSubject(e.target.value)}
+                        ref={register({ required: true })}
+                        value={subject}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-md-10">
+                    <fieldset className="my-fieldsettemplate">
+                      <legend className="login-legend">
+                        Generate template
+                      </legend>
                       <div className="row">
                         <div className="col-md-3">
-                          <label>Direct</label>
-                          <Select
-                            isMulti={true}
-                            onChange={(e) => directOnchange(e)}
-                            options={templeteData.direct}
-                          />
+                          <span className="generateTemplate">
+                            <label>Template type</label>
+                            <select
+                              value={templeteType}
+                              onChange={(e) => setTempleteType(e.target.value)}
+                              className="form-control"
+                            >
+                              <option value="1">Updates</option>
+                            </select>
+                          </span>
                         </div>
                         <div className="col-md-3">
-                          <label>Indirect</label>
-                          <Select
-                            isMulti={true}
-                            onChange={(e) => indirectOnchange(e)}
-                            options={templeteData.inDirect}
-                          />
+                          <span className="generateTemplate">
+                            <label className="d-block">
+                              Start date<span className="declined">*</span>
+                            </label>
+                            <Space direction="vertical" size={24}>
+                              <DatePicker
+                                disabledDate={(d) => !d || d.isAfter(minimum)}
+                                format="DD-MM-YYYY HH:mm:ss"
+                                showTime={{
+                                  defaultValue: moment("00:00:00", "HH:mm:ss"),
+                                }}
+                                onChange={(e) => {
+                                  setFromDate(
+                                    moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                  );
+                                  setMin(moment(e));
+                                }}
+                              />
+                            </Space>
+                          </span>
                         </div>
                         <div className="col-md-3">
-                          <label>other</label>
-                          <Select
-                            onChange={(e) => otherOnchange(e)}
-                            isMulti={true}
-                            options={templeteData.other}
-                          />
+                          <span className="generateTemplate">
+                            <label className="d-block">
+                              End date<span className="declined">*</span>
+                            </label>
+                            <Space direction="vertical" size={24}>
+                              <DatePicker
+                                disabledDate={(d) =>
+                                  !d ||
+                                  !d.isBetween(
+                                    min,
+                                    moment(minimum).add(1, "day").toDate()
+                                  )
+                                }
+                                id="endDate"
+                                format="DD-MM-YYYY HH:mm:ss"
+                                showTime={{
+                                  defaultValue: moment("00:00:00", "HH:mm:ss"),
+                                }}
+                                onChange={(e) =>
+                                  setToDate(
+                                    moment(e).format("DD-MM-YYYY HH:mm:ss")
+                                  )
+                                }
+                              />
+                            </Space>
+                          </span>
                         </div>
                         <div className="col-md-3">
-                          {loading === true ? (
-                            <Loader />
-                          ) : (
+                          <div className="emailerBtn">
+                            <button
+                              type="button"
+                              onClick={(e) => generateTemplate(e)}
+                              className="autoWidthBtn"
+                              style={{ height: "40px" }}
+                            >
+                              Search
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      {showTemplete === true ? (
+                        <div className="row">
+                          <div className="col-md-12">
+                            <label>Direct tax</label>
+                            <Select
+                              isMulti={true}
+                              onChange={(e) => directOnchange(e)}
+                              options={templeteData.direct}
+                            />
+                          </div>
+                          <div className="col-md-12">
+                            <label>Indirect tax</label>
+                            <Select
+                              isMulti={true}
+                              onChange={(e) => indirectOnchange(e)}
+                              options={templeteData.inDirect}
+                            />
+                          </div>
+                          <div className="col-md-12">
+                            <label>Others</label>
+                            <Select
+                              onChange={(e) => otherOnchange(e)}
+                              isMulti={true}
+                              options={templeteData.other}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <div>
+                              <div className="form-group">
+                                <label>Edition date</label>
+                                <input
+                                  type="date"
+                                  name="subject"
+                                  className="form-control"
+                                  onChange={(e) => setEeition(e.target.value)}
+                                  ref={register({ required: true })}
+                                />
+                              </div>
+                            </div>
                             <div className="emailerBtn">
                               <button
                                 type="button"
@@ -902,69 +802,63 @@ Technology, Real Estate, Shipping, Services, Manufacturing and Retail.
                                 className="customBtn"
                                 style={{ height: "40px" }}
                               >
-                                Template
+                                Generate
                               </button>
                             </div>
-                          )}
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {mailerBody && (
-                      <div className="row">
-                        <div className="col-md-12 my-4">
-                          <button
-                            onClick={(e) => setViewHtml(!viewHtml)}
-                            type="button"
-                            className="customBtn"
-                          >
-                            Show html
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </fieldset>
-                </div>
+                      ) : (
+                        ""
+                      )}
+                    </fieldset>
+                  </div>
 
-                <div className="col-md-10">
-                  <label className="d-block">
-                    Schedule date<span className="declined">*</span>
-                  </label>
-                  <Space direction="vertical" size={24}>
-                    <DatePicker
-                      disabledDate={(d) => !d || d.isBefore(minimum)}
-                      format="YYYY-MM-DD HH:mm:ss"
-                      showTime={{
-                        defaultValue: moment("00:00:00", "HH:mm:ss"),
-                      }}
-                      onChange={(e) =>
-                        setSchData(moment(e).format("DD-MM-YYYY HH"))
-                      }
-                    />
-                  </Space>
+                  {schDate.length > 0 ? (
+                    <div className="col-md-4 my-4">
+                      <label className="d-block">
+                        Schedule date<span className="declined">*</span>
+                      </label>
+                      <Space direction="vertical" size={24}>
+                        <DatePicker
+                          disabledDate={(d) => !d || d.isBefore(minimum)}
+                          format={dateFormat}
+                          showTime={{
+                            defaultValue: moment("00:", "HH"),
+                          }}
+                          defaultValue={moment(schDate, dateFormat)}
+                          onChange={(e) =>
+                            setSchData(moment(e).format("DD-MM-YYYY HH"))
+                          }
+                        />
+                      </Space>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12 my-4">
-                  <button type="submit" className="customBtn">
-                    Submit
-                  </button>
+                <div className="row">
+                  <div className="col-md-12 my-4">
+                    <button type="submit" className="customBtn">
+                      Submit
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-            {viewHtml === true ? (
-              <ShowHtml
-                openHandler={openHandler}
-                mailerBody={mailerBody}
-                viewHtml={viewHtml}
-              />
-            ) : (
-              " "
-            )}
-          </CardBody>
-        </Card>
-      </Container>
+              </form>
+              {viewHtml === true ? (
+                <ShowHtml
+                  openHandler={openHandler}
+                  mailerBody={mailerBody}
+                  viewHtml={viewHtml}
+                />
+              ) : (
+                " "
+              )}
+            </CardBody>
+          </Card>
+        </Container>
+      ) : (
+        ""
+      )}
     </Layout>
   );
 };

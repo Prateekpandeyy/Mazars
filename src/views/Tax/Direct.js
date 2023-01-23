@@ -123,7 +123,7 @@ const Direct = () => {
         } else {
           setData([]);
           Swal.fire({
-            html: "No data found",
+            html: "No record found",
           });
         }
       }

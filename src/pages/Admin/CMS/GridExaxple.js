@@ -99,7 +99,7 @@ const GridExample = () => {
       initialWidth: 100,
       cellRendererFramework: (params) => (
         <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <Link to={`/cms/linksedit/${params.data.id}`}>
+          <Link to={`/cms_linksedit/${params.data.id}`}>
             <div title="Edit link">
               <EditQuery />
             </div>

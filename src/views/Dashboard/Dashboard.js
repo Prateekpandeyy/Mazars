@@ -5,6 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import BotqueryDB from "./BotqueryDB"
 import ProposalDB from "./proposalDB"
+import useErrorHandler from "../../useErrorHandler"
 
 
 import { Container, Grid, Paper, Box } from "@material-ui/core";
@@ -39,7 +40,7 @@ function Dashboard() {
     unpaid: "",
     totalpayment: "",
   });
-
+  const setVisibleError = useErrorHandler()
   const {
     total,
     inprogress_queries,
@@ -134,7 +135,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setVisibleError('Unable to record work start time', error)
+        });
     };
 
     getAllQueries();

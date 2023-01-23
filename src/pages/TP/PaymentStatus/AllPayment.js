@@ -156,7 +156,7 @@ rowStyle2 = (row, index) => {
                     <>
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                pathname: `/taxprofessional_queries/${row.assign_id}`,
                                 index : 0,
                                 routes: "paymentstatus",
                             }}
@@ -294,7 +294,7 @@ rowStyle2 = (row, index) => {
 
 <Link
                              to={{
-                                pathname: `/taxprofessional/chatting/${row.id}`,
+                                pathname: `/taxprofessional_chatting/${row.id}`,
                                 index: 0,
                                 routes: "paymentstatus",
                         
@@ -314,7 +314,7 @@ rowStyle2 = (row, index) => {
                           </div>
                           <Link
               to={{
-                  pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                  pathname: `/taxprofessional_paydetails/${row.assign_id}`,
                   index : 0,
                   routes: "paymentstatus",
               }}

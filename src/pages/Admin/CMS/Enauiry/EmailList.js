@@ -121,7 +121,7 @@ const EmailList = () => {
               <EyeIcon />
             </span>
             {row.status === "0" ? (
-              <Link to={`/cms/editenquiry/${row.id}`}>
+              <Link to={`/cms_editenquiry/${row.id}`}>
                 <EditQuery />
               </Link>
             ) : (

@@ -64,7 +64,7 @@ function InComplete() {
         
         return (
           <>
-            <Link to={`/taxprofessional/queries/${row.id}`}>
+            <Link to={`/taxprofessional_queries/${row.id}`}>
               {row.assign_no}
             </Link>
           </>

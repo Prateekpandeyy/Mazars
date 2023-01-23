@@ -194,7 +194,7 @@ const ViewReport = (key) => {
                     <>
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.q_id}`,
+                                pathname: `/taxprofessional_queries/${row.q_id}`,
                                 index : 2,
                                 routes: "assignment",
                             }}
@@ -337,7 +337,7 @@ const ViewReport = (key) => {
                   >
                       {
                  row.paid_status ===  "2" ? null :
-                    <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
+                    <Link to={`/taxprofessional_addassingment/${row.q_id}`}>
                       <i class="fa fa-tasks"></i>
                     </Link>
             }
@@ -355,7 +355,7 @@ const ViewReport = (key) => {
               <div style={{display: "flex"}}>
               <Link
                   to={{
-                    pathname: `/taxprofessional/chatting/${row.q_id}`,
+                    pathname: `/taxprofessional_chatting/${row.q_id}`,
                     index : 2,
                     routes: "assignment",
                        obj: {

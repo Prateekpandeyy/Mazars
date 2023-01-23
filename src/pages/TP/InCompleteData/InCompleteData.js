@@ -81,7 +81,7 @@ function InCompleteData({ CountIncomplete, data }) {
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${row.id}`,
+                pathname: `/taxprofessional_queries/${row.id}`,
                 index: 2,
                 routes: "queriestab",
               }}
@@ -156,7 +156,7 @@ function InCompleteData({ CountIncomplete, data }) {
                 {row.status ===  "Declined Query" ? null : (
                   <Link
                     to={{
-                      pathname: `/taxprofessional/chatting/${row.id}`,
+                      pathname: `/taxprofessional_chatting/${row.id}`,
                       index: 2,
                       routes: "queriestab",
                       obj: {

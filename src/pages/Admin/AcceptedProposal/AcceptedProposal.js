@@ -98,7 +98,7 @@ function AcceptedProposal({ acceptedProposal }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.q_id}`,
+                pathname: `/admin_queries/${row.q_id}`,
                 index: 2,
                 routes: "proposal",
               }}
@@ -233,7 +233,7 @@ function AcceptedProposal({ acceptedProposal }) {
             <div style={{ display: "flex" }}>
               <Link
                 to={{
-                  pathname: `/admin/chatting/${row.q_id}`,
+                  pathname: `/admin_chatting/${row.q_id}`,
                   index: 2,
                   routes: "proposal",
                   obj: {

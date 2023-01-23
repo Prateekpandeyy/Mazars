@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import WebRoutes from "./WebRoutes";
 import {LogOutAllCustTabs} from "./components/Admin-Header/CustLogout";
+import ErrorContainer from "./ErrorContainer";
+
 export default function App() {
   const clearCacheData = () => {
     caches.keys().then((names) => {
@@ -20,7 +22,9 @@ export default function App() {
   }, []);
   return (
     <>
+      <ErrorContainer>
       <WebRoutes />
+      </ErrorContainer>
     </>
   );
 }

@@ -96,7 +96,7 @@ function DeclinedProposal({ declinedProposal }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.q_id}`,
+                pathname: `/admin_queries/${row.q_id}`,
                 index: 3,
                 routes: "proposal",
               }}
@@ -252,7 +252,7 @@ function DeclinedProposal({ declinedProposal }) {
                 <Link
                 
                   to={{
-                    pathname: `/admin/chatting/${row.q_id}`,
+                    pathname: `/admin_chatting/${row.q_id}`,
                     index: 3,
                     routes: "proposal",
                     obj: {

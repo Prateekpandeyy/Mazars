@@ -134,7 +134,7 @@ function AllPayment() {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.assign_id}`,
+                                pathname: `/teamleader_queries/${row.assign_id}`,
                                 index : 2, 
                                 routes: "paymentstatus",
                             }}
@@ -264,7 +264,7 @@ function AllPayment() {
 
 <Link
                              to={{
-                                pathname: `/teamleader/chatting/${row.id}`,
+                                pathname: `/teamleader_chatting/${row.id}`,
                                 index: 2,
                                 routes: "paymentstatus",
                         
@@ -284,7 +284,7 @@ function AllPayment() {
                           </div>
                           <Link
               to={{
-                  pathname: `/teamleader/paydetails/${row.assign_id}`,
+                  pathname: `/teamleader_paydetails/${row.assign_id}`,
                   index : 2,
                   routes: "paymentstatus",
               }}

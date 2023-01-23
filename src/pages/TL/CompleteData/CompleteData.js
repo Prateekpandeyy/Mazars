@@ -115,7 +115,7 @@ function CompletedQuery({ updateTab }) {
           <>
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
+                pathname: `/teamleader_queries/${row.id}`,
                 index: 3,
                 routes: "queriestab",
               }}

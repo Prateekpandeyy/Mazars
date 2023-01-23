@@ -187,7 +187,7 @@ const UpdateIndirect = () => {
                                           {userId ? (
                                             <Link
                                               to={{
-                                                pathname: `/customer/update-details/${i.id}`,
+                                                pathname: `/customer_update-details/${i.id}`,
                                                 index: "indirect",
                                               }}
                                             >
@@ -325,7 +325,7 @@ const UpdateIndirect = () => {
                                         {userId ? (
                                           <Link
                                             to={{
-                                              pathname: `/customer/update-details/${i.id}`,
+                                              pathname: `/customer_update-details/${i.id}`,
                                               index: "indirect",
                                             }}
                                           >

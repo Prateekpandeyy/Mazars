@@ -172,7 +172,7 @@ const LatestUpdates = () => {
                         <Link
                           className="tabHoverflash mx-2 my-0"
                           to={{
-                            pathname: `/customer/latestupdates/${k.id}`,
+                            pathname: `/customer_latestupdates/${k.id}`,
                             index: k.id,
                           }}
                         >

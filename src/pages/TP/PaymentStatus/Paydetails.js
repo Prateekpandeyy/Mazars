@@ -137,7 +137,7 @@ setModal(!modal)
                   <>
                     <Link
                       to={{
-                        pathname: `/taxprofessional/queries/${row.assign_id}`,
+                        pathname: `/taxprofessional_queries/${row.assign_id}`,
                         index: 1,
                         routes: "paymentstatus",
                       }}

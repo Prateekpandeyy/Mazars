@@ -56,7 +56,7 @@ let history  = useHistory()
               <>
                 <Link
                   to={{
-                    pathname: `/admin/queries/${row.id}`,
+                    pathname: `/admin_queries/${row.id}`,
                   
                     routes: "consalation",
                   }}

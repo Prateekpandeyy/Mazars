@@ -163,7 +163,7 @@ const FlashMessage = () => {
          return(
                 <>
              <div style={{display : "flex", justifyContent : "space-evenly"}}>
-             <Link to={`/cms/flashcontent/${row.id}`}>
+             <Link to={`/cms_flashcontent/${row.id}`}>
 
          <EditQuery titleName="Edit flash update"/>
         

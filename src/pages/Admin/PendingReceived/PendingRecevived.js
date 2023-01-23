@@ -195,7 +195,7 @@ function PendingRecevied() {
                     <th scope="row">Action</th>
                     <td>
                     {p.allocation_status ===  "0" || p.allocation_status ===  "3"  ? (
-                        <Link to={`/admin/queryassing/${p.id}`}>
+                        <Link to={`/admin_queryassing/${p.id}`}>
                         <i className="fa fa-share"></i>
                       </Link>
                       ) : (                  

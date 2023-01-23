@@ -64,7 +64,7 @@ function AllQueriesData({
     {
       text: "S.No",
 
-      formatter: (rowIndex) => {
+      formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {
@@ -91,7 +91,7 @@ function AllQueriesData({
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.id}`,
+                pathname: `/customer_my-assingment/${row.id}`,
                 index: 0,
                 routes: "queries",
               }}
@@ -170,7 +170,7 @@ function AllQueriesData({
                   <span className="ml-1">
                     <Link
                       to={{
-                        pathname: `/customer/feedback/${row.assign_no}`,
+                        pathname: `/customer_feedback/${row.assign_no}`,
                         index: 0,
                         routes: "queries",
                       }}
@@ -196,7 +196,7 @@ function AllQueriesData({
                 row.status_code ===  "3" ? (
                   <>
                     <span className="ml-1">
-                      <Link to={`/customer/edit-query/${row.id}`}>
+                      <Link to={`/customer_edit-query/${row.id}`}>
                         <EditQuery />
                       </Link>
                     </span>
@@ -207,7 +207,7 @@ function AllQueriesData({
                     <span className="ml-1">
                       <Link
                         to={{
-                          pathname: `/customer/chatting/${row.id}&type=4`,
+                          pathname: `/customer_chatting/${row.id}&type=4`,
                           index: 0,
                           routes: "queries",
                           obj: {
@@ -238,7 +238,7 @@ function AllQueriesData({
                       <span className="ml-1">
                         <Link
                           to={{
-                            pathname: `/customer/feedback/${row.assign_no}`,
+                            pathname: `/customer_feedback/${row.assign_no}`,
                             index: 0,
                             routes: "queries",
                           }}
@@ -261,7 +261,7 @@ function AllQueriesData({
                       <span className="ml-1">
                         <Link
                           to={{
-                            pathname: `/customer/chatting/${row.id}&type=4`,
+                            pathname: `/customer_chatting/${row.id}&type=4`,
                             index: 0,
                             routes: "queries",
                             obj: {

@@ -110,7 +110,7 @@ function AllProposal() {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.id}`,
+                                pathname: `/teamleader_queries/${row.id}`,
                                 index : 0,
                                 routes: "proposal",
                             }}
@@ -272,7 +272,7 @@ function AllProposal() {
                         <div style={{ display: "flex"}}>
                         <Link
  to={{
-    pathname: `/teamleader/chatting/${row.id}`,
+    pathname: `/teamleader_chatting/${row.id}`,
     index : 0,
     routes: "proposal",
                                                     obj: {
@@ -297,7 +297,7 @@ function AllProposal() {
                                 {row.status_code ===  "4" ? (
                                     <Link 
                                     to={{
-                                        pathname: `/teamleader/edit-proposal/${row.id}`,
+                                        pathname: `/teamleader_edit-proposal/${row.id}`,
                                         index : 0,
                                         routes: "proposal" }}>
                                       <EditQuery titleName="Edit Proposal" />
@@ -305,7 +305,7 @@ function AllProposal() {
                                 ) : row.status_code ===  "2"&& row.work_by != "0" ? (
                                     <Link 
                                     to={{
-                                        pathname: `/teamleader/sendproposal/${row.id}`,
+                                        pathname: `/teamleader_sendproposal/${row.id}`,
                                         index : 0,
                                         routes: "proposal" }}>
                                       <ActionIcon titleName="Create propsal"/>

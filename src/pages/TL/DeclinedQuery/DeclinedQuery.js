@@ -75,7 +75,7 @@ function DeclinedQuery({ CountIncomplete }) {
          
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
+                pathname: `/teamleader_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}

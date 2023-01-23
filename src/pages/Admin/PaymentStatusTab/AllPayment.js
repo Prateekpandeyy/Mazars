@@ -116,7 +116,7 @@ function AllPayment() {
                     <>
                         <Link
                             to={{
-                                pathname: `/admin/queries/${row.assign_id}`,
+                                pathname: `/admin_queries/${row.assign_id}`,
                                 index : 0,
                                 routes: "paymentstatus",
                             }}
@@ -262,7 +262,7 @@ function AllPayment() {
                      <div style={{display: "flex"}}>
                      <Link
                             to={{
-                                pathname: `/admin/chatting/${row.assign_id}`,
+                                pathname: `/admin_chatting/${row.assign_id}`,
                                 index : 0,
                                 routes: "paymentstatus",
                 obj: {
@@ -284,7 +284,7 @@ function AllPayment() {
                       
                         <Link
                             to={{
-                                pathname: `/admin/paydetails/${row.assign_id}`,
+                                pathname: `/admin_paydetails/${row.assign_id}`,
                                 index : 0,
                                 routes: "paymentstatus",
                

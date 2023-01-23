@@ -74,7 +74,7 @@ function AllQueriesData({ allData }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.id}`,
+                pathname: `/admin_queries/${row.id}`,
                 index: 0,
                 routes: "queriestab",
               }}
@@ -152,7 +152,7 @@ function AllQueriesData({ allData }) {
               <>
                 <Link
                   to={{
-                    pathname: `/admin/chatting/${row.id}`,
+                    pathname: `/admin_chatting/${row.id}`,
                     index: 0,
                     routes: "queriestab",
 

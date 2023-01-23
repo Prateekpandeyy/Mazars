@@ -107,7 +107,7 @@ function InprogressProposal() {
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.q_id}`,
+                pathname: `/customer_my-assingment/${row.q_id}`,
                 index: 1,
                 routes: "proposal",
               }}
@@ -252,7 +252,7 @@ function InprogressProposal() {
               <div style={{ display: "flex", justifyContent: "flex-start" }}>
                 <Link
                   to={{
-                    pathname: `/customer/chatting/${row.q_id}&type=2`,
+                    pathname: `/customer_chatting/${row.q_id}&type=2`,
                     index: 1,
                     routes: "proposal",
                     obj: {
@@ -277,7 +277,7 @@ function InprogressProposal() {
               <div style={{ display: "flex", justifyContent: "flex-start" }}>
                 <Link
                   to={{
-                    pathname: `/customer/chatting/${row.q_id}&type=2`,
+                    pathname: `/customer_chatting/${row.q_id}&type=2`,
                     index: 1,
                     routes: "proposal",
                     obj: {

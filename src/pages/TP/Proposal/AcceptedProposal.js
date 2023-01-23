@@ -99,7 +99,7 @@ function AcceptedProposal() {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
+                                pathname: `/taxprofessional_queries/${row.id}`,
                                 index : 2,
                                 routes: "proposal",
                             }}
@@ -234,7 +234,7 @@ function AcceptedProposal() {
                        
                                             <Link
                                               to={{
-                                                pathname: `/taxprofessional/chatting/${row.id}`,
+                                                pathname: `/taxprofessional_chatting/${row.id}`,
                                                 index : 2,
                                                 routes: "proposal",
                                                     obj: {

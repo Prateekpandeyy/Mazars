@@ -68,7 +68,7 @@ const Updates = () =>{
          <>
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/cms/linksedit/${row.id}`}>
+                  <Link to={`/cms_linksedit/${row.id}`}>
          <div title="Edit link">
          <EditQuery />
          </div>

@@ -25,7 +25,7 @@ function Header({
   getData,
   showCook,
 }) {
-  const [logomin, setLogimin] = useState(false);
+  const [logomin, setLogomin] = useState(false);
   let history = useHistory();
 
   const custLogout = () => {
@@ -35,25 +35,36 @@ function Header({
     localStorage.removeItem("category");
     history.push("/customer/signin");
   };
+
+  const [offset, setOffset] = useState(0);
+
+    
+
+
   useEffect(() => {
     if (
       window.location.pathname.split("/")[1] === "customer" ||
       window.location.pathname.split("/")[1].length === 0
     ) {
-      setLogimin(false);
+      setLogomin(false);
     } else {
-      setLogimin(true);
+      setLogomin(true);
     }
+    
     const handleScroll = (event) => {
+      
       if (window.pageYOffset > 0) {
-        setLogimin(true);
+        setLogomin(true);
+        // console.log(window.pageYOffset);
       } else if (
-        window.location.pathname.split("/")[1] === "customer" ||
+        window.location.pathname.split("/")[1] === "customer" 
+        ||
         window.location.pathname.split("/")[1].length === 0
       ) {
-        setLogimin(false);
+        setLogomin(false);
       }
     };
+    
 
     window.addEventListener("scroll", handleScroll);
 

@@ -187,7 +187,7 @@ const UpdateMiscellenous = () => {
                                           {userId ? (
                                             <Link
                                               to={{
-                                                pathname: `/customer/update-details/${i.id}`,
+                                                pathname: `/customer_update-details/${i.id}`,
                                                 index: "miscellaneous",
                                               }}
                                             >
@@ -325,7 +325,7 @@ const UpdateMiscellenous = () => {
                                         {userId ? (
                                           <Link
                                             to={{
-                                              pathname: `/customer/update-details/${i.id}`,
+                                              pathname: `/customer_update-details/${i.id}`,
                                               index: "miscellaneous",
                                             }}
                                           >

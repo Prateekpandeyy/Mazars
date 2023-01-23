@@ -16,17 +16,20 @@ import CommonServices from "../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
-import PaymentComponent from './PaymentComponent';
+import PaymentComponent from "./PaymentComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import './index.css';
+import "./index.css";
 import ModalManual from "../ModalManual/AllComponentManual";
-import MessageIcon, { ViewDiscussionIcon, HelpIcon, 
-  Payment} from "../../components/Common/MessageIcon";
+import MessageIcon, {
+  ViewDiscussionIcon,
+  HelpIcon,
+  Payment,
+} from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 function Paid() {
   const { id } = useParams();
-  let history = useHistory()
+  let history = useHistory();
   const userId = window.localStorage.getItem("userid");
 
   const [records, setRecords] = useState([]);
@@ -39,7 +42,7 @@ function Paid() {
     amount: "",
     accepted_amount: "",
     paid_amount: "",
-    assign_id: '',
+    assign_id: "",
 
     amount_type: "",
     amount_fixed: "",
@@ -64,39 +67,35 @@ function Paid() {
       amount_fixed: key.amount_fixed,
       amount_hourly: key.amount_hourly,
 
-
       payment_terms: key.payment_terms,
       no_of_installment: key.no_of_installment,
       installment_amount: key.installment_amount,
       due_date: key.due_date,
-
     });
   };
 
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const [openManual, setManual] = useState(false)
-  const token = window.localStorage.getItem("clientToken")
+  const [openManual, setManual] = useState(false);
+  const token = window.localStorage.getItem("clientToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const needHelp = () => {
-      
-      setManual(!openManual)
-  }
+    setManual(!openManual);
+  };
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+  };
 
   useEffect(() => {
     getPaymentStatus();
   }, []);
 
   const toggle = (key) => {
-
     setModal(!modal);
 
     fetch(`${baseUrl}/customers/getPaymentDetail?id=${key}`, {
@@ -107,388 +106,368 @@ function Paid() {
     })
       .then((res) => res.json())
       .then((response) => {
-       
         setPay(response.payment_detail);
       })
       .catch((error) => console.log(error));
   };
 
   const getPaymentStatus = () => {
-    axios.get(`${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`, myConfig).then((res) => {
-      
-      if (res.data.code === 1) {
-        setPayment(res.data.result);
-        setCount(res.data.result.length);
-        setRecords(res.data.result.length);
-      }
-      else if (res.data.code === 0){
-        CommonServices.clientLogout(history)
-      }
-    });
+    axios
+      .get(
+        `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(userId)}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setPayment(res.data.result);
+          setCount(res.data.result.length);
+          setRecords(res.data.result.length);
+        } else if (res.data.code === 0) {
+          CommonServices.clientLogout(history);
+        }
+      });
   };
-
-
-
 
   const columns = [
     {
-        dataField: "",
-        text: "S.No",
-        formatter: (cellContent, row, rowIndex) => {
-            return rowIndex + 1;
-        },
-      
-        headerStyle : () => {
-          return( {
-              width: "50px"
-          })
-      }
+      dataField: "",
+      text: "S.No",
+      formatter: (cellContent, row, rowIndex) => {
+        return rowIndex + 1;
+      },
+
+      headerStyle: () => {
+        return {
+          width: "50px",
+        };
+      },
     },
     {
-        dataField: "query_created_date",
-        text: "Date",
-        sort: true,
-       
-        formatter: function dateFormat(cell, row) {
-         
-            var oldDate = row.query_created_date;
-            if (oldDate == null) {
-                return null;
-            }
-            return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-        },
+      dataField: "query_created_date",
+      text: "Date",
+      sort: true,
+
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.query_created_date;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+      },
     },
     {
-        dataField: "assign_no",
-        text: "Query No",
-       
-        formatter: function nameFormatter(cell, row) {
-         
-            return (
-                <>
-                       <Link
-                            to={{
-                                pathname: `/customer/my-assingment/${row.assign_id}`,
-                                index : 0,
-                                routes: "paymentstatus",
-                            }}
-                        >
-                            {row.assign_no}
-                        </Link>
-                </>
-            );
-        },
+      dataField: "assign_no",
+      text: "Query No",
+
+      formatter: function nameFormatter(cell, row) {
+        return (
+          <>
+            <Link
+              to={{
+                pathname: `/customer_my-assingment/${row.assign_id}`,
+                index: 0,
+                routes: "paymentstatus",
+              }}
+            >
+              {row.assign_no}
+            </Link>
+          </>
+        );
+      },
     },
     {
-        dataField: "parent_id",
-        text: "Category",
-        sort: true,
-       
+      dataField: "parent_id",
+      text: "Category",
+      sort: true,
     },
     {
-        dataField: "cat_name",
-        text: "Sub category",
-        sort: true,
-       
+      dataField: "cat_name",
+      text: "Sub category",
+      sort: true,
     },
     {
-        text: "Date of acceptance of proposal",
-        dataField: "cust_accept_date",
-        sort: true,
-      
-        formatter: function dateFormat(cell, row) {
-        
-            var oldDate = row.cust_accept_date;
-            if (oldDate == null) {
-                return null;
-            }
-            return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-        },
+      text: "Date of acceptance of proposal",
+      dataField: "cust_accept_date",
+      sort: true,
+
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.cust_accept_date;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+      },
     },
     {
       text: "Status",
       dataField: "",
-     
-      formatter : function (cell, row) {
-          return(
-              <>
-              {row.paid_status ===  "2"  ?
-              <p className="declined">{row.status} </p> : 
-              <p>{row.status}</p>}
-              </>
-          )
-      }
-  },
-  {
-    dataField: "accepted_amount",
-    text: "Accepted amount ",
-    sort: true,
-   
-    sortFunc: (a, b, order, dataField) => {
-      if (order === 'asc') {
-        return b - a;
-      }
-      return a - b; // desc
-    },
-   
-    formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.accepted_amount;
-         console.log(nfObject.format(x))
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
-},
-{
-    text: "Amount paid",
-    dataField: "paid_amount",
-    sort: true,
-   
-    sortFunc: (a, b, order, dataField) => {
-      if (order === 'asc') {
-        return b - a;
-      }
-      return a - b; // desc
-    },
-   
-    formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.paid_amount;
-         console.log(nfObject.format(x))
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
-},
 
-{
-    text : "Amount outstanding",
-    dataField: "amount_outstanding",
-    sort: true,
-  //  headerStyle: () => {
-  //    return({padding: "5px"})
-  //  },
-    sortFunc: (a, b, order, dataField) => {
-      if (order === 'asc') {
-        return b - a;
-      }
-      return a - b; // desc
+      formatter: function (cell, row) {
+        return (
+          <>
+            {row.paid_status == "2" ? (
+              <p className="declined">{row.status} </p>
+            ) : (
+              <p>{row.status}</p>
+            )}
+          </>
+        );
+      },
     },
-    
-    formatter: function nameFormatter(cell, row){
-        var nfObject = new Intl.NumberFormat('hi-IN')
-         var x = row.amount_outstanding;
-         
-         return(
-           <p className="rightAli">{nfObject.format(x)}</p>
-         )
-       }
-},
     {
-        text: "Date of payment",
-        dataField: "cust_paid_date",
-        sort: true,
-       
-        formatter: function dateFormat(cell, row) {
-          
-            var oldDate = row.cust_paid_date;
-            if (oldDate == null) {
-                return null;
-            }
-            return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-        },
+      dataField: "accepted_amount",
+      text: "Accepted amount ",
+      sort: true,
+
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.accepted_amount;
+        console.log(nfObject.format(x));
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+    {
+      text: "Amount paid",
+      dataField: "paid_amount",
+      sort: true,
+
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.paid_amount;
+        console.log(nfObject.format(x));
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+
+    {
+      text: "Amount outstanding",
+      dataField: "amount_outstanding",
+      sort: true,
+      //  headerStyle: () => {
+      //    return({padding: "5px"})
+      //  },
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.amount_outstanding;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+    {
+      text: "Date of payment",
+      dataField: "cust_paid_date",
+      sort: true,
+
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.cust_paid_date;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+      },
     },
     // {
     //     dataField: "tl_name",
     //     text: "TL name",
     //     sort: true,
-       
+
     // },
-  {
+    {
       text: "Action",
       dataField: "",
-     
+
       formatter: function (cell, row) {
         return (
           <>
-          {row.paid_status === "2" ?
-          <>
-     
-     
-                     <Link
-                            to={{
-                                pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 0,
-                                routes: "paymentstatus",
-                            }}
-                        >
-                                      <Payment />
-                  </Link>
-                
-                  <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
-                                  <ViewDiscussionIcon />
-                                </span>
-                                </>
-          :
-            <>
-        
-            {
-              row.paid_status ===  "0" ?
-                
-                    <Link
-                            to={{
-                                pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 0,
-                                routes: "paymentstatus",
-                            }}
-                        >
-                                      <Payment />
-                  </Link>   
-                :
-                null
-            }
+            {row.paid_status === "2" ? (
+              <>
+                <Link
+                  to={{
+                    pathname: `/customer_paydetails/${row.assign_id}`,
+                    index: 0,
+                    routes: "paymentstatus",
+                  }}
+                >
+                  <Payment />
+                </Link>
 
-
-         
-            {
-              row.paid_amount > 0 && row.paid_status > 0 ?
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </>
+            ) : (
+              <>
+                {row.paid_status == "0" ? (
                   <Link
-                            to={{
-                                pathname: `/customer/paydetails/${row.assign_id}`,
-                                index : 0,
-                                routes: "paymentstatus",
-                            }}
-                        >
-                                      <Payment />
-                  </Link>   
-              
-                :
-                null
-            }
-        
+                    to={{
+                      pathname: `/customer_paydetails/${row.assign_id}`,
+                      index: 0,
+                      routes: "paymentstatus",
+                    }}
+                  >
+                    <Payment />
+                  </Link>
+                ) : null}
 
+                {row.paid_amount > 0 && row.paid_status > 0 ? (
+                  <Link
+                    to={{
+                      pathname: `/customer_paydetails/${row.assign_id}`,
+                      index: 0,
+                      routes: "paymentstatus",
+                    }}
+                  >
+                    <Payment />
+                  </Link>
+                ) : null}
 
-         
-            <Link className="ml-2"
-            to={{
-              pathname: `/customer/chatting/${row.assign_id}`,
-              index : 0,
-              routes: "paymentstatus",
-             
-              
-                obj: {
-                  message_type: "5",
-                  query_No: row.assign_no,
-                  query_id: row.assign_id,
-                  routes: `/customer/paymentstatus`
-                }
-              }}
-            >
-             <MessageIcon />
-            </Link>
-       
-          <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-1">
-                                  <ViewDiscussionIcon />
-                                </span>
-                              
-          </>
-      }
+                <Link
+                  className="ml-2"
+                  to={{
+                    pathname: `/customer_chatting/${row.assign_id}`,
+                    index: 0,
+                    routes: "paymentstatus",
+
+                    obj: {
+                      message_type: "5",
+                      query_No: row.assign_no,
+                      query_id: row.assign_id,
+                      routes: `/customer/paymentstatus`,
+                    },
+                  }}
+                >
+                  <MessageIcon />
+                </Link>
+
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </>
+            )}
           </>
         );
       },
     },
   ];
 
-  const defaultSorted = [{
-    dataField: 'accepted_amount',
-    order: 'desc'
-  }];
-
+  const defaultSorted = [
+    {
+      dataField: "accepted_amount",
+      order: "desc",
+    },
+  ];
 
   return (
-  
-<>
-        <Card>
+    <>
+      <Card>
+        <CardHeader>
+          <span onClick={(e) => needHelp()}>
+            {" "}
+            <HelpIcon />
+          </span>
+          <CustomerFilter
+            setData={setPayment}
+            getData={getPaymentStatus}
+            allPayment="allPayment"
+            setRecords={setRecords}
+            records={records}
+            id={userId}
+          />
+        </CardHeader>
 
-          <CardHeader>
-          <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
-             <CustomerFilter
-              setData={setPayment}
-              getData={getPaymentStatus}
-              allPayment="allPayment"
-              setRecords={setRecords}
-              records={records}
-              id={userId}
-            />
-          </CardHeader>
+        <CardBody>
+          <Records records={records} />
 
+          <DataTablepopulated
+            bgColor="#2b5f55"
+            keyField={"assign_no"}
+            data={payment}
+            columns={columns}
+          ></DataTablepopulated>
+          <PaymentComponent
+            paymentHandler={paymentHandler}
+            addPaymentModal={addPaymentModal}
+            pay={pay}
+            getPaymentStatus={getPaymentStatus}
+          />
 
-          <CardBody>
-          
-            <Records records={records} />
-
-<DataTablepopulated 
-                   bgColor="#2b5f55"
-                   keyField={"assign_no"}
-                   data={payment}
-                   columns={columns}>
-                    </DataTablepopulated>
-            <PaymentComponent
-              paymentHandler={paymentHandler}
-              addPaymentModal={addPaymentModal}
-              pay={pay}
-              getPaymentStatus={getPaymentStatus}
-            />
-
-            <DiscardReport
-              ViewDiscussionToggel={ViewDiscussionToggel}
-              ViewDiscussion={ViewDiscussion}
-              report={assignNo}
-              getData={getPaymentStatus}
-              headColor="#2b5f55"
-            />
-
-
-            
-          </CardBody>
-        </Card>
-        <Modal isOpen={modal} fade={false} toggle={toggle}>
-              <ModalHeader toggle={toggle}>History</ModalHeader>
-              <ModalBody>
-                <table class="table table-bordered">
-                  <thead>
+          <DiscardReport
+            ViewDiscussionToggel={ViewDiscussionToggel}
+            ViewDiscussion={ViewDiscussion}
+            report={assignNo}
+            getData={getPaymentStatus}
+            headColor="#2b5f55"
+          />
+        </CardBody>
+      </Card>
+      <Modal isOpen={modal} fade={false} toggle={toggle}>
+        <ModalHeader toggle={toggle}>History</ModalHeader>
+        <ModalBody>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="row">S.No</th>
+                <th scope="row">Date</th>
+                <th scope="row">Amount</th>
+              </tr>
+            </thead>
+            {pay.length > 0
+              ? pay.map((p, i) => (
+                  <tbody>
                     <tr>
-                      <th scope="row">S.No</th>
-                      <th scope="row">Date</th>
-                      <th scope="row">Amount</th>
+                      <td>{i + 1}</td>
+                      <td>{CommonServices.removeTime(p.payment_date)}</td>
+                      <td>{p.paid_amount}</td>
                     </tr>
-                  </thead>
-                  {pay.length > 0
-                    ? pay.map((p, i) => (
-                      <tbody>
-                        <tr>
-                          <td>{i + 1}</td>
-                          <td>{CommonServices.removeTime(p.payment_date)}</td>
-                          <td>{p.paid_amount}</td>
-                        </tr>
-                      </tbody>
-                    ))
-                    : null}
-                </table>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="secondary" onClick={toggle}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </Modal>
-            <Modal isOpen={openManual} toggle={needHelp} style={{display : "block", position: "absolute", left:"280px"}} size="lg">
-                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
-                        <ModalBody>
-                            <ModalManual tar= {"paymentProcess"} />
-                        </ModalBody>
-                    </Modal>
+                  </tbody>
+                ))
+              : null}
+          </table>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={openManual}
+        toggle={needHelp}
+        style={{ display: "block", position: "absolute", left: "280px" }}
+        size="lg"
+      >
+        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+        <ModalBody>
+          <ModalManual tar={"paymentProcess"} />
+        </ModalBody>
+      </Modal>
     </>
   );
 }

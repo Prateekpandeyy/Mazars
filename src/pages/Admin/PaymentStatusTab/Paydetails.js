@@ -142,7 +142,7 @@ setModal(!modal)
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.assign_id}`,
+                pathname: `/admin_queries/${row.assign_id}`,
                 index: 1,
                 routes: "paymentstatus",
               }}

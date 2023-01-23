@@ -49,8 +49,8 @@ function InprogressAllocation({
   const columns = [
     {
       text: "S.No",
-      dataField: "",
-      formatter: (rowIndex) => {
+
+      formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
       headerStyle: () => {
@@ -77,7 +77,7 @@ function InprogressAllocation({
           <>
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.id}`,
+                pathname: `/customer_my-assingment/${row.id}`,
                 index: 1,
                 routes: "queries",
               }}
@@ -158,7 +158,7 @@ function InprogressAllocation({
                     <span className="ml-1">
                       <Link
                         to={{
-                          pathname: `/customer/feedback/${row.assign_no}`,
+                          pathname: `/customer_feedback/${row.assign_no}`,
                           index: 1,
                           routes: "queries",
                         }}
@@ -185,7 +185,7 @@ function InprogressAllocation({
                 row.status_code ===  "3" ? (
                   <>
                     <span className="ml-1">
-                      <Link to={`/customer/edit-query/${row.id}`}>
+                      <Link to={`/customer_edit-query/${row.id}`}>
                         <EditQuery />
                       </Link>
                     </span>
@@ -196,7 +196,7 @@ function InprogressAllocation({
                     <span className="ml-1">
                       <Link
                         to={{
-                          pathname: `/customer/chatting/${row.id}&type=4`,
+                          pathname: `/customer_chatting/${row.id}&type=4`,
                           index: 1,
                           routes: "queries",
                           obj: {
@@ -227,7 +227,7 @@ function InprogressAllocation({
                       <span className="ml-1">
                         <Link
                           to={{
-                            pathname: `/customer/feedback/${row.assign_no}`,
+                            pathname: `/customer_feedback/${row.assign_no}`,
                             index: 1,
                             routes: "queries",
                           }}
@@ -250,7 +250,7 @@ function InprogressAllocation({
                       <span className="ml-1">
                         <Link
                           to={{
-                            pathname: `/customer/chatting/${row.id}&type=4`,
+                            pathname: `/customer_chatting/${row.id}&type=4`,
                             index: 1,
                             routes: "queries",
                             obj: {

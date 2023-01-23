@@ -119,7 +119,7 @@ const Cms = () => {
         return (
           <>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-              <Link to={`/cms/articlesedit/${row.id}`}>
+              <Link to={`/cms_articlesedit/${row.id}`}>
                 <span title="Edit Articles">
                   <EditQuery />
                 </span>

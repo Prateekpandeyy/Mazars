@@ -19,8 +19,6 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import BootstrapTable from "react-bootstrap-table-next";
 
 function ProposalTab() {
- 
-
   const userId = window.localStorage.getItem("userid");
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [proposalCount, setCountProposal] = useState("");
@@ -104,7 +102,7 @@ function ProposalTab() {
         console.log(row);
         return (
           <>
-            <Link to={`/customer/my-assingment/${row.id}`}>
+            <Link to={`/customer_my-assingment/${row.id}`}>
               {row.assign_no}
             </Link>
           </>
@@ -364,11 +362,10 @@ function ProposalTab() {
         if (response.data.code === 1) {
           getProposalData();
           Swal.fire({
-            title : "success",
-            html : "roposal accepted !",
-            icon : "success"
-           })
-         
+            title: "success",
+            html: "roposal accepted !",
+            icon: "success",
+          });
         }
       })
       .catch((error) => {
@@ -395,11 +392,10 @@ function ProposalTab() {
           setRejected(false);
           getProposalData();
           Swal.fire({
-            title : "success",
-            html : "Proposal rejected !",
-            icon : "success"
-           })
-         
+            title: "success",
+            html: "Proposal rejected !",
+            icon: "success",
+          });
         }
       })
       .catch((error) => {
@@ -414,7 +410,6 @@ function ProposalTab() {
     }
     return oldDate.toString().split("-").reverse().join("-");
   }
-
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>

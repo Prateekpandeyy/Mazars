@@ -67,7 +67,7 @@ function PendingForPayment() {
      
         return (
           <>
-            <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link>
+            <Link to={`/teamleader_queries/${row.id}`}>{row.assign_no}</Link>
           </>
         );
       },

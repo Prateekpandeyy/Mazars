@@ -74,7 +74,7 @@ function PendingForAllocation() {
        
         return (
           <>
-            <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link>
+            <Link to={`/teamleader_queries/${row.id}`}>{row.assign_no}</Link>
           </>
         );
       },
@@ -135,7 +135,7 @@ function PendingForAllocation() {
                 color: "green",
               }}
             >
-              <Link to={`/teamleader/queryassing/${row.id}`}>
+              <Link to={`/teamleader_queryassing/${row.id}`}>
                 <i class="fa fa-share"></i>
               </Link>
             </div>

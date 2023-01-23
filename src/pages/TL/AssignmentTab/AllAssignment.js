@@ -190,7 +190,7 @@ const resetData = () => {
           <>
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.q_id}`,
+                pathname: `/teamleader_queries/${row.q_id}`,
                 index : 0,
                 routes: "assignment",
               }}
@@ -343,7 +343,7 @@ const resetData = () => {
               style={{ cursor: "pointer", textAlign: "center" }}
             >
              {row.paid_status ===  "2" ? null : 
-              <Link to={`/teamleader/addassingment/${row.q_id}`}>
+              <Link to={`/teamleader_addassingment/${row.q_id}`}>
               <i class="fa fa-tasks"></i>
             </Link> }
             </div>
@@ -360,7 +360,7 @@ const resetData = () => {
         <div style={{display: "flex"}}>
         <Link
             to={{
-              pathname: `/teamleader/chatting/${row.q_id}`,
+              pathname: `/teamleader_chatting/${row.q_id}`,
               index : 0,
               routes: "assignment",
                  obj: {

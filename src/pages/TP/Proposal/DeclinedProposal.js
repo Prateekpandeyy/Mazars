@@ -103,7 +103,7 @@ function DeclinedProposal() {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
+                                pathname: `/taxprofessional_queries/${row.id}`,
                                 index : 3,
                                 routes: "proposal",
                             }}
@@ -238,7 +238,7 @@ function DeclinedProposal() {
                        
                                             <Link
                                                 to={{
-                                                    pathname: `/taxprofessional/chatting/${row.id}`,
+                                                    pathname: `/taxprofessional_chatting/${row.id}`,
                                                     index : 3,
                                                     routes: "proposal",
                                                     obj: {
@@ -259,7 +259,7 @@ function DeclinedProposal() {
                                 
                             <div className="ml-2">
                                 {row.status_code ===  "4" ? (
-                                    <Link to={`/taxprofessional/edit-proposal/${row.id}`}>
+                                    <Link to={`/taxprofessional_edit-proposal/${row.id}`}>
                                         <i
                                             className="fa fa-edit"
                                             style={{
@@ -270,7 +270,7 @@ function DeclinedProposal() {
                                         ></i>
                                     </Link>
                                 ) : row.status_code ===  "2"&& row.work_by != "0" ? (
-                                    <Link to={`/taxprofessional/sendproposal/${row.id}`}>
+                                    <Link to={`/taxprofessional_sendproposal/${row.id}`}>
                                         <i
                                             class="fa fa-mail-forward"
                                             style={{

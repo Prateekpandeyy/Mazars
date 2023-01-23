@@ -150,7 +150,7 @@ return(
               
            <div style={{display : "flex", width: "70px", alignItems: "center", justifyContent: "space-evenly"}}>
            <Link 
-                   to={`/cms/editimage/${row.id}`}
+                   to={`/cms_editimage/${row.id}`}
                    >
                      <EditQuery titleName="Edit Photo Gallery" />
                      </Link>

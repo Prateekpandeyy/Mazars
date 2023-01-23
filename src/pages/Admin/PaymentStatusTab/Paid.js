@@ -112,7 +112,7 @@ function Paid() {
                     <>
                         <Link
                             to={{
-                                pathname: `/admin/queries/${row.assign_id}`,
+                                pathname: `/admin_queries/${row.assign_id}`,
                                 index : 1,
                                 routes: "paymentstatus",
                             }}
@@ -258,7 +258,7 @@ function Paid() {
 
                         <Link
              to={{
-                pathname: `/admin/chatting/${row.assign_id}`,
+                pathname: `/admin_chatting/${row.assign_id}`,
                 index : 1,
                 routes: "paymentstatus",
                 obj: {
@@ -277,7 +277,7 @@ function Paid() {
                           </div> 
                         <Link
                to={{
-                pathname: `/admin/paydetails/${row.assign_id}`,
+                pathname: `/admin_paydetails/${row.assign_id}`,
                 index : 1,
                 routes: "paymentstatus",
               

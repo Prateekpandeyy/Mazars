@@ -101,7 +101,7 @@ function AcceptedProposal() {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.id}`,
+                                pathname: `/teamleader_queries/${row.id}`,
                                 index : 2,
                                 routes: "proposal",
                             }}
@@ -248,7 +248,7 @@ function AcceptedProposal() {
                        
                                             <Link
                                               to={{
-                                                pathname: `/teamleader/chatting/${row.id}`,
+                                                pathname: `/teamleader_chatting/${row.id}`,
                                                 index : 2,
                                                 routes: "proposal",
                                                     obj: {

@@ -170,7 +170,7 @@ rowStyle2 = (row, index) => {
                     <>
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.assign_id}`,
+                                pathname: `/teamleader_queries/${row.assign_id}`,
                                 index : 0,
                                 routes: "paymentstatus",
                             }}
@@ -310,7 +310,7 @@ rowStyle2 = (row, index) => {
 
 <Link
                              to={{
-                                pathname: `/teamleader/chatting/${row.id}`,
+                                pathname: `/teamleader_chatting/${row.id}`,
                                 index: 0,
                                 routes: "paymentstatus",
                         
@@ -330,7 +330,7 @@ rowStyle2 = (row, index) => {
                           </div>
                           <Link
               to={{
-                  pathname: `/teamleader/paydetails/${row.assign_id}`,
+                  pathname: `/teamleader_paydetails/${row.assign_id}`,
                   index : 0,
                   routes: "paymentstatus",
               }}

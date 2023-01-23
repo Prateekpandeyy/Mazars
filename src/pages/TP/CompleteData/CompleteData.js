@@ -72,7 +72,7 @@ function CompletedQuery() {
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${row.id}`,
+                pathname: `/taxprofessional_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}

@@ -136,7 +136,7 @@ function TeamLeaderTab() {
       formatter: function (cell, row) {
         return (
           <>
-            <Link to={`/admin/edittl/${row.id}`}>
+            <Link to={`/admin_edittl/${row.id}`}>
               <i
                 className="fa fa-edit"
                 style={{

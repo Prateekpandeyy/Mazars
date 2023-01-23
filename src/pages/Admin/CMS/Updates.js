@@ -92,7 +92,7 @@ const Updates = () =>{
          <>
        
                   <div style={{display : "flex", justifyContent : "space-evenly"}}>
-                  <Link to={`/cms/editupdates/${row.id}`}>
+                  <Link to={`/cms_editupdates/${row.id}`}>
           <EditQuery titleName="Edit Update"/>
       </Link>
       <span   onClick={() => del(row.id)} className="ml-2">

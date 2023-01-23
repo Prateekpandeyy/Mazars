@@ -109,7 +109,7 @@ function AllProposal() {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.id}`,
+                                pathname: `/taxprofessional_queries/${row.id}`,
                                 index : 0,
                                 routes: "proposal",
                             }}
@@ -254,7 +254,7 @@ function AllProposal() {
                         <div style={{ display: "flex"}}>
                         <Link
  to={{
-    pathname: `/taxprofessional/chatting/${row.id}`,
+    pathname: `/taxprofessional_chatting/${row.id}`,
     index : 0,
     routes: "proposal",
                                                     obj: {
@@ -279,7 +279,7 @@ function AllProposal() {
                                 {row.status_code ===  "4" ? (
                                     <Link 
                                     to={{
-                                        pathname: `/taxprofessional/edit-proposal/${row.id}`,
+                                        pathname: `/taxprofessional_edit-proposal/${row.id}`,
                                         index : 0,
                                         routes: "proposal" }}>
                                         <EditQuery titleName="Edit Proposal" />
@@ -287,7 +287,7 @@ function AllProposal() {
                                 ) : row.status_code ===  "2"&& row.work_by != "0" ? (
                                     <Link 
                                     to={{
-                                        pathname: `/taxprofessional/sendproposal/${row.id}`,
+                                        pathname: `/taxprofessional_sendproposal/${row.id}`,
                                         index : 0,
                                         routes: "proposal" }}>
                                                                              <ActionIcon titleName="Dicision on propsal"/>

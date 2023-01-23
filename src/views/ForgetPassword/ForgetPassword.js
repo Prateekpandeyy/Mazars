@@ -64,7 +64,7 @@ function ForgetPassword(props) {
           });
 
           props.history.push({
-            pathname: `/customer/new-password/${value.p_email}`,
+            pathname: `/customer_new-password/${value.p_email}`,
             index: user,
           });
         } else if (response.data.code === 0) {

@@ -101,7 +101,7 @@ function InprogressProposal() {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.id}`,
+                                pathname: `/teamleader_queries/${row.id}`,
                                 index : 1,
                                 routes: "proposal",
                             }}
@@ -287,7 +287,7 @@ function InprogressProposal() {
                                 ) : row.status_code ===  "2"&& row.work_by != "0" ? (
                                     <Link 
                                     to={{
-                                        pathname: `/teamleader/sendproposal/${row.id}`,
+                                        pathname: `/teamleader_sendproposal/${row.id}`,
                                         index : 1,
                                         routes: "proposal" }}>
                                       <ActionIcon titleName= "Decision on proposal" />

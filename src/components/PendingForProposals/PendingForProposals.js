@@ -118,7 +118,7 @@ function PendingForProposals({ CountPendingProposal }) {
             <Link
           
               to={{
-                pathname: `/admin/queries/${row.id}`,
+                pathname: `/admin_queries/${row.id}`,
                 index: 2,
                 routes: "queriestab",
               }}

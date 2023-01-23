@@ -204,7 +204,7 @@ else{
       formatter: function (cell, row) {
         return (
           <>
-            <Link to={`/admin/edittl/${row.id}`}>
+            <Link to={`/admin_edittl/${row.id}`}>
             <EditQuery />
             </Link>
           

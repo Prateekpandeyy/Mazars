@@ -197,7 +197,7 @@ function TaxProfessionalsTab() {
       formatter: function (cell, row) {
         return (
           <>
-            <Link to={`/admin/edittp/${row.id}`}>
+            <Link to={`/admin_edittp/${row.id}`}>
              <EditQuery />
             </Link>
             {/* <i

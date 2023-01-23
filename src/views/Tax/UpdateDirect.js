@@ -191,7 +191,7 @@ const UpdateDirect = () => {
                                           {userId ? (
                                             <Link
                                               to={{
-                                                pathname: `/customer/update-details/${i.id}`,
+                                                pathname: `/customer_update-details/${i.id}`,
                                                 index: "direct",
                                               }}
                                               className="tabHover"
@@ -330,7 +330,7 @@ const UpdateDirect = () => {
                                         {userId ? (
                                           <Link
                                             to={{
-                                              pathname: `/customer/update-details/${i.id}`,
+                                              pathname: `/customer_update-details/${i.id}`,
                                               index: "direct",
                                             }}
                                           >

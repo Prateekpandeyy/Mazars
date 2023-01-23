@@ -184,7 +184,7 @@ function AdminPermission(props) {
           <>
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.q_id}`,
+                pathname: `/teamleader_queries/${row.q_id}`,
                 index: 0,
                 routes: "assignment",
               }}
@@ -349,7 +349,7 @@ function AdminPermission(props) {
             <div style={{ display: "flex" }}>
               <Link
                 to={{
-                  pathname: `/teamleader/chatting/${row.q_id}`,
+                  pathname: `/teamleader_chatting/${row.q_id}`,
                   index: 0,
                   routes: "assignment",
                   obj: {

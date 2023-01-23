@@ -119,7 +119,7 @@ function Unpaid() {
                     <>
                         <Link
                             to={{
-                                pathname: `/admin/queries/${row.assign_id}`,
+                                pathname: `/admin_queries/${row.assign_id}`,
                                 index : 2,
                                 routes: "paymentstatus",
                             }}
@@ -265,7 +265,7 @@ function Unpaid() {
 
                         <Link
               to={{
-                pathname: `/admin/chatting/${row.assign_id}`,
+                pathname: `/admin_chatting/${row.assign_id}`,
                 index : 2,
                 routes: "paymentstatus",
                 obj: {
@@ -284,7 +284,7 @@ function Unpaid() {
                           </div>
                         <Link
               to={{
-                pathname: `/admin/paydetails/${row.assign_id}`,
+                pathname: `/admin_paydetails/${row.assign_id}`,
                 index : 2,
                 routes: "paymentstatus",
                

@@ -102,7 +102,7 @@ const [columnDefs] = useState([
               
      <>
                    <div style={{display : "flex", alignContent: "center", justifyContent : "space-evenly"}}>
-              <Link to={`/cms/editfaq/${params.data.id}`}>
+              <Link to={`/cms_editfaq/${params.data.id}`}>
   
               <EditQuery titleName="Edit Flash Update"/>
             

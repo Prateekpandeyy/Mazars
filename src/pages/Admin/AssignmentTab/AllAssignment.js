@@ -182,7 +182,7 @@ function AssignmentComponent(props) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.q_id}`,
+                pathname: `/admin_queries/${row.q_id}`,
                 index: 0,
                 routes: "assignment",
               }}
@@ -347,7 +347,7 @@ function AssignmentComponent(props) {
             <div style={{ display: "flex" }}>
               <Link
                 to={{
-                  pathname: `/admin/chatting/${row.q_id}`,
+                  pathname: `/admin_chatting/${row.q_id}`,
                   index: 0,
                   routes: "assignment",
                   obj: {

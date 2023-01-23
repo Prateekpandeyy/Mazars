@@ -137,7 +137,7 @@ function AllPayment() {
 
                    <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                pathname: `/taxprofessional_queries/${row.assign_id}`,
                                 index : 2,
                                 routes: "paymentstatus",
                             }}
@@ -266,7 +266,7 @@ function AllPayment() {
 
 <Link
                              to={{
-                                pathname: `/taxprofessional/chatting/${row.id}`,
+                                pathname: `/taxprofessional_chatting/${row.id}`,
                                 index: 2,
                                 routes: "paymentstatus",
                         
@@ -286,7 +286,7 @@ function AllPayment() {
                           </div>
                           <Link
               to={{
-                  pathname: `/taxprofessional/paydetails/${row.assign_id}`,
+                  pathname: `/taxprofessional_paydetails/${row.assign_id}`,
                   index : 2,
                   routes: "paymentstatus",
               }}

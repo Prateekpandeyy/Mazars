@@ -99,7 +99,7 @@ const history = useHistory();
              
                 return (
                     <>
-                        <Link to={`/admin/view-notification/${row.id}`}>
+                        <Link to={`/admin_view-notification/${row.id}`}>
                             {
                                 row.is_read ===  "0" ?
                                     <div

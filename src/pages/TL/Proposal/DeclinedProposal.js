@@ -102,7 +102,7 @@ function DeclinedProposal() {
 
                         <Link
                             to={{
-                                pathname: `/teamleader/queries/${row.id}`,
+                                pathname: `/teamleader_queries/${row.id}`,
                                 index : 3,
                                 routes: "proposal",
                             }}
@@ -249,7 +249,7 @@ function DeclinedProposal() {
                        
                                             <Link
                                                 to={{
-                                                    pathname: `/teamleader/chatting/${row.id}`,
+                                                    pathname: `/teamleader_chatting/${row.id}`,
                                                     index : 3,
                                                     routes: "proposal",
                                                     obj: {
@@ -270,7 +270,7 @@ function DeclinedProposal() {
                                 
                             <div className="ml-2">
                                 {row.status_code ===  "4" ? (
-                                    <Link to={`/teamleader/edit-proposal/${row.id}`}>
+                                    <Link to={`/teamleader_edit-proposal/${row.id}`}>
                                         <i
                                             className="fa fa-edit"
                                             style={{
@@ -281,7 +281,7 @@ function DeclinedProposal() {
                                         ></i>
                                     </Link>
                                 ) : row.status_code ===  "2"&& row.work_by != "0" ? (
-                                    <Link to={`/teamleader/sendproposal/${row.id}`}>
+                                    <Link to={`/teamleader_sendproposal/${row.id}`}>
                                         <i
                                             class="fa fa-mail-forward"
                                             style={{

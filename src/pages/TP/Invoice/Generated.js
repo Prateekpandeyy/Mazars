@@ -122,7 +122,7 @@ const Generated = () => {
 
                         <Link
                             to={{
-                                pathname: `/taxprofessional/queries/${row.assign_id}`,
+                                pathname: `/taxprofessional_queries/${row.assign_id}`,
                                 index : 0,
                                 routes: "tpinvoice",
                             }}

@@ -116,7 +116,7 @@ const VideoMedia = () => {
                 
              <div style={{display : "flex", width: "70px", alignItems: "center", justifyContent: "space-evenly"}}>
              <Link 
-                     to={`/cms/editvideo/${row.id}`}
+                     to={`/cms_editvideo/${row.id}`}
                      >
                        <EditQuery titleName="Edit Video Gallery" />
                        </Link>

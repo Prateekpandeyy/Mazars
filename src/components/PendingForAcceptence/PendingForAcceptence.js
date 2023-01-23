@@ -105,7 +105,7 @@ function PendingForAcceptence({ pendingProposal }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.q_id}`,
+                pathname: `/admin_queries/${row.q_id}`,
                 index: 1,
                 routes: "proposal",
               }}
@@ -245,7 +245,7 @@ function PendingForAcceptence({ pendingProposal }) {
             <div style={{ display: "flex" }}>
               <Link
                 to={{
-                  pathname: `/admin/chatting/${row.q_id}`,
+                  pathname: `/admin_chatting/${row.q_id}`,
                   index: 1,
                   routes: "proposal",
                   obj: {

@@ -72,7 +72,7 @@ function AllQuery(props) {
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${row.id}`,
+                pathname: `/taxprofessional_queries/${row.id}`,
                 index: 0,
                 routes: "queriestab",
               }}
@@ -147,7 +147,7 @@ function AllQuery(props) {
                 {row.status ===  "Declined Query" ? null : (
                   <Link
                     to={{
-                      pathname: `/taxprofessional/chatting/${row.id}`,
+                      pathname: `/taxprofessional_chatting/${row.id}`,
                       index: 0,
                       routes: "queriestab",
 

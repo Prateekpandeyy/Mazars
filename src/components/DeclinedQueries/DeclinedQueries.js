@@ -84,7 +84,7 @@ function DeclinedQueries({ CountPendingForPayment }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.id}`,
+                pathname: `/admin_queries/${row.id}`,
                 index: 3,
                 routes: "queriestab",
               }}

@@ -197,7 +197,7 @@ function AssignmentTab(props) {
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${row.q_id}`,
+                pathname: `/taxprofessional_queries/${row.q_id}`,
                 index : 0,
                 routes: "assignment",
               }}
@@ -339,7 +339,7 @@ function AssignmentTab(props) {
             >
                 {
            row.paid_status ===  "2" ? null :
-              <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
+              <Link to={`/taxprofessional_addassingment/${row.q_id}`}>
                 <i class="fa fa-tasks"></i>
               </Link>
       }
@@ -357,7 +357,7 @@ function AssignmentTab(props) {
         <div style={{display: "flex"}}>
         <Link
             to={{
-              pathname: `/taxprofessional/chatting/${row.q_id}`,
+              pathname: `/taxprofessional_chatting/${row.q_id}`,
               index : 0,
               routes: "assignment",
                  obj: {
