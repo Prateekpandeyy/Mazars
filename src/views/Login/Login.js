@@ -71,7 +71,6 @@ function LoginForm() {
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
-
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState();
