@@ -37,7 +37,7 @@ function ForgetPassword(props) {
             icon: "success",
           });
 
-          props.history.push(`/taxprofessional/new-password/${value.p_email}`);
+          props.history.push(`/taxprofessional_new-password/${value.p_email}`);
         } else if (response.data.code === 0) {
           Swal.fire("Oops...", "Errorr : " + response.data.result, "error");
         }

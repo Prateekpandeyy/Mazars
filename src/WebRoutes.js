@@ -447,7 +447,7 @@ function WebRoutes() {
             component={AdminForgetPassword}
           />
           <PublicRouteAdmin
-            path="/admin/new-password/:id"
+            path="/admin_new-password/:id"
             component={AdminNewPassword}
           />
 
@@ -473,11 +473,11 @@ function WebRoutes() {
           />
           <PrivateRouteAdmin path="/admin/proposal" component={AdminProposal} />
           <PrivateRouteAdmin
-            path="/admin/queries/:id"
+            path="/admin_queries/:id"
             component={AdminQueriesRecevied}
           />
           <PrivateRouteAdmin
-            path="/admin/queryassing/:id"
+            path="/admin_queryassing/:id"
             component={AdminQueryAssingment}
           />
           <PrivateRouteAdmin
@@ -496,14 +496,11 @@ function WebRoutes() {
             path="/admin/assignment"
             component={AdminAssignmentTab}
           />
-          <PrivateRouteAdmin path="/admin/edittl/:id" component={AdminEditTL} />
-          <PrivateRouteAdmin path="/admin/edittp/:id" component={AdminEditTP} />
+          <PrivateRouteAdmin path="/admin_edittl/:id" component={AdminEditTL} />
+          <PrivateRouteAdmin path="/admin_edittp/:id" component={AdminEditTP} />
+
           <PrivateRouteAdmin
-            path="/admin/pending/:id"
-            component={AdminPendingRecevived}
-          />
-          <PrivateRouteAdmin
-            path="/admin/query_rejection/:id"
+            path="/admin_query_rejection/:id"
             component={AdminQueryRejection}
           />
           <PrivateRouteAdmin path="/admin/schedule" component={AdminSchedule} />
@@ -512,12 +509,12 @@ function WebRoutes() {
             component={AdminMeetingComponent}
           />
           <PrivateRouteAdmin
-            path="/admin/chatting/:id"
+            path="/admin_chatting/:id"
             component={AdminChatting}
           />
           <PrivateRouteAdmin path="/admin/message" component={AdminMessage} />
           <PrivateRouteAdmin
-            path="/admin/view-notification/:id"
+            path="/admin_view-notification/:id"
             component={AdminViewNotification}
           />
           <PrivateRouteAdmin
@@ -525,14 +522,14 @@ function WebRoutes() {
             component={AdminRecording}
           />
           <PrivateRouteAdmin
-            path="/admin/meeting/:id"
+            path="/admin_meeting/:id"
             component={adMeetingComponent}
           />
           <PrivateRouteAdmin path="/admin/customers" component={Customer} />
           <PrivateRouteAdmin path="/admin/reports" component={adminReport} />
           <PrivateRouteAdmin path="/admin/adinvoice" component={AdminInvoice} />
           <PrivateRouteAdmin
-            path="/admin/paydetails/:id"
+            path="/admin_paydetails/:id"
             component={AdpayDetails}
           />
           <PrivateRouteAdmin path="/admin/reportlist" component={ReportList} />
@@ -552,7 +549,7 @@ function WebRoutes() {
             component={TlForgetPassword}
           />
           <PublicRouteTL
-            path="/teamleader/new-password/:id"
+            path="/teamleader_new-password/:id"
             component={TlNewPassword}
           />
 
@@ -570,18 +567,18 @@ function WebRoutes() {
             component={TlProposalTab}
           />
           <PrivateRouteTL
-            path="/teamleader/addassingment/:id"
+            path="/teamleader_addassingment/:id"
             component={TlAddAssingmentStages}
           />
           <PrivateRouteTL
-            path="/teamleader/queries/:id"
+            path="/teamleader_queries/:id"
             component={TlQueriesRecevied}
           />
           <PrivateRouteTL
-            path="/teamleader/queryassing/:id"
+            path="/teamleader_queryassing/:id"
             component={TlQueryAssingment}
           />
-          <PrivateRouteTL path="/teamleader/edittp/:id" component={TlEditTP} />
+
           <PrivateRouteTL
             path="/teamleader/feedback"
             component={TlFeedbackTab}
@@ -595,7 +592,7 @@ function WebRoutes() {
             component={TlAssignmentTab}
           />
           <PrivateRouteTL
-            path="/teamleader/sendproposal/:id"
+            path="/teamleader_sendproposal/:id"
             component={TlSendProposal}
           />
           <PrivateRouteTL
@@ -603,32 +600,22 @@ function WebRoutes() {
             component={TlQueriesTab}
           />
           <PrivateRouteTL
-            path="/teamleader/edit-proposal/:id"
+            path="/teamleader_edit-proposal/:id"
             component={TlEditProposal}
           />
+
           <PrivateRouteTL
-            path="/teamleader/pending/:id"
-            component={TlPendingReceived}
-          />
-          <PrivateRouteTL
-            path="/teamleader/assignment-form/:id"
-            component={TlAssignmentForm}
-          />
-          <PrivateRouteTL
-            path="/teamleader/meeting/:id"
+            path="/teamleader_meeting/:id"
             component={TlMeetingComponent}
           />
-          <PrivateRouteTL
-            path="/teamleader/view-report/:id"
-            component={TlViewReport}
-          />
+
           <PrivateRouteTL path="/teamleader/schedule" component={TlSchedule} />
           <PrivateRouteTL
-            path="/teamleader/view-notification/:id"
+            path="/teamleader_view-notification/:id"
             component={TlViewNotification}
           />
           <PrivateRouteTL
-            path="/teamleader/chatting/:id"
+            path="/teamleader_chatting/:id"
             component={TlChatting}
           />
           <PrivateRouteTL path="/teamleader/message" component={TlMessage} />
@@ -643,14 +630,14 @@ function WebRoutes() {
             component={TlInvoiceTab}
           />
           <PrivateRouteTL
-            path="/teamleader/paydetails/:id"
+            path="/teamleader_paydetails/:id"
             component={TlpayDetails}
           />
           <PrivateRouteTL path="/teamleader/custompay" component={Custompay} />
           <PublicRouteTP path="/taxprofessional/start" component={TpStart} />
           <PublicRouteTP path="/taxprofessional/login" component={TpLogin} />
           <PublicRouteTP
-            path="/taxprofessional/new-password/:id"
+            path="/taxprofessional_new-password/:id"
             component={TpNewPassword}
           />
           <PublicRouteTP
@@ -659,7 +646,7 @@ function WebRoutes() {
           />
 
           <PrivateRouteTP
-            path="/taxprofessional/queries/:id"
+            path="/taxprofessional_queries/:id"
             component={TpQueriesRecevied}
           />
           <PrivateRouteTP
@@ -671,11 +658,11 @@ function WebRoutes() {
             component={TpProposalTab}
           />
           <PrivateRouteTP
-            path="/taxprofessional/sendproposal/:id"
+            path="/taxprofessional_sendproposal/:id"
             component={TpSendProposal}
           />
           <PrivateRouteTP
-            path="/taxprofessional/edit-proposal/:id"
+            path="/taxprofessional_edit-proposal/:id"
             component={TpEditProposal}
           />
           <PrivateRouteTP
@@ -687,11 +674,11 @@ function WebRoutes() {
             component={TpDashboard}
           />
           <PrivateRouteTP
-            path="/taxprofessional/chatting/:id"
+            path="/taxprofessional_chatting/:id"
             component={TpChatting}
           />
           <PrivateRouteTP
-            path="/taxprofessional/addassingment/:id"
+            path="/taxprofessional_addassingment/:id"
             component={TpAddAssingmentStages}
           />
           <PrivateRouteTP
@@ -715,11 +702,11 @@ function WebRoutes() {
             component={TpFeedbackTab}
           />
           <PrivateRouteTP
-            path="/taxprofessional/meeting/:id"
+            path="/taxprofessional_meeting/:id"
             component={TpMeetingComponent}
           />
           <PrivateRouteTP
-            path="/taxprofessional/view-notification/:id"
+            path="/taxprofessional_view-notification/:id"
             component={TpViewNotification}
           />
           <PrivateRouteTP
@@ -735,7 +722,7 @@ function WebRoutes() {
             component={TpInvoice}
           />
           <PrivateRouteTP
-            path="/taxprofessional/paydetails/:id"
+            path="/taxprofessional_paydetails/:id"
             component={TppayDetails}
           />
 
@@ -746,7 +733,7 @@ function WebRoutes() {
           <PrivateRouteCms exact path="/cms/updates" component={AdminUpdates} />
           <PrivateRouteCms
             exact
-            path="/cms/articlesedit/:id"
+            path="/cms_articlesedit/:id"
             component={CmsContent}
           />
           <PrivateRouteCms
@@ -755,11 +742,11 @@ function WebRoutes() {
           />
           <PrivateRouteCms
             exact
-            path="/cms/editupdates/:id"
+            path="/cms_editupdates/:id"
             component={Editupdates}
           />
           <PrivateRouteCms exact path="/cms/links" component={Links} />
-          <PrivateRouteCms exact path="/cms/linksedit/:id" component={Links} />
+          <PrivateRouteCms exact path="/cms_linksedit/:id" component={Links} />
           <PrivateRouteCms exact path="/cms/linklist" component={Linklist} />
           <PrivateRouteCms exact path="/cms/faqlist" component={FaqList} />
           <PrivateRouteCms
@@ -778,10 +765,10 @@ function WebRoutes() {
             component={FlashContent}
           />
           <PrivateRouteCms
-            path="/cms/flashcontent/:id"
+            path="/cms_flashcontent/:id"
             component={FlashContent}
           />
-          <PrivateRouteCms exact path="/cms/faqedit/:id" component={Faq} />
+          <PrivateRouteCms exact path="/cms_faqedit/:id" component={Faq} />
           <PrivateRouteCms exact path="/cms/faq" component={Faq} />
           <PrivateRouteCms exact path="/cms/mediatab" component={MediaTab} />
           <PrivateRouteCms
@@ -796,7 +783,7 @@ function WebRoutes() {
           />
           <PrivateRouteCms
             exact
-            path="/cms/mediatext/:id"
+            path="/cms_mediatext/:id"
             component={Mediatextshow}
           />
           <PrivateRouteCms
@@ -811,15 +798,15 @@ function WebRoutes() {
           />
           <PrivateRouteCms
             exact
-            path="/cms/editimage/:id"
+            path="/cms_editimage/:id"
             component={EditImage}
           />
           <PrivateRouteCms
             exact
-            path="/cms/editvideo/:id"
+            path="/cms_editvideo/:id"
             component={EditVideo}
           />
-          <PrivateRouteCms exact path="/cms/editfaq/:id" component={EditFaq} />
+          <PrivateRouteCms exact path="/cms_editfaq/:id" component={EditFaq} />
           <PrivateRouteCms exact path="/cms/videolist" component={VideoMedia} />
           <PrivateRouteCms
             exact
@@ -849,7 +836,7 @@ function WebRoutes() {
           <PrivateRouteCms exact path="/cms/enquiry" component={Enquiry} />
           <PrivateRouteCms
             exact
-            path="/cms/editenquiry/:id"
+            path="/cms_editenquiry/:id"
             component={Enquiry}
           />
           <PrivateRouteCms exact path="/cms/emaillist" component={EmailList} />

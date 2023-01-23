@@ -95,7 +95,7 @@ function Recording() {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${a}`,
+                pathname: `/admin_queries/${a}`,
                 routes: "recording",
               }}
             >

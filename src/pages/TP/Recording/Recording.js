@@ -118,7 +118,7 @@ function Recording() {
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${a}`,
+                pathname: `/taxprofessional_queries/${a}`,
                 routes: "recording",
               }}
             >

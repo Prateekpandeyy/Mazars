@@ -91,7 +91,7 @@ function InCompleteData({ CountIncomplete }) {
           <>
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
+                pathname: `/teamleader_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}
@@ -170,7 +170,7 @@ function InCompleteData({ CountIncomplete }) {
                 {row.status == "Declined Query" ? null : (
                   <Link
                     to={{
-                      pathname: `/teamleader/chatting/${row.id}`,
+                      pathname: `/teamleader_chatting/${row.id}`,
                       index: 1,
                       routes: "queriestab",
 

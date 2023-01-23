@@ -4,7 +4,7 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { baseUrl2 } from '../../../config/config';
+import { baseUrl2 } from "../../../config/config";
 import {
   Card,
   CardHeader,
@@ -15,7 +15,6 @@ import {
   Table,
 } from "reactstrap";
 
-
 function PendingRecevied() {
   const [submitData, setSubmitData] = useState([]);
   const [assingNo, setAssingmentNo] = useState();
@@ -25,29 +24,28 @@ function PendingRecevied() {
   const history = useHistory();
 
   const userid = window.localStorage.getItem("adminkey");
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig).then((res) => {
-        
-        if (res.data.code === 1) {
-          setSubmitData(res.data.result);
-          setDisplaySpecific(res.data.additional_queries);
-          setAssingmentNo(res.data.result[0].assign_no);
-        }
-      });
+      axios
+        .get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setSubmitData(res.data.result);
+            setDisplaySpecific(res.data.additional_queries);
+            setAssingmentNo(res.data.result[0].assign_no);
+          }
+        });
     };
 
     getSubmittedAssingment();
     // getQuery();
   }, [assingNo]);
-
- 
 
   // const getQuery = () => {
   //  if(assingNo === undefined){
@@ -57,7 +55,7 @@ function PendingRecevied() {
   //   axios
   //   .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
   //   .then((res) => {
-      
+
   //     if (res.data.code === 1) {
   //       setDisplayQuery(res.data.result);
   //     }
@@ -65,22 +63,24 @@ function PendingRecevied() {
   //  }
   // };
 
-     //change date format
-     function ChangeFormateDate(oldDate) {
-     
-      if (oldDate == null) {
-        return null;
-      }
-      return oldDate.toString().split("-").reverse().join("-");
+  //change date format
+  function ChangeFormateDate(oldDate) {
+    if (oldDate == null) {
+      return null;
     }
-    
+    return oldDate.toString().split("-").reverse().join("-");
+  }
+
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
           <Row>
             <Col md="4">
-              <button className="btn btn-success" onClick={() => history.goBack()}>
+              <button
+                className="btn btn-success"
+                onClick={() => history.goBack()}
+              >
                 <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
@@ -104,11 +104,11 @@ function PendingRecevied() {
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
+                  <tr>
                     <th scope="row">Query No</th>
                     <td>{p.assign_no}</td>
                   </tr>
-                <tr>
+                  <tr>
                     <th scope="row">Query Status</th>
                     <td>{p.status}</td>
                   </tr>
@@ -194,16 +194,14 @@ function PendingRecevied() {
                   <tr>
                     <th scope="row">Action</th>
                     <td>
-                    {p.allocation_status == "0" || p.allocation_status == "3"  ? (
-                        <Link to={`/admin/queryassing/${p.id}`}>
-                        <i className="fa fa-share"></i>
-                      </Link>
-                      ) : (                  
-                       null
-                      )}
+                      {p.allocation_status == "0" ||
+                      p.allocation_status == "3" ? (
+                        <Link to={`/admin_queryassing/${p.id}`}>
+                          <i className="fa fa-share"></i>
+                        </Link>
+                      ) : null}
                     </td>
                   </tr>
-                 
                 </tbody>
               </table>
 

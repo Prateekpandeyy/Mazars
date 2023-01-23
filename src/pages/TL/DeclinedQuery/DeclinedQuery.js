@@ -20,12 +20,12 @@ function DeclinedQuery({ CountIncomplete }) {
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
 
-  const token = window.localStorage.getItem("tlToken")
+  const token = window.localStorage.getItem("tlToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
 
   useEffect(() => {
     getInCompleteAssingment();
@@ -35,7 +35,6 @@ function DeclinedQuery({ CountIncomplete }) {
     axios
       .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-      
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
@@ -69,13 +68,11 @@ function DeclinedQuery({ CountIncomplete }) {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-      
         return (
           <>
-         
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
+                pathname: `/teamleader_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}
@@ -118,7 +115,6 @@ function DeclinedQuery({ CountIncomplete }) {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-       
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -136,14 +132,9 @@ function DeclinedQuery({ CountIncomplete }) {
           <>
             <div>
               {row.status} /
-              {
-                row.status == "Declined Query" ?
-                  <p className="declined">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              }
+              {row.status == "Declined Query" ? (
+                <p className="declined">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );

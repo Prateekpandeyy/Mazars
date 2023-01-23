@@ -86,7 +86,7 @@ function AllQuery() {
             {/* <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link> */}
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
+                pathname: `/teamleader_queries/${row.id}`,
                 index: 0,
                 routes: "queriestab",
               }}
@@ -162,7 +162,7 @@ function AllQuery() {
                 {row.status == "Declined Query" ? null : (
                   <Link
                     to={{
-                      pathname: `/teamleader/chatting/${row.id}`,
+                      pathname: `/teamleader_chatting/${row.id}`,
                       index: 0,
                       routes: "queriestab",
 

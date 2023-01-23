@@ -99,7 +99,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.id}`,
+                pathname: `/admin_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}
@@ -156,7 +156,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
               </p>
             ) : (
               <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <Link to={`/admin/queryassing/${row.id}`}>
+                <Link to={`/admin_queryassing/${row.id}`}>
                   <DiscussProposal titleName="Assign to" />
                 </Link>
 

@@ -25,11 +25,10 @@ function PendingForAllocation() {
     getPendingForAllocation();
   }, []);
 
-  const getPendingForAllocation= () => {
+  const getPendingForAllocation = () => {
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
       .then((res) => {
-       
         if (res.data.code === 1) {
           setPendingAllocation(res.data.result);
         }
@@ -55,9 +54,8 @@ function PendingForAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        
         var updatedate = row.query_date.split(" ")[0];
-       
+
         if (updatedate == null) {
           return null;
         }
@@ -71,10 +69,9 @@ function PendingForAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-       
         return (
           <>
-            <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link>
+            <Link to={`/teamleader_queries/${row.id}`}>{row.assign_no}</Link>
           </>
         );
       },
@@ -111,7 +108,6 @@ function PendingForAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -135,7 +131,7 @@ function PendingForAllocation() {
                 color: "green",
               }}
             >
-              <Link to={`/teamleader/queryassing/${row.id}`}>
+              <Link to={`/teamleader_queryassing/${row.id}`}>
                 <i class="fa fa-share"></i>
               </Link>
             </div>

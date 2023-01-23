@@ -22,6 +22,8 @@ import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
 import SearchBtn from "../../components/Common/SearchBtn";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -29,6 +31,7 @@ const Direct = () => {
   const [searchText, setSearchText] = useState("");
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
 
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
@@ -88,11 +91,7 @@ const Direct = () => {
     getData();
     getPage();
   }, []);
-  const goToLogin = (e) => {
-    Swal.fire({
-      html: "Please login to view full article",
-    });
-  };
+
   const searchArticle = () => {
     let formData = new FormData();
     formData.append("content", searchText);
@@ -360,7 +359,10 @@ const Direct = () => {
                                   cursor="pointer"
                                   hover="hover"
                                   onClick={(e) => {
-                                    goToLogin(e);
+                                    goToLogin(
+                                      history,
+                                      "Please login to view full article"
+                                    );
                                   }}
                                 >
                                   {`${i.heading}`}

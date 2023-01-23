@@ -27,7 +27,6 @@ import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
 import InviteModal from "./InviteModal";
 
-
 function Demo() {
   const userId = window.localStorage.getItem("tpkey");
   const history = useHistory();
@@ -42,14 +41,14 @@ function Demo() {
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
   const [videoProfile, SetVideoProfile] = useState("240p_4");
-  const [invite, setInvite] = useState(false)
-  const [inviteData, setInviteData] = useState()
-  const token = window.localStorage.getItem("tptoken")
+  const [invite, setInvite] = useState(false);
+  const [inviteData, setInviteData] = useState();
+  const token = window.localStorage.getItem("tptoken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   var date = new Date();
 
   function convert(str) {
@@ -70,7 +69,6 @@ function Demo() {
     axios
       .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -87,7 +85,7 @@ function Demo() {
     question_id: appointment.question_id,
     vstart: appointment.vstart,
     vend: appointment.vend,
-    user: appointment.user.split(','),
+    user: appointment.user.split(","),
     owner: appointment.owner,
     username: appointment.username,
   });
@@ -96,7 +94,6 @@ function Demo() {
     axios
       .get(`${baseUrl}/tl/getAllQuery?tp_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-      
         if (res.data.code === 1) {
           var data = res.data.result;
 
@@ -104,25 +101,26 @@ function Demo() {
             text,
             ...rest,
           }));
-          
+
           setAssignmentData(newArrayOfObj);
         }
       });
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
-  
-      if (res.data.code === 1) {
-        var data = res.data.result;
-        const newOwners = data.map(({ name: text, ...rest }) => ({
-          text,
-          ...rest,
-        }));
-      
-        setOwner(newOwners);
-      }
-    });
+    axios
+      .get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          var data = res.data.result;
+          const newOwners = data.map(({ name: text, ...rest }) => ({
+            text,
+            ...rest,
+          }));
+
+          setOwner(newOwners);
+        }
+      });
   };
 
   const resources = [
@@ -152,17 +150,16 @@ function Demo() {
     },
   });
   const showInvite = (data) => {
-    console.log("data", data)
-    if(data){
-      setInviteData(data)
+    console.log("data", data);
+    if (data) {
+      setInviteData(data);
     }
-    setInvite(!invite)
-   
-  }
+    setInvite(!invite);
+  };
 
   const B = (key) => {
-    setRead(!key)
-  }
+    setRead(!key);
+  };
 
   const AppointmentBase = ({
     children,
@@ -173,27 +170,27 @@ function Demo() {
     ...restProps
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
-   <Appointments.Appointment {...restProps}>
-        <div style={{ display: "flex"}}>
-        <i
-          onClick={() => handleJoin(data)}
+      <Appointments.Appointment {...restProps}>
+        <div style={{ display: "flex" }}>
+          <i
+            onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+            style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
           ></i>
-        
-          <div style={{display : "flex", width : "100px", overflow : "hidden"}}>{children}</div>
-          <span onClick = {() => showInvite(data)}>
-          <i class="fa fa-user-plus"
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
-          ></i>
+
+          <div style={{ display: "flex", width: "100px", overflow: "hidden" }}>
+            {children}
+          </div>
+          <span onClick={() => showInvite(data)}>
+            <i
+              class="fa fa-user-plus"
+              style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
+            ></i>
           </span>
-         
         </div>
       </Appointments.Appointment>
     </div>
   );
-
-  
 
   const Appointment = withStyles(styles, { name: "Appointment" })(
     AppointmentBase
@@ -203,88 +200,82 @@ function Demo() {
     return (
       <Appointment
         {...props}
-      // onAppointmentMetaChange={onAppointmentMetaChange}
+        // onAppointmentMetaChange={onAppointmentMetaChange}
       />
     );
   };
 
-
   //handleJoin
   const handleJoin = (data) => {
-//     // console.log("data", data);
-// //  console.log("data", data)
-// // console.log(data.startDate)
-// var dt = new Date(data.startDate)
-// var dt2 = new Date()
-// let ck = dt.getMonth();
+    //     // console.log("data", data);
+    // //  console.log("data", data)
+    // // console.log(data.startDate)
+    // var dt = new Date(data.startDate)
+    // var dt2 = new Date()
+    // let ck = dt.getMonth();
 
-// let pp = dt2.getMonth();
-// let rr = dt2.getHours();
-// let ss = dt.getHours()
-// let mm = dt2.getMinutes() + 20
-// let dd = dt.getMinutes()
-// let ee = dt.getDate();
-// let eee = dt2.getDate()
-// //   console.log("dt", dt)
-// //   console.log(dt2.getDate())
-// //  console.log(dt.getMinutes())
-// //  console.log(dt2.getMinutes() + 20)
-// //  console.log("ck", ck)
-// //   console.log("dt2", dt2)
-// //   console.log("pp", pp)
-// //   console.log("mm", mm)
-// //   console.log("dd", dd)
-// //   console.log("ss", ss)
-// //   console.log("rr", rr)
-// //   console.log(ck == pp)
-// //   console.log(ee === eee)
-// //   console.log(ss == rr)
-// //   console.log(mm > dd)
+    // let pp = dt2.getMonth();
+    // let rr = dt2.getHours();
+    // let ss = dt.getHours()
+    // let mm = dt2.getMinutes() + 20
+    // let dd = dt.getMinutes()
+    // let ee = dt.getDate();
+    // let eee = dt2.getDate()
+    // //   console.log("dt", dt)
+    // //   console.log(dt2.getDate())
+    // //  console.log(dt.getMinutes())
+    // //  console.log(dt2.getMinutes() + 20)
+    // //  console.log("ck", ck)
+    // //   console.log("dt2", dt2)
+    // //   console.log("pp", pp)
+    // //   console.log("mm", mm)
+    // //   console.log("dd", dd)
+    // //   console.log("ss", ss)
+    // //   console.log("rr", rr)
+    // //   console.log(ck == pp)
+    // //   console.log(ee === eee)
+    // //   console.log(ss == rr)
+    // //   console.log(mm > dd)
 
+    // if(ck == pp && ss == rr && ee == eee){
 
-// if(ck == pp && ss == rr && ee == eee){
+    // if(mm > dd){
+    //   console.log("passed")
 
+    //   Cookies.set("channel_2", data.question_id);
+    //   Cookies.set("baseMode_2", baseMode);
+    //   Cookies.set("transcode_2", transcode);
+    //   Cookies.set("attendeeMode_2", attendeeMode);
+    //   Cookies.set("videoProfile_2", videoProfile);
+    //   // history.push("/teamleader/meeting/");
+    //   history.push(`/taxprofessional/meeting/${data.id}`);
 
-// if(mm > dd){
-//   console.log("passed")
-  
-//   Cookies.set("channel_2", data.question_id);
-//   Cookies.set("baseMode_2", baseMode);
-//   Cookies.set("transcode_2", transcode);
-//   Cookies.set("attendeeMode_2", attendeeMode);
-//   Cookies.set("videoProfile_2", videoProfile);
-//   // history.push("/teamleader/meeting/");
-//   history.push(`/taxprofessional/meeting/${data.id}`);
+    // }
+    // else{
+    // // return false
 
-// }
-// else{
-// // return false
- 
-// Cookies.set("channel_2", data.question_id);
-// Cookies.set("baseMode_2", baseMode);
-// Cookies.set("transcode_2", transcode);
-// Cookies.set("attendeeMode_2", attendeeMode);
-// Cookies.set("videoProfile_2", videoProfile);
-// // history.push("/teamleader/meeting/");
-// history.push(`/taxprofessional/meeting/${data.id}`);
+    // Cookies.set("channel_2", data.question_id);
+    // Cookies.set("baseMode_2", baseMode);
+    // Cookies.set("transcode_2", transcode);
+    // Cookies.set("attendeeMode_2", attendeeMode);
+    // Cookies.set("videoProfile_2", videoProfile);
+    // // history.push("/teamleader/meeting/");
+    // history.push(`/taxprofessional/meeting/${data.id}`);
 
-// }
-// }
+    // }
+    // }
 
-Cookies.set("channel_2", data.question_id);
-  Cookies.set("baseMode_2", baseMode);
-  Cookies.set("transcode_2", transcode);
-  Cookies.set("attendeeMode_2", attendeeMode);
-  Cookies.set("videoProfile_2", videoProfile);
-  // history.push("/teamleader/meeting/");
-  history.push(`/taxprofessional/meeting/${data.id}`);
+    Cookies.set("channel_2", data.question_id);
+    Cookies.set("baseMode_2", baseMode);
+    Cookies.set("transcode_2", transcode);
+    Cookies.set("attendeeMode_2", attendeeMode);
+    Cookies.set("videoProfile_2", videoProfile);
+    // history.push("/teamleader/meeting/");
+    history.push(`/taxprofessional_meeting/${data.id}`);
   };
 
   const changeFormat = (d) => {
-    
-
-    if (typeof d === 'object') {
-
+    if (typeof d === "object") {
       return (
         d.getFullYear() +
         "-" +
@@ -295,16 +286,13 @@ Cookies.set("channel_2", data.question_id);
         d.toString().split(" ")[4]
       );
     } else {
-   
       return d;
     }
   };
 
   const commitChanges = ({ added, changed, deleted }) => {
-
     if (added) {
-      setLoading(true)
-
+      setLoading(true);
 
       var startDate = added.startDate;
       var endDate = added.endDate;
@@ -321,40 +309,36 @@ Cookies.set("channel_2", data.question_id);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
-        headers : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
         .then(function (response) {
-
           if (response.data.code === 1) {
-            setLoading(false)
-            Alerts.SuccessNormal("New call scheduled successfully.")
+            setLoading(false);
+            Alerts.SuccessNormal("New call scheduled successfully.");
           } else if (response.data.code === 0) {
-            setLoading(false)
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
 
           getData();
         })
-        .catch((error) => {
-      
-        });
+        .catch((error) => {});
     }
     if (changed) {
-    
-      setLoading(true)
+      setLoading(true);
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-    
+
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-    
+
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -362,15 +346,13 @@ Cookies.set("channel_2", data.question_id);
           dataIttem = data2[i];
         }
       }
-    
 
-      var a = dataIttem.startDate
-      var b = dataIttem.endDate
-
+      var a = dataIttem.startDate;
+      var b = dataIttem.endDate;
 
       if (!dataIttem.owner) {
-        var variable = "Error"
-        Alerts.ErrorEdit(variable)
+        var variable = "Error";
+        Alerts.ErrorEdit(variable);
         return false;
       }
       let formData = new FormData();
@@ -386,47 +368,39 @@ Cookies.set("channel_2", data.question_id);
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
-        headers : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
         .then(function (response) {
-       
-
           if (response.data.code === 1) {
-            setLoading(false)
-            var msg = "Call details updated successfully."
-            Alerts.SuccessNormal(msg)
-          }
-          else if (response.data.code === 0) {
-            setLoading(false)
+            setLoading(false);
+            var msg = "Call details updated successfully.";
+            Alerts.SuccessNormal(msg);
+          } else if (response.data.code === 0) {
+            setLoading(false);
 
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
           getData();
         })
-        .catch((error) => {
-        
-        });
+        .catch((error) => {});
     }
 
     if (deleted !== undefined) {
-   
-      setLoading(true)
+      setLoading(true);
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-        
-          value = data.owner
+          value = data.owner;
         }
       });
 
-   
       if (!value) {
-        var variable = "Error"
-        Alerts.ErrorDelete(variable)
+        var variable = "Error";
+        Alerts.ErrorDelete(variable);
         return false;
       }
 
@@ -440,22 +414,26 @@ Cookies.set("channel_2", data.question_id);
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig).then((res) => {
-        
-            if (res.data.code === 1) {
-              setLoading(false)
-              Swal.fire("Deleted!", "Scheduled call has been deleted.", "success");
-              getData();
-            } else {
-              setLoading(false)
-              Swal.fire("Oops...", "Errorr ", "error");
-            }
-          });
+          axios
+            .get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig)
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                Swal.fire(
+                  "Deleted!",
+                  "Scheduled call has been deleted.",
+                  "success"
+                );
+                getData();
+              } else {
+                setLoading(false);
+                Swal.fire("Oops...", "Errorr ", "error");
+              }
+            });
         }
       });
     }
   };
-
 
   const BooleanEditor = (props) => {
     if (props.label === "All Day" || props.label === "Repeat") {
@@ -470,35 +448,27 @@ Cookies.set("channel_2", data.question_id);
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-   
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
         onFieldChange={onFieldChange}
         {...restProps}
       >
-
         <AppointmentForm.Label text="All participants" type="title" />
-        <AppointmentForm.TextEditor
-          value={appointmentData.username}
-          readOnly
-        />
-
+        <AppointmentForm.TextEditor value={appointmentData.username} readOnly />
       </AppointmentForm.BasicLayout>
     );
   };
 
-
   return (
     <>
-      {
-        loading ?
-          <Loader />
-          :
-          <>
-           <div style ={{display : "flex", height : "700px"}}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div style={{ display: "flex", height: "700px" }}>
             <Paper>
-              <Scheduler data={data} >
+              <Scheduler data={data}>
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -507,8 +477,8 @@ Cookies.set("channel_2", data.question_id);
                 <EditRecurrenceMenu />
 
                 <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
-                <WeekView cellDuration={60} startDayHour={0} endDayHour={24}  />
-                
+                <WeekView cellDuration={60} startDayHour={0} endDayHour={24} />
+
                 <Appointments appointmentComponent={myAppointment} />
 
                 <Toolbar />
@@ -518,37 +488,36 @@ Cookies.set("channel_2", data.question_id);
 
                 <AppointmentTooltip showOpenButton />
 
-                {
-                  read ?
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                      readOnly
-                    />
-                    :
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                    />
-                }
+                {read ? (
+                  <AppointmentForm
+                    booleanEditorComponent={BooleanEditor}
+                    basicLayoutComponent={BasicLayout}
+                    textEditorComponent={TextEditor}
+                    readOnly
+                  />
+                ) : (
+                  <AppointmentForm
+                    booleanEditorComponent={BooleanEditor}
+                    basicLayoutComponent={BasicLayout}
+                    textEditorComponent={TextEditor}
+                  />
+                )}
 
-                <Resources
-                  data={resources}
-                />
+                <Resources data={resources} />
               </Scheduler>
             </Paper>
-            </div>
-          </>
-      }
-       {
-       invite === true ?
-       <InviteModal 
-       inviteData = {inviteData}
-       showInvite = {showInvite}
-       invite={invite} /> : ""
-     }
+          </div>
+        </>
+      )}
+      {invite === true ? (
+        <InviteModal
+          inviteData={inviteData}
+          showInvite={showInvite}
+          invite={invite}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }

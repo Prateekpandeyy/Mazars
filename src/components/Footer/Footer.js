@@ -55,7 +55,7 @@ function Footer(props) {
             </CustomTypography>
           </div>
           <CustomTypography>
-            {`ISO 27001 certified | Copyright  @2022 All right reserved`}
+            {`ISO 27001 certified | Copyright  @2023 All right reserved`}
           </CustomTypography>
         </div>
 

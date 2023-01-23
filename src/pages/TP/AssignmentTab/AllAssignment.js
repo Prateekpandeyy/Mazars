@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { getErrorMessage } from '../../../constants';
+import { getErrorMessage } from "../../../constants";
 import Loader from "../../../components/Loader/Loader";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-} from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
 import { Link, useHistory } from "react-router-dom";
@@ -16,13 +12,17 @@ import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, { ViewDiscussionIcon, DraftReportUploadIcon, FinalReportUploadIcon} from "../../../components/Common/MessageIcon";
-import {Spinner} from 'reactstrap'
+import MessageIcon, {
+  ViewDiscussionIcon,
+  DraftReportUploadIcon,
+  FinalReportUploadIcon,
+} from "../../../components/Common/MessageIcon";
+import { Spinner } from "reactstrap";
 
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
@@ -43,44 +43,47 @@ function AssignmentTab(props) {
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
 
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
- 
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
+
   const [item] = useState(current_date);
   const [dataItem, setDataItem] = useState({});
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
-  const [qid, setQid] = useState("")
-  const [error, setError] = useState(false)
+  const [qid, setQid] = useState("");
+  const [error, setError] = useState(false);
   let des = false;
-  var rowStyle2 = {}
-  var clcomp= {
-    color: "green"
-  }
+  var rowStyle2 = {};
+  var clcomp = {
+    color: "green",
+  };
   var clinpro = {
-    color : "blue"
-  }
-  const token = window.localStorage.getItem("tptoken")
+    color: "blue",
+  };
+  const token = window.localStorage.getItem("tptoken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const ViewReport = (key) => {
-  
     setReportModal(!reportModal);
     setReport(key.assign_no);
-    setDataItem(key)
+    setDataItem(key);
   };
 
-  
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+  };
 
   useEffect(() => {
     getAssignmentList();
@@ -90,7 +93,6 @@ function AssignmentTab(props) {
     axios
       .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        
         if (res.data.code === 1) {
           setAssignment(res.data.result);
           setCount(res.data.result.length);
@@ -102,15 +104,14 @@ function AssignmentTab(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if(selectedData.length > 0){
+      if (selectedData.length > 0) {
         axios
-        .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-        .then((res) => {
-          
-          if (res.data.code === 1) {
-            setTax2(res.data.result);
-          }
-        });
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setTax2(res.data.result);
+            }
+          });
       }
     };
     getSubCategory();
@@ -118,47 +119,45 @@ function AssignmentTab(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-   setError(false)
+    setError(false);
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-   setError(false)
+    setError(false);
     setStore2(value);
   };
 
   //reset category
-   const resetCategory = () => {
-    console.log(error)
-  
+  const resetCategory = () => {
+    console.log(error);
+
     setSelectedData([]);
     setStore2([]);
-   getAssignmentList()
-    setError(false)
-    setTax2([])
+    getAssignmentList();
+    setError(false);
+    setTax2([]);
   };
 
   //reset date
   const resetData = () => {
-  
     reset();
-     setTax2([])
-    setError(false)
-    setHide("")
+    setTax2([]);
+    setError(false);
+    setHide("");
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-   getAssignmentList()
+    getAssignmentList();
   };
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-   setError(false)
+    setError(false);
     setStatus(value);
   };
-
 
   //columns
   const columns = [
@@ -169,17 +168,15 @@ function AssignmentTab(props) {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return {  width: "50px" };
+        return { width: "50px" };
       },
-    
     },
     {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
-    
+
       formatter: function dateFormat(cell, row) {
-       
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -190,15 +187,14 @@ function AssignmentTab(props) {
     {
       text: "Query no",
       dataField: "assign_no",
-     
+
       formatter: function nameFormatter(cell, row) {
-     
         return (
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${row.q_id}`,
-                index : 0,
+                pathname: `/taxprofessional_queries/${row.q_id}`,
+                index: 0,
                 routes: "assignment",
               }}
             >
@@ -212,18 +208,16 @@ function AssignmentTab(props) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-      
     },
     {
       dataField: "status",
       text: "Status",
-     
+
       headerStyle: () => {
         return { width: "200px" };
       },
@@ -232,40 +226,68 @@ function AssignmentTab(props) {
         return (
           <>
             <div>
-            {row.paid_status == "2" &&
+              {row.paid_status == "2" && (
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
-              }
+              )}
               <p>
                 <span>Client discussion :</span>
-               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
-                                {row.client_discussion}
-                 </span>
+                <span
+                  className={
+                    row.client_discussion === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.client_discussion}
+                </span>
               </p>
               <p>
                 <span>Draft report :</span>
-                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
-                      {row.draft_report}
-                 </span>
+                <span
+                  className={
+                    row.draft_report === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.draft_report}
+                </span>
               </p>
               <p>
                 <span>Final discussion :</span>
-                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
-                     {row.final_discussion}
-                 </span>
+                <span
+                  className={
+                    row.final_discussion === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.final_discussion}
+                </span>
               </p>
               <p>
                 <span>Delivery of final report :</span>
-                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
-                             {row.delivery_report}
-                 </span>
+                <span
+                  className={
+                    row.delivery_report === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.delivery_report}
+                </span>
               </p>
               <p>
                 <span>Awaiting completion:</span>
-                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
-                            {row.other_stage}
-                 </span>
+                <span
+                  className={
+                    row.other_stage === "completed" ? "completed" : "inprogress"
+                  }
+                >
+                  {row.other_stage}
+                </span>
               </p>
             </div>
           </>
@@ -276,9 +298,8 @@ function AssignmentTab(props) {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -290,9 +311,8 @@ function AssignmentTab(props) {
       text: "Actual date of delivery",
       dataField: "final_date",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-       
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
           return null;
@@ -304,32 +324,30 @@ function AssignmentTab(props) {
       text: "Deliverable",
       dataField: "",
       sort: true,
-    
+
       formatter: function (cell, row) {
         return (
           <>
-            {
-              row.paid_status == "2" ? null :
-                <div>
-                  {row.assignement_draft_report || row.final_report ?
-                    <div title="View All Report"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => ViewReport(row)}
-                    >
-                      <DescriptionOutlinedIcon color="secondary" />
-                    </div>
-                    :
-                    null
-                  }
-                </div>
-            }
+            {row.paid_status == "2" ? null : (
+              <div>
+                {row.assignement_draft_report || row.final_report ? (
+                  <div
+                    title="View All Report"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => ViewReport(row)}
+                  >
+                    <DescriptionOutlinedIcon color="secondary" />
+                  </div>
+                ) : null}
+              </div>
+            )}
           </>
         );
       },
     },
     {
       text: "Assignment stage",
-     
+
       formatter: function (cell, row) {
         return (
           <>
@@ -337,12 +355,11 @@ function AssignmentTab(props) {
               title="Add assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
-                {
-           row.paid_status == "2" ? null :
-              <Link to={`/taxprofessional/addassingment/${row.q_id}`}>
-                <i class="fa fa-tasks"></i>
-              </Link>
-      }
+              {row.paid_status == "2" ? null : (
+                <Link to={`/taxprofessional_addassingment/${row.q_id}`}>
+                  <i class="fa fa-tasks"></i>
+                </Link>
+              )}
             </div>
           </>
         );
@@ -350,172 +367,164 @@ function AssignmentTab(props) {
     },
     {
       text: "Action",
-      
+
       formatter: function (cell, row) {
         return (
           <>
-        <div style={{display: "flex"}}>
-        <Link
-            to={{
-              pathname: `/taxprofessional/chatting/${row.q_id}`,
-              index : 0,
-              routes: "assignment",
-                 obj: {
-                   message_type: "3",
-                   query_No: row.assign_no,
-                   query_id: row.q_id,
-                   routes: `/taxprofessional/assignment`
-                 }
-               }}
-             >
-              <MessageIcon />
-             </Link>
-             <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
-                                  
-                                  <ViewDiscussionIcon />
-                          </div>
-         {
-           row.paid_status == "2" ? 
-          null : 
-           <>
-           
-            {
-              row.client_discussion == "completed" && row.draft_report == "inprogress" && row.final_discussion == "inprogress" &&  row.paid_status !=2  ?
-             
-              <p
-                style={{ display: "flex", flexDirection: "column" , cursor: "pointer", color: "green" }}
-                onClick={() => uploadDraftReport(row)}
+            <div style={{ display: "flex" }}>
+              <Link
+                to={{
+                  pathname: `/taxprofessional_chatting/${row.q_id}`,
+                  index: 0,
+                  routes: "assignment",
+                  obj: {
+                    message_type: "3",
+                    query_No: row.assign_no,
+                    query_id: row.q_id,
+                    routes: `/taxprofessional/assignment`,
+                  },
+                }}
               >
-               <DraftReportUploadIcon />
-                draft
-              </p>
-             : null
-           }
-{
- row.client_discussion == "completed" && row.draft_report == "completed" && row.final_discussion == "completed" && row.delivery_report == "inprogress" ?
-
-
- <p
-   style={{  display: "flex", flexDirection: "column" , cursor: "pointer", color: "red" }}
-   onClick={() => uploadFinalReport(row)}
- >
- 
-      
-        <FinalReportUploadIcon />
-         final
-       
-    
- </p>
- : null
-}
-  
-         </>
-         }
- 
-        </div>
-          
-                   </>
+                <MessageIcon />
+              </Link>
+              <div
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                className="ml-1"
+              >
+                <ViewDiscussionIcon />
+              </div>
+              {row.paid_status == "2" ? null : (
+                <>
+                  {row.client_discussion == "completed" &&
+                  row.draft_report == "inprogress" &&
+                  row.final_discussion == "inprogress" &&
+                  row.paid_status != 2 ? (
+                    <p
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        cursor: "pointer",
+                        color: "green",
+                      }}
+                      onClick={() => uploadDraftReport(row)}
+                    >
+                      <DraftReportUploadIcon />
+                      draft
+                    </p>
+                  ) : null}
+                  {row.client_discussion == "completed" &&
+                  row.draft_report == "completed" &&
+                  row.final_discussion == "completed" &&
+                  row.delivery_report == "inprogress" ? (
+                    <p
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        cursor: "pointer",
+                        color: "red",
+                      }}
+                      onClick={() => uploadFinalReport(row)}
+                    >
+                      <FinalReportUploadIcon />
+                      final
+                    </p>
+                  ) : null}
+                </>
+              )}
+            </div>
+          </>
         );
       },
     },
   ];
   rowStyle2 = (row, index) => {
-    const style = {}
-    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    const style = {};
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, "day").toDate();
     // var warnformat = warningDate.format("YYYY-MM-DD");
     var aa = moment().toDate();
-   
 
-    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+    if (
+      row.paid_status != "2" &&
+      row.status != "Complete" &&
+      warningDate < aa
+    ) {
       style.backgroundColor = "#c1d8f2";
-      style.color = "#000111"
+      style.color = "#000111";
     }
-  
+
     return style;
-  }
+  };
 
   const uploadDraftReport = (id) => {
-    console.log("sss", id.id)
-    if(id.id !== undefined){
-      setQid(id.q_id)
-     
-      setId(id.id);
-      setDraftModal(!draftModal);
-    }
-    else{
-      setDraftModal(!draftModal);
-      setLoading(false)
-      setId(id.id);
-    }
-  
-  };
+    console.log("sss", id.id);
+    if (id.id !== undefined) {
+      setQid(id.q_id);
 
+      setId(id.id);
+      setDraftModal(!draftModal);
+    } else {
+      setDraftModal(!draftModal);
+      setLoading(false);
+      setId(id.id);
+    }
+  };
 
   // final modal
-  
-    const uploadFinalReport = (id) => {
-      console.log("iddd", id)
-if(id && id.id === undefined){
-  setLoading(false)
-  setFianlModal(!fianlModal);
-}
-else{
-  setFianlModal(!fianlModal);
+
+  const uploadFinalReport = (id) => {
+    console.log("iddd", id);
+    if (id && id.id === undefined) {
+      setLoading(false);
+      setFianlModal(!fianlModal);
+    } else {
+      setFianlModal(!fianlModal);
       setFinalId(id);
-      setQid(id.q_id)
-}
-    
-    };
-  
-    
-
-  const onSubmit = (data) => {
-   
-   
-if(status.length > 0){
-  axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&assignment_status=${status}&stages_status=${data.p_status
-        }&pcat_id=${selectedData}`
-      )
-      .then((res) => {
-        
-        if (res.data.code === 1) {
-          setLoading(false)
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
-
-          }
-        }
-      });
-
-    }
-    else{
-      axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-        }&assignment_status=${status}&stages_status=${data.p_status
-        }&pcat_id=${selectedData}`
-      )
-      .then((res) => {
-        
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
-
-        }
-      }
-      });
+      setQid(id.q_id);
     }
   };
 
+  const onSubmit = (data) => {
+    if (status.length > 0) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=${status}&stages_status=${
+            data.p_status
+          }&pcat_id=${selectedData}`
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setLoading(false);
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    } else {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=${status}&stages_status=${
+            data.p_status
+          }&pcat_id=${selectedData}`
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
+  };
 
   const Reset = () => {
     return (
@@ -531,13 +540,11 @@ if(status.length > 0){
     );
   };
 
-
   const disabledHandler = (e) => {
-    setStatus([])
-    setError(false)
+    setStatus([]);
+    setError(false);
     setHide(e.target.value);
   };
-
 
   return (
     <>
@@ -577,16 +584,17 @@ if(status.length > 0){
                       {p.details}
                     </Option>
                   ))} */}
-                  {
-                     tax2.length > 0 ?
-                     <>
+                  {tax2.length > 0 ? (
+                    <>
                       {tax2?.map((p, index) => (
-                      <Option value={p.id} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                     </> : ""
-                   }
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </Select>
               </div>
               <div>
@@ -643,93 +651,94 @@ if(status.length > 0){
                 </select>
               </div>
 
-        {
-          hide !== "3" ?
-            
-          <div className="form-group mx-sm-1  mb-2">
-          <Select
-            mode="single"
-            style={{ width: 210 }}
-            placeholder="Select stages"
-            defaultValue={[]}
-            onChange={assingmentStatus}
-            value={status}
-            allowClear
-            className={error ? "customError" : ""}
-          >
-            <Option value="Client_Discussion" label="Compilance">
-              <div className="demo-option-label-item">
-                Client Discussion
-              </div>
-            </Option>
-            <Option value="Draft_Report" label="Compilance">
-              <div className="demo-option-label-item">
-                Draft reports
-              </div>
-            </Option>
-            <Option value="Final_Discussion" label="Compilance">
-              <div className="demo-option-label-item">
-                Final Discussion
-              </div>
-            </Option>
-            <Option value="Delivery_of_report" label="Compilance">
-              <div className="demo-option-label-item">
-                Delivery of Final Reports
-              </div>
-            </Option>
-            <Option value="Completed" label="Compilance">
-              <div className="demo-option-label-item">Awaiting Completion</div>
-            </Option>
-          </Select>
-        </div>  : " "
-        }    
-                 
-                  <div className="form-group mx-sm-1  mb-2">
-                    <Select
-                      mode="single"
-                      style={{ width: 210 }}
-                      placeholder="Select stages"
-                      defaultValue={[]}
-                      onChange={assingmentStatus}
-                      value={status}
-                      allowClear
-                      className={error ? "customError" : ""}
-                    >
-                      <Option value="Client_Discussion" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Client Discussion
-                        </div>
-                      </Option>
-                      <Option value="Draft_Report" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Draft reports
-                        </div>
-                      </Option>
-                      <Option value="Final_Discussion" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Final Discussion
-                        </div>
-                      </Option>
-                      <Option value="Delivery_of_report" label="Compilance">
-                        <div className="demo-option-label-item">
-                          Delivery of Final Reports
-                        </div>
-                      </Option>
-                      <Option value="Completed" label="Compilance">
-                        <div className="demo-option-label-item">Awaiting Completion</div>
-                      </Option>
-                    </Select>
-                  </div>
+              {hide !== "3" ? (
+                <div className="form-group mx-sm-1  mb-2">
+                  <Select
+                    mode="single"
+                    style={{ width: 210 }}
+                    placeholder="Select stages"
+                    defaultValue={[]}
+                    onChange={assingmentStatus}
+                    value={status}
+                    allowClear
+                    className={error ? "customError" : ""}
+                  >
+                    <Option value="Client_Discussion" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Client Discussion
+                      </div>
+                    </Option>
+                    <Option value="Draft_Report" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Draft reports
+                      </div>
+                    </Option>
+                    <Option value="Final_Discussion" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Final Discussion
+                      </div>
+                    </Option>
+                    <Option value="Delivery_of_report" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Delivery of Final Reports
+                      </div>
+                    </Option>
+                    <Option value="Completed" label="Compilance">
+                      <div className="demo-option-label-item">
+                        Awaiting Completion
+                      </div>
+                    </Option>
+                  </Select>
+                </div>
+              ) : (
+                " "
+              )}
 
-
+              <div className="form-group mx-sm-1  mb-2">
+                <Select
+                  mode="single"
+                  style={{ width: 210 }}
+                  placeholder="Select stages"
+                  defaultValue={[]}
+                  onChange={assingmentStatus}
+                  value={status}
+                  allowClear
+                  className={error ? "customError" : ""}
+                >
+                  <Option value="Client_Discussion" label="Compilance">
+                    <div className="demo-option-label-item">
+                      Client Discussion
+                    </div>
+                  </Option>
+                  <Option value="Draft_Report" label="Compilance">
+                    <div className="demo-option-label-item">Draft reports</div>
+                  </Option>
+                  <Option value="Final_Discussion" label="Compilance">
+                    <div className="demo-option-label-item">
+                      Final Discussion
+                    </div>
+                  </Option>
+                  <Option value="Delivery_of_report" label="Compilance">
+                    <div className="demo-option-label-item">
+                      Delivery of Final Reports
+                    </div>
+                  </Option>
+                  <Option value="Completed" label="Compilance">
+                    <div className="demo-option-label-item">
+                      Awaiting Completion
+                    </div>
+                  </Option>
+                </Select>
+              </div>
 
               <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">Total Records : {records}</label>
+                <label className="form-select form-control">
+                  Total Records : {records}
+                </label>
               </div>
-               <button type="submit" class="customBtn mx-sm-1 mb-2">
+              <button type="submit" class="customBtn mx-sm-1 mb-2">
                 Search
               </button>
-
 
               <Reset />
             </div>
@@ -737,23 +746,23 @@ if(status.length > 0){
         </CardHeader>
 
         <CardBody>
-        <DataTablepopulated 
-                   bgColor="#42566a"
-                   keyField= {"assign_no"}
-                   data={assignment}
-                   rowStyle2 = {rowStyle2}
-                   columns={columns}>
-                    </DataTablepopulated>
+          <DataTablepopulated
+            bgColor="#42566a"
+            keyField={"assign_no"}
+            data={assignment}
+            rowStyle2={rowStyle2}
+            columns={columns}
+          ></DataTablepopulated>
 
-                    <DraftReportModal
+          <DraftReportModal
             draftModal={draftModal}
             uploadDraftReport={uploadDraftReport}
             getAssignmentList={getAssignmentList}
             id={id}
-            loading = {loading}
-            setLoading = {setLoading}
-            des = {des}
-            qno = {qid}
+            loading={loading}
+            setLoading={setLoading}
+            des={des}
+            qno={qid}
             setDraftModal={setDraftModal}
           />
 
@@ -762,21 +771,18 @@ if(status.length > 0){
             uploadFinalReport={uploadFinalReport}
             getAssignmentList={getAssignmentList}
             id={finalId}
-            loading = {loading}
-            setLoading = {setLoading}
-            des = {des}
+            loading={loading}
+            setLoading={setLoading}
+            des={des}
             setFianlModal={setFianlModal}
-            qno = {qid}
+            qno={qid}
           />
-
-
 
           <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}
             report={report}
             dataItem={dataItem}
-          
           />
 
           <DiscardReport
@@ -793,13 +799,3 @@ if(status.length > 0){
 }
 
 export default AssignmentTab;
-
-
-
-
-
-
-
-
-
-

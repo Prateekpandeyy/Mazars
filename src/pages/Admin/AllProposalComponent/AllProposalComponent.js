@@ -98,7 +98,7 @@ function AllProposalComponent({ allProposal }) {
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.q_id}`,
+                pathname: `/admin_queries/${row.q_id}`,
                 index: 0,
                 routes: "proposal",
               }}
@@ -240,7 +240,7 @@ function AllProposalComponent({ allProposal }) {
             <div style={{ display: "flex" }}>
               <Link
                 to={{
-                  pathname: `/admin/chatting/${row.q_id}`,
+                  pathname: `/admin_chatting/${row.q_id}`,
                   index: 0,
                   routes: "proposal",
                   obj: {

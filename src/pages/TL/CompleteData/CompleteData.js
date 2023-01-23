@@ -115,7 +115,7 @@ function CompletedQuery({ updateTab }) {
           <>
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
+                pathname: `/teamleader_queries/${row.id}`,
                 index: 3,
                 routes: "queriestab",
               }}
@@ -233,7 +233,7 @@ function CompletedQuery({ updateTab }) {
     }).then(function (result) {
       console.log("resutl", result);
       if (result.value) {
-        hist.push(`/teamleader/queryassing/${id}`);
+        hist.push(`/teamleader_queryassing/${id}`);
       } else if (result.dismiss == "cancel") {
         axios
           .get(

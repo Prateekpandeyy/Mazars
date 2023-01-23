@@ -23,7 +23,6 @@ import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 
-
 function PendingForProposals({ CountPendingProposal }) {
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -34,34 +33,31 @@ function PendingForProposals({ CountPendingProposal }) {
 
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-    headers : {
-     "uit" : token
-    }
-  }
+    headers: {
+      uit: token,
+    },
+  };
   const toggle = (key) => {
-   
-   if(key.length > 0){
-    setModal(!modal);
+    if (key.length > 0) {
+      setModal(!modal);
 
-    fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-        uit : token
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-     
-        setHistory(response.result);
+      fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
+        method: "GET",
+        headers: new Headers({
+          Accept: "application/vnd.github.cloak-preview",
+          uit: token,
+        }),
       })
-      .catch((error) => console.log(error));
-   }
-   else {
-    setModal(!modal);
-   }
+        .then((res) => res.json())
+        .then((response) => {
+          setHistory(response.result);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      setModal(!modal);
+    }
   };
 
   useEffect(() => {
@@ -70,7 +66,6 @@ function PendingForProposals({ CountPendingProposal }) {
 
   const getPendingForProposals = () => {
     axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
-      
       if (res.data.code === 1) {
         setNonPendingData(res.data.result);
         setRecords(res.data.result.length);
@@ -78,9 +73,6 @@ function PendingForProposals({ CountPendingProposal }) {
       }
     });
   };
-
-
-
 
   const columns = [
     {
@@ -90,16 +82,15 @@ function PendingForProposals({ CountPendingProposal }) {
         return rowIndex + 1;
       },
       headerStyle: () => {
-        return({width: "50px"})
-      }
+        return { width: "50px" };
+      },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
-      
+
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -110,19 +101,19 @@ function PendingForProposals({ CountPendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
-     
+
       formatter: function nameFormatter(cell, row) {
-       
         return (
           <>
             <Link
-          
               to={{
-                pathname: `/admin/queries/${row.id}`,
+                pathname: `/admin_queries/${row.id}`,
                 index: 2,
                 routes: "queriestab",
               }}
-            >{row.assign_no}</Link>
+            >
+              {row.assign_no}
+            </Link>
           </>
         );
       },
@@ -131,38 +122,28 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-     
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
-     
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
-     
-     
     },
     {
       text: "Status",
-     
-     
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
               {row.status}/
-              {
-                row.status == "Inprogress Query" ?
-                  <p className="inprogress">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              }
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );
@@ -172,13 +153,11 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "tname",
       text: "TL name",
       sort: true,
-     
     },
     {
       text: "History",
       dataField: "",
-     
-     
+
       formatter: function (cell, row) {
         return (
           <>
@@ -195,9 +174,6 @@ function PendingForProposals({ CountPendingProposal }) {
     },
   ];
 
-
-
-
   return (
     <>
       <Card>
@@ -209,17 +185,15 @@ function PendingForProposals({ CountPendingProposal }) {
             setRecords={setRecords}
             records={records}
           />
-
         </CardHeader>
         <CardBody>
           {/* <Records records={records} /> */}
-          <DataTablepopulated 
-          bgColor="#55425f"
-          keyField= {"assign_no"}
-          data={nonpendingData}
-          
-          columns={columns}>
-           </DataTablepopulated> 
+          <DataTablepopulated
+            bgColor="#55425f"
+            keyField={"assign_no"}
+            data={nonpendingData}
+            columns={columns}
+          ></DataTablepopulated>
           <Modal isOpen={modal} fade={false} toggle={toggle} size="lg">
             <ModalHeader toggle={toggle}>History</ModalHeader>
             <ModalBody>
@@ -236,16 +210,16 @@ function PendingForProposals({ CountPendingProposal }) {
 
                 {history.length > 0
                   ? history.map((p, i) => (
-                    <tbody>
-                      <tr>
-                        <td>{i + 1}</td>
-                        <td>{p.name}</td>
-                        <td>{p.assign_no}</td>
-                        <td>{p.status}</td>
-                        <td>{p.date_of_allocation}</td>
-                      </tr>
-                    </tbody>
-                  ))
+                      <tbody>
+                        <tr>
+                          <td>{i + 1}</td>
+                          <td>{p.name}</td>
+                          <td>{p.assign_no}</td>
+                          <td>{p.status}</td>
+                          <td>{p.date_of_allocation}</td>
+                        </tr>
+                      </tbody>
+                    ))
                   : null}
               </table>
             </ModalBody>

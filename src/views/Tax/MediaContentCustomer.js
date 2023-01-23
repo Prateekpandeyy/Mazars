@@ -27,6 +27,7 @@ import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 import SearchBtn from "../../components/Common/SearchBtn";
+import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 const MyHeading = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
@@ -84,11 +85,7 @@ const MediaContentCustomer = () => {
         setDescription(true);
       });
   };
-  const goToLogin = (e) => {
-    Swal.fire({
-      html: "Please login to view content",
-    });
-  };
+
   const searchArticle = (e) => {
     console.log("eee", e);
     let formData = new FormData();
@@ -371,7 +368,12 @@ const MediaContentCustomer = () => {
                                   </TableCell>
                                   <TableCell>
                                     <span
-                                      onClick={(e) => goToLogin(e)}
+                                      onClick={(e) =>
+                                        goToLogin(
+                                          history,
+                                          "Please login to view content"
+                                        )
+                                      }
                                       className="primary"
                                       style={{ cursor: "pointer" }}
                                     >

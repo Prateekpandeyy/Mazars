@@ -2,24 +2,21 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import {
-  Card,
-  CardHeader,
-  CardBody,
- 
-} from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import ViewAllReportModal from "./ViewAllReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import MessageIcon, {ViewDiscussionIcon, Payment} from "../../../components/Common/MessageIcon";
-
+import MessageIcon, {
+  ViewDiscussionIcon,
+  Payment,
+} from "../../../components/Common/MessageIcon";
 
 function DraftReport() {
   const userid = window.localStorage.getItem("adminkey");
@@ -35,43 +32,52 @@ function DraftReport() {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
 
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
   const [item] = useState(current_date);
-  const [assignNo, setAssignNo] = useState('');
+  const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [report, setReport] = useState();
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-var rowStyle2 = {}
+    headers: {
+      uit: token,
+    },
+  };
+  var rowStyle2 = {};
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+  };
 
-  var clcomp= {
-    color: "green"
-  }
+  var clcomp = {
+    color: "green",
+  };
   var clinpro = {
-    color : "blue"
-  }
+    color: "blue",
+  };
   useEffect(() => {
     getAssignmentData();
   }, []);
 
   const getAssignmentData = () => {
-    axios.get(`${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`, myConfig).then((res) => {
-     
-      if (res.data.code === 1) {
-        setAssignmentDisplay(res.data.result);
-        setCountAssignment(res.data.result.length);
-        setRecords(res.data.result.length);
-      }
-    });
+    axios
+      .get(
+        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setAssignmentDisplay(res.data.result);
+          setCountAssignment(res.data.result.length);
+          setRecords(res.data.result.length);
+        }
+      });
   };
 
   //get category
@@ -80,7 +86,6 @@ var rowStyle2 = {}
       axios
         .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
         .then((res) => {
-       
           if (res.data.code === 1) {
             setTax2(res.data.result);
           }
@@ -91,20 +96,17 @@ var rowStyle2 = {}
 
   //handleCategory
   const handleCategory = (value) => {
-   
     setSelectedData(value);
     setStore2([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-   
     setStore2(value);
   };
 
   //reset category
   const resetCategory = () => {
- 
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();
@@ -112,7 +114,6 @@ var rowStyle2 = {}
 
   //reset date
   const resetData = () => {
-   
     reset();
     setStatus([]);
     setSelectedData([]);
@@ -122,12 +123,10 @@ var rowStyle2 = {}
 
   //assingmentStatus
   const assingmentStatus = (value) => {
-   
     setStatus(value);
   };
   // view report
   const ViewReport = (key) => {
-  
     setReportModal(!reportModal);
     setReport(key);
   };
@@ -146,9 +145,8 @@ var rowStyle2 = {}
       text: "Date",
       dataField: "date_of_query",
       sort: true,
-      
+
       formatter: function dateFormat(cell, row) {
-       
         var oldDate = row.date_of_query;
         if (oldDate == null) {
           return null;
@@ -159,16 +157,14 @@ var rowStyle2 = {}
     {
       text: "Query no",
       dataField: "assign_no",
-      
+
       formatter: function nameFormatter(cell, row) {
-        
         return (
           <>
-           
             <Link
               to={{
-                pathname: `/admin/queries/${row.q_id}`,
-                index : 1,
+                pathname: `/admin_queries/${row.q_id}`,
+                index: 1,
                 routes: "assignment",
               }}
             >
@@ -182,13 +178,11 @@ var rowStyle2 = {}
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-      
     },
     {
       dataField: "status",
@@ -200,40 +194,68 @@ var rowStyle2 = {}
         return (
           <>
             <div>
-            {row.paid_status == "2" &&
+              {row.paid_status == "2" && (
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
-              }
+              )}
               <p>
                 <span>Client discussion :</span>
-               <span className={row.client_discussion === "completed" ? "completed" : "inprogress"}>
-                                {row.client_discussion}
-                 </span>
+                <span
+                  className={
+                    row.client_discussion === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.client_discussion}
+                </span>
               </p>
               <p>
                 <span>Draft report :</span>
-                <span className={row.draft_report === "completed" ? "completed" : "inprogress"}>
-                      {row.draft_report}
-                 </span>
+                <span
+                  className={
+                    row.draft_report === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.draft_report}
+                </span>
               </p>
               <p>
                 <span>Final discussion :</span>
-                <span className={row.final_discussion === "completed" ? "completed" : "inprogress"}>
-                     {row.final_discussion}
-                 </span>
+                <span
+                  className={
+                    row.final_discussion === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.final_discussion}
+                </span>
               </p>
               <p>
                 <span>Delivery of final report :</span>
-                <span className={row.delivery_report === "completed" ? "completed" : "inprogress"}>
-                             {row.delivery_report}
-                 </span>
+                <span
+                  className={
+                    row.delivery_report === "completed"
+                      ? "completed"
+                      : "inprogress"
+                  }
+                >
+                  {row.delivery_report}
+                </span>
               </p>
               <p>
                 <span>Awaiting completion:</span>
-                <span className={row.other_stage === "completed" ? "completed" : "inprogress"}>
-                            {row.other_stage}
-                 </span>
+                <span
+                  className={
+                    row.other_stage === "completed" ? "completed" : "inprogress"
+                  }
+                >
+                  {row.other_stage}
+                </span>
               </p>
             </div>
           </>
@@ -244,9 +266,8 @@ var rowStyle2 = {}
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      
+
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -258,9 +279,8 @@ var rowStyle2 = {}
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-     
+
       formatter: function dateFormat(cell, row) {
-        
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
           return null;
@@ -268,29 +288,27 @@ var rowStyle2 = {}
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-   
+
     {
       text: "Deliverable",
       dataField: "",
-     
+
       formatter: function (cell, row) {
         return (
           <>
-            {
-              row.paid_status == "2" ? null :
-                <div>
-                  {row.assignement_draft_report || row.final_report ?
-                    <div title="View All Report"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => ViewReport(row.assign_no)}
-                    >
-                      <DescriptionOutlinedIcon color="secondary" />
-                    </div>
-                    :
-                    null
-                  }
-                </div>
-            }
+            {row.paid_status == "2" ? null : (
+              <div>
+                {row.assignement_draft_report || row.final_report ? (
+                  <div
+                    title="View All Report"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => ViewReport(row.assign_no)}
+                  >
+                    <DescriptionOutlinedIcon color="secondary" />
+                  </div>
+                ) : null}
+              </div>
+            )}
           </>
         );
       },
@@ -299,38 +317,36 @@ var rowStyle2 = {}
       text: "TL name",
       dataField: "tl_name",
       sort: true,
-     
     },
     {
       text: "Action",
-      
+
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex"}}>
-
-
-                <Link
-                  to={{
-                    pathname: `/admin/chatting/${row.q_id}`,
-                    index : 1,
-                    routes: "assignment",
-                    obj: {
-                      message_type: "3",
-                      query_No: row.assign_no,
-                      query_id: row.q_id,
-                      routes: `/admin/assignment`
-                    }
-                  }}
-                >
+            <div style={{ display: "flex" }}>
+              <Link
+                to={{
+                  pathname: `/admin_chatting/${row.q_id}`,
+                  index: 1,
+                  routes: "assignment",
+                  obj: {
+                    message_type: "3",
+                    query_No: row.assign_no,
+                    query_id: row.q_id,
+                    routes: `/admin/assignment`,
+                  },
+                }}
+              >
                 <MessageIcon />
-                </Link>
-            
+              </Link>
 
-              <div  onClick={() => ViewDiscussionToggel(row.assign_no)} className="ml-1">
-                                  
-                                  <ViewDiscussionIcon />
-                          </div>
+              <div
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                className="ml-1"
+              >
+                <ViewDiscussionIcon />
+              </div>
             </div>
           </>
         );
@@ -339,32 +355,32 @@ var rowStyle2 = {}
   ];
 
   rowStyle2 = (row, index) => {
-    const style = {}
-    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, 'day').toDate();
+    const style = {};
+    var warningDate = moment(row.Exp_Delivery_Date).subtract(2, "day").toDate();
     // var warnformat = warningDate.format("YYYY-MM-DD");
     var aa = moment().toDate();
-   
 
-    if(row.paid_status != "2" && row.status != "Complete" && warningDate < aa)  {
+    if (
+      row.paid_status != "2" &&
+      row.status != "Complete" &&
+      warningDate < aa
+    ) {
       style.backgroundColor = "#c1d8f2";
-      style.color = "#000111"
-    }
-    else if(row.paid_status != "2" && warningDate > aa){
+      style.color = "#000111";
+    } else if (row.paid_status != "2" && warningDate > aa) {
       style.backgroundColor = "#fff";
-      style.color = "#000"
+      style.color = "#000";
     }
-  
+
     return style;
-  }
+  };
   const onSubmit = (data) => {
-    
     axios
       .get(
         `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}`,
         myConfig
       )
       .then((res) => {
-     
         if (res.data.code === 1) {
           if (res.data.result) {
             setAssignmentDisplay(res.data.result);
@@ -467,9 +483,6 @@ var rowStyle2 = {}
                 />
               </div>
 
-
-
-
               <button type="submit" className="customBtn mx-2">
                 Search
               </button>
@@ -481,19 +494,19 @@ var rowStyle2 = {}
 
         <CardBody className="card-body">
           <Records records={records} />
-          <DataTablepopulated 
-                   bgColor="#7c887c"
-                   keyField= {"assign_no"}
-                   data={assignmentDisplay}
-                   rowStyle2= {rowStyle2}
-                   columns={columns}>
-                    </DataTablepopulated>
-  <ViewAllReportModal
+          <DataTablepopulated
+            bgColor="#7c887c"
+            keyField={"assign_no"}
+            data={assignmentDisplay}
+            rowStyle2={rowStyle2}
+            columns={columns}
+          ></DataTablepopulated>
+          <ViewAllReportModal
             ViewReport={ViewReport}
             reportModal={reportModal}
             report={report}
             getPendingforAcceptance={getAssignmentData}
-            deleiverAble = "#7c887c"
+            deleiverAble="#7c887c"
           />
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
@@ -509,4 +522,3 @@ var rowStyle2 = {}
 }
 
 export default DraftReport;
-

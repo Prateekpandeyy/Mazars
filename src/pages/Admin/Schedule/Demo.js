@@ -26,28 +26,26 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
-import {makeStyles} from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import InviteModal from "./InviteModal";
 const useStyle = makeStyles(() => ({
-  rchStyle : {
-    color : "green",
-    display : "flex",
-    overflow: "hidden"
+  rchStyle: {
+    color: "green",
+    display: "flex",
+    overflow: "hidden",
   },
-  OverlayBase : {
-    display : "flex", 
-    width : "670px"
-  }
-}))
-
-
+  OverlayBase: {
+    display: "flex",
+    width: "670px",
+  },
+}));
 
 function Demo() {
-  const classes = useStyle()
+  const classes = useStyle();
   const userId = window.localStorage.getItem("adminkey");
-   const userEmail = window.localStorage.getItem("adminEmail")
-   // const userEmail = null
-  const em = JSON.parse(userEmail)
+  const userEmail = window.localStorage.getItem("adminEmail");
+  // const userEmail = null
+  const em = JSON.parse(userEmail);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -57,16 +55,16 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [showVideoIcon, setShowVideoIcon] = useState(false)
+  const [showVideoIcon, setShowVideoIcon] = useState(false);
   const [videoProfile, SetVideoProfile] = useState("240p_4");
-  const [invite, setInvite] = useState(false)
-  const [inviteData, setInviteData] = useState()
-  const token = window.localStorage.getItem("adminToken")
+  const [invite, setInvite] = useState(false);
+  const [inviteData, setInviteData] = useState();
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   var date = new Date();
 
   function convert(str) {
@@ -84,17 +82,12 @@ function Demo() {
   }, []);
 
   const getData = () => {
-    axios
-    .get(`${baseUrl}/admin/videoScheduler`, myConfig)
-      .then((res) => {
-
-   
-         var a = res.data.result.items;
-        if (a) {
-          setData(a.map(mapAppointmentData));
-        
-        }
-      });
+    axios.get(`${baseUrl}/admin/videoScheduler`, myConfig).then((res) => {
+      var a = res.data.result.items;
+      if (a) {
+        setData(a.map(mapAppointmentData));
+      }
+    });
   };
 
   const mapAppointmentData = (appointment) => ({
@@ -106,42 +99,40 @@ function Demo() {
     question_id: appointment.question_id,
     vstart: appointment.vstart,
     vend: appointment.vend,
-    user: appointment.user.split(','),
+    user: appointment.user.split(","),
     owner: appointment.owner,
     username: appointment.username,
   });
 
   const getAssignmentNo = () => {
-    axios
-    .get(`${baseUrl}/admin/getAllQuery`, myConfig)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          var data = res.data.result;
-
-          const newArrayOfObj = data.map(({ assign_no: text, ...rest }) => ({
-            text,
-            ...rest,
-          }));
-       
-          setAssignmentData(newArrayOfObj);
-        }
-      });
-  };
-
-  const getUsers = () => {
-    axios.get(`${baseUrl}/admin/allAttendees?uid=${JSON.parse(userId)}`, myConfig).then((res) => {
-
+    axios.get(`${baseUrl}/admin/getAllQuery`, myConfig).then((res) => {
       if (res.data.code === 1) {
         var data = res.data.result;
-        const newOwners = data.map(({ name: text, ...rest }) => ({
+
+        const newArrayOfObj = data.map(({ assign_no: text, ...rest }) => ({
           text,
           ...rest,
         }));
-       
-        setOwner(newOwners);
+
+        setAssignmentData(newArrayOfObj);
       }
     });
+  };
+
+  const getUsers = () => {
+    axios
+      .get(`${baseUrl}/admin/allAttendees?uid=${JSON.parse(userId)}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          var data = res.data.result;
+          const newOwners = data.map(({ name: text, ...rest }) => ({
+            text,
+            ...rest,
+          }));
+
+          setOwner(newOwners);
+        }
+      });
   };
 
   const resources = [
@@ -155,7 +146,7 @@ function Demo() {
       fieldName: "user",
       title: "Users",
       instances: owner,
-    
+
       allowMultiple: true,
     },
   ];
@@ -173,18 +164,16 @@ function Demo() {
     },
   });
 
-
   const B = (key) => {
-    setRead(!key)
-  }
+    setRead(!key);
+  };
   const showInvite = (data) => {
-    console.log("data", data)
-    if(data){
-      setInviteData(data)
+    console.log("data", data);
+    if (data) {
+      setInviteData(data);
     }
-    setInvite(!invite)
-   
-  }
+    setInvite(!invite);
+  };
   const AppointmentBase = ({
     children,
     data,
@@ -194,27 +183,27 @@ function Demo() {
     ...restProps
   }) => (
     <div onDoubleClick={() => B(data.owner)}>
-       <Appointments.Appointment {...restProps}>
-        <div style={{ display: "flex"}}>
-        <i
-          onClick={() => handleJoin(data)}
+      <Appointments.Appointment {...restProps}>
+        <div style={{ display: "flex" }}>
+          <i
+            onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+            style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
           ></i>
-        
-          <div style={{display : "flex", width : "100px", overflow : "hidden"}}>{children}</div>
-          <span onClick = {() => showInvite(data)}>
-          <i class="fa fa-user-plus"
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
-          ></i>
+
+          <div style={{ display: "flex", width: "100px", overflow: "hidden" }}>
+            {children}
+          </div>
+          <span onClick={() => showInvite(data)}>
+            <i
+              class="fa fa-user-plus"
+              style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
+            ></i>
           </span>
-         
         </div>
       </Appointments.Appointment>
     </div>
   );
-
-  
 
   const Appointment = withStyles(styles, { name: "Appointment" })(
     AppointmentBase
@@ -224,88 +213,82 @@ function Demo() {
     return (
       <Appointment
         {...props}
-      // onAppointmentMetaChange={onAppointmentMetaChange}
+        // onAppointmentMetaChange={onAppointmentMetaChange}
       />
     );
   };
 
-
   //handleJoin
   const handleJoin = (data) => {
-    
-// //  console.log("data", data)
-// // console.log(data.startDate)
-//   var dt = new Date(data.startDate)
-//   var dt2 = new Date()
-//   let ck = dt.getMonth();
- 
-//   let pp = dt2.getMonth();
-//   let rr = dt2.getHours();
-//   let ss = dt.getHours()
-//   let mm = dt2.getMinutes() + 20
-//   let dd = dt.getMinutes()
-//   let ee = dt.getDate();
-//   let eee = dt2.getDate()
-// //   console.log("dt", dt)
-// //   console.log(dt2.getDate())
-// //  console.log(dt.getMinutes())
-// //  console.log(dt2.getMinutes() + 20)
-// //  console.log("ck", ck)
-// //   console.log("dt2", dt2)
-// //   console.log("pp", pp)
-// //   console.log("mm", mm)
-// //   console.log("dd", dd)
-// //   console.log("ss", ss)
-// //   console.log("rr", rr)
-// //   console.log(ck == pp)
-// //   console.log(ee === eee)
-// //   console.log(ss == rr)
-// //   console.log(mm > dd)
-  
- 
-//   if(ck == pp && ss == rr && ee == eee){
- 
- 
-//   if(mm > dd){
-//     console.log("passed")
-//     setShowVideoIcon(true)
-//     Cookies.set("channel_2", data.question_id);
-//     Cookies.set("baseMode_2", baseMode);
-//     Cookies.set("transcode_2", transcode);
-//     Cookies.set("attendeeMode_2", attendeeMode);
-//     Cookies.set("videoProfile_2", videoProfile);
-//     // history.push("/teamleader/meeting/");
-//     history.push(`/admin/meeting/${data.id}`);
+    // //  console.log("data", data)
+    // // console.log(data.startDate)
+    //   var dt = new Date(data.startDate)
+    //   var dt2 = new Date()
+    //   let ck = dt.getMonth();
 
-//   }
-//   else{
-//   // return false
-//   setShowVideoIcon(true)
-//   Cookies.set("channel_2", data.question_id);
-//   Cookies.set("baseMode_2", baseMode);
-//   Cookies.set("transcode_2", transcode);
-//   Cookies.set("attendeeMode_2", attendeeMode);
-//   Cookies.set("videoProfile_2", videoProfile);
-//   // history.push("/teamleader/meeting/");
-//   history.push(`/admin/meeting/${data.id}`);
-//   }
-//   }
-console.log("data", data)
-Cookies.set("channel_2", data.question_id);
-Cookies.set("baseMode_2", baseMode);
-Cookies.set("transcode_2", transcode);
-Cookies.set("attendeeMode_2", attendeeMode);
-Cookies.set("videoProfile_2", videoProfile);
-Cookies.set("adminid", data.id)
+    //   let pp = dt2.getMonth();
+    //   let rr = dt2.getHours();
+    //   let ss = dt.getHours()
+    //   let mm = dt2.getMinutes() + 20
+    //   let dd = dt.getMinutes()
+    //   let ee = dt.getDate();
+    //   let eee = dt2.getDate()
+    // //   console.log("dt", dt)
+    // //   console.log(dt2.getDate())
+    // //  console.log(dt.getMinutes())
+    // //  console.log(dt2.getMinutes() + 20)
+    // //  console.log("ck", ck)
+    // //   console.log("dt2", dt2)
+    // //   console.log("pp", pp)
+    // //   console.log("mm", mm)
+    // //   console.log("dd", dd)
+    // //   console.log("ss", ss)
+    // //   console.log("rr", rr)
+    // //   console.log(ck == pp)
+    // //   console.log(ee === eee)
+    // //   console.log(ss == rr)
+    // //   console.log(mm > dd)
 
-// history.push("/teamleader/meeting/");
-history.push(`/admin/meeting/${data.id}`);
+    //   if(ck == pp && ss == rr && ee == eee){
+
+    //   if(mm > dd){
+    //     console.log("passed")
+    //     setShowVideoIcon(true)
+    //     Cookies.set("channel_2", data.question_id);
+    //     Cookies.set("baseMode_2", baseMode);
+    //     Cookies.set("transcode_2", transcode);
+    //     Cookies.set("attendeeMode_2", attendeeMode);
+    //     Cookies.set("videoProfile_2", videoProfile);
+    //     // history.push("/teamleader/meeting/");
+    //     history.push(`/admin/meeting/${data.id}`);
+
+    //   }
+    //   else{
+    //   // return false
+    //   setShowVideoIcon(true)
+    //   Cookies.set("channel_2", data.question_id);
+    //   Cookies.set("baseMode_2", baseMode);
+    //   Cookies.set("transcode_2", transcode);
+    //   Cookies.set("attendeeMode_2", attendeeMode);
+    //   Cookies.set("videoProfile_2", videoProfile);
+    //   // history.push("/teamleader/meeting/");
+    //   history.push(`/admin/meeting/${data.id}`);
+    //   }
+    //   }
+    console.log("data", data);
+    Cookies.set("channel_2", data.question_id);
+    Cookies.set("baseMode_2", baseMode);
+    Cookies.set("transcode_2", transcode);
+    Cookies.set("attendeeMode_2", attendeeMode);
+    Cookies.set("videoProfile_2", videoProfile);
+    Cookies.set("adminid", data.id);
+
+    // history.push("/teamleader/meeting/");
+    history.push(`/admin_meeting/${data.id}`);
   };
 
   const changeFormat = (d) => {
-
-    if (typeof d === 'object') {
-   
+    if (typeof d === "object") {
       return (
         d.getFullYear() +
         "-" +
@@ -316,16 +299,13 @@ history.push(`/admin/meeting/${data.id}`);
         d.toString().split(" ")[4]
       );
     } else {
-    
       return d;
     }
   };
 
   const commitChanges = ({ added, changed, deleted }) => {
-
     if (added) {
-      setLoading(true)
-      
+      setLoading(true);
 
       var startDate = added.startDate;
       var endDate = added.endDate;
@@ -342,41 +322,36 @@ history.push(`/admin/meeting/${data.id}`);
       axios({
         method: "POST",
         url: `${baseUrl}/admin/aminPostCallSchedule`,
-        headers : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
         .then(function (response) {
-        
           if (response.data.code === 1) {
-            setLoading(false)
-            Alerts.SuccessNormal("New call scheduled successfully.")
+            setLoading(false);
+            Alerts.SuccessNormal("New call scheduled successfully.");
           } else if (response.data.code === 0) {
-            setLoading(false)
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
 
           getData();
         })
-        .catch((error) => {
-
-        });
+        .catch((error) => {});
     }
     if (changed) {
-  
-      setLoading(true)
+      setLoading(true);
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-     
 
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-     
+
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -384,13 +359,12 @@ history.push(`/admin/meeting/${data.id}`);
           dataIttem = data2[i];
         }
       }
-      var a = dataIttem.startDate
-      var b = dataIttem.endDate
-
+      var a = dataIttem.startDate;
+      var b = dataIttem.endDate;
 
       if (!dataIttem.owner) {
-        var variable = "Error"
-        Alerts.ErrorEdit(variable)
+        var variable = "Error";
+        Alerts.ErrorEdit(variable);
         return false;
       }
       let formData = new FormData();
@@ -406,47 +380,39 @@ history.push(`/admin/meeting/${data.id}`);
       axios({
         method: "POST",
         url: `${baseUrl}/admin/aminPostCallSchedule`,
-        headers  : {
-          uit : token
+        headers: {
+          uit: token,
         },
         data: formData,
       })
         .then(function (response) {
-         
-
           if (response.data.code === 1) {
-            setLoading(false)
-            var msg = "Call details updated successfully."
-            Alerts.SuccessNormal(msg)
-          }
-          else if (response.data.code === 0) {
-            setLoading(false)
-         
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = "Call details updated successfully.";
+            Alerts.SuccessNormal(msg);
+          } else if (response.data.code === 0) {
+            setLoading(false);
+
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
           getData();
         })
-        .catch((error) => {
-
-        });
+        .catch((error) => {});
     }
 
     if (deleted !== undefined) {
-     
-      setLoading(true)
+      setLoading(true);
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-         
-          value = data.owner
+          value = data.owner;
         }
       });
 
-   
       if (!value) {
-        var variable = "Error"
-        Alerts.ErrorDelete(variable)
+        var variable = "Error";
+        Alerts.ErrorDelete(variable);
         return false;
       }
 
@@ -460,26 +426,29 @@ history.push(`/admin/meeting/${data.id}`);
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/admin/freeslot?id=${deleted}`, myConfig).then((res) => {
-           
-            if (res.data.code === 1) {
-              setLoading(false)
-              Swal.fire("Deleted!", "Scheduled call has been deleted.", "success");
-              getData();
-            } else {
-              setLoading(false)
-              Swal.fire("Oops...", "Errorr ", "error");
-            }
-          });
-        }
-        else{
+          axios
+            .get(`${baseUrl}/admin/freeslot?id=${deleted}`, myConfig)
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                Swal.fire(
+                  "Deleted!",
+                  "Scheduled call has been deleted.",
+                  "success"
+                );
+                getData();
+              } else {
+                setLoading(false);
+                Swal.fire("Oops...", "Errorr ", "error");
+              }
+            });
+        } else {
           setLoading(false);
-          history.push("/admin/schedule")
+          history.push("/admin/schedule");
         }
       });
     }
   };
-
 
   const BooleanEditor = (props) => {
     if (props.label === "All Day" || props.label === "Repeat") {
@@ -494,88 +463,79 @@ history.push(`/admin/meeting/${data.id}`);
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
         onFieldChange={onFieldChange}
         {...restProps}
       >
-
         <AppointmentForm.Label text="All participants" type="title" />
-        <AppointmentForm.TextEditor
-          value={appointmentData.username}
-          readOnly
-        />
-
+        <AppointmentForm.TextEditor value={appointmentData.username} readOnly />
       </AppointmentForm.BasicLayout>
     );
   };
 
-
   return (
     <>
-          
-        <div style ={{display : "flex", height : "700px"}}>
+      <div style={{ display: "flex", height: "700px" }}>
+        <Paper>
+          <Scheduler data={data}>
+            <ViewState
+              className={classes.rchStyle}
+              defaultCurrentDate={currentDate}
+              defaultCurrentViewName="Week"
+            />
+            <EditingState
+              className={classes.OverlayBase}
+              onCommitChanges={commitChanges}
+            />
+            <EditRecurrenceMenu />
 
-        <Paper >
-            <Scheduler data={data}>
-                <ViewState className = {classes.rchStyle}
-                  defaultCurrentDate={currentDate}
-                  defaultCurrentViewName="Week"
-                />
-                <EditingState  className = {classes.OverlayBase} onCommitChanges={commitChanges}   />
-                <EditRecurrenceMenu  />
+            <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
+            <WeekView
+              cellDuration={60}
+              startDayHour={0}
+              endDayHour={24}
+              TimeTableLayoutProps={8}
+            />
 
-                <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
-                <WeekView cellDuration={60} startDayHour={0} endDayHour={24} TimeTableLayoutProps={8} />
-                
-                <Appointments appointmentComponent={myAppointment} />
+            <Appointments appointmentComponent={myAppointment} />
 
-                <Toolbar />
-                <DateNavigator />
-                <TodayButton />
-                <ViewSwitcher  />
-                
-                <AppointmentTooltip showOpenButton  />
-                {
-                  read ?
-              
-                    
-                    <AppointmentForm 
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                      
-                      readOnly
-                    />
-                    
-                    :
-                   
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                    
-                    />
-                      
-                }
-                <Resources
-                  data={resources}
-                />
-              </Scheduler>
-            
-            </Paper>
-        </div>
-        
-        {
-       invite === true ?
-       <InviteModal 
-       inviteData = {inviteData}
-       showInvite = {showInvite}
-       invite={invite} /> : ""
-     } 
-          </>
+            <Toolbar />
+            <DateNavigator />
+            <TodayButton />
+            <ViewSwitcher />
+
+            <AppointmentTooltip showOpenButton />
+            {read ? (
+              <AppointmentForm
+                booleanEditorComponent={BooleanEditor}
+                basicLayoutComponent={BasicLayout}
+                textEditorComponent={TextEditor}
+                readOnly
+              />
+            ) : (
+              <AppointmentForm
+                booleanEditorComponent={BooleanEditor}
+                basicLayoutComponent={BasicLayout}
+                textEditorComponent={TextEditor}
+              />
+            )}
+            <Resources data={resources} />
+          </Scheduler>
+        </Paper>
+      </div>
+
+      {invite === true ? (
+        <InviteModal
+          inviteData={inviteData}
+          showInvite={showInvite}
+          invite={invite}
+        />
+      ) : (
+        ""
+      )}
+    </>
   );
 }
 export default Demo;
