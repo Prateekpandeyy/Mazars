@@ -45,7 +45,7 @@ function Header({
       setLogimin(true);
     }
     const handleScroll = (event) => {
-      if (window.pageYOffset > 0) {
+      if (document.documentElement.scrollTop > 10) {
         setLogimin(true);
       } else if (
         window.location.pathname.split("/")[1] === "customer" ||

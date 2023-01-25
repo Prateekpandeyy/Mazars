@@ -302,7 +302,12 @@ const Report = () => {
       value.tds ||
       value.receiptDate ||
       value.amount_type ||
-      value.amountReceived
+      value.amountReceived ||
+      value.mpayable_amount ||
+      value.mamount_credited ||
+      value.pmaccount_number ||
+      value.mpayment_receipt_date ||
+      value.mpayment_type
     ) {
       payment_info = true;
     }
@@ -379,6 +384,14 @@ const Report = () => {
         formData.append("search_pay_amount", Number(value.search_pay_amount));
         formData.append("company", comp);
         formData.append("invoicing_company", Number(value.companyName));
+        formData.append("mpayable_amount", Number(value.mpayable_amount));
+        formData.append("mamount_creditedt", Number(value.mamount_credited));
+        formData.append("maccount_number", Number(value.pmaccount_number));
+        formData.append(
+          "mpayment_receipt_date",
+          Number(value.mpayment_receipt_date)
+        );
+        formData.append("mpayment_type", Number(value.mpayment_type));
         axios({
           method: "POST",
           url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -520,6 +533,15 @@ const Report = () => {
       formData.append("search_pay_amount", Number(value.search_pay_amount));
       formData.append("company", comp);
       formData.append("invoicing_company", Number(value.companyName));
+      formData.append("payable_amount", Number(value.payable_amount));
+      formData.append("mpayable_amount", Number(value.payable_amount));
+      formData.append("mamount_creditedt", Number(value.mamount_credited));
+      formData.append("maccount_number", Number(value.pmaccount_number));
+      formData.append(
+        "mpayment_receipt_date",
+        Number(value.mpayment_receipt_date)
+      );
+      formData.append("mpayment_type", Number(value.mpayment_type));
       axios({
         method: "POST",
         url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -1103,7 +1125,7 @@ const Report = () => {
                         checked={proposalCheckbox}
                         id="paymentTerms"
                       ></input>
-                      <label htmlFor="paymentTerms">Payment plan</label>
+                      <label htmlFor="paymentTerms">Payment terms</label>
                     </span>
                     <span>
                       <input
@@ -1295,25 +1317,6 @@ const Report = () => {
               <div className="col-md-12">
                 <fieldset className="my-fieldset">
                   <legend className="login-legend">Payment receipt</legend>
-
-                  <div className="basicFeild">
-                    <span>
-                      <Select
-                        styles={{
-                          option: (styles, { data }) => {
-                            return {
-                              ...styles,
-                              backgroundColor: "#fff",
-                            };
-                          },
-                        }}
-                        isMulti={true}
-                        ref={selectInputRef7}
-                        options={companyName}
-                        onChange={(e) => setCompanyName2(e)}
-                      />
-                    </span>
-                  </div>
                   <div className="basicFeild">
                     <span>
                       <input
@@ -1337,35 +1340,23 @@ const Report = () => {
                         Payment received record only
                       </label>
                     </span>
-                    <span style={{ textAlign: "right", marginLeft: "auto" }}>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="manual_payment_receipt"
-                        id="manual_payment_receipt"
-                      ></input>
-                      <label htmlFor="manual_payment_receipt">
-                        Maunal in payment receipt
-                      </label>
+
+                    <span>
+                      <Select
+                        styles={{
+                          option: (styles, { data }) => {
+                            return {
+                              ...styles,
+                              backgroundColor: "#fff",
+                            };
+                          },
+                        }}
+                        isMulti={true}
+                        ref={selectInputRef7}
+                        options={companyName}
+                        onChange={(e) => setCompanyName2(e)}
+                      />
                     </span>
-                    {/* 
-<span>
-  <Select 
-   styles={{
-    option: (styles, { data }) => {
-      return {
-        ...styles,
-      backgroundColor : "#fff"
-      };
-    },
-    multiValueLabel: (styles, { data }) => ({
-      ...styles,
-      color: data.value == 2
-        ? "green"
-        : "blue"
-    }),
-  }} />
-</span> */}
                   </div>
                   <div className="basicFeild">
                     <span>
@@ -1480,10 +1471,7 @@ const Report = () => {
                       ></input>
                       <label htmlFor="tds">TDS deducted</label>
                     </span>
-                    {/* <span>
-<input type="checkbox" ref={register} checked={paymnetCheckbox} name="net_amount" id="net_amount"></input>
-<label htmlFor="net_amount">Net Amount </label>
-</span> */}
+
                     <span>
                       <input
                         type="checkbox"
@@ -1521,55 +1509,55 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
+                        name="mpayable_amount"
+                        id="mpayable_amount"
                         checked={paymnetCheckbox}
-                        name="payable_amount"
-                        id="payable_amount"
                       ></input>
-                      <label htmlFor="payable_amount">Payable amount </label>
+                      <label htmlFor="mpayable_amount">Payable amount</label>
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         ref={register}
+                        name="mamount_credited"
+                        id="mamount_credited"
                         checked={paymnetCheckbox}
-                        name="amount_credited"
-                        id="amount_credited"
                       ></input>
-                      <label htmlFor="amount_credited">Amount credited</label>
+                      <label htmlFor="mamount_credited">Amount credited</label>
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         ref={register}
+                        name="maccount_number"
+                        id="maccount_number"
                         checked={paymnetCheckbox}
-                        name="account_number"
-                        id="account_number"
                       ></input>
-                      <label htmlFor="account_number">
-                        Paid in bank account number{" "}
+                      <label htmlFor="maccount_number">
+                        Paid in bank account number
                       </label>
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         ref={register}
+                        name="mpayment_receipt_date"
+                        id="mpayment_receipt_date"
                         checked={paymnetCheckbox}
-                        name="payment_receipt_date"
-                        id="payment_receipt_date"
                       ></input>
-                      <label htmlFor="payment_receipt_date">
-                        Payment receipt date{" "}
+                      <label htmlFor="mpayment_receipt_date">
+                        Payment receipt date
                       </label>
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         ref={register}
+                        name="mpayment_type"
+                        id="mpayment_type"
                         checked={paymnetCheckbox}
-                        name="payment_type"
-                        id="payment_type"
                       ></input>
-                      <label htmlFor="payment_type">Payment type</label>
+                      <label htmlFor="mpayment_type">Payment type</label>
                     </span>
                   </div>
                 </fieldset>
