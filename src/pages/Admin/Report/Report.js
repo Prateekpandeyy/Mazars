@@ -30,19 +30,13 @@ const Report = () => {
   const selectInputRef5 = useRef();
   const selectInputRef6 = useRef();
   const selectInputRef7 = useRef();
-  const [subCategory, setSubCategory] = useState([]);
   const [subData, subCategeryData] = useState([]);
-  const [custCate, setCustcate] = useState([]);
   const [tax, setTax] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store, setStore] = useState([]);
   const [error, setError] = useState();
   const [error2, setError2] = useState();
   const [mcatname, setmcatname] = useState([]);
-  const [nn, setNn] = useState([]);
-  const [mcategory, setmcategory] = useState([]);
-  const [categoryData, setCategoryData] = useState([]);
-  const [custCate2, setCustcate2] = useState([]);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [taxId, setTaxId] = useState([]);
@@ -59,9 +53,31 @@ const Report = () => {
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null);
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
+  const [paymentValue, setPaymentValue] = useState({
+    companyName: false,
+    invoice_number: false,
+    dos: false,
+    basic_amount: false,
+    pocket_expensive: false,
+    cget_tax: false,
+    sgst_tax: false,
+    igst_tax: false,
+    total_gst: false,
+    total_invoice: false,
+    tds: false,
+    receiptDate: false,
+    amount_type: false,
+    amountReceived: false,
+    mpayable_amount: false,
+    mamount_credited: false,
+    maccount_number: false,
+    mpayment_receipt_date: false,
+    mpayment_type: false,
+  });
   var kk = [];
   var pp = [];
   var vv = [];
+  let pk = [];
   const [dd, setDd] = useState([]);
   const history = useHistory();
   const { handleSubmit, register, errors, getValues, reset } = useForm();
@@ -95,7 +111,13 @@ const Report = () => {
 
     getCategory();
   }, []);
-
+  const handlePayment = (e) => {
+    const { name, checked } = e.target;
+    setPaymentValue({
+      ...paymentValue,
+      [name]: checked,
+    });
+  };
   useEffect(() => {
     const getSubCategory = async () => {
       if (store.length > 0) {
@@ -161,7 +183,6 @@ const Report = () => {
   }, [teamleader44]);
 
   const getTaxProf = () => {
-    console.log("teamleader", teamleader44);
     if (teamleader44) {
       axios
         .get(
@@ -181,7 +202,7 @@ const Report = () => {
       });
     }
   };
-  let pk = [];
+
   const custName = (a) => {
     console.log(a);
 
@@ -610,16 +631,12 @@ const Report = () => {
   // Category
   const category2 = (v) => {
     let cc = [];
-    setCategoryData(v);
-    setNn((oldData) => {
-      return [...oldData, mcategory];
-    });
+
     setError("");
-    setCustcate(v);
+
     v.map((val) => {
       vv.push(val.value);
       cc.push(val.value);
-      setmcategory(val.value);
 
       setStore(val.value);
     });
@@ -651,7 +668,7 @@ const Report = () => {
   const subCategory22 = (e) => {
     let kk = [];
     subCategeryData(e);
-    setCustcate2(e);
+
     setError2("");
 
     e.map((i) => {
@@ -706,13 +723,22 @@ const Report = () => {
     }
   };
   const selectAllPayment = (e) => {
-    if (paymnetCheckbox === null) {
-      setPaymentCheckbox(true);
-    } else {
-      setPaymentCheckbox(null);
-    }
+    let kd = paymentValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+    console.log("kkdd", kd);
+    setPaymentValue({
+      ...paymentValue,
+      kd,
+    });
+    // if (paymnetCheckbox === null) {
+    //   setPaymentCheckbox(true);
+    // } else {
+    //   setPaymentCheckbox(null);
+    // }
   };
-
+  console.log(paymentValue);
   // const setCompany = (e) => {
 
   //   e.map((i) => {
@@ -1365,8 +1391,9 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="companyName"
+                        onClick={(e) => handlePayment(e)}
                         id="companyName"
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.companyName}
                       ></input>
                       <label htmlFor="companyName">Invoicing company</label>
                     </span>
@@ -1374,7 +1401,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.invoice_number}
+                        onClick={(e) => handlePayment(e)}
                         name="invoice_number"
                         id="invoice_number"
                       ></input>
@@ -1384,7 +1412,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.dos}
+                        onClick={(e) => handlePayment(e)}
                         name="dos"
                         id="dos"
                       ></input>
@@ -1394,7 +1423,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.basic_amount}
+                        onClick={(e) => handlePayment(e)}
                         name="basic_amount"
                         id="basic_amount"
                       ></input>
@@ -1404,7 +1434,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.pocket_expensive}
+                        onClick={(e) => handlePayment(e)}
                         name="pocket_expensive"
                         id="pocket_expensive"
                       ></input>
@@ -1416,7 +1447,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.cget_tax}
+                        onClick={(e) => handlePayment(e)}
                         name="cget_tax"
                         id="cget_tax"
                       ></input>
@@ -1426,7 +1458,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.igst_tax}
+                        onClick={(e) => handlePayment(e)}
                         name="igst_tax"
                         id="igst_tax"
                       ></input>
@@ -1436,7 +1469,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.sgst_tax}
+                        onClick={(e) => handlePayment(e)}
                         name="sgst_tax"
                         id="sgst_tax"
                       ></input>
@@ -1446,7 +1480,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.total_gst}
+                        onClick={(e) => handlePayment(e)}
                         name="total_gst"
                         id="total_gst"
                       ></input>
@@ -1456,7 +1491,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.total_invoice}
+                        onClick={(e) => handlePayment(e)}
                         name="total_invoice"
                         id="total_invoice"
                       ></input>
@@ -1466,7 +1502,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.tds}
+                        onClick={(e) => handlePayment(e)}
                         name="tds"
                         id="tds"
                       ></input>
@@ -1477,7 +1514,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.receiptDate}
+                        onClick={(e) => handlePayment(e)}
                         name="receiptDate"
                         id="receiptDate"
                       ></input>
@@ -1487,7 +1525,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.amountReceived}
+                        onClick={(e) => handlePayment(e)}
                         name="amountReceived"
                         id="amountReceived"
                       ></input>
@@ -1498,7 +1537,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.amount_type}
+                        onClick={(e) => handlePayment(e)}
                         name="amount_type"
                         id="amount_type"
                       ></input>
@@ -1512,7 +1552,8 @@ const Report = () => {
                         ref={register}
                         name="mpayable_amount"
                         id="mpayable_amount"
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.mpayable_amount}
+                        onClick={(e) => handlePayment(e)}
                       ></input>
                       <label htmlFor="mpayable_amount">Payable amount</label>
                     </span>
@@ -1522,7 +1563,8 @@ const Report = () => {
                         ref={register}
                         name="mamount_credited"
                         id="mamount_credited"
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.mamount_credited}
+                        onClick={(e) => handlePayment(e)}
                       ></input>
                       <label htmlFor="mamount_credited">Amount credited</label>
                     </span>
@@ -1532,7 +1574,8 @@ const Report = () => {
                         ref={register}
                         name="maccount_number"
                         id="maccount_number"
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.maccount_number}
+                        onClick={(e) => handlePayment(e)}
                       ></input>
                       <label htmlFor="maccount_number">
                         Paid in bank account number
@@ -1544,7 +1587,8 @@ const Report = () => {
                         ref={register}
                         name="mpayment_receipt_date"
                         id="mpayment_receipt_date"
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.mpayment_receipt_date}
+                        onClick={(e) => handlePayment(e)}
                       ></input>
                       <label htmlFor="mpayment_receipt_date">
                         Payment receipt date
@@ -1556,7 +1600,8 @@ const Report = () => {
                         ref={register}
                         name="mpayment_type"
                         id="mpayment_type"
-                        checked={paymnetCheckbox}
+                        checked={paymentValue.mpayment_type}
+                        onClick={(e) => handlePayment(e)}
                       ></input>
                       <label htmlFor="mpayment_type">Payment type</label>
                     </span>
