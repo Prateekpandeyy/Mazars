@@ -53,6 +53,36 @@ const Report = () => {
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null);
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
+  const [basicValue, setBasicValue] = useState({
+    brief_fact_case: false,
+    assessment: false,
+    purpose_p: false,
+    p_format: false,
+    t_requested: false,
+    spc_que: false,
+    doa: false,
+    process_status: false,
+  });
+  const [proposalValue, setProposalValue] = useState({
+    paymentDeclinedReason: false,
+    declinedDate: false,
+    amount_overdue: false,
+    amountOutstanding: false,
+    amount_receipt: false,
+    date_acceptance: false,
+    acceptedAmount: false,
+    proposal_status: false,
+    paymentTerms: false,
+    proposedAmount: false,
+    dateProposal: false,
+  });
+  const [assignmeneValue, setAssignmentValue] = useState({
+    assignDate: false,
+    completionDate: false,
+    assignStatus: false,
+    completionQuery: false,
+    assignTime: false,
+  });
   const [paymentValue, setPaymentValue] = useState({
     companyName: false,
     invoice_number: false,
@@ -80,17 +110,15 @@ const Report = () => {
   let pk = [];
   const [dd, setDd] = useState([]);
   const history = useHistory();
-  const { handleSubmit, register, errors, getValues, reset } = useForm();
-  let date = new Date();
+  const { handleSubmit, register, errors, reset } = useForm();
+
   var current_date =
     new Date().getFullYear() +
     "-" +
     ("0" + (new Date().getMonth() + 1)).slice(-2) +
     "-" +
     ("0" + new Date().getDate()).slice(-2);
-  const firstDay = new Date(
-    date.getFullYear() + +"-" + ("0" + (new Date().getMonth() + 1)).slice(-2)
-  );
+
   const [item] = useState(current_date);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -111,13 +139,7 @@ const Report = () => {
 
     getCategory();
   }, []);
-  const handlePayment = (e) => {
-    const { name, checked } = e.target;
-    setPaymentValue({
-      ...paymentValue,
-      [name]: checked,
-    });
-  };
+
   useEffect(() => {
     const getSubCategory = async () => {
       if (store.length > 0) {
@@ -156,6 +178,48 @@ const Report = () => {
   useEffect(() => {
     getupdateQuery();
   }, [taxId, taxxId, cname]);
+
+  const handlePayment = (e) => {
+    const { name, checked } = e.target;
+    setPaymentValue({
+      ...paymentValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setPaymentCheckbox(false);
+    }
+  };
+  const handleAssignment = (e) => {
+    const { name, checked } = e.target;
+    setAssignmentValue({
+      ...assignmeneValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setAssignmentCheckbox(false);
+    }
+  };
+  const handleProposal = (e) => {
+    const { name, checked } = e.target;
+    setProposalValue({
+      ...assignmeneValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setProposalCheckbox(false);
+    }
+  };
+
+  const handleBasic = (e) => {
+    const { name, checked } = e.target;
+    setBasicValue({
+      ...basicValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setCheckBox(false);
+    }
+  };
   const getupdateQuery = () => {
     axios
       .get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
@@ -204,8 +268,6 @@ const Report = () => {
   };
 
   const custName = (a) => {
-    console.log(a);
-
     a.map((r) => {
       pk.push(r.value);
     });
@@ -248,7 +310,10 @@ const Report = () => {
   }));
   const resetData = () => {
     reset();
-    console.log(selectInputRef);
+    let assignValue = assignmeneValue;
+    let pVAlue = paymentValue;
+    let proposValue = proposalValue;
+    let bValue = basicValue;
     selectInputRef.current.select.clearValue();
     selectInputRef2.current.select.clearValue();
     selectInputRef3.current.select.clearValue();
@@ -256,10 +321,46 @@ const Report = () => {
     selectInputRef5.current.select.clearValue();
     selectInputRef6.current.select.clearValue();
     selectInputRef7.current.select.clearValue();
-    setCheckBox(null);
-    setProposalCheckbox(null);
-    setAssignmentCheckbox(null);
-    setPaymentCheckbox(null);
+    Object.keys(bValue).forEach((key) => {
+      bValue[key] = false;
+    });
+
+    setBasicValue({
+      ...basicValue,
+      pVAlue,
+    });
+    setCheckBox(false);
+
+    Object.keys(proposValue).forEach((key) => {
+      proposValue[key] = false;
+    });
+
+    setProposalValue({
+      ...proposalValue,
+      proposValue,
+    });
+    Object.keys(assignValue).forEach((key) => {
+      assignValue[key] = false;
+    });
+
+    setAssignmentValue({
+      ...assignmeneValue,
+      assignValue,
+    });
+    Object.keys(pVAlue).forEach((key) => {
+      pVAlue[key] = false;
+    });
+
+    setPaymentValue({
+      ...paymentValue,
+      pVAlue,
+    });
+    setPaymentCheckbox(false);
+
+    setAssignmentCheckbox(false);
+    setPaymentCheckbox(false);
+    setCheckBox(false);
+    setProposalCheckbox(false);
     setQno([]);
   };
   const onSubmit = (value) => {
@@ -694,7 +795,6 @@ const Report = () => {
     setTaxprofessional44(kk2);
   };
   const queryNumber = (e) => {
-    console.log("aaa", e);
     let kk4 = [];
     e.map((i) => {
       kk4.push(i.value);
@@ -702,43 +802,54 @@ const Report = () => {
     setQqno(kk4);
   };
   const selectAllbasic = (e) => {
-    if (checkBox === null) {
-      setCheckBox(true);
-    } else {
-      setCheckBox(null);
-    }
+    let kd = basicValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setBasicValue({
+      ...basicValue,
+      kd,
+    });
+    setCheckBox(e.target.checked);
   };
   const selectAllproposal = (e) => {
-    if (proposalCheckbox === null) {
-      setProposalCheckbox(true);
-    } else {
-      setProposalCheckbox(null);
-    }
+    let kd = proposalValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setProposalValue({
+      ...proposalValue,
+      kd,
+    });
+    setProposalCheckbox(e.target.checked);
   };
   const selectAllAssignment = (e) => {
-    if (assignmentCheckbox === null) {
-      setAssignmentCheckbox(true);
-    } else {
-      setAssignmentCheckbox(null);
-    }
+    let kd = assignmeneValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setAssignmentValue({
+      ...assignmeneValue,
+      kd,
+    });
+    setAssignmentCheckbox(e.target.checked);
   };
   const selectAllPayment = (e) => {
     let kd = paymentValue;
     Object.keys(kd).forEach((key) => {
       kd[key] = e.target.checked;
     });
-    console.log("kkdd", kd);
+
     setPaymentValue({
       ...paymentValue,
       kd,
     });
-    // if (paymnetCheckbox === null) {
-    //   setPaymentCheckbox(true);
-    // } else {
-    //   setPaymentCheckbox(null);
-    // }
+    setPaymentCheckbox(e.target.checked);
   };
-  console.log(paymentValue);
+
   // const setCompany = (e) => {
 
   //   e.map((i) => {
@@ -749,7 +860,7 @@ const Report = () => {
   //   })
 
   // }
-  console.log("ldone");
+
   return (
     <>
       <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -912,6 +1023,7 @@ const Report = () => {
                       <input
                         type="checkbox"
                         onClick={(i) => selectAllbasic(i)}
+                        value={checkBox}
                         name="select_all"
                         className="selectall"
                         id="select_all"
@@ -1015,7 +1127,8 @@ const Report = () => {
                         type="checkbox"
                         name="assessment"
                         ref={register}
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.assessment}
                         id="assessment"
                       ></input>
                       <label htmlFor="assessment">Assessment year(s)</label>
@@ -1026,7 +1139,8 @@ const Report = () => {
                         type="checkbox"
                         name="brief_fact_case"
                         ref={register}
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.brief_fact_case}
                         id="brief_fact_case"
                       ></input>
                       <label htmlFor="brief_fact_case">Name of the case</label>
@@ -1037,7 +1151,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="purpose_p"
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.purpose_p}
                         id="purpose_p"
                       ></input>
                       <label htmlFor="purpose_p">
@@ -1049,7 +1164,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="p_format"
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.p_format}
                         id="p_format"
                       ></input>
                       <label htmlFor="p_format">
@@ -1061,7 +1177,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="t_requested"
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.t_requested}
                         id="t_requested"
                       ></input>
                       <label htmlFor="t_requested">Timeline requested</label>
@@ -1072,7 +1189,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="spc_que"
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.spc_que}
                         id="spc_que"
                       ></input>
                       <label htmlFor="spc_que">Specific questions</label>
@@ -1083,7 +1201,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="doa"
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.doa}
                         id="doa"
                       ></input>
                       <label htmlFor="doa">Date of allocation of query</label>
@@ -1093,7 +1212,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={checkBox}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.process_status}
                         name="process_status"
                         id="process_status"
                       ></input>
@@ -1114,6 +1234,7 @@ const Report = () => {
                       <input
                         type="checkbox"
                         onClick={(i) => selectAllproposal(i)}
+                        checked={proposalCheckbox}
                         name="selectallProposal"
                         className="selectall"
                         id="selectallProposal"
@@ -1128,7 +1249,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="dateProposal"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.dateProposal}
                         id="dateProposal"
                       ></input>
                       <label htmlFor="dateProposal">Date of proposal</label>
@@ -1138,7 +1260,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="proposedAmount"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.proposedAmount}
                         id="proposedAmount"
                       ></input>
                       <label htmlFor="proposedAmount">Proposed amount</label>
@@ -1148,7 +1271,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="paymentTerms"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.paymentTerms}
                         id="paymentTerms"
                       ></input>
                       <label htmlFor="paymentTerms">Payment terms</label>
@@ -1158,7 +1282,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="proposal_status"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.proposal_status}
                         id="proposal_status"
                       ></input>
                       <label htmlFor="proposal_status">Proposal status</label>
@@ -1168,7 +1293,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.acceptedAmount}
                         name="acceptedAmount"
                         id="acceptedAmount"
                       ></input>
@@ -1181,7 +1307,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="date_acceptance"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.date_acceptance}
                         id="date_acceptance"
                       ></input>
                       <label htmlFor="date_acceptance">
@@ -1192,7 +1319,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.amount_receipt}
                         name="amount_receipt"
                         id="amount_receipt"
                       ></input>
@@ -1205,7 +1333,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="amountOutstanding"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.amountOutstanding}
                         id="amountOutstanding"
                       ></input>
                       <label htmlFor="amountOutstanding">
@@ -1217,7 +1346,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="amount_overdue"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.amount_overdue}
                         id="amount_overdue"
                       ></input>
                       <label htmlFor="amount_overdue">
@@ -1230,7 +1360,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="declinedDate"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.declinedDate}
                         id="declinedDate"
                       ></input>
                       <label htmlFor="declinedDate">Payment decline date</label>
@@ -1241,7 +1372,8 @@ const Report = () => {
                         type="checkbox"
                         ref={register}
                         name="paymentDeclinedReason"
-                        checked={proposalCheckbox}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.paymentDeclinedReason}
                         id="paymentDeclinedReason"
                       ></input>
                       <label htmlFor="paymentDeclinedReason">
@@ -1263,6 +1395,7 @@ const Report = () => {
                       <input
                         type="checkbox"
                         onClick={(i) => selectAllAssignment(i)}
+                        checked={assignmentCheckbox}
                         name="selectAllAssignment"
                         className="selectall"
                         id="selectAllAssignment"
@@ -1276,7 +1409,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={assignmentCheckbox}
+                        checked={assignmeneValue.assignDate}
+                        onClick={(e) => handleAssignment(e)}
                         name="assignDate"
                         id="assignDate"
                       ></input>
@@ -1286,7 +1420,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={assignmentCheckbox}
+                        checked={assignmeneValue.completionDate}
+                        onClick={(e) => handleAssignment(e)}
                         name="completionDate"
                         id="completionDate"
                       ></input>
@@ -1299,7 +1434,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={assignmentCheckbox}
+                        checked={assignmeneValue.assignStatus}
+                        onClick={(e) => handleAssignment(e)}
                         name="assignStatus"
                         id="assignStatus"
                       ></input>
@@ -1311,7 +1447,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={assignmentCheckbox}
+                        checked={assignmeneValue.completionQuery}
+                        onClick={(e) => handleAssignment(e)}
                         name="completionQuery"
                         id="completionQuery"
                       ></input>
@@ -1324,7 +1461,8 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        checked={assignmentCheckbox}
+                        checked={assignmeneValue.assignTime}
+                        onClick={(e) => handleAssignment(e)}
                         name="assignTime"
                         id="assignTime"
                       ></input>
@@ -1366,6 +1504,7 @@ const Report = () => {
                       <input
                         type="checkbox"
                         onClick={(i) => selectAllPayment(i)}
+                        checked={paymnetCheckbox}
                         name="selectAllPayment"
                         className="selectall"
                         id="selectAllPayment"

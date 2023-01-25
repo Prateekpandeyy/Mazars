@@ -9,6 +9,7 @@ import CustomHeading from "../../components/Common/CustomHeading";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import { ImageUrl } from "../../config/config";
+import pdfUrl from "../dFile/Mazars_Advisory_Solutions.pdf";
 const AboutOuter = () => {
   return (
     <>
@@ -83,7 +84,7 @@ const AboutOuter = () => {
                       </CustomTypography>
                       <a
                         className="autoWidthBtn my-4"
-                        href={`${ImageUrl}/cms/Mazars_Advisory_Solutions(MAS).pdf`}
+                        href={pdfUrl}
                         target="_blank"
                       >
                         Download brochure

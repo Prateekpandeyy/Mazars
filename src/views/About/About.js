@@ -1,11 +1,12 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
-import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import classes from "./design.module.css";
 import CustomHeading from "../../components/Common/CustomHeading";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import { ImageUrl } from "../../config/config";
+import pdfUrl from "../dFile/Mazars_Advisory_Solutions.pdf";
 const About = () => {
   const userId = window.localStorage.getItem("userid");
   return (
@@ -77,7 +78,7 @@ const About = () => {
                     </CustomTypography>
                     <a
                       className="autoWidthBtn my-4"
-                      href={`${ImageUrl}/cms/Mazars_Advisory_Solutions(MAS).pdf`}
+                      href={pdfUrl}
                       target="_blank"
                     >
                       Download brochure
