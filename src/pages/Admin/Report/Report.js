@@ -1319,29 +1319,6 @@ const Report = () => {
                   <legend className="login-legend">Payment receipt</legend>
                   <div className="basicFeild">
                     <span>
-                      <input
-                        type="checkbox"
-                        onClick={(i) => selectAllPayment(i)}
-                        name="selectAllPayment"
-                        className="selectall"
-                        id="selectAllPayment"
-                        ref={register}
-                      ></input>
-                      <label htmlFor="selectAllPayment">Select all</label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="search_pay_amount"
-                        id="search_pay_amount"
-                      ></input>
-                      <label htmlFor="search_pay_amount">
-                        Payment received record only
-                      </label>
-                    </span>
-
-                    <span>
                       <Select
                         styles={{
                           option: (styles, { data }) => {
@@ -1356,6 +1333,30 @@ const Report = () => {
                         options={companyName}
                         onChange={(e) => setCompanyName2(e)}
                       />
+                    </span>
+                  </div>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={(i) => selectAllPayment(i)}
+                        name="selectAllPayment"
+                        className="selectall"
+                        id="selectAllPayment"
+                        ref={register}
+                      ></input>
+                      <label htmlFor="selectAllPayment">Select all</label>
+                    </span>
+                    <span style={{ marginLeft: "auto" }}>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="search_pay_amount"
+                        id="search_pay_amount"
+                      ></input>
+                      <label htmlFor="search_pay_amount">
+                        Payment received record only
+                      </label>
                     </span>
                   </div>
                   <div className="basicFeild">
