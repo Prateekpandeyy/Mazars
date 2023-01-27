@@ -51,6 +51,7 @@ const Report = () => {
   const [proposalCheckbox, setProposalCheckbox] = useState(null);
   const [assignmentCheckbox, setAssignmentCheckbox] = useState(null);
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null);
+  const [manualCheckbox, setManualCheckbox] = useState(null);
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [basicValue, setBasicValue] = useState({
@@ -98,6 +99,8 @@ const Report = () => {
     receiptDate: false,
     amount_type: false,
     amountReceived: false,
+  });
+  const [manualReceipt, setManualReceipt] = useState({
     mpayable_amount: false,
     mamount_credited: false,
     maccount_number: false,
@@ -187,6 +190,16 @@ const Report = () => {
     });
     if (e.target.checked === false) {
       setPaymentCheckbox(false);
+    }
+  };
+  const handleManualPayment = (e) => {
+    const { name, checked } = e.target;
+    setManualReceipt({
+      ...manualReceipt,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setManualCheckbox(false);
     }
   };
   const handleAssignment = (e) => {
@@ -314,6 +327,7 @@ const Report = () => {
     let pVAlue = paymentValue;
     let proposValue = proposalValue;
     let bValue = basicValue;
+    let manualValue = manualReceipt;
     selectInputRef.current.select.clearValue();
     selectInputRef2.current.select.clearValue();
     selectInputRef3.current.select.clearValue();
@@ -355,6 +369,15 @@ const Report = () => {
       ...paymentValue,
       pVAlue,
     });
+    Object.keys(bValue).forEach((key) => {
+      manualValue[key] = false;
+    });
+
+    setManualReceipt({
+      ...manualReceipt,
+      manualValue,
+    });
+    setManualCheckbox(false);
     setPaymentCheckbox(false);
 
     setAssignmentCheckbox(false);
@@ -800,6 +823,18 @@ const Report = () => {
       kk4.push(i.value);
     });
     setQqno(kk4);
+  };
+  const selectAllManualPayment = (e) => {
+    let kd = manualReceipt;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setManualReceipt({
+      ...manualReceipt,
+      kd,
+    });
+    setManualCheckbox(e.target.checked);
   };
   const selectAllbasic = (e) => {
     let kd = basicValue;
@@ -1275,7 +1310,7 @@ const Report = () => {
                         checked={proposalValue.paymentTerms}
                         id="paymentTerms"
                       ></input>
-                      <label htmlFor="paymentTerms">Payment terms</label>
+                      <label htmlFor="paymentTerms">Payment plan</label>
                     </span>
                     <span>
                       <input
@@ -1481,8 +1516,22 @@ const Report = () => {
               <div className="col-md-12">
                 <fieldset className="my-fieldset">
                   <legend className="login-legend">Payment receipt</legend>
+
                   <div className="basicFeild">
                     <span>
+                      <input
+                        type="checkbox"
+                        onClick={(i) => selectAllPayment(i)}
+                        checked={paymnetCheckbox}
+                        name="selectAllPayment"
+                        className="selectall"
+                        id="selectAllPayment"
+                        ref={register}
+                      ></input>
+                      <label htmlFor="selectAllPayment">Select all</label>
+                    </span>
+                    <span>
+                      <label>Company name</label>
                       <Select
                         styles={{
                           option: (styles, { data }) => {
@@ -1498,21 +1547,7 @@ const Report = () => {
                         onChange={(e) => setCompanyName2(e)}
                       />
                     </span>
-                  </div>
-                  <div className="basicFeild">
                     <span>
-                      <input
-                        type="checkbox"
-                        onClick={(i) => selectAllPayment(i)}
-                        checked={paymnetCheckbox}
-                        name="selectAllPayment"
-                        className="selectall"
-                        id="selectAllPayment"
-                        ref={register}
-                      ></input>
-                      <label htmlFor="selectAllPayment">Select all</label>
-                    </span>
-                    <span style={{ marginLeft: "auto" }}>
                       <input
                         type="checkbox"
                         ref={register}
@@ -1684,6 +1719,29 @@ const Report = () => {
                       <label htmlFor="amount_type">Payment mode </label>
                     </span>
                   </div>
+                </fieldset>
+              </div>
+            </div>
+
+            {/* Manual  Receipt */}
+            <div className="row">
+              <div className="col-md-12">
+                <fieldset className="my-fieldset">
+                  <legend className="login-legend">Manual Payment</legend>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={(i) => selectAllManualPayment(i)}
+                        checked={manualCheckbox}
+                        name="selectAllManualPayment"
+                        className="selectall"
+                        id="selectAllManualPayment"
+                        ref={register}
+                      ></input>
+                      <label htmlFor="selectAllManualPayment">Select all</label>
+                    </span>
+                  </div>
                   <div className="basicFeild">
                     <span>
                       <input
@@ -1691,8 +1749,8 @@ const Report = () => {
                         ref={register}
                         name="mpayable_amount"
                         id="mpayable_amount"
-                        checked={paymentValue.mpayable_amount}
-                        onClick={(e) => handlePayment(e)}
+                        checked={manualReceipt.mpayable_amount}
+                        onClick={(e) => handleManualPayment(e)}
                       ></input>
                       <label htmlFor="mpayable_amount">Payable amount</label>
                     </span>
@@ -1702,8 +1760,8 @@ const Report = () => {
                         ref={register}
                         name="mamount_credited"
                         id="mamount_credited"
-                        checked={paymentValue.mamount_credited}
-                        onClick={(e) => handlePayment(e)}
+                        checked={manualReceipt.mamount_credited}
+                        onClick={(e) => handleManualPayment(e)}
                       ></input>
                       <label htmlFor="mamount_credited">Amount credited</label>
                     </span>
@@ -1713,8 +1771,8 @@ const Report = () => {
                         ref={register}
                         name="maccount_number"
                         id="maccount_number"
-                        checked={paymentValue.maccount_number}
-                        onClick={(e) => handlePayment(e)}
+                        checked={manualReceipt.maccount_number}
+                        onClick={(e) => handleManualPayment(e)}
                       ></input>
                       <label htmlFor="maccount_number">
                         Paid in bank account number
@@ -1726,8 +1784,8 @@ const Report = () => {
                         ref={register}
                         name="mpayment_receipt_date"
                         id="mpayment_receipt_date"
-                        checked={paymentValue.mpayment_receipt_date}
-                        onClick={(e) => handlePayment(e)}
+                        checked={manualReceipt.mpayment_receipt_date}
+                        onClick={(e) => handleManualPayment(e)}
                       ></input>
                       <label htmlFor="mpayment_receipt_date">
                         Payment receipt date
@@ -1739,8 +1797,8 @@ const Report = () => {
                         ref={register}
                         name="mpayment_type"
                         id="mpayment_type"
-                        checked={paymentValue.mpayment_type}
-                        onClick={(e) => handlePayment(e)}
+                        checked={manualReceipt.mpayment_type}
+                        onClick={(e) => handleManualPayment(e)}
                       ></input>
                       <label htmlFor="mpayment_type">Payment type</label>
                     </span>
