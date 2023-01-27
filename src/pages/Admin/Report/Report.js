@@ -170,6 +170,7 @@ const Report = () => {
         company.push(a);
       });
       setCompanyName(company);
+      setCompanyName2(company[0]);
     });
   };
   useEffect(() => {
@@ -450,13 +451,13 @@ const Report = () => {
       value.amountReceived ||
       value.mpayable_amount ||
       value.mamount_credited ||
-      value.pmaccount_number ||
+      value.maccount_number ||
       value.mpayment_receipt_date ||
       value.mpayment_type
     ) {
       payment_info = true;
     }
-    if (value.search_pay_amount) {
+    if (value.search_online) {
       if (payment_info) {
         let formData = new FormData();
         formData.append("report_name", value.report_name);
@@ -526,17 +527,18 @@ const Report = () => {
         formData.append("amount_type", Number(value.amount_type));
         formData.append("dos", Number(value.dos));
         formData.append("invoice_number", Number(value.invoice_number));
-        formData.append("search_pay_amount", Number(value.search_pay_amount));
+        formData.append("search_online", Number(value.search_online));
         formData.append("company", comp);
         formData.append("invoicing_company", Number(value.companyName));
         formData.append("mpayable_amount", Number(value.mpayable_amount));
         formData.append("mamount_creditedt", Number(value.mamount_credited));
-        formData.append("maccount_number", Number(value.pmaccount_number));
+        formData.append("maccount_number", Number(value.maccount_number));
         formData.append(
           "mpayment_receipt_date",
           Number(value.mpayment_receipt_date)
         );
         formData.append("mpayment_type", Number(value.mpayment_type));
+        formData.append("mManual_payment", Number(value.mManual_payment));
         axios({
           method: "POST",
           url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -675,18 +677,19 @@ const Report = () => {
       formData.append("amount_type", Number(value.amount_type));
       formData.append("dos", Number(value.dos));
       formData.append("invoice_number", Number(value.invoice_number));
-      formData.append("search_pay_amount", Number(value.search_pay_amount));
+      formData.append("search_online", Number(value.search_online));
       formData.append("company", comp);
       formData.append("invoicing_company", Number(value.companyName));
-      formData.append("payable_amount", Number(value.payable_amount));
-      formData.append("mpayable_amount", Number(value.payable_amount));
+
+      formData.append("mpayable_amount", Number(value.mpayable_amount));
       formData.append("mamount_creditedt", Number(value.mamount_credited));
-      formData.append("maccount_number", Number(value.pmaccount_number));
+      formData.append("maccount_number", Number(value.maccount_number));
       formData.append(
         "mpayment_receipt_date",
         Number(value.mpayment_receipt_date)
       );
       formData.append("mpayment_type", Number(value.mpayment_type));
+      formData.append("mManual_payment", Number(value.mManual_payment));
       axios({
         method: "POST",
         url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -1531,7 +1534,6 @@ const Report = () => {
                       <label htmlFor="selectAllPayment">Select all</label>
                     </span>
                     <span>
-                      <label>Company name</label>
                       <Select
                         styles={{
                           option: (styles, { data }) => {
@@ -1544,6 +1546,7 @@ const Report = () => {
                         isMulti={true}
                         ref={selectInputRef7}
                         options={companyName}
+                        value={companyName2}
                         onChange={(e) => setCompanyName2(e)}
                       />
                     </span>
@@ -1551,12 +1554,19 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        name="search_pay_amount"
-                        id="search_pay_amount"
+                        name="search_online"
+                        id="search_online"
                       ></input>
-                      <label htmlFor="search_pay_amount">
-                        Payment received record only
-                      </label>
+                      <label htmlFor="search_online">Online Payment</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="mManual_payment"
+                        id="mManual_payment"
+                      ></input>
+                      <label htmlFor="mManual_payment">Manual Payment</label>
                     </span>
                   </div>
                   <div className="basicFeild">
