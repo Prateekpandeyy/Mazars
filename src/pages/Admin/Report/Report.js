@@ -172,7 +172,7 @@ const Report = () => {
         company.push(a);
       });
       setCompanyName(company);
-      setCompanyName2(company[0]);
+      setCompanyName2([company[0]]);
     });
   };
   useEffect(() => {
@@ -696,6 +696,7 @@ const Report = () => {
       );
       formData.append("mpayment_type", Number(value.mpayment_type));
       formData.append("mManual_payment", Number(value.mManual_payment));
+      formData.append("mpayment_info", Number(value.mpayment_info));
       formData.append("other_info", Number(value.other_info));
       axios({
         method: "POST",
