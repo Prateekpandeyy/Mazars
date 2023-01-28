@@ -400,6 +400,7 @@ const Report = () => {
     let proposal_info = false;
     let assignment_info = false;
     let payment_info = false;
+    let manual_payment_info = false;
     if (
       value.process_status ||
       value.brief_fact_case ||
@@ -452,7 +453,11 @@ const Report = () => {
       value.total_invoice ||
       value.receiptDate ||
       value.amountReceived ||
-      value.amount_type ||
+      value.amount_type
+    ) {
+      payment_info = true;
+    }
+    if (
       value.mpayable_amount ||
       value.mamount_credited ||
       value.maccount_number ||
@@ -461,7 +466,7 @@ const Report = () => {
       value.mpayment_info ||
       value.other_info
     ) {
-      payment_info = true;
+      manual_payment_info = true;
     }
     if (value.search_online) {
       if (payment_info) {
@@ -471,6 +476,7 @@ const Report = () => {
         formData.append("proposal_info", Number(proposal_info));
         formData.append("assignment_info", Number(assignment_info));
         formData.append("payment_info", Number(payment_info));
+        formData.append("manual_payment_info", Number(manual_payment_info));
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
         formData.append("customer_name", cname);
@@ -612,7 +618,8 @@ const Report = () => {
       basic_info === false &&
       proposal_info === false &&
       assignment_info === false &&
-      payment_info === false
+      payment_info === false &&
+      manual_payment_info === false
     ) {
       Swal.fire({
         title: "error",
@@ -626,6 +633,7 @@ const Report = () => {
       formData.append("proposal_info", Number(proposal_info));
       formData.append("assignment_info", Number(assignment_info));
       formData.append("payment_info", Number(payment_info));
+      formData.append("manual_payment_info", Number(manual_payment_info));
       formData.append("from", value.p_from);
       formData.append("to", value.p_to);
       formData.append("customer_name", cname);
