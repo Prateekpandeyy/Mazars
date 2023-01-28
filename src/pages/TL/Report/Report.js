@@ -573,7 +573,6 @@ const Report = () => {
                 html: "Report generated successfully",
                 icon: "success",
               });
-              window.open(`${baseUrl3}/${response.data.result}`);
             } else {
               Swal.fire({
                 title: "error",
@@ -726,7 +725,6 @@ const Report = () => {
               html: "Report generated successfully",
               icon: "success",
             });
-            window.open(`${baseUrl3}/${response.data.result}`);
           } else {
             Swal.fire({
               title: "error",
