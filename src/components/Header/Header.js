@@ -64,7 +64,14 @@ function Header({
 
   return (
     <>
-      <div className={logomin === true ? "headerMin" : "header"}>
+      <div
+        className={
+          window.location.pathname.split("/")[1] === "customer" ||
+          window.location.pathname.split("/")[1].length === 0
+            ? "header"
+            : "headerMin"
+        }
+      >
         {id && (
           <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/customer/questionnaire-page">

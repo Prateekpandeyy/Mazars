@@ -199,7 +199,7 @@ function Dashboard() {
                 </thead>
               </table>
               <table className="table table-striped second main_table mb-1">
-                <thead className="query_thead1">
+                <thead className="query_thead">
                   <tr>
                     <th className="left_side">
                       <CustomTypography color="#ffffff">
@@ -243,7 +243,7 @@ function Dashboard() {
               </table>
 
               <table className="table table-striped third main_table mb-1">
-                <thead className="query_thead1">
+                <thead className="query_thead">
                   <tr>
                     <th className="left_side">
                       <CustomTypography color="#ffffff">
@@ -266,7 +266,7 @@ function Dashboard() {
               </table>
 
               <table className="table table-striped forth main_table mb-1">
-                <thead className="query_thead1">
+                <thead className="query_thead">
                   <tr>
                     <th className="left_side">
                       <CustomTypography color="#ffffff">
