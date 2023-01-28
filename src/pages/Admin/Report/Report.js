@@ -106,6 +106,8 @@ const Report = () => {
     maccount_number: false,
     mpayment_receipt_date: false,
     mpayment_type: false,
+    mpayment_info: false,
+    other_info: false,
   });
   var kk = [];
   var pp = [];
@@ -434,26 +436,28 @@ const Report = () => {
       assignment_info = true;
     }
     if (
-      value.receiptDate ||
-      value.amountReceived ||
-      value.invoice_number ||
-      value.dos ||
-      value.basic_amount ||
-      value.pocket_expensive ||
-      value.cget_tax ||
-      value.sgst_tax ||
-      value.igst_tax ||
-      value.total_gst ||
-      value.total_invoice ||
-      value.tds ||
-      value.receiptDate ||
-      value.amount_type ||
-      value.amountReceived ||
-      value.mpayable_amount ||
-      value.mamount_credited ||
-      value.maccount_number ||
-      value.mpayment_receipt_date ||
-      value.mpayment_type
+      (value.receiptDate ||
+        value.amountReceived ||
+        value.invoice_number ||
+        value.dos ||
+        value.basic_amount ||
+        value.pocket_expensive ||
+        value.cget_tax ||
+        value.sgst_tax ||
+        value.igst_tax ||
+        value.total_gst ||
+        value.total_invoice ||
+        value.tds ||
+        value.receiptDate ||
+        value.amount_type ||
+        value.amountReceived ||
+        value.mpayable_amount ||
+        value.mamount_credited ||
+        value.maccount_number ||
+        value.mpayment_receipt_date ||
+        value.mpayment_type,
+      value.mpayment_info,
+      value.other_info)
     ) {
       payment_info = true;
     }
@@ -539,6 +543,8 @@ const Report = () => {
         );
         formData.append("mpayment_type", Number(value.mpayment_type));
         formData.append("mManual_payment", Number(value.mManual_payment));
+        formData.append("mpayment_info", Number(value.mpayment_info));
+        formData.append("other_info", Number(value.other_info));
         axios({
           method: "POST",
           url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -690,6 +696,7 @@ const Report = () => {
       );
       formData.append("mpayment_type", Number(value.mpayment_type));
       formData.append("mManual_payment", Number(value.mManual_payment));
+      formData.append("other_info", Number(value.other_info));
       axios({
         method: "POST",
         url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -1811,6 +1818,28 @@ const Report = () => {
                         onClick={(e) => handleManualPayment(e)}
                       ></input>
                       <label htmlFor="mpayment_type">Payment type</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="mpayment_info"
+                        id="mpayment_info"
+                        checked={manualReceipt.mpayment_info}
+                        onClick={(e) => handleManualPayment(e)}
+                      ></input>
+                      <label htmlFor="mpayment_info">Payment information</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="other_info"
+                        id="other_info"
+                        checked={manualReceipt.other_info}
+                        onClick={(e) => handleManualPayment(e)}
+                      ></input>
+                      <label htmlFor="mpayment_info">Other information</label>
                     </span>
                   </div>
                 </fieldset>
