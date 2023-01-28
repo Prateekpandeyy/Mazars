@@ -390,6 +390,7 @@ const Report = () => {
     setQno([]);
   };
   const onSubmit = (value) => {
+    console.log("value", value);
     let comp = [];
     companyName2.map((i) => {
       comp.push(i.value);
@@ -435,29 +436,30 @@ const Report = () => {
     ) {
       assignment_info = true;
     }
+
     if (
-      (value.receiptDate ||
-        value.amountReceived ||
-        value.invoice_number ||
-        value.dos ||
-        value.basic_amount ||
-        value.pocket_expensive ||
-        value.cget_tax ||
-        value.sgst_tax ||
-        value.igst_tax ||
-        value.total_gst ||
-        value.total_invoice ||
-        value.tds ||
-        value.receiptDate ||
-        value.amount_type ||
-        value.amountReceived ||
-        value.mpayable_amount ||
-        value.mamount_credited ||
-        value.maccount_number ||
-        value.mpayment_receipt_date ||
-        value.mpayment_type,
-      value.mpayment_info,
-      value.other_info)
+      value.sgst_tax ||
+      value.invoice_number ||
+      value.companyName ||
+      value.invoice_number ||
+      value.dos ||
+      value.basic_amount ||
+      value.pocket_expensive ||
+      value.cget_tax ||
+      value.igst_tax ||
+      value.total_gst ||
+      value.tds ||
+      value.total_invoice ||
+      value.receiptDate ||
+      value.amountReceived ||
+      value.amount_type ||
+      value.mpayable_amount ||
+      value.mamount_credited ||
+      value.maccount_number ||
+      value.mpayment_receipt_date ||
+      value.mpayment_type ||
+      value.mpayment_info ||
+      value.other_info
     ) {
       payment_info = true;
     }
@@ -1737,115 +1739,126 @@ const Report = () => {
                       <label htmlFor="amount_type">Payment mode </label>
                     </span>
                   </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <fieldset className="my-fieldset">
+                        <legend className="login-legend">Manual Payment</legend>
+                        <div className="basicFeild">
+                          <span>
+                            <input
+                              type="checkbox"
+                              onClick={(i) => selectAllManualPayment(i)}
+                              checked={manualCheckbox}
+                              name="selectAllManualPayment"
+                              className="selectall"
+                              id="selectAllManualPayment"
+                              ref={register}
+                            ></input>
+                            <label htmlFor="selectAllManualPayment">
+                              Select all
+                            </label>
+                          </span>
+                        </div>
+                        <div className="basicFeild">
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mpayable_amount"
+                              id="mpayable_amount"
+                              checked={manualReceipt.mpayable_amount}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayable_amount">
+                              Payable amount
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mamount_credited"
+                              id="mamount_credited"
+                              checked={manualReceipt.mamount_credited}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mamount_credited">
+                              Amount credited
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="maccount_number"
+                              id="maccount_number"
+                              checked={manualReceipt.maccount_number}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="maccount_number">
+                              Paid in bank account number
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mpayment_receipt_date"
+                              id="mpayment_receipt_date"
+                              checked={manualReceipt.mpayment_receipt_date}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_receipt_date">
+                              Payment receipt date
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mpayment_type"
+                              id="mpayment_type"
+                              checked={manualReceipt.mpayment_type}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_type">Payment type</label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mpayment_info"
+                              id="mpayment_info"
+                              checked={manualReceipt.mpayment_info}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_info">
+                              Payment information
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="other_info"
+                              id="other_info"
+                              checked={manualReceipt.other_info}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_info">
+                              Other information
+                            </label>
+                          </span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
                 </fieldset>
               </div>
             </div>
 
             {/* Manual  Receipt */}
-            <div className="row">
-              <div className="col-md-12">
-                <fieldset className="my-fieldset">
-                  <legend className="login-legend">Manual Payment</legend>
-                  <div className="basicFeild">
-                    <span>
-                      <input
-                        type="checkbox"
-                        onClick={(i) => selectAllManualPayment(i)}
-                        checked={manualCheckbox}
-                        name="selectAllManualPayment"
-                        className="selectall"
-                        id="selectAllManualPayment"
-                        ref={register}
-                      ></input>
-                      <label htmlFor="selectAllManualPayment">Select all</label>
-                    </span>
-                  </div>
-                  <div className="basicFeild">
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="mpayable_amount"
-                        id="mpayable_amount"
-                        checked={manualReceipt.mpayable_amount}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="mpayable_amount">Payable amount</label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="mamount_credited"
-                        id="mamount_credited"
-                        checked={manualReceipt.mamount_credited}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="mamount_credited">Amount credited</label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="maccount_number"
-                        id="maccount_number"
-                        checked={manualReceipt.maccount_number}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="maccount_number">
-                        Paid in bank account number
-                      </label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="mpayment_receipt_date"
-                        id="mpayment_receipt_date"
-                        checked={manualReceipt.mpayment_receipt_date}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="mpayment_receipt_date">
-                        Payment receipt date
-                      </label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="mpayment_type"
-                        id="mpayment_type"
-                        checked={manualReceipt.mpayment_type}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="mpayment_type">Payment type</label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="mpayment_info"
-                        id="mpayment_info"
-                        checked={manualReceipt.mpayment_info}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="mpayment_info">Payment information</label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="other_info"
-                        id="other_info"
-                        checked={manualReceipt.other_info}
-                        onClick={(e) => handleManualPayment(e)}
-                      ></input>
-                      <label htmlFor="mpayment_info">Other information</label>
-                    </span>
-                  </div>
-                </fieldset>
-              </div>
-            </div>
+
             <button type="submit" className="autoWidthBtn my-3">
               Generate report
             </button>

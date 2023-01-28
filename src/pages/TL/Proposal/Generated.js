@@ -269,7 +269,7 @@ const Generated = ({ updateTab }) => {
               ) : (
                 ""
               )}
-              {row.is_paid == "0" && row.paymenturl !== null ? (
+              {row.is_paid == "0" && row.paymenturl.length > 0 ? (
                 <span title={row.paymenturl}>
                   {copy == row.id ? (
                     <span style={{ color: "red" }}>Copied</span>
