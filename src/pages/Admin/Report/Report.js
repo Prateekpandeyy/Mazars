@@ -372,7 +372,7 @@ const Report = () => {
       ...paymentValue,
       pVAlue,
     });
-    Object.keys(bValue).forEach((key) => {
+    Object.keys(manualValue).forEach((key) => {
       manualValue[key] = false;
     });
 
@@ -550,7 +550,7 @@ const Report = () => {
           Number(value.mpayment_receipt_date)
         );
         formData.append("mpayment_type", Number(value.mpayment_type));
-        formData.append("mManual_payment", Number(value.mManual_payment));
+        formData.append("search_manual", Number(value.search_manual));
         formData.append("mpayment_info", Number(value.mpayment_info));
         formData.append("other_info", Number(value.other_info));
         axios({
@@ -705,7 +705,7 @@ const Report = () => {
         Number(value.mpayment_receipt_date)
       );
       formData.append("mpayment_type", Number(value.mpayment_type));
-      formData.append("mManual_payment", Number(value.mManual_payment));
+      formData.append("search_manual", Number(value.search_manual));
       formData.append("mpayment_info", Number(value.mpayment_info));
       formData.append("other_info", Number(value.other_info));
       axios({
@@ -1581,10 +1581,10 @@ const Report = () => {
                       <input
                         type="checkbox"
                         ref={register}
-                        name="mManual_payment"
-                        id="mManual_payment"
+                        name="search_manual"
+                        id="search_manual"
                       ></input>
-                      <label htmlFor="mManual_payment">Manual Payment</label>
+                      <label htmlFor="search_manual">Manual Payment</label>
                     </span>
                   </div>
                   <div className="basicFeild">
