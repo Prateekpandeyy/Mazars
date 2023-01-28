@@ -382,8 +382,8 @@ const Report = () => {
     let manual_payment_info = false;
     if (
       value.process_status ||
-      value.assessment ||
       value.brief_fact_case ||
+      value.assessment ||
       value.purpose_p ||
       value.p_format ||
       value.t_requested ||
@@ -394,7 +394,6 @@ const Report = () => {
     }
     if (
       value.dateProposal ||
-      value.amount_receipt ||
       value.proposedAmount ||
       value.paymentTerms ||
       value.proposal_status ||
@@ -403,7 +402,8 @@ const Report = () => {
       value.date_acceptance ||
       value.amountOutstanding ||
       value.amount_overdue ||
-      value.declinedDate
+      value.declinedDate ||
+      value.amount_receipt
     ) {
       proposal_info = true;
     }
@@ -416,22 +416,23 @@ const Report = () => {
     ) {
       assignment_info = true;
     }
+
     if (
-      value.receiptDate ||
-      value.amountReceived ||
+      value.sgst_tax ||
+      value.invoice_number ||
+      value.companyName ||
       value.invoice_number ||
       value.dos ||
       value.basic_amount ||
       value.pocket_expensive ||
       value.cget_tax ||
-      value.sgst_tax ||
       value.igst_tax ||
       value.total_gst ||
-      value.total_invoice ||
       value.tds ||
+      value.total_invoice ||
       value.receiptDate ||
-      value.amount_type ||
-      value.amountReceived
+      value.amountReceived ||
+      value.amount_type
     ) {
       payment_info = true;
     }
@@ -593,7 +594,8 @@ const Report = () => {
       basic_info === false &&
       proposal_info === false &&
       assignment_info === false &&
-      payment_info === false
+      payment_info === false &&
+      manual_payment_info === false
     ) {
       Swal.fire({
         title: "error",
