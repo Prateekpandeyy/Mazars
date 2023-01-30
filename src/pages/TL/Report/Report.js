@@ -116,7 +116,6 @@ const Report = () => {
     other_info: false,
   });
   var kk = [];
-  var pp = [];
   var vv = [];
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -124,9 +123,6 @@ const Report = () => {
       uit: token,
     },
   };
-  var allData1 = {};
-  var dir = [];
-  var indir = [];
   const [dd, setDd] = useState([]);
   const history = useHistory();
   const { handleSubmit, register, errors, getValues, reset } = useForm();
@@ -610,6 +606,7 @@ const Report = () => {
       formData.append("proposal_info", Number(proposal_info));
       formData.append("assignment_info", Number(assignment_info));
       formData.append("payment_info", Number(payment_info));
+      formData.append("manual_payment_info", Number(manual_payment_info));
       formData.append("from", value.p_from);
       formData.append("to", value.p_to);
       formData.append("customer_name", cname);

@@ -172,7 +172,6 @@ const Report = () => {
         company.push(a);
       });
       setCompanyName(company);
-      setCompanyName2([company[0]]);
     });
   };
   useEffect(() => {
