@@ -29,6 +29,7 @@ const Direct = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [filterValue, setFilterValue] = useState("DT");
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
@@ -265,6 +266,32 @@ const Direct = () => {
               <div className={classesCustom.articlesDetails}>
                 <div className="bredcrubmWrapperarticle">
                   <SearchBtn outer="outer">
+                    <diiv
+                      style={{
+                        display: "flex",
+                        maxWidth: "150px",
+                        width: "100%",
+                        margin: "0px 10px",
+                      }}
+                    >
+                      <select
+                        style={{
+                          display: "flex",
+                          padding: "5px 15px",
+                          border: "1px solid #ccc",
+                          borderRradius: " 6px",
+                          width: "100%",
+                          backgroundColor: "#fff",
+                          outline: "none",
+                        }}
+                        onChange={(e) => setFilterValue(e.target.value)}
+                        value={filterValue}
+                      >
+                        <option value="DT">DT</option>
+                        <option value="IDT">IDT</option>
+                        <option value="All">All</option>
+                      </select>
+                    </diiv>
                     <input
                       placeholder="Please enter text"
                       className="form-control"
