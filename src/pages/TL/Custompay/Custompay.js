@@ -285,7 +285,7 @@ function Custompay(props) {
                           <option value="neft">NEFT</option>
                           <option value="rgts">RGTS</option>
                           <option value="upi">UPI</option>
-
+                          <option value="cash deposite">Cash deposit</option>
                           <option value="other">Other</option>
                         </select>
                       </div>

@@ -487,6 +487,7 @@ const Report = () => {
         formData.append("search_manual", Number(value.search_manual));
         formData.append("mpayment_info", Number(value.mpayment_info));
         formData.append("other_info", Number(value.other_info));
+        formData.append("how_paid", Number(value.how_paid));
         axios({
           method: "POST",
           url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -637,6 +638,7 @@ const Report = () => {
       formData.append("search_manual", Number(value.search_manual));
       formData.append("mpayment_info", Number(value.mpayment_info));
       formData.append("other_info", Number(value.other_info));
+      formData.append("how_paid", Number(value.how_paid));
       axios({
         method: "POST",
         url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -1532,7 +1534,16 @@ const Report = () => {
                         name="search_manual"
                         id="search_manual"
                       ></input>
-                      <label htmlFor="search_manual">Manual Payment</label>
+                      <label htmlFor="search_manual">Manual credit</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="how_paid"
+                        id="how_paid"
+                      ></input>
+                      <label htmlFor="how_paid">How paid</label>
                     </span>
                   </div>
                   <div className="basicFeild">
@@ -1698,7 +1709,7 @@ const Report = () => {
                   <div className="row">
                     <div className="col-md-12">
                       <fieldset className="my-fieldset">
-                        <legend className="login-legend">Manual Payment</legend>
+                        <legend className="login-legend">Manual credit</legend>
                         <div className="basicFeild">
                           <span>
                             <input
