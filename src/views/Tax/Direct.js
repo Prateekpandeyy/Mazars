@@ -29,7 +29,7 @@ const Direct = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [filterValue, setFilterValue] = useState("DT");
+  const [filterValue, setFilterValue] = useState("Alll");
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
@@ -287,9 +287,9 @@ const Direct = () => {
                         onChange={(e) => setFilterValue(e.target.value)}
                         value={filterValue}
                       >
+                        <option value="All">All</option>
                         <option value="DT">DT</option>
                         <option value="IDT">IDT</option>
-                        <option value="All">All</option>
                       </select>
                     </diiv>
                     <input
