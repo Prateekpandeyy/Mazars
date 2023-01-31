@@ -31,13 +31,15 @@ function QueryRecording(assingNo) {
   const getRecording = () => {
     var confToken = "";
     let apipath = "";
-    if (window.location.pathname.split("/")[1] === "teamleader") {
+    if (window.location.pathname.split("/")[1] === "teamleader_queries") {
       apipath = "tl";
       confToken = window.localStorage.getItem("tlToken");
-    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+    } else if (
+      window.location.pathname.split("/")[1] === "taxprofessional_queries"
+    ) {
       confToken = window.localStorage.getItem("tptoken");
       apipath = "tl";
-    } else if (window.location.pathname.split("/")[1] === "admin") {
+    } else if (window.location.pathname.split("/")[1] === "admin_queries") {
       confToken = window.localStorage.getItem("adminToken");
       apipath = "admin";
     }

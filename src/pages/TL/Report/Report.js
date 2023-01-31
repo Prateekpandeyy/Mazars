@@ -105,6 +105,7 @@ const Report = () => {
     receiptDate: false,
     amount_type: false,
     amountReceived: false,
+    how_paid: false,
   });
   const [manualReceipt, setManualReceipt] = useState({
     mpayable_amount: false,
@@ -428,7 +429,8 @@ const Report = () => {
       value.total_invoice ||
       value.receiptDate ||
       value.amountReceived ||
-      value.amount_type
+      value.amount_type ||
+      value.how_paid
     ) {
       payment_info = true;
     }
@@ -667,7 +669,7 @@ const Report = () => {
       formData.append("amount_type", Number(value.amount_type));
       formData.append("dos", Number(value.dos));
       formData.append("invoice_number", Number(value.invoice_number));
-      formData.append("search_pay_amount", Number(value.search_pay_amount));
+      formData.append("search_online", Number(value.search_online));
       formData.append("invoicing_company", Number(value.companyName));
       formData.append("company", comp);
       formData.append("search_online", Number(value.search_online));
@@ -1584,15 +1586,6 @@ const Report = () => {
                       ></input>
                       <label htmlFor="search_manual">Manual credit</label>
                     </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="how_paid"
-                        id="how_paid"
-                      ></input>
-                      <label htmlFor="how_paid">How paid</label>
-                    </span>
                   </div>
                   <div className="basicFeild">
                     <span>
@@ -1752,6 +1745,17 @@ const Report = () => {
                         id="amount_type"
                       ></input>
                       <label htmlFor="amount_type">Payment mode </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="how_paid"
+                        id="how_paid"
+                        checked={paymentValue.how_paid}
+                        onClick={(e) => handlePayment(e)}
+                      ></input>
+                      <label htmlFor="how_paid">How paid</label>
                     </span>
                   </div>
                   <div className="row">

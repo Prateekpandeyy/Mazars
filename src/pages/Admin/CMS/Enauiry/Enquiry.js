@@ -380,7 +380,7 @@ const Enquiry = (props) => {
 
     <body>
    
-    <table width = "90%" align="center">
+    <table width = "70%" align="center">
 
 
         <tr>
@@ -476,29 +476,29 @@ const Enquiry = (props) => {
  <table style="max-width : 350px; width : 100%; margin : auto;" border="0" align="center" cellspacing="0px"><tr>
  <td>
  <a href = "https://advisorysolutions.mazars.co.in" target = "_blank">
- <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-link-48.png" style="display : block; width : 40%"/>
+ <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-link-48.png" style="display : block; width : 30%"/>
  </a>
  </td>
  
  <td >
  <a href = "https://www.linkedin.com/company/mazars-in-india/" target = "_blank">
- <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-linkedin-48.png" style="display : block; width : 40%"  />
+ <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-linkedin-48.png" style="display : block; width : 30%"  />
  </a>
  </td>
  
  <td >
  <a href = "https://www.instagram.com/mazarsinindia/" target = "_blank">
- <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_instagram-48.png" style="display : block; width : 40%;" />
+ <img src = "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_instagram-48.png" style="display : block; width : 30%;" />
  </a>
  </td>
  <td >
  <a href = "https://www.facebook.com/mazarsinindia/" target = "_blank">
- <img src = "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook_colored_svg_copy-48.png" style="display : block; width : 40%" />
+ <img src = "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook_colored_svg_copy-48.png" style="display : block; width : 30%" />
  </a>
  </td>
  <td >
  <a href = "https://twitter.com/mazarsinindia" target = "_blank">
- <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" style="display : block; width : 40%" />
+ <img src = "https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" style="display : block; width : 30%" />
  </a>
  </td>
  </tr>
