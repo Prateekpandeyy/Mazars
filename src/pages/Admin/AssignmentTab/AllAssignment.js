@@ -23,12 +23,8 @@ import { Spinner } from "reactstrap";
 
 function AssignmentComponent(props) {
   const [loading, setLoading] = useState(false);
-  const userid = window.localStorage.getItem("adminkey");
 
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
-  const { handleSubmit, register, errors, reset } = useForm();
-  const { Option, OptGroup } = Select;
-  const [assignmentCount, setCountAssignment] = useState("");
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
@@ -37,58 +33,46 @@ function AssignmentComponent(props) {
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
   const [error, setError] = useState(false);
+  const [item] = useState(current_date);
+  const [reportModal, setReportModal] = useState(false);
+  const [assignNo, setAssignNo] = useState(null);
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("adminToken");
+  var rowStyle2 = {};
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   var current_date =
     new Date().getFullYear() +
     "-" +
     ("0" + (new Date().getMonth() + 1)).slice(-2) +
     "-" +
     ("0" + new Date().getDate()).slice(-2);
+  const { handleSubmit, register, errors, reset } = useForm();
+  const { Option } = Select;
+  const ViewDiscussionToggel = (key) => {
+    setViewDiscussion(!ViewDiscussion);
+    setAssignNo(key);
+  };
 
-  const [item] = useState(current_date);
-  var rowStyle2 = {};
-  var clcomp = {
-    color: "green",
-  };
-  var clinpro = {
-    color: "blue",
-  };
-  const [reportModal, setReportModal] = useState(false);
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
   };
 
-  const [assignNo, setAssignNo] = useState(null);
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const ViewDiscussionToggel = (key) => {
-    setViewDiscussion(!ViewDiscussion);
-
-    setAssignNo(key);
-  };
-
-  const [viewData, setViewData] = useState({});
-  const [viewModal, setViewModal] = useState(false);
-  const ViewHandler = (key) => {
-    setViewModal(!viewModal);
-    setViewData(key);
-  };
-
   useEffect(() => {
     getAssignmentData();
   }, []);
-  const token = window.localStorage.getItem("adminToken");
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
+
   const getAssignmentData = () => {
     axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
       if (res.data.code === 1) {
-        alert("done");
         setAssignmentDisplay(res.data.result);
-        setCountAssignment(res.data.result.length);
+
         setRecords(res.data.result.length);
+        setLoading(true);
       }
     });
   };
@@ -580,52 +564,48 @@ function AssignmentComponent(props) {
               ) : (
                 ""
               )}
-              {loading ? (
-                // <Loader />
-                <div class="col-md-12">
-                  <Spinner color="primary" />
-                </div>
-              ) : (
-                <button type="submit" className="customBtn">
-                  Search
-                </button>
-              )}
+              <button type="submit" className="customBtn">
+                Search
+              </button>
 
               <Reset />
             </div>
           </form>
         </CardHeader>
 
-        <CardBody>
-          <Records records={records} />
-          <DataTablepopulated
-            bgColor="#5a625a"
-            keyField={"assign_no"}
-            data={assignmentDisplay}
-            rowStyle2={rowStyle2}
-            columns={columns}
-          ></DataTablepopulated>
-
-          {reportModal === true ? (
-            <ViewAllReportModal
-              ViewReport={ViewReport}
-              reportModal={reportModal}
-              report={report}
-              getPendingforAcceptance={getAssignmentData}
-              deleiverAble="#5a625a"
+        {loading === true ? (
+          <CardBody>
+            <Records records={records} />
+            <DiscardReport
+              ViewDiscussionToggel={ViewDiscussionToggel}
+              ViewDiscussion={ViewDiscussion}
+              report={assignNo}
+              getData={getAssignmentData}
+              headColor="#5a625a"
             />
-          ) : (
-            ""
-          )}
+            <DataTablepopulated
+              bgColor="#5a625a"
+              keyField={"assign_no"}
+              data={assignmentDisplay}
+              rowStyle2={rowStyle2}
+              columns={columns}
+            ></DataTablepopulated>
 
-          <DiscardReport
-            ViewDiscussionToggel={ViewDiscussionToggel}
-            ViewDiscussion={ViewDiscussion}
-            report={assignNo}
-            getData={getAssignmentData}
-            headColor="#5a625a"
-          />
-        </CardBody>
+            {reportModal === true ? (
+              <ViewAllReportModal
+                ViewReport={ViewReport}
+                reportModal={reportModal}
+                report={report}
+                getPendingforAcceptance={getAssignmentData}
+                deleiverAble="#5a625a"
+              />
+            ) : (
+              ""
+            )}
+          </CardBody>
+        ) : (
+          ""
+        )}
       </Card>
     </div>
   );
