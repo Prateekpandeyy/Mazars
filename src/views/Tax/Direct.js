@@ -96,6 +96,7 @@ const Direct = () => {
   const searchArticle = () => {
     let formData = new FormData();
     formData.append("content", searchText);
+    formData.append("article_type", filterValue);
     axios({
       method: "POST",
       url: `${baseUrl}/customers/getarticles`,
