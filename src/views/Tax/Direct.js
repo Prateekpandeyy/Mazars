@@ -29,7 +29,7 @@ const Direct = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [filterValue, setFilterValue] = useState("Alll");
+  const [filterValue, setFilterValue] = useState("");
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
@@ -137,6 +137,32 @@ const Direct = () => {
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
             <SearchBtn>
+              <diiv
+                style={{
+                  display: "flex",
+                  maxWidth: "150px",
+                  width: "100%",
+                  margin: "0px 10px",
+                }}
+              >
+                <select
+                  style={{
+                    display: "flex",
+                    padding: "5px 15px",
+                    border: "1px solid #ccc",
+                    borderRradius: " 6px",
+                    width: "100%",
+                    backgroundColor: "#fff",
+                    outline: "none",
+                  }}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                  value={filterValue}
+                >
+                  <option value="">All</option>
+                  <option value="DT">DT</option>
+                  <option value="IDT">IDT</option>
+                </select>
+              </diiv>
               <input
                 placeholder="Please enter text"
                 className="form-control"
@@ -288,7 +314,7 @@ const Direct = () => {
                         onChange={(e) => setFilterValue(e.target.value)}
                         value={filterValue}
                       >
-                        <option value="All">All</option>
+                        <option value="">All</option>
                         <option value="DT">DT</option>
                         <option value="IDT">IDT</option>
                       </select>
