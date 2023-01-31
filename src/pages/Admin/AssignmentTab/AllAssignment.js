@@ -85,6 +85,7 @@ function AssignmentComponent(props) {
   const getAssignmentData = () => {
     axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
       if (res.data.code === 1) {
+        alert("done");
         setAssignmentDisplay(res.data.result);
         setCountAssignment(res.data.result.length);
         setRecords(res.data.result.length);
@@ -595,7 +596,7 @@ function AssignmentComponent(props) {
           </form>
         </CardHeader>
 
-        <CardBody className="card-body">
+        <CardBody>
           <Records records={records} />
           <DataTablepopulated
             bgColor="#5a625a"
