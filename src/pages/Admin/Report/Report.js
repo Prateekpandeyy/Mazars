@@ -1542,49 +1542,69 @@ const Report = () => {
                 <fieldset className="my-fieldset">
                   <legend className="login-legend">Payment receipt</legend>
 
-                  <div className="basicFeild">
-                    <span>
-                      <input
-                        type="checkbox"
-                        onClick={(i) => selectAllPayment(i)}
-                        checked={paymnetCheckbox}
-                        name="selectAllPayment"
-                        className="selectall"
-                        id="selectAllPayment"
-                        ref={register}
-                      ></input>
-                      <label htmlFor="selectAllPayment">Select all</label>
-                    </span>
-                    <span>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <span>
+                        <input
+                          type="checkbox"
+                          style={{ margin: "0px 10px" }}
+                          onClick={(i) => selectAllPayment(i)}
+                          checked={paymnetCheckbox}
+                          name="selectAllPayment"
+                          className="selectall"
+                          id="selectAllPayment"
+                          ref={register}
+                        ></input>
+                        <label htmlFor="selectAllPayment">Select all</label>
+                      </span>
+                    </div>
+                    <div className="col-md-3">
                       <Select
                         isMulti={true}
                         ref={selectInputRef7}
                         options={companyName}
+                        style={{
+                          display: "flex",
+                          width: "300px",
+                        }}
                         value={companyName2}
+                        placeholder="Select Company"
                         onChange={(e) => setCompanyName2(e)}
                       />
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="search_online"
-                        id="search_online"
-                      ></input>
-                      <label htmlFor="search_online">Online Payment</label>
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="search_manual"
-                        checked={manualSearch}
-                        onClick={(e) => setManualSearch(!manualSearch)}
-                        id="search_manual"
-                      ></input>
-                      <label htmlFor="search_manual">Manual credit</label>
-                    </span>
+                    </div>
+                    <div className="col-md-3">
+                      <span>
+                        <input
+                          style={{ margin: "0px 10px" }}
+                          type="checkbox"
+                          ref={register}
+                          name="search_online"
+                          id="search_online"
+                        ></input>
+                        <label htmlFor="search_online">Online Payment</label>
+                      </span>
+                    </div>
+                    <div className="col-md-3">
+                      <span>
+                        <input
+                          style={{ margin: "0px 10px" }}
+                          type="checkbox"
+                          ref={register}
+                          name="search_manual"
+                          checked={manualSearch}
+                          onClick={(e) => {
+                            setManualSearch(!manualSearch);
+                            if (e.target.checked === false) {
+                              selectAllManualPayment(e);
+                            }
+                          }}
+                          id="search_manual"
+                        ></input>
+                        <label htmlFor="search_manual">Manual credit</label>
+                      </span>
+                    </div>
                   </div>
+
                   <div className="basicFeild">
                     <span>
                       <input

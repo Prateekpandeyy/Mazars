@@ -47,6 +47,7 @@ const EmailValidation = (props) => {
           })
           .catch((error) => {});
       } else if (props.panel === "Clinet" && props.clientId.length > 5) {
+        console.log("props", props);
         let formData = new FormData();
         formData.append("user_id", props.clientId);
         formData.append("email", email);
@@ -74,7 +75,7 @@ const EmailValidation = (props) => {
       props.setWemail("Please enter valid email");
     }
   };
-  console.log("props", props.invalid);
+
   return (
     <>
       <input

@@ -730,8 +730,7 @@ function SignUp(props) {
                           Name<span className="declined">*</span>
                         </label>
                         <span
-                          title={`• Enter full name or any chosen name (no special characters allowed.) 
-                            • For registration of business/entity, enter the legal name of the business/entity.`}
+                          title={`Enter full name or any chosen name (no special characters allowed).`}
                         >
                           <input
                             type="text"
