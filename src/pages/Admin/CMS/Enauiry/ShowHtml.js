@@ -18,7 +18,7 @@ const ShowHtml = ({
   console.log("totalType", subject);
 
   return (
-    <Modal isOpen={viewHtml} toggle={openHandler} scrollable size="lg">
+    <Modal isOpen={viewHtml} toggle={openHandler} scrollable>
       <ModalHeader toggle={openHandler}>
         <div>
           <>

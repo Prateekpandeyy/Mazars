@@ -50,6 +50,7 @@ const Report = () => {
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null);
   const [manualCheckbox, setManualCheckbox] = useState(null);
   const [manualSearch, setManualSearch] = useState(false);
+  const [issueInvoice, setIssueInvoice] = useState(false);
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [tlName, setTlName] = useState("");
@@ -491,6 +492,7 @@ const Report = () => {
         formData.append("mpayment_info", Number(value.mpayment_info));
         formData.append("other_info", Number(value.other_info));
         formData.append("how_paid", Number(value.how_paid));
+        formData.append("issue_invoice", issueInvoice);
         axios({
           method: "POST",
           url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -641,6 +643,7 @@ const Report = () => {
       formData.append("mpayment_info", Number(value.mpayment_info));
       formData.append("other_info", Number(value.other_info));
       formData.append("how_paid", Number(value.how_paid));
+      formData.append("issue_invoice", issueInvoice);
       axios({
         method: "POST",
         url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
@@ -1490,7 +1493,7 @@ const Report = () => {
                   <legend className="login-legend">Payment receipt</legend>
 
                   <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <span>
                         <input
                           style={{ margin: "0px 10px" }}
@@ -1517,7 +1520,7 @@ const Report = () => {
                         />
                       </span>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <span>
                         <input
                           style={{ margin: "0px 10px" }}
@@ -1529,7 +1532,7 @@ const Report = () => {
                         <label htmlFor="search_online">Online Payment</label>
                       </span>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <span>
                         <input
                           style={{ margin: "0px 10px" }}
@@ -1546,6 +1549,20 @@ const Report = () => {
                           id="search_manual"
                         ></input>
                         <label htmlFor="search_manual">Manual credit</label>
+                      </span>
+                    </div>
+                    <div className="col-md-2">
+                      <span>
+                        <input
+                          style={{ margin: "0px 10px" }}
+                          type="checkbox"
+                          ref={register}
+                          onClick={(e) => setIssueInvoice(!issueInvoice)}
+                          name="issue_invoice"
+                          checked={issueInvoice}
+                          id="issue_invoice"
+                        ></input>
+                        <label htmlFor="issue_invoice">Issue of invoice </label>
                       </span>
                     </div>
                   </div>
