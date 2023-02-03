@@ -350,7 +350,7 @@ function AssignmentTab() {
               title="Add Assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
-              {row.paid_status ===  "2" ? null : (
+              {row.paid_status == "2" ? null : (
                 <Link to={`/teamleader_addassingment/${row.q_id}`}>
                   <i class="fa fa-tasks"></i>
                 </Link>

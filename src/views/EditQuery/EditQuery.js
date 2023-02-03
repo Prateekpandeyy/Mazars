@@ -13,6 +13,8 @@ import classNames from "classnames";
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import CustomQuillEditor from "../../pages/Admin/CMS/CustomQuillEditor";
+import "react-quill/dist/quill.snow.css";
 import PublishIcon from "@material-ui/icons/Publish";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -36,6 +38,7 @@ function EditQuery(props) {
   const category = window.localStorage.getItem("category");
   const [loading, setLoading] = useState(false);
   const [custcheckError, setCheckerror] = useState(null);
+  const [showEditor, setShowEditor] = useState(false);
   const [queryDocs, setQueryDocs] = useState([]);
   const [qno, setQno] = useState();
   const [selectedOption, setSelectedOption] = useState("");
@@ -98,6 +101,7 @@ function EditQuery(props) {
           } catch (e) {}
 
           setValue2(res.data.result[0].fact_case);
+          setShowEditor(true)
 
           //  setValue("fact_case", res.data.result[0].fact_case);
           setValue("case_name", res.data.result[0].case_name);
@@ -121,6 +125,9 @@ function EditQuery(props) {
 
   const onSubmit = (value) => {
     console.log("done21");
+    var myEditor = document.querySelector("#snow-container");
+    var html = myEditor.children[0].innerHTML;
+    console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
 
     if (purposeOption < 1) {
       setSelectError("At least one value should be enter");
@@ -151,7 +158,7 @@ function EditQuery(props) {
         }
       }
 
-      formData.append("fact", value2);
+      formData.append("fact", html);
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
       formData.append("user", JSON.parse(userId));
@@ -270,7 +277,7 @@ function EditQuery(props) {
                         <span className="declined">*</span>
                       </label>
 
-                      <CKEditor
+                      {/* <CKEditor
                         editor={ClassicEditor}
                         className={classNames("form-control", {
                           "is-invalid": errors.p_fact,
@@ -284,7 +291,19 @@ function EditQuery(props) {
                           // setcustError("")
                         }}
                         //ref={register({ required: true })}
-                      ></CKEditor>
+                      ></CKEditor> */}
+                      <CustomQuillEditor
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_fact,
+                      })}
+                      id="textarea22"
+                      name="p_fact"
+                      content={value2}
+                      showEditor={showEditor}
+                      onChange ={ ( html, delta, source, editor) => {
+                        this.setValue2({ editorHtml: html });
+                      }}
+                      ></CustomQuillEditor>
                     </div>
                   </div>
                 </div>

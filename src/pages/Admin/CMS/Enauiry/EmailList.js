@@ -231,7 +231,7 @@ const EmailList = () => {
 
             {row.status === "0" ? (
               <span className="mx-2">
-                <Link to={`/cms/editenquiry/${row.id}`}>
+                <Link to={`/cms_editenquiry/${row.id}`}>
                   <EditQuery />
                 </Link>
               </span>

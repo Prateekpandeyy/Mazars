@@ -233,8 +233,8 @@ function CompletedQuery({ updateTab }) {
     }).then(function (result) {
       console.log("resutl", result);
       if (result.value) {
-        hist.push(`/teamleader/queryassing/${id}`);
-      } else if (result.dismiss ===  "cancel") {
+        hist.push(`/teamleader_queryassing/${id}`);
+      } else if (result.dismiss == "cancel") {
         axios
           .get(
             `${baseUrl}/tl/workby?uid=${JSON.parse(userid)}&qid=${id}`,

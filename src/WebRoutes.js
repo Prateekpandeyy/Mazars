@@ -502,10 +502,7 @@ function WebRoutes() {
           />
           <PrivateRouteAdmin path="/admin_edittl/:id" component={AdminEditTL} />
           <PrivateRouteAdmin path="/admin_edittp/:id" component={AdminEditTP} />
-          <PrivateRouteAdmin
-            path="/admin_pending/:id"
-            component={AdminPendingRecevived}
-          />
+
           <PrivateRouteAdmin
             path="/admin_query_rejection/:id"
             component={AdminQueryRejection}
@@ -585,7 +582,6 @@ function WebRoutes() {
             path="/teamleader_queryassing/:id"
             component={TlQueryAssingment}
           />
-          <PrivateRouteTL path="/teamleader_edittp/:id" component={TlEditTP} />
           <PrivateRouteTL
             path="/teamleader/feedback"
             component={TlFeedbackTab}
@@ -610,22 +606,12 @@ function WebRoutes() {
             path="/teamleader_edit-proposal/:id"
             component={TlEditProposal}
           />
-          <PrivateRouteTL
-            path="/teamleader_pending/:id"
-            component={TlPendingReceived}
-          />
-          <PrivateRouteTL
-            path="/teamleader_assignment-form/:id"
-            component={TlAssignmentForm}
-          />
+
           <PrivateRouteTL
             path="/teamleader_meeting/:id"
             component={TlMeetingComponent}
           />
-          <PrivateRouteTL
-            path="/teamleader_view-report/:id"
-            component={TlViewReport}
-          />
+
           <PrivateRouteTL path="/teamleader/schedule" component={TlSchedule} />
           <PrivateRouteTL
             path="/teamleader_view-notification/:id"
@@ -823,7 +809,7 @@ function WebRoutes() {
             path="/cms_editvideo/:id"
             component={EditVideo}
           />
-          <PrivateRouteCms exact path="/cms/editfaq/:id" component={EditFaq} />
+          <PrivateRouteCms exact path="/cms_editfaq/:id" component={EditFaq} />
           <PrivateRouteCms exact path="/cms/videolist" component={VideoMedia} />
           <PrivateRouteCms
             exact

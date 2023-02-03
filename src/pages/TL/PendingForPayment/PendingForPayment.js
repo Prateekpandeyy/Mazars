@@ -16,7 +16,6 @@ import "antd/dist/antd.css";
 import { Select } from "antd";
 import BootstrapTable from "react-bootstrap-table-next";
 
-
 function PendingForPayment() {
   const userid = window.localStorage.getItem("tlkey");
   const [pendingForPayment, setPendingForPayment] = useState([]);
@@ -29,13 +28,11 @@ function PendingForPayment() {
     axios
       .get(`${baseUrl}/tl/getProposals?uid=${JSON.parse(userid)}`)
       .then((res) => {
-      
         if (res.data.code === 1) {
-            setPendingForPayment(res.data.result);
+          setPendingForPayment(res.data.result);
         }
       });
   };
-
 
   const columns = [
     {
@@ -55,7 +52,6 @@ function PendingForPayment() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-   
     },
     {
       text: "Query No",
@@ -64,7 +60,6 @@ function PendingForPayment() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-     
         return (
           <>
             <Link to={`/teamleader_queries/${row.id}`}>{row.assign_no}</Link>
@@ -87,7 +82,7 @@ function PendingForPayment() {
       headerStyle: () => {
         return { fontSize: "12px" };
       },
-    },   
+    },
     {
       text: "Client Name",
       dataField: "name",

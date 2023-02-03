@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Swal from "sweetalert2";
-import { Row, Col } from "reactstrap";
+import { Row, Col ,Spinner } from "reactstrap";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import ErrorMessage from "../../../components/ErrorMessage/ErrorMessage";
 const MyContainer = styled(Container)({});
@@ -33,6 +33,7 @@ const MediaGallery = () => {
   const userId = window.localStorage.getItem("adminkey");
   let history = useHistory();
   const [heading, setHeading] = useState("");
+  const [loading, setLoading] = useState(false);
   const [isFile, setIsFile] = useState(true);
   const [file, setFile] = useState("");
   const { handleSubmit, register, errors, getValues } = useForm();
@@ -46,6 +47,7 @@ const MediaGallery = () => {
   const token = localStorage.getItem("token");
 
   const onSubmit = (value) => {
+    setLoading(true);
     if (file?.name?.length > 0) {
       setIsFile(true);
       let formData = new FormData();
@@ -71,6 +73,7 @@ const MediaGallery = () => {
         let a = res.data;
 
         if (res.data.code === 1) {
+          setLoading(false);
           Swal.fire({
             title: "success",
             html: "Image uploaded successfully",
@@ -83,6 +86,7 @@ const MediaGallery = () => {
       });
     } else {
       setIsFile(false);
+      setLoading(false);
     }
   };
   return (
@@ -166,9 +170,14 @@ const MediaGallery = () => {
                 </p>
               </div>
               <div className="row">
+              {loading ? (
+                    <Spinner color="primary" className="ml-4"/>
+                  ):(
                 <div className="col-md-12">
                   <button className="customBtn mt-5">Submit</button>{" "}
                 </div>
+                )
+              }
               </div>
             </InnerBox>
           </form>

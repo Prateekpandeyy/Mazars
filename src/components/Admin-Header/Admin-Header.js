@@ -91,8 +91,7 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId, cmsDashboard
         localStorage.removeItem("tlkey");
         localStorage.removeItem("tlEmail");
         localStorage.removeItem("category");
-        localStorage.removeItem("tlToken")
-
+        localStorage.removeItem("tlToken");
         history.push("/teamleader/login");
 
       })

@@ -13,10 +13,13 @@ import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
 import SearchBtn from "../../components/Common/SearchBtn";
+import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Media = () => {
   const [galleryData, setGalleryData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
 
   useEffect(() => {
     getGalleryData();
@@ -39,11 +42,7 @@ const Media = () => {
       }
     });
   };
-  const goToLogin = (e) => {
-    Swal.fire({
-      html: "Please login to view content",
-    });
-  };
+
   return (
     <>
       {userId ? (
@@ -211,7 +210,9 @@ const Media = () => {
                               width: "50%",
                               height: "50%",
                             }}
-                            onClick={(e) => goToLogin(e)}
+                            onClick={(e) =>
+                              goToLogin(history, "Please login to view content")
+                            }
                             id={i.id}
                             alt="Png Album"
                           />

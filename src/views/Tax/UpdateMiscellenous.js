@@ -22,13 +22,15 @@ import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
 import SearchBtn from "../../components/Common/SearchBtn";
+import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const UpdateMiscellenous = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
-
+  let history = useHistory();
   useEffect(() => {
     getData();
   }, []);
@@ -89,11 +91,7 @@ const UpdateMiscellenous = () => {
       }
     });
   };
-  const goToLogin = (e) => {
-    Swal.fire({
-      html: "Please login to view full update",
-    });
-  };
+
   return (
     <>
       {userId ? (
@@ -340,7 +338,12 @@ const UpdateMiscellenous = () => {
                                           <CustomTypography
                                             cursor="pointer"
                                             hover="hover"
-                                            onClick={(e) => goToLogin(e)}
+                                            onClick={(e) =>
+                                              goToLogin(
+                                                history,
+                                                "Please login to view full update"
+                                              )
+                                            }
                                           >
                                             {i.heading}
                                           </CustomTypography>

@@ -358,7 +358,7 @@ function AdminPermission(props) {
               title="Add assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
             >
-              {row.paid_status ===  "2" ? null : (
+              {row.paid_status == "2" ? null : (
                 <Link to={`/taxprofessional_addassingment/${row.q_id}`}>
                   <i class="fa fa-tasks"></i>
                 </Link>

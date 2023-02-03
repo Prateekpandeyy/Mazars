@@ -21,13 +21,16 @@ import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
 import Layout from "../../components/Layout/Layout";
 import Swal from "sweetalert2";
+import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 import SearchBtn from "../../components/Common/SearchBtn";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const UpdateDirect = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
+  let history = useHistory();
 
   useEffect(() => {
     getData();
@@ -93,11 +96,7 @@ const UpdateDirect = () => {
       }
     });
   };
-  const goToLogin = (e) => {
-    Swal.fire({
-      html: "Please login to view full update",
-    });
-  };
+
   return (
     <>
       {userId ? (
@@ -346,7 +345,10 @@ const UpdateDirect = () => {
                                             cursor="pointer"
                                             hover="hover"
                                             onClick={(e) => {
-                                              goToLogin(e);
+                                              goToLogin(
+                                                history,
+                                                "Please login to view full update"
+                                              );
                                             }}
                                           >
                                             {`${i.heading}`}

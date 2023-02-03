@@ -3,7 +3,7 @@ import axios from "axios";
 // //for development
 
 export default axios.create({
-  baseURL: "https://stagingapi.masindia.live/v1",
+  baseURL: "https://stagingapi-advisorysolutions.mazars.co.in/v1",
   headers: {
     "Content-type": "application/json",
   },

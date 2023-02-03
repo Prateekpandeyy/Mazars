@@ -17,14 +17,13 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
 import { TurnedIn } from "@material-ui/icons";
 function TeamLeaderTab() {
-  
   const [data, setData] = useState([]);
   const [tlCount, setTlCount] = useState("");
-  const [subCat, setsubCat] = useState([])
+  const [subCat, setsubCat] = useState([]);
   const userid = window.localStorage.getItem("adminkey");
-  var kk = []
-  var pp = []
-  
+  var kk = [];
+  var pp = [];
+
   const columns = [
     {
       dataField: "",
@@ -86,23 +85,27 @@ function TeamLeaderTab() {
       },
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
-        digit2 = row.allpcat_id.split(",")
-       
+        digit2 = row.allpcat_id.split(",");
+
         return (
           <>
-
-            {
-              digit2.map((e) => {
-                return (
-                  <>
-                    <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + ","}</p>
-                  </>
-                )
-              })
-            }
+            {digit2.map((e) => {
+              return (
+                <>
+                  <p
+                    className={
+                      e.includes("Indirect") === true ? "dirCla" : "indirCla"
+                    }
+                  >
+                    {" "}
+                    {e + ","}
+                  </p>
+                </>
+              );
+            })}
           </>
-        )
-      }
+        );
+      },
     },
     {
       dataField: "allcat_id",
@@ -113,18 +116,20 @@ function TeamLeaderTab() {
       },
       formatter: function nameFormatter(cell, row) {
         var digit = [];
-     
-        digit = JSON.parse(row.allcat_id);
 
+        digit = JSON.parse(row.allcat_id);
 
         return (
           <>
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + ","} </p>
-            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + ","}</p>
+            <p style={{ color: "blue", diplay: "block" }}>
+              {digit.direct + ","}{" "}
+            </p>
+            <p style={{ color: "green", display: "block" }}>
+              {digit.indirect + ","}
+            </p>
           </>
-
-        )
-      }
+        );
+      },
     },
 
     {
@@ -153,35 +158,27 @@ function TeamLeaderTab() {
             ></i>
           </>
         );
-
       },
-
     },
-
   ];
 
   useEffect(() => {
     getTeamLeader();
-
   }, []);
 
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-    
-      var dd = []
+      var dd = [];
       if (res.data.code === 1) {
-        pp.push(res.data.result)
-        setData((res.data.result));
+        pp.push(res.data.result);
+        setData(res.data.result);
         setTlCount(res.data.result.length);
       }
     });
   };
 
-
   //check
   const del = (id) => {
-   
-
     Swal.fire({
       title: "Are you sure?",
       text: "It will permanently deleted !",
@@ -202,26 +199,18 @@ function TeamLeaderTab() {
     axios
       .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
       .then(function (response) {
-      
         if (response.data.code === 1) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           getTeamLeader();
         } else {
           Swal.fire("Oops...", "Errorr ", "error");
         }
-
       })
-      .catch((error) => {
-       
-      });
+      .catch((error) => {});
   };
 
-
-
   return (
-
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-    
       <Card>
         <CardHeader>
           <Row>
@@ -240,7 +229,6 @@ function TeamLeaderTab() {
             bootstrap4
             keyField="id"
             data={data}
-
             columns={columns}
             rowIndex
           />
@@ -250,4 +238,4 @@ function TeamLeaderTab() {
   );
 }
 
-export default TeamLeaderTab
+export default TeamLeaderTab;

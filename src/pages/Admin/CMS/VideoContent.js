@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Swal from "sweetalert2";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Spinner } from "reactstrap";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import ErrorMessage from "../../../components/ErrorMessage/ErrorMessage";
 const MyContainer = styled(Container)({});
@@ -34,6 +34,7 @@ const VideoContent = () => {
   let history = useHistory();
   const [heading, setHeading] = useState("");
   const [isFile, setIsFile] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState("");
   var current_date =
     new Date().getFullYear() +
@@ -50,6 +51,7 @@ const VideoContent = () => {
   };
   const { handleSubmit, register, errors } = useForm();
   const onSubmit = (value) => {
+    setLoading(true);
     if (file?.name?.length > 0) {
       setIsFile(true);
       let formData = new FormData();
@@ -75,6 +77,7 @@ const VideoContent = () => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
+          setLoading(false);
           Swal.fire({
             title: "success",
             html: "Video Gallery added successfully",
@@ -87,6 +90,7 @@ const VideoContent = () => {
       });
     } else {
       setIsFile(false);
+      setLoading(false);
     }
   };
   return (
@@ -173,9 +177,14 @@ const VideoContent = () => {
                 </p>
               </div>
               <div className="row">
+              {loading ? (
+                    <Spinner color="primary" className="ml-4" />
+                  ):(
                 <div className="col-md-12">
-                  <button className="customBtn mt-5">Submit</button>{" "}
+                      <button className="customBtn mt-5">Submit</button>{" "}
                 </div>
+                )
+              }
               </div>
             </InnerBox>
           </form>

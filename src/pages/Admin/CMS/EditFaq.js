@@ -133,6 +133,7 @@ const EditFaq = () => {
             <div className="col-md-12">
               <CustomQuillEditor content={det} />
             </div>
+            
           </div>
           <div className="row">
             <div className="col-md-3">

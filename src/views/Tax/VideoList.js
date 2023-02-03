@@ -15,13 +15,15 @@ import Swal from "sweetalert2";
 import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
 import SearchBtn from "../../components/Common/SearchBtn";
+import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const VideoList = () => {
   const [galleryData, setGalleryData] = useState([]);
   const [videoId] = useState();
   const [play, isPlay] = useState(false);
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
-
+  let history = useHistory();
   useEffect(() => {
     getGalleryData();
   }, []);
@@ -45,11 +47,7 @@ const VideoList = () => {
       }
     });
   };
-  const goToLogin = (e) => {
-    Swal.fire({
-      html: "Please login to view content",
-    });
-  };
+
   return (
     <>
       {userId ? (
@@ -239,7 +237,9 @@ const VideoList = () => {
                             }}
                             id={i.id}
                             alt="album"
-                            onClick={(e) => goToLogin(e)}
+                            onClick={(e) =>
+                              goToLogin(history, "Please login to view content")
+                            }
                           />
                         </div>
                         <div

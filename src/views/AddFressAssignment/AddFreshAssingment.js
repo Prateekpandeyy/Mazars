@@ -6,11 +6,16 @@ import Select from "react-select";
 import "./style.css";
 import Swal from "sweetalert2";
 import { purpose } from "./data";
+import AddEditor from "../../pages/Admin/CMS/AddEditor";
 import Layout from "../../components/Layout/Layout";
 import { Card, CardHeader, Row, Col } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import Mandatory from "../../components/Common/Mandatory";
 import classNames from "classnames";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import CustomQuillEditor from "../../pages/Admin/CMS/CustomQuillEditor";
+import "../../pages/Admin/CMS/map.css"
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -39,7 +44,6 @@ function AddFreshAssingment(props) {
   const [purposeOption, setPurposeOption] = useState([]);
   const [assessmentYear, setAssessmentYear] = useState([]);
   const [det, addDet] = useState();
-
   const [loading, setLoading] = useState(false);
   const [selectError, setSelectError] = useState();
   const [uploadOrDownloadCount, setUploadOrDownloadCount] = useState(10);
@@ -64,13 +68,17 @@ function AddFreshAssingment(props) {
       }
     });
   };
-
+  
   const onSubmit = (value) => {
-    console.log("deyy", det === undefined);
+    var myEditor = document.querySelector("#snow-container");
+    var html = myEditor.children[0].innerHTML;
+    console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
+    console.log("deyy", html === undefined);
     let timer;
     const a = value.p_fact;
+    
 
-    if (det === undefined || det.length === 0) {
+    if (html === undefined || html.length === 0) {
       Swal.fire({
         title: "error",
         html: "Please enter Brief facts of the case",
@@ -111,7 +119,7 @@ function AddFreshAssingment(props) {
         }
       }
 
-      formData.append("fact", det);
+      formData.append("fact", html);
 
       formData.append("specific", JSON.stringify(value.users));
       formData.append("timelines", value.p_timelines);
@@ -205,14 +213,13 @@ function AddFreshAssingment(props) {
             <div class="col-xl-12 col-lg-12 col-md-12 py-4">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                  <div className="col-md-12">
-                    <div className="mb-3">
+                  <div className="col-md-12 mb-3">
                       <label className="form-label">
                         Brief facts of the case{" "}
                         <span className="declined">*</span>
                       </label>
 
-                      <CKEditor
+                      {/* <CKEditor
                         editor={ClassicEditor}
                         className={classNames("form-control", {
                           "is-invalid": errors.p_fact,
@@ -223,8 +230,20 @@ function AddFreshAssingment(props) {
                         onChange={(event, editor) => {
                           addDet(editor.getData());
                         }}
-                      ></CKEditor>
-                    </div>
+                      ></CKEditor> */}
+                      <AddEditor 
+                      editor={ClassicEditor}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_fact,
+                      })} 
+                      name="p_fact"
+                      id="textarea22"
+                      content={det}
+                      // onChange={e => addDet(e.target.value)}
+                      onChange ={ ( html, delta, source, editor) => {
+                        this.addDet({ editorHtml: html });
+                      }}
+                      ></AddEditor>
                   </div>
                 </div>
                 <div className="row">
