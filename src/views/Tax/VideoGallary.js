@@ -13,11 +13,14 @@ import classes from "./design.module.css";
 import MyContainer from "../../components/Common/MyContainer";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import Layout from "../../components/Layout/Layout";
+import CoolLightbox from "./CoolLightbox";
 const Videogallery = () => {
   const [galleryData, setGalleryData] = useState([]);
+  const [imageData, setImageData] = useState([]);
   const [videoId, setVideoId] = useState();
   const [play, isPlay] = useState(false);
   const [title, setTitle] = useState("");
+  const [fullScreen, setFullScreen] = useState(false);
   const userId = window.localStorage.getItem("userid");
   var aa = localStorage.getItem("videoId");
   let history = useHistory();
@@ -27,7 +30,7 @@ const Videogallery = () => {
   const getGalleryVideo = () => {
     if (history.location.index) {
       localStorage.setItem("videoId", history.location.index.id);
-
+      let kd = [];
       axios
         .get(
           `${baseUrl}/customers/getvideogallery?id=${history.location.index.id}`
@@ -36,16 +39,39 @@ const Videogallery = () => {
           setGalleryData(res.data.result);
           res.data.result.map((i) => {
             setTitle(i.title);
-            return true;
+
+            if (i.name.split(".")[1] === "mp4") {
+            } else {
+              let a = {
+                src: `${baseUrl3}/assets/gallery/${i.name}`,
+                loading: "lazy",
+                alt: i.name,
+              };
+              kd.push(a);
+            }
           });
+
+          setImageData(kd);
+          return true;
         });
     } else {
+      let kd = [];
       axios.get(`${baseUrl}/customers/getvideogallery?id=${aa}`).then((res) => {
         setGalleryData(res.data.result);
         res.data.result.map((i) => {
           setTitle(i.title);
-          return true;
+          if (i.name.split(".")[1] === "mp4") {
+          } else {
+            let a = {
+              src: `${baseUrl3}/assets/gallery/${i.name}`,
+              loading: "lazy",
+              alt: i.name,
+            };
+            kd.push(a);
+          }
         });
+        setImageData(kd);
+        return true;
       });
     }
   };
@@ -58,6 +84,11 @@ const Videogallery = () => {
     <>
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
+          {fullScreen === true ? (
+            <CoolLightbox setFullScreen={setFullScreen} fullData={imageData} />
+          ) : (
+            ""
+          )}
           <OuterloginContainer>
             <MyContainer>
               <div className={classes.articleContent}>
@@ -136,49 +167,35 @@ const Videogallery = () => {
                             ) : (
                               <>
                                 {history.location.index ? (
-                                  <Link
-                                    style={{ display: "flex", width: "100%" }}
-                                    to={{
-                                      pathname: "/customer/imagegallery",
-                                      index: i.name,
+                                  <img
+                                    style={{
+                                      display: "flex",
+                                      zIndex: 1,
+                                      maxWidth: "150px",
+                                      maxHeight: "100px",
+                                      height: "100%",
+                                      width: "100%",
                                     }}
-                                  >
-                                    <img
-                                      style={{
-                                        display: "flex",
-                                        zIndex: 1,
-                                        maxWidth: "150px",
-                                        maxHeight: "100px",
-                                        height: "100%",
-                                        width: "100%",
-                                      }}
-                                      alt="Gallery"
-                                      id={i.id}
-                                      src={`${baseUrl3}/assets/gallery/${i.name}`}
-                                    />
-                                  </Link>
+                                    onClick={(e) => setFullScreen(true)}
+                                    alt="Gallery"
+                                    id={i.id}
+                                    src={`${baseUrl3}/assets/gallery/${i.name}`}
+                                  />
                                 ) : (
-                                  <Link
-                                    style={{ display: "flex", width: "100%" }}
-                                    to={{
-                                      pathname: "/customer/imagegallery",
-                                      index: i.name,
+                                  <img
+                                    style={{
+                                      display: "flex",
+                                      zIndex: 1,
+                                      maxWidth: "150px",
+                                      maxHeight: "100px",
+                                      height: "100%",
+                                      width: "100%",
                                     }}
-                                  >
-                                    <img
-                                      style={{
-                                        display: "flex",
-                                        zIndex: 1,
-                                        maxWidth: "150px",
-                                        maxHeight: "100px",
-                                        height: "100%",
-                                        width: "100%",
-                                      }}
-                                      alt="Refresh Gallery"
-                                      id={i.id}
-                                      src={`${baseUrl3}/assets/gallery/${i.name}`}
-                                    />
-                                  </Link>
+                                    onClick={(e) => setFullScreen(true)}
+                                    alt="Refresh Gallery"
+                                    id={i.id}
+                                    src={`${baseUrl3}/assets/gallery/${i.name}`}
+                                  />
                                 )}
                               </>
                             )}
@@ -243,7 +260,9 @@ const Videogallery = () => {
                     >
                       Video Gallery
                     </Link>
-                    <Typography color="text.primary"> {title}</Typography>
+                    {title && (
+                      <Typography color="text.primary"> {title}</Typography>
+                    )}
                   </Breadcrumbs>
 
                   <div

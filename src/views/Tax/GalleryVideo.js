@@ -50,10 +50,10 @@ const GalleryVideo = () => {
           });
           setFullData(kd);
         });
-    } else if (typeof history.location.index.id === "string") {
+    } else if (typeof history.location?.index?.id === "string") {
       axios
         .get(
-          `${baseUrl}/customers/getvideogallery?id=${history.location.index.id}`
+          `${baseUrl}/customers/getvideogallery?id=${history.location?.index?.id}`
         )
         .then((res) => {
           res.data.result.map((i) => {
@@ -68,7 +68,7 @@ const GalleryVideo = () => {
           });
         });
     } else {
-      setTitle(history.location.index.split(".")[0]);
+      setTitle(history.location?.index?.split(".")[0]);
 
       let a = {
         original: `${baseUrl3}/assets/gallery/${history.location.index}`,
@@ -79,7 +79,7 @@ const GalleryVideo = () => {
       setImages(obj);
     }
   };
-  console.log("Images", fullData);
+  console.log("Images", window.location);
   return (
     <>
       <>
@@ -135,9 +135,9 @@ const GalleryVideo = () => {
                         <div className="imgBox">
                           <img
                             src={`${baseUrl3}/assets/gallery/${
-                              i.name.split(".")[0] +
+                              i?.name.split(".")[0] +
                               "_thumb." +
-                              i.name.split(".")[1]
+                              i?.name.split(".")[1]
                             }`}
                             alt="Images album"
                             className="img-responsive"

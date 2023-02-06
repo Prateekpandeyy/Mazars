@@ -260,6 +260,13 @@ const MediaGallery = () => {
             icon: "success",
           });
           history.push("/cms/imagelist");
+        } else if (res.data.code === 0) {
+          setLoading(false);
+          Swal.fire({
+            title: "error",
+            html: "Something went wrong",
+            icon: "error",
+          });
         } else if (res.data.code === 102) {
           history.push("/cms/login");
         }
