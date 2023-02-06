@@ -978,3 +978,12 @@ color: #ffffff;
     height: 100%;
     padding: 1.7rem 0rem;
   }
+  /* emailer modal */
+  .modal-dialog:has(.modalShowHtml){
+    max-width: 585px!important;
+}
+.modalShowHtml tbody tr td:has(p){
+    min-height: 59px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

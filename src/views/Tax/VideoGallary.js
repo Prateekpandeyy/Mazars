@@ -121,8 +121,6 @@ const Videogallery = () => {
                       style={{
                         display: "flex",
                         flexWrap: "wrap",
-                        height: "130px",
-                        overflow: "hidden",
                       }}
                     >
                       {galleryData.map((i) => (
@@ -138,13 +136,21 @@ const Videogallery = () => {
                           >
                             {(i.name.split(".")[1] === "mp4") === true ? (
                               <>
-                                <div style={{ position: "relative" }}>
+                                <div
+                                  style={{
+                                    position: "relative",
+                                    margin: "10px 0px",
+                                    maxHeight: "100px",
+                                    overflow: "hidden",
+                                  }}
+                                >
                                   <video
                                     onClick={(e) => playVideo2(i.name)}
                                     style={{
                                       display: "flex",
                                       zIndex: 1,
                                       width: "100%",
+                                      height: "130px",
                                     }}
                                     id={i.id}
                                     src={`${baseUrl3}/assets/gallery/${i.name}`}

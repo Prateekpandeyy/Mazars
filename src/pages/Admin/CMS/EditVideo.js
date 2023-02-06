@@ -1,35 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import { Container, Box, Paper } from '@material-ui/core';
-import classNames from 'classnames';
-import { styled } from '@mui/material';
-import { useHistory, useParams } from 'react-router';
+import { Container, Box, Paper } from "@material-ui/core";
+import classNames from "classnames";
+import { styled } from "@mui/material";
+import { useHistory, useParams } from "react-router";
 import { useState } from "react";
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { baseUrl, baseUrl3 } from '../../../config/config';
-import Swal from 'sweetalert2';
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { baseUrl, baseUrl3 } from "../../../config/config";
+import Swal from "sweetalert2";
 import { DeleteIcon, EyeIcon } from "../../../components/Common/MessageIcon";
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import {
-
-  Row,
-  Col,
-
-} from "reactstrap";
-import CustomHeading from '../../../components/Common/CustomHeading';
-const MyContainer = styled(Container)({
-
-})
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import { Row, Col } from "reactstrap";
+import CustomHeading from "../../../components/Common/CustomHeading";
+import { Spinner } from "reactstrap";
+const MyContainer = styled(Container)({});
 
 const MyBox = styled(Box)({
   display: "flex",
   width: "100%",
   height: "500px",
   justifyContent: "center",
-  alignItems: "center"
-})
+  alignItems: "center",
+});
 const InnerBox = styled(Paper)({
   display: "flex",
   flexDirection: "column",
@@ -37,52 +31,63 @@ const InnerBox = styled(Paper)({
   minHeight: "300px",
   width: "400px",
   lineHeight: "30px",
-  borderRadius: "10px"
-})
+  borderRadius: "10px",
+});
 const EditVideo = () => {
   const userId = window.localStorage.getItem("adminkey");
-  let history = useHistory()
-  const [heading, setHeading] = useState("")
-  const [date, setDate] = useState("")
-  const [data, setData] = useState([])
-  const [imgResult, setImgResult] = useState([])
+  let history = useHistory();
+  const [heading, setHeading] = useState("");
+  const [date, setDate] = useState("");
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [imgResult, setImgResult] = useState([]);
   const { handleSubmit, register, errors, getValues } = useForm();
-  let getId = useParams()
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
+  let getId = useParams();
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
   const [item] = useState(current_date);
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const myConfig = {
-    headers : {
-     "uit" : token
-    }
-  }
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
   const getData = (e) => {
-
     if (getId.id !== undefined) {
-      axios.get(`${baseUrl}/cms/getgallarylist?uid=${JSON.parse(userId)}&type=video&id=${getId.id}`, myConfig)
+      axios
+        .get(
+          `${baseUrl}/cms/getgallarylist?uid=${JSON.parse(
+            userId
+          )}&type=video&id=${getId.id}`,
+          myConfig
+        )
         .then((res) => {
-
           setData(res.data.files);
           res.data.result.map((i) => {
-            setImgResult(res.data.result)
-            setHeading(i.title)
+            setImgResult(res.data.result);
+            setHeading(i.title);
 
-            setDate(i.created_date.split(" ")[0].split("-").join("-"))
-          })
-        })
+            setDate(i.created_date.split(" ")[0].split("-").join("-"));
+          });
+        });
     }
-  }
+  };
 
   const onSubmit = (value) => {
+    setLoading(true);
     let formData = new FormData();
     let file;
     formData.append("title", heading);
     formData.append("type", "video");
-    formData.append("date_event", value.date_event)
-    formData.append("id", getId.id)
+    formData.append("date_event", value.date_event);
+    formData.append("id", getId.id);
     var uploadImg = value.uploadImg;
     if (uploadImg) {
       for (var i = 0; i < uploadImg.length; i++) {
@@ -91,42 +96,49 @@ const EditVideo = () => {
       }
     }
 
-
     axios({
       method: "POST",
       url: `${baseUrl}/cms/uploadphoto`,
-      headers : {
-        uit : token
+      headers: {
+        uit: token,
       },
-      data: formData
+      data: formData,
     })
       .then((res) => {
-        let a = res.data
-    
+        let a = res.data;
+
         if (res.data.code === 1) {
+          setLoading(false);
           Swal.fire({
             title: "success",
             html: "Video Gallery Update successfully",
-            icon: "success"
-          })
-          history.push("/cms/videolist")
+            icon: "success",
+          });
+          history.push("/cms/videolist");
+        } else {
+          setLoading(false);
+          Swal.fire({
+            title: "error",
+            html: "Something went wrong",
+            icon: "error",
+          });
         }
       })
-
-  }
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
 
   const del = (e) => {
-    
-let message = ""
-let confirmationMessage = ""
-if(e.name.split(".")[1] === "mp4"){
-  message = "Video deleted successfully"
-  confirmationMessage = "Do you want to delete video? Yes, delete it!"
-}
-else{
-  message = "Image deleted successfully"
-  confirmationMessage = "Do you want to delete image? Yes, delete it!"
-}
+    let message = "";
+    let confirmationMessage = "";
+    if (e.name.split(".")[1] === "mp4") {
+      message = "Video deleted successfully";
+      confirmationMessage = "Do you want to delete video? Yes, delete it!";
+    } else {
+      message = "Image deleted successfully";
+      confirmationMessage = "Do you want to delete image? Yes, delete it!";
+    }
     Swal.fire({
       title: "Are you sure?",
       text: `${confirmationMessage}`,
@@ -137,63 +149,52 @@ else{
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
-        axios.get(`${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${imgResult[0].id}&videooid=${e.imageid}`, myConfig)
+        axios
+          .get(
+            `${baseUrl}/cms/deletevideo?uid=${JSON.parse(userId)}&id=${
+              imgResult[0].id
+            }&videooid=${e.imageid}`,
+            myConfig
+          )
           .then((res) => {
-          
             if (res.data.code === 1) {
               Swal.fire({
                 title: "success",
                 html: `${message}`,
-                icon: "success"
-              })
-              getData()
-            }
-            else if (res.data.code === 102){
-              history.push("/cms/login")
-            }
-            else {
+                icon: "success",
+              });
+              getData();
+            } else if (res.data.code === 102) {
+              history.push("/cms/login");
+            } else {
               Swal.fire({
                 title: "error",
                 html: "Something went wrong , please try again",
-                icon: "error"
-              })
+                icon: "error",
+              });
             }
-          })
+          });
       }
     });
   };
   return (
     <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
-
       <MyContainer>
         <Row className="my-2">
           <Col md="4">
-            <button
-              className="autoWidthBtn"
-              onClick={() => history.goBack()}
-            >
-
+            <button className="autoWidthBtn" onClick={() => history.goBack()}>
               Go Back
             </button>
-
           </Col>
           <Col md="4" alig="center">
-            <CustomHeading>
-              Video gallery
-            </CustomHeading>
-        
+            <CustomHeading>Video gallery</CustomHeading>
           </Col>
         </Row>
         <MyBox>
-
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-
-
             <InnerBox>
-
               <div className="row">
                 <div className="col-md-12 col-sm-12">
-
                   <label className="form-label">Title</label>
                   <input
                     type="text"
@@ -210,7 +211,6 @@ else{
               </div>
               <div className="row">
                 <div className="col-md-12 col-sm-12">
-
                   <label className="form-label">Date</label>
                   <input
                     type="date"
@@ -219,25 +219,44 @@ else{
                     ref={register}
                     className="form-control"
                     max={item}
-
                   />
                 </div>
               </div>
-              <div className="row" style={{
-                display: "flex", maxHeight: "100px",
-                padding: "10px 0", overflow: "auto"
-              }}>
+              <div
+                className="row"
+                style={{
+                  display: "flex",
+                  maxHeight: "100px",
+                  padding: "10px 0",
+                  overflow: "auto",
+                }}
+              >
                 {data.map((i, e) => (
                   <div className="col-md-12 col-sm-12">
-                    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-                      {
-                        i.name.split(".")[1] === "mp4" === true ?
-                          <a href={`${baseUrl3}/assets/gallery/${i.name}`} className="tabHover" target="_blank">
-                            <OndemandVideoIcon className="inprogress" />
-                          </a> :
-                          <a href={`${baseUrl3}/assets/gallery/${i.name}`} className="tabHover" target="_blank">
-                            <InsertPhotoIcon className="inprogress" />
-                          </a>}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                      }}
+                    >
+                      {(i.name.split(".")[1] === "mp4") === true ? (
+                        <a
+                          href={`${baseUrl3}/assets/gallery/${i.name}`}
+                          className="tabHover"
+                          target="_blank"
+                        >
+                          <OndemandVideoIcon className="inprogress" />
+                        </a>
+                      ) : (
+                        <a
+                          href={`${baseUrl3}/assets/gallery/${i.name}`}
+                          className="tabHover"
+                          target="_blank"
+                        >
+                          <InsertPhotoIcon className="inprogress" />
+                        </a>
+                      )}
 
                       <span onClick={() => del(i)}>
                         <DeleteIcon />
@@ -248,8 +267,9 @@ else{
               </div>
               <div className="row">
                 <div className="col-md-12 col-sm-12">
-
-                  <label className="form-label">Media  <sup className="declined"> *</sup></label>
+                  <label className="form-label">
+                    Media <sup className="declined"> *</sup>
+                  </label>
 
                   <input
                     type="file"
@@ -260,25 +280,35 @@ else{
                     multiple
                   />
                 </div>
-
               </div>
-              <div style={{display :"flex", width: "100%", mmargin: "5px 0", justifyContent : "flex-end"}}>
-                    <p> <sup className="declined"> *</sup>jpeg,gif,png , mp4,wav,avi,mov,3gp,flv,amv,m4v only</p>
-                    </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  mmargin: "5px 0",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <p>
+                  {" "}
+                  <sup className="declined"> *</sup>jpeg,gif,png ,
+                  mp4,wav,avi,mov,3gp,flv,amv,m4v only
+                </p>
+              </div>
               <div className="row">
                 <div className="col-md-12">
-                  <button className="customBtn mt-5">Submit</button> </div>
+                  {loading === false ? (
+                    <button className="customBtn mt-5">Submit</button>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
               </div>
             </InnerBox>
-
-
-
-
-
           </form>
         </MyBox>
       </MyContainer>
     </Layout>
-  )
-}
+  );
+};
 export default EditVideo;
