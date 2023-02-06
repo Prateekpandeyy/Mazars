@@ -33,7 +33,7 @@ const Videogallery = () => {
       let kd = [];
       axios
         .get(
-          `${baseUrl}/customers/getvideogallery?id=${history.location.index.id}`
+          `${baseUrl}/customers/getvideogallerydetail?id=${history.location.index.id}`
         )
         .then((res) => {
           setGalleryData(res.data.result);
@@ -56,23 +56,25 @@ const Videogallery = () => {
         });
     } else {
       let kd = [];
-      axios.get(`${baseUrl}/customers/getvideogallery?id=${aa}`).then((res) => {
-        setGalleryData(res.data.result);
-        res.data.result.map((i) => {
-          setTitle(i.title);
-          if (i.name.split(".")[1] === "mp4") {
-          } else {
-            let a = {
-              src: `${baseUrl3}/assets/gallery/${i.name}`,
-              loading: "lazy",
-              alt: i.name,
-            };
-            kd.push(a);
-          }
+      axios
+        .get(`${baseUrl}/customers/getvideogallerydetail?id=${aa}`)
+        .then((res) => {
+          setGalleryData(res.data.result);
+          res.data.result.map((i) => {
+            setTitle(i.title);
+            if (i.name.split(".")[1] === "mp4") {
+            } else {
+              let a = {
+                src: `${baseUrl3}/assets/gallery/${i.name}`,
+                loading: "lazy",
+                alt: i.name,
+              };
+              kd.push(a);
+            }
+          });
+          setImageData(kd);
+          return true;
         });
-        setImageData(kd);
-        return true;
-      });
     }
   };
   const playVideo2 = (e) => {
