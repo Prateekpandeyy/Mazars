@@ -138,7 +138,15 @@ const VideoList = () => {
                                 index: i,
                               }}
                             >
-                              <CustomTypography hover="hover" cursor="pointer">
+                              <CustomTypography
+                                style={{
+                                  overflow: "hidden",
+                                  wordBreak: "break-all",
+                                  height: "40px",
+                                }}
+                                hover="hover"
+                                cursor="pointer"
+                              >
                                 {i.title}
                               </CustomTypography>
                             </Link>
@@ -261,7 +269,11 @@ const VideoList = () => {
                         >
                           <CustomTypography
                             title={i.title}
-                            style={{ overflow: "hidden" }}
+                            style={{
+                              overflow: "hidden",
+                              wordBreak: "break-all",
+                              height: "40px",
+                            }}
                             cursor="pointer"
                             onClick={(e) =>
                               goToLogin(history, "Please login to view content")
