@@ -130,9 +130,19 @@ const VideoList = () => {
                               justifyContent: "space-between",
                             }}
                           >
-                            <CustomTypography hover="hover" cursor="pointer">
-                              {i.title}
-                            </CustomTypography>
+                            <Link
+                              style={{ display: "flex", overflow: "hidden" }}
+                              title={i.title}
+                              to={{
+                                pathname: "/customer/videogallery",
+                                index: i,
+                              }}
+                            >
+                              <CustomTypography hover="hover" cursor="pointer">
+                                {i.title}
+                              </CustomTypography>
+                            </Link>
+
                             <CustomTypography>
                               {i.created_date
                                 .split(" ")[0]
@@ -249,7 +259,16 @@ const VideoList = () => {
                             justifyContent: "space-between",
                           }}
                         >
-                          <CustomTypography>{i.title}</CustomTypography>
+                          <CustomTypography
+                            title={i.title}
+                            style={{ overflow: "hidden" }}
+                            cursor="pointer"
+                            onClick={(e) =>
+                              goToLogin(history, "Please login to view content")
+                            }
+                          >
+                            {i.title}
+                          </CustomTypography>
                           <CustomTypography>
                             {i.created_date
                               .split(" ")[0]

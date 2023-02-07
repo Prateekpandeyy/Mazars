@@ -30,8 +30,8 @@ const InnerBox = styled(Paper)({
 });
 const MediaContent = () => {
   const [galleryData, setGalleryData] = useState([]);
-  const [large, setLarge] = useState(false);
-  const userId = window.localStorage.getItem("adminkey");
+
+  const userId = window.localStorage.getItem("cmsId");
   const token = window.localStorage.getItem("token");
   const myConfig = {
     headers: {
@@ -90,6 +90,19 @@ const MediaContent = () => {
       }
     });
   };
+  const myShowValue = (e, row) => {
+    axios
+      .get(
+        `${baseUrl}/cms/setgallerystatus?uid=${JSON.parse(userId)}&id=${
+          row.id
+        }&status=0`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.result === 1) {
+        }
+      });
+  };
   const columns = [
     {
       dataField: "",
@@ -146,7 +159,7 @@ const MediaContent = () => {
             <div
               style={{
                 display: "flex",
-                width: "70px",
+                width: "120px",
                 alignItems: "center",
                 justifyContent: "space-evenly",
               }}
@@ -158,6 +171,45 @@ const MediaContent = () => {
               <span onClick={() => del(row)}>
                 <DeleteIcon titleName="Delete Photo Gallery" />
               </span>
+              {row.status === undefined ? (
+                <div>
+                  <label
+                    className="switch"
+                    onChange={(e) => myShowValue(e, row)}
+                  >
+                    <input type="checkbox" defaultChecked />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              ) : (
+                ""
+              )}
+              {row.status == "1" ? (
+                <div>
+                  <label
+                    className="switch"
+                    onChange={(e) => myShowValue(e, row)}
+                  >
+                    <input type="checkbox" defaultChecked />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              ) : (
+                ""
+              )}
+              {row.status == "0" ? (
+                <div>
+                  <label
+                    className="switch"
+                    onChange={(e) => myShowValue(e, row)}
+                  >
+                    <input type="checkbox" />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </>
         );

@@ -223,6 +223,7 @@ const VideoContent = () => {
   const [isFile, setIsFile] = useState(true);
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState("");
+  const [stats, setStats] = useState(false);
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -247,6 +248,7 @@ const VideoContent = () => {
       formData.append("title", heading);
       formData.append("type", "video");
       formData.append("date_event", value.date_event);
+      formData.append("status", Number(stats));
       var uploadImg = value.p_upload;
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
@@ -271,6 +273,13 @@ const VideoContent = () => {
             icon: "success",
           });
           history.push("/cms/videolist");
+        } else if (res.data.code === 0) {
+          setLoading(false);
+          Swal.fire({
+            title: "error",
+            html: "Something went wrong",
+            icon: "error",
+          });
         } else if (res.data.code === 102) {
           history.push("/cms/login");
         }
@@ -280,6 +289,10 @@ const VideoContent = () => {
       setLoading(false);
     }
   };
+  const myLabel = (e) => {
+    setStats(!stats);
+  };
+
   return (
     <Layout cmsDashboard="cmsDashboard">
       <MyContainer>
@@ -347,6 +360,24 @@ const VideoContent = () => {
                   ) : (
                     ""
                   )}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <span style={{ margin: "10px 0" }}>
+                    <input
+                      type="checkbox"
+                      style={{ margin: "10px 0px" }}
+                      name="hide"
+                      checked={stats}
+                      id="hide"
+                      onChange={(e) => myLabel(e)}
+                    ></input>
+                    <label htmlFor="hide" style={{ margin: "10px" }}>
+                      {" "}
+                      Publish
+                    </label>
+                  </span>
                 </div>
               </div>
               <div
