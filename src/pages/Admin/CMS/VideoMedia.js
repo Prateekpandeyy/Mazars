@@ -60,7 +60,7 @@ const VideoMedia = () => {
   const myShowValue = (e, row) => {
     axios
       .get(
-        `${baseUrl}/cms/cms/setgallerystatus?uid=${JSON.parse(userId)}&id=${
+        `${baseUrl}/cms/setgallerystatus?uid=${JSON.parse(userId)}&id=${
           row.id
         }&status=0`,
         myConfig

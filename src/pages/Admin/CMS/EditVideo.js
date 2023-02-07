@@ -183,7 +183,7 @@ const EditVideo = () => {
     });
   };
   return (
-    <Layout cmsDashboard="cmsDashboard" adminUserId={userId}>
+    <Layout cmsDashboard="cmsDashboard">
       <MyContainer>
         <Row className="my-2">
           <Col md="4">

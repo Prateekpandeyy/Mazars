@@ -128,9 +128,20 @@ const Media = () => {
                               justifyContent: "space-between",
                             }}
                           >
-                            <CustomTypography hover="hover" cursor="pointer">
-                              {i.title}
-                            </CustomTypography>
+                            <Link
+                              title={i.title}
+                              style={{ display: "flex", overflow: "hidden" }}
+                              to={{
+                                pathname: "/customer/imagegallery",
+                                index: i,
+                                hash: "images",
+                              }}
+                            >
+                              <CustomTypography hover="hover" cursor="pointer">
+                                {i.title}
+                              </CustomTypography>
+                            </Link>
+
                             <CustomTypography>
                               {i.created_date
                                 .split(" ")[0]
@@ -226,7 +237,16 @@ const Media = () => {
                             justifyContent: "space-between",
                           }}
                         >
-                          <CustomTypography>{i.title}</CustomTypography>
+                          <CustomTypography
+                            cursor="pointer"
+                            title={i.title}
+                            style={{ overflow: "hidden" }}
+                            onClick={(e) =>
+                              goToLogin(history, "Please login to view content")
+                            }
+                          >
+                            {i.title}
+                          </CustomTypography>
                           <CustomTypography>
                             {i.created_date
                               .split(" ")[0]
