@@ -236,6 +236,11 @@ const GroupImage = () => {
                 <CustomHeading>Photo gallery</CustomHeading>
               </Col>
             </Row>
+            <Row>
+              <Col md="12" align="center" style={{ wordBreak: "break-word" }}>
+                <CustomHeading>{imageId[0]?.title}</CustomHeading>
+              </Col>
+            </Row>
           </div>
           <div className="galleryContainer">
             {galleryData.map((i) => (
@@ -258,7 +263,7 @@ const GroupImage = () => {
                     }`}
                   />
                 </a>
-                <h4 style={{ margin: "5px 10px" }}>{imageId[0].title}</h4>
+
                 <div className="delIcon">
                   <span title="Delete Photo" onClick={() => del(i)}>
                     <DeleteIcon />

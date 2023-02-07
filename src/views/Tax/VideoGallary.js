@@ -166,7 +166,7 @@ const Videogallery = () => {
                                         height: "40px",
                                         position: "absolute",
                                         top: "33%",
-                                        left: "50%",
+                                        left: "40%",
                                       }}
                                     />
                                   </span>
