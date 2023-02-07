@@ -684,23 +684,26 @@ function SignUp(props) {
                         <label className="form-label">
                           User Id<span className="declined">*</span>
                         </label>
-                        <input
-                          type="text"
-                          autoComplete="off"
-                          onChange={(e) => getUser(e)}
-                          onBlur={() => validateUser()}
-                          maxLength="16"
-                          name="p_user"
-                          value={user}
-                          ref={register({ required: true })}
-                          placeholder="minimum 6 alphanumeric characters (no special character)"
-                          className={classNames("form-control", {
-                            "is-invalid":
-                              errors.p_user ||
-                              userError.length > 0 ||
-                              userAvailable.flag === 0,
-                          })}
-                        />
+                        <span title="Enter minimum 6 alpha numeric character (no special character) to form an user id.">
+                          <input
+                            type="text"
+                            autoComplete="off"
+                            onChange={(e) => getUser(e)}
+                            onBlur={() => validateUser()}
+                            maxLength="16"
+                            name="p_user"
+                            value={user}
+                            ref={register({ required: true })}
+                            placeholder="minimum 6 alphanumeric characters (no special character)"
+                            className={classNames("form-control", {
+                              "is-invalid":
+                                errors.p_user ||
+                                userError.length > 0 ||
+                                userAvailable.flag === 0,
+                            })}
+                          />
+                        </span>
+
                         <span
                           style={{
                             display: "flex",
@@ -733,19 +736,24 @@ function SignUp(props) {
                         <label className="form-label">
                           Name<span className="declined">*</span>
                         </label>
-                        <input
-                          type="text"
-                          name="p_name"
-                          value={name}
-                          maxLength="100"
-                          onBlur={(e) => checkNameError(e)}
-                          onChange={(e) => checkSpecial(e)}
-                          ref={register({ required: true })}
-                          placeholder="Enter name containing no special characters"
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_name || nameError === true,
-                          })}
-                        />
+                        <span
+                          title={`Enter full name or any chosen name (no special characters allowed).`}
+                        >
+                          <input
+                            type="text"
+                            name="p_name"
+                            value={name}
+                            maxLength="100"
+                            onBlur={(e) => checkNameError(e)}
+                            onChange={(e) => checkSpecial(e)}
+                            ref={register({ required: true })}
+                            placeholder="Enter name containing no special characters"
+                            className={classNames("form-control", {
+                              "is-invalid": errors.p_name || nameError === true,
+                            })}
+                          />
+                        </span>
+
                         <span
                           style={{
                             display: "flex",

@@ -12,6 +12,8 @@ import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import { Spinner } from "reactstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import CustomQuillEditor from "../../Admin/CMS/CustomQuillEditor";
+import "react-quill/dist/quill.snow.css";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -26,6 +28,7 @@ function EditComponent(props) {
 
   const [companyName, setCompanyName] = useState([]);
   const [clearValue, setClearValue] = useState(true);
+  const [showEditor, setShowEditor] = useState(false);
   const [payment, setPayment] = useState([]);
   const [installment, setInstallment] = useState([]);
   const [value2, setValue2] = useState("");
@@ -146,7 +149,7 @@ function EditComponent(props) {
           ) {
             dis.push(1);
           }
-
+          setShowEditor(true)
           setFormInstallmentInfo({
             dueDate1: res.data.result.due_date.split(","),
             amount: mainAmount,
@@ -356,12 +359,18 @@ function EditComponent(props) {
   };
 
   const onSubmit = (value) => {
+    var myEditor = document.querySelector("#snow-container");
+    var html = myEditor.children[0].innerHTML;
+    console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
     if (value2) {
       if (diserror && diserror.length > 0) {
         return false;
       } else if (dateError === true) {
         Alerts.ErrorNormal("Date must be unique");
-      } else {
+      } else if (html === undefined || html.length === 0){
+        return false;
+      } 
+      else {
         var lumsum = value.p_inst_date;
         if (store === "1") {
           setDate(lumsum);
@@ -374,7 +383,7 @@ function EditComponent(props) {
         formData.append("type", "tl");
         formData.append("id", JSON.parse(userid));
         formData.append("assign_id", id);
-        formData.append("description", value2);
+        formData.append("description", html);
         formData.append("amount_type", "fixed");
         formData.append("amount", totalAmount);
         formData.append("installment_amount", formInstallmentInfo.amount);
@@ -1155,7 +1164,7 @@ function EditComponent(props) {
                   <label>
                     Scope of work <span className="declined">*</span>
                   </label>
-                  <CKEditor
+                  {/* <CKEditor
                     editor={ClassicEditor}
                     height="400px"
                     config={{
@@ -1215,7 +1224,17 @@ function EditComponent(props) {
                       // setcustError("")
                     }}
                     //ref={register({ required: true })}
-                  ></CKEditor>
+                  ></CKEditor> */}
+                  <CustomQuillEditor
+                      id="textarea"
+                      name="description"
+                      ref={register}
+                      content={description}
+                      showEditor={showEditor}
+                      onChange ={ ( html, delta, source, editor) => {
+                        this.setValue2({ editorHtml: html });
+                      }}
+                      ></CustomQuillEditor>
                 </div>
               </div>
 

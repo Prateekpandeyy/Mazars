@@ -22,6 +22,8 @@ import { Spinner } from "reactstrap";
 import Swal from "sweetalert2";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import AddEditor from "../../Admin/CMS/AddEditor";
+import "../../Admin/CMS/map.css"
 
 function ProposalComponent(props) {
   const { id } = props;
@@ -117,6 +119,9 @@ function ProposalComponent(props) {
   }, []);
 
   const onSubmit = (value) => {
+    var myEditor = document.querySelector("#snow-container");
+    var html = myEditor.children[0].innerHTML;
+    console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
     if (det) {
       if (diserror.length > 0) {
         return false;
@@ -124,7 +129,11 @@ function ProposalComponent(props) {
         Alerts.ErrorNormal("Date must be unique");
       } else if (det && det.length ===  0) {
         return false;
-      } else {
+      }
+      else if (html === undefined || html.length === 0){
+        return false;
+      }
+       else {
         var lumsum = value.p_inst_date;
         if (store === "1") {
           setDate(lumsum);
@@ -139,7 +148,7 @@ function ProposalComponent(props) {
         formData.append("id", JSON.parse(userid));
         formData.append("assign_id", assignId);
 
-        formData.append("description", det);
+        formData.append("description", html);
         formData.append("amount_type", "fixed");
         formData.append("amount", value.p_fixed);
         formData.append("installment_amount", allAmount);
@@ -552,7 +561,7 @@ function ProposalComponent(props) {
                     Scope of work<span className="declined">*</span>
                   </label>
 
-                  <CKEditor
+                  {/* <CKEditor
                     editor={ClassicEditor}
                     height="600px"
                     config={{
@@ -628,7 +637,19 @@ function ProposalComponent(props) {
                     onChange={(event, editor) => {
                       addDet(editor.getData());
                     }}
-                  ></CKEditor>
+                  ></CKEditor> */}
+                  <AddEditor 
+                      editor={ClassicEditor}
+                      className={classNames("form-control", {
+                        "is-invalid": errors.p_fact,
+                      })} 
+                      name="p_fact"
+                      id="textarea22"
+                      content={det}
+                      onChange ={ ( html, delta, source, editor) => {
+                        this.addDet({ editorHtml: html });
+                      }}
+                      ></AddEditor>
                 </div>
               </div>
 

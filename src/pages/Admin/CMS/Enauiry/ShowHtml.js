@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Markup } from "interweave";
 import CustomTypography from "../../../../components/Common/CustomTypography";
 import CustomHeading from "../../../../components/Common/CustomHeading";
+import "./ShowHtml.css"
 const ShowHtml = ({
   mailerBody,
   openHandler,
@@ -15,10 +16,11 @@ const ShowHtml = ({
   const handleClose = () => {
     setOpen(!open);
   };
+  
   console.log("totalType", subject);
 
   return (
-    <Modal isOpen={viewHtml} toggle={openHandler} scrollable size="lg">
+    <Modal isOpen={viewHtml} toggle={openHandler} scrollable contentClassName="modalShowHtml">
       <ModalHeader toggle={openHandler}>
         <div>
           <>

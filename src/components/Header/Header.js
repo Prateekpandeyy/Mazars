@@ -52,10 +52,8 @@ function Header({
     }
     
     const handleScroll = (event) => {
-      
-      if (window.pageYOffset > 0) {
+      if (document.documentElement.scrollTop > 0) {
         setLogomin(true);
-        // console.log(window.pageYOffset);
       } else if (
         window.location.pathname.split("/")[1] === "customer" 
         ||
@@ -75,7 +73,14 @@ function Header({
 
   return (
     <>
-      <div className={logomin === true ? "headerMin" : "header"}>
+      <div
+        className={
+          window.location.pathname.split("/")[1] === "customer" ||
+          window.location.pathname.split("/")[1].length === 0
+            ? "header"
+            : "headerMin"
+        }
+      >
         {id && (
           <div className={logomin === true ? "logomin" : "logo"}>
             <Link to="/customer/questionnaire-page">
