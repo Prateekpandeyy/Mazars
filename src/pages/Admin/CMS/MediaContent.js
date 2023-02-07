@@ -30,8 +30,7 @@ const InnerBox = styled(Paper)({
 });
 const MediaContent = () => {
   const [galleryData, setGalleryData] = useState([]);
-  const [check, setCheck] = useState(true);
-  let history = useHistory();
+
   const userId = window.localStorage.getItem("cmsId");
   const token = window.localStorage.getItem("token");
   const myConfig = {
@@ -52,6 +51,7 @@ const MediaContent = () => {
         setGalleryData(res.data.result);
       });
   };
+  let history = useHistory();
 
   const del = (e) => {
     Swal.fire({
@@ -91,33 +91,17 @@ const MediaContent = () => {
     });
   };
   const myShowValue = (e, row) => {
-    if (e.target.checked === true) {
-      axios
-        .get(
-          `${baseUrl}/cms/setgallerystatus?uid=${JSON.parse(userId)}&id=${
-            row.id
-          }&status=0`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.result === 1) {
-            setCheck(true);
-          } else {
-            setCheck(true);
-          }
-        });
-    } else {
-      axios
-        .get(
-          `${baseUrl}/cms/setarticlestatus?uid=${JSON.parse(userId)}&id=${
-            row.id
-          }&status=1`,
-          myConfig
-        )
-        .then((res) => {
-          setCheck(false);
-        });
-    }
+    axios
+      .get(
+        `${baseUrl}/cms/cms/setgallerystatus?uid=${JSON.parse(userId)}&id=${
+          row.id
+        }&status=0`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.result === 1) {
+        }
+      });
   };
   const columns = [
     {
@@ -187,8 +171,20 @@ const MediaContent = () => {
               <span onClick={() => del(row)}>
                 <DeleteIcon titleName="Delete Photo Gallery" />
               </span>
-
-              {row.status == "1" || row.status === undefined ? (
+              {row.status === undefined ? (
+                <div>
+                  <label
+                    className="switch"
+                    onChange={(e) => myShowValue(e, row)}
+                  >
+                    <input type="checkbox" defaultChecked />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              ) : (
+                ""
+              )}
+              {row.status == "1" ? (
                 <div>
                   <label
                     className="switch"
