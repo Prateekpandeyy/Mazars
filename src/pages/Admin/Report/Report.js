@@ -1455,7 +1455,7 @@ const Report = () => {
                         checked={proposalValue.issue_invoice}
                         id="issue_invoice"
                       ></input>
-                      <label htmlFor="issue_invoice">Issue of invoice </label>
+                      <label htmlFor="issue_invoice">Issue to invoice </label>
                     </span>
                   </div>
                 </fieldset>
