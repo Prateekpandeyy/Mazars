@@ -34,14 +34,18 @@ const InnerBox = styled(Paper)({
   borderRadius: "10px",
 });
 const EditVideo = () => {
-  const userId = window.localStorage.getItem("adminkey");
+  const userId = window.localStorage.getItem("cmsId");
   let history = useHistory();
   const [heading, setHeading] = useState("");
   const [date, setDate] = useState("");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imgResult, setImgResult] = useState([]);
-  const { handleSubmit, register, errors, getValues } = useForm();
+  const [stats, setStats] = useState(false);
+  const { handleSubmit, register, errors } = useForm();
+  const myLabel = (e) => {
+    setStats(!stats);
+  };
   let getId = useParams();
   var current_date =
     new Date().getFullYear() +
@@ -73,7 +77,7 @@ const EditVideo = () => {
           res.data.result.map((i) => {
             setImgResult(res.data.result);
             setHeading(i.title);
-
+            setStats(i.status);
             setDate(i.created_date.split(" ")[0].split("-").join("-"));
           });
         });
@@ -88,6 +92,7 @@ const EditVideo = () => {
     formData.append("type", "video");
     formData.append("date_event", value.date_event);
     formData.append("id", getId.id);
+    formData.append("status", Number(stats));
     var uploadImg = value.uploadImg;
     if (uploadImg) {
       for (var i = 0; i < uploadImg.length; i++) {
@@ -279,6 +284,24 @@ const EditVideo = () => {
                     className="form-control-file"
                     multiple
                   />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <span style={{ margin: "10px 0" }}>
+                    <input
+                      type="checkbox"
+                      style={{ margin: "10px 0px" }}
+                      name="hide"
+                      checked={stats}
+                      id="hide"
+                      onChange={(e) => myLabel(e)}
+                    ></input>
+                    <label htmlFor="hide" style={{ margin: "10px" }}>
+                      {" "}
+                      Publish
+                    </label>
+                  </span>
                 </div>
               </div>
               <div

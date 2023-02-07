@@ -216,7 +216,8 @@ const MediaGallery = () => {
   const [loading, setLoading] = useState(false);
   const [isFile, setIsFile] = useState(true);
   const [file, setFile] = useState("");
-  const { handleSubmit, register, errors, getValues } = useForm();
+  const [stats, setStats] = useState(false);
+  const { handleSubmit, register, errors } = useForm();
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -225,6 +226,9 @@ const MediaGallery = () => {
     ("0" + new Date().getDate()).slice(-2);
   const [item] = useState(current_date);
   const token = localStorage.getItem("token");
+  const myLabel = (e) => {
+    setStats(!stats);
+  };
 
   const onSubmit = (value) => {
     setLoading(true);
@@ -235,6 +239,7 @@ const MediaGallery = () => {
       formData.append("title", heading);
       formData.append("type", "image");
       formData.append("date_event", value.date_event);
+      formData.append("status", Number(stats));
       var uploadImg = value.uploadImg;
       if (uploadImg) {
         for (var i = 0; i < uploadImg.length; i++) {
@@ -341,6 +346,24 @@ const MediaGallery = () => {
                   ) : (
                     ""
                   )}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <span style={{ margin: "10px 0" }}>
+                    <input
+                      type="checkbox"
+                      style={{ margin: "10px 0px" }}
+                      name="hide"
+                      checked={stats}
+                      id="hide"
+                      onChange={(e) => myLabel(e)}
+                    ></input>
+                    <label htmlFor="hide" style={{ margin: "10px" }}>
+                      {" "}
+                      Publish
+                    </label>
+                  </span>
                 </div>
               </div>
               <div

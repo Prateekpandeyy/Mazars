@@ -32,7 +32,7 @@ const InnerBox = styled(Paper)({
   borderRadius: "10px",
 });
 const EditImage = () => {
-  const userId = window.localStorage.getItem("adminkey");
+  const userId = window.localStorage.getItem("cmsId");
   let history = useHistory();
   const [heading, setHeading] = useState("");
   const [date, setDate] = useState("");
@@ -40,6 +40,7 @@ const EditImage = () => {
   const [images, setImages] = useState([]);
   const [imgResult, setImgResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState(false);
   const token = localStorage.getItem("token");
   const myConfig = {
     headers: {
@@ -73,12 +74,15 @@ const EditImage = () => {
           setData(res.data.files);
           res.data.result.map((i) => {
             setHeading(i.title);
-
+            setStats(i.status);
             setDate(i.created_date.split(" ")[0].split("-").join("-"));
             setImages(i.name);
           });
         });
     }
+  };
+  const myLabel = (e) => {
+    setStats(!stats);
   };
   const del = (e) => {
     Swal.fire({
@@ -126,6 +130,7 @@ const EditImage = () => {
     formData.append("type", "image");
     formData.append("date_event", value.date_event);
     formData.append("id", getId.id);
+    formData.append("status", Number(stats));
     var uploadImg = value.uploadImg;
     if (uploadImg) {
       for (var i = 0; i < uploadImg.length; i++) {
@@ -254,6 +259,24 @@ const EditImage = () => {
                     className="form-control-file manage_file"
                     multiple
                   />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <span style={{ margin: "10px 0" }}>
+                    <input
+                      type="checkbox"
+                      style={{ margin: "10px 0px" }}
+                      name="hide"
+                      checked={stats}
+                      id="hide"
+                      onChange={(e) => myLabel(e)}
+                    ></input>
+                    <label htmlFor="hide" style={{ margin: "10px" }}>
+                      {" "}
+                      Publish
+                    </label>
+                  </span>
                 </div>
               </div>
               <div
