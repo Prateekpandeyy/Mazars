@@ -39,7 +39,9 @@ function Footer(props) {
           <SocialIcons />
           <div style={{ display: "flex", justifyContent: "center" }}>
             <CustomTypography>
-              <a onClick={() => myLink("enquiry")}>Enquiry &nbsp;|</a>
+              <a className="tabHover" onClick={() => myLink("enquiry")}>
+                Enquiry &nbsp;|
+              </a>
             </CustomTypography>
             <CustomTypography>
               <a onClick={() => myLink("contactbasic")}>

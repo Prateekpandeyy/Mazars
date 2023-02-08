@@ -176,7 +176,7 @@ function Sidebar({
     }
   };
   useEffect(() => {
-    getFeedbacktl();
+    setTimeout(getFeedbacktl, 60000 * 10);
   }, [TLDashboard]);
 
   const getFeedbacktp = () => {

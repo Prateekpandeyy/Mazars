@@ -90,7 +90,6 @@ function Updates() {
     showLinkData();
   }, []);
   const showLinkData = () => {
-    alert("done");
     if (getId === 3) {
       axios.get(`${baseUrl}/customers/getimportantlink`).then((res) => {
         console.log("res", res);

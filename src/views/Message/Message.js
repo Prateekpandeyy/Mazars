@@ -2,22 +2,14 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../common/common";
 import { useHistory } from "react-router";
 import CustomHeading from "../../components/Common/CustomHeading";
+import CustomTypography from "../../components/Common/CustomTypography";
 function Message(props) {
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);
@@ -127,7 +119,10 @@ function Message(props) {
                   onClick={() => readNotification(row.id)}
                   title="unread"
                 >
-                  <p>{row.message}</p>
+                  <CustomTypography cursor="pointer" hover="hover">
+                    {row.message}
+                  </CustomTypography>
+
                   <i class="fa fa-bullseye" style={{ color: "#BC363D" }}></i>
                 </div>
               ) : (
@@ -140,7 +135,9 @@ function Message(props) {
                   }}
                   title="read"
                 >
-                  <p>{row.message}</p>
+                  <CustomTypography cursor="pointer" hover="hover">
+                    {row.message}
+                  </CustomTypography>
                   <i class="fa fa-bullseye" style={{ color: "#348719" }}></i>
                 </div>
               )}

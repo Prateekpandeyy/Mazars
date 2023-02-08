@@ -126,7 +126,9 @@ const GalleryVideo = () => {
                           </Link>
                         )}
 
-                        <Typography>{title}</Typography>
+                        <Typography style={{ wordBreak: "break-all" }}>
+                          {title}
+                        </Typography>
                       </Breadcrumbs>
                     </>
 

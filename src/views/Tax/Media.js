@@ -94,7 +94,7 @@ const Media = () => {
                             style={{
                               display: "flex",
                               justifyContent: "center",
-                              height: "70%",
+                              height: "55%",
                               width: "100%",
                               alignItems: "center",
                             }}
@@ -217,7 +217,7 @@ const Media = () => {
                           style={{
                             display: "flex",
 
-                            height: "70%",
+                            height: "55%",
                             width: "100%",
                             alignItems: "center",
                           }}

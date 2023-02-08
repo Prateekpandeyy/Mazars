@@ -99,7 +99,7 @@ const VideoList = () => {
                             style={{
                               display: "flex",
                               justifyContent: "center",
-                              height: "70%",
+                              height: "55%",
                               width: "100%",
                               alignItems: "center",
                             }}
@@ -241,7 +241,7 @@ const VideoList = () => {
                           style={{
                             display: "flex",
 
-                            height: "70%",
+                            height: "55%",
                             width: "100%",
                             alignItems: "center",
                           }}

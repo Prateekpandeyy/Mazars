@@ -46,18 +46,20 @@ function Custompay(props) {
     },
   };
   useEffect(() => {
-    axios
-      .get(
-        `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(
-          userId
-        )}&invoice=1&invoice_id=${props.location.data.id}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setData(res.data.payment_detail[0]);
-        }
-      });
+    if (props.location.data.id) {
+      axios
+        .get(
+          `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(
+            userId
+          )}&invoice=1&invoice_id=${props.location.data.id}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setData(res.data.payment_detail[0]);
+          }
+        });
+    }
   }, [props]);
 
   const onSubmit = (value) => {
