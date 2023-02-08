@@ -127,13 +127,11 @@ function ProposalComponent(props) {
     console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
     console.log("deyy", html === undefined);
 
-    if (det) {
+    if (html) {
       if (diserror.length > 0) {
         return false;
       } else if (dateError === true) {
         Alerts.ErrorNormal("Date must be unique");
-      } else if (det && det.length ===  0) {
-        return false;
       } else if (html === undefined || html.length === 0){
         return false;
       }
@@ -155,7 +153,7 @@ function ProposalComponent(props) {
         formData.append("id", JSON.parse(userid));
         formData.append("assign_id", assignId);
 
-        formData.append("description", det);
+        formData.append("description", html);
         formData.append("amount_type", "fixed");
         formData.append("amount", value.p_fixed);
         formData.append("installment_amount", allAmount);
@@ -393,6 +391,7 @@ function ProposalComponent(props) {
     console.log("event", event, editor.getData());
     addDet(editor.getData());
   };
+  
 
   return (
     <>
@@ -656,7 +655,7 @@ function ProposalComponent(props) {
                       getEditor(event, editor);
                     }}
                   ></CKEditor> */}
-                   <AddEditor 
+                   {/* <AddEditor 
                       editor={ClassicEditor}
                       className={classNames("form-control", {
                         "is-invalid": errors.p_fact,
@@ -664,13 +663,13 @@ function ProposalComponent(props) {
                       id="textarea22"
                       name="p_fact"
                       content={det}
-                      // onChange={e => addDet(e.target.value)}
                       onChange ={ ( html, delta, source, editor) => {
-                        this.getEditor({ editorHtml: html });
+                          addDet({ editorHtml: html });
                       }}
                       // onChange={(event, editor) => {
                       //   addDet(editor.getData());}}
-                      ></AddEditor>
+                      ></AddEditor> */}
+                      <AddEditor />
                 </div>
               </div>
 

@@ -361,8 +361,9 @@ function EditComponent(props) {
   const onSubmit = (value) => {
     var myEditor = document.querySelector("#snow-container");
     var html = myEditor.children[0].innerHTML;
+    setValue2(html)
     console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
-    if (value2) {
+    if (html) {
       if (diserror && diserror.length > 0) {
         return false;
       } else if (dateError === true) {
@@ -1226,14 +1227,13 @@ function EditComponent(props) {
                     //ref={register({ required: true })}
                   ></CKEditor> */}
                   <CustomQuillEditor
-                      id="textarea"
-                      name="description"
-                      ref={register}
+                      // id="textarea"
+                      // name="description"
                       content={description}
-                      showEditor={showEditor}
-                      onChange ={ ( html, delta, source, editor) => {
-                        this.setValue2({ editorHtml: html });
-                      }}
+                      // showEditor={showEditor}
+                      // onChange ={ ( html, delta, source, editor) => {
+                      //   this.setValue2({ editorHtml: html });
+                      // }}
                       ></CustomQuillEditor>
                 </div>
               </div>

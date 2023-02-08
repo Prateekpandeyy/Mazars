@@ -1078,8 +1078,6 @@ span {
     height: 100%;
     padding: 1.7rem 0rem;
   }
-<<<<<<< HEAD
-=======
   /* emailer modal */
   .modal-dialog:has(.modalShowHtml){
     max-width: 585px!important;
@@ -1089,4 +1087,3 @@ span {
     padding-left: 10px;
     padding-right: 10px;
 }
->>>>>>> a87490f7380cc2498981f4001e3a56d19b7b6de3

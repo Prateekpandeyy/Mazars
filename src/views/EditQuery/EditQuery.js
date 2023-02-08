@@ -127,6 +127,7 @@ function EditQuery(props) {
     console.log("done21");
     var myEditor = document.querySelector("#snow-container");
     var html = myEditor.children[0].innerHTML;
+    setValue2(html)
     console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
 
     if (purposeOption < 1) {
@@ -293,16 +294,16 @@ function EditQuery(props) {
                         //ref={register({ required: true })}
                       ></CKEditor> */}
                       <CustomQuillEditor
-                      className={classNames("form-control", {
-                        "is-invalid": errors.p_fact,
-                      })}
-                      id="textarea22"
-                      name="p_fact"
+                      // className={classNames("form-control", {
+                      //   "is-invalid": errors.p_fact,
+                      // })}
+                      // id="textarea22"
+                      // name="p_fact"
                       content={value2}
-                      showEditor={showEditor}
-                      onChange ={ ( html, delta, source, editor) => {
-                        this.setValue2({ editorHtml: html });
-                      }}
+                      // showEditor={showEditor}
+                      // onChange ={ ( html, delta, source, editor) => {
+                      //   this.setValue2({ editorHtml: html });
+                      // }}
                       ></CustomQuillEditor>
                     </div>
                   </div>

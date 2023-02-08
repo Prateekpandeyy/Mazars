@@ -122,18 +122,16 @@ function ProposalComponent(props) {
     var myEditor = document.querySelector("#snow-container");
     var html = myEditor.children[0].innerHTML;
     console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
-    if (det) {
+    if (html) {
       if (diserror.length > 0) {
         return false;
       } else if (dateError === true) {
         Alerts.ErrorNormal("Date must be unique");
-      } else if (det && det.length ===  0) {
+      }else if (html === undefined || html.length === 0)
+      {
         return false;
-      }
-      else if (html === undefined || html.length === 0){
-        return false;
-      }
-       else {
+      }else 
+      {
         var lumsum = value.p_inst_date;
         if (store === "1") {
           setDate(lumsum);
@@ -638,7 +636,7 @@ function ProposalComponent(props) {
                       addDet(editor.getData());
                     }}
                   ></CKEditor> */}
-                  <AddEditor 
+                  {/* <AddEditor 
                       editor={ClassicEditor}
                       className={classNames("form-control", {
                         "is-invalid": errors.p_fact,
@@ -649,7 +647,8 @@ function ProposalComponent(props) {
                       onChange ={ ( html, delta, source, editor) => {
                         this.addDet({ editorHtml: html });
                       }}
-                      ></AddEditor>
+                      ></AddEditor> */}
+                      <AddEditor />
                 </div>
               </div>
 
