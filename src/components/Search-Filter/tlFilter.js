@@ -105,7 +105,9 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
             data.p_status
-          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -123,7 +125,9 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/pendingQues?id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -141,7 +145,9 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
             userid
-          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -159,7 +165,9 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${
             data.p_status
-          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -177,7 +185,9 @@ function TeamFilter(props) {
         .get(
           `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
