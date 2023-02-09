@@ -537,7 +537,7 @@ function TeamFilter(props) {
                     </select>
                   )}
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 p-0">
                   <input
                     type="text"
                     name="query_no"
