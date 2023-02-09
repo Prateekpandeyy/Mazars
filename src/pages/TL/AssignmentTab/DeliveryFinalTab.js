@@ -443,7 +443,9 @@ function AssignmentTab() {
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
           data.p_dateTo
-        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`,
+        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${
+          data.query_no
+        }`,
         myConfig
       )
 
@@ -555,7 +557,15 @@ function AssignmentTab() {
                   max={item}
                 />
               </div>
-
+              <div className="form-group mx-sm-1  mb-2">
+                <input
+                  type="text"
+                  name="query_no"
+                  ref={register}
+                  placeholder="Enter Query Number"
+                  className="form-control"
+                />
+              </div>
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">
                   Total Records : {records}

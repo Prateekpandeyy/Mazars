@@ -498,7 +498,7 @@ function AssignmentTab(props) {
             data.p_dateTo
           }&assignment_status=${status}&stages_status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -519,7 +519,7 @@ function AssignmentTab(props) {
             data.p_dateTo
           }&assignment_status=${status}&stages_status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -693,7 +693,15 @@ function AssignmentTab(props) {
               ) : (
                 " "
               )}
-
+              <div className="form-group mx-sm-1  mb-2">
+                <input
+                  type="text"
+                  name="query_no"
+                  ref={register}
+                  placeholder="Enter Query Number"
+                  className="form-control"
+                />
+              </div>
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">
                   Total Records : {records}
