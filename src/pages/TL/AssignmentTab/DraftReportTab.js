@@ -441,8 +441,9 @@ function AssignmentTab() {
           userid
         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
           data.p_dateTo
-        }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}&qno=${data.query_no}`,
+        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}&qno=${
+          data.query_no
+        }`,
         myConfig
       )
       .then((res) => {

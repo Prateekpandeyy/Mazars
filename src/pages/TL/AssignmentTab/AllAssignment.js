@@ -490,6 +490,7 @@ function AssignmentTab(props) {
 
   const onSubmit = (data) => {
     if (status.length > 0) {
+      console.log("done");
       axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -523,6 +524,7 @@ function AssignmentTab(props) {
           myConfig
         )
         .then((res) => {
+          console.log("done");
           if (res.data.code === 1) {
             if (res.data.result) {
               setAssignment(res.data.result);

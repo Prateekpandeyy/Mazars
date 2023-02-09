@@ -411,7 +411,7 @@ function AdminPermission(props) {
     } else {
       axios
         .get(
-          `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
+          `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
