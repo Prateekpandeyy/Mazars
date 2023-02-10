@@ -103,7 +103,6 @@ import TlSendProposal from "./pages/TL/SendProposal/SendProposal";
 import TlQueriesTab from "./pages/TL/QueriesTab/QueriesTab";
 import TlEditProposal from "./pages/TL/EditProposal/EditProposal";
 import TlPendingReceived from "./pages/TL//PendingReceived/PendingReceived";
-import TlAssignmentForm from "./pages/TL/AssignmentForm/AssignmentForm";
 import TlViewReport from "./pages/TL/ViewReport/ViewReport";
 import TlForgetPassword from "./pages/TL/ForgetPassword/ForgetPassword";
 import TlNewPassword from "./pages/TL/NewPassword/NewPassword";

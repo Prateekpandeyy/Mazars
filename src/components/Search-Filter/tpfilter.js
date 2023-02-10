@@ -108,7 +108,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${
             data.p_status
-          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -126,7 +128,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -144,7 +148,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
             userid
-          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -162,7 +168,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
             data.p_status
-          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -180,7 +188,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -200,7 +210,7 @@ function TaxProfessionalFilter(props) {
             userid
           )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -220,7 +230,7 @@ function TaxProfessionalFilter(props) {
             userid
           )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -238,7 +248,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -257,7 +269,7 @@ function TaxProfessionalFilter(props) {
             userid
           )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -275,7 +287,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -293,7 +307,9 @@ function TaxProfessionalFilter(props) {
         .get(
           `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
+          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
           myConfig
         )
         .then((res) => {
@@ -503,7 +519,15 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
                 </div>
-
+                <div className="form-group mx-sm-1  mb-2">
+                  <input
+                    type="text"
+                    name="query_no"
+                    ref={register}
+                    placeholder="Enter Query Number"
+                    className="form-control"
+                  />
+                </div>
                 <button type="submit" className="customBtn mx-sm-1 mb-2">
                   Search
                 </button>

@@ -5,76 +5,83 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 
 import Swal from "sweetalert2";
-import { Spinner } from 'reactstrap';
-import Select from 'react-select'
+import { Spinner } from "reactstrap";
+import Select from "react-select";
 
-
-
-function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, uploadDraftReport, id, getAssignmentList , des}) {
- 
+function DraftReport({
+  loading,
+  qno,
+  setDraftModal,
+  setLoading,
+  draftModal,
+  uploadDraftReport,
+  id,
+  getAssignmentList,
+  des,
+}) {
   const { handleSubmit, register, reset } = useForm();
-  const [client, setClient] = useState([])
-  const [email, setEmail] = useState("")
-  const [copyUser, setCopyUser] = useState([])
-  const token = window.localStorage.getItem("tptoken")
+  const [client, setClient] = useState([]);
+  const [email, setEmail] = useState("");
+  const [copyUser, setCopyUser] = useState([]);
+  const token = window.localStorage.getItem("tptoken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
 
-    const getClient = () => {
-      console.log("done")
-      let collectData = []
-      axios.get(
-        `${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig
-      )
+  const getClient = () => {
+    console.log("done");
+    let collectData = [];
+    axios
+      .get(`${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig)
       .then((res) => {
-        let email = {}
-        console.log("response", res)
+        let email = {};
+        console.log("response", res);
         res.data.result.map((i) => {
-          console.log("iii", i)
+          console.log("iii", i);
           email = {
-            label : i.email,
-            value : i.email
-          }
-          collectData.push(email)
-          
-        })
-        console.log("data", collectData)
-        setClient(collectData)
-      })
-    }
+            label: i.email,
+            value: i.email,
+          };
+          collectData.push(email);
+        });
+        console.log("data", collectData);
+        setClient(collectData);
+      });
+  };
   const selectedUser = () => {
-    let collectData = []
-    axios.get(`${baseUrl}/tl/getreportemail?id=${qno}`, myConfig)
-    .then((res) => {
-      let email = {}
-      console.log("response", res)
-      res.data.result.map((i) => {
-        console.log("iii", i)
-        email = {
-          label : i.email,
-          value : i.email
-        }
-        collectData.push(email)
-        
-      })
-      setCopyUser(collectData)
-    })
-  }
-    useEffect(() => {
-      getClient()
-      selectedUser()
-    }, [draftModal === true]);
-  
+    let collectData = [];
+    if (qno) {
+      axios
+        .get(`${baseUrl}/tl/getreportemail?id=${qno}`, myConfig)
+        .then((res) => {
+          let email = {};
+          console.log("response", res);
+          res.data.result.map((i) => {
+            console.log("iii", i);
+            email = {
+              label: i.email,
+              value: i.email,
+            };
+            collectData.push(email);
+          });
+          setCopyUser(collectData);
+        });
+    }
+  };
+  useEffect(() => {
+    getClient();
+    selectedUser();
+  }, [draftModal === true]);
+
   const onSubmit = (value) => {
     des = false;
-    setLoading(true)
+    setLoading(true);
 
     let formData = new FormData();
     var uploadImg = value.p_draft;
-   formData.append("emails", email)
+    formData.append("emails", email);
 
     if (uploadImg) {
       for (var i = 0; i < uploadImg.length; i++) {
@@ -84,76 +91,73 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
     }
 
     formData.append("id", id);
-    axios.post(`${baseUrl}/tl/UploadReport`, formData, {
-      headers: {
-        'content-type': 'multipart/form-data',
-        uit: token
-      }
-    }).then(response => {
-    
-      if (response.data.code === 1 && des === false) {
-        des = true
-        setLoading(false)
-        var message = response.data.message
-        if (message.invalid) {
-          Swal.fire({
-            title: 'Error !',
-            html: `<p class="text-danger">${message.invalid}</p>`,
-          })
-        } else if (message.faill && message.success) {
-          Swal.fire({
-            title: 'Success',
-            html: `<p class="text-danger">${message.faill}</p> <br/> <p>${message.success}</p> `,
-            icon: 'success',
-          })
-        } else if (message.success) {
-          Swal.fire({
-            title: 'Success',
-            html: `<p>${message.success}</p>`,
-            icon: 'success',
-          })
+    axios
+      .post(`${baseUrl}/tl/UploadReport`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          uit: token,
+        },
+      })
+      .then((response) => {
+        if (response.data.code === 1 && des === false) {
+          des = true;
+          setLoading(false);
+          var message = response.data.message;
+          if (message.invalid) {
+            Swal.fire({
+              title: "Error !",
+              html: `<p class="text-danger">${message.invalid}</p>`,
+            });
+          } else if (message.faill && message.success) {
+            Swal.fire({
+              title: "Success",
+              html: `<p class="text-danger">${message.faill}</p> <br/> <p>${message.success}</p> `,
+              icon: "success",
+            });
+          } else if (message.success) {
+            Swal.fire({
+              title: "Success",
+              html: `<p>${message.success}</p>`,
+              icon: "success",
+            });
+          } else if (message.faill) {
+            Swal.fire({
+              title: "Success",
+              html: `<p class="text-danger">${message.faill}</p>`,
+              icon: "success",
+            });
+          }
+          getAssignmentList();
+          setDraftModal(!draftModal);
+        } else if (response.data.code === 0) {
+          setLoading(false);
         }
-        else if (message.faill) {
-          Swal.fire({
-            title: 'Success',
-            html: `<p class="text-danger">${message.faill}</p>`,
-            icon: 'success',
-          })
-        }
-        getAssignmentList();
-        setDraftModal(!draftModal)
-      } else if (response.data.code === 0) {
-        setLoading(false)
-      }
-
-    });
+      });
   };
   const clientFun = (e) => {
-    setCopyUser(e)
-    let a = []
+    setCopyUser(e);
+    let a = [];
     e.map((i) => {
-      a.push(i.value)
-    })
-    console.log("eee", e)
-    setEmail(a)
-  }
+      a.push(i.value);
+    });
+    console.log("eee", e);
+    setEmail(a);
+  };
   return (
     <div>
       <Modal isOpen={draftModal} toggle={uploadDraftReport} size="md">
         <ModalHeader toggle={uploadDraftReport}>Draft report</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <div class="form-group">
-          <label>Copy to</label>
-          <Select
-                     isMulti={true}
-                     onChange={(e) => clientFun(e)}
-                      options={client}
-                      value={copyUser}
-                  />
-
-
-                </div>
+            <div class="form-group">
+              <label>Copy to</label>
+              <Select
+                isMulti={true}
+                onChange={(e) => clientFun(e)}
+                options={client}
+                value={copyUser}
+              />
+            </div>
             <div className="mb-3">
               <label>Upload multiple report</label>
               <input
@@ -165,17 +169,13 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
               />
             </div>
             <div class="modal-footer">
-              {
-                loading ?
-                  <Spinner color="primary" />
-                  :
-                  <button
-                    type="submit"
-                    className="customBtn"
-                  >
-                    Upload
-                  </button>
-              }
+              {loading ? (
+                <Spinner color="primary" />
+              ) : (
+                <button type="submit" className="customBtn">
+                  Upload
+                </button>
+              )}
             </div>
           </form>
         </ModalBody>
@@ -185,5 +185,3 @@ function DraftReport({ loading,  qno, setDraftModal, setLoading, draftModal, upl
 }
 
 export default DraftReport;
-
-

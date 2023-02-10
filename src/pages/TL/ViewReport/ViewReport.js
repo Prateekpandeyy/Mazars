@@ -20,35 +20,34 @@ function ViewReport() {
   const { id } = useParams();
   const history = useHistory();
   const [data, setData] = useState([]);
-  const token = window.localStorage.getItem("tlToken")
+  const token = window.localStorage.getItem("tlToken");
 
   useEffect(() => {
     getReport();
   }, []);
 
   const getReport = () => {
-    let formData = new FormData();
-    formData.append("assign_no", id);
-    formData.append("uid", JSON.parse(userid));
-    formData.append("stages_type", 2);
+    if (id && id.length > 0) {
+      let formData = new FormData();
+      formData.append("assign_no", id);
+      formData.append("uid", JSON.parse(userid));
+      formData.append("stages_type", 2);
 
-    axios({
-      method: "POST",
-      url: `${baseUrl}/tl/getstagesinfo`,
-      headers : {
-        uit : token
-      },
-      data: formData,
-    })
-      .then(function (response) {
-
-        if (response.data.code === 1) {
-          setData(response.data.result);
-        }
+      axios({
+        method: "POST",
+        url: `${baseUrl}/tl/getstagesinfo`,
+        headers: {
+          uit: token,
+        },
+        data: formData,
       })
-      .catch((error) => {
-       
-      });
+        .then(function (response) {
+          if (response.data.code === 1) {
+            setData(response.data.result);
+          }
+        })
+        .catch((error) => {});
+    }
   };
 
   return (
@@ -61,7 +60,6 @@ function ViewReport() {
                 class="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                
                 Go Back
               </button>
             </Col>
@@ -81,25 +79,25 @@ function ViewReport() {
               </thead>
               {data.length > 0
                 ? data.map((p, i) => (
-                  <tbody>
-                    <tr>
-                      <td>{i + 1}</td>
-                      <td>
-                        {p.document && (
-                          <p style={{ display: "flex" }}>
-                            <a
-                              href={`${ReportUrl}/${p.assign_no}/${p.document}`}
-                              target="_blank"
-                            >
-                              <i class="fa fa-photo"></i>
-                            </a>
-                            <p style={{ marginLeft: "15px" }}>{p.document}</p>
-                          </p>
-                        )}
-                      </td>
-                    </tr>
-                  </tbody>
-                ))
+                    <tbody>
+                      <tr>
+                        <td>{i + 1}</td>
+                        <td>
+                          {p.document && (
+                            <p style={{ display: "flex" }}>
+                              <a
+                                href={`${ReportUrl}/${p.assign_no}/${p.document}`}
+                                target="_blank"
+                              >
+                                <i class="fa fa-photo"></i>
+                              </a>
+                              <p style={{ marginLeft: "15px" }}>{p.document}</p>
+                            </p>
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))
                 : null}
             </table>
           </div>

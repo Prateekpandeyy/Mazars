@@ -377,7 +377,7 @@ function DraftReport() {
   const onSubmit = (data) => {
     axios
       .get(
-        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}`,
+        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&qno=${data.query_no}`,
         myConfig
       )
       .then((res) => {
@@ -480,6 +480,15 @@ function DraftReport() {
                   ref={register}
                   defaultValue={item}
                   max={item}
+                />
+              </div>
+              <div className="form-group mx-sm-1  mb-2">
+                <input
+                  type="text"
+                  name="query_no"
+                  ref={register}
+                  placeholder="Enter Query Number"
+                  className="form-control"
                 />
               </div>
 

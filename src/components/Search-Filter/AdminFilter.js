@@ -104,7 +104,7 @@ function AdminFilter(props) {
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -121,7 +121,7 @@ function AdminFilter(props) {
       if (data.p_status.length > 0) {
         axios
           .get(
-            `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+            `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -152,7 +152,7 @@ function AdminFilter(props) {
     if (declinedProposal == "declinedProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -168,7 +168,7 @@ function AdminFilter(props) {
     if (declinedQueries == "declinedQueries") {
       axios
         .get(
-          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -184,7 +184,7 @@ function AdminFilter(props) {
     if (pendingForProposal == "pendingForProposal") {
       axios
         .get(
-          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -200,7 +200,7 @@ function AdminFilter(props) {
     if (allQueries == "allQueries") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -216,7 +216,7 @@ function AdminFilter(props) {
     if (pendingAlloation == "pendingAlloation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -232,7 +232,7 @@ function AdminFilter(props) {
     if (AllPayment == "AllPayment") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -248,7 +248,7 @@ function AdminFilter(props) {
     if (unpaid == "unpaid") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -264,7 +264,7 @@ function AdminFilter(props) {
     if (paid == "paid") {
       axios
         .get(
-          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -280,7 +280,7 @@ function AdminFilter(props) {
     if (allProposal == "allProposal") {
       axios
         .get(
-          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}`,
+          `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -477,7 +477,15 @@ function AdminFilter(props) {
                     </select>
                   )}
                 </div>
-
+                <div className="form-group mx-sm-1  mb-2">
+                  <input
+                    type="text"
+                    name="query_no"
+                    ref={register}
+                    placeholder="Enter Query Number"
+                    className="form-control"
+                  />
+                </div>
                 <button type="submit" className="searchBtn mx-sm-1 mb-2">
                   Search
                 </button>

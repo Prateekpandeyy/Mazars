@@ -19,7 +19,7 @@ function TeamFilter(props) {
     setData,
     getData,
     AllQuery,
-
+    inCompleteQuery,
     InprogressQuery,
     DeclinedQuery,
     pendingForAcceptence,
@@ -144,6 +144,25 @@ function TeamFilter(props) {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
+            userid
+          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setData(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
+    if (inCompleteQuery == "inCompleteQuery") {
+      axios
+        .get(
+          `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
             userid
           )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
             data.query_no

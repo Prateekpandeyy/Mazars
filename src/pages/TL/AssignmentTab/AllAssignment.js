@@ -95,7 +95,7 @@ function AssignmentTab(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData != undefined) {
+      if (selectedData.length > 0) {
         axios
           .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
