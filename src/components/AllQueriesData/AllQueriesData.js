@@ -11,7 +11,7 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../components/Common/MessageIcon";
 
-function AllQueriesData({ allData }) {
+function AllQueriesData({ CountAllQuery, setAllData, allData }) {
   const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -180,14 +180,14 @@ function AllQueriesData({ allData }) {
       },
     },
   ];
-
+  console.log("result", allQueriesData);
   return (
     <>
       <Card>
         <CardHeader>
           <AdminFilter
-            setData={setAllQueriesData}
-            getData={getAllQueriesData}
+            setData={setAllData}
+            getData={CountAllQuery}
             allQueries="allQueries"
             setRecords={setRecords}
             records={records}

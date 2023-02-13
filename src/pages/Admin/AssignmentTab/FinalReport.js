@@ -388,7 +388,8 @@ function FinalReport() {
   const onSubmit = (data) => {
     axios
       .get(
-        `${baseUrl}/tl/getAssignments?assignment_status=Delivery_of_report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&qno=${data.query_no}`
+        `${baseUrl}/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&qno=${data.query_no}`,
+        myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {

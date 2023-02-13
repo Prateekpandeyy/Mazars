@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
-import finalPdf from "../dFile/final_manual.pdf";
+import finalPdf from "../dFile/Mazars_Advisory_Solution.pdf";
 import { Viewer } from "@react-pdf-viewer/core"; // install this library
 // Plugins
 // import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'; // install this library
@@ -18,6 +18,7 @@ const ModalManual = () => {
         <div
           style={{
             display: "flex",
+
             flexDirection: "column",
             maxWidth: "1920px",
             width: "100%",

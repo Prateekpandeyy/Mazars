@@ -77,7 +77,6 @@ const MediaContentCustomer = () => {
     setRowsPerPage(e.target.value);
   };
   const getData = (e) => {
-    console.log("eee", e);
     axios
       .get(`${baseUrl}/customers/getgalleryupdateddetail?id=${e.id}`, myConfig)
       .then((res) => {
@@ -87,7 +86,6 @@ const MediaContentCustomer = () => {
   };
 
   const searchArticle = (e) => {
-    console.log("eee", e);
     let formData = new FormData();
     formData.append("content", searchText);
     axios({
@@ -99,7 +97,6 @@ const MediaContentCustomer = () => {
       data: formData,
     }).then((res) => {
       setMyData(res.data.result[0]);
-      setDescription(true);
     });
   };
 
@@ -252,9 +249,6 @@ const MediaContentCustomer = () => {
                       >
                         Media News
                       </Link>
-                      <Typography color="text.primary">
-                        {myData.heading}
-                      </Typography>
                     </Breadcrumbs>
                     <div style={{ margin: "20px 0px 10px 0px" }}>
                       <div>

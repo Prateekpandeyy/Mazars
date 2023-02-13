@@ -205,10 +205,8 @@ function AdminFilter(props) {
         )
         .then((res) => {
           if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
+            setData(res.data.result);
+            setRecords(res.data.result.length);
           }
         });
     }
