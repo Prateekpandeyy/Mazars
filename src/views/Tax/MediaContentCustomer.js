@@ -90,7 +90,7 @@ const MediaContentCustomer = () => {
     formData.append("content", searchText);
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getgalleryupdateddetail`,
+      url: `${baseUrl}/customers/getgalleryupdated`,
       headers: {
         uit: token,
       },
