@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../common/common";
-import BootstrapTable from "react-bootstrap-table-next";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import PaymentComponent from "./PaymentComponent";
@@ -389,7 +388,6 @@ function Paid() {
       <Card>
         <CardHeader>
           <span onClick={(e) => needHelp()}>
-            {" "}
             <HelpIcon />
           </span>
           <CustomerFilter
@@ -425,6 +423,12 @@ function Paid() {
             getData={getPaymentStatus}
             headColor="#2b5f55"
           />
+          <Modal isOpen={openManual} toggle={needHelp} size="lg">
+            <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+            <ModalBody>
+              <ModalManual tar={"paymentProcess"} />
+            </ModalBody>
+          </Modal>
         </CardBody>
       </Card>
       <Modal isOpen={modal} fade={false} toggle={toggle}>
@@ -456,17 +460,6 @@ function Paid() {
             Cancel
           </Button>
         </ModalFooter>
-      </Modal>
-      <Modal
-        isOpen={openManual}
-        toggle={needHelp}
-        style={{ display: "block", position: "absolute", left: "280px" }}
-        size="lg"
-      >
-        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
-        <ModalBody>
-          <ModalManual tar={"paymentProcess"} />
-        </ModalBody>
       </Modal>
     </>
   );

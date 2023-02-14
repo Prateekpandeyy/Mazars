@@ -96,7 +96,7 @@ const MediaContentCustomer = () => {
       },
       data: formData,
     }).then((res) => {
-      setMyData(res.data.result[0]);
+      setData(res.data.result);
     });
   };
 
