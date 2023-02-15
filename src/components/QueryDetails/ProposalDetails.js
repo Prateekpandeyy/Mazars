@@ -51,22 +51,6 @@ function ProposalDetails({
 
   var nfObject = new Intl.NumberFormat("hi-IN");
 
-  // checkDevice
-  const checkDevice = () => {
-    return (
-      [
-        "iPad Simulator",
-        "iPhone Simulator",
-        "iPod Simulator",
-        "iPad",
-        "iPhone",
-        "iPod",
-      ].includes(navigator.platform) ||
-      // iPad on iOS 13 detection
-      (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-    );
-  };
-
   const downloadpdf = () => {
     const token = window.localStorage.getItem("adminToken");
 
@@ -216,51 +200,6 @@ function ProposalDetails({
     return i + "th";
   }
 
-  const dataCheck = (dateArr) => {
-    let duedd = 0;
-
-    for (let i = 0; i < dateArr.length; i++) {
-      if (dateArr[i] < currentDate) {
-        duedd++;
-      }
-    }
-    return duedd;
-  };
-
-  const dueDate = (a, b) => {
-    var item1 = a.split(",");
-    var item2 = b.split(",");
-
-    var due = dataCheck(item2);
-
-    //total installment
-    let nd = 0;
-    var total_Installment = 0;
-    for (var i = 1; i <= due; i++) {
-      let pk = Number(item1[i]);
-      // total_Installment = total_Installment + item1[i];
-
-      if (item1[i] !== undefined) {
-        total_Installment = total_Installment + pk;
-      }
-      nd = total_Installment + pk;
-    }
-
-    //total payment history
-    var total_Payment_History = paymentDetails.reduce(function (prev, current) {
-      return prev + +current.paid_amount;
-    }, 0);
-
-    var amount = total_Payment_History - total_Installment;
-
-    if (amount > 0) {
-      if (payment_received) {
-        return accepted_amount - payment_received;
-      } else {
-        return total_Payment_History;
-      }
-    }
-  };
   const getInviceValue = (e) => {
     let messsage = "";
     if (e.target.value === "0") {
@@ -542,7 +481,10 @@ function ProposalDetails({
                                     onChange={(e) => getInviceValue(e)}
                                     className="spaceRadio"
                                     value="1"
-                                    disabled={successDisabled}
+                                    disabled={
+                                      successDisabled ||
+                                      accepted_amount !== null
+                                    }
                                     name="yestl"
                                   />
                                   Yes
@@ -553,7 +495,10 @@ function ProposalDetails({
                                     type="radio"
                                     className="spaceRadio"
                                     onChange={(e) => getInviceValue(e)}
-                                    disabled={successDisabled}
+                                    disabled={
+                                      successDisabled ||
+                                      accepted_amount !== null
+                                    }
                                     value="1"
                                     name="yestl"
                                   />
@@ -566,7 +511,10 @@ function ProposalDetails({
                                     type="radio"
                                     onChange={(e) => getInviceValue(e)}
                                     defaultChecked
-                                    disabled={successDisabled}
+                                    disabled={
+                                      successDisabled ||
+                                      accepted_amount !== null
+                                    }
                                     className="spaceRadio"
                                     value="0"
                                     name="yestl"
@@ -580,7 +528,10 @@ function ProposalDetails({
                                     onChange={(e) => getInviceValue(e)}
                                     className="spaceRadio"
                                     value="0"
-                                    disabled={successDisabled}
+                                    disabled={
+                                      successDisabled ||
+                                      accepted_amount !== null
+                                    }
                                     name="yestl"
                                   />
                                   No

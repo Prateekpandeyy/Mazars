@@ -141,7 +141,7 @@ const VideoList = () => {
                               <CustomTypography
                                 style={{
                                   overflow: "hidden",
-                                  wordBreak: "break-all",
+                                  wordBreak: "break-word",
                                   height: "40px",
                                 }}
                                 hover="hover"
@@ -271,7 +271,7 @@ const VideoList = () => {
                             title={i.title}
                             style={{
                               overflow: "hidden",
-                              wordBreak: "break-all",
+                              wordBreak: "break-word",
                               height: "40px",
                             }}
                             cursor="pointer"

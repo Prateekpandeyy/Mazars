@@ -11,7 +11,6 @@ import { OuterloginContainer } from "../../components/Common/OuterloginContainer
 import MyContainer from "../../components/Common/MyContainer";
 import CustomTypography from "../../components/Common/CustomTypography";
 import Layout from "../../components/Layout/Layout";
-import Swal from "sweetalert2";
 import SearchBtn from "../../components/Common/SearchBtn";
 import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -140,7 +139,7 @@ const Media = () => {
                               <CustomTypography
                                 style={{
                                   overflow: "hidden",
-                                  wordBreak: "break-all",
+                                  wordBreak: "break-word",
                                   height: "40px",
                                 }}
                                 hover="hover"
@@ -250,7 +249,7 @@ const Media = () => {
                             title={i.title}
                             style={{
                               overflow: "hidden",
-                              wordBreak: "break-all",
+                              wordBreak: "break-word",
                               height: "40px",
                             }}
                             onClick={(e) =>

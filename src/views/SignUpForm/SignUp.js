@@ -13,7 +13,7 @@ import ResendOtp from "./ResendOtp";
 import Select from "react-select";
 import Mandatory from "../../components/Common/Mandatory";
 import EmailValidation from "../../components/Common/EmailValidation";
-import MyPDF from "../dFile/LoginManual.pdf";
+import MyPDF from "../dFile/signUp.pdf";
 import { HelpIcon } from "../../components/Common/MessageIcon";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import Swal from "sweetalert2";

@@ -100,6 +100,7 @@ function TeamFilter(props) {
     },
   };
   const onSubmit = (data) => {
+    console.log("data", data);
     if (AllQuery == "AllQuery") {
       axios
         .get(

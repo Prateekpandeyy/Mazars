@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/css/style.css";
-import MyPDF from "../../views/dFile/LoginManual.pdf";
+import MyPDF from "../../views/dFile/needHelp.pdf";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import SocialIcons from "../socialicon.js/SocialIcons";

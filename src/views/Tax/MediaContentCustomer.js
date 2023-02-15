@@ -87,6 +87,7 @@ const MediaContentCustomer = () => {
 
   const searchArticle = (e) => {
     let formData = new FormData();
+    let dataList = [];
     formData.append("content", searchText);
     axios({
       method: "POST",
@@ -96,7 +97,20 @@ const MediaContentCustomer = () => {
       },
       data: formData,
     }).then((res) => {
-      setData(res.data.result);
+      res.data.result.map((i, e) => {
+        let dataObj = {
+          sn: ++e,
+          content: i.content,
+          file: i.file,
+          heading: i.heading,
+          id: i.id,
+          publish_date: i.publish_date,
+          status: i.status,
+          type: i.type,
+        };
+        dataList.push(dataObj);
+      });
+      setData(dataList);
     });
   };
 
