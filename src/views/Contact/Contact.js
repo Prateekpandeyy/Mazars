@@ -23,11 +23,13 @@ const Contact = () => {
             <CardBody>
               <Row>
                 <Col md="12">
-                  <CustomTypography>211, Mercantile House</CustomTypography>
                   <CustomTypography>
-                    15, Kasturba Gandhi Marg, Connaught Place
+                    106 and 107, Mercantile House
                   </CustomTypography>
-                  <CustomTypography>New Delhi-110001, India</CustomTypography>
+                  <CustomTypography>15 Kasturba Gandhi Marg</CustomTypography>
+                  <CustomTypography>
+                    Connaught Place, New Delhi - 110001, India
+                  </CustomTypography>
 
                   <CustomTypography>
                     Email :{" "}

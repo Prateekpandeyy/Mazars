@@ -29,6 +29,7 @@ function AdminFilter(props) {
     AllPayment,
     paid,
     unpaid,
+    index,
   } = props;
 
   const [selectedData, setSelectedData] = useState([]);
@@ -36,7 +37,11 @@ function AdminFilter(props) {
   const [store2, setStore2] = useState([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
+  const [queryNo, setQueryNo] = useState("");
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -61,6 +66,7 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
+              setLoading(true);
             }
           });
       }
@@ -89,11 +95,15 @@ function AdminFilter(props) {
 
   //reset date
   const resetData = () => {
+    localStorage.removeItem(`searchData${index}`);
     reset();
     setSelectedData([]);
     setStore2([]);
     setTax2([]);
     getData();
+    setFromDate("");
+    setStatus("");
+    setQueryNo("");
     dateValue.current.clearValue();
   };
 
@@ -101,6 +111,18 @@ function AdminFilter(props) {
     setFromDate(e.format("YYYY-MM-DD"));
   };
   const onSubmit = (data) => {
+    let obj = {
+      store: store2,
+      fromDate: fromDate,
+      toDate: toDate,
+      pcatId: selectedData,
+      query_no: data?.query_no,
+      p_status: data?.p_status,
+      route: window.location.pathname,
+      index: index,
+    };
+    localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
+
     if (acceptedProposal == "acceptedProposal") {
       axios
         .get(
@@ -200,11 +222,12 @@ function AdminFilter(props) {
     if (allQueries == "allQueries") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+          `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data?.p_status}&pcat_id=${selectedData}&qno=${data?.query_no}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
+            console.log("done21", data, res.data.result.length);
             setData(res.data.result);
             setRecords(res.data.result.length);
           }
@@ -305,6 +328,31 @@ function AdminFilter(props) {
       </>
     );
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
+    if (dk) {
+      if (dk.route === window.location.pathname && dk.index === index) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.toDate.split("-").reverse().join("-"));
+        setSelectedData(dk.pcatId);
+        setStatus(dk.p_status);
+        setQueryNo(dk.query_no);
+      }
+    }
+  }, []);
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
+    console.log("dkkk", dk);
+    if (dk?.store?.length > 0) {
+      if (store2.length > 0) {
+        onSubmit(dk);
+      }
+    } else {
+      console.log("dkkk", dk);
+      setTimeout(onSubmit(dk), 2000);
+    }
+  }, [loading]);
 
   return (
     <>
@@ -361,14 +409,30 @@ function AdminFilter(props) {
                   <label className="form-select form-control">From</label>
                 </div>
 
-                <div className="form-group mx-sm-1  mb-2">
-                  <DatePicker
-                    ref={dateValue}
-                    onChange={(e) => fromDateFun(e)}
-                    disabledDate={(d) => !d || d.isAfter(maxDate)}
-                    format={dateFormatList}
-                  />
-                </div>
+                {fromDate.length > 0 ? (
+                  <div className="form-group mx-sm-1  mb-2">
+                    <DatePicker
+                      ref={dateValue}
+                      onChange={(e) => fromDateFun(e)}
+                      disabledDate={(d) => !d || d.isAfter(maxDate)}
+                      format={dateFormatList}
+                      defaultValue={moment(fromDate, dateFormatList)}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+                {fromDate.length === 0 ? (
+                  <div className="form-group mx-sm-1  mb-2">
+                    <DatePicker
+                      ref={dateValue}
+                      disabledDate={(d) => !d || d.isAfter(maxDate)}
+                      format={dateFormatList}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">To</label>
@@ -397,6 +461,8 @@ function AdminFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -410,6 +476,8 @@ function AdminFilter(props) {
                     <select
                       className="form-select form-control"
                       name="p_status"
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                       ref={register}
                       style={{ height: "33px" }}
                     >
@@ -425,6 +493,8 @@ function AdminFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="1">Inprogress; Preparation</option>
@@ -438,6 +508,8 @@ function AdminFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="1">Inprogress Proposals</option>
@@ -452,6 +524,8 @@ function AdminFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="1">Admin Declined; Queries</option>
@@ -466,6 +540,8 @@ function AdminFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -482,6 +558,8 @@ function AdminFilter(props) {
                     ref={register}
                     placeholder="Enter Query Number"
                     className="form-control"
+                    onChange={(e) => setQueryNo(e.target.value)}
+                    value={queryNo}
                   />
                 </div>
                 <button type="submit" className="searchBtn mx-sm-1 mb-2">

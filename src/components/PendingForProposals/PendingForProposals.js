@@ -177,15 +177,20 @@ function PendingForProposals({ CountPendingProposal }) {
   return (
     <>
       <Card>
-        <CardHeader>
-          <AdminFilter
-            setData={setNonPendingData}
-            getData={getPendingForProposals}
-            pendingForProposal="pendingForProposal"
-            setRecords={setRecords}
-            records={records}
-          />
-        </CardHeader>
+        {nonpendingData.length > 0 ? (
+          <CardHeader>
+            <AdminFilter
+              setData={setNonPendingData}
+              getData={getPendingForProposals}
+              pendingForProposal="pendingForProposal"
+              setRecords={setRecords}
+              records={records}
+              index="3"
+            />
+          </CardHeader>
+        ) : (
+          ""
+        )}
         <CardBody>
           {/* <Records records={records} /> */}
           <DataTablepopulated

@@ -304,6 +304,7 @@ function Paid() {
             unpaid="unpaid"
             setRecords={setRecords}
             records={records}
+            index="2"
           />
         </CardHeader>
         <CardBody>

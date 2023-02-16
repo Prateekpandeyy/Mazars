@@ -179,7 +179,7 @@ function Dashboard() {
     getPayment();
     getAssignment();
   }, []);
-  console.log("check git");
+
   return (
     <>
       <Layout adminDashboard="adminDashboard" adminUserId={userId}>

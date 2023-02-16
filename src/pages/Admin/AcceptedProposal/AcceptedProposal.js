@@ -278,6 +278,7 @@ function AcceptedProposal({ acceptedProposal }) {
             acceptedProposal="acceptedProposal"
             setRecords={setRecords}
             records={records}
+            index="3"
           />
         </CardHeader>
         <CardBody>

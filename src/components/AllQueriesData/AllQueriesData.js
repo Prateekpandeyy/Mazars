@@ -180,19 +180,24 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
       },
     },
   ];
-  console.log("result", allQueriesData);
+
   return (
     <>
       <Card>
-        <CardHeader>
-          <AdminFilter
-            setData={setAllData}
-            getData={CountAllQuery}
-            allQueries="allQueries"
-            setRecords={setRecords}
-            records={records}
-          />
-        </CardHeader>
+        {allData?.length > 0 ? (
+          <CardHeader>
+            <AdminFilter
+              setData={setAllData}
+              getData={CountAllQuery}
+              allQueries="allQueries"
+              setRecords={setRecords}
+              records={records}
+              index="1"
+            />
+          </CardHeader>
+        ) : (
+          ""
+        )}
         <CardBody>
           {/* <Records records={records} /> */}
 

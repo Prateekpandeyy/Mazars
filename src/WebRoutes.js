@@ -219,7 +219,7 @@ function WebRoutes() {
           />
           <PublicRouteUser
             exact
-            path="/customer/aboutbasic"
+            path="/customer/about"
             component={AboutOuter}
           />
           <PublicRouteUser exact path="/customer/direct" component={Direct} />
@@ -264,7 +264,7 @@ function WebRoutes() {
           <PublicRouteUser exact path="/customer/updates" component={Updates} />
           <PublicRouteUser
             exact
-            path="/customer/contactbasic"
+            path="/customer/contact"
             component={ContactOuter}
           />
           <PublicRouteUser

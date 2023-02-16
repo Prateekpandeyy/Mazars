@@ -146,13 +146,18 @@ function DeclinedQueries({ CountPendingForPayment }) {
     <>
       <Card>
         <CardHeader>
-          <AdminFilter
-            setData={setPendingData}
-            getData={getPendingForPayment}
-            declinedQueries="declinedQueries"
-            setRecords={setRecords}
-            records={records}
-          />
+          {pendingData.length > 0 ? (
+            <AdminFilter
+              setData={setPendingData}
+              getData={getPendingForPayment}
+              declinedQueries="declinedQueries"
+              setRecords={setRecords}
+              records={records}
+              index="4"
+            />
+          ) : (
+            ""
+          )}
         </CardHeader>
         <CardBody>
           {/* <Records records={records} /> */}

@@ -293,6 +293,7 @@ function AllProposalComponent({ allProposal }) {
             allProposal="allProposal"
             setRecords={setRecords}
             records={records}
+            index="1"
           />
         </CardHeader>
 

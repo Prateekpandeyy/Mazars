@@ -286,9 +286,9 @@ export const CmsCont = (props) => {
       } else if (e === "enquiry") {
         history.push("/customer/customerquery");
       } else if (e === "contactUs") {
-        history.push("/customer/contactbasic");
+        history.push("/customer/contact");
       } else if (e === "about") {
-        history.push("/customer/aboutbasic");
+        history.push("/customer/about");
       }
     } else {
       props.showCook("showCookies");

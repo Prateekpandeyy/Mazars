@@ -309,6 +309,7 @@ function AllPayment() {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
+            index="1"
           />
         </CardHeader>
         <CardBody>

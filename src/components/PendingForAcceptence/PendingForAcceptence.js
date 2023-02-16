@@ -299,6 +299,7 @@ function PendingForAcceptence({ pendingProposal }) {
             pendingAcceptedProposal="pendingAcceptedProposal"
             setRecords={setRecords}
             records={records}
+            index="2"
           />
         </CardHeader>
         <CardBody>

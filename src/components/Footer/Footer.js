@@ -15,9 +15,9 @@ function Footer(props) {
       if (e === "enquiry") {
         history.push("/customer/customerquery");
       } else if (e === "contactbasic") {
-        history.push("/customer/contactbasic");
+        history.push("/customer/contact");
       } else if (e === "aboutbasic") {
-        history.push("/customer/aboutbasic");
+        history.push("/customer/about");
       } else if (e === "needhelp") {
         window.open(MyPDF, "blank");
       }

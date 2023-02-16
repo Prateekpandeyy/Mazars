@@ -192,15 +192,20 @@ function PendingAllocation({ CountPendingForAllocation }) {
   return (
     <>
       <Card>
-        <CardHeader>
-          <AdminFilter
-            setData={setPendingData}
-            getData={getPendingForAllocation}
-            pendingAlloation="pendingAlloation"
-            setRecords={setRecords}
-            records={records}
-          />
-        </CardHeader>
+        {pendingData.length > 0 ? (
+          <CardHeader>
+            <AdminFilter
+              setData={setPendingData}
+              getData={getPendingForAllocation}
+              pendingAlloation="pendingAlloation"
+              setRecords={setRecords}
+              records={records}
+              index="2"
+            />
+          </CardHeader>
+        ) : (
+          ""
+        )}
         <CardBody className="card-body">
           {/* <Records records={records} /> */}
           <DataTablepopulated
