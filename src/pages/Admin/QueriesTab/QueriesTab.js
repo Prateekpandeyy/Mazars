@@ -118,11 +118,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllQueriesData
-            CountAllQuery={CountAllQuery}
-            setAllData={setAllData}
-            allData={allData}
-          />
+          <AllQueriesData />
         </TabPanel>
 
         <TabPanel>

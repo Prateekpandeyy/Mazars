@@ -343,13 +343,12 @@ function AdminFilter(props) {
   }, []);
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
-    console.log("dkkk", dk);
+
     if (dk?.store?.length > 0) {
       if (store2.length > 0) {
         onSubmit(dk);
       }
-    } else {
-      console.log("dkkk", dk);
+    } else if (dk) {
       setTimeout(onSubmit(dk), 2000);
     }
   }, [loading]);

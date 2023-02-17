@@ -232,7 +232,7 @@ function Recording() {
               <RecordingFilter
                 setData={setFeedBackData}
                 //    getData={getInCompleteAssingment}
-                SearchQuery="SearchQuery"
+                SearchQuery="tlQuery"
                 setRecords={setRecords}
                 records={records}
                 userid={userid}

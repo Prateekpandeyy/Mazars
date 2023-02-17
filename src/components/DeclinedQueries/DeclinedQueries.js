@@ -10,7 +10,7 @@ import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import { ViewDiscussionIcon } from "../../components/Common/MessageIcon";
 
-function DeclinedQueries({ CountPendingForPayment }) {
+function DeclinedQueries() {
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -30,8 +30,6 @@ function DeclinedQueries({ CountPendingForPayment }) {
       if (res.data.code === 1) {
         setPendingData(res.data.result);
         setRecords(res.data.result.length);
-
-        // CountPendingForPayment(res.data.result.length);
       }
     });
   };
@@ -146,18 +144,14 @@ function DeclinedQueries({ CountPendingForPayment }) {
     <>
       <Card>
         <CardHeader>
-          {pendingData.length > 0 ? (
-            <AdminFilter
-              setData={setPendingData}
-              getData={getPendingForPayment}
-              declinedQueries="declinedQueries"
-              setRecords={setRecords}
-              records={records}
-              index="4"
-            />
-          ) : (
-            ""
-          )}
+          <AdminFilter
+            setData={setPendingData}
+            getData={getPendingForPayment}
+            declinedQueries="declinedQueries"
+            setRecords={setRecords}
+            records={records}
+            index="4"
+          />
         </CardHeader>
         <CardBody>
           {/* <Records records={records} /> */}

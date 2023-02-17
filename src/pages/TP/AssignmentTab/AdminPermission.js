@@ -496,7 +496,8 @@ function AdminPermission(props) {
             data.p_dateTo
           }&assignment_status=${status}&stages_status=${
             data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
+          myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
@@ -516,7 +517,8 @@ function AdminPermission(props) {
             data.p_dateTo
           }&assignment_status=${status}&stages_status=${
             data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
+          myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {

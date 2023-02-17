@@ -36,6 +36,7 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
     axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
       if (res.data.code === 1) {
         setRecords(res.data.result.length);
+        setAllQueriesData(res.data.result);
       }
     });
   };
@@ -180,31 +181,29 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
       },
     },
   ];
+  console.log("allData", allData);
 
   return (
     <>
       <Card>
-        {allData?.length > 0 ? (
-          <CardHeader>
-            <AdminFilter
-              setData={setAllData}
-              getData={CountAllQuery}
-              allQueries="allQueries"
-              setRecords={setRecords}
-              records={records}
-              index="1"
-            />
-          </CardHeader>
-        ) : (
-          ""
-        )}
+        <CardHeader>
+          <AdminFilter
+            setData={setAllQueriesData}
+            getData={getAllQueriesData}
+            allQueries="allQueries"
+            setRecords={setRecords}
+            records={records}
+            index="1"
+          />
+        </CardHeader>
+
         <CardBody>
           {/* <Records records={records} /> */}
 
           <DataTablepopulated
             bgColor="#55425f"
             keyField="assign_no"
-            data={allData}
+            data={allQueriesData}
             columns={columns}
           ></DataTablepopulated>
 

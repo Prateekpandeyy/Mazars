@@ -30,10 +30,7 @@ function Sidebar({
   custDashboard,
   TLDashboard,
   TPDashboard,
-  feedbackNumber,
 }) {
-  const [toggleState, setToggleState] = useState(false);
-  const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
   const [open2, setOpen2] = useState(false);
@@ -42,11 +39,9 @@ function Sidebar({
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey");
-  const cmsToken = localStorage.getItem("token");
+
   let history = useHistory();
-  const toggleTab = (index) => {
-    setToggleState(index);
-  };
+
   const role = localStorage.getItem("role");
   const feedNumber = {
     fontSize: "10.5px",
@@ -103,38 +98,48 @@ function Sidebar({
   };
   const getFeedback2 = () => {
     if (role === "admin" && adminDashboard !== undefined) {
+      console.log("deon22");
       const token = window.localStorage.getItem("adminToken");
       const myConfig = {
         headers: {
           uit: token,
         },
       };
-      axios
-        .get(
-          `${baseUrl}/admin/getFeedback?uid=${JSON.parse(
-            adminkey
-          )}&&type=total`,
-          myConfig
-        )
-        .then((res) => {
-          if (role === "cms") {
-            setLogo("/cms/cms");
-          } else {
-            setLogo("/admin/dashboard");
-          }
-          if (res.data.code === 1) {
-            if (res.data.result != undefined) {
-              setfeedbackNumber2(res.data.result[0].total);
+      try {
+        setInterval(async () => {
+          axios
+            .get(
+              `${baseUrl}/admin/getFeedback?uid=${JSON.parse(
+                adminkey
+              )}&&type=total`,
+              myConfig
+            )
+            .then((res) => {
               if (role === "cms") {
                 setLogo("/cms/cms");
               } else {
                 setLogo("/admin/dashboard");
               }
-            }
-          } else if (res.data.code === 102) {
-            history.push("/admin/login");
-          }
-        });
+              if (res.data.code === 1) {
+                if (res.data.result != undefined) {
+                  localStorage.setItem(
+                    "adminFeedback",
+                    res.data.result[0].total
+                  );
+                  if (role === "cms") {
+                    setLogo("/cms/cms");
+                  } else {
+                    setLogo("/admin/dashboard");
+                  }
+                }
+              } else if (res.data.code === 102) {
+                history.push("/admin/login");
+              }
+            });
+        }, 60000 * 10);
+      } catch (e) {
+        console.log(e);
+      }
     }
     if (
       window.location.pathname.split("/").slice(-1) == "recording" ||
@@ -176,7 +181,7 @@ function Sidebar({
     }
   };
   useEffect(() => {
-    setTimeout(getFeedbacktl, 60000 * 10);
+    setInterval(getFeedbacktl, 60000 * 10);
   }, [TLDashboard]);
 
   const getFeedbacktp = () => {
@@ -747,7 +752,10 @@ function Sidebar({
                     <span className="feedbackMenu"></span>
                   </i>
                   <span className="menu-title" data-i18n="">
-                    Feedback <sup style={feedNumber}>{feedbackNumber2}</sup>
+                    Feedback{" "}
+                    <sup style={feedNumber}>
+                      {localStorage.getItem("adminFeedback")}
+                    </sup>
                   </span>
                   {/* Feedback  <span className="badge">{feedbackNumber2}</span> */}
                 </NavLink>

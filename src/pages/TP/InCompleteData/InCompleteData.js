@@ -201,7 +201,7 @@ function InCompleteData({ CountIncomplete, data }) {
           <DataTablepopulated
             bgColor="#55425f"
             keyField={"assign_no"}
-            data={data}
+            data={incompleteData}
             columns={columns}
           ></DataTablepopulated>
           <DiscardReport

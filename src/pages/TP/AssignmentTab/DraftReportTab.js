@@ -421,7 +421,8 @@ function AssignmentTab() {
           data.p_dateTo
         }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
           data.query_no
-        }`
+        }`,
+        myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
