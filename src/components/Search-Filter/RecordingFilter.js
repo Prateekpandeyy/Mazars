@@ -8,16 +8,8 @@ function RecordingFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
 
-  const {
-    records,
-    setRecords,
-    setData,
-    getRecording,
-    SearchQuery,
-   userid,
-  
- 
-  } = props;
+  const { records, setRecords, setData, getRecording, SearchQuery, userid } =
+    props;
   // const userid = window.localStorage.getItem("tpkey");
 
   const [selectedData, setSelectedData] = useState([]);
@@ -25,97 +17,93 @@ function RecordingFilter(props) {
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState(1);
 
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
 
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  
   const [item] = useState(current_date);
-
- 
-
-  
- 
 
   //reset date
   const resetData = () => {
-  
     reset();
     setSelectedData([]);
     setStore2([]);
-    setStatus1(1)
-   getRecording();
+    setStatus1(1);
+    getRecording();
   };
 
   const onSubmit = (data) => {
- 
-if(SearchQuery == "adminQuery") {
-  const token = window.localStorage.getItem("adminToken")
-  const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-    axios
+    if (SearchQuery == "adminQuery") {
+      const token = window.localStorage.getItem("adminToken");
+      const myConfig = {
+        headers: {
+          uit: token,
+        },
+      };
+      axios
         .get(
-          `${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`, myConfig)
+          `${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(
+            userid
+          )}&assign_id=${data.queryNo}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
-
             }
           }
         });
-}
-else if(SearchQuery == "tlQuery") {
-  
-  const token = window.localStorage.getItem("tlToken")
-  const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-    axios
+    } else if (SearchQuery == "tlQuery") {
+      const token = window.localStorage.getItem("tlToken");
+      const myConfig = {
+        headers: {
+          uit: token,
+        },
+      };
+      axios
         .get(
-          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`, myConfig)
+          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(
+            userid
+          )}&assign_id=${data.queryNo}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
-
             }
           }
         });
-}
-else if(SearchQuery == "tpQuery") {
-  
-  const token = window.localStorage.getItem("tptoken")
-  const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
-    axios
+    } else if (SearchQuery == "tpQuery") {
+      const token = window.localStorage.getItem("tptoken");
+      const myConfig = {
+        headers: {
+          uit: token,
+        },
+      };
+      axios
         .get(
-          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}&assign_id=${data.queryNo}`, myConfig)
+          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(
+            userid
+          )}&assign_id=${data.queryNo}`,
+          myConfig
+        )
         .then((res) => {
-         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
-
             }
           }
         });
-}
-
-   
+    }
   };
-
 
   const Reset = () => {
     return (
@@ -131,9 +119,6 @@ else if(SearchQuery == "tpQuery") {
     );
   };
 
-
-
-
   return (
     <>
       <div className="row">
@@ -141,21 +126,20 @@ else if(SearchQuery == "tpQuery") {
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-inline">
-          
-             <input
-                    type="text"
-                    name="queryNo"
-                    ref={register}
-                    className="form-select form-control"
-                    
-                  />
+                <input
+                  type="text"
+                  name="queryNo"
+                  ref={register}
+                  className="form-select form-control"
+                />
                 <button type="submit" className="customBtn mx-sm-1 mb-2">
                   Search
                 </button>
                 <Reset />
                 <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control"
-                  >Total Records : {records}</label>
+                  <label className="form-select form-control">
+                    Total Records : {records}
+                  </label>
                 </div>
               </div>
             </form>
@@ -167,4 +151,3 @@ else if(SearchQuery == "tpQuery") {
 }
 
 export default RecordingFilter;
-
