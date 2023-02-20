@@ -117,6 +117,7 @@ import TlSchedule from "./pages/TL/Schedule/Schedule";
 import TlMeetingComponent from "./pages/TL/MeetingComponent/MeetingComponent";
 import TlRecording from "./pages/TL/Recording/Recording";
 import TlReport from "./pages/TL/Report/Report";
+import EnqiuryReport from "./pages/TL/Report/EnquiryReport"
 import TlInvoice from "./pages/TL/Proposal/Invoice";
 import TlInvoiceTab from "./pages/TL/Proposal/InvoiceTab";
 import TlpayDetails from "./pages/TL/PaymentStatus/Paydetails";
@@ -627,6 +628,7 @@ function WebRoutes() {
             component={TlRecording}
           />
           <PrivateRouteTL path="/teamleader/reports" component={TlReport} />
+          <PrivateRouteTL path="/teamleader/enquiry_reports" component={EnqiuryReport} />
           <PrivateRouteTL path="/teamleader/invoice" component={TlInvoice} />
           <PrivateRouteTL
             path="/teamleader/tlinvoice"

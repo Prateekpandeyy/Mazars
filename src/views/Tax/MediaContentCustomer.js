@@ -258,14 +258,14 @@ const MediaContentCustomer = () => {
                     </Breadcrumbs>
                     <div style={{ margin: "20px 0px 10px 0px" }}>
                       <div>
-                        <MyHeading>
+                        {/* <MyHeading>
                           <h5>
                             {" "}
                             {CommonServices.capitalizeFirstLetter(
                               myData.heading
                             )}
                           </h5>
-                        </MyHeading>
+                        </MyHeading> */}
 
                         <h6>
                           Date -{" "}
@@ -440,12 +440,12 @@ const MediaContentCustomer = () => {
                   </Breadcrumbs>
                   <div style={{ margin: "20px 0px 10px 0px" }}>
                     <div>
-                      <MyHeading>
+                      {/* <MyHeading>
                         <h5>
                           {" "}
                           {CommonServices.capitalizeFirstLetter(myData.heading)}
                         </h5>
-                      </MyHeading>
+                      </MyHeading> */}
 
                       <h6>
                         Date -{" "}

@@ -81,6 +81,12 @@ const Invoice = (updateTab) => {
         }
       });
   };
+  const [hasinput , setHasinput]=useState(false);
+  console.log(hasinput,"has not changed the filter")
+  function handlecallback(){
+    setHasinput(true)
+    console.log(hasinput,"has changed the filter")
+  }
 
   const columns = [
     {
@@ -177,6 +183,7 @@ const Invoice = (updateTab) => {
             records={records}
             invoice="tlcreate"
             userid={JSON.parse(userid)}
+            hasinput={hasinput}
           />
         </CardHeader>
 
@@ -206,6 +213,7 @@ const Invoice = (updateTab) => {
             tabIndex22={1}
             updateTab={updateTab}
             getProposalList={getProposalList}
+            handlecallback={handlecallback}
           />
         </CardBody>
       </Card>

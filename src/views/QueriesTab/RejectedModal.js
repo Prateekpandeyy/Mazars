@@ -65,7 +65,7 @@ function RejectedModal({
 
   return (
     <div>
-      <Modal isOpen={rejectedBox} toggle={deleteCliente} size="md">
+      <Modal isOpen={rejectedBox} toggle={deleteCliente} shouldFocusAfterRender={false} size="md">
         <ModalHeader toggle={deleteCliente}>Please provide the reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)} style={{display  : "flex", flexDirection : "column", width : "100%"}}>

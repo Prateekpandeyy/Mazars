@@ -36,3 +36,61 @@ margin: 8px 8px;
   .my-fieldset{
     border: 1px solid;
   }
+
+  /* added later for enquiry form */
+
+  .myFormBox {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  }
+  .formChoice {
+    cursor: pointer;
+    display: block;
+    line-height: 1;
+    padding-left: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #464646;
+  }
+  .myFormBoxaggree {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 10px 0px;
+  }
+  .formButton{
+    align-items: center;
+    background-color: #0071ce;
+    border: 1px solid #0071ce;
+    border-bottom-left-radius: 1.75rem;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: center;
+    line-height: 1;
+    max-width: 100%;
+    min-height: 3rem;
+    max-width: 300px;
+    overflow: hidden;
+    padding: 0.75rem 1.5rem;
+    position: relative;
+    text-decoration: none !important;
+    transition: all 0.3s;
+    vertical-align: middle;
+  }
+  textarea.formTextArea {
+    border: 1px solid #464646;
+    line-height: 1.4;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: #464646;
+    width: 100%;
+    min-height: 120px;
+  }

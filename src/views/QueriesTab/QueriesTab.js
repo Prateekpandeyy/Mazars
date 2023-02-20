@@ -166,7 +166,6 @@ function QueriesTab(props) {
               >
                 Completed; queries ({allResult.completeQuery})
               </Tab>
-
               <Tab
                 style={tabIndex === 3 ? myStyle2 : myStyle1}
                 className="tabHover"

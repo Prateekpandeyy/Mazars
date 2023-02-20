@@ -20,6 +20,7 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import { ActionIcon } from "../../../components/Common/MessageIcon";
 
 function CompletedQuery({ updateTab }) {
+  
   const userid = window.localStorage.getItem("tlkey");
   const hist = useHistory();
   const [incompleteData, setInCompleteData] = useState([]);
@@ -80,6 +81,7 @@ function CompletedQuery({ updateTab }) {
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
+          
         }
       });
   };

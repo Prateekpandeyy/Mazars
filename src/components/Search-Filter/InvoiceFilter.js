@@ -13,6 +13,28 @@ const InvoiceFilter = (props) => {
 
   const [item] = useState(current_date);
 
+  // function getFilterValues(){
+  //   const storedFilterValue=localStorage.getItem('invoicetlFilterData');
+  //   if(!storedFilterValue) return {
+  //    query_no : " ", p_dateFrom : " " , p_dateTo : " ", installment_no : " ", opt : " "  }
+  //    else
+  //    return JSON.parse(storedFilterValue)
+  //  }
+
+  const [invoicetlFilterData, setFilterData] = useState({
+    query_no: "", p_dateFrom: "", p_dateTo: "", installment_no: "", opt: ""
+  });
+  const { query_no, p_dateFrom, p_dateTo, installment_no, opt } = invoicetlFilterData
+  const handleChange = (e) => {
+    let value = e.target.value;
+    let name = e.target.name;
+    console.log("input entered here")
+    setFilterData(prev => ({ ...prev, [name]: value }));
+    // onSubmit(invoicetlFilterData)
+    // console.log("called to submit 1")
+  };
+
+
   const onSubmit = (data) => {
     let formData = new FormData();
     formData.append("qno", data.query_no);
@@ -33,6 +55,7 @@ const InvoiceFilter = (props) => {
         if (res.data.code === 1) {
           props.setData(res.data.payment_detail);
           props.setRec(res.data.payment_detail.length);
+          // console.log(res.data)
         }
       });
     } else if (props.invoice === "tlcreate") {
@@ -48,6 +71,7 @@ const InvoiceFilter = (props) => {
         if (res.data.code === 1) {
           props.setData(res.data.payment_detail);
           props.setRec(res.data.payment_detail.length);
+          console.log(res.data)
         }
       });
     } else if (props.invoice === "tpcreate") {
@@ -63,6 +87,7 @@ const InvoiceFilter = (props) => {
         if (res.data.code === 1) {
           props.setData(res.data.payment_detail);
           props.setRec(res.data.payment_detail.length);
+          console.log(res.data)
         }
       });
     } else if (props.invoice === "tpgenerated") {
@@ -79,6 +104,7 @@ const InvoiceFilter = (props) => {
         if (res.data.code === 1) {
           props.setData(res.data.payment_detail);
           props.setRec(res.data.payment_detail.length);
+          console.log(res.data)
         }
       });
     } else if (props.invoice === "admingenerated") {
@@ -94,6 +120,7 @@ const InvoiceFilter = (props) => {
         if (res.data.code === 1) {
           props.setData(res.data.payment_detail);
           props.setRec(res.data.payment_detail.length);
+          console.log(res.data)
         }
       });
     } else if (props.invoice === "admincreate") {
@@ -109,13 +136,40 @@ const InvoiceFilter = (props) => {
         if (res.data.code === 1) {
           props.setData(res.data.payment_detail);
           props.setRec(res.data.payment_detail.length);
+          console.log(res.data)
         }
       });
     }
   };
   const resetData = () => {
     reset();
+    setFilterData({
+      query_no : "", p_dateFrom : "" , p_dateTo : "", installment_no : "", opt : ""  })
+    localStorage.removeItem("invoicetlFilterData", JSON.stringify(invoicetlFilterData));
   };
+
+  useEffect(() => {
+    const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
+    if (query_no === "" && p_dateFrom === "" && p_dateTo === "" && installment_no === "" && opt === "") {
+      setFilterData((prev) => ({ ...prev, ...filterForm }));
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("invoicetlFilterData", JSON.stringify(invoicetlFilterData))
+    console.log(invoicetlFilterData, "filter data is saved")
+  }, [query_no, p_dateFrom, p_dateTo, installment_no, opt]);
+
+  useEffect(() => {
+    const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
+    if((filterForm.query_no !== "" || filterForm.p_dateFrom !== "" || filterForm.installment_no !== "" || filterForm.p_dateTo !== "" || filterForm.opt !== "")){
+      onSubmit(filterForm);
+      console.log("there is data in filter")
+    } 
+    else{console.log("nofilterhere")}
+    },[invoicetlFilterData])
+
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -127,6 +181,8 @@ const InvoiceFilter = (props) => {
               ref={register}
               placeholder="Enter Query Number"
               className="form-control"
+              value={query_no}
+              onChange={handleChange}
             />
           </div>
           <div className="col-md-2">
@@ -135,6 +191,8 @@ const InvoiceFilter = (props) => {
               className="form-select form-control"
               style={{ height: "33px" }}
               name="installment_no"
+              value={installment_no}
+              onChange={handleChange}
             >
               <option value="">Please select installment</option>
               <option value="0">Lumpsum</option>
@@ -153,6 +211,8 @@ const InvoiceFilter = (props) => {
               name="p_dateFrom"
               className="form-select form-control"
               ref={register}
+              value={p_dateFrom}
+              onChange={handleChange}
             />
           </div>
           <div className="col-md-1">
@@ -164,14 +224,16 @@ const InvoiceFilter = (props) => {
               name="p_dateTo"
               className="form-select form-control"
               ref={register}
+              value={p_dateTo}
+              onChange={handleChange}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-3">
             {props.invoice === "tpcreate" ||
-            props.invoice === "admincreate" ||
-            props.invoice === "create" ? (
+              props.invoice === "admincreate" ||
+              props.invoice === "create" ? (
               ""
             ) : (
               <select
@@ -179,6 +241,8 @@ const InvoiceFilter = (props) => {
                 className="form-select form-control"
                 ref={register}
                 style={{ height: "33px" }}
+                value={opt}
+                onChange={handleChange}
               >
                 <option value="">Select </option>
                 <option value="0">Unpaid</option>
@@ -271,7 +335,7 @@ const InvoiceFilter = (props) => {
                />
              </div>
            <div className="col-lg-3 col-md-6 col-sm-12 my-sm-2">
-           {props.invoice =="tpcreate" || props.invoice === "admincreate" || props.invoice === "create" ? "" :
+           {props.invoice =="tpcreate" || props.invoice == "admincreate" || props.invoice == "create" ? "" :
        
         <select name="opt" className="form-select form-control" ref={register}  style={{ height: "33px" }}>
         <option value="">Select </option>

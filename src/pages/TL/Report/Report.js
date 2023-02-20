@@ -21,7 +21,7 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 import $ from "jquery";
-const Report = () => {
+const EnquiryReport = () => {
   const userid = window.localStorage.getItem("tlkey");
 
   const selectInputRef = useRef();
@@ -1928,4 +1928,4 @@ const Report = () => {
     </>
   );
 };
-export default Report;
+export default EnquiryReport;

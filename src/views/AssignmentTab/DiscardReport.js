@@ -3,6 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import CommonServices from "../../common/common";
+import "./index.css"
 
 
 
@@ -44,10 +45,10 @@ function DiscardReport({
           <table class="table table-bordered">
             <thead>
               <tr style={{backgroundColor: `${headColor}`,  color: "#fff"}}>
-                <th scope="row" style={{border: `1px solid ${headColor}`}}>S.no</th>
-                <th scope="row" style={{border: `1px solid ${headColor}`}}>Date</th>
-                <th scope="row" style={{border: `1px solid ${headColor}`}}>Name</th>
-                <th scope="row" style={{border: `1px solid ${headColor}`}}>Message</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`,  color: "#fff"}}>S.no</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`,  color: "#fff"}}>Date</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`,  color: "#fff"}}>Name</th>
+                <th scope="row" style={{border: `1px solid ${headColor}`,  color: "#fff"}}>Message</th>
               </tr>
             </thead>
             {data.length > 0

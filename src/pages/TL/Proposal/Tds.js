@@ -432,6 +432,7 @@ const basicFun = (e) => {
             setDiscription("")
             if(res.data.code === 1){
               props.addTdsToggle()
+              props.handlecallback()
               Swal.fire({
                 title : "success", 
                 html : "Invoice generated successfully",

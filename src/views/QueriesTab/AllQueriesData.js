@@ -54,6 +54,9 @@ function AllQueriesData({
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if(ViewDiscussion !== false){
+      console.log("should make static")
+    }
   };
 
   const needHelp = () => {

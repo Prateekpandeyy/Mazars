@@ -95,7 +95,7 @@ function AssignmentTab(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData != undefined) {
+      if (selectedData.length > 0) {
         axios
           .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
@@ -490,6 +490,7 @@ function AssignmentTab(props) {
 
   const onSubmit = (data) => {
     if (status.length > 0) {
+      console.log("done");
       axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -498,7 +499,7 @@ function AssignmentTab(props) {
             data.p_dateTo
           }&assignment_status=${status}&stages_status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -519,10 +520,11 @@ function AssignmentTab(props) {
             data.p_dateTo
           }&assignment_status=${status}&stages_status=${
             data.p_status
-          }&pcat_id=${selectedData}`,
+          }&pcat_id=${selectedData}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
+          console.log("done");
           if (res.data.code === 1) {
             if (res.data.result) {
               setAssignment(res.data.result);
@@ -693,7 +695,15 @@ function AssignmentTab(props) {
               ) : (
                 " "
               )}
-
+              <div className="form-group mx-sm-1  mb-2">
+                <input
+                  type="text"
+                  name="query_no"
+                  ref={register}
+                  placeholder="Enter Query Number"
+                  className="form-control"
+                />
+              </div>
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">
                   Total Records : {records}

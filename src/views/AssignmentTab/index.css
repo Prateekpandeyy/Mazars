@@ -49,6 +49,34 @@ h5.modal-title {
 
   cursor: pointer;
 }
+/* .modal-open{
+  overflow: initial!important;
+} */
+body.modal-open {
+  overflow: visible!important;
+  position: absolute !important;
+}
+body.modal-open .MuiContainer-root{
+  overflow-y: hidden!important;
+  scroll-behavior: unset;
+  
+}
+
+
+.ReactModal__Body--open {
+  position: static;
+  overflow-y: scroll;
+}
+
+.ReactModal__Html--open {
+  overflow-y: hidden;
+}
+
+.ReactModalPortal {
+  position: fixed;
+  z-index: 1 !important;
+}
+
 /* 
   
   .tableFixHead          { overflow-y: auto; height: 100px; }
