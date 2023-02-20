@@ -99,10 +99,13 @@ const Report = () => {
             formData.append("captcha", captchValue);
             axios({
                 method: "POST",
-                url: `${baseUrl}/report/generateEnquiryReport?t=${JSON.stringify(
+                url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
                     Math.floor(Math.random() * 110000)
-                )}`,
-                data: formData,
+                  )}`,
+                headers: {
+                    uit: token,
+                  },
+                  data: formData
             }).then((res) => {
                 console.log("response", res);
                 if (res.data.code === 1) {
@@ -111,7 +114,6 @@ const Report = () => {
                         html: "Your enquiry submitted successfully, our team will contact you soon",
                         icon: "success",
                     });
-                    history.push("/");
                 } else if (res.data.code === 0) {
                     setCaptchValue("");
                     resendCaptcha();

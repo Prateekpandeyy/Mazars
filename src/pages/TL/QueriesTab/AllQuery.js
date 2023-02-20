@@ -43,6 +43,11 @@ function AllQuery() {
   }, []);
 
   const getInCompleteAssingment = () => {
+    const tlQueryFilterData = JSON.parse(localStorage.getItem("tlQueryFilterData"));
+    if (tlQueryFilterData.qp_status !== [] || tlQueryFilterData.qcategory !== "" || tlQueryFilterData.qsubcategory !== [] || tlQueryFilterData.qdatefrom !== ""  || tlQueryFilterData.qno !== "") {
+        console.log("Not called in all Q axios");
+      }
+    else{
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
@@ -51,6 +56,7 @@ function AllQuery() {
           setRecords(res.data.result.length);
         }
       });
+    }
   };
 
   const columns = [

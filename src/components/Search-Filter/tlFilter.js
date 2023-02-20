@@ -148,7 +148,6 @@ function TeamFilter(props) {
       setDateto(tlPayFilter.paydateto)
       setQueryno(tlPayFilter.payqno)
     }
-
   }, [])
   useEffect(() => {
     if ((tlAsFilter.asp_status !== [] || tlAsFilter.ascategory !== "" || tlAsFilter.assubcategory !== [] || tlAsFilter.asdatefrom !== "" || tlAsFilter.asdateto !== "" || tlAsFilter.asqno !== "") &&
@@ -162,7 +161,6 @@ function TeamFilter(props) {
       setDatefrom(tlAsFilter.asdatefrom)
       setDateto(tlAsFilter.asdateto)
     }
-
   }, [])
 
   //handleCategory
@@ -217,11 +215,6 @@ function TeamFilter(props) {
     },
   };
 
-  useEffect(()=>{
-    setInputQTest(true)
-    setInputPTest(true)
-    setInputTest(true)
-  },[])
 
   const onSubmit = (data) => {
     console.log(data," Data from form");
