@@ -552,7 +552,7 @@ function AdminFilter(props) {
       setToDate(fullDate);
     }
   }, []);
-  console.log("toDate", toDate);
+
   return (
     <>
       <div className="row">
