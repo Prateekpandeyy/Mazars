@@ -388,8 +388,8 @@ function AssignmentComponent(props) {
     if (data.route) {
       obj = {
         store: data.store,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
@@ -411,7 +411,7 @@ function AssignmentComponent(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/admin/getAssignments?cat_id=${obj.store}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${obj.pcatId}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getAssignments?cat_id=${obj.store}&from=${obj.fromDate}&to=${obj.toDate}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${obj.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
