@@ -106,37 +106,35 @@ function Sidebar({
         },
       };
       try {
-        setInterval(async () => {
-          axios
-            .get(
-              `${baseUrl}/admin/getFeedback?uid=${JSON.parse(
-                adminkey
-              )}&&type=total`,
-              myConfig
-            )
-            .then((res) => {
-              if (role === "cms") {
-                setLogo("/cms/cms");
-              } else {
-                setLogo("/admin/dashboard");
-              }
-              if (res.data.code === 1) {
-                if (res.data.result != undefined) {
-                  localStorage.setItem(
-                    "adminFeedback",
-                    res.data.result[0].total
-                  );
-                  if (role === "cms") {
-                    setLogo("/cms/cms");
-                  } else {
-                    setLogo("/admin/dashboard");
-                  }
+        axios
+          .get(
+            `${baseUrl}/admin/getFeedback?uid=${JSON.parse(
+              adminkey
+            )}&&type=total`,
+            myConfig
+          )
+          .then((res) => {
+            if (role === "cms") {
+              setLogo("/cms/cms");
+            } else {
+              setLogo("/admin/dashboard");
+            }
+            if (res.data.code === 1) {
+              if (res.data.result != undefined) {
+                localStorage.setItem("adminFeedback", res.data.result[0].total);
+                if (role === "cms") {
+                  setLogo("/cms/cms");
+                } else {
+                  setLogo("/admin/dashboard");
                 }
-              } else if (res.data.code === 102) {
-                history.push("/admin/login");
               }
-            });
-        }, 60000 * 10);
+            } else if (res.data.code === 102) {
+              history.push("/admin/login");
+            }
+          });
+        // setInterval(async () => {
+
+        // }, 60000 * 10);
       } catch (e) {
         console.log(e);
       }

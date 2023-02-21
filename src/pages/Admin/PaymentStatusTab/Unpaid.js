@@ -46,15 +46,18 @@ function Unpaid() {
   }, []);
 
   const getPaymentStatus = () => {
-    axios
-      .get(`${baseUrl}/admin/getUploadedProposals?status=2`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPayment(res.data.result);
-          setPaymentCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDataadpayment3"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getUploadedProposals?status=2`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPayment(res.data.result);
+            setPaymentCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const toggle = (key) => {
@@ -308,7 +311,7 @@ function Unpaid() {
             paid="paid"
             setRecords={setRecords}
             records={records}
-            index="3"
+            index="adpayment3"
           />
         </CardHeader>
         <CardBody>

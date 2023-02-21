@@ -54,14 +54,17 @@ function AcceptedProposal({ acceptedProposal }) {
     getAcceptedProposal();
   }, []);
   const getAcceptedProposal = () => {
-    axios
-      .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposalDisplay(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDataadproposal3"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposalDisplay(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -278,7 +281,7 @@ function AcceptedProposal({ acceptedProposal }) {
             acceptedProposal="acceptedProposal"
             setRecords={setRecords}
             records={records}
-            index="3"
+            index="adproposal3"
           />
         </CardHeader>
         <CardBody>

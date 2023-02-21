@@ -65,13 +65,16 @@ function PendingForProposals({ CountPendingProposal }) {
   }, []);
 
   const getPendingForProposals = () => {
-    axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setNonPendingData(res.data.result);
-        setRecords(res.data.result.length);
-        // CountPendingProposal(res.data.result.length);
-      }
-    });
+    let data = JSON.parse(localStorage.getItem("searchDataadquery3"));
+    if (!data) {
+      axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setNonPendingData(res.data.result);
+          setRecords(res.data.result.length);
+          // CountPendingProposal(res.data.result.length);
+        }
+      });
+    }
   };
 
   const columns = [
@@ -184,7 +187,7 @@ function PendingForProposals({ CountPendingProposal }) {
             pendingForProposal="pendingForProposal"
             setRecords={setRecords}
             records={records}
-            index="3"
+            index="adquery3"
           />
         </CardHeader>
         <CardBody>

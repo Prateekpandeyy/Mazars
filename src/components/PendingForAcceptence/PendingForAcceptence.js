@@ -56,15 +56,18 @@ function PendingForAcceptence({ pendingProposal }) {
   }, []);
 
   const getPendingAcceptedProposal = () => {
-    axios
-      .get(`${baseUrl}/admin/getProposals?status1=1`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposalDisplay(res.data.result);
-          setRecords(res.data.result.length);
-          // pendingProposal(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDataadproposal2"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getProposals?status1=1`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposalDisplay(res.data.result);
+            setRecords(res.data.result.length);
+            // pendingProposal(res.data.result.length);
+          }
+        });
+    }
   };
 
   const retviewProposal = (e) => {
@@ -299,7 +302,7 @@ function PendingForAcceptence({ pendingProposal }) {
             pendingAcceptedProposal="pendingAcceptedProposal"
             setRecords={setRecords}
             records={records}
-            index="2"
+            index="adproposal2"
           />
         </CardHeader>
         <CardBody>

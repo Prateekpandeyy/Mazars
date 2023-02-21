@@ -57,13 +57,17 @@ function PendingAllocation({ CountPendingForAllocation }) {
   }, []);
 
   const getPendingForAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        // CountPendingForAllocation(res.data.result.length);
-        setPendingData(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    });
+    let data = JSON.parse(localStorage.getItem("searchDataadquery2"));
+
+    if (!data) {
+      axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          // CountPendingForAllocation(res.data.result.length);
+          setPendingData(res.data.result);
+          setRecords(res.data.result.length);
+        }
+      });
+    }
   };
 
   const columns = [
@@ -192,28 +196,16 @@ function PendingAllocation({ CountPendingForAllocation }) {
   return (
     <>
       <Card>
-        {pendingData.length > 0 ? (
-          <CardHeader>
-            <AdminFilter
-              setData={setPendingData}
-              getData={getPendingForAllocation}
-              pendingAlloation="pendingAlloation"
-              setRecords={setRecords}
-              records={records}
-              index="2"
-            />
-          </CardHeader>
-        ) : (
-          <CardHeader>
-            <AdminFilter
-              setData={setPendingData}
-              getData={getPendingForAllocation}
-              pendingAlloation="pendingAlloation"
-              setRecords={setRecords}
-              records={records}
-            />
-          </CardHeader>
-        )}
+        <CardHeader>
+          <AdminFilter
+            setData={setPendingData}
+            getData={getPendingForAllocation}
+            pendingAlloation="pendingAlloation"
+            setRecords={setRecords}
+            records={records}
+            index="adquery2"
+          />
+        </CardHeader>
         <CardBody className="card-body">
           {/* <Records records={records} /> */}
           <DataTablepopulated

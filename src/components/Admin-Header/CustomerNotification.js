@@ -42,7 +42,17 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("adminEmail");
       localStorage.removeItem("category");
       localStorage.removeItem("adminToken");
-
+      localStorage.removeItem("searchDataadquery1");
+      localStorage.removeItem("searchDataadquery2");
+      localStorage.removeItem("searchDataadquery3");
+      localStorage.removeItem("searchDataadquery4");
+      localStorage.removeItem("searchDataadproposal1");
+      localStorage.removeItem("searchDataadproposal2");
+      localStorage.removeItem("searchDataadproposal3");
+      localStorage.removeItem("searchDataadproposal4");
+      localStorage.removeItem("searchDataadpayment1");
+      localStorage.removeItem("searchDataadpayment2");
+      localStorage.removeItem("searchDataadpayment3");
       history.push("/admin/login");
     });
   };

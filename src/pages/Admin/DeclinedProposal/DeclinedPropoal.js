@@ -45,15 +45,18 @@ function DeclinedProposal({ declinedProposal }) {
   }, []);
 
   const getDeclinedProposal = () => {
-    axios
-      .get(`${baseUrl}/admin/getProposals?&status=6`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposalDisplay(res.data.result);
-          setRecords(res.data.result.length);
-          // declinedProposal(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDataadproposal4"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getProposals?&status=6`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposalDisplay(res.data.result);
+            setRecords(res.data.result.length);
+            // declinedProposal(res.data.result.length);
+          }
+        });
+    }
   };
 
   const retviewProposal = (e) => {
@@ -292,7 +295,7 @@ function DeclinedProposal({ declinedProposal }) {
             declinedProposal="declinedProposal"
             setRecords={setRecords}
             records={records}
-            index="4"
+            index="adproposal4"
           />
         </CardHeader>
         <CardBody>

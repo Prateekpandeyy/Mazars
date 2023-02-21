@@ -48,13 +48,18 @@ function AllPayment() {
   }, []);
 
   const getPaymentStatus = () => {
-    axios.get(`${baseUrl}/admin/getUploadedProposals`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setPayment(res.data.result);
-        setPaymentCount(res.data.result.length);
-        setRecords(res.data.result.length);
-      }
-    });
+    let data = JSON.parse(localStorage.getItem("searchDataadpayment1"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getUploadedProposals`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPayment(res.data.result);
+            setPaymentCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const [modal, setModal] = useState(false);
@@ -309,7 +314,7 @@ function AllPayment() {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
-            index="1"
+            index="adpayment1"
           />
         </CardHeader>
         <CardBody>

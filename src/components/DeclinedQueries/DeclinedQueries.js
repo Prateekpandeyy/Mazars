@@ -26,12 +26,15 @@ function DeclinedQueries() {
   }, []);
 
   const getPendingForPayment = () => {
-    axios.get(`${baseUrl}/admin/declinedQueries`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setPendingData(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    });
+    let data = JSON.parse(localStorage.getItem("searchDataadquery4"));
+    if (!data) {
+      axios.get(`${baseUrl}/admin/declinedQueries`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setPendingData(res.data.result);
+          setRecords(res.data.result.length);
+        }
+      });
+    }
   };
 
   const ViewDiscussionToggel = (key) => {
@@ -150,7 +153,7 @@ function DeclinedQueries() {
             declinedQueries="declinedQueries"
             setRecords={setRecords}
             records={records}
-            index="4"
+            index="adquery4"
           />
         </CardHeader>
         <CardBody>

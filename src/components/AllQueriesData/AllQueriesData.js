@@ -33,12 +33,15 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
   }, []);
 
   const getAllQueriesData = () => {
-    axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setRecords(res.data.result.length);
-        setAllQueriesData(res.data.result);
-      }
-    });
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
+    if (!searchData) {
+      axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setRecords(res.data.result.length);
+          setAllQueriesData(res.data.result);
+        }
+      });
+    }
   };
 
   const columns = [
@@ -193,7 +196,7 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
             allQueries="allQueries"
             setRecords={setRecords}
             records={records}
-            index="1"
+            index="adquery1"
           />
         </CardHeader>
 

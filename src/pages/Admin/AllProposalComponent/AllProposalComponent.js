@@ -53,12 +53,15 @@ function AllProposalComponent({ allProposal }) {
   }, []);
 
   const getProposalData = () => {
-    axios.get(`${baseUrl}/admin/getProposals`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setProposalDisplay(res.data.result);
-        setRecords(res.data.result.length);
-      }
-    });
+    let data = JSON.parse(localStorage.getItem("searchDataadproposal1"));
+    if (!data) {
+      axios.get(`${baseUrl}/admin/getProposals`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setProposalDisplay(res.data.result);
+          setRecords(res.data.result.length);
+        }
+      });
+    }
   };
 
   const retviewProposal = (e) => {
@@ -293,7 +296,7 @@ function AllProposalComponent({ allProposal }) {
             allProposal="allProposal"
             setRecords={setRecords}
             records={records}
-            index="1"
+            index="adproposal1"
           />
         </CardHeader>
 
