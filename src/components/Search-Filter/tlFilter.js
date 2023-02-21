@@ -55,8 +55,9 @@ function TeamFilter(props) {
     "-" +
     ("0" + new Date().getDate()).slice(-2);
 
+  const dateValue = useRef();
   const [item] = useState(current_date);
-
+  
   const [tlQueryFilterData, setQueryTlFilterData] = useState({
     qp_status: [], qcategory: "", qsubcategory: [], qdatefrom: "", qdateto: "", qno: ""
   });
@@ -96,8 +97,10 @@ function TeamFilter(props) {
 
 
   useEffect(() => {
+    console.log(inputQTest,"Testing Use Effect");
     setInputQTest(false)
   }, [])
+
   useEffect(() => {
     if ((tlQueryFilter.qp_status !== [] || tlQueryFilter.qcategory !== "" || tlQueryFilter.qsubcategory !== [] || tlQueryFilter.qdatefrom !== "" || tlQueryFilter.qdateto !== "" || tlQueryFilter.qno !== "") &&
       ((AllQuery === "AllQuery") || (pendingForAcceptence === "pendingForAcceptence") || (InprogressQuery === "InprogressQuery") || (inCompleteQuery == "inCompleteQuery") || (DeclinedQuery == "DeclinedQuery"))) {
@@ -105,21 +108,24 @@ function TeamFilter(props) {
       setSelectedData(tlQueryFilter.qcategory);
       setStore2(tlQueryFilter.qsubcategory)
       handleQueryno(tlQueryFilter.qno)
-      setPstatus(tlQueryFilter.qp_status)
       setDatefrom(tlQueryFilter.qdatefrom)
       setDateto(tlQueryFilter.qdateto)
       setQueryno(tlQueryFilter.qno)
       if (InprogressQuery === "InprogressQuery") {
         setStatus1(tlQueryFilter.qp_status)
       }
+      else{
+        setPstatus(tlQueryFilter.qp_status)
+      }
       console.log("date is updated and submitted");
-      setInputQTest(true)
+      onSubmit(tlQuerydatatemp)
+      // setInputQTest(true)
     }
   }, [])
-  useEffect(() => {
-    console.log("inside test useeffect",inputQTest);
-    onSubmit(tlQuerydatatemp)
-  }, [inputQTest])
+  // useEffect(() => {
+  //   console.log("inside test useeffect",inputQTest);
+  //   onSubmit(tlQuerydatatemp)
+  // }, [inputQTest])
   useEffect(() => {
     if ((tlPropsalFilter.pp_status !== [] || tlPropsalFilter.pcategory !== "" || tlPropsalFilter.psubcategory !== [] || tlPropsalFilter.pdatefrom !== "" || tlPropsalFilter.pdateto !== "" || tlPropsalFilter.pqno !== "")
       && ((AllProposal === "AllProposal") || (InprogressProposal === "InprogressProposal") || (proposal === "acceptedProposal") || (proposal === "proposal"))
@@ -132,6 +138,7 @@ function TeamFilter(props) {
       setDatefrom(tlPropsalFilter.pdatefrom)
       setDateto(tlPropsalFilter.pdateto)
       setQueryno(tlPropsalFilter.pqno)
+      // onSubmit(tlProposaldatatemp);
     }
   }, [])
 
@@ -147,6 +154,7 @@ function TeamFilter(props) {
       setDatefrom(tlPayFilter.paydatefrom)
       setDateto(tlPayFilter.paydateto)
       setQueryno(tlPayFilter.payqno)
+      // onSubmit(tlPayFilterDatatemp);
     }
   }, [])
   useEffect(() => {
@@ -197,6 +205,12 @@ function TeamFilter(props) {
     setQueryno("")
     setDatefrom("");
     setPstatus("")
+    let date = moment().format("YYYY-MM-DD");
+    let fullDate = date;
+    setToDate(fullDate);
+    dateValue.current.clearValue();
+
+
     if ((AllQuery === "AllQuery") || (pendingForAcceptence === "pendingForAcceptence") || (InprogressQuery === "InprogressQuery") || (inCompleteQuery == "inCompleteQuery") || (DeclinedQuery == "DeclinedQuery")) {
       setQueryTlFilterData({qp_status: [], qcategory: "", qsubcategory: [], qdatefrom: "", qdateto: "", qno: ""})
   }
@@ -217,34 +231,34 @@ function TeamFilter(props) {
 
 
   const onSubmit = (data) => {
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    }
     console.log(data," Data from form");
     if (AllQuery === "AllQuery") {
+      localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
       setQueryTlFilterData({ qp_status: data.p_status, qcategory: selectedData, qsubcategory: store2, qdatefrom: fromDate, qdateto: toDate, qno: data.query_no })
       console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "allQuerydata")
-      if ((tlQueryFilterData.qp_status !== "" || tlQueryFilterData.qcategory !== "" || tlQueryFilterData.qsubcategory !== [] || tlQueryFilterData.qdatefrom !== "" || tlQueryFilterData.qno !== "")) 
-      { 
-        console.log("Inside If axios");
-        console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
-        }&cat_id=${tlQueryFilterData.qsubcategory}&from=${tlQueryFilterData.qdatefrom}&to=${tlQueryFilterData.qdateto}&pcat_id=${tlQueryFilterData.qcategory}&qno=${data.query_no}`,"THIS IS IF ADDRESS");
-        axios
-        .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
-          }&cat_id=${tlQueryFilterData.qsubcategory}&from=${tlQueryFilterData.qdatefrom}&to=${tlQueryFilterData.qdateto}&pcat_id=${tlQueryFilterData.qcategory}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            console.log("getting if axios value");
-            console.log(res.data.result)
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
-      }
-      else{
-        console.log("inside Else axios");
+      // if ((tlQueryFilterData.qp_status !== "" || tlQueryFilterData.qcategory !== "" || tlQueryFilterData.qsubcategory !== [] || tlQueryFilterData.qdatefrom !== "" || tlQueryFilterData.qno !== ""))
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
@@ -262,10 +276,10 @@ function TeamFilter(props) {
             }
           }
         });
-      }
     }
 
     if (pendingForAcceptence === "pendingForAcceptence") {
+      localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
       setQueryTlFilterData({ qp_status: data.p_status, qcategory: selectedData, qsubcategory: store2, qdatefrom: fromDate, qdateto: toDate, qno: data.query_no })
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "pendingForAcceptence")
 
@@ -288,6 +302,7 @@ function TeamFilter(props) {
     }
 
     if (InprogressQuery === "InprogressQuery") {
+      localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
       setQueryTlFilterData({ qp_status: data.p_status, qcategory: selectedData, qsubcategory: store2, qdatefrom: fromDate, qdateto: toDate, qno: data.query_no })
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "inProgress")
       axios
@@ -308,6 +323,7 @@ function TeamFilter(props) {
         });
     }
     if (inCompleteQuery === "inCompleteQuery") {
+      localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
       setQueryTlFilterData({ qp_status: data.p_status, qcategory: selectedData, qsubcategory: store2, qdatefrom: fromDate, qdateto: toDate, qno: data.query_no })
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "incompletequery")
       axios
@@ -329,6 +345,7 @@ function TeamFilter(props) {
     }
 
     if (DeclinedQuery === "DeclinedQuery") {
+      localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
       setQueryTlFilterData({ qp_status: data.p_status, qcategory: selectedData, qsubcategory: store2, qdatefrom: fromDate, qdateto: toDate, qno: data.query_no })
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "declinedQuery")
       axios
@@ -349,6 +366,7 @@ function TeamFilter(props) {
     }
 
     if (completeAssignment === "completeAssignment") {
+      localStorage.setItem("tlAsFilterData", JSON.stringify(tlAsFilterData))
       setTlAsFilterData({ asp_status: data.p_status, ascategory: selectedData, assubcategory: store2, asdatefrom: fromDate, asdateto: toDate, asqno: data.query_no })
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "complelteAss")
 
@@ -371,6 +389,7 @@ function TeamFilter(props) {
     }
 
     if (AllProposal === "AllProposal") {
+      localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "Allpropsal")
       setProposalTlFilterData({ pp_status: data.p_status, pcategory: selectedData, psubcategory: store2, pdatefrom: fromDate, pdateto: toDate, pqno: data.query_no })
       axios
@@ -392,6 +411,7 @@ function TeamFilter(props) {
     }
 
     if (InprogressProposal === "InprogressProposal") {
+      localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "Inprogresspropsal")
       setProposalTlFilterData({ pp_status: data.p_status, pcategory: selectedData, psubcategory: store2, pdatefrom: fromDate, pdateto: toDate, pqno: data.query_no })
       if (data.p_status.length > 0) {
@@ -412,6 +432,7 @@ function TeamFilter(props) {
             }
           });
       } else {
+        localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
         // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "else")
         setProposalTlFilterData({ pp_status: data.p_status, pcategory: selectedData, psubcategory: store2, pdatefrom: fromDate, pdateto: toDate, pqno: data.query_no })
         axios
@@ -432,6 +453,7 @@ function TeamFilter(props) {
       }
     }
     if (proposal === "acceptedProposal") {
+      localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "Acceptedpropsal")
       setProposalTlFilterData({ pp_status: data.p_status, pcategory: selectedData, psubcategory: store2, pdatefrom: fromDate, pdateto: toDate, pqno: data.query_no })
       axios
@@ -453,6 +475,7 @@ function TeamFilter(props) {
     }
 
     if (proposal === "proposal") {
+      localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "propsal")
       setProposalTlFilterData({ pp_status: data.p_status, pcategory: selectedData, psubcategory: store2, pdatefrom: fromDate, pdateto: toDate, pqno: data.query_no })
       axios
@@ -474,6 +497,7 @@ function TeamFilter(props) {
     }
 
     if (AllPayment === "AllPayment") {
+      localStorage.setItem("tlPayFilterData", JSON.stringify(tlPayFilterData))
       // console.log("p_status", data.p_status, "SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "Allpayment")
       setTlPayFilterData({ paycategory: selectedData, paysubcategory: store2, paydatefrom: fromDate, paydateto: toDate, payqno: data.query_no, payp_status: data.p_status })
       axios
@@ -495,6 +519,7 @@ function TeamFilter(props) {
     }
 
     if (Unpaid === "Unpaid") {
+      localStorage.setItem("tlPayFilterData", JSON.stringify(tlPayFilterData))
       // console.log("SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "Allpayment")
       setTlPayFilterData({ paycategory: selectedData, paysubcategory: store2, paydatefrom: fromDate, paydateto: toDate, payqno: data.query_no })
       axios
@@ -516,6 +541,7 @@ function TeamFilter(props) {
     }
 
     if (Paid === "Paid") {
+      localStorage.setItem("tlPayFilterData", JSON.stringify(tlPayFilterData))
       // console.log("SelectedData", selectedData, "Subcot", store2, "fromDate", fromDate, "todate", toDate, "qno", data.query_no, "Allpayment")
       setTlPayFilterData({ paycategory: selectedData, paysubcategory: store2, paydatefrom: fromDate, paydateto: toDate, payqno: data.query_no })
       axios
@@ -541,57 +567,57 @@ function TeamFilter(props) {
   const tlQueryFilter = JSON.parse(localStorage.getItem("tlQueryFilterData"));
   const tlQuerydatatemp = { p_status: tlQueryFilter.qp_status, query_no: tlQueryFilter.qno }
   
-  useEffect(() => {
-    const tlQueryFilterData = JSON.parse(localStorage.getItem("tlQueryFilterData"));
-    if (tlQueryFilterData.qp_status !== [] || tlQueryFilterData.qcategory !== "" || tlQueryFilterData.qsubcategory !== [] || tlQueryFilterData.qdatefrom !== "" || tlQueryFilterData.qdateto !== "" || tlQueryFilterData.qno !== "") {
-      setQueryTlFilterData((queprev) => ({ ...queprev, ...tlQueryFilterData }));
-      console.log(tlQuerydatatemp, "Querytempfilled Here");
-      }
-  }, [])
+  // useEffect(() => {
+  //   const tlQueryFilterData = JSON.parse(localStorage.getItem("tlQueryFilterData"));
+  //   if (tlQueryFilterData.qp_status !== [] || tlQueryFilterData.qcategory !== "" || tlQueryFilterData.qsubcategory !== [] || tlQueryFilterData.qdatefrom !== "" || tlQueryFilterData.qdateto !== "" || tlQueryFilterData.qno !== "") {
+  //     setQueryTlFilterData((queprev) => ({ ...queprev, ...tlQueryFilterData }));
+  //     console.log(tlQuerydatatemp, "Querytempfilled Here");
+  //     }
+  // }, [])
   const tlPropsalFilter = JSON.parse(localStorage.getItem("tlPropsalFilterData"));
   const tlProposaldatatemp = { p_status: tlPropsalFilter.pp_status, query_no: tlPropsalFilter.pqno }
   // console.log(tlProposaldatatemp, "ProposalTemp filled ");
-  useEffect(() => {
-    const tlPropsalFilterData = JSON.parse(localStorage.getItem("tlPropsalFilterData"));
-    if (tlPropsalFilterData.pp_status !== [] || tlPropsalFilterData.pcategory !== "" || tlPropsalFilterData.psubcategory !== [] || tlPropsalFilterData.pdatefrom !== "" || tlPropsalFilterData.pdateto !== "" || tlPropsalFilterData.pqno !== "") {
-      setProposalTlFilterData((proprev) => ({ ...proprev, ...tlPropsalFilterData }));
-    }
-  }, [])
+  // useEffect(() => {
+  //   const tlPropsalFilterData = JSON.parse(localStorage.getItem("tlPropsalFilterData"));
+  //   if (tlPropsalFilterData.pp_status !== [] || tlPropsalFilterData.pcategory !== "" || tlPropsalFilterData.psubcategory !== [] || tlPropsalFilterData.pdatefrom !== "" || tlPropsalFilterData.pdateto !== "" || tlPropsalFilterData.pqno !== "") {
+  //     setProposalTlFilterData((proprev) => ({ ...proprev, ...tlPropsalFilterData }));
+  //   }
+  // }, [])
   const tlPayFilter = JSON.parse(localStorage.getItem("tlPayFilterData"));
   const tlPayFilterDatatemp = { p_status: tlPayFilterData.payp_status, query_no: tlPayFilterData.payqno }
   // console.log(tlPayFilterDatatemp, "temppay filled");
-  useEffect(() => {
-    const tlPayFilterData = JSON.parse(localStorage.getItem("tlPayFilterData"));
-    if (tlPayFilterData.payp_status !== [] || tlPayFilterData.paycategory !== "" || tlPayFilterData.paysubcategory !== [] || tlPayFilterData.paydatefrom !== "" || tlPayFilterData.paydateto !== "" || tlPayFilterData.payqno !== "") {
-      setTlPayFilterData((payprev) => ({ ...payprev, ...tlPayFilterData }));
-    }
-  }, [])
+  // useEffect(() => {
+  //   const tlPayFilterData = JSON.parse(localStorage.getItem("tlPayFilterData"));
+  //   if (tlPayFilterData.payp_status !== [] || tlPayFilterData.paycategory !== "" || tlPayFilterData.paysubcategory !== [] || tlPayFilterData.paydatefrom !== "" || tlPayFilterData.paydateto !== "" || tlPayFilterData.payqno !== "") {
+  //     setTlPayFilterData((payprev) => ({ ...payprev, ...tlPayFilterData }));
+  //   }
+  // }, [])
   const tlAsFilter = JSON.parse(localStorage.getItem("tlAsFilterData"));
-
-  useEffect(() => {
-    const tlAsFilterData = JSON.parse(localStorage.getItem("tlAsFilterData"));
-    if (tlAsFilterData.asp_status !== [] || tlAsFilterData.ascategory !== "" || tlAsFilterData.assubcategory !== [] || tlAsFilterData.paydatefrom !== "" || tlAsFilterData.asdateto !== "" || tlAsFilterData.asqno !== "") {
-      setTlAsFilterData((asprev) => ({ ...asprev, ...tlAsFilterData }));
-    }
-  }, [])
+  const tlAsFiltertemp = { p_status: tlAsFilter.ap_status}
+  // useEffect(() => {
+  //   const tlAsFilterData = JSON.parse(localStorage.getItem("tlAsFilterData"));
+  //   if (tlAsFilterData.asp_status !== [] || tlAsFilterData.ascategory !== "" || tlAsFilterData.assubcategory !== [] || tlAsFilterData.paydatefrom !== "" || tlAsFilterData.asdateto !== "" || tlAsFilterData.asqno !== "") {
+  //     setTlAsFilterData((asprev) => ({ ...asprev, ...tlAsFilterData }));
+  //   }
+  // }, [])
 
   //to put data storage
-  useEffect(() => {
-    localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
-    console.log(tlQueryFilterData, "filter data is saved")
-  }, [tlQueryFilterData]);
-  useEffect(() => {
-    localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
-    // console.log(tlPropsalFilterData, "filter data is saved")
-  }, [tlPropsalFilterData]);
-  useEffect(() => {
-    localStorage.setItem("tlPayFilterData", JSON.stringify(tlPayFilterData))
-    // console.log(tlPayFilterData, "filter data is saved")
-  }, [tlPayFilterData]);
-  useEffect(() => {
-    localStorage.setItem("tlAsFilterData", JSON.stringify(tlAsFilterData))
-    // console.log(tlAsFilterData, "filter data is saved")
-  }, [tlAsFilterData]);
+  // useEffect(() => {
+  //   localStorage.setItem("tlQueryFilterData", JSON.stringify(tlQueryFilterData))
+  //   console.log(tlQueryFilterData, "filter data is saved")
+  // }, [tlQueryFilterData]);
+  // useEffect(() => {
+  //   localStorage.setItem("tlPropsalFilterData", JSON.stringify(tlPropsalFilterData))
+  //   // console.log(tlPropsalFilterData, "filter data is saved")
+  // }, [tlPropsalFilterData]);
+  // useEffect(() => {
+  //   localStorage.setItem("tlPayFilterData", JSON.stringify(tlPayFilterData))
+  //   // console.log(tlPayFilterData, "filter data is saved")
+  // }, [tlPayFilterData]);
+  // useEffect(() => {
+  //   localStorage.setItem("tlAsFilterData", JSON.stringify(tlAsFilterData))
+  //   // console.log(tlAsFilterData, "filter data is saved")
+  // }, [tlAsFilterData]);
   
   //for auto submit
 
@@ -686,7 +712,7 @@ function TeamFilter(props) {
     setFromDate(e.format("YYYY-MM-DD"));
   };
   // console.log(datefrom.length)
-  // console.log(dateto.length);
+  console.log(dateto,"dateto");
 
 
   return (
@@ -756,7 +782,7 @@ function TeamFilter(props) {
                         onChange={(e) => fromDateFun(e)}
                         disabledDate={(d) => !d || d.isAfter(maxDate)}
                         format={dateFormatList}
-                        ref={register}
+                        ref={dateValue}
                         name="fromdate"
                         defaultValue={moment(
                           `${datefrom}`,
@@ -772,7 +798,7 @@ function TeamFilter(props) {
                       onChange={(e) => fromDateFun(e)}
                       disabledDate={(d) => !d || d.isAfter(maxDate)}
                       format={dateFormatList}
-                      ref={register}
+                      ref={dateValue}
                       name="fromdate"
                     />
                   </div>
@@ -795,7 +821,7 @@ function TeamFilter(props) {
                           dateFormat
                         )}
                         format={dateFormatList}
-                        ref={register}
+                        ref={dateValue}
                         name="todate"
                       />
                     </div> :
@@ -807,7 +833,7 @@ function TeamFilter(props) {
                       <DatePicker
                         onChange={(e) => setToDate(e.format("YYYY-MM-DD"))}
                         disabledDate={(d) => !d || d.isAfter(maxDate)}
-                        ref={register}
+                        ref={dateValue}
                         defaultValue={moment(new Date(), "DD MM, YYYY")}
                         format={dateFormatList}
                         name="todate"
