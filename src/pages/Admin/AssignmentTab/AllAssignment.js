@@ -70,14 +70,18 @@ function AssignmentComponent(props) {
   }, []);
 
   const getAssignmentData = () => {
-    axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setAssignmentDisplay(res.data.result);
+    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment1"));
 
-        setRecords(res.data.result.length);
-        setLoading(true);
-      }
-    });
+    if (!dk) {
+      axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setAssignmentDisplay(res.data.result);
+
+          setRecords(res.data.result.length);
+          setLoading(true);
+        }
+      });
+    }
   };
 
   //get category
@@ -380,35 +384,93 @@ function AssignmentComponent(props) {
     return style;
   };
   const onSubmit = (data) => {
-    localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(data));
-    if (status.length > 0) {
-      axios
-        .get(
-          `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
     } else {
-      axios
-        .get(
-          `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(obj));
+    if (status.length > 0) {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getAssignments?cat_id=${obj.store}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${obj.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setLoading(true);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setLoading(true);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    } else {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getAssignments?cat_id=${obj.store}&from=${fromDate}&to=${toDate}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${obj.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+                setLoading(true);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+                setLoading(true);
+              }
+            }
+          });
+      }
     }
   };
   useEffect(() => {
@@ -417,7 +479,8 @@ function AssignmentComponent(props) {
     if (dk) {
       if (dk.route === window.location.pathname) {
         setStore2(dk.store);
-
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
         setSelectedData(dk.pcatId);
         setHide(dk.p_status);
         setQueryNo(dk.query_no);
