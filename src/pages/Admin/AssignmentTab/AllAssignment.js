@@ -37,6 +37,9 @@ function AssignmentComponent(props) {
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [queryNo, setQueryNo] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const token = window.localStorage.getItem("adminToken");
   var rowStyle2 = {};
   const myConfig = {
@@ -377,6 +380,7 @@ function AssignmentComponent(props) {
     return style;
   };
   const onSubmit = (data) => {
+    localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(data));
     if (status.length > 0) {
       axios
         .get(
@@ -407,7 +411,20 @@ function AssignmentComponent(props) {
         });
     }
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment1"));
 
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+
+        setSelectedData(dk.pcatId);
+        setHide(dk.p_status);
+        setQueryNo(dk.query_no);
+        onSubmit(dk);
+      }
+    }
+  }, []);
   const Reset = () => {
     return (
       <>
@@ -489,6 +506,8 @@ function AssignmentComponent(props) {
                   className="form-select form-control"
                   ref={register}
                   max={item}
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
                 />
               </div>
 
@@ -502,7 +521,8 @@ function AssignmentComponent(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
                   max={item}
                 />
               </div>
@@ -513,6 +533,7 @@ function AssignmentComponent(props) {
                   name="p_status"
                   ref={register}
                   style={{ height: "33px" }}
+                  value={hide}
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>
@@ -570,6 +591,8 @@ function AssignmentComponent(props) {
                   name="query_no"
                   ref={register}
                   placeholder="Enter Query Number"
+                  value={queryNo}
+                  onChange={(e) => setQueryNo(e.target.value)}
                   className="form-control"
                 />
               </div>

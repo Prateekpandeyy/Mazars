@@ -613,7 +613,7 @@ function AdminFilter(props) {
                     <DatePicker
                       ref={dateValue}
                       onChange={(e) =>
-                        setFromDate(moment(e).format("DD-MM-YYYY HH:mm:ss"))
+                        setFromDate(moment(e).format("DD-MM-YYYY"))
                       }
                       disabledDate={(d) => !d || d.isAfter(maxDate)}
                       format={dateFormatList}
@@ -628,7 +628,7 @@ function AdminFilter(props) {
                     <DatePicker
                       ref={dateValue}
                       onChange={(e) =>
-                        setFromDate(moment(e).format("DD-MM-YYYY HH:mm:ss"))
+                        setFromDate(moment(e).format("DD-MM-YYYY"))
                       }
                       disabledDate={(d) => !d || d.isAfter(maxDate)}
                       format={dateFormatList}
@@ -647,7 +647,7 @@ function AdminFilter(props) {
                     <DatePicker
                       ref={dateValue}
                       onChange={(e) =>
-                        setToDate(moment(e).format("DD-MM-YYYY HH:mm:ss"))
+                        setToDate(moment(e).format("DD-MM-YYYY"))
                       }
                       disabledDate={(d) => !d || d.isAfter(maxDate)}
                       format={dateFormatList}
@@ -659,7 +659,7 @@ function AdminFilter(props) {
                   {toDate.length === 0 ? (
                     <DatePicker
                       onChange={(e) =>
-                        setToDate(moment(e).format("DD-MM-YYYY HH:mm:ss"))
+                        setToDate(moment(e).format("DD-MM-YYYY"))
                       }
                       disabledDate={(d) => !d || d.isAfter(maxDate)}
                       defaultValue={moment(new Date(), "DD MM, YYYY")}
