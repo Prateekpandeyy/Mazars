@@ -115,8 +115,8 @@ function AdminFilter(props) {
     if (data.route) {
       obj = {
         store: data.store,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
@@ -126,8 +126,8 @@ function AdminFilter(props) {
     } else {
       obj = {
         store: store2,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: selectedData,
         query_no: data?.query_no,
         p_status: data?.p_status,
@@ -156,7 +156,15 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status1=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status1=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -188,7 +196,13 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -204,7 +218,6 @@ function AdminFilter(props) {
 
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
       if (data.route) {
-        console.log("dataaa", data);
         if (data.p_status.length > 0) {
           axios
             .get(
@@ -238,7 +251,15 @@ function AdminFilter(props) {
         if (data.p_status.length > 0) {
           axios
             .get(
-              `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
+              `${baseUrl}/admin/getProposals?status1=${
+                data.p_status
+              }&cat_id=${store2}&from=${fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {
@@ -285,7 +306,13 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -317,7 +344,12 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -349,7 +381,12 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -379,7 +416,12 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data?.p_status}&pcat_id=${selectedData}&qno=${data?.query_no}`,
+            `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data?.p_status
+            }&pcat_id=${selectedData}&qno=${data?.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -409,7 +451,13 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate}&date2=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&date2=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -441,7 +489,12 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -473,7 +526,15 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=1&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
             myConfig
           )
           .then((res) => {
@@ -505,7 +566,15 @@ function AdminFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getUploadedProposals?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
             myConfig
           )
           .then((res) => {
