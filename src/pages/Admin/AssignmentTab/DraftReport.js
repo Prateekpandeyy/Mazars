@@ -31,7 +31,9 @@ function DraftReport() {
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [queryNo, setQueryNo] = useState("");
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -66,18 +68,21 @@ function DraftReport() {
   }, []);
 
   const getAssignmentData = () => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setAssignmentDisplay(res.data.result);
-          setCountAssignment(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDataadAssignment2"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAssignmentDisplay(res.data.result);
+            setCountAssignment(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   //get category
@@ -118,13 +123,13 @@ function DraftReport() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    setFromDate("");
+    setToDate("");
+    setQueryNo("");
+    localStorage.removeItem("searchDataadAssignment2");
     getAssignmentData();
   };
 
-  //assingmentStatus
-  const assingmentStatus = (value) => {
-    setStatus(value);
-  };
   // view report
   const ViewReport = (key) => {
     setReportModal(!reportModal);
@@ -375,21 +380,74 @@ function DraftReport() {
     return style;
   };
   const onSubmit = (data) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&qno=${data.query_no}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignmentDisplay(res.data.result);
-            setRecords(res.data.result.length);
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDataadAssignment2`, JSON.stringify(obj));
+    if (data.route) {
+      axios
+        .get(
+          `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&qno=${data.query_no}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignmentDisplay(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
+    } else {
+      axios
+        .get(
+          `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&qno=${data.query_no}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignmentDisplay(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment2"));
 
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        // setHide(dk.p_status);
+        setQueryNo(dk.query_no);
+        onSubmit(dk);
+      }
+    }
+  }, []);
   const Reset = () => {
     return (
       <>
@@ -464,6 +522,8 @@ function DraftReport() {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  value={fromDate}
                   max={item}
                 />
               </div>
@@ -478,7 +538,8 @@ function DraftReport() {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  onChange={(e) => setToDate(e.target.value)}
+                  value={toDate}
                   max={item}
                 />
               </div>
@@ -487,6 +548,8 @@ function DraftReport() {
                   type="text"
                   name="query_no"
                   ref={register}
+                  onChange={(e) => setQueryNo(e.target.value)}
+                  value={queryNo}
                   placeholder="Enter Query Number"
                   className="form-control"
                 />

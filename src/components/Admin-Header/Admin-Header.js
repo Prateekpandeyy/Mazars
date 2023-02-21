@@ -54,6 +54,10 @@ function AdminHeader({
       localStorage.removeItem("searchDataadpayment1");
       localStorage.removeItem("searchDataadpayment2");
       localStorage.removeItem("searchDataadpayment3");
+      localStorage.removeItem("searchDataadAssignment1");
+      localStorage.removeItem("searchDataadAssignment2");
+      localStorage.removeItem("searchDataadAssignment3");
+      localStorage.removeItem("searchDataadAssignment4");
       history.push("/admin/login");
     });
   };

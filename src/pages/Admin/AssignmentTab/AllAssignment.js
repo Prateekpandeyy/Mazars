@@ -70,14 +70,13 @@ function AssignmentComponent(props) {
   }, []);
 
   const getAssignmentData = () => {
-    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment1"));
-
-    if (!dk) {
+    let data = JSON.parse(localStorage.getItem("searchDataadAssignment1"));
+    if (!data) {
       axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
         if (res.data.code === 1) {
           setAssignmentDisplay(res.data.result);
 
-          setRecords(res.data.result.length);
+          setRecords(res?.data?.result?.length);
           setLoading(true);
         }
       });
@@ -87,7 +86,7 @@ function AssignmentComponent(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData.length > 0) {
+      if (selectedData?.length > 0) {
         axios
           .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
@@ -131,6 +130,10 @@ function AssignmentComponent(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    setFromDate("");
+    setToDate("");
+    setQueryNo("");
+    localStorage.removeItem("searchDataadAssignment1");
     getAssignmentData();
   };
 
@@ -393,6 +396,7 @@ function AssignmentComponent(props) {
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
+        stage_status: data?.assignment_status,
         route: window.location.pathname,
       };
     } else {
@@ -402,56 +406,54 @@ function AssignmentComponent(props) {
         toDate: toDate,
         pcatId: selectedData,
         query_no: data?.query_no,
-        p_status: data?.p_status,
+        p_status: hide,
+        stage_status: status,
         route: window.location.pathname,
       };
     }
     localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(obj));
-    if (status.length > 0) {
-      if (data.route) {
+    if (data.route) {
+      if (status?.length > 0) {
         axios
           .get(
-            `${baseUrl}/admin/getAssignments?cat_id=${obj.store}&from=${obj.fromDate}&to=${obj.toDate}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${obj.pcatId}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getAssignments?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
                 setAssignmentDisplay(res.data.result);
-                setLoading(true);
-                setRecords(res.data.result.length);
+                setRecords(res?.data?.result?.length);
               }
             }
           });
       } else {
         axios
           .get(
-            `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getAssignments?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
                 setAssignmentDisplay(res.data.result);
-                setLoading(true);
-                setRecords(res.data.result.length);
+                setRecords(res?.data?.result?.length);
               }
             }
           });
       }
     } else {
-      if (data.route) {
+      if (status?.length > 0) {
         axios
           .get(
-            `${baseUrl}/admin/getAssignments?cat_id=${obj.store}&from=${fromDate}&to=${toDate}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${obj.pcatId}&qno=${data.query_no}`,
+            `${baseUrl}/admin/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
                 setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
-                setLoading(true);
+                setRecords(res?.data?.result?.length);
               }
             }
           });
@@ -465,8 +467,7 @@ function AssignmentComponent(props) {
             if (res.data.code === 1) {
               if (res.data.result) {
                 setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
-                setLoading(true);
+                setRecords(res?.data?.result?.length);
               }
             }
           });
@@ -482,8 +483,9 @@ function AssignmentComponent(props) {
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
         setSelectedData(dk.pcatId);
-        setHide(dk.p_status);
+        setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
+        setHide(dk.p_status);
         onSubmit(dk);
       }
     }
@@ -668,39 +670,35 @@ function AssignmentComponent(props) {
           </form>
         </CardHeader>
 
-        {loading === true ? (
-          <CardBody>
-            <Records records={records} />
-            <DiscardReport
-              ViewDiscussionToggel={ViewDiscussionToggel}
-              ViewDiscussion={ViewDiscussion}
-              report={assignNo}
-              getData={getAssignmentData}
-              headColor="#5a625a"
-            />
-            <DataTablepopulated
-              bgColor="#5a625a"
-              keyField={"assign_no"}
-              data={assignmentDisplay}
-              rowStyle2={rowStyle2}
-              columns={columns}
-            ></DataTablepopulated>
+        <CardBody>
+          <Records records={records} />
+          <DiscardReport
+            ViewDiscussionToggel={ViewDiscussionToggel}
+            ViewDiscussion={ViewDiscussion}
+            report={assignNo}
+            getData={getAssignmentData}
+            headColor="#5a625a"
+          />
+          <DataTablepopulated
+            bgColor="#5a625a"
+            keyField={"assign_no"}
+            data={assignmentDisplay}
+            rowStyle2={rowStyle2}
+            columns={columns}
+          ></DataTablepopulated>
 
-            {reportModal === true ? (
-              <ViewAllReportModal
-                ViewReport={ViewReport}
-                reportModal={reportModal}
-                report={report}
-                getPendingforAcceptance={getAssignmentData}
-                deleiverAble="#5a625a"
-              />
-            ) : (
-              ""
-            )}
-          </CardBody>
-        ) : (
-          ""
-        )}
+          {reportModal === true ? (
+            <ViewAllReportModal
+              ViewReport={ViewReport}
+              reportModal={reportModal}
+              report={report}
+              getPendingforAcceptance={getAssignmentData}
+              deleiverAble="#5a625a"
+            />
+          ) : (
+            ""
+          )}
+        </CardBody>
       </Card>
     </div>
   );
