@@ -150,6 +150,28 @@
     padding: 16px 15px;
     margin-top: 3px;
 }
+.reportMenu{
+    background-image: url("./images/againImg/sche_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    display: flex;
+    width: 40px;
+}
+.nav-item:hover .reportMenu{
+    background-image: url("./images/againImg/sche_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
 .feedbackMenu{
     background-image: url("./images/againImg/feed_gary.png") !important;
     background-repeat: no-repeat !important;

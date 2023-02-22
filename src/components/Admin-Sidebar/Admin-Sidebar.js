@@ -30,18 +30,24 @@ function Sidebar({
   custDashboard,
   TLDashboard,
   TPDashboard,
+  feedbackNumber,
 }) {
+  const [toggleState, setToggleState] = useState(false);
+  const [feedbackNumber2, setfeedbackNumber2] = useState();
   const [feedbackNumbertl, setfeedbackNumbertl] = useState();
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
   const [open2, setOpen2] = useState(false);
   const [open, setOpen] = useState(false);
+  const [open3,setOpen3] =useState(false);
   const [logo, setLogo] = useState("customer/dashboard");
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
   const adminkey = window.localStorage.getItem("adminkey");
-
+  const cmsToken = localStorage.getItem("token");
   let history = useHistory();
-
+  const toggleTab = (index) => {
+    setToggleState(index);
+  };
   const role = localStorage.getItem("role");
   const feedNumber = {
     fontSize: "10.5px",
@@ -98,52 +104,45 @@ function Sidebar({
   };
   const getFeedback2 = () => {
     if (role === "admin" && adminDashboard !== undefined) {
-      console.log("deon22");
       const token = window.localStorage.getItem("adminToken");
       const myConfig = {
         headers: {
           uit: token,
         },
       };
-      try {
-        axios
-          .get(
-            `${baseUrl}/admin/getFeedback?uid=${JSON.parse(
-              adminkey
-            )}&&type=total`,
-            myConfig
-          )
-          .then((res) => {
-            if (role === "cms") {
-              setLogo("/cms/cms");
-            } else {
-              setLogo("/admin/dashboard");
-            }
-            if (res.data.code === 1) {
-              if (res.data.result != undefined) {
-                localStorage.setItem("adminFeedback", res.data.result[0].total);
-                if (role === "cms") {
-                  setLogo("/cms/cms");
-                } else {
-                  setLogo("/admin/dashboard");
-                }
+      axios
+        .get(
+          `${baseUrl}/admin/getFeedback?uid=${JSON.parse(
+            adminkey
+          )}&&type=total`,
+          myConfig
+        )
+        .then((res) => {
+          if (role === "cms") {
+            setLogo("/cms/cms");
+          } else {
+            setLogo("/admin/dashboard");
+          }
+          if (res.data.code === 1) {
+            if (res.data.result != undefined) {
+              setfeedbackNumber2(res.data.result[0].total);
+              if (role === "cms") {
+                setLogo("/cms/cms");
+              } else {
+                setLogo("/admin/dashboard");
               }
-            } else if (res.data.code === 102) {
-              history.push("/admin/login");
             }
-          });
-        // setInterval(async () => {
-
-        // }, 60000 * 10);
-      } catch (e) {
-        console.log(e);
-      }
+          } else if (res.data.code === 102) {
+            history.push("/admin/login");
+          }
+        });
     }
     if (
-      window.location.pathname.split("/").slice(-1) == "recording" ||
-      window.location.pathname.split("/").slice(-1) == "schedule"
+      window.location.pathname.split("/").slice(-1) === "recording" ||
+      window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
+      setOpen3(true)
     }
   };
   const getFeedbacktl = () => {
@@ -172,14 +171,15 @@ function Sidebar({
         });
     }
     if (
-      window.location.pathname.split("/").slice(-1) == "recording" ||
-      window.location.pathname.split("/").slice(-1) == "schedule"
+      window.location.pathname.split("/").slice(-1) === "recording" ||
+      window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
+      setOpen3(true)
     }
   };
   useEffect(() => {
-    setInterval(getFeedbacktl, 60000 * 10);
+    getFeedbacktl();
   }, [TLDashboard]);
 
   const getFeedbacktp = () => {
@@ -206,10 +206,11 @@ function Sidebar({
         });
     }
     if (
-      window.location.pathname.split("/").slice(-1) == "recording" ||
-      window.location.pathname.split("/").slice(-1) == "schedule"
+      window.location.pathname.split("/").slice(-1) === "recording" ||
+      window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
+      setOpen3(true);
     }
   };
   useEffect(() => {
@@ -222,6 +223,9 @@ function Sidebar({
   const handleClickCms = () => {
     setOpen2(!open2);
   };
+  const handleClickReport = () => {
+    setOpen3(!open3)
+  }
 
   const classes = useStyle();
   return (
@@ -229,7 +233,7 @@ function Sidebar({
       <div
         className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
         data-scroll-to-active="true"
-        data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
+        data-img="#"
       >
         <div className="navbar-header">
           <ul className="nav navbar-nav flex-row">
@@ -272,7 +276,7 @@ function Sidebar({
               <div
                 className="main-menu menu-fixed menu-light menu-accordion  menu-shadow "
                 data-scroll-to-active="true"
-                data-img="https://themeselection.com/demo/ chameleon-free-bootstrap-admin-template/theme-assets/images/backgrounds/02.jpg"
+                data-img="#"
               >
                 <div className="navbar-header">
                   <ul className="nav navbar-nav flex-row">
@@ -750,10 +754,7 @@ function Sidebar({
                     <span className="feedbackMenu"></span>
                   </i>
                   <span className="menu-title" data-i18n="">
-                    Feedback{" "}
-                    <sup style={feedNumber}>
-                      {localStorage.getItem("adminFeedback")}
-                    </sup>
+                    Feedback <sup style={feedNumber}>{feedbackNumber2}</sup>
                   </span>
                   {/* Feedback  <span className="badge">{feedbackNumber2}</span> */}
                 </NavLink>
@@ -872,14 +873,35 @@ function Sidebar({
                 </Collapse>
               </li>
               <li className="nav-item">
-                <NavLink to={"/teamleader/reports"}>
-                  <i className="fa">
+              <ListItemButton onMouseOver={() => handleClickReport()}>
+                  <i className="listStyle">
                     <span className="reportMenu"></span>
                   </i>
                   <span className="menu-title" data-i18n="">
-                    Reports
+                  Reports
                   </span>
-                </NavLink>
+                  {open3 ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open3} unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ul>
+                      <li>
+                        <NavLink to={"/teamleader/reports"}>
+                          <span className="menu-title" data-i18n="">
+                            Query Reports
+                          </span>
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to={"/teamleader/enquiry_reports"}>
+                          <span className="menu-title" data-i18n="">
+                            Enquiry Reports
+                          </span>
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </List>
+                </Collapse>
               </li>
               <li className="nav-item">
                 <NavLink

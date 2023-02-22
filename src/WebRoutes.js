@@ -116,6 +116,7 @@ import TlReport from "./pages/TL/Report/Report";
 import TlInvoice from "./pages/TL/Proposal/Invoice";
 import TlInvoiceTab from "./pages/TL/Proposal/InvoiceTab";
 import TlpayDetails from "./pages/TL/PaymentStatus/Paydetails";
+import EnqiuryReport from "./pages/TL/Report/EnquiryReport";
 import Custompay from "./pages/TL/Custompay/Custompay";
 // TP routes
 import TpStart from "./pages/TP/Start/Start";
@@ -633,6 +634,10 @@ function WebRoutes() {
             component={TlpayDetails}
           />
           <PrivateRouteTL path="/teamleader/custompay" component={Custompay} />
+          <PrivateRouteTL
+            path="/teamleader/enquiry_reports"
+            component={EnqiuryReport}
+          />
           <PublicRouteTP path="/taxprofessional/start" component={TpStart} />
           <PublicRouteTP path="/taxprofessional/login" component={TpLogin} />
           <PublicRouteTP
