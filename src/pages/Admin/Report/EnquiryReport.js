@@ -26,11 +26,6 @@ const Report = () => {
   const history = useHistory();
   const { handleSubmit, register, errors, getValues, reset } = useForm();
   let date = new Date();
-
-  useEffect(() => {
-    setFromDate(dateSpit);
-  }, []);
-
   var dateweek = date.setDate(date.getDate() - 7);
   const dt = new Date(dateweek);
   const yr = dt.getFullYear();
@@ -39,9 +34,9 @@ const Report = () => {
 
   var dateSpit = `${yr}` + "-" + `${monthIn2Digit}` + "-" + `${dateIn2Digit}`;
 
-  // console.log(yr);
-  // console.log(monthIn2Digit);
-  // console.log(dateIn2Digit);
+  useEffect(() => {
+    setFromDate(dateSpit);
+  }, []);
 
   const handleCategory = (value) => {
     setSelectedData(value);
@@ -163,16 +158,20 @@ const Report = () => {
                   <div className="form-group mx-sm-1  mb-2">
                     <label className="form-select form-control">From</label>
                   </div>
-                  <div className="form-group mx-sm-1  mb-2">
-                    <DatePicker
-                      onChange={(e) => fromDateFun(e)}
-                      disabledDate={(d) => !d || d.isAfter(maxDate)}
-                      format={dateFormatList}
-                      ref={dateValue}
-                      defaultValue={moment(`${dateSpit}`, dateFormat)}
-                      name="fromdate"
-                    />
-                  </div>
+                  {fromDate.length > 0 ? (
+                    <div className="form-group mx-sm-1  mb-2">
+                      <DatePicker
+                        onChange={(e) => fromDateFun(e)}
+                        disabledDate={(d) => !d || d.isAfter(maxDate)}
+                        format={dateFormatList}
+                        ref={dateValue}
+                        defaultValue={moment(`${fromDate}`, dateFormat)}
+                        name="fromdate"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div className="form-group mx-sm-1  mb-2">
                     <label className="form-select form-control">To</label>
                   </div>

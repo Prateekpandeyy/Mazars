@@ -49,7 +49,7 @@ function Proposal(props) {
 
     const getDeclinedProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?&status=6&?count=1`, myConfig)
+        .get(`${baseUrl}/admin/getProposals?&status=6&count=1`, myConfig)
         .then((response) => {
           if (response.data.code === 1) {
             setDeclinedProposalCount(response?.data?.result?.recordcount);
@@ -60,7 +60,7 @@ function Proposal(props) {
 
     const getPendingForAcceptence = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=1&?count=1`, myConfig)
+        .get(`${baseUrl}/admin/getProposals?status1=1&count=1`, myConfig)
         .then((response) => {
           if (response.data.code === 1) {
             setPendingProposalCount(response?.data?.result?.recordcount);
