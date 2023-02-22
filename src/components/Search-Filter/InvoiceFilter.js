@@ -131,7 +131,14 @@ const InvoiceFilter = (props) => {
   };
   const resetData = () => {
     reset();
+    setQueryNo("");
+    setInstallmentNo("");
+    setFromDate("");
+    setToDate("");
+    setStatus("");
+
     localStorage.removeItem(props.invoice);
+    props.getData();
   };
   return (
     <>
