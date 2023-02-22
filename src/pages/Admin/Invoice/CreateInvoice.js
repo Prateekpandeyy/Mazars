@@ -48,14 +48,17 @@ const CreateInvoice = () => {
   }, []);
 
   const getProposalList = () => {
-    axios
-      .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.payment_detail);
-          setRecords(res.data.payment_detail.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("admincreate"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.payment_detail);
+            setRecords(res.data.payment_detail.length);
+          }
+        });
+    }
   };
 
   const columns = [

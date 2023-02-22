@@ -4,6 +4,11 @@ import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 const InvoiceFilter = (props) => {
   const { handleSubmit, register, errors, reset } = useForm();
+  const [queryNo, setQueryNo] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [status, setStatus] = useState("");
+  const [installmentno, setInstallmentNo] = useState("");
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -12,7 +17,17 @@ const InvoiceFilter = (props) => {
     ("0" + new Date().getDate()).slice(-2);
 
   const [item] = useState(current_date);
-
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem(`${props.invoice}`));
+    if (data) {
+      setQueryNo(data.query_no);
+      setInstallmentNo(data.installment_no);
+      setFromDate(data.p_dateFrom);
+      setToDate(data.p_dateTo);
+      setStatus(data.opt);
+      onSubmit(data);
+    }
+  }, [props]);
   const onSubmit = (data) => {
     let formData = new FormData();
     formData.append("qno", data.query_no);
@@ -20,6 +35,7 @@ const InvoiceFilter = (props) => {
     formData.append("to", data.p_dateTo);
     formData.append("installment_no", data.installment_no);
     formData.append("status", data.opt);
+    localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
     if (props.invoice == "generated") {
       const token = window.localStorage.getItem("tlToken");
       axios({
@@ -115,6 +131,7 @@ const InvoiceFilter = (props) => {
   };
   const resetData = () => {
     reset();
+    localStorage.removeItem(props.invoice);
   };
   return (
     <>
@@ -127,11 +144,15 @@ const InvoiceFilter = (props) => {
               ref={register}
               placeholder="Enter Query Number"
               className="form-control"
+              value={queryNo}
+              onChange={(e) => setQueryNo(e.target.value)}
             />
           </div>
           <div className="col-md-2">
             <select
               ref={register}
+              value={installmentno}
+              onChange={(e) => setInstallmentNo(e.target.value)}
               className="form-select form-control"
               style={{ height: "33px" }}
               name="installment_no"
@@ -153,6 +174,8 @@ const InvoiceFilter = (props) => {
               name="p_dateFrom"
               className="form-select form-control"
               ref={register}
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
             />
           </div>
           <div className="col-md-1">
@@ -164,6 +187,8 @@ const InvoiceFilter = (props) => {
               name="p_dateTo"
               className="form-select form-control"
               ref={register}
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
             />
           </div>
         </div>
@@ -179,6 +204,8 @@ const InvoiceFilter = (props) => {
                 className="form-select form-control"
                 ref={register}
                 style={{ height: "33px" }}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="">Select </option>
                 <option value="0">Unpaid</option>

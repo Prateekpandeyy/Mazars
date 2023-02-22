@@ -47,14 +47,17 @@ const Generated = () => {
   }, []);
 
   const getProposalList = () => {
-    axios
-      .get(`${baseUrl}/admin/getPaymentDetail?&invoice=1`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.payment_detail);
-          setRecords(res.data.payment_detail.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("admingenerated"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/admin/getPaymentDetail?&invoice=1`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.payment_detail);
+            setRecords(res.data.payment_detail.length);
+          }
+        });
+    }
   };
   const downloadpdf = (qno, id, installmentNumber) => {
     const myConfig2 = {
