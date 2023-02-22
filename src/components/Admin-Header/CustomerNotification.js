@@ -57,6 +57,8 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDataadAssignment2");
       localStorage.removeItem("searchDataadAssignment3");
       localStorage.removeItem("searchDataadAssignment4");
+      localStorage.removeItem("admincreate");
+      localStorage.removeItem("admingenerated");
       history.push("/admin/login");
     });
   };
