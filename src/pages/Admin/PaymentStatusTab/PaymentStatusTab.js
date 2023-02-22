@@ -4,13 +4,9 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 
-
 import AllPayment from "./AllPayment";
 import Paid from "./Paid";
 import Unpaid from "./Unpaid";
-
-
-
 
 function PaymentStatus(props) {
   const userId = window.localStorage.getItem("adminkey");
@@ -18,7 +14,7 @@ function PaymentStatus(props) {
   const [allPayment, setAllPayment] = useState("");
   const [paid, setPaid] = useState("");
   const [unpaid, setUnpaid] = useState("");
-  const [bgColor, setbgColor] = useState("#2b5f55")
+  const [bgColor, setbgColor] = useState("#2b5f55");
 
   useEffect(() => {
     getAllPaid();
@@ -26,45 +22,41 @@ function PaymentStatus(props) {
     getUnpaid();
   }, []);
 
-  const token = window.localStorage.getItem("adminToken")
+  const token = window.localStorage.getItem("adminToken");
   const myConfig = {
-      headers : {
-       "uit" : token
-      }
-    }
+    headers: {
+      uit: token,
+    },
+  };
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/admin/getUploadedProposals`, myConfig)
+      .get(`${baseUrl}/admin/getUploadedProposals?count=1`, myConfig)
       .then((res) => {
-     
         if (res.data.code === 1) {
-          setAllPayment(res.data.result.length);
+          setAllPayment(res?.data?.result?.recordcount);
         }
       });
   };
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/admin/getUploadedProposals?status=1`, myConfig)
+      .get(`${baseUrl}/admin/getUploadedProposals?status=1&count=1`, myConfig)
       .then((res) => {
-     
         if (res.data.code === 1) {
-          setPaid(res.data.result.length);
+          setPaid(res?.data?.result?.recordcount);
         }
       });
   };
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/admin/getUploadedProposals?status=2`, myConfig)
+      .get(`${baseUrl}/admin/getUploadedProposals?status=2&count=1`, myConfig)
       .then((res) => {
-     
         if (res.data.code === 1) {
-          setUnpaid(res.data.result.length);
+          setUnpaid(res?.data?.result?.recordcount);
         }
       });
   };
-
 
   const [tabIndex, setTabIndex] = useState(0);
   useLayoutEffect(() => {
@@ -72,62 +64,56 @@ function PaymentStatus(props) {
   }, [props.location.index]);
 
   const tableIndex = (index) => {
-    setTabIndex(index)
-    console.log(index)
-    if(index === 0){
-      setbgColor("#2b5f55")
+    setTabIndex(index);
+    console.log(index);
+    if (index === 0) {
+      setbgColor("#2b5f55");
+    } else if (index === 1) {
+      setbgColor("#3e8678");
+    } else if (index === 2) {
+      setbgColor("#3e8678");
+    } else if (index === 3) {
+      setbgColor("#3e8678");
     }
-    else if(index === 1){
-      setbgColor("#3e8678")
-    }
-    else if(index === 2){
-      setbgColor("#3e8678")
-    }
-    else if(index === 3){
-      setbgColor("#3e8678")
-    }
-  }
-    
+  };
+
   const myStyle1 = {
     margin: "10px auto",
-    fontSize : "14px"
+    fontSize: "14px",
   };
   const myStyle2 = {
- margin: "10px auto",
+    margin: "10px auto",
 
- color : "#2b5f55",
- fontWeight : 1000
+    color: "#2b5f55",
+    fontWeight: 1000,
   };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
-      <TabList
-           className="fixedTab"
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
-              All payment ({allPayment})
-            </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
-              Unpaid ({paid})
-            </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-              Paid ({unpaid})
-            </Tab>
-          </TabList>
-          <TabPanel>
-            <AllPayment />
-          </TabPanel>
+        <TabList className="fixedTab">
+          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            All payment ({allPayment})
+          </Tab>
+          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            Unpaid ({paid})
+          </Tab>
+          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            Paid ({unpaid})
+          </Tab>
+        </TabList>
+        <TabPanel>
+          <AllPayment />
+        </TabPanel>
 
-          <TabPanel>
-            <Paid />
-          </TabPanel>
+        <TabPanel>
+          <Paid />
+        </TabPanel>
 
-          <TabPanel>
-            <Unpaid />
-          </TabPanel>
-        </Tabs>
-     
+        <TabPanel>
+          <Unpaid />
+        </TabPanel>
+      </Tabs>
     </Layout>
   );
 }
