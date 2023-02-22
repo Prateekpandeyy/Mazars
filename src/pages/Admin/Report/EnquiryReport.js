@@ -2,33 +2,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import classNames from "classnames";
 import moment from "moment";
 import { baseUrl, baseUrl3 } from "../../../config/config";
-import "./Admin.css";
 import { Select } from "antd";
 import { DatePicker, Space } from "antd";
 import Layout from "../../../components/Layout/Layout";
-import { Typography, Button } from "@material-ui/core";
-import Mandatory from "../../../components/Common/Mandatory";
 import { useHistory } from "react-router";
-import MyContainer from "../../../components/Common/MyContainer";
-import style from "./Admin.css";
-import { BiRefresh } from "react-icons/bi";
-import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import DiscardReport from "../AssignmentTab/DiscardReport";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
-import { Grid, Box, Container, Item } from "@material-ui/core";
+import { Card, CardHeader, Row, Col } from "reactstrap";
 import Swal from "sweetalert2";
-import $ from "jquery";
+
 const Report = () => {
   const { Option } = Select;
   const [selectedData, setSelectedData] = useState([]);
@@ -40,11 +22,7 @@ const Report = () => {
   const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
   const userid = window.localStorage.getItem("adminkey");
   const token = window.localStorage.getItem("adminToken");
-  const myConfig = {
-    headers: {
-      uit: token,
-    },
-  };
+
   const history = useHistory();
   const { handleSubmit, register, errors, getValues, reset } = useForm();
   let date = new Date();
@@ -89,7 +67,7 @@ const Report = () => {
         fromdate: fromDate,
         todate: toDate,
       };
-      console.log(formData, "formData");
+
       axios({
         method: "POST",
         url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
