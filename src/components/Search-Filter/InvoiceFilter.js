@@ -27,7 +27,7 @@ const InvoiceFilter = (props) => {
       setStatus(data.opt);
       onSubmit(data);
     }
-  }, [props]);
+  }, []);
   const onSubmit = (data) => {
     let formData = new FormData();
     formData.append("qno", data.query_no);
@@ -140,6 +140,7 @@ const InvoiceFilter = (props) => {
     localStorage.removeItem(props.invoice);
     props.getData();
   };
+  console.log("status", status);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -158,7 +159,7 @@ const InvoiceFilter = (props) => {
           <div className="col-md-2">
             <select
               ref={register}
-              defaultValue={installmentno}
+              value={installmentno}
               onChange={(e) => setInstallmentNo(e.target.value)}
               className="form-select form-control"
               style={{ height: "33px" }}
@@ -211,8 +212,8 @@ const InvoiceFilter = (props) => {
                 className="form-select form-control"
                 ref={register}
                 style={{ height: "33px" }}
-                defaultValue={status}
                 onChange={(e) => setStatus(e.target.value)}
+                value={status}
               >
                 <option value="">Select </option>
                 <option value="0">Unpaid</option>
