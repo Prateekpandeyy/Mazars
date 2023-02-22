@@ -151,14 +151,14 @@ const InvoiceFilter = (props) => {
               ref={register}
               placeholder="Enter Query Number"
               className="form-control"
-              value={queryNo}
+              defaultValue={queryNo}
               onChange={(e) => setQueryNo(e.target.value)}
             />
           </div>
           <div className="col-md-2">
             <select
               ref={register}
-              value={installmentno}
+              defaultValue={installmentno}
               onChange={(e) => setInstallmentNo(e.target.value)}
               className="form-select form-control"
               style={{ height: "33px" }}
@@ -181,8 +181,8 @@ const InvoiceFilter = (props) => {
               name="p_dateFrom"
               className="form-select form-control"
               ref={register}
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
+              defaultValue={fromDate}
+              onChange={(e) => setFromDate(e.target.defaultValue)}
             />
           </div>
           <div className="col-md-1">
@@ -194,7 +194,7 @@ const InvoiceFilter = (props) => {
               name="p_dateTo"
               className="form-select form-control"
               ref={register}
-              value={toDate}
+              defaultValue={toDate}
               onChange={(e) => setToDate(e.target.value)}
             />
           </div>
@@ -211,7 +211,7 @@ const InvoiceFilter = (props) => {
                 className="form-select form-control"
                 ref={register}
                 style={{ height: "33px" }}
-                value={status}
+                defaultValue={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="">Select </option>
