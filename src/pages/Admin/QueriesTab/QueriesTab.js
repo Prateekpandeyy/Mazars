@@ -37,12 +37,14 @@ function QueriesTab(props) {
   };
 
   const CountAllQuery = (data) => {
-    axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setAllQueriesCount(res.data.result.length);
-        setAllData(res.data.result);
-      }
-    });
+    axios
+      .get(`${baseUrl}/admin/getAllQueries?count=1`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setAllQueriesCount(res.data.result.length);
+          setAllData(res.data.result);
+        }
+      });
   };
 
   const CountInprogressAllocation = () => {
