@@ -38,7 +38,7 @@ function Sidebar({
   const [feedbackNumbertp, setfeedbackNumbertp] = useState();
   const [open2, setOpen2] = useState(false);
   const [open, setOpen] = useState(false);
-  const [open3,setOpen3] =useState(false);
+  const [open3, setOpen3] = useState(false);
   const [logo, setLogo] = useState("customer/dashboard");
   const tlkey = window.localStorage.getItem("tlkey");
   const tpkey = window.localStorage.getItem("tpkey");
@@ -142,7 +142,7 @@ function Sidebar({
       window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
-      setOpen3(true)
+      setOpen3(true);
     }
   };
   const getFeedbacktl = () => {
@@ -175,7 +175,7 @@ function Sidebar({
       window.location.pathname.split("/").slice(-1) === "schedule"
     ) {
       setOpen(true);
-      setOpen3(true)
+      setOpen3(true);
     }
   };
   useEffect(() => {
@@ -224,8 +224,8 @@ function Sidebar({
     setOpen2(!open2);
   };
   const handleClickReport = () => {
-    setOpen3(!open3)
-  }
+    setOpen3(!open3);
+  };
 
   const classes = useStyle();
   return (
@@ -739,15 +739,37 @@ function Sidebar({
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to={"/admin/reportlist"}>
-                  <i className="fa">
+                <ListItemButton onMouseOver={() => handleClickReport()}>
+                  <i className="listStyle">
                     <span className="reportMenu"></span>
                   </i>
                   <span className="menu-title" data-i18n="">
-                    Report
+                    Reports
                   </span>
-                </NavLink>
+                  {open3 ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open3} unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ul>
+                      <li>
+                        <NavLink to={"/admin/reports"}>
+                          <span className="menu-title" data-i18n="">
+                            Query Reports
+                          </span>
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to={"/admin/enquiry_reports"}>
+                          <span className="menu-title" data-i18n="">
+                            Enquiry Reports
+                          </span>
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </List>
+                </Collapse>
               </li>
+
               <li className="nav-item">
                 <NavLink to={"/admin/feedback"}>
                   <i className="fa">
@@ -873,35 +895,14 @@ function Sidebar({
                 </Collapse>
               </li>
               <li className="nav-item">
-              <ListItemButton onMouseOver={() => handleClickReport()}>
-                  <i className="listStyle">
+                <NavLink to={"/teamleader/reportlist"}>
+                  <i className="fa">
                     <span className="reportMenu"></span>
                   </i>
                   <span className="menu-title" data-i18n="">
-                  Reports
+                    Report
                   </span>
-                  {open3 ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open3} unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ul>
-                      <li>
-                        <NavLink to={"/teamleader/reports"}>
-                          <span className="menu-title" data-i18n="">
-                            Query Reports
-                          </span>
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink to={"/teamleader/enquiry_reports"}>
-                          <span className="menu-title" data-i18n="">
-                            Enquiry Reports
-                          </span>
-                        </NavLink>
-                      </li>
-                    </ul>
-                  </List>
-                </Collapse>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink

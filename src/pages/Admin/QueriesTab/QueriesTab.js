@@ -16,7 +16,7 @@ import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 
 function QueriesTab(props) {
   const userid = window.localStorage.getItem("adminkey");
-  const [allData, setAllData] = useState();
+
   const [allQueriesCount, setAllQueriesCount] = useState("");
   const [pendingProposalCount, setPendingProposalCount] = useState("");
   const [declined, setDeclined] = useState("");
@@ -41,34 +41,39 @@ function QueriesTab(props) {
       .get(`${baseUrl}/admin/getAllQueries?count=1`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
-          setAllQueriesCount(res.data.result.length);
-          setAllData(res.data.result);
+          setAllQueriesCount(res?.data?.result?.recordcount);
         }
       });
   };
 
   const CountInprogressAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setInprogressAllocation(res.data.result.length);
-      }
-    });
+    axios
+      .get(`${baseUrl}/admin/pendingAllocation?count=1`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setInprogressAllocation(res?.data?.result?.recordcount);
+        }
+      });
   };
 
   const CountInprogressProposal = () => {
-    axios.get(`${baseUrl}/admin/pendingProposal`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setPendingProposalCount(res.data.result.length);
-      }
-    });
+    axios
+      .get(`${baseUrl}/admin/pendingProposal?count=1`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setPendingProposalCount(res?.data?.result?.recordcount);
+        }
+      });
   };
 
   const CountDeclined = () => {
-    axios.get(`${baseUrl}/admin/declinedQueries`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setDeclined(res.data.result.length);
-      }
-    });
+    axios
+      .get(`${baseUrl}/admin/declinedQueries?count=1`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setDeclined(res?.data?.result?.recordcount);
+        }
+      });
   };
 
   useLayoutEffect(() => {

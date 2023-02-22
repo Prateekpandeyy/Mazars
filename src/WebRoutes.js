@@ -72,6 +72,7 @@ import adMeetingComponent from "./pages/Admin/MeetingComponent/MeetingComponent"
 import Customer from "./pages/Admin/customer/Customer";
 import adminReport from "./pages/Admin/Report/Report";
 import AdminInvoice from "./pages/Admin/Invoice/Invoice";
+import EnqiuryReport from "./pages/Admin/Report/EnquiryReport";
 import AdpayDetails from "./pages/Admin/PaymentStatusTab/Paydetails";
 import ReportList from "./pages/Admin/Report/ReportList";
 import Consalation from "./pages/Admin/Report/Consalation";
@@ -116,7 +117,7 @@ import TlReport from "./pages/TL/Report/Report";
 import TlInvoice from "./pages/TL/Proposal/Invoice";
 import TlInvoiceTab from "./pages/TL/Proposal/InvoiceTab";
 import TlpayDetails from "./pages/TL/PaymentStatus/Paydetails";
-import EnqiuryReport from "./pages/TL/Report/EnquiryReport";
+
 import Custompay from "./pages/TL/Custompay/Custompay";
 // TP routes
 import TpStart from "./pages/TP/Start/Start";
@@ -450,7 +451,10 @@ function WebRoutes() {
             path="/admin_new-password/:id"
             component={AdminNewPassword}
           />
-
+          <PrivateRouteAdmin
+            path="/admin/enquiry_reports"
+            component={EnqiuryReport}
+          />
           <PrivateRouteAdmin
             path="/admin/dashboard"
             component={AdminDashboard}
@@ -634,10 +638,7 @@ function WebRoutes() {
             component={TlpayDetails}
           />
           <PrivateRouteTL path="/teamleader/custompay" component={Custompay} />
-          <PrivateRouteTL
-            path="/teamleader/enquiry_reports"
-            component={EnqiuryReport}
-          />
+
           <PublicRouteTP path="/taxprofessional/start" component={TpStart} />
           <PublicRouteTP path="/taxprofessional/login" component={TpLogin} />
           <PublicRouteTP
