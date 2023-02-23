@@ -149,4 +149,11 @@ button should be left align in sign up
 
 breadcrumb size
 align button left in sign up
-update details remove bold
+update details remove 
+
+sign up image should be adjecent to text . page no 4. 
+on the above email address and mobile number.
+Sign up successful replaced by sign up successfully.
+After successful login by an existing client or registration of a new client, following
+screen/ window will open. (wiil be repalced by)
+After successful login by an existing client or registration of a new client, Client dashboard screen / window will open.(Remove below screen)(for need help and signup)
