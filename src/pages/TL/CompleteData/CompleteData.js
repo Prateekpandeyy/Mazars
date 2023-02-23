@@ -104,7 +104,7 @@ function CompletedQuery({ updateTab }) {
       sort: true,
 
       formatter: function (cell, row) {
-        let dueDate = row.created.split("-").reverse().join("-");
+        let dueDate = row?.created?.split("-").reverse().join("-");
 
         return <>{dueDate}</>;
       },

@@ -39,7 +39,7 @@ function TeamFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [status1, setStatus1] = useState(1);
+
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
@@ -95,7 +95,7 @@ function TeamFilter(props) {
     reset();
     setSelectedData([]);
     setStore2([]);
-    setStatus1(1);
+    setStatus(1);
     setTax2([]);
 
     setFromDate("");
@@ -246,9 +246,9 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${data.store}&from=${
-              data.fromDate
-            }&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            )}&status=${status}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -264,7 +264,7 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            )}&status=${status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
@@ -285,9 +285,9 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${data.store}&from=${
-              data.fromDate
-            }&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            )}&status=${status}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -303,7 +303,7 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+            )}&status=${status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
@@ -861,6 +861,8 @@ function TeamFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -876,7 +878,8 @@ function TeamFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
-                      onChange={(e) => setStatus1(e.target.value)}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="4">Inprogress Acceptance</option>
@@ -891,6 +894,8 @@ function TeamFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="3">Client Declined; Proposals</option>
@@ -904,6 +909,8 @@ function TeamFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="1">Inprogress; Proposals</option>
@@ -918,6 +925,8 @@ function TeamFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="4">Inprogress; Preparation</option>
@@ -931,6 +940,8 @@ function TeamFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      onChange={(e) => setStatus(e.target.value)}
+                      value={status}
                     >
                       <option value="">--select--</option>
                       <option value="1">Unpaid</option>
@@ -946,6 +957,8 @@ function TeamFilter(props) {
                     ref={register}
                     placeholder="Enter Query Number"
                     className="form-control"
+                    onChange={(e) => setQueryNo(e.target.value)}
+                    value={queryNo}
                   />
                 </div>
                 <button type="submit" className="customBtn mx-sm-1 mb-2">

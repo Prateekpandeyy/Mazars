@@ -60,12 +60,12 @@ function QueriesTab(props) {
     const AllQuery = () => {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}?count=1`,
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAllQuery(esponse?.data?.result?.recordcount);
+            setAllQuery(res?.data?.result?.recordcount);
           }
         });
     };
@@ -73,12 +73,12 @@ function QueriesTab(props) {
     const getPendindForAccepttence = () => {
       axios
         .get(
-          `${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}?count=1`,
+          `${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setPendingForAcceptence(response?.data?.result?.recordcount);
+            setPendingForAcceptence(res?.data?.result?.recordcount);
           }
         });
     };
@@ -93,7 +93,7 @@ function QueriesTab(props) {
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setIncomplete(esponse?.data?.result?.recordcount);
+            setIncomplete(res?.data?.result?.recordcount);
           }
         });
     };
@@ -101,12 +101,12 @@ function QueriesTab(props) {
     const getComplete = () => {
       axios
         .get(
-          `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}?count=1`,
+          `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setcomplete(esponse?.data?.result?.recordcount);
+            setcomplete(res?.data?.result?.recordcount);
           }
         });
     };
