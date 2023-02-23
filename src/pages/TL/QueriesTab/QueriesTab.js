@@ -60,22 +60,25 @@ function QueriesTab(props) {
     const AllQuery = () => {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}?count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAllQuery(res.data.result.length);
+            setAllQuery(esponse?.data?.result?.recordcount);
           }
         });
     };
 
     const getPendindForAccepttence = () => {
       axios
-        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
+        .get(
+          `${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}?count=1`,
+          myConfig
+        )
         .then((res) => {
           if (res.data.code === 1) {
-            setPendingForAcceptence(res.data.result.length);
+            setPendingForAcceptence(response?.data?.result?.recordcount);
           }
         });
     };
@@ -83,12 +86,14 @@ function QueriesTab(props) {
     const getIncomplete = () => {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`,
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
+            userid
+          )}&status=1&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setIncomplete(res.data.result.length);
+            setIncomplete(esponse?.data?.result?.recordcount);
           }
         });
     };
@@ -96,31 +101,30 @@ function QueriesTab(props) {
     const getComplete = () => {
       axios
         .get(
-          `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}?count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setcomplete(res.data.result.length);
+            setcomplete(esponse?.data?.result?.recordcount);
           }
         });
     };
 
-    const Declined = () => {
-      axios
-        .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setDeclined(res.data.result.length);
-          }
-        });
-    };
+    // const Declined = () => {
+    //   axios
+    //     .get(`${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}`, myConfig)
+    //     .then((res) => {
+    //       if (res.data.code === 1) {
+    //         setDeclined(res.data.result.length);
+    //       }
+    //     });
+    // };
 
     getPendindForAccepttence();
     getIncomplete();
     getComplete();
     AllQuery();
-    Declined();
   }, []);
 
   const updateTab = (key) => {

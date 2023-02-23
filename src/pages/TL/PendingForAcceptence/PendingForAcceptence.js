@@ -42,14 +42,17 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   }, []);
 
   const getPendingforAcceptance = () => {
-    axios
-      .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPendingData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlquery3"));
+    if (!searchData) {
+      axios
+        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPendingData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -191,6 +194,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             pendingForAcceptence="pendingForAcceptence"
             setRecords={setRecords}
             records={records}
+            index="tlquery3"
           />
         </CardHeader>
         <CardBody>

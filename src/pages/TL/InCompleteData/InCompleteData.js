@@ -47,17 +47,20 @@ function InCompleteData({ CountIncomplete }) {
   }, []);
 
   const getInCompleteAssingment = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setInCompleteData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlquery2"));
+    if (!searchData) {
+      axios
+        .get(
+          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setInCompleteData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -210,6 +213,7 @@ function InCompleteData({ CountIncomplete }) {
             InprogressQuery="InprogressQuery"
             setRecords={setRecords}
             records={records}
+            index="tlquery2"
           />
         </CardHeader>
         <CardBody>

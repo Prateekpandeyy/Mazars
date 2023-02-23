@@ -52,18 +52,21 @@ function AcceptedProposal() {
     },
   };
   const getProposalList = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlproposal3"));
+    if (!searchData) {
+      axios
+        .get(
+          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -280,6 +283,7 @@ function AcceptedProposal() {
             proposal="acceptedProposal"
             setRecords={setRecords}
             records={records}
+            index="tlproposal3"
           />
         </CardHeader>
         <CardBody>

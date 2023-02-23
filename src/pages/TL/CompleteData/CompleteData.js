@@ -71,17 +71,20 @@ function CompletedQuery({ updateTab }) {
     //   .catch((error) => console.log(error));
   };
   const getInCompleteAssingment = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setInCompleteData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlquery4"));
+    if (!searchData) {
+      axios
+        .get(
+          `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setInCompleteData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -261,6 +264,7 @@ function CompletedQuery({ updateTab }) {
             inCompleteQuery="inCompleteQuery"
             setRecords={setRecords}
             records={records}
+            index="searchDatatlquery4"
           />
         </CardHeader>
         <CardBody>

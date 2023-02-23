@@ -53,18 +53,21 @@ function InprogressProposal() {
     },
   };
   const getProposalList = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlproposal2"));
+    if (!searchData) {
+      axios
+        .get(
+          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -304,6 +307,7 @@ function InprogressProposal() {
             InprogressProposal="InprogressProposal"
             setRecords={setRecords}
             records={records}
+            index="tlproposal2"
           />
         </CardHeader>
         <CardBody>

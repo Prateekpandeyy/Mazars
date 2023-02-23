@@ -66,6 +66,7 @@ function AllPayment() {
   }, []);
 
   const getPaymentStatus = () => {
+    let data = JSON.parse(localStorage.getItem("searchDatatlpayment2"));
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`,
@@ -336,6 +337,7 @@ function AllPayment() {
             Paid="Paid"
             setRecords={setRecords}
             records={records}
+            index="tlpayment2"
           />
         </CardHeader>
 
