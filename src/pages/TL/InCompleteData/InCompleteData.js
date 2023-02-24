@@ -47,6 +47,12 @@ function InCompleteData({ CountIncomplete }) {
   }, []);
 
   const getInCompleteAssingment = () => {
+    const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ2`));
+    if (tlQueryFilterData)
+      {
+        console.log("Not called in all Q axios");
+      }
+    else{
     axios
       .get(
         `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`,
@@ -58,6 +64,7 @@ function InCompleteData({ CountIncomplete }) {
           setRecords(res.data.result.length);
         }
       });
+    }
   };
 
   const columns = [
@@ -210,6 +217,7 @@ function InCompleteData({ CountIncomplete }) {
             InprogressQuery="InprogressQuery"
             setRecords={setRecords}
             records={records}
+            index={2}
           />
         </CardHeader>
         <CardBody>

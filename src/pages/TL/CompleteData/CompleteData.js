@@ -20,7 +20,6 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import { ActionIcon } from "../../../components/Common/MessageIcon";
 
 function CompletedQuery({ updateTab }) {
-  
   const userid = window.localStorage.getItem("tlkey");
   const hist = useHistory();
   const [incompleteData, setInCompleteData] = useState([]);
@@ -81,7 +80,6 @@ function CompletedQuery({ updateTab }) {
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
-          
         }
       });
   };
@@ -103,7 +101,11 @@ function CompletedQuery({ updateTab }) {
       sort: true,
 
       formatter: function (cell, row) {
-        let dueDate = row.created.split("-").reverse().join("-");
+
+        let test=row.created
+
+
+        let dueDate = row.created?.split("-").reverse().join("-");
 
         return <>{dueDate}</>;
       },
@@ -153,7 +155,7 @@ function CompletedQuery({ updateTab }) {
         if (oldDate == null) {
           return null;
         }
-        return oldDate.toString().split("-").reverse().join("-");
+        return oldDate.toString()?.split("-").reverse().join("-");
       },
     },
     {
@@ -164,11 +166,11 @@ function CompletedQuery({ updateTab }) {
           <>
             <div>
               {row.status}/
-              {row.status ===  "Inprogress Query" ? (
+              {row.status == "Inprogress Query" ? (
                 <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status ===  "Declined Query" ? (
+              ) : row.status == "Declined Query" ? (
                 <p className="declined">{row.statusdescription}</p>
-              ) : row.status ===  "Completed Query" ? (
+              ) : row.status == "Completed Query" ? (
                 <p className="completed">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -263,6 +265,7 @@ function CompletedQuery({ updateTab }) {
             inCompleteQuery="inCompleteQuery"
             setRecords={setRecords}
             records={records}
+            index={4}
           />
         </CardHeader>
         <CardBody>

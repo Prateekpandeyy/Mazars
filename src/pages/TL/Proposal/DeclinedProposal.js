@@ -52,6 +52,10 @@ function DeclinedProposal() {
     },
   };
   const getProposalList = () => {
+    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP4`));
+            if (tlProposalFilterData) {
+                console.log("Not called in Complete Data P axios");
+            } else {
     axios
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=3`,
@@ -65,6 +69,7 @@ function DeclinedProposal() {
         }
       });
   };
+}
 
   const columns = [
     {
@@ -302,6 +307,7 @@ function DeclinedProposal() {
             proposal="proposal"
             setRecords={setRecords}
             records={records}
+            index={4}
           />
         </CardHeader>
         <CardBody>

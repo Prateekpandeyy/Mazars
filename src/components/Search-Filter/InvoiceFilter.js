@@ -4,6 +4,8 @@ import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 const InvoiceFilter = (props) => {
   const { handleSubmit, register, errors, reset } = useForm();
+  const { index } = props
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -22,7 +24,7 @@ const InvoiceFilter = (props) => {
   //  }
 
   const [invoicetlFilterData, setFilterData] = useState({
-    query_no: "", p_dateFrom: "", p_dateTo: "", installment_no: "", opt: ""
+    query_no: "", p_dateFrom: "", p_dateTo: "", installment_no: "", opt: "",route:"",index:""
   });
   const { query_no, p_dateFrom, p_dateTo, installment_no, opt } = invoicetlFilterData
   const handleChange = (e) => {
@@ -30,11 +32,16 @@ const InvoiceFilter = (props) => {
     let name = e.target.name;
     console.log("input entered here")
     setFilterData(prev => ({ ...prev, [name]: value }));
-    // onSubmit(invoicetlFilterData)
     // console.log("called to submit 1")
   };
 
-
+  useEffect(() => {
+    let id = JSON.parse(localStorage.getItem(`searchDataI${index}`));
+    if(id){
+      setFilterData((prev) => ({ ...prev, ...id }));
+      onSubmit(id)
+    }
+  }, []);
   const onSubmit = (data) => {
     let formData = new FormData();
     formData.append("qno", data.query_no);
@@ -42,8 +49,52 @@ const InvoiceFilter = (props) => {
     formData.append("to", data.p_dateTo);
     formData.append("installment_no", data.installment_no);
     formData.append("status", data.opt);
+    if ((props.invoice === "generated") || (props.invoice === "tlcreate")) {
+      if(data.routes)
+      {
+      let objI = {
+        query_no: data.query_no,
+        p_dateFrom: data.p_dateFrom,
+        p_dateTo: data.p_dateTo,
+        installment_no: data.installment_no,
+        opt: data.opt,
+        route: window.location.pathname,
+        index: index,
+      }
+    }
+      else {
+        let objI = {
+          query_no: data.query_no,
+          p_dateFrom: data.p_dateFrom,
+          p_dateTo: data.p_dateTo,
+          installment_no: data.installment_no,
+          opt: data.opt,
+          route: window.location.pathname,
+          index: index,
+        }
+        localStorage.setItem(`searchDataI${index}`, JSON.stringify(objI));
+      }
+    } 
+    
     if (props.invoice === "generated") {
       const token = window.localStorage.getItem("tlToken");
+      const tlGinvoice = window.localStorage.getItem(`searchDataI1`);
+      if(tlGinvoice){
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=1`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        }).then((res) => {
+          if (res.data.code === 1) {
+            props.setData(res.data.payment_detail);
+            props.setRec(res.data.payment_detail.length);
+            // console.log(res.data)
+          }
+        });
+      }else{
       axios({
         method: "POST",
         url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=1`,
@@ -58,8 +109,26 @@ const InvoiceFilter = (props) => {
           // console.log(res.data)
         }
       });
+    }
     } else if (props.invoice === "tlcreate") {
       const token = window.localStorage.getItem("tlToken");
+      const tlCinvoice = window.localStorage.getItem(`searchDataI2`);
+      if(tlCinvoice){
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&ststus=${tlCinvoice.opt}`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        }).then((res) => {
+          if (res.data.code === 1) {
+            props.setData(res.data.payment_detail);
+            props.setRec(res.data.payment_detail.length);
+            console.log(res.data)
+          }
+        });
+      }else{
       axios({
         method: "POST",
         url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&ststus=${data.opt}`,
@@ -74,6 +143,7 @@ const InvoiceFilter = (props) => {
           console.log(res.data)
         }
       });
+    }
     } else if (props.invoice === "tpcreate") {
       const token = window.localStorage.getItem("tptoken");
       axios({
@@ -144,30 +214,31 @@ const InvoiceFilter = (props) => {
   const resetData = () => {
     reset();
     setFilterData({
-      query_no : "", p_dateFrom : "" , p_dateTo : "", installment_no : "", opt : ""  })
-    localStorage.removeItem("invoicetlFilterData", JSON.stringify(invoicetlFilterData));
+      query_no: "", p_dateFrom: "", p_dateTo: "", installment_no: "", opt: "" ,route:"",index:""
+    })
+    localStorage.removeItem(`searchDataI${index}`);
   };
 
-  useEffect(() => {
-    const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
-    if (query_no === "" && p_dateFrom === "" && p_dateTo === "" && installment_no === "" && opt === "") {
-      setFilterData((prev) => ({ ...prev, ...filterForm }));
-    }
-  }, [])
+  // useEffect(() => {
+  //   const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
+  //   if (query_no === "" && p_dateFrom === "" && p_dateTo === "" && installment_no === "" && opt === "") {
+  //     setFilterData((prev) => ({ ...prev, ...filterForm }));
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    localStorage.setItem("invoicetlFilterData", JSON.stringify(invoicetlFilterData))
-    console.log(invoicetlFilterData, "filter data is saved")
-  }, [query_no, p_dateFrom, p_dateTo, installment_no, opt]);
+  // useEffect(() => {
+  //   localStorage.setItem("invoicetlFilterData", JSON.stringify(invoicetlFilterData))
+  //   console.log(invoicetlFilterData, "filter data is saved")
+  // }, [query_no, p_dateFrom, p_dateTo, installment_no, opt]);
 
-  useEffect(() => {
-    const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
-    if((filterForm.query_no !== "" || filterForm.p_dateFrom !== "" || filterForm.installment_no !== "" || filterForm.p_dateTo !== "" || filterForm.opt !== "")){
-      onSubmit(filterForm);
-      console.log("there is data in filter")
-    } 
-    else{console.log("nofilterhere")}
-    },[invoicetlFilterData])
+  // useEffect(() => {
+  //   const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
+  //   if((filterForm.query_no !== "" || filterForm.p_dateFrom !== "" || filterForm.installment_no !== "" || filterForm.p_dateTo !== "" || filterForm.opt !== "")){
+  //     onSubmit(filterForm);
+  //     console.log("there is data in filter")
+  //   } 
+  //   else{console.log("nofilterhere")}
+  //   },[invoicetlFilterData])
 
 
   return (

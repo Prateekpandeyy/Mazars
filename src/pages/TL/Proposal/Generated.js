@@ -70,6 +70,10 @@ const Generated = ({ updateTab }) => {
     },
   };
   const getProposalList = () => {
+    const tlInFilterData = JSON.parse(localStorage.getItem(`searchDataI1`));
+    if (tlInFilterData) {
+      console.log("Not called in Complete Data A axios");
+    } else {
     axios
       .get(
         `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`,
@@ -82,6 +86,7 @@ const Generated = ({ updateTab }) => {
         }
       });
   };
+}
 
   const downloadpdf = (qno, id, installmentNumber) => {
     setCopy(0);
@@ -341,6 +346,7 @@ const Generated = ({ updateTab }) => {
             panel="teamleader"
             records={records}
             userid={JSON.parse(userid)}
+            index={1}
           />
         </CardHeader>
 

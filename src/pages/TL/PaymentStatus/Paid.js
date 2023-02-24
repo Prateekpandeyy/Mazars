@@ -66,19 +66,24 @@ function AllPayment() {
   }, []);
 
   const getPaymentStatus = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPayment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
-  };
+    const tlPayFilterData = JSON.parse(localStorage.getItem(`searchDataY3`));
+    if (tlPayFilterData) {
+      console.log("Not called in Complete Data P axios");
+    } else {
+      axios
+        .get(
+          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPayment(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    };
+  }
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -336,6 +341,7 @@ function AllPayment() {
             Paid="Paid"
             setRecords={setRecords}
             records={records}
+            index={3}
           />
         </CardHeader>
 
@@ -374,14 +380,14 @@ function AllPayment() {
                 </thead>
                 {pay.length > 0
                   ? pay.map((p, i) => (
-                      <tbody>
-                        <tr>
-                          <td>{i + 1}</td>
-                          <td>{CommonServices.removeTime(p.payment_date)}</td>
-                          <td>{p.paid_amount}</td>
-                        </tr>
-                      </tbody>
-                    ))
+                    <tbody>
+                      <tr>
+                        <td>{i + 1}</td>
+                        <td>{CommonServices.removeTime(p.payment_date)}</td>
+                        <td>{p.paid_amount}</td>
+                      </tr>
+                    </tbody>
+                  ))
                   : null}
               </table>
             </ModalBody>

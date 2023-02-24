@@ -49,6 +49,10 @@ function AssignmentTab(props) {
   const [qid, setQid] = useState("");
   const [error, setError] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [query_no,setQuery_no] = useState("");
+  const [dateFrom,setdateFrom]=useState("");
+  const [dateto,setDateto]=useState("");
+  const [p_status,setP_status]=useState("");
   const [item] = useState(current_date);
   const [client, setClient] = useState([]);
   var current_date =
@@ -115,6 +119,8 @@ function AssignmentTab(props) {
     setStore2([]);
   };
 
+  
+
   //handleSubCategory
   const handleSubCategory = (value) => {
     setError(false);
@@ -140,7 +146,39 @@ function AssignmentTab(props) {
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
+    setQuery_no();
+    setdateFrom("");
+    setDateto("");
+    localStorage.removeItem(`searchDataAs1`);
   };
+
+  const handleDatefrom = (e) => {
+    setdateFrom(e.target.value)
+  };
+  const handleDateto = (e) => {
+    setDateto(e.target.value)
+  };
+
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs1`));
+    console.log(asd);
+    if (asd) {
+    // setTax2([]);
+    // setError(false);
+    // setHide("");
+    assingmentStatus(asd.status)
+    setQuery_no(asd.query_no)
+    setStatus(asd.status);
+    setSelectedData(asd.pcatid);
+    setStore2(asd.store);
+    setdateFrom(asd.fromDate)
+    setDateto(asd.toDate)
+    setHide(asd.p_status);
+    // onSubmit(asd)
+    }
+    // getAssignmentList();
+  }, []);
 
   //assingmentStatus
   const assingmentStatus = (value) => {
@@ -489,9 +527,61 @@ function AssignmentTab(props) {
   };
 
   const onSubmit = (data) => {
+    console.log(data)
+    let obj ={}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data.pcatId,
+        status:data.status,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        status:status,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDataAs1`, JSON.stringify(obj));
+
     if (status.length > 0) {
       console.log("done");
-      axios
+      if (data.route) {
+        axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data.fromDate
+          }&to=${
+            data.toDate
+          }&assignment_status=${data.status}&stages_status=${
+            data.p_status
+          }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setLoading(false);
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+      }
+
+      else{
+        axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
             userid
@@ -511,8 +601,34 @@ function AssignmentTab(props) {
             }
           }
         });
+      }
+      
     } else {
-      axios
+      if (data.route) {
+        axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+            data.toDate
+          }&assignment_status=${data.status}&stages_status=${
+            data.p_status
+          }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+          myConfig
+        )
+        .then((res) => {
+          console.log("done");
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+      }
+
+      else{
+        axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
             userid
@@ -532,9 +648,11 @@ function AssignmentTab(props) {
             }
           }
         });
+      } 
     }
   };
 
+  
   const Reset = () => {
     return (
       <>
@@ -620,6 +738,8 @@ function AssignmentTab(props) {
                   className="form-select form-control"
                   ref={register}
                   max={item}
+                  value={dateFrom}
+                  onChange= {handleDatefrom}
                 />
               </div>
 
@@ -635,6 +755,8 @@ function AssignmentTab(props) {
                   ref={register}
                   defaultValue={item}
                   max={item}
+                  value={dateto}
+                  onChange= {handleDateto}
                 />
               </div>
 
@@ -644,6 +766,7 @@ function AssignmentTab(props) {
                   name="p_status"
                   ref={register}
                   style={{ height: "33px" }}
+                  value={p_status}
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>
@@ -702,6 +825,8 @@ function AssignmentTab(props) {
                   ref={register}
                   placeholder="Enter Query Number"
                   className="form-control"
+                  value={query_no}
+                  onChange={(e) => setQuery_no(e.target.value)}
                 />
               </div>
               <div class="form-group mx-sm-1  mb-2">

@@ -129,7 +129,7 @@ function QueriesTab(props) {
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
-      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+      <Tabs selectedIndex={tabIndex}  onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
           <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
             All queries ({allQuery})
@@ -147,7 +147,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllQuery />
+          <AllQuery/>
         </TabPanel>
 
         <TabPanel>

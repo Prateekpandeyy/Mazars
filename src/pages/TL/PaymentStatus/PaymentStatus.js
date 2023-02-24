@@ -56,6 +56,7 @@ function QueriesTab(props) {
       });
   };
 
+
   const getUnpaid = () => {
     axios
       .get(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}&status=2`, myConfig)
@@ -64,6 +65,7 @@ function QueriesTab(props) {
         setUnpaid(res.data.result.length);
       });
   };
+
 
 
   

@@ -68,6 +68,10 @@ const Invoice = (updateTab) => {
     },
   };
   const getProposalList = () => {
+    const tlInFilterData = JSON.parse(localStorage.getItem(`searchDataI2`));
+    if (tlInFilterData) {
+      console.log("Not called in Complete Data P axios");
+    } else {
     axios
       .get(
         `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=0`,
@@ -81,6 +85,7 @@ const Invoice = (updateTab) => {
         }
       });
   };
+}
   const [hasinput , setHasinput]=useState(false);
   console.log(hasinput,"has not changed the filter")
   function handlecallback(){
@@ -184,6 +189,7 @@ const Invoice = (updateTab) => {
             invoice="tlcreate"
             userid={JSON.parse(userid)}
             hasinput={hasinput}
+            index={2}
           />
         </CardHeader>
 

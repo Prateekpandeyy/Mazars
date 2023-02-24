@@ -54,74 +54,94 @@ function QueriesTab(props) {
 
   useEffect(() => {
     const AllAssignment = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAllAssignmentCount(res.data.result.length);
-          }
-        });
-    };
+      // const tlAssFilterData = JSON.parse(localStorage.getItem(`searchDataA1`));
+      // if (tlAssFilterData) {
+      //   console.log("Not called in Complete Data A axios");
+      // } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setAllAssignmentCount(res.data.result.length);
+            }
+          });
+      };
+    // }
 
     const getDraftReports = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&assignment_status=Draft_Report&stages_status=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setDraft(res.data.result.length);
-          }
-        });
-    };
+      // const tlAssFilterData = JSON.parse(localStorage.getItem(`searchDataA2`));
+      // if (tlAssFilterData) {
+      //   console.log("Not called in Complete Data A axios");
+      // } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+              userid
+            )}&assignment_status=Draft_Report&stages_status=1`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setDraft(res.data.result.length);
+            }
+          });
+      };
+    // }
 
     const getFinalReports = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&assignment_status=Delivery_of_report&stages_status=1`,
-          myConfig
-        )
-        .then((res) => {
+      // const tlAssFilterData = JSON.parse(localStorage.getItem(`searchDataA3`));
+      // if (tlAssFilterData) {
+      //   console.log("Not called in Complete Data A axios");
+      // } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+              userid
+            )}&assignment_status=Delivery_of_report&stages_status=1`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setFinal(res.data.result.length);
+            }
+          });
+      };
+    // }
+    const getAdminPermissionCount = () => {
+      // const tlAssFilterData = JSON.parse(localStorage.getItem(`searchDataA4`));
+      // if (tlAssFilterData) {
+      //   console.log("Not called in Complete Data A axios");
+      // } else {
+        axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
           if (res.data.code === 1) {
-            setFinal(res.data.result.length);
+            setPermission(res.data.result.length);
           }
         });
-    };
-    const getAdminPermissionCount = () => {
-      axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          setPermission(res.data.result.length);
-        }
-      });
-    };
-    AllAssignment();
-    getDraftReports();
-    getFinalReports();
-    getAdminPermissionCount();
+      };
+      AllAssignment();
+      getDraftReports();
+      getFinalReports();
+      getAdminPermissionCount();
+    // }
   }, []);
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
-          <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 0 ? myStyle2 : myStyle1} className="tabHover">
             All assignments ({allAssignmentCount})
           </Tab>
-          <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 1 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Draft reports ({draft})
           </Tab>
-          <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 2 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Delivery of final report({final})
           </Tab>
-          <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex === 2 ? myStyle2 : myStyle1} className="tabHover">
             Permission; issue to invoice({permission})
           </Tab>
         </TabList>

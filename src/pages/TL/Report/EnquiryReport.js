@@ -216,14 +216,13 @@ const Report = () => {
                         </div>
                     </CardHeader>
                     <CardBody>
-                    <DataTablepopulated
+                    {/* <DataTablepopulated
                     bgColor="#55425f"
                     keyField="assign_no"
                     ></DataTablepopulated>
                     <DiscardReport
                     headColor="#55425f"
-                    ></DiscardReport>
-
+                    ></DiscardReport> */}
                     </CardBody>
                 </Card>
             </Layout>

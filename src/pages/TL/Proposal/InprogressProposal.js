@@ -53,6 +53,10 @@ function InprogressProposal() {
     },
   };
   const getProposalList = () => {
+    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP2`));
+    if (tlProposalFilterData) {
+        console.log("Not called in Complete Data P axios");
+    } else {
     axios
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`,
@@ -66,6 +70,7 @@ function InprogressProposal() {
         }
       });
   };
+}
 
   const columns = [
     {
@@ -304,6 +309,7 @@ function InprogressProposal() {
             InprogressProposal="InprogressProposal"
             setRecords={setRecords}
             records={records}
+            index={2}
           />
         </CardHeader>
         <CardBody>

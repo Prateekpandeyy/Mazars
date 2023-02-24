@@ -62,6 +62,11 @@ function AllProposal() {
     },
   };
   const getProposalList = () => {
+    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP1`));
+    if (tlProposalFilterData) {
+      console.log("Not called in Complete Data P axios");
+    }
+    else{
     axios
       .get(`${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
@@ -71,6 +76,7 @@ function AllProposal() {
           setRecords(res.data.result.length);
         }
       });
+    }
   };
 
   const columns = [
@@ -317,6 +323,7 @@ function AllProposal() {
             AllProposal="AllProposal"
             setRecords={setRecords}
             records={records}
+            index={1}
           />
         </CardHeader>
         <CardBody>

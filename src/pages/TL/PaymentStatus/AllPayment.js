@@ -73,6 +73,10 @@ function AllPayment() {
     },
   };
   const getPaymentStatus = () => {
+    const tlPayFilterData = JSON.parse(localStorage.getItem(`searchDataY1`));
+            if (tlPayFilterData) {
+                console.log("Not called in Complete Data P axios");
+            } else {
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}`,
@@ -86,6 +90,7 @@ function AllPayment() {
         }
       });
   };
+}
 
   const toggle = (key) => {
     setModal(!modal);
@@ -355,6 +360,7 @@ function AllPayment() {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
+            index={1}
           />
         </CardHeader>
 

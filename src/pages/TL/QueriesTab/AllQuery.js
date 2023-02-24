@@ -43,8 +43,9 @@ function AllQuery() {
   }, []);
 
   const getInCompleteAssingment = () => {
-    const tlQueryFilterData = JSON.parse(localStorage.getItem("tlQueryFilterData"));
-    if (tlQueryFilterData.qp_status !== [] || tlQueryFilterData.qcategory !== "" || tlQueryFilterData.qsubcategory !== [] || tlQueryFilterData.qdatefrom !== ""  || tlQueryFilterData.qno !== "") {
+    const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ1`));
+    if (tlQueryFilterData)
+      {
         console.log("Not called in all Q axios");
       }
     else{
@@ -208,6 +209,7 @@ function AllQuery() {
             AllQuery="AllQuery"
             setRecords={setRecords}
             records={records}
+            index={1}
           />
         </CardHeader>
         <CardBody>
