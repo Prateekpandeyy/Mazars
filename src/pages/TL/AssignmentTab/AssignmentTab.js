@@ -56,12 +56,12 @@ function QueriesTab(props) {
     const AllAssignment = () => {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAllAssignmentCount(res.data.result.length);
+            setAllAssignmentCount(res?.data?.result?.recordcount);
           }
         });
     };
@@ -71,12 +71,12 @@ function QueriesTab(props) {
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
             userid
-          )}&assignment_status=Draft_Report&stages_status=1`,
+          )}&assignment_status=Draft_Report&stages_status=1&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setDraft(res.data.result.length);
+            setDraft(res?.data?.result?.recordcount);
           }
         });
     };
@@ -86,21 +86,23 @@ function QueriesTab(props) {
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
             userid
-          )}&assignment_status=Delivery_of_report&stages_status=1`,
+          )}&assignment_status=Delivery_of_report&stages_status=1&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setFinal(res.data.result.length);
+            setFinal(res?.data?.result?.recordcount);
           }
         });
     };
     const getAdminPermissionCount = () => {
-      axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          setPermission(res.data.result.length);
-        }
-      });
+      axios
+        .get(`${baseUrl}/tl/getadminpermissiona?count=1`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPermission(res?.data?.result?.recordcount);
+          }
+        });
     };
     AllAssignment();
     getDraftReports();
