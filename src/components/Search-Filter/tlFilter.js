@@ -173,12 +173,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -196,12 +190,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
               data.p_status
             }&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -233,12 +221,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -256,12 +238,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/pendingQues?id=${JSON.parse(
               userid
             )}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -293,12 +269,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -316,12 +286,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
               userid
             )}&status=${status}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -352,12 +316,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -375,12 +333,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
             )}&status=${status}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -412,12 +364,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -435,12 +381,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${
               data.p_status
             }&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -472,12 +412,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -494,9 +428,13 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -517,12 +455,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
               data.store
             }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -587,12 +519,6 @@ function TeamFilter(props) {
                 .join("-")}&to=${data.toDate
                 ?.split("-")
                 .reverse()
-                .join("-")}&to=${data.toDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&to=${data.toDate
-                ?.split("-")
-                .reverse()
                 .join("-")}&status=${data.p_status}&pcat_id=${
                 data.pcatId
               }&qno=${data.query_no}`,
@@ -612,12 +538,6 @@ function TeamFilter(props) {
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
                 data.store
               }&from=${data.fromDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&to=${data.toDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&to=${data.toDate
                 ?.split("-")
                 .reverse()
                 .join("-")}&to=${data.toDate
@@ -685,12 +605,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -708,12 +622,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
             )}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -747,12 +655,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -770,12 +672,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
             )}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -809,12 +705,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
               data.query_no
             }`,
@@ -834,12 +724,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
             )}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -873,12 +757,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -896,12 +774,6 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
             )}&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -963,7 +835,7 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig

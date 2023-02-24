@@ -895,7 +895,7 @@ function Sidebar({
                 </Collapse>
               </li>
               <li className="nav-item">
-                <NavLink to={"/teamleader/reportlist"}>
+                <NavLink to={"/teamleader/reports"}>
                   <i className="fa">
                     <span className="reportMenu"></span>
                   </i>

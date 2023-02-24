@@ -75,6 +75,24 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("tlEmail");
       localStorage.removeItem("category");
       localStorage.removeItem("tlToken");
+      localStorage.removeItem("searchDatatlquery1");
+      localStorage.removeItem("searchDatatlquery2");
+      localStorage.removeItem("searchDatatlquery3");
+      localStorage.removeItem("searchDatatlquery4");
+      localStorage.removeItem("searchDatatlproposal1");
+      localStorage.removeItem("searchDatatlproposal2");
+      localStorage.removeItem("searchDatatlproposal3");
+      localStorage.removeItem("searchDatatlproposal4");
+      localStorage.removeItem("searchDatatlpayment1");
+      localStorage.removeItem("searchDatatlpayment2");
+      localStorage.removeItem("searchDatatlpayment3");
+      localStorage.removeItem("searchDatatlAssignment1");
+      localStorage.removeItem("searchDatatlAssignment2");
+      localStorage.removeItem("searchDatatlAssignment3");
+      localStorage.removeItem("searchDatatlAssignment4");
+      localStorage.removeItem("tlcreate");
+      localStorage.removeItem("tlgenerated");
+      history.push("/teamleader/login");
 
       history.push("/teamleader/login");
     });
