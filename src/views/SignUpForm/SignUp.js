@@ -468,7 +468,7 @@ function SignUp(props) {
 
               setLoad(false);
 
-              var variable = "Signup successfully.";
+              var variable = "Sign up successful.";
               Alerts.SuccessNormal(variable);
 
               localStorage.setItem(
