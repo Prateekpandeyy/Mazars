@@ -166,9 +166,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
               data.p_status
-            }&cat_id=${store2}&from=${data.fromDate}&to=${
-              data.toDate
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            }&cat_id=${store2}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -184,9 +194,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
               data.p_status
-            }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+            }&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -206,9 +226,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}&cat_id=${
               data.store
-            }&from=${data.fromDate}&to=${data.toDate}&pcat_id=${
-              data.pcatId
-            }&qno=${data.query_no}`,
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -224,9 +254,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingQues?id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -246,9 +286,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
               userid
-            )}&status=${status}&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            )}&status=${status}&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -264,9 +314,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
               userid
-            )}&status=${status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+            )}&status=${status}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -285,9 +345,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
-            )}&status=${status}&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            )}&status=${status}&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -303,9 +373,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
-            )}&status=${status}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+            )}&status=${status}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -325,9 +405,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${
               data.p_status
-            }&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            }&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -343,9 +433,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${
               data.p_status
-            }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+            }&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -365,9 +465,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(userid)}&cat_id=${
               data.store
-            }&from=${data.fromDate}&to=${data.toDate}&pcat_id=${
-              data.pcatId
-            }&qno=${data.query_no}`,
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -405,9 +515,21 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
               data.store
-            }&from=${data.fromDate}&to=${data.toDate}&status=${
-              data.p_status
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
             myConfig
           )
           .then((res) => {
@@ -423,9 +545,21 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
             myConfig
           )
           .then((res) => {
@@ -446,9 +580,21 @@ function TeamFilter(props) {
             .get(
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
                 data.store
-              }&from=${data.fromDate}&to=${data.toDate}&status=${
-                data.p_status
-              }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+              }&from=${data.fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=${data.p_status}&pcat_id=${
+                data.pcatId
+              }&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {
@@ -464,9 +610,19 @@ function TeamFilter(props) {
             .get(
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
                 data.store
-              }&from=${data.fromDate}&to=${data.toDate}&status=1&pcat_id=${
-                data.pcatId
-              }`,
+              }&from=${data.fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=1&pcat_id=${data.pcatId}`,
               myConfig
             )
             .then((res) => {
@@ -522,9 +678,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
               data.store
-            }&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${
-              data.pcatId
-            }&qno=${data.query_no}`,
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -540,7 +706,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
@@ -562,9 +740,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
               data.store
-            }&from=${data.fromDate}&to=${data.toDate}&status=3&pcat_id=${
-              data.pcatId
-            }&qno=${data.query_no}`,
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -580,7 +768,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=3&pcat_id=${selectedData}&qno=${
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=3&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
@@ -602,9 +802,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+            )}&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
               data.query_no
             }`,
             myConfig
@@ -622,9 +832,21 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
             myConfig
           )
           .then((res) => {
@@ -644,9 +866,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            )}&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -662,7 +894,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=1&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
@@ -684,9 +928,19 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            )}&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -702,7 +956,13 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
