@@ -49,12 +49,7 @@ function AdminPermission(props) {
 
   const [item] = useState(current_date);
   var rowStyle2 = {};
-  var clcomp = {
-    color: "green",
-  };
-  var clinpro = {
-    color: "blue",
-  };
+
   const [reportModal, setReportModal] = useState(false);
   const ViewReport = (key) => {
     setReportModal(!reportModal);

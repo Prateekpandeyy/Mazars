@@ -143,9 +143,7 @@ function FinalReport() {
   };
 
   //assingmentStatus
-  const assingmentStatus = (value) => {
-    setStatus(value);
-  };
+
   // View Report
 
   const ViewReport = (key) => {

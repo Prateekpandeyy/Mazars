@@ -46,13 +46,10 @@ function AdminPermission(props) {
 
   const [item] = useState(current_date);
   var rowStyle2 = {};
-  var clcomp = {
-    color: "green",
-  };
-  var clinpro = {
-    color: "blue",
-  };
   const [reportModal, setReportModal] = useState(false);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [queryNo, setQueryNo] = useState("");
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
@@ -83,15 +80,33 @@ function AdminPermission(props) {
     },
   };
   const getAssignmentData = () => {
-    axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        setAssignmentDisplay(res.data.result);
-        setCountAssignment(res.data.result.length);
-        setRecords(res.data.result.length);
-      }
-    });
+    let data = JSON.parse(localStorage.getItem("searchDataadAssignment4"));
+    if (!data) {
+      axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setAssignmentDisplay(res.data.result);
+          setCountAssignment(res.data.result.length);
+          setRecords(res.data.result.length);
+        }
+      });
+    }
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment4"));
 
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        setStatus(dk.stage_status);
+        setQueryNo(dk.query_no);
+        setHide(dk.p_status);
+        onSubmit(dk);
+      }
+    }
+  }, []);
   //get category
   useEffect(() => {
     const getSubCategory = () => {
@@ -141,6 +156,7 @@ function AdminPermission(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    localStorage.removeItem("searchDataadAssignment4");
     getAssignmentData();
   };
 
@@ -393,35 +409,108 @@ function AdminPermission(props) {
 
     return style;
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment4"));
+
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        setStatus(dk.stage_status);
+        setQueryNo(dk.query_no);
+        setHide(dk.p_status);
+        onSubmit(dk);
+      }
+    }
+  }, []);
   const onSubmit = (data) => {
-    if (status.length > 0) {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        stage_status: data?.assignment_status,
+        route: window.location.pathname,
+      };
     } else {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: hide,
+        stage_status: status,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDataadAssignment4`, JSON.stringify(obj));
+    if (data.route) {
+      if (status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    } else {
+      if (status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
   };
 
@@ -506,6 +595,8 @@ function AdminPermission(props) {
                   className="form-select form-control"
                   ref={register}
                   max={item}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  value={fromDate}
                 />
               </div>
 
@@ -519,7 +610,8 @@ function AdminPermission(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  onChange={(e) => setToDate(e.target.value)}
+                  value={toDate}
                   max={item}
                 />
               </div>
@@ -530,6 +622,7 @@ function AdminPermission(props) {
                   name="p_status"
                   ref={register}
                   style={{ height: "33px" }}
+                  value={hide}
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>
@@ -588,6 +681,8 @@ function AdminPermission(props) {
                   ref={register}
                   placeholder="Enter Query Number"
                   className="form-control"
+                  onChange={(e) => setQueryNo(e.target.value)}
+                  value={queryNo}
                 />
               </div>
               {loading ? (

@@ -84,15 +84,21 @@ function AssignmentTab(props) {
     },
   };
   const getAssignmentList = () => {
-    axios
-      .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setAssignment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAssignment(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   //get category
@@ -111,7 +117,7 @@ function AssignmentTab(props) {
     };
     getSubCategory();
   }, [selectedData]);
-  console.log("tax2", tax2);
+
   //handleCategory
   const handleCategory = (value) => {
     setError(false);
@@ -143,6 +149,7 @@ function AssignmentTab(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    localStorage.removeItem("searchDatatlAssignment1");
     getAssignmentList();
   };
 
@@ -516,7 +523,7 @@ function AssignmentTab(props) {
         route: window.location.pathname,
       };
     }
-    localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(obj));
+    localStorage.setItem(`searchDatatlAssignment1`, JSON.stringify(obj));
     if (data.route) {
       if (status?.length > 0) {
         axios

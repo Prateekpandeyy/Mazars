@@ -49,6 +49,9 @@ function AssignmentTab() {
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [qid, setQid] = useState("");
+  const [queryNo, setQueryNo] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -56,12 +59,7 @@ function AssignmentTab() {
     },
   };
   var rowStyle2 = {};
-  var clcomp = {
-    color: "green",
-  };
-  var clinpro = {
-    color: "blue",
-  };
+
   let des = false;
   const uploadDraftReport = (id) => {
     console.log("id", id);
@@ -84,20 +82,23 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-          userid
-        )}&assignment_status=Draft_Report&stages_status=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setAssignment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+            userid
+          )}&assignment_status=Draft_Report&stages_status=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAssignment(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   //get category
@@ -140,6 +141,7 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    localStorage.removeItem("searchDataadAssignment2");
     getAssignmentList();
   };
 
@@ -434,26 +436,73 @@ function AssignmentTab() {
       },
     },
   ];
+
   const onSubmit = (data) => {
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-          data.p_dateTo
-        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}&qno=${
-          data.query_no
-        }`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDatatlAssignment2`, JSON.stringify(obj));
+
+    if (data.route) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${
+            data.store
+          }&from=${data.fromDate}&to=${
+            data.toDate
+          }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${
+            data.pcatId
+          }&qno=${data.query_no}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
+    } else {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
   };
 
   const Reset = () => {
@@ -536,6 +585,8 @@ function AssignmentTab() {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  value={fromDate}
                   max={item}
                 />
               </div>
@@ -550,7 +601,8 @@ function AssignmentTab() {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  onChange={(e) => setToDate(e.target.value)}
+                  value={toDate}
                   max={item}
                 />
               </div>
@@ -559,6 +611,8 @@ function AssignmentTab() {
                   type="text"
                   name="query_no"
                   ref={register}
+                  onChange={(e) => setQueryNo(e.target.value)}
+                  value={queryNo}
                   placeholder="Enter Query Number"
                   className="form-control"
                 />
