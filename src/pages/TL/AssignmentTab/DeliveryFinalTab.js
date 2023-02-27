@@ -474,7 +474,7 @@ function AssignmentTab() {
         store: data.store,
         fromDate: data?.fromDate,
         toDate: data?.toDate,
-        pcatid: data.pcatId,
+        pcatid: data.pcatid,
         route: window.location.pathname,
       };
     } else {
@@ -490,7 +490,7 @@ function AssignmentTab() {
     if(data.route){
       axios
       .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId}`,
+        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatid}`,
         myConfig
       )
 
@@ -528,6 +528,7 @@ function AssignmentTab() {
       setStore2(asd.store);
       setdateFrom(asd.fromDate)
       setDateto(asd.toDate)
+
       onSubmit(asd)
     }
   }, [])
