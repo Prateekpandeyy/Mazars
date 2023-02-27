@@ -35,6 +35,8 @@ function AssignmentTab() {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
+  const [dateFrom, setdateFrom] = useState("");
+  const [dateto, setDateto] = useState(current_date);
 
   var current_date =
     new Date().getFullYear() +
@@ -92,11 +94,12 @@ function AssignmentTab() {
   };
 
   //get category
+
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData != undefined) {
+      if (selectedData != undefined && selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -107,10 +110,35 @@ function AssignmentTab() {
     getSubCategory();
   }, [selectedData]);
 
+  // useEffect(() => {
+  //   const getSubCategory = () => {
+  //     if (selectedData != undefined) {
+  //       axios
+  //         .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+  //         .then((res) => {
+  //           if (res.data.code === 1) {
+  //             setTax2(res.data.result);
+  //           }
+  //         });
+  //     }
+  //   };
+  //   getSubCategory();
+  // }, [selectedData]);
+
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
     setStore2([]);
+  };
+
+   //handle dates
+   const handleDatefrom = (e) => {
+    setdateFrom(e.target.value)
+    console.log(dateFrom)
+  };
+  const handleDateto = (e) => {
+    setDateto(e.target.value)
+    console.log(dateto)
   };
 
   //handleSubCategory
@@ -132,6 +160,9 @@ function AssignmentTab() {
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
+    setdateFrom("");
+    setDateto(current_date);
+    localStorage.removeItem(`searchDataAs3`);
   };
 
   //assingmentStatus
@@ -437,13 +468,29 @@ function AssignmentTab() {
   };
 
   const onSubmit = (data) => {
-    axios
+    let obj = {}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data.pcatId,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDataAs3`, JSON.stringify(obj));
+    if(data.route){
+      axios
       .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-          data.p_dateTo
-        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`,
+        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId}`,
         myConfig
       )
 
@@ -455,7 +502,35 @@ function AssignmentTab() {
           }
         }
       });
+    }
+    else{
+      axios
+      .get(
+        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`,
+        myConfig
+      )
+
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setAssignment(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
   };
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs3`));
+    if (asd) {
+      setSelectedData(asd.pcatid)
+      setStore2(asd.store);
+      setdateFrom(asd.fromDate)
+      setDateto(asd.toDate)
+      onSubmit(asd)
+    }
+  }, [])
 
   const Reset = () => {
     return (
@@ -536,6 +611,8 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
+                  onChange= {handleDatefrom}
+                  value={dateFrom}
                   ref={register}
                   max={item}
                 />
@@ -550,8 +627,10 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
+                  onChange= {handleDateto}
+                  value={dateto}
                   ref={register}
-                  defaultValue={item}
+                  defaultValue={current_date}
                   max={item}
                 />
               </div>

@@ -37,6 +37,9 @@ function AdminPermission(props) {
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
   const [error, setError] = useState(false);
+  const [dateFrom, setdateFrom] = useState("");
+  const [dateto, setDateto] = useState(current_date);
+  const [p_status, setP_status] = useState("");
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -95,9 +98,9 @@ function AdminPermission(props) {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData.length > 0) {
+      if (selectedData != undefined && selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -107,6 +110,50 @@ function AdminPermission(props) {
     };
     getSubCategory();
   }, [selectedData]);
+  // useEffect(() => {
+  //   const getSubCategory = () => {
+
+  //     // if (selectedData != undefined && selectedData.length > 0){
+  //     //   axios
+  //     //       .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+  //     //       .then((res) => {
+  //     //         if (res.data.code === 1) {
+  //     //           console.log(res.data.result);
+  //     //           setTax2(res.data.result);
+  //     //         }
+  //     //       });
+  //     // }
+
+  //     let asd = JSON.parse(localStorage.getItem(`searchDataAs4`));
+  //     let selectedData1 = asd?.pcatid
+  //     if (asd) {
+  //       // let selectedData1 = asd?.pcatid
+  //       if (selectedData1 !== undefined && selectedData1.length > 0) {
+  //         axios
+  //           .get(`${baseUrl}/tl/getCategory?pid=${selectedData1}`, myConfig)
+  //           .then((res) => {
+  //             if (res.data.code === 1) {
+  //               setTax2(res.data.result);
+  //               console.log(res.data.result);
+  //             }
+  //           });
+  //       }
+  //     }
+  //     else {
+  //       if (selectedData !== undefined && selectedData.length > 0) {
+  //         axios
+  //           .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+  //           .then((res) => {
+  //             if (res.data.code === 1) {
+  //               setTax2(res.data.result);
+  //               console.log(res.data.result);
+  //             }
+  //           });
+  //       }
+  //     }
+  //   };
+  //   getSubCategory();
+  // }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
@@ -119,6 +166,14 @@ function AdminPermission(props) {
   const handleSubCategory = (value) => {
     setError(false);
     setStore2(value);
+  };
+
+  //handle dates
+  const handleDatefrom = (e) => {
+    setdateFrom(e.target.value)
+  };
+  const handleDateto = (e) => {
+    setDateto(e.target.value)
   };
 
   //reset category
@@ -139,9 +194,13 @@ function AdminPermission(props) {
     setError(false);
     setHide("");
     setStatus([]);
+    setP_status("")
     setSelectedData([]);
     setStore2([]);
     getAssignmentData();
+    setDateto(current_date)
+    setdateFrom("")
+    localStorage.removeItem(`searchDataAs4`);
   };
 
   //assingmentStatus
@@ -150,6 +209,7 @@ function AdminPermission(props) {
 
     setStatus(value);
   };
+
 
   const columns = [
     {
@@ -217,7 +277,7 @@ function AdminPermission(props) {
         return (
           <>
             <div>
-              {row.paid_status ===  "2" && (
+              {row.paid_status === "2" && (
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
@@ -305,7 +365,7 @@ function AdminPermission(props) {
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate ===  "0000-00-00 00:00:00") {
+        if (oldDate == null || oldDate === "0000-00-00 00:00:00") {
           return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
@@ -318,7 +378,7 @@ function AdminPermission(props) {
       formatter: function (cell, row) {
         return (
           <>
-            {row.paid_status ===  "2" ? null : (
+            {row.paid_status === "2" ? null : (
               <div>
                 {row.assignement_draft_report || row.final_report ? (
                   <div
@@ -394,36 +454,108 @@ function AdminPermission(props) {
     return style;
   };
   const onSubmit = (data) => {
-    if (status.length > 0) {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+
+    let obj = {}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data.pcatid,
+        status: data.status,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
     } else {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        status: status,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
     }
+    localStorage.setItem(`searchDataAs4`, JSON.stringify(obj));
+    if (data.route) {
+      let status1 = data.status
+      if (status1.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.status}&stages_status=${data.p_status}&pcat_id=${data.pcatid}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.status}&stages_status=${data.p_status}&pcat_id=${data.pcatid}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    } else {
+      if (status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignmentDisplay(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    }
+
+
   };
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs4`));
+    if (asd) {
+      setStatus(asd.status)
+      setSelectedData(asd.pcatid)
+      setStore2(asd.store);
+      setdateFrom(asd.fromDate)
+      setDateto(asd.toDate)
+      setP_status(asd.p_status)
+      onSubmit(asd)
+    }
+  }, [])
 
   const Reset = () => {
     return (
@@ -443,6 +575,7 @@ function AdminPermission(props) {
     setStatus([]);
     setHide(e.target.value);
     setError(false);
+    setP_status(e.target.value)
   };
 
   return (
@@ -506,6 +639,8 @@ function AdminPermission(props) {
                   className="form-select form-control"
                   ref={register}
                   max={item}
+                  value={dateFrom}
+                  onChange={handleDatefrom}
                 />
               </div>
 
@@ -519,8 +654,10 @@ function AdminPermission(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  defaultValue={current_date}
                   max={item}
+                  value={dateto}
+                  onChange={handleDateto}
                 />
               </div>
 
@@ -530,6 +667,7 @@ function AdminPermission(props) {
                   name="p_status"
                   ref={register}
                   style={{ height: "33px" }}
+                  value={p_status}
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>

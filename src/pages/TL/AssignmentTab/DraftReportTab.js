@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -33,6 +33,8 @@ function AssignmentTab() {
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
+  const [dateFrom, setdateFrom] = useState("");
+  const [dateto, setDateto] = useState(current_date);
 
   var current_date =
     new Date().getFullYear() +
@@ -40,7 +42,7 @@ function AssignmentTab() {
     ("0" + (new Date().getMonth() + 1)).slice(-2) +
     "-" +
     ("0" + new Date().getDate()).slice(-2);
-
+  const dateValue = useRef();
   const [item] = useState(current_date);
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -103,9 +105,9 @@ function AssignmentTab() {
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData != undefined) {
+      if (selectedData != undefined && selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -115,6 +117,22 @@ function AssignmentTab() {
     };
     getSubCategory();
   }, [selectedData]);
+  
+  // useEffect(() => {
+  //   const getSubCategory = () => {
+  //     if (selectedData != undefined) {
+  //       axios
+  //         .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+  //         .then((res) => {
+  //           if (res.data.code === 1) {
+  //             setTax2(res.data.result);
+  //             console.log(res.data.result);
+  //           }
+  //         });
+  //     }
+  //   };
+  //   getSubCategory();
+  // }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
@@ -125,6 +143,16 @@ function AssignmentTab() {
   //handleSubCategory
   const handleSubCategory = (value) => {
     setStore2(value);
+  };
+
+  //handle dates
+  const handleDatefrom = (e) => {
+    setdateFrom(e.target.value)
+    console.log(dateFrom)
+  };
+  const handleDateto = (e) => {
+    setDateto(e.target.value)
+    console.log(dateto)
   };
 
   //reset category
@@ -141,6 +169,9 @@ function AssignmentTab() {
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
+    setdateFrom("");
+    setDateto(current_date);
+    localStorage.removeItem(`searchDataAs2`);
   };
 
   //assingmentStatus
@@ -410,9 +441,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -435,14 +466,30 @@ function AssignmentTab() {
     },
   ];
   const onSubmit = (data) => {
-    axios
+
+    let obj = {}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data.pcatid,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDataAs2`, JSON.stringify(obj));
+    if(data.route){
+      axios
       .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-          data.p_dateTo
-        }&assignment_status="Draft_Report"&stages_status=1
-               &pcat_id=${selectedData}`,
+        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatid}`,
         myConfig
       )
       .then((res) => {
@@ -453,7 +500,34 @@ function AssignmentTab() {
           }
         }
       });
+    }
+    else{
+    axios
+      .get(
+        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setAssignment(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
   };
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs2`));
+    if (asd) {
+      setSelectedData(asd.pcatid)
+      setStore2(asd.store);
+      setdateFrom(asd.fromDate)
+      setDateto(asd.toDate)
+      onSubmit(asd)
+    }
+  }, [])
 
   const Reset = () => {
     return (
@@ -534,6 +608,8 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
+                  onChange= {handleDatefrom}
+                  value={dateFrom}
                   ref={register}
                   max={item}
                 />
@@ -548,8 +624,10 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
+                  onChange= {handleDateto}
+                  value={dateto}
                   ref={register}
-                  defaultValue={item}
+                  defaultValue={current_date}
                   max={item}
                 />
               </div>

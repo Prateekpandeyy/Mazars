@@ -51,8 +51,10 @@ function AssignmentTab(props) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [query_no,setQuery_no] = useState("");
   const [dateFrom,setdateFrom]=useState("");
-  const [dateto,setDateto]=useState("");
+  const [dateto,setDateto]=useState(current_date);
   const [p_status,setP_status]=useState("");
+  const [pCatid,setPcatid]=useState("")
+
   const [item] = useState(current_date);
   const [client, setClient] = useState([]);
   var current_date =
@@ -85,6 +87,9 @@ function AssignmentTab(props) {
     },
   };
   const getAssignmentList = () => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs1`));
+    if (asd) {console.log("no preload list")}
+    else{
     axios
       .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
@@ -94,14 +99,15 @@ function AssignmentTab(props) {
           setRecords(res.data.result.length);
         }
       });
+    }
   };
 
   //get category
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData.length > 0) {
+      if (selectedData != undefined && selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -111,6 +117,45 @@ function AssignmentTab(props) {
     };
     getSubCategory();
   }, [selectedData]);
+  // useEffect(() => {
+  //   const getSubCategory = () => {
+  //     if (selectedData != undefined && selectedData.length > 0){
+  //       axios
+  //       .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+  //       .then((res) => {
+  //         if (res.data.code === 1) {
+  //           setTax2(res.data.result);
+  //         }
+  //       });
+  //     }
+
+  //   //   let asd = JSON.parse(localStorage.getItem(`searchDataAs1`));
+  //   // if (asd) {
+  //   //   let selectedData1= asd.pcatid
+  //   //   if (selectedData1.length > 0) {
+  //   //     axios
+  //   //       .get(`${baseUrl}/tl/getCategory?pid=${asd.pcatid}`, myConfig)
+  //   //       .then((res) => {
+  //   //         if (res.data.code === 1) {
+  //   //           setTax2(res.data.result);
+  //   //         }
+  //   //       });
+  //   //   }
+  //   // }
+  //   // else{
+  //   //   if (selectedData.length > 0) {
+  //   //     axios
+  //   //       .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+  //   //       .then((res) => {
+  //   //         if (res.data.code === 1) {
+  //   //           setTax2(res.data.result);
+  //   //         }
+  //   //       });
+  //   //   }
+  //   // }
+  //   };
+  //   getSubCategory();
+  // }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
@@ -145,11 +190,11 @@ function AssignmentTab(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    getAssignmentList();
-    setQuery_no();
+    setQuery_no("");
     setdateFrom("");
-    setDateto("");
+    setDateto(current_date);
     localStorage.removeItem(`searchDataAs1`);
+    getAssignmentList();
   };
 
   const handleDatefrom = (e) => {
@@ -167,6 +212,7 @@ function AssignmentTab(props) {
     // setTax2([]);
     // setError(false);
     // setHide("");
+    setP_status(asd.p_status)
     assingmentStatus(asd.status)
     setQuery_no(asd.query_no)
     setStatus(asd.status);
@@ -175,9 +221,9 @@ function AssignmentTab(props) {
     setdateFrom(asd.fromDate)
     setDateto(asd.toDate)
     setHide(asd.p_status);
-    // onSubmit(asd)
+    onSubmit(asd)
     }
-    // getAssignmentList();
+    getAssignmentList();
   }, []);
 
   //assingmentStatus
@@ -534,7 +580,7 @@ function AssignmentTab(props) {
         store: data.store,
         fromDate: data?.fromDate,
         toDate: data?.toDate,
-        pcatid: data.pcatId,
+        pcatid: data?.pcatid,
         status:data.status,
         query_no: data?.query_no,
         p_status: data?.p_status,
@@ -557,6 +603,7 @@ function AssignmentTab(props) {
     if (status.length > 0) {
       console.log("done");
       if (data.route) {
+        console.log("////p_status",data.p_status,"////status",data.p_status ,"if1");
         axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -566,7 +613,7 @@ function AssignmentTab(props) {
             data.toDate
           }&assignment_status=${data.status}&stages_status=${
             data.p_status
-          }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+          }&pcat_id=${data.pcatid}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -581,6 +628,7 @@ function AssignmentTab(props) {
       }
 
       else{
+        console.log("/////p_status",data.p_status,"/////status",data.p_status,"else2");
         axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -605,6 +653,7 @@ function AssignmentTab(props) {
       
     } else {
       if (data.route) {
+        console.log("////p_status",data.p_status,"////status",status ,"if2");
         axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -613,7 +662,7 @@ function AssignmentTab(props) {
             data.toDate
           }&assignment_status=${data.status}&stages_status=${
             data.p_status
-          }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+          }&pcat_id=${data.pcatid}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
@@ -628,6 +677,7 @@ function AssignmentTab(props) {
       }
 
       else{
+        console.log("/////p_status",data.p_status,"/////status",status,"else2");
         axios
         .get(
           `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
@@ -671,6 +721,7 @@ function AssignmentTab(props) {
     setStatus([]);
     setError(false);
     setHide(e.target.value);
+    setP_status(e.target.value)
   };
 
   return (
@@ -753,7 +804,7 @@ function AssignmentTab(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  defaultValue={current_date}
                   max={item}
                   value={dateto}
                   onChange= {handleDateto}

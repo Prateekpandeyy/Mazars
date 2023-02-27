@@ -60,7 +60,7 @@ function TeamFilter(props) {
 
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData.length != 0) {
+      if (selectedData != undefined && selectedData.length > 0) {
         axios
           .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
           .then((res) => {
@@ -112,13 +112,13 @@ function TeamFilter(props) {
     setStatus1(1);
     setTax2([]);
     getData();
-    setQueryno("")
-    setFromDate("")
-    setDateto("")
+    setQueryno("");
+    setFromDate("");
+    setDateto("");
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    dateValue.current.clearValue();
+    // dateValue.current.clearValue();
   };
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -162,8 +162,7 @@ function TeamFilter(props) {
         };
       }
       localStorage.setItem(`searchDataQ${index}`, JSON.stringify(objQ));
-    }
-    else if ((completeAssignment === "completeAssignment")) {
+    } else if ((completeAssignment === "completeAssignment")) {
       if (data.route) {
         objA = {
           store: data.store,
@@ -188,8 +187,7 @@ function TeamFilter(props) {
         };
       }
       localStorage.setItem(`searchDataA${index}`, JSON.stringify(objA));
-    }
-    else if ((AllProposal === "AllProposal") || (InprogressProposal === "InprogressProposal") || (proposal === "acceptedProposal") || (proposal == "proposal")) {
+    } else if ((AllProposal === "AllProposal") || (InprogressProposal === "InprogressProposal") || (proposal === "acceptedProposal") || (proposal == "proposal")) {
       if (data.route) {
         objP = {
           store: data.store,
@@ -214,8 +212,7 @@ function TeamFilter(props) {
         };
       }
       localStorage.setItem(`searchDataP${index}`, JSON.stringify(objP));
-    }
-    else if ((AllPayment === "AllPayment") || (Unpaid === "Unpaid") || (Paid === "Paid")) {
+    } else if ((AllPayment === "AllPayment") || (Unpaid === "Unpaid") || (Paid === "Paid")) {
       if (data.route) {
         objY = {
           store: data.store,
@@ -246,18 +243,23 @@ function TeamFilter(props) {
 
     if (AllQuery === "AllQuery") {
       if (data.route) {
+        console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
+            }&cat_id=${data.store}&from=${data.fromDate
+            }&to=${data.toDate
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
+            }`);
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
             }&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -270,6 +272,9 @@ function TeamFilter(props) {
             }
           });
       } else {
+        console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
+            }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no
+            }`);
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
@@ -295,14 +300,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/pendingQues?id=${JSON.parse(
               userid
             )}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -342,14 +347,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(
               userid
             )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -389,14 +394,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
             )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -435,14 +440,14 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status
             }&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -481,14 +486,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(
               userid
             )}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -528,14 +533,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
             )}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&status=${data.p_status
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&status=${data.p_status
             }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -576,14 +581,14 @@ function TeamFilter(props) {
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
                 userid
               )}&cat_id=${data.store}&from=${data.fromDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
+              // ?.split("-")
+              // .reverse()
+              // .join("-")
               }&to=${data.toDate
-                  // ?.split("-")
-                  // .reverse()
-                  // .join("-")
-                }&status=${data.p_status
+              // ?.split("-")
+              // .reverse()
+              // .join("-")
+              }&status=${data.p_status
               }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
               myConfig
             )
@@ -601,14 +606,14 @@ function TeamFilter(props) {
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
                 userid
               )}&cat_id=${data.store}&from=${data.fromDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
+              // ?.split("-")
+              // .reverse()
+              // .join("-")
               }&to=${data.toDate
-                  // ?.split("-")
-                  // .reverse()
-                  // .join("-")
-                }&status=1&pcat_id=${data.pcatId}`,
+              // ?.split("-")
+              // .reverse()
+              // .join("-")
+              }&status=1&pcat_id=${data.pcatId}`,
               myConfig
             )
             .then((res) => {
@@ -665,14 +670,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
             )}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&status=2&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&status=2&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -712,14 +717,14 @@ function TeamFilter(props) {
             `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
               userid
             )}&cat_id=${data.store}&from=${data.fromDate
-              // ?.split("-")
-              // .reverse()
-              // .join("-")
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
             }&to=${data.toDate
-                // ?.split("-")
-                // .reverse()
-                // .join("-")
-              }&status=3&pcat_id=${data.pcatId}&qno=${data.query_no
+            // ?.split("-")
+            // .reverse()
+            // .join("-")
+            }&status=3&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -753,138 +758,119 @@ function TeamFilter(props) {
     }
 
     if (AllPayment === "AllPayment") {
-      // if (data.route) {
-      //   axios
-      //   .get(
-      //     `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-      //       userid
-      //     )}&cat_id=${data.store}&from=${data.fromDate
-      //       ?.split("-")
-      //       .reverse()
-      //       .join("-")}&to=${data.toDate
-      //         ?.split("-")
-      //         .reverse()
-      //         .join("-")}&status=${data.p_status
-      //     }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-      //     myConfig
-      //   )
-      //   .then((res) => {
-      //     if (res.data.code === 1) {
-      //       if (res.data.result) {
-      //         setData(res.data.result);
-      //         setRecords(res.data.result.length);
-      //       }
-      //     }
-      //   });
-      // }
-      // else{
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      console.log("inside all payment axios");
+      if (data.route) {
+        console.log("inside all payment axios1");
+        console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
+          userid)}&cat_id=${data.store}&from=${data.fromDate}
+          &to=${data.toDate}&status=${data.p_status}
+          &pcat_id=${data.pcatId}&qno=${data.query_no}`,"All with data routes");
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+                console.log(res.data.result)
+              }
             }
-          }
-        });
-      // }
+          });
+      }
+      else {
+
+
+        console.log("inside all payment axios2");
+        console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}
+        &cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}
+        &pcat_id=${selectedData}&qno=${data.query_no.typeof}`,"Else all Y");
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+                console.log("res.data.result in getting", res.data.result);
+              }
+            }
+          });
+      }
     }
 
     if (Unpaid === "Unpaid") {
-      // if (data.route) {
-      //   axios
-      //   .get(
-      //     `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-      //       userid
-      //     )}&cat_id=${data.store}&from=${data.fromDate
-      //       ?.split("-")
-      //       .reverse()
-      //       .join("-")}&to=${data.toDate
-      //         ?.split("-")
-      //         .reverse()
-      //         .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
-      //     }`,
-      //     myConfig
-      //   )
-      //   .then((res) => {
-      //     if (res.data.code === 1) {
-      //       if (res.data.result) {
-      //         setData(res.data.result);
-      //         setRecords(res.data.result.length);
-      //       }
-      //     }
-      //   });
-      // }
-      // else{
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
-      // }
+          });
+      }
+      else {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (Paid === "Paid") {
-      // if (data.route) {
-      //   axios
-      //   .get(
-      //     `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-      //       userid
-      //     )}&cat_id=${data.store}&from=${data.fromDate
-      //       ?.split("-")
-      //       .reverse()
-      //       .join("-")}&to=${data.toDate
-      //         ?.split("-")
-      //         .reverse()
-      //         .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no
-      //     }`,
-      //     myConfig
-      //   )
-      //   .then((res) => {
-      //     if (res.data.code === 1) {
-      //       if (res.data.result) {
-      //         setData(res.data.result);
-      //         setRecords(res.data.result.length);
-      //       }
-      //     }
-      //   });
-      // }
-      // else{
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
-      // }
+          });
+      }
+      else {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
   };
 
