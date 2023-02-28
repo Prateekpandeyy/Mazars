@@ -31,7 +31,7 @@ function AssignmentTab() {
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-  const [status, setStatus] = useState([]);
+
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
@@ -144,7 +144,7 @@ function AssignmentTab() {
   //reset date
   const resetData = () => {
     reset();
-    setStatus([]);
+
     setSelectedData([]);
     setStore2([]);
     setToDate("");

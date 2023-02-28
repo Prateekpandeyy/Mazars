@@ -31,7 +31,7 @@ function AdminPermission(props) {
   const [assignmentCount, setCountAssignment] = useState("");
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-  const [status, setStatus] = useState([]);
+  const [status, setStatus] = useState("");
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
@@ -153,7 +153,7 @@ function AdminPermission(props) {
     setTax2([]);
     setError(false);
     setHide("");
-    setStatus([]);
+    setStatus("");
     setSelectedData([]);
     setStore2([]);
     setToDate("");
@@ -532,7 +532,7 @@ function AdminPermission(props) {
   };
 
   const disabledHandler = (e) => {
-    setStatus([]);
+    setStatus("");
     setHide(e.target.value);
     setError(false);
   };

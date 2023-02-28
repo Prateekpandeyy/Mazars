@@ -139,7 +139,7 @@ function AssignmentTab(props) {
     setTax2([]);
     setError(false);
     setHide("");
-    setStatus([]);
+    setStatus("");
     setSelectedData([]);
     setToDate("");
     setFromDate("");
@@ -659,7 +659,7 @@ function AssignmentTab(props) {
   };
 
   const disabledHandler = (e) => {
-    setStatus([]);
+    setStatus("");
     setError(false);
     setHide(e.target.value);
   };
