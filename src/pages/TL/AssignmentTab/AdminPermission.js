@@ -80,7 +80,7 @@ function AdminPermission(props) {
     },
   };
   const getAssignmentData = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadAssignment4"));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
     if (!data) {
       axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
         if (res.data.code === 1) {
@@ -92,7 +92,7 @@ function AdminPermission(props) {
     }
   };
   useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment4"));
+    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -112,7 +112,7 @@ function AdminPermission(props) {
     const getSubCategory = () => {
       if (selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -156,7 +156,10 @@ function AdminPermission(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    localStorage.removeItem("searchDataadAssignment4");
+    setToDate("");
+    setFromDate("");
+    setQueryNo("");
+    localStorage.removeItem("searchDatatlAssignment4");
     getAssignmentData();
   };
 
@@ -410,7 +413,7 @@ function AdminPermission(props) {
     return style;
   };
   useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment4"));
+    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -450,7 +453,7 @@ function AdminPermission(props) {
         route: window.location.pathname,
       };
     }
-    localStorage.setItem(`searchDataadAssignment4`, JSON.stringify(obj));
+    localStorage.setItem(`searchDatatlAssignment4`, JSON.stringify(obj));
     if (data.route) {
       if (status.length > 0) {
         axios

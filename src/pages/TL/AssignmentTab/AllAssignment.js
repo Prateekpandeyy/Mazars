@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
-import { baseUrl, baseUrl3 } from "../../../config/config";
-import { getErrorMessage } from "../../../constants";
-import Loader from "../../../components/Loader/Loader";
+import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
 import { Select } from "antd";
-import BootstrapTable from "react-bootstrap-table-next";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -22,21 +17,20 @@ import MessageIcon, {
   DraftReportUploadIcon,
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
-import { Spinner } from "reactstrap";
 
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+
   const userid = window.localStorage.getItem("tlkey");
   const { handleSubmit, register, errors, reset } = useForm();
-  const { Option, OptGroup } = Select;
-  const [count, setCount] = useState("");
+  const { Option } = Select;
+
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-  const [status, setStatus] = useState([]);
+  const [status, setStatus] = useState("");
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
@@ -53,7 +47,7 @@ function AssignmentTab(props) {
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [client, setClient] = useState([]);
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -94,7 +88,7 @@ function AssignmentTab(props) {
         .then((res) => {
           if (res.data.code === 1) {
             setAssignment(res.data.result);
-            setCount(res.data.result.length);
+
             setRecords(res.data.result.length);
           }
         });
@@ -106,10 +100,9 @@ function AssignmentTab(props) {
     const getSubCategory = () => {
       if (selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
             if (res.data.code === 1) {
-              console.log("response", res.data.result);
               setTax2(res.data.result);
             }
           });
@@ -148,6 +141,9 @@ function AssignmentTab(props) {
     setHide("");
     setStatus([]);
     setSelectedData([]);
+    setToDate("");
+    setFromDate("");
+    setQueryNo("");
     setStore2([]);
     localStorage.removeItem("searchDatatlAssignment1");
     getAssignmentList();
@@ -472,8 +468,6 @@ function AssignmentTab(props) {
   const uploadDraftReport = (id) => {
     let collectData = [];
     if (id.id !== undefined) {
-      setClient(collectData);
-
       setQid(id.q_id);
 
       setId(id.id);
@@ -488,7 +482,6 @@ function AssignmentTab(props) {
   // final modal
 
   const uploadFinalReport = (id) => {
-    console.log("iddd", id);
     if (id && id.id === undefined) {
       setLoading(false);
       setFianlModal(!fianlModal);
@@ -500,6 +493,7 @@ function AssignmentTab(props) {
   };
   const onSubmit = (data) => {
     let obj = {};
+
     if (data.route) {
       obj = {
         store: data.store,
@@ -523,6 +517,7 @@ function AssignmentTab(props) {
         route: window.location.pathname,
       };
     }
+
     localStorage.setItem(`searchDatatlAssignment1`, JSON.stringify(obj));
     if (data.route) {
       if (status?.length > 0) {
@@ -587,8 +582,8 @@ function AssignmentTab(props) {
     }
   };
   useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment1"));
-
+    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    console.log("dkk", dk);
     if (dk) {
       if (dk.route === window.location.pathname) {
         setStore2(dk.store);
@@ -692,27 +687,23 @@ function AssignmentTab(props) {
                 </Select>
               </div>
 
-              {tax2?.length > 0 ? (
-                <div class="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="multiple"
-                    style={{ width: 250 }}
-                    placeholder="Select Sub Category"
-                    defaultValue={[]}
-                    onChange={handleSubCategory}
-                    value={store2}
-                    allowClear
-                  >
-                    {tax2.map((p, index) => (
-                      <Option value={p.id} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-              ) : (
-                ""
-              )}
+              <div class="form-group mx-sm-1  mb-2">
+                <Select
+                  mode="multiple"
+                  style={{ width: 250 }}
+                  placeholder="Select Sub Category"
+                  defaultValue={[]}
+                  onChange={handleSubCategory}
+                  value={store2}
+                  allowClear
+                >
+                  {tax2.map((p, index) => (
+                    <Option value={p.id} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
               <div>
                 <button
                   type="submit"

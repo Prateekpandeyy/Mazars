@@ -106,7 +106,7 @@ function AssignmentTab() {
     const getSubCategory = () => {
       if (selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -141,7 +141,10 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    localStorage.removeItem("searchDataadAssignment2");
+    setToDate("");
+    setFromDate("");
+    setQueryNo("");
+    localStorage.removeItem("searchDatatlAssignment2");
     getAssignmentList();
   };
 
@@ -518,7 +521,21 @@ function AssignmentTab() {
       </>
     );
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
 
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        // setHide(dk.p_status);
+        setQueryNo(dk.query_no);
+        onSubmit(dk);
+      }
+    }
+  }, []);
   return (
     <>
       <Card>

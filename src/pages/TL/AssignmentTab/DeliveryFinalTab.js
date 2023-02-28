@@ -93,7 +93,7 @@ function AssignmentTab() {
     }
   };
   useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDataadAssignment3"));
+    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -112,7 +112,7 @@ function AssignmentTab() {
     const getSubCategory = () => {
       if (selectedData.length > 0) {
         axios
-          .get(`${baseUrl}/tl/getCategory?pid=${selectedData}`, myConfig)
+          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
           .then((res) => {
             if (res.data.code === 1) {
               setTax2(res.data.result);
@@ -147,7 +147,10 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    localStorage.removeItem("searchDataadAssignment3");
+    setToDate("");
+    setFromDate("");
+    setQueryNo("");
+    localStorage.removeItem("searchDatatlAssignment3");
     getAssignmentList();
   };
 
