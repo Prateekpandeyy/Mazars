@@ -15,11 +15,18 @@ function AllQueriesData({ allData }) {
   const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
-
+  const [scrolledTo, setScrolledTo] = useState("")
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    console.log("Out Rendered", key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllQD", key);
+      setViewDiscussion(key)
+    }else{
+      console.log("Scrolled To Else AllQD", scrolledTo)
+    }
   };
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -31,6 +38,8 @@ function AllQueriesData({ allData }) {
   useEffect(() => {
     getAllQueriesData();
   }, []);
+  
+  
 
   const getAllQueriesData = () => {
     axios.get(`${baseUrl}/admin/getAllQueries`, myConfig).then((res) => {
@@ -49,7 +58,7 @@ function AllQueriesData({ allData }) {
       },
 
       formatter: (cellContent, row, rowIndex, index) => {
-        return <div>{rowIndex + 1}</div>;
+        return <div id={row.assign_no}>{rowIndex + 1}</div>;
       },
     },
     {

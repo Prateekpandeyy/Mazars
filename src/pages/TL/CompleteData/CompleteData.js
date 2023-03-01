@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -29,10 +29,22 @@ function CompletedQuery({ updateTab }) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([])
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllQ", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllQ", scrolledTo)
+    }else{
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log(myRef.current[scrolledTo],"ref element array")
+      }
+    }
   };
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -40,6 +52,19 @@ function CompletedQuery({ updateTab }) {
       uit: token,
     },
   };
+
+  useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log("red",element);
+        console.log(myRef.current[scrolledTo],"ref element array")
+        let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+    }
+    }
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     getInCompleteAssingment();

@@ -52,7 +52,7 @@ h5.modal-title {
 /* .modal-open{
   overflow: initial!important;
 } */
-body.modal-open {
+/* body.modal-open {
   overflow: visible!important;
   position: absolute !important;
 }
@@ -60,7 +60,9 @@ body.modal-open .MuiContainer-root{
   overflow-y: hidden!important;
   scroll-behavior: unset;
   
-}
+} */
+
+
 
 
 .ReactModal__Body--open {

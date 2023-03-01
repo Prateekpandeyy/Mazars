@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -21,8 +21,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     id: "",
     allocation_id: "",
   });
-
+  const myRef = useRef([])
   const [addPaymentModal, setPaymentModal] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("")
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -64,7 +65,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {

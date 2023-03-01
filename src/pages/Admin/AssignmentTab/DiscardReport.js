@@ -85,7 +85,7 @@ function DiscardReport({
                     </td>
                     <td style={{ width: "460px", overflow: "wrap" }}>
                       <CustomTypography>
-                        {p.type == "sent" ? (
+                        {p.type === "sent" ? (
                           <i
                             class="fa fa-mail-forward"
                             style={{

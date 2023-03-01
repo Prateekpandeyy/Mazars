@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -27,36 +27,68 @@ function AllQuery() {
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("")
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
+  const myRef = useRef([])
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllQ", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllQ", scrolledTo)
+    }else{
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log(myRef.current[scrolledTo],"ref element array")
+      }
+    }
+
   };
+
+  useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log("red",element);
+        console.log(myRef.current[scrolledTo],"ref element array")
+        let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+    }
+    }
+  }, [ViewDiscussion]);
+
 
   useEffect(() => {
     getInCompleteAssingment();
   }, []);
 
+
+  // useEffect(() => {
+  //   console.log("Rendered");
+  // }, [ViewDiscussion]);
+
   const getInCompleteAssingment = () => {
     const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ1`));
-    if (tlQueryFilterData)
-      {
-        console.log("Not called in all Q axios");
-      }
-    else{
-    axios
-      .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setInCompleteData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    if (tlQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }
+    else {
+      axios
+        .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setInCompleteData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
     }
   };
 
@@ -65,7 +97,7 @@ function AllQuery() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -127,7 +159,7 @@ function AllQuery() {
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
 
-        if (oldDate ===  "0000-00-00") {
+        if (oldDate === "0000-00-00") {
           return null;
         } else {
           return oldDate.toString().split("-").reverse().join("-");
@@ -142,11 +174,11 @@ function AllQuery() {
           <>
             <div>
               {row.status}/
-              {row.status ===  "Inprogress Query" ? (
+              {row.status === "Inprogress Query" ? (
                 <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status ===  "Declined Query" ? (
+              ) : row.status === "Declined Query" ? (
                 <p className="declined">{row.statusdescription}</p>
-              ) : row.status ===  "Completed Query" ? (
+              ) : row.status === "Completed Query" ? (
                 <p className="completed">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -160,13 +192,13 @@ function AllQuery() {
       formatter: function (cell, row) {
         return (
           <>
-            {row.status_code ===  "1" ? null : (
+            {row.status_code === "1" ? null : (
               <div
                 style={{
                   display: "flex",
                 }}
               >
-                {row.status ===  "Declined Query" ? null : (
+                {row.status === "Declined Query" ? null : (
                   <Link
                     to={{
                       pathname: `/teamleader_chatting/${row.id}`,

@@ -60,7 +60,7 @@ function TeamFilter(props) {
 
   useEffect(() => {
     const getSubCategory = () => {
-      if (selectedData != undefined && selectedData.length > 0) {
+      if (selectedData !== undefined && selectedData.length > 0) {
         axios
           .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
           .then((res) => {
