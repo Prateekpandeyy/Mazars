@@ -214,7 +214,7 @@ const InvoiceFilter = (props) => {
   const resetData = () => {
     reset();
     setFilterData({
-      query_no: "", p_dateFrom: "", p_dateTo: "", installment_no: "", opt: "" ,route:"",index:""
+      query_no: "", p_dateFrom: "", p_dateTo: current_date, installment_no: "", opt: "" ,route:"",index:""
     })
     localStorage.removeItem(`searchDataI${index}`);
   };
