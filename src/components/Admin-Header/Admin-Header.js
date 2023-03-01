@@ -122,7 +122,23 @@ function AdminHeader({
       localStorage.removeItem("tpEmail");
       localStorage.removeItem("category");
       localStorage.removeItem("tptoken");
-
+      localStorage.removeItem("searchDatatpquery1");
+      localStorage.removeItem("searchDatatpquery2");
+      localStorage.removeItem("searchDatatpquery3");
+      localStorage.removeItem("searchDatatpquery4");
+      localStorage.removeItem("searchDatatpproposal1");
+      localStorage.removeItem("searchDatatpproposal2");
+      localStorage.removeItem("searchDatatpproposal3");
+      localStorage.removeItem("searchDatatpproposal4");
+      localStorage.removeItem("searchDatatppayment1");
+      localStorage.removeItem("searchDatatppayment2");
+      localStorage.removeItem("searchDatatppayment3");
+      localStorage.removeItem("searchDatatpAssignment1");
+      localStorage.removeItem("searchDatatpAssignment2");
+      localStorage.removeItem("searchDatatpAssignment3");
+      localStorage.removeItem("searchDatatpAssignment4");
+      localStorage.removeItem("tpcreate");
+      localStorage.removeItem("tpgenerated");
       history.push("/taxprofessional/login");
     });
   };

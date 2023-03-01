@@ -33,18 +33,21 @@ function AllQuery(props) {
   // }, []);
 
   const getInCompleteAssingment = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setInCompleteData(res.data.result);
-          setRecords(res.data.result.length);
-          props.getAllCount(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setInCompleteData(res.data.result);
+            setRecords(res.data.result.length);
+            props.getAllCount(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -187,6 +190,7 @@ function AllQuery(props) {
             AllQuery="AllQuery"
             setRecords={setRecords}
             records={records}
+            index="tpquery1"
           />
         </CardHeader>
         <CardBody>

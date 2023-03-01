@@ -194,7 +194,7 @@ const Report = () => {
   }, []);
   useEffect(() => {
     getTeamLeader();
-  }, [cname]);
+  }, []);
   const getupdateQuery = () => {
     axios
       .get(

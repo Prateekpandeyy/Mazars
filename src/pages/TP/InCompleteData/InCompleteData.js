@@ -42,17 +42,22 @@ function InCompleteData({ CountIncomplete, data }) {
   // }, []);
 
   const getInCompleteAssingment = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setInCompleteData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+            userid
+          )}&status=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setInCompleteData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -195,6 +200,7 @@ function InCompleteData({ CountIncomplete, data }) {
             InprogressQuery="InprogressQuery"
             setRecords={setRecords}
             records={records}
+            index="tpquery3"
           />
         </CardHeader>
         <CardBody>

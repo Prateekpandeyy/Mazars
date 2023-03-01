@@ -193,20 +193,18 @@ const Report = () => {
   }, []);
   useEffect(() => {
     getupdateQuery();
-  }, [taxId, taxxId, cname]);
+  }, []);
   const getupdateQuery = () => {
-    if (cname.length > 0) {
-      axios
-        .get(`${baseUrl}/tl/getAllQueryList?customer=${cname}`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            var data = res.data.result;
+    axios
+      .get(`${baseUrl}/tl/getAllQueryList?customer=${cname}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          var data = res.data.result;
 
-            let b = res.data.result;
-            setQno(b.map(getqNo));
-          }
-        });
-    }
+          let b = res.data.result;
+          setQno(b.map(getqNo));
+        }
+      });
   };
   //   const getTeamLeader = () => {
   //     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {

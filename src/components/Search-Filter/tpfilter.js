@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ function TaxProfessionalFilter(props) {
     AllPayment,
     Unpaid,
     Paid,
+    index,
   } = props;
   const userid = window.localStorage.getItem("tpkey");
 
@@ -37,10 +38,12 @@ function TaxProfessionalFilter(props) {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState(1);
+
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
+  const [queryNo, setQueryNo] = useState("");
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
-
+  const dateValue = useRef(null);
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -99,227 +102,505 @@ function TaxProfessionalFilter(props) {
     setStore2([]);
     setStatus1(1);
     setTax2([]);
+
+    setFromDate("");
+
+    setQueryNo("");
+    let date = moment().format("DD-MM-YYYY");
+    let fullDate = date;
+    setToDate(fullDate);
     getData();
+
+    dateValue.current.clearValue();
   };
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
+
+    if (dk) {
+      if (dk.route === window.location.pathname && dk.index === index) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        setStatus1(dk.p_status);
+        setQueryNo(dk.query_no);
+        onSubmit(dk);
+      }
+    } else if (!dk?.toDate) {
+      let date = moment().format("DD-MM-YYYY");
+      let fullDate = date;
+      setToDate(fullDate);
+    }
+  }, []);
 
   const onSubmit = (data) => {
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+        index: index,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+        index: index,
+      };
+    }
+
+    localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     if (AllQuery == "AllQuery") {
-      axios
-        .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=${
-            data.p_status
-          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+              userid
+            )}&status=${data.p_status}&cat_id=${data.store}&from=${
+              data.fromDate
+            }&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+              userid
+            )}&status=${
+              data.p_status
+            }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (pendingForAcceptence == "pendingForAcceptence") {
-      axios
-        .get(
-          `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&pcat_id=${
+              data.pcatId
+            }&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (InprogressQuery == "InprogressQuery") {
-      axios
-        .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
-            userid
-          )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+              userid
+            )}&status=${data.p_status}&cat_id=${data.store}&from=${
+              data.fromDate
+            }&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+              userid
+            )}&status=${status1}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (DeclinedQuery == "DeclinedQuery") {
-      axios
-        .get(
-          `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
-            data.p_status
-          }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
+              data.p_status
+            }&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
+              data.p_status
+            }&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (completeAssignment == "completeAssignment") {
-      axios
-        .get(
-          `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&pcat_id=${
+              data.pcatId
+            }&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (AllProposal == "AllProposal") {
-      axios
-        .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (InprogressProposal == "InprogressProposal") {
-      axios
-        .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=${
+              data.p_status
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (proposal == "proposal") {
-      axios
-        .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${
+              data.pcatId
+            }&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
     if (AllPayment == "AllPayment") {
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (Unpaid == "Unpaid") {
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?&tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=1&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
 
     if (Paid == "Paid") {
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
-            data.query_no
-          }`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=2&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
   };
 
@@ -400,18 +681,35 @@ function TaxProfessionalFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  {/* <input
-                    type="date"
-                    name="p_dateFrom"
-                    className="form-select form-control"
-                    ref={register}
-                    max={item}
-                  /> */}
-                  <DatePicker
-                    onChange={(e) => fromDateFun(e)}
-                    disabledDate={(d) => !d || d.isAfter(maxDate)}
-                    format={dateFormatList}
-                  />
+                  {fromDate.length > 0 ? (
+                    <div className="form-group mx-sm-1  mb-2">
+                      <DatePicker
+                        ref={dateValue}
+                        onChange={(e) =>
+                          setFromDate(moment(e).format("DD-MM-YYYY"))
+                        }
+                        disabledDate={(d) => !d || d.isAfter(maxDate)}
+                        format={dateFormatList}
+                        defaultValue={moment(fromDate, dateFormatList)}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {fromDate.length === 0 ? (
+                    <div className="form-group mx-sm-1  mb-2">
+                      <DatePicker
+                        ref={dateValue}
+                        onChange={(e) =>
+                          setFromDate(moment(e).format("DD-MM-YYYY"))
+                        }
+                        disabledDate={(d) => !d || d.isAfter(maxDate)}
+                        format={dateFormatList}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
@@ -419,20 +717,31 @@ function TaxProfessionalFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  {/* <input
-                    type="date"
-                    name="p_dateTo"
-                    className="form-select form-control"
-                    ref={register}
-                    defaultValue={item}
-                    max={item}
-                  /> */}
-                  <DatePicker
-                    onChange={(e) => setToDate(e.format("YYYY-MM-DD"))}
-                    defaultValue={moment(new Date(), "DD MM, YYYY")}
-                    disabledDate={(d) => !d || d.isAfter(maxDate)}
-                    format={dateFormatList}
-                  />
+                  {toDate.length > 0 ? (
+                    <DatePicker
+                      ref={dateValue}
+                      onChange={(e) =>
+                        setToDate(moment(e).format("DD-MM-YYYY"))
+                      }
+                      disabledDate={(d) => !d || d.isAfter(maxDate)}
+                      format={dateFormatList}
+                      defaultValue={moment(toDate, dateFormatList)}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {toDate.length === 0 ? (
+                    <DatePicker
+                      onChange={(e) =>
+                        setToDate(moment(e).format("DD-MM-YYYY"))
+                      }
+                      disabledDate={(d) => !d || d.isAfter(maxDate)}
+                      defaultValue={moment(new Date(), "DD MM, YYYY")}
+                      format={dateFormatList}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
@@ -440,6 +749,8 @@ function TaxProfessionalFilter(props) {
                     <select
                       className="form-select form-control"
                       name="p_status"
+                      value={status1}
+                      onChange={(e) => setStatus1(e.target.value)}
                       ref={register}
                       style={{ height: "33px" }}
                     >
@@ -456,6 +767,7 @@ function TaxProfessionalFilter(props) {
                       name="p_status"
                       ref={register}
                       style={{ height: "33px" }}
+                      value={status1}
                       onChange={(e) => setStatus1(e.target.value)}
                     >
                       <option value="">--select--</option>
@@ -470,6 +782,8 @@ function TaxProfessionalFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      value={status1}
+                      onChange={(e) => setStatus1(e.target.value)}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -483,6 +797,8 @@ function TaxProfessionalFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      value={status1}
+                      onChange={(e) => setStatus1(e.target.value)}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -497,6 +813,8 @@ function TaxProfessionalFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      value={status1}
+                      onChange={(e) => setStatus1(e.target.value)}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -510,6 +828,8 @@ function TaxProfessionalFilter(props) {
                       className="form-select form-control"
                       name="p_status"
                       ref={register}
+                      value={status1}
+                      onChange={(e) => setStatus1(e.target.value)}
                       style={{ height: "33px" }}
                     >
                       <option value="">--select--</option>
@@ -525,6 +845,8 @@ function TaxProfessionalFilter(props) {
                     name="query_no"
                     ref={register}
                     placeholder="Enter Query Number"
+                    onChange={(e) => setQueryNo(e.target.value)}
+                    value={queryNo}
                     className="form-control"
                   />
                 </div>

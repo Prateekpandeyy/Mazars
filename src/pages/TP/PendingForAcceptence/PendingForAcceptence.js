@@ -43,16 +43,19 @@ function PendingForAcceptence(props) {
   };
 
   const getPendingforAcceptance = () => {
-    axios
-      .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPendingData(res.data.result);
-          setRecords(res.data.result.length);
-          props.pendingQueryNumber(res.data.result.length);
-          // CountPendingForAcceptence(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
+    if (!data) {
+      axios
+        .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPendingData(res.data.result);
+            setRecords(res.data.result.length);
+            props.pendingQueryNumber(res.data.result.length);
+            // CountPendingForAcceptence(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -192,6 +195,7 @@ function PendingForAcceptence(props) {
             getData={getPendingforAcceptance}
             pendingForAcceptence="pendingForAcceptence"
             setRecords={setRecords}
+            index="tpquery2"
             records={records}
           />
         </CardHeader>

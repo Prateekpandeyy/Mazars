@@ -53,17 +53,22 @@ const CreateInvoice = () => {
   }, []);
 
   const getProposalList = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=0`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.payment_detail);
-          setRecords(res.data.payment_detail.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("tpcreate"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(
+            userid
+          )}&invoice=0`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.payment_detail);
+            setRecords(res.data.payment_detail.length);
+          }
+        });
+    }
   };
 
   const columns = [

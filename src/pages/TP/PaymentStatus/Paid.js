@@ -68,20 +68,23 @@ function AllPayment() {
     setAssignNo(key);
   };
   const getPaymentStatus = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
-          userid
-        )}&status=2`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPayment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+            userid
+          )}&status=2`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setPayment(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const toggle = (key) => {
@@ -314,6 +317,7 @@ function AllPayment() {
             getData={getPaymentStatus}
             Paid="Paid"
             setRecords={setRecords}
+            index="tppayment2"
             records={records}
           />
         </CardHeader>

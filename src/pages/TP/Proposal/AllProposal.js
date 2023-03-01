@@ -54,15 +54,21 @@ function AllProposal() {
   }, []);
 
   const getProposalList = () => {
-    axios
-      .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const columns = [
@@ -298,6 +304,7 @@ function AllProposal() {
             AllProposal="AllProposal"
             setRecords={setRecords}
             records={records}
+            index="tlproposal1"
           />
         </CardHeader>
         <CardBody>

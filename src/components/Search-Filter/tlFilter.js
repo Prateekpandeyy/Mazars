@@ -192,7 +192,7 @@ function TeamFilter(props) {
             }&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -240,7 +240,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -288,7 +288,7 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -335,7 +335,7 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -383,7 +383,7 @@ function TeamFilter(props) {
             }&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -481,7 +481,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
@@ -624,7 +624,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=2&pcat_id=${selectedData}&qno=${
@@ -674,7 +674,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=3&pcat_id=${selectedData}&qno=${
@@ -726,9 +726,12 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
+              data.query_no
+            }`,
             myConfig
           )
           .then((res) => {
@@ -773,7 +776,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=1&pcat_id=${selectedData}&qno=${
@@ -829,7 +832,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
+              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=2&pcat_id=${selectedData}&qno=${
