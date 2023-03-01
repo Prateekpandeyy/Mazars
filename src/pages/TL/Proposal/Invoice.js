@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -40,6 +40,8 @@ const Invoice = (updateTab) => {
   const [billNo, setBillNo] = useState();
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
@@ -52,8 +54,32 @@ const Invoice = (updateTab) => {
       setInstallmentNo(key.installment_no);
       setBillNo(key.billno);
       setId2(key.id);
+      // console.log(key);
+      if (tdsForm === false) {
+        console.log("Rendered CI", key);
+        setScrolledTo(key.id)
+      }else{
+        console.log("Scrolled To Else CI", scrolledTo)
+        var element = document.getElementById(scrolledTo);
+        if (element){
+          console.log(myRef.current[scrolledTo],"ref element array")
+        }
+      }
     }
   };
+  useEffect(() => {
+    if (tdsForm === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log("red",element);
+        console.log(myRef.current[scrolledTo],"ref element array")
+        let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+    }
+    }
+  }, [tdsForm]);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   };
@@ -168,7 +194,10 @@ const Invoice = (updateTab) => {
       formatter: function (cell, row) {
         return (
           <>
-            <div style={{ display: "flex" }} onClick={() => addTdsToggle(row)}>
+            <div style={{ display: "flex" }} onClick={() => addTdsToggle(row)}
+            id={row.id} 
+            ref={el => (myRef.current[row.id] = el)}
+            >
               <ActionIcon titleName="Create Invoice" />
             </div>
           </>

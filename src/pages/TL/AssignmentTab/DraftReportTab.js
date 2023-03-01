@@ -36,6 +36,14 @@ function AssignmentTab() {
   const [dateFrom, setdateFrom] = useState("");
   const [dateto, setDateto] = useState(current_date);
 
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const [runTo, setRunTo] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  const myRefss = useRef([]);
+
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -76,11 +84,61 @@ function AssignmentTab() {
       setDraftModal(!draftModal);
       setId(id.id);
     }
+    console.log("id.as",id.assignment_label_number);
+    if (draftModal === false) {
+      console.log("Rendered AllQ", id.assignment_label_number);
+      setLastDown(id.assignment_label_number)
+      console.log("Scrolled To AllQ", lastDown)
+    } else {
+      console.log("Scrolled To Else AllQ", lastDown)
+      var element = document.getElementById(lastDown);
+      if (element) {
+        console.log(myRefs.current[lastDown], "ref element array")
+      }
+    }
   };
+  useEffect(() => {
+    if (draftModal === false) {
+      console.log("Scrolled To Else AllQ", lastDown)
+      var element = document.getElementById(lastDown);
+      if (element) {
+        console.log("red", element);
+        console.log(myRefs.current[lastDown], "ref element array")
+        let runTo = myRefs.current[lastDown]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [draftModal]);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllQ", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllQ", scrolledTo)
+    } else {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log(myRef.current[scrolledTo], "ref element array")
+      }
+    }
   };
+  //Discussion Jump
+  useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRef.current[scrolledTo], "ref element array")
+        let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [ViewDiscussion]);
+
   useEffect(() => {
     getAssignmentList();
   }, []);
@@ -117,7 +175,7 @@ function AssignmentTab() {
     };
     getSubCategory();
   }, [selectedData]);
-  
+
   // useEffect(() => {
   //   const getSubCategory = () => {
   //     if (selectedData != undefined) {
@@ -181,7 +239,33 @@ function AssignmentTab() {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+    console.log(key.assignment_number);
+    if (reportModal === false) {
+      console.log("Rendered AllQ", key);
+      setRunTo(key.assignment_number)
+      console.log("Scrolled To AllQ", runTo)
+    } else {
+      console.log("Scrolled To Else AllQ", runTo)
+      var element = document.getElementById(runTo);
+      if (element) {
+        console.log(myRefss.current[runTo], "ref element array")
+      }
+    }
   };
+
+  useEffect(() => {
+    if (reportModal === false) {
+      console.log("Scrolled To Else AllQ", runTo)
+      var element = document.getElementById(runTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRefss.current[runTo], "ref element array")
+        let runTwo = myRefss.current[runTo]
+        runTwo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [reportModal]);
+
   // row Style
   rowStyle2 = (row, index) => {
     const style = {};
@@ -210,7 +294,7 @@ function AssignmentTab() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -380,6 +464,8 @@ function AssignmentTab() {
                     title="View All Report"
                     style={{ cursor: "pointer", textAlign: "center" }}
                     onClick={() => ViewReport(row)}
+                    id={row.assignment_number}
+                    ref={el => (myRefss.current[row.assignment_number] = el)}
                   >
                     <DescriptionOutlinedIcon color="secondary" />
                   </div>
@@ -399,6 +485,7 @@ function AssignmentTab() {
             <div
               title="Add Assignment stages"
               style={{ cursor: "pointer", textAlign: "center" }}
+              
             >
               {row.paid_status == "2" ? null : (
                 <Link to={`/teamleader_addassingment/${row.q_id}`}>
@@ -452,6 +539,8 @@ function AssignmentTab() {
                         color: "green",
                       }}
                       onClick={() => uploadDraftReport(row)}
+                      id={row.assignment_label_number}
+                      ref={el => (myRefs.current[row.assignment_label_number] = el)}
                     >
                       <DraftReportUploadIcon />
                       draft
@@ -486,35 +575,35 @@ function AssignmentTab() {
       };
     }
     localStorage.setItem(`searchDataAs2`, JSON.stringify(obj));
-    if(data.route){
+    if (data.route) {
       axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatid}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatid}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
     }
-    else{
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
+    else {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
     }
   };
 
@@ -608,7 +697,7 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
-                  onChange= {handleDatefrom}
+                  onChange={handleDatefrom}
                   value={dateFrom}
                   ref={register}
                   max={item}
@@ -624,7 +713,7 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
-                  onChange= {handleDateto}
+                  onChange={handleDateto}
                   value={dateto}
                   ref={register}
                   defaultValue={current_date}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../../config/config";
@@ -57,6 +57,8 @@ function AssignmentTab(props) {
 
   const [item] = useState(current_date);
   const [client, setClient] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("")
+  const myRef = useRef([])
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -75,7 +77,30 @@ function AssignmentTab(props) {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllA", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllA", scrolledTo)
+    }else{
+      console.log("Scrolled To Else AllA", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log(myRef.current[scrolledTo],"ref element array")
+      }
+    }
   };
+  useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log("red",element);
+        console.log(myRef.current[scrolledTo],"ref element array")
+        let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+    }
+    }
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     getAssignmentList();
@@ -238,7 +263,7 @@ function AssignmentTab(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {

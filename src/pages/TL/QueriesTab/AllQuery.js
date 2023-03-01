@@ -47,6 +47,7 @@ function AllQuery() {
       var element = document.getElementById(scrolledTo);
       if (element){
         console.log(myRef.current[scrolledTo],"ref element array")
+
       }
     }
 
