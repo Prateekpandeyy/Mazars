@@ -37,10 +37,10 @@ function TaxProfessionalFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [status1, setStatus1] = useState(1);
+  const [status1, setStatus1] = useState("");
 
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
+  const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef(null);
@@ -102,9 +102,9 @@ function TaxProfessionalFilter(props) {
     setStore2([]);
     setStatus1(1);
     setTax2([]);
-
+    localStorage.removeItem(`searchData${index}`);
     setFromDate("");
-
+    setStatus1("");
     setQueryNo("");
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
