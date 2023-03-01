@@ -813,17 +813,18 @@ function TeamFilter(props) {
       console.log("inside all payment axios");
       if (data.route) {
         console.log("inside all payment axios1");
-        console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-          userid)}&cat_id=${data.store}&from=${data.fromDate?.split("-")
+        console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate?.split("-")
           .reverse()
-          .join("-")}
-          &to=${data.toDate?.split("-")
+          .join("-")}&to=${data.toDate?.split("-")
           .reverse()
-          .join("-")}&status=${data.p_status}
-          &pcat_id=${data.pcatId}&qno=${data.query_no}`,"All with data routes");
+          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,"All with data routes");
         axios
           .get(
-            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate?.split("-")
+            .reverse()
+            .join("-")}&to=${data.toDate?.split("-")
+            .reverse()
+            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -849,7 +850,11 @@ function TeamFilter(props) {
         &pcat_id=${selectedData}&qno=${data.query_no.typeof}`,"Else all Y");
         axios
           .get(
-            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate}&to=${toDate}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate?.split("-")
+            .reverse()
+            .join("-")}&to=${toDate?.split("-")
+            .reverse()
+            .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
