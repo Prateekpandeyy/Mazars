@@ -828,7 +828,7 @@ const Report = () => {
   const handleProposal = (e) => {
     const { name, checked } = e.target;
     setProposalValue({
-      ...assignmeneValue,
+      ...proposalValue,
       [name]: checked,
     });
     if (e.target.checked === false) {
@@ -1394,6 +1394,7 @@ const Report = () => {
                         Payment decline reason{" "}
                       </label>
                     </span>
+
                     <span>
                       <input
                         type="checkbox"

@@ -169,7 +169,7 @@ const Videogallery = () => {
                                         display: "flex",
                                         color: "red",
                                         width: "40px",
-                                        height: "40px",
+                                        height: "45",
                                         position: "absolute",
                                         top: "33%",
                                         left: "40%",

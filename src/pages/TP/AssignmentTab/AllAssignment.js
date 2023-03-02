@@ -31,7 +31,7 @@ function AssignmentTab(props) {
 
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
-  const [count, setCount] = useState("");
+
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
@@ -59,6 +59,8 @@ function AssignmentTab(props) {
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [qid, setQid] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
   const [error, setError] = useState(false);
   let des = false;
   var rowStyle2 = {};
@@ -90,15 +92,21 @@ function AssignmentTab(props) {
   }, []);
 
   const getAssignmentList = () => {
-    axios
-      .get(`${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setAssignment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAssignment(res.data.result);
+
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   //get category
@@ -150,6 +158,12 @@ function AssignmentTab(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+
+    setToDate("");
+    setFromDate("");
+    setQid("");
+
+    localStorage.removeItem("searchDatatpAssignment1");
     getAssignmentList();
   };
 
@@ -482,49 +496,137 @@ function AssignmentTab(props) {
       setQid(id.q_id);
     }
   };
-
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
+    console.log("dkk", dk);
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        setStatus(dk.stage_status);
+        setQid(dk.query_no);
+        setHide(dk.p_status);
+        onSubmit(dk);
+      }
+    }
+  }, []);
   const onSubmit = (data) => {
-    if (status.length > 0) {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+    let obj = {};
+
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        stage_status: data?.assignment_status,
+        route: window.location.pathname,
+      };
     } else {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: hide,
+        stage_status: status,
+        route: window.location.pathname,
+      };
+    }
+
+    localStorage.setItem(`searchDatatpAssignment1`, JSON.stringify(obj));
+
+    if (data.route) {
+      if (status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${
+              data.stage_status
+            }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${
+              data.stage_status
+            }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    } else {
+      if (status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&assignment_status=${status}&stages_status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&assignment_status=${status}&stages_status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
     }
   };
 
@@ -620,6 +722,8 @@ function AssignmentTab(props) {
                   className="form-select form-control"
                   ref={register}
                   max={item}
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
                 />
               </div>
 
@@ -633,7 +737,8 @@ function AssignmentTab(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
                   max={item}
                 />
               </div>
@@ -643,6 +748,7 @@ function AssignmentTab(props) {
                   className="form-select form-control"
                   name="p_status"
                   ref={register}
+                  value={hide}
                   style={{ height: "33px" }}
                   onChange={(e) => disabledHandler(e)}
                 >
@@ -697,48 +803,14 @@ function AssignmentTab(props) {
               )}
 
               <div className="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="single"
-                  style={{ width: 210 }}
-                  placeholder="Select stages"
-                  defaultValue={[]}
-                  onChange={assingmentStatus}
-                  value={status}
-                  allowClear
-                  className={error ? "customError" : ""}
-                >
-                  <Option value="Client_Discussion" label="Compilance">
-                    <div className="demo-option-label-item">
-                      Client Discussion
-                    </div>
-                  </Option>
-                  <Option value="Draft_Report" label="Compilance">
-                    <div className="demo-option-label-item">Draft reports</div>
-                  </Option>
-                  <Option value="Final_Discussion" label="Compilance">
-                    <div className="demo-option-label-item">
-                      Final Discussion
-                    </div>
-                  </Option>
-                  <Option value="Delivery_of_report" label="Compilance">
-                    <div className="demo-option-label-item">
-                      Delivery of Final Reports
-                    </div>
-                  </Option>
-                  <Option value="Completed" label="Compilance">
-                    <div className="demo-option-label-item">
-                      Awaiting Completion
-                    </div>
-                  </Option>
-                </Select>
-              </div>
-              <div className="form-group mx-sm-1  mb-2">
                 <input
                   type="text"
                   name="query_no"
                   ref={register}
                   placeholder="Enter Query Number"
                   className="form-control"
+                  value={qid}
+                  onChange={(e) => setQid(e.target.value)}
                 />
               </div>
 

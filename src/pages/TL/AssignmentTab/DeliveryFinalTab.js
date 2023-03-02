@@ -622,7 +622,6 @@ function AssignmentTab() {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
                   max={item}

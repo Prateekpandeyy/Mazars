@@ -20,15 +20,13 @@ import MessageIcon, {
 import moment from "moment";
 
 function AssignmentTab() {
-  const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
 
-  const { handleSubmit, register, errors, reset } = useForm();
-  const { Option, OptGroup } = Select;
-  const [count, setCount] = useState("");
+  const { handleSubmit, register, reset } = useForm();
+  const { Option } = Select;
+
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
-  const [finalId, setFinalId] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -49,13 +47,10 @@ function AssignmentTab() {
   const [assignNo, setAssignNo] = useState("");
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
+  const [queryNo, setQueryNo] = useState("");
   const [loading, setLoading] = useState(false);
-  var clcomp = {
-    color: "green",
-  };
-  var clinpro = {
-    color: "blue",
-  };
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -90,20 +85,23 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-          userid
-        )}&assignment_status=Draft_Report&stages_status=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setAssignment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
+    if (!data) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+            userid
+          )}&assignment_status=Draft_Report&stages_status=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAssignment(res.data.result);
+
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   //get category
@@ -146,6 +144,10 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    setToDate("");
+    setFromDate("");
+    setQueryNo("");
+    localStorage.removeItem("searchDatatpAssignment2");
     getAssignmentList();
   };
 
@@ -413,25 +415,70 @@ function AssignmentTab() {
     },
   ];
   const onSubmit = (data) => {
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-          data.p_dateTo
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
-          data.query_no
-        }`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
+    let obj = {};
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: fromDate,
+        toDate: toDate,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchDatatpAssignment2`, JSON.stringify(obj));
+    if (data.route) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${
+            data.store
+          }&from=${data.fromDate}&to=${
+            data.toDate
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+            data.pcatId
+          }&qno=${data.query_no}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
+    } else {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
+          }`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
   };
 
   const Reset = () => {
@@ -528,6 +575,8 @@ function AssignmentTab() {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  value={fromDate}
                   max={item}
                 />
               </div>
@@ -542,7 +591,8 @@ function AssignmentTab() {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
+                  onChange={(e) => setToDate(e.target.value)}
+                  value={toDate}
                   max={item}
                 />
               </div>
@@ -553,6 +603,8 @@ function AssignmentTab() {
                   ref={register}
                   placeholder="Enter Query Number"
                   className="form-control"
+                  onChange={(e) => setQueryNo(e.target.value)}
+                  value={queryNo}
                 />
               </div>
               <div class="form-group mx-sm-1  mb-2">

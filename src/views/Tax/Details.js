@@ -57,7 +57,12 @@ const Details = () => {
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <>
-        <OuterloginContainer>
+        <OuterloginContainer
+          onCopy={(e) => {
+            e.preventDefault();
+            return false;
+          }}
+        >
           <MyContainer>
             <div className={classes.articleContent}>
               {data.map((i) => (

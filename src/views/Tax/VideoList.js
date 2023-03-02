@@ -142,7 +142,7 @@ const VideoList = () => {
                                 style={{
                                   overflow: "hidden",
                                   wordBreak: "break-word",
-                                  height: "40px",
+                                  height: "45px",
                                 }}
                                 hover="hover"
                                 cursor="pointer"

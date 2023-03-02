@@ -118,7 +118,12 @@ const MediaContentCustomer = () => {
     <>
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
-          <OuterloginContainer>
+          <OuterloginContainer
+            onCopy={(e) => {
+              e.preventDefault();
+              return false;
+            }}
+          >
             <MyContainer>
               {description === false ? (
                 <div className={classesCustom.articleContent}>
@@ -295,7 +300,12 @@ const MediaContentCustomer = () => {
           </OuterloginContainer>
         </Layout>
       ) : (
-        <OuterloginContainer>
+        <OuterloginContainer
+          onCopy={(e) => {
+            e.preventDefault();
+            return false;
+          }}
+        >
           <Header noSign="noSign" />
 
           <MyContainer>
