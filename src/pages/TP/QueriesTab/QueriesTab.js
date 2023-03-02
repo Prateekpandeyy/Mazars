@@ -59,15 +59,16 @@ function QueriesTab(props) {
       uit: token,
     },
   };
+
   const allQuery22 = () => {
     axios
       .get(
-        `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`,
+        `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&count=1`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setAllQuery(res.data.result.length);
+          setAllQuery(res?.data?.result?.recordcount);
           setAllQdata(res.data.result);
         }
       });
@@ -75,11 +76,14 @@ function QueriesTab(props) {
   useEffect(() => {
     const getPendindForAccepttence = () => {
       axios
-        .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
+        .get(
+          `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&count=1`,
+          myConfig
+        )
         .then((res) => {
           if (res.data.code === 1) {
             setPendingData(res.data.result);
-            setPendingForAcceptence(res.data.result.length);
+            setPendingForAcceptence(res?.data?.result?.recordcount);
           }
         });
     };
@@ -89,13 +93,13 @@ function QueriesTab(props) {
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
             userid
-          )}&status=1`,
+          )}&status=1&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
             setIncompleteData(res.data.result);
-            setIncomplete(res.data.result.length);
+            setIncomplete(res?.data?.result?.recordcount);
           }
         });
     };
@@ -106,12 +110,12 @@ function QueriesTab(props) {
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
             userid
-          )}&status=2`,
+          )}&status=2&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setcomplete(res.data.result.length);
+            setcomplete(res?.data?.result?.recordcount);
           }
         });
     };
@@ -155,11 +159,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllQuery
-            data={allQdata}
-            allQuery={allQuery22}
-            setAllQdata={setAllQdata}
-          />
+          <AllQuery />
         </TabPanel>
         <TabPanel>
           <PendingForAcceptence data={pendingData} updateTab={updateTab} />

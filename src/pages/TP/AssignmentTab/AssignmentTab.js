@@ -57,12 +57,12 @@ function QueriesTab(props) {
     const AllAssignment = () => {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAllAssignmentCount(res.data.result.length);
+            setAllAssignmentCount(res?.data?.result?.recordcount);
           }
         });
     };
@@ -72,12 +72,12 @@ function QueriesTab(props) {
         .get(
           `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
             userid
-          )}&assignment_status=Draft_Report&stages_status=1`,
+          )}&assignment_status=Draft_Report&stages_status=1&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setDraft(res.data.result.length);
+            setDraft(res?.data?.result?.recordcount);
           }
         });
     };
@@ -87,24 +87,26 @@ function QueriesTab(props) {
         .get(
           `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
             userid
-          )}&assignment_status=Delivery_of_report&stages_status=1`,
+          )}&assignment_status=Delivery_of_report&stages_status=1&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setFinal(res.data.result.length);
+            setFinal(res?.data?.result?.recordcount);
           }
         });
     };
     const AdminAssignment = () => {
       axios
         .get(
-          `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
+            userid
+          )}&count=1`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAdminCount(res.data.result.length);
+            setAdminCount(res?.data?.result?.recordcount);
           }
         });
     };

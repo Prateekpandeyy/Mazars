@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -42,6 +42,9 @@ function PendingForAcceptence(props) {
     });
   };
 
+  useEffect(() => {
+    getPendingforAcceptance();
+  }, []);
   const getPendingforAcceptance = () => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
     if (!data) {
@@ -51,8 +54,6 @@ function PendingForAcceptence(props) {
           if (res.data.code === 1) {
             setPendingData(res.data.result);
             setRecords(res.data.result.length);
-            props.pendingQueryNumber(res.data.result.length);
-            // CountPendingForAcceptence(res.data.result.length);
           }
         });
     }
@@ -206,7 +207,7 @@ function PendingForAcceptence(props) {
             <DataTablepopulated
               bgColor="#55425f"
               keyField={"assign_no"}
-              data={props.data}
+              data={pendingData}
               columns={columns}
             ></DataTablepopulated>
           )}

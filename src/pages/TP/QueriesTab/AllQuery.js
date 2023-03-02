@@ -28,9 +28,9 @@ function AllQuery(props) {
       uit: token,
     },
   };
-  // useEffect(() => {
-  //     getInCompleteAssingment();
-  // }, []);
+  useEffect(() => {
+    getInCompleteAssingment();
+  }, []);
 
   const getInCompleteAssingment = () => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
@@ -44,7 +44,6 @@ function AllQuery(props) {
           if (res.data.code === 1) {
             setInCompleteData(res.data.result);
             setRecords(res.data.result.length);
-            props.getAllCount(res.data.result.length);
           }
         });
     }
@@ -185,8 +184,8 @@ function AllQuery(props) {
       <Card>
         <CardHeader>
           <TaxProfessionalFilter
-            setData={props.setAllQdata}
-            getData={props.allQuery}
+            setData={setInCompleteData}
+            getData={getInCompleteAssingment}
             AllQuery="AllQuery"
             setRecords={setRecords}
             records={records}
@@ -197,7 +196,7 @@ function AllQuery(props) {
           <DataTablepopulated
             bgColor="#55425f"
             keyField={"assign_no"}
-            data={props.data}
+            data={incompleteData}
             columns={columns}
           ></DataTablepopulated>
           <DiscardReport
