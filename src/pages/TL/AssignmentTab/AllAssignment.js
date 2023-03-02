@@ -772,7 +772,7 @@ function AssignmentTab(props) {
                 </Select>
               </div>
 
-              {tax2.length > 0 ? (
+              
                 <div class="form-group mx-sm-1  mb-2">
                   <Select
                     mode="multiple"
@@ -790,9 +790,7 @@ function AssignmentTab(props) {
                     ))}
                   </Select>
                 </div>
-              ) : (
-                ""
-              )}
+              
               <div>
                 <button
                   type="submit"

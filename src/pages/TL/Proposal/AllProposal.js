@@ -303,6 +303,7 @@ function AllProposal() {
               <div
                 onClick={() => ViewDiscussionToggel(row.assign_no)}
                 className="ml-1"
+                
               >
                 <ViewDiscussionIcon />
               </div>

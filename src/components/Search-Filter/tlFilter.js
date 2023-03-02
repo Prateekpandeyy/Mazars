@@ -36,12 +36,9 @@ function TeamFilter(props) {
   const userid = window.localStorage.getItem("tlkey");
 
   const [selectedData, setSelectedData] = useState([]);
-  const [inputQTest, setInputQTest] = useState(false)
-  const [inputPTest, setInputPTest] = useState(false)
-  const [inputPayTest, setInputTest] = useState(false)
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [status1, setStatus1] = useState(1);
+  const [status1, setStatus1] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [pstatus, setPstatus] = useState("");
   const [queryno, setQueryno] = useState("")
@@ -109,7 +106,7 @@ function TeamFilter(props) {
     reset();
     setSelectedData([]);
     setStore2([]);
-    setStatus1(1);
+    setStatus1("");
     setTax2([]);
     getData();
     setQueryno("");
@@ -117,8 +114,7 @@ function TeamFilter(props) {
     setDateto("");
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
-    setToDate(fullDate);
-    // dateValue.current.clearValue();
+    setToDate("");
   };
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -126,9 +122,6 @@ function TeamFilter(props) {
       uit: token,
     },
   };
-  // ?.split("-")
-  // .reverse()
-  // .join("-")
 
   const onSubmit = (data) => {
     console.log(data)
@@ -970,8 +963,12 @@ function TeamFilter(props) {
           setSelectedData(qd.pcatId);
           setStatus1(qd.p_status);
           setQueryno(qd.query_no);
-          setFromDate(qd.fromDate)
-          setDateto(qd.toDate)
+          setFromDate(qd.fromDate?.split("-")
+          .reverse()
+          .join("-"))
+          setDateto(qd.toDate?.split("-")
+          .reverse()
+          .join("-"))
           onSubmit(qd);
         }
       } else if (!qd?.toDate) {
@@ -988,8 +985,12 @@ function TeamFilter(props) {
           setSelectedData(ad.pcatId);
           setStatus1(ad.p_status);
           setQueryno(ad.query_no);
-          setFromDate(ad.fromDate)
-          setDateto(ad.toDate)
+          setFromDate(ad.fromDate?.split("-")
+          .reverse()
+          .join("-"))
+          setDateto(ad.toDate?.split("-")
+          .reverse()
+          .join("-"))
           onSubmit(ad);
         }
       } else if (!ad?.toDate) {
@@ -1006,8 +1007,12 @@ function TeamFilter(props) {
           setSelectedData(pd.pcatId);
           setStatus1(pd.p_status);
           setQueryno(pd.query_no);
-          setFromDate(pd.fromDate)
-          setDateto(pd.toDate)
+          setFromDate(pd.fromDate?.split("-")
+          .reverse()
+          .join("-"))
+          setDateto(pd.toDate?.split("-")
+          .reverse()
+          .join("-"))
           onSubmit(pd);
         }
       } else if (!pd?.toDate) {
@@ -1024,8 +1029,12 @@ function TeamFilter(props) {
           setSelectedData(yd.pcatId);
           setStatus1(yd.p_status);
           setQueryno(yd.query_no);
-          setFromDate(yd.fromDate)
-          setDateto(yd.toDate)
+          setFromDate(yd.fromDate?.split("-")
+          .reverse()
+          .join("-"))
+          setDateto(yd.toDate?.split("-")
+          .reverse()
+          .join("-"))
           onSubmit(yd);
         }
       } else if (!yd?.toDate) {
@@ -1180,7 +1189,7 @@ function TeamFilter(props) {
                 }
 
                 <div className="form-group mx-sm-1  mb-2">
-                  {AllQuery == "AllQuery" && (
+                  {AllQuery === "AllQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -1196,7 +1205,7 @@ function TeamFilter(props) {
                     </select>
                   )}
 
-                  {InprogressQuery == "InprogressQuery" && (
+                  {InprogressQuery === "InprogressQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"

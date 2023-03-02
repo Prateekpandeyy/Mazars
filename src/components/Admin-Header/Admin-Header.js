@@ -93,7 +93,69 @@ function AdminHeader({ custUserId, adminUserId, TLuserId, TPuserId, cmsDashboard
         localStorage.removeItem("category");
         localStorage.removeItem("tlToken");
         history.push("/teamleader/login");
-
+        if (localStorage.getItem(`searchDataAs1`) !== null){
+          localStorage.removeItem(`searchDataAs1`);
+        }
+          if (localStorage.getItem(`searchDataAs2` ) !== null){ 
+          localStorage.removeItem(`searchDataAs2`);
+        }
+          if (localStorage.getItem(`searchDataAs3` ) !== null){ 
+          localStorage.removeItem(`searchDataAs3`);
+        }
+          if (localStorage.getItem(`searchDataAs4` ) !== null){ 
+          localStorage.removeItem(`searchDataAs4`);
+        }
+          if (localStorage.getItem(`searchDataI1` ) !== null){ 
+          localStorage.removeItem(`searchDataI1`);
+        }
+          if (localStorage.getItem(`searchDataI2` ) !== null){ 
+          localStorage.removeItem(`searchDataI2`);
+        }
+          if (localStorage.getItem(`searchDataQ1` ) !== null){ 
+          localStorage.removeItem(`searchDataQ1`);
+        }
+          if (localStorage.getItem(`searchDataQ2` ) !== null){ 
+          localStorage.removeItem(`searchDataQ2`);
+        }
+          if (localStorage.getItem(`searchDataQ3` ) !== null){ 
+          localStorage.removeItem(`searchDataQ3`);
+        }
+          if (localStorage.getItem(`searchDataQ4` ) !== null){ 
+          localStorage.removeItem(`searchDataQ4`);
+        }
+          if (localStorage.getItem(`searchDataA1` ) !== null){ 
+          localStorage.removeItem(`searchDataA1`);
+        }
+          if (localStorage.getItem(`searchDataA2` ) !== null){ 
+          localStorage.removeItem(`searchDataA2`);
+        }
+          if (localStorage.getItem(`searchDataA3` ) !== null){ 
+          localStorage.removeItem(`searchDataA3`);
+        }
+          if (localStorage.getItem(`searchDataA4` ) !== null){ 
+          localStorage.removeItem(`searchDataA4`);
+        }
+          if (localStorage.getItem(`searchDataP1` ) !== null){ 
+          localStorage.removeItem(`searchDataP1`);
+        }
+          if (localStorage.getItem(`searchDataP2` ) !== null){ 
+          localStorage.removeItem(`searchDataP2`);
+        }
+          if (localStorage.getItem(`searchDataP3` ) !== null){ 
+          localStorage.removeItem(`searchDataP3`);
+        }
+          if (localStorage.getItem(`searchDataP4` ) !== null){ 
+          localStorage.removeItem(`searchDataP4`);
+        }
+          if (localStorage.getItem(`searchDataY1` ) !== null){ 
+          localStorage.removeItem(`searchDataY1`);
+        }
+          if (localStorage.getItem(`searchDataY2` ) !== null){ 
+          localStorage.removeItem(`searchDataY2`);
+        }
+          if (localStorage.getItem(`searchDataY3` ) !== null){ 
+          localStorage.removeItem(`searchDataY3`);
+        }
       })
   };
 

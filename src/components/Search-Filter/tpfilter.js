@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
@@ -38,9 +38,12 @@ function TaxProfessionalFilter(props) {
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState(1);
   const [fromDate, setFromDate] = useState("");
+  const [pstatus, setPstatus] = useState("");
+  const [queryno, setQueryno] = useState("")
+  // const [dateto, setDateto] = useState("")
   const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
-
+  const dateValue = useRef();
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -100,9 +103,14 @@ function TaxProfessionalFilter(props) {
     setStatus1(1);
     setTax2([]);
     getData();
+    setToDate("");
+    setFromDate("");
   };
 
   const onSubmit = (data) => {
+
+    
+
     if (AllQuery === "AllQuery") {
       axios
         .get(
@@ -383,41 +391,73 @@ function TaxProfessionalFilter(props) {
                   <label className="form-select form-control">From</label>
                 </div>
 
-                <div className="form-group mx-sm-1  mb-2">
-                  {/* <input
-                    type="date"
-                    name="p_dateFrom"
-                    className="form-select form-control"
-                    ref={register}
-                    max={item}
-                  /> */}
-                  <DatePicker
-                    onChange={(e) => fromDateFun(e)}
-                    disabledDate={(d) => !d || d.isAfter(maxDate)}
-                    format={dateFormatList}
-                  />
-                </div>
+                {
+                  (fromDate.length) > 0 ?
+                    <div className="form-group mx-sm-1  mb-2">
+                      <DatePicker
+                        onChange={(e) => setFromDate(moment(e).format("DD-MM-YYYY"))}
+                        disabledDate={(d) => !d || d.isAfter(maxDate)}
+                        format={dateFormatList}
+                        ref={dateValue}
+                        name="fromDate"
+                        defaultValue={moment(
+                          `${fromDate}`,
+                          dateFormat
+                        )}
+                      />
+                    </div> :
+                    ""
+                }
+                {(fromDate.length) === 0 ?
+                  <div className="form-group mx-sm-1  mb-2">
+                    <DatePicker
+                      onChange={(e) => setFromDate(moment(e).format("DD-MM-YYYY"))}
+                      disabledDate={(d) => !d || d.isAfter(maxDate)}
+                      format={dateFormatList}
+                      ref={dateValue}
+                      name="fromdate"
+                    />
+                  </div>
+                  :
+                  ""
+                }
 
                 <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">To</label>
                 </div>
 
-                <div className="form-group mx-sm-1  mb-2">
-                  {/* <input
-                    type="date"
-                    name="p_dateTo"
-                    className="form-select form-control"
-                    ref={register}
-                    defaultValue={item}
-                    max={item}
-                  /> */}
-                  <DatePicker
-                    onChange={(e) => setToDate(e.format("YYYY-MM-DD"))}
-                    defaultValue={moment(new Date(), "DD MM, YYYY")}
-                    disabledDate={(d) => !d || d.isAfter(maxDate)}
-                    format={dateFormatList}
-                  />
-                </div>
+                {
+                  (toDate.length > 0) ?
+                    <div className="form-group mx-sm-1  mb-2">
+                      <DatePicker
+                        onChange={(e) => setToDate(moment(e).format("DD-MM-YYYY"))}
+                        disabledDate={(d) => !d || d.isAfter(maxDate)}
+                        defaultValue={moment(
+                          `${toDate}`,
+                          dateFormat
+                        )}
+                        format={dateFormatList}
+                        ref={dateValue}
+                        name="todate"
+                      />
+                    </div> :
+                    ""
+                }
+                {
+                  (toDate.length === 0) ?
+                    <div className="form-group mx-sm-1  mb-2">
+                      <DatePicker
+                        onChange={(e) => setToDate(moment(e).format("DD-MM-YYYY"))}
+                        disabledDate={(d) => !d || d.isAfter(maxDate)}
+                        ref={dateValue}
+                        defaultValue={moment(new Date(), "DD MM, YYYY")}
+                        format={dateFormatList}
+                        name="todate"
+                      />
+                    </div>
+                    :
+                    ""
+                }
 
                 <div className="form-group mx-sm-1  mb-2">
                   {AllQuery === "AllQuery" && (

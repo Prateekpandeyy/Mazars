@@ -194,6 +194,7 @@ function Dashboard() {
     localStorage.removeItem("tlkey");
     localStorage.removeItem("tlEmail");
     history.push("/teamleader/login");
+    
   };
 
   return (
