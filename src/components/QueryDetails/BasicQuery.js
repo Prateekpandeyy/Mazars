@@ -208,7 +208,7 @@ function BasicQuery({
       });
   };
   const getAdminFile = (e) => {
-    if (window.location.pathname.split("/")[0] === "admin") {
+    if (window.location.pathname.split("/")[1] === "admin_queries") {
       let id = [];
       axios
         .get(`${baseUrl}/admin/foldersubfolder?q_id=${qid.id}`, myConfigAdmin)

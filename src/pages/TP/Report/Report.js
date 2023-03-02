@@ -271,12 +271,6 @@ const Report = () => {
     let proposValue = proposalValue;
     let bValue = basicValue;
     let manualValue = manualReceipt;
-    selectInputRef.current.select.clearValue();
-    selectInputRef2.current.select.clearValue();
-    selectInputRef3.current.select.clearValue();
-    selectInputRef4.current.select.clearValue();
-    selectInputRef5.current.select.clearValue();
-    selectInputRef6.current.select.clearValue();
 
     Object.keys(bValue).forEach((key) => {
       bValue[key] = false;
@@ -328,6 +322,12 @@ const Report = () => {
     setCheckBox(false);
     setProposalCheckbox(false);
     setQno([]);
+    selectInputRef.current.select.clearValue();
+    selectInputRef2.current.select.clearValue();
+    selectInputRef3.current.select.clearValue();
+    selectInputRef4.current.select.clearValue();
+    selectInputRef5.current.select.clearValue();
+    selectInputRef6.current.select.clearValue();
   };
   const onSubmit = (value) => {
     let comp = [];
