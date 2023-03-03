@@ -68,10 +68,12 @@ const AssignmentFolderWrapper = (props) => {
                         props.downloadFile(e, i.assign_no, i.id, i.document)
                       }
                     >
-                      <FileIcon
-                        name={i.document}
-                        sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                      />
+                      <span style={{ cursor: "pointer" }}>
+                        <FileIcon
+                          name={i.document}
+                          sx={{ fontSize: "2.5rem", pointer: "cursor" }}
+                        />
+                      </span>
                       <span className="folderLabel">
                         <CustomTypography> {i.document}</CustomTypography>
                       </span>
@@ -96,10 +98,12 @@ const AssignmentFolderWrapper = (props) => {
                         )
                       }
                     >
-                      <FileIcon
-                        name={i.customer_files}
-                        sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                      />
+                      <span style={{ cursor: "pointer" }}>
+                        <FileIcon
+                          name={i.customer_files}
+                          sx={{ fontSize: "2.5rem", pointer: "cursor" }}
+                        />
+                      </span>
                       <span className="folderLabel">
                         <CustomTypography> {i.customer_files}</CustomTypography>
                       </span>
@@ -119,10 +123,12 @@ const AssignmentFolderWrapper = (props) => {
                         props.downloadFile(e, i.assign_no, i.id, i.name)
                       }
                     >
-                      <FileIcon
-                        name={i.document}
-                        sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                      />
+                      <span style={{ cursor: "pointer" }}>
+                        <FileIcon
+                          name={i.document}
+                          sx={{ fontSize: "2.5rem", pointer: "cursor" }}
+                        />
+                      </span>
                       <span className="folderLabel">
                         <CustomTypography> {i.document}</CustomTypography>
                       </span>
@@ -147,10 +153,12 @@ const AssignmentFolderWrapper = (props) => {
                         )
                       }
                     >
-                      <FileIcon
-                        name={i.customer_files}
-                        sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                      />
+                      <span style={{ cursor: "pointer" }}>
+                        <FileIcon
+                          name={i.customer_files}
+                          sx={{ fontSize: "2.5rem", pointer: "cursor" }}
+                        />
+                      </span>
                       <span className="folderLabel">
                         <CustomTypography> {i.customer_files}</CustomTypography>
                       </span>

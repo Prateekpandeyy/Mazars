@@ -67,10 +67,13 @@ const FolderWrapper = (props) => {
                         props.downloadFile(e, i.assign_no, i.id, i.name)
                       }
                     >
-                      <FileIcon
-                        name={i.name}
-                        sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                      />
+                      <span style={{ cursor: "pointer" }}>
+                        <FileIcon
+                          name={i.name}
+                          style={{ cursor: "pointer" }}
+                          sx={{ fontSize: "2.5rem" }}
+                        />
+                      </span>
                       <span className="folderLabel">
                         <CustomTypography> {i.name}</CustomTypography>
                       </span>
@@ -88,10 +91,9 @@ const FolderWrapper = (props) => {
                     props.downloadFile(e, i.assign_no, i.id, i.name)
                   }
                 >
-                  <FileIcon
-                    name={i.name}
-                    sx={{ fontSize: "2.5rem", pointer: "cursor" }}
-                  />
+                  <span style={{ cursor: "pointer" }}>
+                    <FileIcon name={i.name} sx={{ fontSize: "2.5rem" }} />
+                  </span>
                   <span className="folderLabel">
                     <CustomTypography> {i.name}</CustomTypography>
                   </span>

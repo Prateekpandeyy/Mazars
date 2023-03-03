@@ -266,6 +266,7 @@ const Report = () => {
 
   const resetData = () => {
     reset();
+    setManualSearch(false);
     let assignValue = assignmeneValue;
     let pVAlue = paymentValue;
     let proposValue = proposalValue;
@@ -322,7 +323,7 @@ const Report = () => {
     setCheckBox(false);
     setProposalCheckbox(false);
     setQno([]);
-    selectInputRef.current.select.clearValue();
+
     selectInputRef2.current.select.clearValue();
     selectInputRef3.current.select.clearValue();
     selectInputRef4.current.select.clearValue();
@@ -1021,7 +1022,7 @@ const Report = () => {
                   <label className="form-label">Query Number</label>
                   <Select
                     isMulti={true}
-                    ref={selectInputRef6}
+                    ref={selectInputRef2}
                     options={qno}
                     onChange={(e) => queryNumber(e)}
                   />
