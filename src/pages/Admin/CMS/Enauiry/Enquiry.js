@@ -548,7 +548,7 @@ Technology  Real Estate  Shipping  Services  Manufacturing and Retail.
       });
     }
   };
-  console.log("templete type", moment(minimum).format("DD-MM-YYYY"));
+
   return (
     <Layout cmsDashboard="cmsDashboard">
       {loading === true ? (

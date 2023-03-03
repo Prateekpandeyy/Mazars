@@ -74,7 +74,7 @@ function AllPayment() {
   };
   const getPaymentStatus = () => {
     let data = JSON.parse(localStorage.getItem("searchDatatlpayment1"));
-    console.log("data123", data);
+
     if (!data) {
       axios
         .get(

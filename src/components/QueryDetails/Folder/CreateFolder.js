@@ -65,7 +65,7 @@ function CreateFolder({
           value: "0",
         });
         setShowSubFolderData(false);
-        console.log("folderId", folderid);
+
         if (folderid.value === "0") {
           setColor(0);
           getList();

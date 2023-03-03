@@ -184,7 +184,6 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
       },
     },
   ];
-  console.log("allData", allData);
 
   return (
     <>

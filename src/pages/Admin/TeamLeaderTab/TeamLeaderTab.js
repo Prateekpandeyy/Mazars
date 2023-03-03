@@ -134,7 +134,7 @@ function TeamLeaderTab() {
         var digit = [];
 
         digit = JSON.parse(row.allcat_id);
-        console.log("digit", digit);
+
         let k, pp;
 
         if (digit.direct && digit.direct.length - 1 == "1") {

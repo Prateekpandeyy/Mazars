@@ -171,7 +171,6 @@ function ProposalComponent(props) {
             if (installment == "") {
               Alerts.ErrorNormal(`Please select no of installment .`);
             } else if (!allAmount || !date) {
-              console.log("amounts", allAmount, date);
               Alerts.ErrorNormal(`Please enter all fields.`);
             } else if (allAmount && date) {
               if (installment.value > 0) {
@@ -312,7 +311,6 @@ function ProposalComponent(props) {
       );
       roundNum = actualInstallmentNumber * installmentAmount;
       adjustAmount = totalInstallAmount - roundNum;
-      console.log("InstallmentAmount", installmentAmount);
     }
 
     for (let i = 0; i < installment; i++) {
@@ -377,7 +375,6 @@ function ProposalComponent(props) {
     setSubplan(e.target.value);
   };
   const getEditor = (event, editor) => {
-    console.log("event", event, editor.getData());
     addDet(editor.getData());
   };
 

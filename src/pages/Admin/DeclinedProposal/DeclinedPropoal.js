@@ -35,7 +35,6 @@ function DeclinedProposal({ declinedProposal }) {
     setAssignNo(key);
   };
   const showProposalModal2 = (e) => {
-    console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
   };

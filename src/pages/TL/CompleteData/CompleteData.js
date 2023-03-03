@@ -52,7 +52,6 @@ function CompletedQuery({ updateTab }) {
         myConfig
       )
       .then((res) => {
-        console.log("response", res);
         if (res.data.code === 1) {
           setHistory(res.data.result);
         }
@@ -234,7 +233,6 @@ function CompletedQuery({ updateTab }) {
       confirmButtonText: "Yes, assign it!",
       cancelButtonText: "No",
     }).then(function (result) {
-      console.log("resutl", result);
       if (result.value) {
         hist.push(`/teamleader_queryassing/${id}`);
       } else if (result.dismiss == "cancel") {

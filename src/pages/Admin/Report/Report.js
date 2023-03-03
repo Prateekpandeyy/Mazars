@@ -167,7 +167,6 @@ const Report = () => {
     let company = [];
     let a = {};
     axios.get(`${baseUrl}/tl/getcompany`, myConfig).then((res) => {
-      console.log("response", res);
       res.data.result.map((i) => {
         a = {
           value: i.company_prefix,
@@ -334,6 +333,7 @@ const Report = () => {
     let proposValue = proposalValue;
     let bValue = basicValue;
     let manualValue = manualReceipt;
+    setManualSearch(false);
     selectInputRef.current.select.clearValue();
     selectInputRef2.current.select.clearValue();
     selectInputRef3.current.select.clearValue();
@@ -393,7 +393,6 @@ const Report = () => {
     setQno([]);
   };
   const onSubmit = (value) => {
-    console.log("value", value);
     let comp = [];
     companyName2.map((i) => {
       comp.push(i.value);
@@ -572,10 +571,6 @@ const Report = () => {
         })
           .then(function (response) {
             if (response.data.code === 1) {
-              // axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig)
-              // .then((res2) => {
-              //   console.log(res2)
-              // })
               const myConfig2 = {
                 headers: {
                   uit: token,
@@ -594,7 +589,7 @@ const Report = () => {
                   document.body.appendChild(a);
                   a.style = "display: none";
                   a.href = url;
-                  console.log(res2);
+
                   a.download = "report.xlsx";
                   a.target = "_blank";
                   a.click();
@@ -747,22 +742,12 @@ const Report = () => {
                 document.body.appendChild(a);
                 a.style = "display: none";
                 a.href = url;
-                console.log(res2);
+
                 a.download = "report.xlsx";
                 a.target = "_blank";
                 a.click();
               });
 
-            // axios.get(`${baseUrl}/report/viewReport?id=${response.data.id}`, myConfig)
-            // .then((res2) => {
-            //   console.log(res2)
-            //   const url = window.URL.createObjectURL(new Blob([res2.data]));
-            //   const link = document.createElement('a');
-            //   link.href = url;
-            //   link.setAttribute('download', `Admin.xlsx`);
-            //   document.body.appendChild(link);
-            //   link.click();
-            // })
             Swal.fire({
               title: "success",
               html: "Report generated successfully",
@@ -914,17 +899,6 @@ const Report = () => {
     });
     setPaymentCheckbox(e.target.checked);
   };
-
-  // const setCompany = (e) => {
-
-  //   e.map((i) => {
-  //     console.log(i)
-  //     setCompanyName2((oldData) => {
-  //       return(i.label)
-  //     })
-  //   })
-
-  // }
 
   return (
     <>

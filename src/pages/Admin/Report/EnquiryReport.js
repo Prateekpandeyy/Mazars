@@ -44,7 +44,6 @@ const Report = () => {
 
   const resetCategory = () => {
     setSelectedData([]);
-    console.log(selectedData);
   };
 
   const onSubmit = () => {
@@ -73,7 +72,6 @@ const Report = () => {
         },
         data: formData,
       }).then((res) => {
-        console.log("response", res.config.data);
         if (res.data.code === 1) {
           Swal.fire({
             title: "success",

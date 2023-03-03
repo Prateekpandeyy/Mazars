@@ -53,7 +53,6 @@ const VideoMedia = () => {
         myConfig
       )
       .then((res) => {
-        console.log("res", res.data.result);
         setGalleryData(res.data.result);
       });
   };
@@ -204,7 +203,6 @@ const VideoMedia = () => {
             myConfig
           )
           .then((res) => {
-            console.log("response", res);
             if (res.data.code === 1) {
               Swal.fire({
                 title: "success",

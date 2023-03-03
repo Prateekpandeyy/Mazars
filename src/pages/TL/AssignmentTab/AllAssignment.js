@@ -583,7 +583,7 @@ function AssignmentTab(props) {
   };
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
-    console.log("dkk", dk);
+
     if (dk) {
       if (dk.route === window.location.pathname) {
         setStore2(dk.store);
@@ -597,52 +597,6 @@ function AssignmentTab(props) {
       }
     }
   }, []);
-  // const onSubmit = (data) => {
-  //   if (status.length > 0) {
-  //     console.log("done");
-  //     axios
-  //       .get(
-  //         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-  //           userid
-  //         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-  //           data.p_dateTo
-  //         }&assignment_status=${status}&stages_status=${
-  //           data.p_status
-  //         }&pcat_id=${selectedData}&qno=${data.query_no}`,
-  //         myConfig
-  //       )
-  //       .then((res) => {
-  //         if (res.data.code === 1) {
-  //           setLoading(false);
-  //           if (res.data.result) {
-  //             setAssignment(res.data.result);
-  //             setRecords(res.data.result.length);
-  //           }
-  //         }
-  //       });
-  //   } else {
-  //     axios
-  //       .get(
-  //         `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-  //           userid
-  //         )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-  //           data.p_dateTo
-  //         }&assignment_status=${status}&stages_status=${
-  //           data.p_status
-  //         }&pcat_id=${selectedData}&qno=${data.query_no}`,
-  //         myConfig
-  //       )
-  //       .then((res) => {
-  //         console.log("done");
-  //         if (res.data.code === 1) {
-  //           if (res.data.result) {
-  //             setAssignment(res.data.result);
-  //             setRecords(res.data.result.length);
-  //           }
-  //         }
-  //       });
-  //   }
-  // };
 
   const Reset = () => {
     return (

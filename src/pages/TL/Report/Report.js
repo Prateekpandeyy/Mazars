@@ -174,7 +174,6 @@ const Report = () => {
     let company = [];
     let a = {};
     axios.get(`${baseUrl}/tl/getcompany`, myConfig).then((res) => {
-      console.log("response", res);
       res.data.result.map((i) => {
         a = {
           value: i.company_prefix,
@@ -206,32 +205,13 @@ const Report = () => {
         }
       });
   };
-  //   const getTeamLeader = () => {
-  //     axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
 
-  //       var dd = []
-  //       if (res.data.code === 1) {
-
-  //         pp.push(res.data.result)
-
-  //         res.data.result.map((i) => {
-
-  //           if(JSON.parse(userid) == i.id){
-  //             console.log("result", i)
-  // setData(i)
-  //           }
-  //         })
-
-  //       }
-  //     });
-  //   };
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`, myConfig).then((res) => {
       var dd = [];
       if (res.data.code === 1) {
         res.data.result.map((i) => {
           if (JSON.parse(userid) == i.id) {
-            console.log("result", i);
             setTeamleader44(i.id);
             setData([i]);
           }
@@ -566,7 +546,7 @@ const Report = () => {
                   document.body.appendChild(a);
                   a.style = "display: none";
                   a.href = url;
-                  console.log(res2);
+
                   a.download = "report.xlsx";
                   a.target = "_blank";
                   a.click();
@@ -720,7 +700,7 @@ const Report = () => {
                 document.body.appendChild(a);
                 a.style = "display: none";
                 a.href = url;
-                console.log(res2);
+
                 a.download = "report.xlsx";
                 a.target = "_blank";
                 a.click();

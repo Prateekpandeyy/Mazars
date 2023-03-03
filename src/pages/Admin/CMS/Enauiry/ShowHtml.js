@@ -15,7 +15,6 @@ const ShowHtml = ({
   const handleClose = () => {
     setOpen(!open);
   };
-  console.log("totalType", subject);
 
   return (
     <Modal isOpen={viewHtml} toggle={openHandler} scrollable size="md">

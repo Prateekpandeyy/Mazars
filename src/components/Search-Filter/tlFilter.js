@@ -134,7 +134,6 @@ function TeamFilter(props) {
   }, []);
 
   const onSubmit = (data) => {
-    console.log("dataFromTl", data);
     let obj = {};
     if (data.route) {
       obj = {

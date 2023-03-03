@@ -346,7 +346,7 @@ function Tds(props) {
   };
   const basicFun = (e) => {
     let a = parseFloat(parseInt(e.target.value) + parseFloat(pocketExp));
-    console.log("etargetValue", parseInt(e.target.value) + pocketExp);
+
     let tdsamount = parseInt(Math.round((a * tdsR) / 100));
     setBasicAmount(e.target.value);
     if (e.target.value > 0) {

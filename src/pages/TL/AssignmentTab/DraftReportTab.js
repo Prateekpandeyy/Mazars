@@ -62,9 +62,7 @@ function AssignmentTab() {
 
   let des = false;
   const uploadDraftReport = (id) => {
-    console.log("id", id);
     if (typeof id == "object") {
-      console.log("id");
       setQid(id.q_id);
       setLoading(false);
       setDraftModal(!draftModal);

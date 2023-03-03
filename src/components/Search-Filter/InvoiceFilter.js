@@ -140,7 +140,7 @@ const InvoiceFilter = (props) => {
     localStorage.removeItem(props.invoice);
     props.getData();
   };
-  console.log("status", status);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

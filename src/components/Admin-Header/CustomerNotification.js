@@ -188,7 +188,6 @@ function CustomerNotification({ tokenKey, name, panel }) {
               setCountNotification(res.data.result[0].total);
             }
           } else if (res.data.code === 102) {
-            console.log("customer Logout");
             if (redir === "admin") {
               adminLogout();
             } else if (redir === "tl") {

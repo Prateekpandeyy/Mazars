@@ -72,10 +72,7 @@ const Generated = () => {
         myConfig2
       )
       .then((res) => {
-        console.log("res", res);
         if (res.status === 200) {
-          //    window.open(URL.createObjectURL(res.data));
-          console.log(URL.createObjectURL(res.data));
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
           var a = document.createElement("a");
@@ -127,7 +124,6 @@ const Generated = () => {
       dataField: "installment_no",
       sort: true,
       sortFunc: (a, b, order, dataField, rowA, rowB) => {
-        console.log("myValue", a, b, order, dataField, rowA, rowB);
         if (order === "asc") {
           return b - a;
         }
@@ -179,7 +175,6 @@ const Generated = () => {
       sort: true,
 
       sortFunc: (a, b, order, dataField) => {
-        console.log("aaaa", a);
         if (order === "asc") {
           return b - a;
         }

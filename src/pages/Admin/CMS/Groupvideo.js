@@ -51,8 +51,6 @@ const Groupvideo = () => {
     }
   };
   const del = (e) => {
-    console.log("galleryData", e);
-
     Swal.fire({
       title: "Are you sure?",
       text: "Want to delete media? Yes, delete it!",
@@ -71,7 +69,6 @@ const Groupvideo = () => {
             myConfig
           )
           .then((res) => {
-            console.log("response", res);
             if (res.data.code === 1) {
               Swal.fire({
                 title: "success",

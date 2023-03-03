@@ -121,7 +121,7 @@ function Recording() {
       formatter: function nameFormatter(cell, row) {
         var recording = row.file.split(",");
         let a = 1;
-        console.log(row.file.split(","));
+
         return (
           <>
             <div>

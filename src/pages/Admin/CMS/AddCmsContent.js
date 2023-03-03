@@ -117,7 +117,7 @@ const AddCmsContent = () => {
     } else {
       var myEditor = document.querySelector("#snow-container");
       var html = myEditor.children[0].innerHTML;
-      console.log("myEditor", html, myEditor, myEditor.children[0].TEXT_NODE);
+
       addDet(html);
       formData.append("content", html);
       formData.append("content_type", 2);

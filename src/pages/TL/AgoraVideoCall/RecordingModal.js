@@ -31,8 +31,7 @@ function RecordingModal({
   useEffect(() => {
     setParti(item.username);
   }, [isOpen === true]);
-  console.log(item.username, username);
-  //submit
+
   const onSubmit = (value) => {
     var serverResponse = data.serverResponse.fileList;
     var completeRecording;
@@ -46,7 +45,7 @@ function RecordingModal({
     const { fileList } = serverResponse;
 
     let a = parti + username;
-    console.log("aaa", parti);
+
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
     formData.append("fileList", completeRecording);

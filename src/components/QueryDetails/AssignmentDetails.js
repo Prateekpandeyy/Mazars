@@ -627,7 +627,7 @@ function AssignmentDetails({
       });
   };
   // Client file
-  console.log(window.location.pathname.split("/"));
+
   const getClientFiles2 = (e) => {
     axios
       .get(

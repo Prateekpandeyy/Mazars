@@ -111,7 +111,6 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          console.log("api called");
           setDeclined(res.data.result);
           setAllResult((preValue) => {
             return {

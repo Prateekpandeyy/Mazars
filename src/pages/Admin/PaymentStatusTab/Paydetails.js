@@ -31,7 +31,6 @@ const PayDetails = (props) => {
     },
   };
   const paydetails2 = () => {
-    console.log("done22");
     axios
       .get(`${baseUrl}/admin/getPaymentDetail?id=${id}`, myConfig)
 
@@ -69,10 +68,7 @@ const PayDetails = (props) => {
         myConfig2
       )
       .then((res) => {
-        console.log("res", res);
         if (res.status === 200) {
-          //    window.open(URL.createObjectURL(res.data));
-          console.log(URL.createObjectURL(res.data));
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
           var a = document.createElement("a");

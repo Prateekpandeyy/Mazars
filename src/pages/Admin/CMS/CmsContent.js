@@ -136,7 +136,7 @@ const CmsContent = () => {
     } else {
       var myEditor = document.querySelector("#snow-container");
       var html = myEditor.children[0].innerHTML;
-      console.log("htmll", myEditor.children[0].innerHTML);
+
       if (myEditor.children[0].innerHTML.trim() === "<p><br></p>") {
         return false;
       }
