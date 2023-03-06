@@ -1,21 +1,11 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
-// import {
-//   Card,
-//   CardHeader,
-//   CardBody,
-//   CardTitle,
-//   Row,
-//   Col,
-//   Table,
-// } from "reactstrap";
+
 import {
   Card,
   Grid,
   CardHeader,
-  CardActionArea,
   CardContent,
-  CardActions,
   Container,
   Paper,
 } from "@material-ui/core";

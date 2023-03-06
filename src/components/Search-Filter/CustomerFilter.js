@@ -35,6 +35,7 @@ function CustomerFilter(props) {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [categoryData, setCategory] = useState([]);
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -50,6 +51,10 @@ function CustomerFilter(props) {
     },
   };
 
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("categoryData"));
+    setCategory(data);
+  }, []);
   useEffect(() => {
     const getSubCategory = () => {
       if (selectedData.length > 0) {
@@ -534,7 +539,7 @@ function CustomerFilter(props) {
       </>
     );
   };
-
+  console.log("category", categoryData);
   return (
     <>
       <div className="row">
@@ -548,12 +553,11 @@ function CustomerFilter(props) {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                    <Option value={p.id} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
               <div className="form-group mx-sm-1  mb-2">
