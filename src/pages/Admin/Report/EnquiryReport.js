@@ -4,18 +4,19 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import { baseUrl, baseUrl3 } from "../../../config/config";
-import { Select } from "antd";
+
 import { DatePicker, Space } from "antd";
 import Layout from "../../../components/Layout/Layout";
 import { useHistory } from "react-router";
-import { Card, CardHeader, Row, Col } from "reactstrap";
+import { Card, CardHeader, Row, Col, CardBody } from "reactstrap";
 import Swal from "sweetalert2";
+import Select from "react-select";
 
 const Report = () => {
-  const { Option } = Select;
   const [selectedData, setSelectedData] = useState([]);
 
   const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
+  const [companyName, setCompanyName] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const [fromDate, setFromDate] = useState("");
   const dateValue = useRef();
@@ -35,6 +36,17 @@ const Report = () => {
   var dateSpit = `${yr}` + "-" + `${monthIn2Digit}` + "-" + `${dateIn2Digit}`;
 
   useEffect(() => {
+    let cname = [
+      {
+        value: "General enquiries - MAZ",
+        label: "General enquiries - MAZ",
+      },
+      {
+        value: "Business Advisory Services - MAZ",
+        label: "Business Advisory Services - MAZ",
+      },
+    ];
+    setCompanyName(cname);
     setFromDate(dateSpit);
   }, []);
 
@@ -47,6 +59,10 @@ const Report = () => {
   };
 
   const onSubmit = () => {
+    let cName = selectedData.map((i) => {
+      return i.value;
+    });
+
     // (selectedData !== "General enquiries - MAZ" || selectedData !== "Business Advisory Services - MAZ"   )
     if (selectedData.length === 0) {
       Swal.fire({
@@ -55,12 +71,10 @@ const Report = () => {
         icon: "error",
       });
     } else {
-      let formData = {};
-      formData = {
-        cat: selectedData,
-        fromdate: fromDate,
-        todate: toDate,
-      };
+      let formData = new FormData();
+      formData.append("cat", cName);
+      formData.append("fromdate", fromDate);
+      formData.append("todate", toDate);
 
       axios({
         method: "POST",
@@ -73,6 +87,16 @@ const Report = () => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+
+          a.download = "edqiuireyList";
+          a.target = "_blank";
+          a.click();
           Swal.fire({
             title: "success",
             html: "Enquiry Report generated successfully",
@@ -97,7 +121,7 @@ const Report = () => {
   return (
     <>
       <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-        <Card>
+        <Card style={{ height: "150px", marginTop: "20px" }}>
           <CardHeader>
             <div className="TlForm">
               <Row>
@@ -115,9 +139,17 @@ const Report = () => {
                 <Col md="4"></Col>
               </Row>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-inline mt-3">
-                  <div className="form-group mx-sm-1 mb-2">
+                <div className="row">
+                  <div className="col-md-3">
                     <Select
+                      style={{ zIndex: 10000 }}
+                      isMulti={true}
+                      onChange={handleCategory}
+                      options={companyName}
+                      value={selectedData}
+                    />
+                  </div>
+                  {/* <Select
                       style={{ width: 365 }}
                       placeholder="Select Category"
                       defaultValue={[]}
@@ -142,8 +174,8 @@ const Report = () => {
                           Business Advisory Services - Mazars Advisory Solutions
                         </div>
                       </Option>
-                    </Select>
-                  </div>
+                    </Select> */}
+
                   <div>
                     <button
                       type="reset"
