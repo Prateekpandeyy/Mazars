@@ -119,7 +119,7 @@ function TeamFilter(props) {
     setToDate("");
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
-    console.log(fullDate);
+    // console.log(fullDate);
     // setToDate(fullDate);
     // dateValue.current.clearValue();
   };
@@ -134,7 +134,7 @@ function TeamFilter(props) {
   // .join("-")
 
   const onSubmit = (data) => {
-    console.log(data)
+    // console.log(data)
     let objQ = {};
     let objP = {};
     let objA = {};
@@ -242,21 +242,21 @@ function TeamFilter(props) {
       localStorage.setItem(`searchDataY${index}`, JSON.stringify(objY));
     }
 
-    console.log("data", data);
+    // console.log("data", data);
 
     if (AllQuery === "AllQuery") {
       if (data.route) {
-        console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
-          }&cat_id=${data.store}&from=${data.fromDate
-            ?.split("-")
-            .reverse()
-            .join("-")
-          }&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")
-          }&pcat_id=${data.pcatId}&qno=${data.query_no
-          }`);
+        // console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
+        //   }&cat_id=${data.store}&from=${data.fromDate
+        //     ?.split("-")
+        //     .reverse()
+        //     .join("-")
+        //   }&to=${data.toDate
+        //     ?.split("-")
+        //     .reverse()
+        //     .join("-")
+        //   }&pcat_id=${data.pcatId}&qno=${data.query_no
+        //   }`);
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
@@ -281,17 +281,17 @@ function TeamFilter(props) {
             }
           });
       } else {
-        console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
-          }&cat_id=${store2}&from=${fromDate
-            ?.split("-")
-            .reverse()
-            .join("-")
-          }&to=${toDate
-            ?.split("-")
-            .reverse()
-            .join("-")
-          }&pcat_id=${selectedData}&qno=${data.query_no
-          }`);
+        // console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
+        //   }&cat_id=${store2}&from=${fromDate
+        //     ?.split("-")
+        //     .reverse()
+        //     .join("-")
+        //   }&to=${toDate
+        //     ?.split("-")
+        //     .reverse()
+        //     .join("-")
+        //   }&pcat_id=${selectedData}&qno=${data.query_no
+        //   }`);
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
@@ -859,11 +859,11 @@ function TeamFilter(props) {
     }
 
     if (AllPayment === "AllPayment") {
-      console.log("inside all payment axios");
+      // console.log("inside all payment axios");
       if (data.route) {
-        console.log("inside all payment axios1");
-        console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate?.split("-").reverse()
-          .join("-")}&to=${data.toDate?.split("-").reverse().join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`, "All with data routes");
+        // console.log("inside all payment axios1");
+        // console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate?.split("-").reverse()
+          // .join("-")}&to=${data.toDate?.split("-").reverse().join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`, "All with data routes");
         axios
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate
@@ -890,14 +890,14 @@ function TeamFilter(props) {
       else {
 
 
-        console.log("inside all payment axios2");
-        console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}
-        &cat_id=${store2}&from=${fromDate?.split("-")
-            .reverse()
-            .join("-")}&to=${toDate?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}
-        &pcat_id=${selectedData}&qno=${data.query_no.typeof}`, "Else all Y");
+        // console.log("inside all payment axios2");
+        // console.log(`${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}
+        // &cat_id=${store2}&from=${fromDate?.split("-")
+        //     .reverse()
+        //     .join("-")}&to=${toDate?.split("-")
+        //       .reverse()
+        //       .join("-")}&status=${data.p_status}
+        // &pcat_id=${selectedData}&qno=${data.query_no.typeof}`, "Else all Y");
         axios
           .get(
             `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&cat_id=${store2}&from=${fromDate
@@ -916,7 +916,7 @@ function TeamFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
-                console.log("res.data.result in getting", res.data.result);
+                // console.log("res.data.result in getting", res.data.result);
               }
             }
           });
@@ -1033,7 +1033,7 @@ function TeamFilter(props) {
     if ((AllQuery === "AllQuery") || (pendingForAcceptence === "pendingForAcceptence") || (InprogressQuery === "InprogressQuery") || (inCompleteQuery == "inCompleteQuery") || (DeclinedQuery == "DeclinedQuery")) {
       if (qd) {
         if (qd.route === window.location.pathname && qd.index === index) {
-          console.log(qd);
+          // console.log(qd);
           setStore2(qd.store);
           setToDate(qd.toDate
 
@@ -1044,7 +1044,7 @@ function TeamFilter(props) {
           setSelectedData(qd.pcatId);
           setStatus1(qd.p_status);
           setQueryno(qd.query_no);
-          console.log(toDate, "in if of set")
+          // console.log(toDate, "in if of set")
           onSubmit(qd);
         }
       } else if (
@@ -1054,7 +1054,7 @@ function TeamFilter(props) {
         let date = moment().format("DD-MM-YYYY");
         let fullDate = date;
         setToDate(fullDate);
-        console.log(toDate, "full Date is set");
+        // console.log(toDate, "full Date is set");
       }
     } else if ((completeAssignment === "completeAssignment")) {
       if (ad) {
@@ -1128,7 +1128,7 @@ function TeamFilter(props) {
     );
   };
 
-  console.log(toDate, "todate updated")
+  // console.log(toDate, "todate updated")
 
 
   // const fromDateFun = (e) => {
