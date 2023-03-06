@@ -4,19 +4,20 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import { baseUrl, baseUrl3 } from "../../../config/config";
-
 import { DatePicker, Space } from "antd";
 import Layout from "../../../components/Layout/Layout";
 import { useHistory } from "react-router";
 import { Card, CardHeader, Row, Col, CardBody } from "reactstrap";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 
 const Report = () => {
   const [selectedData, setSelectedData] = useState([]);
 
   const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10));
   const [companyName, setCompanyName] = useState([]);
+  const [data, setData] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const [fromDate, setFromDate] = useState("");
   const dateValue = useRef();
@@ -49,7 +50,24 @@ const Report = () => {
     setCompanyName(cname);
     setFromDate(dateSpit);
   }, []);
-
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+  useEffect(() => {
+    const getAllQueryList = () => {
+      axios
+        .get(`${baseUrl}/admin/getenquirylist`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setData(res.data.result);
+          }
+        })
+        .catch((error) => {});
+    };
+    getAllQueryList();
+  }, []);
   const handleCategory = (value) => {
     setSelectedData(value);
   };
@@ -72,7 +90,7 @@ const Report = () => {
       });
     } else {
       let formData = new FormData();
-      formData.append("cat", cName);
+      formData.append("message_type", cName);
       formData.append("fromdate", fromDate);
       formData.append("todate", toDate);
 
@@ -117,7 +135,7 @@ const Report = () => {
   const fromDateFun = (e) => {
     setFromDate(e.format("YYYY-MM-DD"));
   };
-
+  const columns = [];
   return (
     <>
       <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -215,13 +233,21 @@ const Report = () => {
                       name="todate"
                     />
                   </div>
-                  <button type="submit" className="autoWidthBtn mb-2 mr-2 ml-2">
+                  <button type="submit" className="searchBtn mb-2 mr-2 ml-2">
                     Generate Report
                   </button>
                 </div>
               </form>
             </div>
           </CardHeader>
+          <CardBody>
+            {/* <DataTablepopulated
+              bgColor="#42566a"
+              keyField={"assign_no"}
+              data={data}
+              columns={columns}
+            ></DataTablepopulated> */}
+          </CardBody>
         </Card>
       </Layout>
     </>
