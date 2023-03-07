@@ -289,7 +289,8 @@ const Report = () => {
     let proposValue = proposalValue;
     let bValue = basicValue;
     let manualValue = manualReceipt;
-
+    setFromDate("");
+    setToDate(current_date);
     Object.keys(bValue).forEach((key) => {
       bValue[key] = false;
     });

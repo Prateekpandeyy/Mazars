@@ -142,8 +142,8 @@ const Report = () => {
   );
   const [item] = useState(current_date);
   const [item2, setItem2] = useState(current_date);
-  const [toDate, setToDate] = useState(current_date);
-  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState(current_date);
   useEffect(() => {
     const getCategory = async () => {
       await axios
@@ -292,6 +292,8 @@ const Report = () => {
     let proposValue = proposalValue;
     let bValue = basicValue;
     let manualValue = manualReceipt;
+    setFromDate("");
+    setToDate(current_date);
     selectInputRef.current.select.clearValue();
     selectInputRef2.current.select.clearValue();
     selectInputRef3.current.select.clearValue();
@@ -354,7 +356,7 @@ const Report = () => {
     if (cust) {
       axios
         .get(
-          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}subcategory=${dd}&teamleader=${teamleader44}&taxprofessional=${taxprofessional44}&customer=${cust}`,
+          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}&subcategory=${dd}&teamleader=${teamleader44}&taxprofessional=${taxprofessional44}&customer=${cust}`,
           myConfig
         )
         .then((res) => {

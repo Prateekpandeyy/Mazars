@@ -55,7 +55,7 @@ const Report = () => {
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [manualSearch, setManualSearch] = useState(false);
-  const [issueInvoice, setIssueInvoice] = useState(false);
+
   const [basicValue, setBasicValue] = useState({
     brief_fact_case: false,
     assessment: false,
@@ -129,8 +129,8 @@ const Report = () => {
     ("0" + new Date().getDate()).slice(-2);
 
   const [item] = useState(current_date);
-  const [toDate, setToDate] = useState("");
-  const [fromDate, setFromDate] = useState(current_date);
+  const [toDate, setToDate] = useState(current_date);
+  const [fromDate, setFromDate] = useState("");
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -182,12 +182,9 @@ const Report = () => {
   useEffect(() => {
     getTeamLeader();
     getData();
-    getupdateQuery();
+    filterQuery("");
     getCompany();
   }, []);
-  useEffect(() => {
-    getupdateQuery();
-  }, [taxId, taxxId, cname]);
 
   const handlePayment = (e) => {
     const { name, checked } = e.target;
@@ -240,18 +237,18 @@ const Report = () => {
       setCheckBox(false);
     }
   };
-  const getupdateQuery = () => {
-    axios
-      .get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          var data = res.data.result;
+  // const getupdateQuery = () => {
+  //   axios
+  //     .get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
+  //     .then((res) => {
+  //       if (res.data.code === 1) {
+  //         var data = res.data.result;
 
-          let b = res.data.result;
-          setQno(b.map(getqNo));
-        }
-      });
-  };
+  //         let b = res.data.result;
+  //         setQno(b.map(getqNo));
+  //       }
+  //     });
+  // };
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
       var dd = [];
@@ -335,6 +332,8 @@ const Report = () => {
     let pVAlue = paymentValue;
     let proposValue = proposalValue;
     let bValue = basicValue;
+    setFromDate("");
+    setToDate(current_date);
     let manualValue = manualReceipt;
     setManualSearch(false);
     selectInputRef.current.select.clearValue();
@@ -908,19 +907,17 @@ const Report = () => {
     setPaymentCheckbox(e.target.checked);
   };
   const filterQuery = (cust) => {
-    if (cust) {
-      axios
-        .get(
-          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}subcategory=${dd}&teamleader=${teamleader44}&taxprofessional=${taxprofessional44}&customer=${cust}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let b = res.data.result;
-            setQno(b.map(getqNo));
-          }
-        });
-    }
+    axios
+      .get(
+        `${baseUrl}/admin/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}&subcategory=${dd}&teamleader=${teamleader44}&taxprofessional=${taxprofessional44}&customer=${cust}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let b = res.data.result;
+          setQno(b.map(getqNo));
+        }
+      });
   };
 
   return (
