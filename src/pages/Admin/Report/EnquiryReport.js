@@ -82,15 +82,16 @@ const Report = () => {
     });
 
     // (selectedData !== "General enquiries - MAZ" || selectedData !== "Business Advisory Services - MAZ"   )
+    let formData = {
+      message_type: cName,
+      fromdate: fromDate,
+      todate: toDate,
+    };
 
-    let formData = new FormData();
-    formData.append("message_type", cName);
-    formData.append("fromdate", fromDate);
-    formData.append("todate", toDate);
-    let filename = "enquieryReport.xlsx";
     let api = `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
       Math.floor(Math.random() * 110000)
     )}`;
+    exportData(formData, api);
     // axios({
     //   method: "POST",
     //   url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
@@ -98,30 +99,25 @@ const Report = () => {
     //   )}`,
     //   headers: {
     //     uit: token,
+    //     "Content-Type": "application/json",
     //     responseType: "blob",
     //   },
     //   data: formData,
     // }).then((resp) => {
-    //   var blob = resp.data;
-    //   if (window.navigator.msSaveOrOpenBlob) {
-    //     window.navigator.msSaveBlob(blob, filename);
-    //   } else {
-    //     var downloadLink = window.document.createElement("a");
-    //     downloadLink.href = window.URL.createObjectURL(
-    //       new Blob([blob], {
-    //         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    //       })
-    //     );
-    //     downloadLink.download = filename;
-    //     document.body.appendChild(downloadLink);
-    //     downloadLink.click();
-    //     document.body.removeChild(downloadLink);
+    //   var a;
+    //   if (resp.data) {
+    //     a = document.createElement("a");
+    //     a.href = window.URL.createObjectURL(resp.data);
+    //     a.download = filename;
+    //     a.style.display = "none";
+    //     document.body.appendChild(a);
+    //     a.click();
     //   }
     // });
-    exportData(formData, api);
   };
 
   const exportData = (filteredRows, activity) => {
+    console.log(filteredRows);
     let filename = "EnquieryReport.xlsx";
     let xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.onreadystatechange = function () {
@@ -139,7 +135,7 @@ const Report = () => {
     xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
     xmlHttpRequest.setRequestHeader("uit", token);
     xmlHttpRequest.responseType = "blob";
-    xmlHttpRequest.send(filteredRows);
+    xmlHttpRequest.send(JSON.stringify(filteredRows));
   };
   const dateFormat = "YYYY-MM-DD";
   const fromDateFun = (e) => {
