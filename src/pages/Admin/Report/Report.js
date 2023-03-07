@@ -129,6 +129,8 @@ const Report = () => {
     ("0" + new Date().getDate()).slice(-2);
 
   const [item] = useState(current_date);
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState(current_date);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -290,6 +292,7 @@ const Report = () => {
       pk.push(r.value);
     });
     setcName(pk);
+    filterQuery(pk);
   };
 
   const getData = () => {
@@ -904,6 +907,21 @@ const Report = () => {
     });
     setPaymentCheckbox(e.target.checked);
   };
+  const filterQuery = (cust) => {
+    if (cust) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}subcategory=${dd}&teamleader=${teamleader44}&taxprofessional=${taxprofessional44}&customer=${cust}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            let b = res.data.result;
+            setQno(b.map(getqNo));
+          }
+        });
+    }
+  };
 
   return (
     <>
@@ -941,6 +959,8 @@ const Report = () => {
                     type="date"
                     name="p_from"
                     ref={register}
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
                     placeholder="Enter Mobile Number"
                     className={classNames("form-control", {
                       "is-invalid": errors.p_mobile,
@@ -958,7 +978,8 @@ const Report = () => {
                     className={classNames("form-control", {
                       "is-invalid": errors.p_type,
                     })}
-                    defaultValue={item}
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
                     max={item}
                     placeholder="Enter type"
                     ref={register({ required: true })}

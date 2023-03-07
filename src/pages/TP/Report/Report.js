@@ -54,6 +54,7 @@ const Report = () => {
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [tlName, setTlName] = useState("");
+
   const [basicValue, setBasicValue] = useState({
     brief_fact_case: false,
     assessment: false,
@@ -137,6 +138,8 @@ const Report = () => {
     ("0" + (new Date().getMonth() + 1)).slice(-2) +
     "-" +
     ("0" + new Date().getDate()).slice(-2);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const firstDay = new Date(
     date.getFullYear() + +"-" + ("0" + (new Date().getMonth() + 1)).slice(-2)
   );
@@ -228,17 +231,21 @@ const Report = () => {
     filterQuery(pk);
   };
   const filterQuery = (cust) => {
-    axios
-      .get(
-        `${baseUrl}/tl/getAllQueryList?from=&to=&category=&teamleader=&taxprofessional=&customer=${cust}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let b = res.data.result;
-          setQno(b.map(getqNo));
-        }
-      });
+    if (cust) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}&subcategory=${dd}&teamleader=${
+            tlName.value
+          }&taxprofessional=${JSON.parse(userid)}&customer=${cust}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            let b = res.data.result;
+            setQno(b.map(getqNo));
+          }
+        });
+    }
   };
   const getData = () => {
     axios
@@ -913,6 +920,8 @@ const Report = () => {
                   <input
                     type="date"
                     name="p_from"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
                     ref={register}
                     placeholder="Enter Mobile Number"
                     className={classNames("form-control", {
@@ -928,6 +937,8 @@ const Report = () => {
                   <input
                     type="date"
                     name="p_to"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
                     className={classNames("form-control", {
                       "is-invalid": errors.p_type,
                     })}
