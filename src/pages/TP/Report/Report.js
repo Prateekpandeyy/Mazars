@@ -225,8 +225,21 @@ const Report = () => {
       pk.push(r.value);
     });
     setcName(pk);
+    filterQuery(pk);
   };
-
+  const filterQuery = (cust) => {
+    axios
+      .get(
+        `${baseUrl}/tl/getAllQueryList?from=&to=&category=&teamleader=&taxprofessional=&customer=${cust}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let b = res.data.result;
+          setQno(b.map(getqNo));
+        }
+      });
+  };
   const getData = () => {
     axios
       .get(`${baseUrl}/tl/allClient?tp_id=${JSON.parse(userid)}`, myConfig)

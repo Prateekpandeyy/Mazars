@@ -88,35 +88,59 @@ const Report = () => {
     formData.append("fromdate", fromDate);
     formData.append("todate", toDate);
     let filename = "enquieryReport.xlsx";
-    axios({
-      method: "POST",
-      url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
-        Math.floor(Math.random() * 110000)
-      )}`,
-      headers: {
-        uit: token,
-        responseType: "blob",
-      },
-      data: formData,
-    }).then((resp) => {
-      var blob = resp.data;
-      if (window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveBlob(blob, filename);
-      } else {
-        var downloadLink = window.document.createElement("a");
-        downloadLink.href = window.URL.createObjectURL(
-          new Blob([blob], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          })
-        );
-        downloadLink.download = filename;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-      }
-    });
+    let api = `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
+      Math.floor(Math.random() * 110000)
+    )}`;
+    // axios({
+    //   method: "POST",
+    //   url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
+    //     Math.floor(Math.random() * 110000)
+    //   )}`,
+    //   headers: {
+    //     uit: token,
+    //     responseType: "blob",
+    //   },
+    //   data: formData,
+    // }).then((resp) => {
+    //   var blob = resp.data;
+    //   if (window.navigator.msSaveOrOpenBlob) {
+    //     window.navigator.msSaveBlob(blob, filename);
+    //   } else {
+    //     var downloadLink = window.document.createElement("a");
+    //     downloadLink.href = window.URL.createObjectURL(
+    //       new Blob([blob], {
+    //         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //       })
+    //     );
+    //     downloadLink.download = filename;
+    //     document.body.appendChild(downloadLink);
+    //     downloadLink.click();
+    //     document.body.removeChild(downloadLink);
+    //   }
+    // });
+    exportData(formData, api);
   };
 
+  const exportData = (filteredRows, activity) => {
+    let filename = "EnquieryReport.xlsx";
+    let xmlHttpRequest = new XMLHttpRequest();
+    xmlHttpRequest.onreadystatechange = function () {
+      var a;
+      if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
+        a = document.createElement("a");
+        a.href = window.URL.createObjectURL(xmlHttpRequest.response);
+        a.download = filename;
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+      }
+    };
+    xmlHttpRequest.open("POST", activity);
+    xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
+    xmlHttpRequest.setRequestHeader("uit", token);
+    xmlHttpRequest.responseType = "blob";
+    xmlHttpRequest.send(filteredRows);
+  };
   const dateFormat = "YYYY-MM-DD";
   const fromDateFun = (e) => {
     setFromDate(e.format("YYYY-MM-DD"));
@@ -182,7 +206,7 @@ const Report = () => {
               </Row>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                  <div className="col-md-3">
+                  <div className="col-md-3" style={{ zIndex: 99999 }}>
                     <Select
                       style={{ zIndex: 10000 }}
                       isMulti={true}
