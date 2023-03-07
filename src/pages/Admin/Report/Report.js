@@ -735,17 +735,22 @@ const Report = () => {
                 `${baseUrl}/report/viewReport?id=${response.data.id}`,
                 myConfig2
               )
-              .then((res2) => {
-                window.URL = window.URL || window.webkitURL;
-                var url = window.URL.createObjectURL(res2.data);
-                var a = document.createElement("a");
-                document.body.appendChild(a);
-                a.style = "display: none";
-                a.href = url;
-
-                a.download = "report.xlsx";
-                a.target = "_blank";
-                a.click();
+              .then((resp) => {
+                var blob = resp.data;
+                if (window.navigator.msSaveOrOpenBlob) {
+                  window.navigator.msSaveBlob(blob, "report.xlsx");
+                } else {
+                  var downloadLink = window.document.createElement("a");
+                  downloadLink.href = window.URL.createObjectURL(
+                    new Blob([blob], {
+                      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    })
+                  );
+                  downloadLink.download = "report.xlsx";
+                  document.body.appendChild(downloadLink);
+                  downloadLink.click();
+                  document.body.removeChild(downloadLink);
+                }
               });
 
             Swal.fire({

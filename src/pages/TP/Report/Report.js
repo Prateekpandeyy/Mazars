@@ -189,12 +189,10 @@ const Report = () => {
     getTeamLeader();
     getData();
     getupdateQuery();
-
+    getTeamLeader();
     getCompany();
   }, []);
-  useEffect(() => {
-    getTeamLeader();
-  }, []);
+
   const getupdateQuery = () => {
     axios
       .get(
@@ -203,8 +201,6 @@ const Report = () => {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          var data = res.data.result;
-          console.log("response", res.data.result);
           let b = res.data.result;
           setQno(b.map(getqNo));
         }
@@ -224,6 +220,7 @@ const Report = () => {
 
   let pk = [];
   const custName = (a) => {
+    console.log(a, qno);
     a.map((r) => {
       pk.push(r.value);
     });

@@ -39,12 +39,12 @@ const Report = () => {
   useEffect(() => {
     let cname = [
       {
-        value: "General enquiries - MAZ",
-        label: "General enquiries - MAZ",
+        value: "General enquiries -Mazars Advisory Solutions",
+        label: "General enquiries -Mazars Advisory Solutions",
       },
       {
-        value: "Business Advisory Services - MAZ",
-        label: "Business Advisory Services - MAZ",
+        value: "Business Advisory Services - Mazars Advisory Solutions",
+        label: "Business Advisory Services - Mazars Advisory Solutions",
       },
     ];
     setCompanyName(cname);
@@ -55,17 +55,17 @@ const Report = () => {
       uit: token,
     },
   };
+  const getAllQueryList = () => {
+    axios
+      .get(`${baseUrl}/admin/getenquirylist`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setData(res.data.result);
+        }
+      })
+      .catch((error) => {});
+  };
   useEffect(() => {
-    const getAllQueryList = () => {
-      axios
-        .get(`${baseUrl}/admin/getenquirylist`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setData(res.data.result);
-          }
-        })
-        .catch((error) => {});
-    };
     getAllQueryList();
   }, []);
   const handleCategory = (value) => {
@@ -82,66 +82,90 @@ const Report = () => {
     });
 
     // (selectedData !== "General enquiries - MAZ" || selectedData !== "Business Advisory Services - MAZ"   )
-    if (selectedData.length === 0) {
-      Swal.fire({
-        title: "error",
-        html: "Please fill all input values",
-        icon: "error",
-      });
-    } else {
-      let formData = new FormData();
-      formData.append("message_type", cName);
-      formData.append("fromdate", fromDate);
-      formData.append("todate", toDate);
 
-      axios({
-        method: "POST",
-        url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
-          Math.floor(Math.random() * 110000)
-        )}`,
-        headers: {
-          uit: token,
-        },
-        data: formData,
-      }).then((res) => {
-        if (res.data.code === 1) {
-          window.URL = window.URL || window.webkitURL;
-          var url = window.URL.createObjectURL(res.data);
-          var a = document.createElement("a");
-          document.body.appendChild(a);
-          a.style = "display: none";
-          a.href = url;
-
-          a.download = "edqiuireyList";
-          a.target = "_blank";
-          a.click();
-          Swal.fire({
-            title: "success",
-            html: "Enquiry Report generated successfully",
-            icon: "success",
-          });
-        } else {
-          Swal.fire({
-            title: "error",
-            html: "Something went wrong , please try again",
-            icon: "error",
-          });
-        }
-      });
-    }
+    let formData = new FormData();
+    formData.append("message_type", cName);
+    formData.append("fromdate", fromDate);
+    formData.append("todate", toDate);
+    let filename = "enquieryReport.xlsx";
+    axios({
+      method: "POST",
+      url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
+        Math.floor(Math.random() * 110000)
+      )}`,
+      headers: {
+        uit: token,
+        responseType: "blob",
+      },
+      data: formData,
+    }).then((resp) => {
+      var blob = resp.data;
+      if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+      } else {
+        var downloadLink = window.document.createElement("a");
+        downloadLink.href = window.URL.createObjectURL(
+          new Blob([blob], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          })
+        );
+        downloadLink.download = filename;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }
+    });
   };
 
   const dateFormat = "YYYY-MM-DD";
   const fromDateFun = (e) => {
     setFromDate(e.format("YYYY-MM-DD"));
   };
-  const columns = [];
+  const columns = [
+    {
+      dataField: "message_type",
+      text: "Company Name",
+      sort: true,
+    },
+    {
+      dataField: "name",
+      text: "Name",
+      sort: true,
+    },
+    {
+      dataField: "email_from",
+      text: "Email",
+      sort: true,
+    },
+    {
+      dataField: "create_date",
+      text: "Date",
+      sort: true,
+      formatter: function dateFun(cell, row) {
+        var date = row.create_date.split(" ")[0].split("-").reverse().join("-");
+
+        return <>{date}</>;
+      },
+    },
+  ];
+  const resetData = () => {
+    setSelectedData([]);
+    setToDate(new Date().toISOString().slice(0, 10));
+    setFromDate(dateSpit);
+    getAllQueryList();
+  };
+  function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+    return buf;
+  }
   return (
     <>
       <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-        <Card style={{ height: "150px", marginTop: "20px" }}>
+        <Card>
           <CardHeader>
-            <div className="TlForm">
+            <div className="TlForm my-2">
               <Row>
                 <Col md="4">
                   <button
@@ -197,14 +221,16 @@ const Report = () => {
                   <div>
                     <button
                       type="reset"
-                      className="btnSearch mb-2 mx-2"
+                      className="btnSearch h-90"
                       onClick={resetCategory}
                     >
                       X
                     </button>
                   </div>
                   <div className="form-group mx-sm-1  mb-2">
-                    <label className="form-select form-control">From</label>
+                    <label className="form-select form-control h-100">
+                      From
+                    </label>
                   </div>
                   {fromDate.length > 0 ? (
                     <div className="form-group mx-sm-1  mb-2">
@@ -221,7 +247,7 @@ const Report = () => {
                     ""
                   )}
                   <div className="form-group mx-sm-1  mb-2">
-                    <label className="form-select form-control">To</label>
+                    <label className="form-select form-control h-100">To</label>
                   </div>
                   <div className="form-group mx-sm-1  mb-2">
                     <DatePicker
@@ -233,20 +259,31 @@ const Report = () => {
                       name="todate"
                     />
                   </div>
-                  <button type="submit" className="searchBtn mb-2 mr-2 ml-2">
-                    Generate Report
-                  </button>
+                  <div>
+                    <button type="submit" className="autoWidthBtn mt-1 mx-2">
+                      Generate Report
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      className="autoWidthBtn mt-1 mx-2"
+                      onClick={() => resetData()}
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
           </CardHeader>
           <CardBody>
-            {/* <DataTablepopulated
+            <DataTablepopulated
               bgColor="#42566a"
-              keyField={"assign_no"}
+              keyField="id"
               data={data}
               columns={columns}
-            ></DataTablepopulated> */}
+            ></DataTablepopulated>
           </CardBody>
         </Card>
       </Layout>
