@@ -142,8 +142,8 @@ const Report = () => {
   );
   const [item] = useState(current_date);
   const [item2, setItem2] = useState(current_date);
-  const [toDate, setToDate] = useState("");
-  const [fromDate, setFromDate] = useState(current_date);
+  const [toDate, setToDate] = useState(current_date);
+  const [fromDate, setFromDate] = useState("");
   useEffect(() => {
     const getCategory = async () => {
       await axios

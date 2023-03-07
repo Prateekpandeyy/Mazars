@@ -109,10 +109,10 @@ const QueryContact = () => {
                           }
                         )}
                       >
-                        <option value="General enquiries - MAZ">
+                        <option value="General enquiries - Mazars Advisory Solutions">
                           General enquiries - Mazars Advisory Solutions{" "}
                         </option>
-                        <option value="Business Advisory Services - MAZ">
+                        <option value="Business Advisory Services - Mazars Advisory Solutions">
                           Business Advisory Services - Mazars Advisory Solutions{" "}
                         </option>
                       </select>
