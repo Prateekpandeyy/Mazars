@@ -77,47 +77,48 @@ const Report = () => {
   };
 
   const onSubmit = () => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
     let cName = selectedData.map((i) => {
       return i.value;
     });
-
-    // (selectedData !== "General enquiries - MAZ" || selectedData !== "Business Advisory Services - MAZ"   )
-    let formData = {
-      message_type: cName,
-      fromdate: fromDate,
-      todate: toDate,
-    };
-
+    let formData = new FormData();
+    formData.append("message_type", cName);
+    formData.append("fromdate", fromDate);
+    formData.append("todate", toDate);
+    let filename = "enquieryReport.xlsx";
     let api = `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
       Math.floor(Math.random() * 110000)
     )}`;
-    exportData(formData, api);
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
-    //     Math.floor(Math.random() * 110000)
-    //   )}`,
-    //   headers: {
-    //     uit: token,
-    //     "Content-Type": "application/json",
-    //     responseType: "blob",
-    //   },
-    //   data: formData,
-    // }).then((resp) => {
-    //   var a;
-    //   if (resp.data) {
-    //     a = document.createElement("a");
-    //     a.href = window.URL.createObjectURL(resp.data);
-    //     a.download = filename;
-    //     a.style.display = "none";
-    //     document.body.appendChild(a);
-    //     a.click();
-    //   }
-    // });
+    axios({
+      method: "POST",
+      url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
+        Math.floor(Math.random() * 110000)
+      )}`,
+      headers: {
+        uit: token,
+        "Content-Type": "application/json",
+      },
+      responseType: "blob",
+      data: formData,
+    }).then((resp) => {
+      var a;
+      if (resp.data) {
+        a = document.createElement("a");
+        a.href = window.URL.createObjectURL(resp.data);
+        a.download = filename;
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+      }
+    });
   };
 
   const exportData = (filteredRows, activity) => {
-    console.log(filteredRows);
     let filename = "EnquieryReport.xlsx";
     let xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.onreadystatechange = function () {
@@ -135,7 +136,7 @@ const Report = () => {
     xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
     xmlHttpRequest.setRequestHeader("uit", token);
     xmlHttpRequest.responseType = "blob";
-    xmlHttpRequest.send(JSON.stringify(filteredRows));
+    xmlHttpRequest.send(filteredRows);
   };
   const dateFormat = "YYYY-MM-DD";
   const fromDateFun = (e) => {
