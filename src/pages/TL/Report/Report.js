@@ -474,7 +474,7 @@ const Report = () => {
         formData.append("basic_category", Number(value.basicCategory));
         formData.append("basic_sub_category", Number(value.basic_sub_category));
         formData.append("assessment", Number(value.assessment));
-        fromDate.append("dateofacceptance", value.dateofacceptance);
+        fromDate.append("dateofacceptance", Number(value.dateofacceptance));
         formData.append("purpose", Number(value.purpose_p));
         formData.append("p_format", Number(value.p_format));
         formData.append("t_requested", Number(value.t_requested));
@@ -631,7 +631,7 @@ const Report = () => {
       formData.append("basic_category", Number(value.basicCategory));
       formData.append("basic_sub_category", Number(value.basic_sub_category));
       formData.append("assessment", Number(value.assessment));
-      formData.append("dateofacceptance", value.dateofacceptance);
+      formData.append("dateofacceptance", Number(value.dateofacceptance));
       formData.append("purpose", Number(value.purpose_p));
       formData.append("p_format", Number(value.p_format));
       formData.append("t_requested", Number(value.t_requested));
