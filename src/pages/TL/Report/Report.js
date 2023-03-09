@@ -71,6 +71,7 @@ const Report = () => {
     spc_que: false,
     doa: false,
     process_status: false,
+    dateofacceptance: false,
   });
   const [proposalValue, setProposalValue] = useState({
     paymentDeclinedReason: false,
@@ -293,6 +294,7 @@ const Report = () => {
     let bValue = basicValue;
     let manualValue = manualReceipt;
     setFromDate("");
+    setManualSearch(false);
     setToDate(current_date);
     selectInputRef.current.select.clearValue();
     selectInputRef2.current.select.clearValue();
@@ -386,7 +388,8 @@ const Report = () => {
       value.p_format ||
       value.t_requested ||
       value.spc_que ||
-      value.doa
+      value.doa ||
+      value.dateofacceptance
     ) {
       basic_info = true;
     }
@@ -471,6 +474,7 @@ const Report = () => {
         formData.append("basic_category", Number(value.basicCategory));
         formData.append("basic_sub_category", Number(value.basic_sub_category));
         formData.append("assessment", Number(value.assessment));
+        fromDate.append("dateofacceptance", value.dateofacceptance);
         formData.append("purpose", Number(value.purpose_p));
         formData.append("p_format", Number(value.p_format));
         formData.append("t_requested", Number(value.t_requested));
@@ -627,6 +631,7 @@ const Report = () => {
       formData.append("basic_category", Number(value.basicCategory));
       formData.append("basic_sub_category", Number(value.basic_sub_category));
       formData.append("assessment", Number(value.assessment));
+      formData.append("dateofacceptance", value.dateofacceptance);
       formData.append("purpose", Number(value.purpose_p));
       formData.append("p_format", Number(value.p_format));
       formData.append("t_requested", Number(value.t_requested));
@@ -1185,6 +1190,19 @@ const Report = () => {
                         disabled
                       ></input>
                       <label htmlFor="tp_name">Name of tax professional</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        name="dateofacceptance"
+                        ref={register}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.dateofacceptance}
+                        id="dateofacceptance"
+                      ></input>
+                      <label htmlFor="dateofacceptance">
+                        Date of acceptance
+                      </label>
                     </span>
 
                     <span>

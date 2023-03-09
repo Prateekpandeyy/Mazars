@@ -39,8 +39,8 @@ const Report = () => {
   useEffect(() => {
     let cname = [
       {
-        value: "General enquiries -Mazars Advisory Solutions",
-        label: "General enquiries -Mazars Advisory Solutions",
+        value: "General enquiries - Mazars Advisory Solutions",
+        label: "General enquiries - Mazars Advisory Solutions",
       },
       {
         value: "Business Advisory Services - Mazars Advisory Solutions",
@@ -145,7 +145,7 @@ const Report = () => {
   const columns = [
     {
       dataField: "message_type",
-      text: "Company Name",
+      text: "Enquiry type",
       sort: true,
     },
     {
@@ -167,6 +167,11 @@ const Report = () => {
 
         return <>{date}</>;
       },
+    },
+    {
+      dataField: "message",
+      text: "Message",
+      sort: true,
     },
   ];
   const resetData = () => {
