@@ -9,14 +9,13 @@ import { useHistory } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import { Spinner } from "reactstrap";
 import ShowError from "../../components/LoadingTime/LoadingTime";
-import Cookies from "js-cookie";
 const Schema = yup.object().shape({
   p_otp: yup.string().required("mandatory"),
 });
 
 function VerifyOTP({
   email,
-  uid,
+
   time,
   setLoad,
   setDisabled,
@@ -36,11 +35,21 @@ function VerifyOTP({
     axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
       if (res.data.code === 1) {
         let data = res.data.result;
+        data.map((i) => {
+          getSubCategory(i);
+        });
         localStorage.setItem("categoryData", JSON.stringify(data));
       }
     });
   }
 
+  const getSubCategory = (e) => {
+    axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
+      if (res.data.code === 1) {
+        localStorage.setItem(`${e.details}`, JSON.stringify(res.data.result));
+      }
+    });
+  };
   const validOtp = (e) => {
     if (isNaN(e.target.value)) {
       e.target.value = "";
@@ -95,7 +104,7 @@ function VerifyOTP({
             history.push("customer/dashboard");
             localStorage.setItem("clientToken", response.data.token);
           }
-          console.log("categoryData", getCategory());
+
           loginSuccess();
         } else {
           Alerts.ErrorNormal("Incorrect OTP");

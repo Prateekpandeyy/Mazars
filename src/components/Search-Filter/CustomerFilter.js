@@ -31,7 +31,7 @@ function CustomerFilter(props) {
     assignment,
   } = props;
 
-  const [selectedData, setSelectedData] = useState([]);
+  const [selectedData, setSelectedData] = useState("Please select category");
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,29 +50,17 @@ function CustomerFilter(props) {
       uit: token,
     },
   };
-
+  let directSubCat = JSON.parse(localStorage.getItem("directSubCategory"));
+  let indirectSubCat = JSON.parse(localStorage.getItem("indirectSubCategory"));
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("categoryData"));
     setCategory(data);
   }, []);
-  useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
   };
 
@@ -83,7 +71,7 @@ function CustomerFilter(props) {
 
   //reset category
   const resetCategory = () => {
-    setSelectedData([]);
+    setSelectedData("");
     setStore2([]);
     setTax2([]);
   };
@@ -91,7 +79,7 @@ function CustomerFilter(props) {
   //reset date
   const resetData = () => {
     reset();
-    setSelectedData([]);
+    setSelectedData("");
     setStore2([]);
     setTax2([]);
     getData();
@@ -539,7 +527,7 @@ function CustomerFilter(props) {
       </>
     );
   };
-  console.log("category", categoryData);
+
   return (
     <>
       <div className="row">
@@ -548,13 +536,13 @@ function CustomerFilter(props) {
             <div className="form-inline">
               <div className="form-group mb-2">
                 <Select
+                  style={{ width: 150 }}
                   placeholder="Select Category"
-                  defaultValue={[]}
                   onChange={handleCategory}
                   value={selectedData}
                 >
                   {categoryData.map((p, index) => (
-                    <Option value={p.id} key={index}>
+                    <Option value={p.details} key={index}>
                       {p.details}
                     </Option>
                   ))}
@@ -570,7 +558,7 @@ function CustomerFilter(props) {
                   value={store2}
                   allowClear
                 >
-                  {tax2.map((p, index) => (
+                  {tax2?.map((p, index) => (
                     <Option value={p.id} key={index}>
                       {p.details}
                     </Option>

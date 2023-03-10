@@ -59,6 +59,15 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDataadAssignment4");
       localStorage.removeItem("admincreate");
       localStorage.removeItem("admingenerated");
+      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+        if (res.data.code === 1) {
+          localStorage.removeItem("admincategoryData");
+          let data = res.data.result;
+          data.map((i) => {
+            localStorage.removeItem(`admin${i.details}`);
+          });
+        }
+      });
       history.push("/admin/login");
     });
   };

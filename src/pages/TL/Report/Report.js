@@ -138,13 +138,20 @@ const Report = () => {
     ("0" + (new Date().getMonth() + 1)).slice(-2) +
     "-" +
     ("0" + new Date().getDate()).slice(-2);
-  const firstDay = new Date(
-    date.getFullYear() + +"-" + ("0" + (new Date().getMonth() + 1)).slice(-2)
-  );
+
   const [item] = useState(current_date);
-  const [item2, setItem2] = useState(current_date);
   const [toDate, setToDate] = useState(current_date);
   const [fromDate, setFromDate] = useState("");
+  const [querySearchData, setQueryString] = useState({
+    fromdate: "",
+    todate: current_date,
+    tl: "",
+    tp: "",
+    cat: "",
+    sub_cat: "",
+    cid: "",
+  });
+  const [selectQuery, setSelectedQuery] = useState([]);
   useEffect(() => {
     const getCategory = async () => {
       await axios
@@ -211,7 +218,6 @@ const Report = () => {
 
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/tl/getTeamLeader`, myConfig).then((res) => {
-      var dd = [];
       if (res.data.code === 1) {
         res.data.result.map((i) => {
           if (JSON.parse(userid) == i.id) {
@@ -245,7 +251,10 @@ const Report = () => {
       pk.push(r.value);
     });
     setcName(pk);
-    filterQuery(pk);
+    filterQuery({
+      name: "cid",
+      value: pk,
+    });
   };
 
   const getData = () => {
@@ -355,19 +364,48 @@ const Report = () => {
     setQno([]);
   };
   const filterQuery = (cust) => {
-    if (cust) {
-      axios
-        .get(
-          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}&subcategory=${dd}&teamleader=${teamleader44}&taxprofessional=${taxprofessional44}&customer=${cust}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let b = res.data.result;
-            setQno(b.map(getqNo));
-          }
-        });
-    }
+    var { name, value } = cust;
+
+    setQueryString((payload) => {
+      return {
+        ...payload,
+        [name]: value,
+      };
+    });
+    let data = {
+      ...querySearchData,
+      [name]: value,
+    };
+
+    axios
+      .get(
+        `${baseUrl}/tl/getAllQueryList?from=${data.fromdate}&to=${
+          data.todate
+        }&category=${data.cat}&subcategory=${
+          data.sub_cat
+        }&teamleader=${JSON.parse(userid)}&taxprofessional=${
+          data.tp
+        }&customer=${data.cid}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let b = res.data.result;
+          let remainQu = [];
+          b.forEach((i) => {
+            selectQuery.forEach((q) => {
+              console.log(q);
+              if (q.value === i.assign_no) {
+                remainQu.push(q);
+              }
+            });
+            console.log("remainQu", remainQu);
+          });
+
+          setSelectedQuery(remainQu);
+          setQno(b.map(getqNo));
+        }
+      });
   };
   const onSubmit = (value) => {
     let comp = [];
@@ -758,6 +796,7 @@ const Report = () => {
     });
     setError("");
     setCustcate(v);
+
     v.map((val) => {
       vv.push(val.value);
       cc.push(val.value);
@@ -765,7 +804,10 @@ const Report = () => {
 
       setStore(val.value);
     });
-
+    filterQuery({
+      name: "cat",
+      value: cc,
+    });
     setmcatname(cc);
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
@@ -808,9 +850,14 @@ const Report = () => {
       kk2.push(i.value);
       setTaxxId(i.value);
     });
+    filterQuery({
+      name: "tp",
+      value: kk2,
+    });
     setTaxprofessional44(kk2);
   };
   const queryNumber = (e) => {
+    setSelectedQuery(e);
     let kk4 = [];
     e.map((i) => {
       kk4.push(i.value);
@@ -965,7 +1012,13 @@ const Report = () => {
                     name="p_from"
                     ref={register}
                     value={fromDate}
-                    onChange={(e) => setFromDate(e.target.value)}
+                    onChange={(e) => {
+                      setFromDate(e.target.value);
+                      filterQuery({
+                        name: "fromdate",
+                        value: e.target.value,
+                      });
+                    }}
                     placeholder="Enter Mobile Number"
                     className={classNames("form-control", {
                       "is-invalid": errors.p_mobile,
@@ -984,7 +1037,13 @@ const Report = () => {
                       "is-invalid": errors.p_type,
                     })}
                     value={toDate}
-                    onChange={(e) => setToDate(e.target.value)}
+                    onChange={(e) => {
+                      setToDate(e.target.value);
+                      filterQuery({
+                        name: "todate",
+                        value: e.target.value,
+                      });
+                    }}
                     max={item}
                     placeholder="Enter type"
                     ref={register({ required: true })}
@@ -1079,6 +1138,7 @@ const Report = () => {
                     isMulti={true}
                     ref={selectInputRef6}
                     options={qno}
+                    value={selectQuery}
                     onChange={(e) => queryNumber(e)}
                   />
                 </div>

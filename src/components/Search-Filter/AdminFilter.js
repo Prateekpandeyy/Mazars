@@ -6,7 +6,6 @@ import { Select } from "antd";
 import "antd/dist/antd.css";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
-const dateFormat = "YYYY/MM/DD";
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function AdminFilter(props) {
   const { Option } = Select;
@@ -50,35 +49,46 @@ function AdminFilter(props) {
     ("0" + new Date().getDate()).slice(-2);
   const dateValue = useRef();
   const [item] = useState(current_date);
+  const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-
-  //get category
   useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData != undefined && selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-              setLoading(true);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
+    let data = JSON.parse(localStorage.getItem("admincategoryData"));
+    setCategory(data);
+  }, []);
 
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
   };
+  // //get category
+  // useEffect(() => {
+  //   const getSubCategory = () => {
+  //     if (selectedData != undefined && selectedData.length > 0) {
+  //       axios
+  //         .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
+  //         .then((res) => {
+  //           if (res.data.code === 1) {
+  //             setTax2(res.data.result);
+  //             setLoading(true);
+  //           }
+  //         });
+  //     }
+  //   };
+  //   getSubCategory();
+  // }, [selectedData]);
+
+  // //handleCategory
+  // const handleCategory = (value) => {
+  //   setSelectedData(value);
+  //   setStore2([]);
+  // };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -729,18 +739,16 @@ function AdminFilter(props) {
               <div className="form-inline">
                 <div className="form-group mb-2">
                   <Select
-                    style={{ width: 130 }}
+                    style={{ width: 150 }}
                     placeholder="Select Category"
-                    defaultValue={[]}
                     onChange={handleCategory}
                     value={selectedData}
                   >
-                    <Option value="1" label="Compilance">
-                      <div className="demo-option-label-item">Direct Tax</div>
-                    </Option>
-                    <Option value="2" label="Compilance">
-                      <div className="demo-option-label-item">Indirect Tax</div>
-                    </Option>
+                    {categoryData.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                   </Select>
                 </div>
 

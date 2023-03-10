@@ -7,24 +7,14 @@ import { baseUrl, baseUrl3 } from "../../../config/config";
 import "./Admin.css";
 import Select from "react-select";
 import Layout from "../../../components/Layout/Layout";
-import { Typography, Button } from "@material-ui/core";
-import Mandatory from "../../../components/Common/Mandatory";
 import { useHistory } from "react-router";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import Swal from "sweetalert2";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import Cookies from "js-cookie";
 const Report = () => {
   const userid = window.localStorage.getItem("tpkey");
-  const selectInputRef = useRef();
+
   const selectInputRef2 = useRef();
   const selectInputRef3 = useRef();
   const selectInputRef4 = useRef();
@@ -50,7 +40,6 @@ const Report = () => {
   const [paymnetCheckbox, setPaymentCheckbox] = useState(null);
   const [manualCheckbox, setManualCheckbox] = useState(null);
   const [manualSearch, setManualSearch] = useState(false);
-  const [issueInvoice, setIssueInvoice] = useState(false);
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [tlName, setTlName] = useState("");
@@ -64,6 +53,7 @@ const Report = () => {
     spc_que: false,
     doa: false,
     process_status: false,
+    dateofacceptance: false,
   });
   const [proposalValue, setProposalValue] = useState({
     paymentDeclinedReason: false,
@@ -140,11 +130,18 @@ const Report = () => {
     ("0" + new Date().getDate()).slice(-2);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState(current_date);
-  const firstDay = new Date(
-    date.getFullYear() + +"-" + ("0" + (new Date().getMonth() + 1)).slice(-2)
-  );
+
   const [item] = useState(current_date);
-  const [item2, setItem2] = useState(current_date);
+  const [querySearchData, setQueryString] = useState({
+    fromdate: "",
+    todate: current_date,
+    tl: "",
+    tp: "",
+    cat: "",
+    sub_cat: "",
+    cid: "",
+  });
+  const [selectQuery, setSelectedQuery] = useState([]);
   useEffect(() => {
     const getCategory = async () => {
       await axios
@@ -228,24 +225,52 @@ const Report = () => {
       pk.push(r.value);
     });
     setcName(pk);
-    filterQuery(pk);
+    filterQuery({
+      name: "cid",
+      value: pk,
+    });
   };
   const filterQuery = (cust) => {
-    if (cust) {
-      axios
-        .get(
-          `${baseUrl}/tl/getAllQueryList?from=${fromDate}&to=${toDate}&category=${mcatname}&subcategory=${dd}&teamleader=${
-            tlName.value
-          }&taxprofessional=${JSON.parse(userid)}&customer=${cust}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let b = res.data.result;
-            setQno(b.map(getqNo));
-          }
-        });
-    }
+    var { name, value } = cust;
+
+    setQueryString((payload) => {
+      return {
+        ...payload,
+        [name]: value,
+      };
+    });
+    let data = {
+      ...querySearchData,
+      [name]: value,
+    };
+
+    axios
+      .get(
+        `${baseUrl}/tl/getAllQueryList?from=${data.fromdate}&to=${
+          data.todate
+        }&category=${data.cat}&subcategory=${data.sub_cat}&teamleader=${
+          tlName.value
+        }&taxprofessional=${JSON.parse(userid)}&customer=${data.cid}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let b = res.data.result;
+          let remainQu = [];
+          b.forEach((i) => {
+            selectQuery.forEach((q) => {
+              console.log(q);
+              if (q.value === i.assign_no) {
+                remainQu.push(q);
+              }
+            });
+            console.log("remainQu", remainQu);
+          });
+
+          setSelectedQuery(remainQu);
+          setQno(b.map(getqNo));
+        }
+      });
   };
   const getData = () => {
     axios
@@ -366,7 +391,8 @@ const Report = () => {
       value.p_format ||
       value.t_requested ||
       value.spc_que ||
-      value.doa
+      value.doa ||
+      value.dateofacceptance
     ) {
       basic_info = true;
     }
@@ -444,6 +470,7 @@ const Report = () => {
         formData.append("query_no", qqno);
         formData.append("category", mcatname);
         formData.append("subCategory", dd);
+        formData.append("dateofacceptance", Number(value.dateofacceptance));
         formData.append("q_no", Number(value.qno));
         formData.append("date_query", Number(value.dataQuery));
         formData.append("cust_id", Number(value.cust_id));
@@ -598,6 +625,7 @@ const Report = () => {
       formData.append("query_no", qqno);
       formData.append("category", mcatname);
       formData.append("subCategory", dd);
+      formData.append("dateofacceptance", Number(value.dateofacceptance));
       formData.append("q_no", Number(value.qno));
       formData.append("date_query", Number(value.dataQuery));
       formData.append("cust_id", Number(value.cust_id));
@@ -729,7 +757,10 @@ const Report = () => {
 
       setStore(val.value);
     });
-
+    filterQuery({
+      name: "cat",
+      value: cc,
+    });
     setmcatname(cc);
     if (vv.length > 0) {
       if (vv.includes("1") && vv.includes("2")) {
@@ -767,7 +798,7 @@ const Report = () => {
   };
 
   const queryNumber = (e) => {
-    console.log("aaa", e);
+    setSelectedQuery(e);
     let kk4 = [];
     e.map((i) => {
       kk4.push(i.value);
@@ -922,9 +953,14 @@ const Report = () => {
                     type="date"
                     name="p_from"
                     value={fromDate}
-                    onChange={(e) => setFromDate(e.target.value)}
+                    onChange={(e) => {
+                      setFromDate(e.target.value);
+                      filterQuery({
+                        name: "fromdate",
+                        value: e.target.value,
+                      });
+                    }}
                     ref={register}
-                    placeholder="Enter Mobile Number"
                     className={classNames("form-control", {
                       "is-invalid": errors.p_mobile,
                     })}
@@ -939,13 +975,18 @@ const Report = () => {
                     type="date"
                     name="p_to"
                     value={toDate}
-                    onChange={(e) => setToDate(e.target.value)}
+                    onChange={(e) => {
+                      setToDate(e.target.value);
+                      filterQuery({
+                        name: "todate",
+                        value: e.target.value,
+                      });
+                    }}
                     className={classNames("form-control", {
                       "is-invalid": errors.p_type,
                     })}
                     defaultValue={item}
                     max={item}
-                    placeholder="Enter type"
                     ref={register({ required: true })}
                   />
                 </div>
@@ -1046,6 +1087,7 @@ const Report = () => {
                     isMulti={true}
                     ref={selectInputRef2}
                     options={qno}
+                    value={selectQuery}
                     onChange={(e) => queryNumber(e)}
                   />
                 </div>
@@ -1158,7 +1200,32 @@ const Report = () => {
                       ></input>
                       <label htmlFor="tp_name">Name of tax professional</label>
                     </span>
-
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="dateofacceptance"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.dateofacceptance}
+                        id="dateofacceptance"
+                      ></input>
+                      <label htmlFor="dateofacceptance">
+                        Date of acceptance
+                      </label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="doa"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.doa}
+                        id="doa"
+                      ></input>
+                      <label htmlFor="doa">Date of allocation</label>
+                    </span>
                     <span>
                       <input
                         type="checkbox"
@@ -1232,18 +1299,7 @@ const Report = () => {
                       ></input>
                       <label htmlFor="spc_que">Specific questions</label>
                     </span>
-                    <span>
-                      {" "}
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="doa"
-                        onClick={(e) => handleBasic(e)}
-                        checked={basicValue.doa}
-                        id="doa"
-                      ></input>
-                      <label htmlFor="doa">Date of allocation of query</label>
-                    </span>
+
                     <span>
                       {" "}
                       <input
