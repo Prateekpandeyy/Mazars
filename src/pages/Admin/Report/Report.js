@@ -317,12 +317,14 @@ const Report = () => {
   };
 
   const getData = () => {
-    axios.get(`${baseUrl}/admin/getAllList`, myConfig).then((res) => {
-      var a = res.data.result;
-      if (a) {
-        setcustData(a.map(mapAppointmentData));
-      }
-    });
+    axios
+      .get(`${baseUrl}/admin/allClient?uid=${JSON.parse(userid)}`, myConfig)
+      .then((res) => {
+        var a = res.data.result;
+        if (a) {
+          setcustData(a.map(mapAppointmentData));
+        }
+      });
   };
 
   const mapAppointmentData = (appiontmentData) => ({
