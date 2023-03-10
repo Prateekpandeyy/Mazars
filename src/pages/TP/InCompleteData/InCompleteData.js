@@ -19,7 +19,7 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
 
-function InCompleteData({ CountIncomplete, data }) {
+function InCompleteData({ CountIncomplete, data ,setIncompleteData ,getIncomplete }) {
   const userid = window.localStorage.getItem("tpkey");
 
   const [incompleteData, setInCompleteData] = useState([]);
@@ -37,11 +37,16 @@ function InCompleteData({ CountIncomplete, data }) {
       uit: token,
     },
   };
-  // useEffect(() => {
-  //   getInCompleteAssingment();
-  // }, []);
+  useEffect(() => {
+    getInCompleteAssingment();
+  }, []);
 
   const getInCompleteAssingment = () => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataQ3`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }
+    else {
     axios
       .get(
         `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`,
@@ -53,6 +58,7 @@ function InCompleteData({ CountIncomplete, data }) {
           setRecords(res.data.result.length);
         }
       });
+    }
   };
 
   const columns = [
@@ -190,11 +196,14 @@ function InCompleteData({ CountIncomplete, data }) {
       <Card>
         <CardHeader>
           <TaxProfessionalFilter
-            setData={setInCompleteData}
-            getData={getInCompleteAssingment}
+            // setData={setInCompleteData}
+            // getData={getInCompleteAssingment}
+            setData={setIncompleteData}
+            getData={getIncomplete}
             InprogressQuery="InprogressQuery"
             setRecords={setRecords}
             records={records}
+            index={3}
           />
         </CardHeader>
         <CardBody>

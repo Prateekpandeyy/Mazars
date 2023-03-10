@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Container, Paper } from "@material-ui/core";
 import BootstrapTable from "react-bootstrap-table-next";
 import { styled } from "@material-ui/styles";
@@ -34,6 +34,9 @@ const DataTablepopulated = (props) => {
       fontFamily: "Halyard",
     },
   });
+
+
+
   return (
     <>
       {props.data ? (

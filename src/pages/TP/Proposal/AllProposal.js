@@ -50,10 +50,16 @@ function AllProposal() {
   };
 
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataP1`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Proposal axios");
+    }else{
     getProposalList();
+    }
   }, []);
 
   const getProposalList = () => {
+    
     axios
       .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
@@ -63,6 +69,7 @@ function AllProposal() {
           setRecords(res.data.result.length);
         }
       });
+    
   };
 
   const columns = [
@@ -298,6 +305,7 @@ function AllProposal() {
             AllProposal="AllProposal"
             setRecords={setRecords}
             records={records}
+            index={1}
           />
         </CardHeader>
         <CardBody>

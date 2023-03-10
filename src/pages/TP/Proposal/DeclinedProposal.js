@@ -49,10 +49,16 @@ function DeclinedProposal() {
     setAssignNo(key);
   };
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataP4`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }else{
     getProposalList();
+    }
   }, []);
 
   const getProposalList = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`,
@@ -65,6 +71,7 @@ function DeclinedProposal() {
           setRecords(res.data.result.length);
         }
       });
+    
   };
 
   const columns = [
@@ -291,6 +298,7 @@ function DeclinedProposal() {
             proposal="proposal"
             setRecords={setRecords}
             records={records}
+            index={4}
           />
         </CardHeader>
         <CardBody>

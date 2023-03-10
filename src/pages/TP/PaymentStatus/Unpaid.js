@@ -60,10 +60,16 @@ function AllPayment() {
   };
 
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataY2`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }else{
     getPaymentStatus();
+    }
   }, []);
 
   const getPaymentStatus = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
@@ -78,6 +84,7 @@ function AllPayment() {
           setRecords(res.data.result.length);
         }
       });
+    
   };
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -333,6 +340,7 @@ function AllPayment() {
             Unpaid="Unpaid"
             setRecords={setRecords}
             records={records}
+            index={2}
           />
         </CardHeader>
 

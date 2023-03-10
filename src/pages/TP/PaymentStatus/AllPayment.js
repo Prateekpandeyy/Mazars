@@ -66,10 +66,16 @@ function AllPayment() {
   };
 
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataY1`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }else{
     getPaymentStatus();
+    }
   }, []);
 
   const getPaymentStatus = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`,
@@ -82,6 +88,7 @@ function AllPayment() {
           setRecords(res.data.result.length);
         }
       });
+    
   };
 
   const toggle = (key) => {
@@ -331,6 +338,7 @@ function AllPayment() {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
+            index={1}
           />
         </CardHeader>
 

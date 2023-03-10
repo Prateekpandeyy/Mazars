@@ -44,10 +44,16 @@ function AcceptedProposal() {
   };
 
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataP3`));
+    if (tpQueryFilterData) {
+      console.log("Not called in inprogress axios");
+    }else{
     getProposalList();
+    }
   }, []);
 
   const getProposalList = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2`,
@@ -60,6 +66,7 @@ function AcceptedProposal() {
           setRecords(res.data.result.length);
         }
       });
+    
   };
 
   const columns = [
@@ -263,6 +270,7 @@ function AcceptedProposal() {
             proposal="proposal"
             setRecords={setRecords}
             records={records}
+            index={3}
           />
         </CardHeader>
         <CardBody>

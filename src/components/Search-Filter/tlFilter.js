@@ -100,7 +100,7 @@ function TeamFilter(props) {
       localStorage.removeItem(`searchDataQ${index}`);
     }
     else if ((completeAssignment === "completeAssignment")) {
-      localStorage.removeItem(`searchDataA${index}`);
+      localStorage.removeItem(`searchDataA`);
     }
     else if ((AllProposal === "AllProposal") || (InprogressProposal === "InprogressProposal") || (proposal === "acceptedProposal") || (proposal == "proposal")) {
       localStorage.removeItem(`searchDataP${index}`);
@@ -189,7 +189,7 @@ function TeamFilter(props) {
           index: index,
         };
       }
-      localStorage.setItem(`searchDataA${index}`, JSON.stringify(objA));
+      localStorage.setItem(`searchDataA`, JSON.stringify(objA));
     } else if ((AllProposal === "AllProposal") || (InprogressProposal === "InprogressProposal") || (proposal === "acceptedProposal") || (proposal == "proposal")) {
       if (data.route) {
         objP = {
@@ -246,17 +246,6 @@ function TeamFilter(props) {
 
     if (AllQuery === "AllQuery") {
       if (data.route) {
-        // console.log(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
-        //   }&cat_id=${data.store}&from=${data.fromDate
-        //     ?.split("-")
-        //     .reverse()
-        //     .join("-")
-        //   }&to=${data.toDate
-        //     ?.split("-")
-        //     .reverse()
-        //     .join("-")
-        //   }&pcat_id=${data.pcatId}&qno=${data.query_no
-        //   }`);
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
@@ -1028,7 +1017,7 @@ function TeamFilter(props) {
     let qd = JSON.parse(localStorage.getItem(`searchDataQ${index}`));
     let pd = JSON.parse(localStorage.getItem(`searchDataP${index}`));
     let yd = JSON.parse(localStorage.getItem(`searchDataY${index}`));
-    let ad = JSON.parse(localStorage.getItem(`searchDataA${index}`));
+    let ad = JSON.parse(localStorage.getItem(`searchDataA`));
 
     if ((AllQuery === "AllQuery") || (pendingForAcceptence === "pendingForAcceptence") || (InprogressQuery === "InprogressQuery") || (inCompleteQuery == "inCompleteQuery") || (DeclinedQuery == "DeclinedQuery")) {
       if (qd) {

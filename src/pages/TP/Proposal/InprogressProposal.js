@@ -52,7 +52,12 @@ function InprogressProposal() {
   };
 
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataP2`));
+    if (tpQueryFilterData) {
+      console.log("Not called in inprogress Proposal axios");
+    }else{
     getProposalList();
+    }
   }, []);
 
   const getProposalList = () => {
@@ -302,6 +307,7 @@ function InprogressProposal() {
           InprogressProposal="InprogressProposal"
           setRecords={setRecords}
           records={records}
+          index={2}
         />
       </CardHeader>
       <CardBody>

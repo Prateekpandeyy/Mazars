@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -42,6 +42,18 @@ function PendingForAcceptence(props) {
     });
   };
 
+  
+
+  useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataQ2`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }
+    else {
+    getPendingforAcceptance()
+    }
+  }, []);
+
   const getPendingforAcceptance = () => {
     axios
       .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
@@ -53,6 +65,7 @@ function PendingForAcceptence(props) {
           // CountPendingForAcceptence(res.data.result.length);
         }
       });
+    
   };
 
   const columns = [
@@ -188,11 +201,14 @@ function PendingForAcceptence(props) {
       <Card>
         <CardHeader>
           <TaxProfessionalFilter
-            setData={setPendingData}
-            getData={getPendingforAcceptance}
+          setData={props.setPendingData}
+          getData={props.getPendindForAccepttence}
+            // setData={setPendingData}
+            // getData={getPendingforAcceptance}
             pendingForAcceptence="pendingForAcceptence"
             setRecords={setRecords}
             records={records}
+            index={2}
           />
         </CardHeader>
         <CardBody>

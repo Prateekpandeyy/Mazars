@@ -28,11 +28,19 @@ function AllQuery(props) {
       uit: token,
     },
   };
-  // useEffect(() => {
-  //     getInCompleteAssingment();
-  // }, []);
+  useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataQ1`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }
+    else {  
+      console.log("in else get");
+      getInCompleteAssingment();
+    }
+  }, []);
 
   const getInCompleteAssingment = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`,
@@ -45,6 +53,7 @@ function AllQuery(props) {
           props.getAllCount(res.data.result.length);
         }
       });
+    
   };
 
   const columns = [
@@ -187,6 +196,7 @@ function AllQuery(props) {
             AllQuery="AllQuery"
             setRecords={setRecords}
             records={records}
+            index={1}
           />
         </CardHeader>
         <CardBody>

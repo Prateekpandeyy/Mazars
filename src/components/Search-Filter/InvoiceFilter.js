@@ -219,26 +219,6 @@ const InvoiceFilter = (props) => {
     localStorage.removeItem(`searchDataI${index}`);
   };
 
-  // useEffect(() => {
-  //   const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
-  //   if (query_no === "" && p_dateFrom === "" && p_dateTo === "" && installment_no === "" && opt === "") {
-  //     setFilterData((prev) => ({ ...prev, ...filterForm }));
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   localStorage.setItem("invoicetlFilterData", JSON.stringify(invoicetlFilterData))
-  //   console.log(invoicetlFilterData, "filter data is saved")
-  // }, [query_no, p_dateFrom, p_dateTo, installment_no, opt]);
-
-  // useEffect(() => {
-  //   const filterForm = JSON.parse(localStorage.getItem("invoicetlFilterData"));
-  //   if((filterForm.query_no !== "" || filterForm.p_dateFrom !== "" || filterForm.installment_no !== "" || filterForm.p_dateTo !== "" || filterForm.opt !== "")){
-  //     onSubmit(filterForm);
-  //     console.log("there is data in filter")
-  //   } 
-  //   else{console.log("nofilterhere")}
-  //   },[invoicetlFilterData])
 
 
   return (

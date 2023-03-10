@@ -60,7 +60,12 @@ function AllPayment() {
     },
   };
   useEffect(() => {
+    const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataY3`));
+    if (tpQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }else{
     getPaymentStatus();
+    }
   }, []);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -68,6 +73,7 @@ function AllPayment() {
     setAssignNo(key);
   };
   const getPaymentStatus = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
@@ -82,6 +88,7 @@ function AllPayment() {
           setRecords(res.data.result.length);
         }
       });
+    
   };
 
   const toggle = (key) => {
@@ -315,6 +322,7 @@ function AllPayment() {
             Paid="Paid"
             setRecords={setRecords}
             records={records}
+            index={3}
           />
         </CardHeader>
 
