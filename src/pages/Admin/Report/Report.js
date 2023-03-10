@@ -25,9 +25,7 @@ const Report = () => {
   const userid = window.localStorage.getItem("adminkey");
   const selectInputRef = useRef();
   const selectInputRef2 = useRef();
-  const selectInputRef3 = useRef();
-  const selectInputRef4 = useRef();
-  const selectInputRef5 = useRef();
+
   const selectInputRef6 = useRef();
   const selectInputRef7 = useRef();
   const [subData, subCategeryData] = useState([]);
@@ -365,11 +363,9 @@ const Report = () => {
     setToDate(current_date);
     let manualValue = manualReceipt;
     setManualSearch(false);
-    selectInputRef.current.select.clearValue();
+
     selectInputRef2.current.select.clearValue();
-    selectInputRef3.current.select.clearValue();
-    selectInputRef4.current.select.clearValue();
-    selectInputRef5.current.select.clearValue();
+
     selectInputRef6.current.select.clearValue();
     selectInputRef7.current.select.clearValue();
     Object.keys(bValue).forEach((key) => {
@@ -862,8 +858,8 @@ const Report = () => {
 
   const teamLeader = (a) => {
     let tk = [];
+    setTaxId(a);
     a.map((i) => {
-      setTaxId(i.value);
       tk.push(i.value);
     });
     setTeamleader44(tk);
@@ -1073,8 +1069,8 @@ const Report = () => {
                   <Select
                     isMulti={true}
                     options={options3}
-                    ref={selectInputRef}
                     onChange={(e) => teamLeader(e)}
+                    value={taxId}
                   />
                 </div>
               </div>
@@ -1098,7 +1094,6 @@ const Report = () => {
                   isMulti
                   options={options}
                   className={error ? "customError" : ""}
-                  ref={selectInputRef3}
                   styles={{
                     option: (styles, { data }) => {
                       return {
@@ -1111,7 +1106,7 @@ const Report = () => {
                       color: data.value == 2 ? "green" : "blue",
                     }),
                   }}
-                  onChange={category2}
+                  onChange={(e) => category2(e)}
                 ></Select>
               </div>
               <div className="col-md-3">
@@ -1120,8 +1115,7 @@ const Report = () => {
                   isMulti
                   options={options2}
                   className={error2 ? "customError" : ""}
-                  ref={selectInputRef4}
-                  onChange={subCategory22}
+                  onChange={(e) => subCategory22(e)}
                   styles={{
                     option: (styles, { data }) => {
                       return {
@@ -1143,7 +1137,6 @@ const Report = () => {
                   <Select
                     isMulti
                     options={custData}
-                    ref={selectInputRef5}
                     onChange={(e) => custName(e)}
                   ></Select>
                 </div>
