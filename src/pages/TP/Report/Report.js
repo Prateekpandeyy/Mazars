@@ -51,7 +51,7 @@ const Report = () => {
     p_format: false,
     t_requested: false,
     spc_que: false,
-    doa: false,
+
     process_status: false,
     dateofacceptance: false,
   });
@@ -391,7 +391,6 @@ const Report = () => {
       value.p_format ||
       value.t_requested ||
       value.spc_que ||
-      value.doa ||
       value.dateofacceptance
     ) {
       basic_info = true;
@@ -481,7 +480,7 @@ const Report = () => {
         formData.append("p_format", Number(value.p_format));
         formData.append("t_requested", Number(value.t_requested));
         formData.append("spc_que", Number(value.spc_que));
-        formData.append("date_allocation", Number(value.doa));
+
         formData.append("brief_fact_case", Number(value.brief_fact_case));
         // formData.append("teamleader", Number(value.tl_name));
         // formData.append("taxprofessional", Number(value.tp_name));
@@ -636,7 +635,7 @@ const Report = () => {
       formData.append("p_format", Number(value.p_format));
       formData.append("t_requested", Number(value.t_requested));
       formData.append("spc_que", Number(value.spc_que));
-      formData.append("date_allocation", Number(value.doa));
+
       formData.append("brief_fact_case", Number(value.brief_fact_case));
       // formData.append("teamleader", Number(value.tl_name));
       // formData.append("taxprofessional", Number(value.tp_name));
@@ -1214,7 +1213,7 @@ const Report = () => {
                         Date of acceptance
                       </label>
                     </span>
-                    <span>
+                    {/* <span>
                       {" "}
                       <input
                         type="checkbox"
@@ -1225,7 +1224,7 @@ const Report = () => {
                         id="doa"
                       ></input>
                       <label htmlFor="doa">Date of allocation</label>
-                    </span>
+                    </span> */}
                     <span>
                       <input
                         type="checkbox"
