@@ -307,7 +307,10 @@ const Report = () => {
   };
   const filterClient = (e) => {
     axios
-      .get(`${baseUrl}/admin/getAllList?tp_id=${e}`, myConfig)
+      .get(
+        `${baseUrl}/admin/allClient?tl_id=${teamleader44}&tp_id=${e}`,
+        myConfig
+      )
       .then((res) => {
         var a = res.data.result;
         if (a) {
@@ -869,6 +872,7 @@ const Report = () => {
       value: tk,
     });
   };
+
   const taxProfessional = (e) => {
     let kk2 = [];
     e.map((i) => {
