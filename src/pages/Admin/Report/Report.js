@@ -305,6 +305,16 @@ const Report = () => {
       value: pk,
     });
   };
+  const filterClient = (e) => {
+    axios
+      .get(`${baseUrl}/admin/getAllList?tp_id=${e}`, myConfig)
+      .then((res) => {
+        var a = res.data.result;
+        if (a) {
+          setcustData(a.map(mapAppointmentData));
+        }
+      });
+  };
 
   const getData = () => {
     axios.get(`${baseUrl}/admin/getAllList`, myConfig).then((res) => {
@@ -868,6 +878,7 @@ const Report = () => {
       value: kk2,
     });
     setTaxprofessional44(kk2);
+    filterClient(kk2);
   };
   const queryNumber = (e) => {
     setSelectedQuery(e);
