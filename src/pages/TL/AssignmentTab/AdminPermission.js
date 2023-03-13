@@ -731,12 +731,18 @@ function AdminPermission(props) {
               )}
 
               <Reset />
+
+              <div class="form-group mx-sm-1  mb-2">
+                <label className="form-select form-control">
+                  Total Records : {records}
+                </label>
+              </div>
             </div>
           </form>
         </CardHeader>
 
         <CardBody className="card-body">
-          <Records records={records} />
+          {/* <Records records={records} /> */}
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}
