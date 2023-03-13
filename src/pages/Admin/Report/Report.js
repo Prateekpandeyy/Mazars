@@ -23,11 +23,8 @@ import Swal from "sweetalert2";
 import CustomHeading from "../../../components/Common/CustomHeading";
 const Report = () => {
   const userid = window.localStorage.getItem("adminkey");
-  const selectInputRef = useRef();
-  const selectInputRef2 = useRef();
 
-  const selectInputRef6 = useRef();
-  const selectInputRef7 = useRef();
+  const selectInputRef2 = useRef();
   const [subData, subCategeryData] = useState([]);
   const [tax, setTax] = useState([]);
   const [tax2, setTax2] = useState([]);
@@ -38,7 +35,6 @@ const Report = () => {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [taxId, setTaxId] = useState([]);
-  const [taxxId, setTaxxId] = useState("");
   const [teamleader44, setTeamleader44] = useState("");
   const [taxprofessional44, setTaxprofessional44] = useState("");
   const [qno, setQno] = useState();
@@ -53,7 +49,7 @@ const Report = () => {
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [manualSearch, setManualSearch] = useState(false);
-
+  const [clientId, setClientId] = useState([]);
   const [basicValue, setBasicValue] = useState({
     brief_fact_case: false,
     assessment: false,
@@ -117,6 +113,7 @@ const Report = () => {
   let pk = [];
 
   const [dd, setDd] = useState([]);
+  const [tpValue, setTpValue] = useState([]);
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm();
 
@@ -140,6 +137,7 @@ const Report = () => {
     cid: "",
   });
   const [selectQuery, setSelectedQuery] = useState([]);
+  const [catValue, setCatValue] = useState([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -246,21 +244,9 @@ const Report = () => {
       setCheckBox(false);
     }
   };
-  // const getupdateQuery = () => {
-  //   axios
-  //     .get(`${baseUrl}/admin/getAllQueryList?customer=${cname}`, myConfig)
-  //     .then((res) => {
-  //       if (res.data.code === 1) {
-  //         var data = res.data.result;
 
-  //         let b = res.data.result;
-  //         setQno(b.map(getqNo));
-  //       }
-  //     });
-  // };
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
-      var dd = [];
       if (res.data.code === 1) {
         pp.push(res.data.result);
         setData(res.data.result);
@@ -294,6 +280,9 @@ const Report = () => {
   };
 
   const custName = (a) => {
+    setClientId(a);
+
+    setQqno([]);
     a.map((r) => {
       pk.push(r.value);
     });
@@ -315,6 +304,14 @@ const Report = () => {
           setcustData(a.map(mapAppointmentData));
         }
       });
+  };
+  const filterClienttl = (e) => {
+    axios.get(`${baseUrl}/admin/allClient?tl_id=${e}`, myConfig).then((res) => {
+      var a = res.data.result;
+      if (a) {
+        setcustData(a.map(mapAppointmentData));
+      }
+    });
   };
 
   const getData = () => {
@@ -359,15 +356,35 @@ const Report = () => {
     let pVAlue = paymentValue;
     let proposValue = proposalValue;
     let bValue = basicValue;
+    setQueryString({
+      fromdate: "",
+      todate: current_date,
+      tl: "",
+      tp: "",
+      cat: "",
+      sub_cat: "",
+      cid: "",
+    });
+    setCompanyName([]);
+    setCompanyName2([]);
     setFromDate("");
+    setCatValue([]);
+    setTaxId([]);
+    subCategeryData([]);
+    setSelectedQuery([]);
+    setCompanyName2([]);
+    setTpValue([]);
+    setClientId([]);
+    setTaxprofessional44([]);
+    setTeamleader44([]);
+    setcName([]);
+    setQqno([]);
+    setDd([]);
+    setmcatname([]);
     setToDate(current_date);
     let manualValue = manualReceipt;
     setManualSearch(false);
 
-    selectInputRef2.current.select.clearValue();
-
-    selectInputRef6.current.select.clearValue();
-    selectInputRef7.current.select.clearValue();
     Object.keys(bValue).forEach((key) => {
       bValue[key] = false;
     });
@@ -418,6 +435,10 @@ const Report = () => {
     setCheckBox(false);
     setProposalCheckbox(false);
     setQno([]);
+    getTeamLeader();
+    getData();
+    filterQuery("");
+    getCompany();
   };
   const onSubmit = (value) => {
     let comp = [];
@@ -802,7 +823,7 @@ const Report = () => {
   // Category
   const category2 = (v) => {
     let cc = [];
-
+    setCatValue(v);
     setError("");
 
     v.map((val) => {
@@ -811,7 +832,12 @@ const Report = () => {
 
       setStore(val.value);
     });
-
+    setQueryString((payload) => {
+      return {
+        ...payload,
+        sub_cat: [],
+      };
+    });
     setmcatname(cc);
     filterQuery({
       name: "cat",
@@ -857,12 +883,19 @@ const Report = () => {
   };
 
   const teamLeader = (a) => {
+    setTpValue([]);
+    setClientId([]);
+    setSelectedQuery([]);
+    setTaxprofessional44([]);
+    setcName([]);
+    setQqno([]);
     let tk = [];
     setTaxId(a);
     a.map((i) => {
       tk.push(i.value);
     });
     setTeamleader44(tk);
+    filterClienttl(tk);
     filterQuery({
       name: "tl",
       value: tk,
@@ -870,10 +903,15 @@ const Report = () => {
   };
 
   const taxProfessional = (e) => {
+    setTpValue(e);
+    setClientId([]);
+    setSelectedQuery([]);
+
+    setcName([]);
+    setQqno([]);
     let kk2 = [];
     e.map((i) => {
       kk2.push(i.value);
-      setTaxxId(i.value);
     });
     filterQuery({
       name: "tp",
@@ -951,7 +989,16 @@ const Report = () => {
     setPaymentCheckbox(e.target.checked);
   };
   const filterQuery = (cust) => {
+    let data = {};
     var { name, value } = cust;
+    let sub_cat = [];
+    if (name === "cat") {
+      sub_cat = [];
+    } else if (name === "sub_cat") {
+      sub_cat = value;
+    } else {
+      sub_cat = querySearchData.sub_cat;
+    }
 
     setQueryString((payload) => {
       return {
@@ -959,14 +1006,26 @@ const Report = () => {
         [name]: value,
       };
     });
-    let data = {
-      ...querySearchData,
-      [name]: value,
-    };
+    if (cust) {
+      data = {
+        ...querySearchData,
+        [name]: value,
+      };
+    } else {
+      data = {
+        fromdate: "",
+        todate: current_date,
+        tl: "",
+        tp: "",
+        cat: "",
+        sub_cat: "",
+        cid: "",
+      };
+    }
 
     axios
       .get(
-        `${baseUrl}/admin/getAllQueryList?from=${data.fromdate}&to=${data.todate}&category=${data.cat}&subcategory=${data.sub_cat}&teamleader=${data.tl}&taxprofessional=${data.tp}&customer=${data.cid}`,
+        `${baseUrl}/admin/getAllQueryList?from=${data.fromdate}&to=${data.todate}&category=${data.cat}&subcategory=${sub_cat}&teamleader=${data.tl}&taxprofessional=${data.tp}&customer=${data.cid}`,
         myConfig
       )
       .then((res) => {
@@ -1080,7 +1139,7 @@ const Report = () => {
                   <label className="form-label">Tax Professional</label>
                   <Select
                     isMulti={true}
-                    ref={selectInputRef2}
+                    value={tpValue}
                     options={options4}
                     onChange={(e) => taxProfessional(e)}
                   />
@@ -1107,6 +1166,7 @@ const Report = () => {
                     }),
                   }}
                   onChange={(e) => category2(e)}
+                  value={catValue}
                 ></Select>
               </div>
               <div className="col-md-3">
@@ -1137,6 +1197,7 @@ const Report = () => {
                   <Select
                     isMulti
                     options={custData}
+                    value={clientId}
                     onChange={(e) => custName(e)}
                   ></Select>
                 </div>
@@ -1146,7 +1207,6 @@ const Report = () => {
                   <label className="form-label">Query Number</label>
                   <Select
                     isMulti={true}
-                    ref={selectInputRef6}
                     value={selectQuery}
                     options={qno}
                     onChange={(e) => queryNumber(e)}
@@ -1653,7 +1713,6 @@ const Report = () => {
                     <div className="col-md-3">
                       <Select
                         isMulti={true}
-                        ref={selectInputRef7}
                         options={companyName}
                         style={{
                           display: "flex",
