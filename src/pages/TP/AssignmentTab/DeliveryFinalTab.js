@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -28,6 +28,8 @@ function AssignmentTab() {
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
+  const [dateFrom, setdateFrom] = useState("");
+  const [dateto, setDateto] = useState(current_date);
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -81,7 +83,12 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchTPDataAs3`));
+    if (asd) {
+      console.log("searchTPDataAs3");
+    }else{
     getAssignmentList();
+    }
   }, []);
 
   const getAssignmentList = () => {
@@ -128,6 +135,16 @@ function AssignmentTab() {
     setStore2(value);
   };
 
+     //handle dates
+     const handleDatefrom = (e) => {
+      setdateFrom(e.target.value)
+      console.log(dateFrom)
+    };
+    const handleDateto = (e) => {
+      setDateto(e.target.value)
+      console.log(dateto)
+    };
+
   //reset category
   const resetCategory = () => {
     setSelectedData([]);
@@ -142,6 +159,9 @@ function AssignmentTab() {
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
+    setdateFrom("");
+    setDateto(current_date);
+    localStorage.removeItem(`searchTPDataAs3`);
   };
 
   //assingmentStatus
@@ -418,13 +438,34 @@ function AssignmentTab() {
   ];
 
   const onSubmit = (data) => {
-    axios
+
+    let obj = {}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data.pcatid,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchTPDataAs3`, JSON.stringify(obj));
+    if(data.route){
+      axios
       .get(
         `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
           userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-          data.p_dateTo
-        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`
+        )}&cat_id=${data.store}&from=${data?.fromDate}&to=${
+          data?.toDate
+        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatid}`,myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
@@ -434,7 +475,35 @@ function AssignmentTab() {
           }
         }
       });
+    }else{
+    axios
+      .get(
+        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+          data.p_dateTo
+        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}`,myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            setAssignment(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        }
+      });
+    }
   };
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchTPDataAs3`));
+    if (asd) {
+      setSelectedData(asd.pcatid)
+      setStore2(asd.store);
+      setdateFrom(asd.fromDate)
+      setDateto(asd.toDate)
+      onSubmit(asd)
+    }
+  }, [])
 
   const Reset = () => {
     return (
@@ -530,6 +599,8 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
+                  onChange= {handleDatefrom}
+                  value={dateFrom}
                   ref={register}
                   max={item}
                 />
@@ -544,6 +615,8 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
+                  onChange= {handleDateto}
+                  value={dateto}
                   ref={register}
                   defaultValue={item}
                   max={item}

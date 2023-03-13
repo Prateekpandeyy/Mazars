@@ -36,11 +36,26 @@ const InvoiceFilter = (props) => {
   };
 
   useEffect(() => {
+    if ((props.invoice === "generated") || (props.invoice === "tlcreate")) {
     let id = JSON.parse(localStorage.getItem(`searchDataI${index}`));
     if(id){
       setFilterData((prev) => ({ ...prev, ...id }));
       onSubmit(id)
     }
+    else{
+      console.log("none");
+    }
+  } else if((props.invoice === "tpgenerated") || (props.invoice === "tpcreate")){
+    let id = JSON.parse(localStorage.getItem(`searchTpDataI${index}`));
+    if(id){
+      setFilterData((prev) => ({ ...prev, ...id }));
+      onSubmit(id)
+    }
+    else{
+      console.log("none");
+    }
+  }
+
   }, []);
   const onSubmit = (data) => {
     let formData = new FormData();
@@ -75,6 +90,33 @@ const InvoiceFilter = (props) => {
         localStorage.setItem(`searchDataI${index}`, JSON.stringify(objI));
       }
     } 
+    if ((props.invoice === "tpgenerated") || (props.invoice === "tpcreate")){
+      if(data.routes)
+      {
+      let objI = {
+        query_no: data.query_no,
+        p_dateFrom: data.p_dateFrom,
+        p_dateTo: data.p_dateTo,
+        installment_no: data.installment_no,
+        opt: data.opt,
+        route: window.location.pathname,
+        index: index,
+      }
+    }
+      else {
+        let objI = {
+          query_no: data.query_no,
+          p_dateFrom: data.p_dateFrom,
+          p_dateTo: data.p_dateTo,
+          installment_no: data.installment_no,
+          opt: data.opt,
+          route: window.location.pathname,
+          index: index,
+        }
+        localStorage.setItem(`searchTpDataI${index}`, JSON.stringify(objI));
+      }
+    }
+
     
     if (props.invoice === "generated") {
       const token = window.localStorage.getItem("tlToken");
@@ -146,37 +188,73 @@ const InvoiceFilter = (props) => {
     }
     } else if (props.invoice === "tpcreate") {
       const token = window.localStorage.getItem("tptoken");
-      axios({
-        method: "POST",
-        url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=0`,
-        headers: {
-          uit: token,
-        },
-        data: formData,
-      }).then((res) => {
-        if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
-          console.log(res.data)
-        }
-      });
+      const tpGinvoice = window.localStorage.getItem(`searchTpDataI2`);
+      if(tpGinvoice){
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=0`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        }).then((res) => {
+          if (res.data.code === 1) {
+            props.setData(res.data.payment_detail);
+            props.setRec(res.data.payment_detail.length);
+            console.log(res.data)
+          }
+        });
+      }else{
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=0`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        }).then((res) => {
+          if (res.data.code === 1) {
+            props.setData(res.data.payment_detail);
+            props.setRec(res.data.payment_detail.length);
+            console.log(res.data)
+          }
+        });
+      }
+      
     } else if (props.invoice === "tpgenerated") {
       const token = window.localStorage.getItem("tptoken");
-
-      axios({
-        method: "POST",
-        url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=1`,
-        headers: {
-          uit: token,
-        },
-        data: formData,
-      }).then((res) => {
-        if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
-          console.log(res.data)
-        }
-      });
+      const tpGinvoice = window.localStorage.getItem(`searchTpDataI1`);
+      if(tpGinvoice){
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=1`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        }).then((res) => {
+          if (res.data.code === 1) {
+            props.setData(res.data.payment_detail);
+            props.setRec(res.data.payment_detail.length);
+            console.log(res.data)
+          }
+        });
+      }else{
+        axios({
+          method: "POST",
+          url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=1`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        }).then((res) => {
+          if (res.data.code === 1) {
+            props.setData(res.data.payment_detail);
+            props.setRec(res.data.payment_detail.length);
+            console.log(res.data)
+          }
+        });
+      }
     } else if (props.invoice === "admingenerated") {
       const token = window.localStorage.getItem("adminToken");
       axios({
@@ -216,7 +294,12 @@ const InvoiceFilter = (props) => {
     setFilterData({
       query_no: "", p_dateFrom: "", p_dateTo: current_date, installment_no: "", opt: "" ,route:"",index:""
     })
+    if ((props.invoice === "generated") || (props.invoice === "tlcreate")) {
     localStorage.removeItem(`searchDataI${index}`);
+    }
+    else if((props.invoice === "tpgenerated") || (props.invoice === "tpcreate")){
+    localStorage.removeItem(`searchTpDataI${index}`);
+    }
   };
 
 

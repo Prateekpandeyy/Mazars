@@ -57,7 +57,7 @@ const Invoice = (updateTab) => {
       // console.log(key);
       if (tdsForm === false) {
         console.log("Rendered CI", key);
-        setScrolledTo(key.id)
+        setScrolledTo(key.assign_no)
       }else{
         console.log("Scrolled To Else CI", scrolledTo)
         var element = document.getElementById(scrolledTo);
@@ -124,7 +124,7 @@ const Invoice = (updateTab) => {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {

@@ -56,17 +56,7 @@ function AllProposal() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
-    if (ViewDiscussion === false) {
-      console.log("Rendered AllQ", key);
-      setScrolledTo(key)
-      console.log("Scrolled To AllQ", scrolledTo)
-    } else {
-      console.log("Scrolled To Else AllQ", scrolledTo)
-      var element = document.getElementById(scrolledTo);
-      if (element) {
-        console.log(myRef.current[scrolledTo], "ref element array")
-      }
-    }
+    
   };
   useEffect(() => {
     if (ViewDiscussion === false) {

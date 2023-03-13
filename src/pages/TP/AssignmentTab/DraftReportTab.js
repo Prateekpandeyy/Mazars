@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -29,6 +29,8 @@ function AssignmentTab() {
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
+  const [dateFrom, setdateFrom] = useState("");
+  const [dateto, setDateto] = useState(current_date);
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -36,6 +38,12 @@ function AssignmentTab() {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const [runTo, setRunTo] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  const myRefss = useRef([]);
 
   var current_date =
     new Date().getFullYear() +
@@ -50,6 +58,7 @@ function AssignmentTab() {
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [qid, setQid] = useState("");
   var clcomp = {
     color: "green",
   };
@@ -84,9 +93,40 @@ function AssignmentTab() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered Key", key);
+      setScrolledTo(key)
+      console.log("Scrolled To set", scrolledTo)
+    } else {
+      console.log("Scrolled To Else AllA", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log(myRef.current[scrolledTo], "ref element array")
+      }
+    }
   };
+
   useEffect(() => {
-    getAssignmentList();
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRef.current[scrolledTo], "ref element array")
+        let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [ViewDiscussion]);
+
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchTPDataAs2`));
+    if (asd) {
+      console.log("searchTPDataAs2 is here");
+    } else {
+      getAssignmentList();
+    }
   }, []);
 
   const getAssignmentList = () => {
@@ -133,6 +173,15 @@ function AssignmentTab() {
     setStore2(value);
   };
 
+  //handle dates
+  const handleDatefrom = (e) => {
+    setdateFrom(e.target.value)
+    console.log(dateFrom)
+  };
+  const handleDateto = (e) => {
+    setDateto(e.target.value)
+    console.log(dateto)
+  };
   //reset category
   const resetCategory = () => {
     setSelectedData([]);
@@ -147,9 +196,23 @@ function AssignmentTab() {
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
+    setdateFrom("");
+    setDateto(current_date);
+    localStorage.removeItem(`searchTPDataAs2`);
   };
 
   //assingmentStatus
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchTPDataAs2`));
+    if (asd) {
+      setSelectedData(asd.pcatid)
+      setdateFrom(asd.fromDate);
+      setDateto(asd.toDate);
+      setStore2(asd.store);
+      onSubmit(asd);
+    }
+  }, []);
 
   //columns
   const columns = [
@@ -157,7 +220,7 @@ function AssignmentTab() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -388,9 +451,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -413,22 +476,59 @@ function AssignmentTab() {
     },
   ];
   const onSubmit = (data) => {
-    axios
-      .get(
-        `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-          userid
-        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-          data.p_dateTo
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}`
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          if (res.data.result) {
-            setAssignment(res.data.result);
-            setRecords(res.data.result.length);
+
+    let obj = {}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data.pcatid,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchTPDataAs2`, JSON.stringify(obj))
+    if (data.route) {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data?.fromDate}&to=${data?.toDate
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatid}`, myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
           }
-        }
-      });
+        });
+    } else {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}`, myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              setAssignment(res.data.result);
+              setRecords(res.data.result.length);
+            }
+          }
+        });
+    }
   };
 
   const Reset = () => {
@@ -524,6 +624,8 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
+                  onChange={handleDatefrom}
+                  value={dateFrom}
                   ref={register}
                   max={item}
                 />
@@ -538,6 +640,8 @@ function AssignmentTab() {
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
+                  onChange={handleDateto}
+                  value={dateto}
                   ref={register}
                   defaultValue={item}
                   max={item}

@@ -217,6 +217,7 @@ function AssignmentTab(props) {
     setStore2([]);
     setQuery_no("");
     setdateFrom("");
+    disabledHandler("");
     setDateto(current_date);
     localStorage.removeItem(`searchDataAs1`);
     getAssignmentList();

@@ -39,16 +39,18 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   };
 
   useEffect(() => {
-    getPendingforAcceptance();
-  }, []);
-
-  const getPendingforAcceptance = () => {
     const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ3`));
     if (tlQueryFilterData)
       {
         console.log("Not called in all Q axios");
       }
     else{
+    getPendingforAcceptance();
+    }
+  }, []);
+
+  const getPendingforAcceptance = () => {
+    
     axios
       .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
@@ -57,7 +59,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           setRecords(res.data.result.length);
         }
       });
-    }
+    
   };
 
   const columns = [

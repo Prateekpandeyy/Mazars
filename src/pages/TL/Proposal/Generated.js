@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../../config/config";
@@ -41,6 +41,10 @@ const Generated = ({ updateTab }) => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [copy, setCopy] = useState(0);
+  const [scrolledTo, setScrolledTo] = useState("")
+  const [lastDown, setLastDown] = useState("")
+  const myRef = useRef([])
+  const myRefs = useRef([])
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
@@ -53,12 +57,37 @@ const Generated = ({ updateTab }) => {
       setInstallmentNo(key.installment_no);
       setBillNo(key.billno);
       setId2(key.id);
+      if (tdsForm === false) {
+        console.log("Rendered AllQ", key);
+        setScrolledTo(key.assign_no)
+        console.log("Scrolled To AllQ", scrolledTo)
+      } else {
+        console.log("Scrolled To Else AllQ", scrolledTo)
+        var element = document.getElementById(scrolledTo);
+        if (element) {
+          console.log(myRef.current[scrolledTo], "ref element array")
+        }
+      }
     }
+   
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   };
+
+  useEffect(() => {
+    if (tdsForm === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRef.current[scrolledTo], "ref element array")
+        let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [tdsForm]);
 
   useEffect(() => {
     getProposalList();
@@ -74,19 +103,19 @@ const Generated = ({ updateTab }) => {
     if (tlInFilterData) {
       console.log("Not called in Complete Data A axios");
     } else {
-    axios
-      .get(
-        `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setProposal(res.data.payment_detail);
-          setRecords(res.data.payment_detail.length);
-        }
-      });
-  };
-}
+      axios
+        .get(
+          `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setProposal(res.data.payment_detail);
+            setRecords(res.data.payment_detail.length);
+          }
+        });
+    };
+  }
 
   const downloadpdf = (qno, id, installmentNumber) => {
     setCopy(0);
@@ -124,7 +153,7 @@ const Generated = ({ updateTab }) => {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       style: {
         fontSize: "11px",
@@ -210,7 +239,7 @@ const Generated = ({ updateTab }) => {
 
         return (
           <>
-            {row.is_paid ===  "0" ? (
+            {row.is_paid === "0" ? (
               <p className="rightAli"></p>
             ) : (
               <p className="rightAli">{nfObject.format(x)}</p>
@@ -228,11 +257,11 @@ const Generated = ({ updateTab }) => {
       formatter: function (cell, row) {
         return (
           <>
-            {row.is_paid ===  "0" ? (
+            {row.is_paid === "0" ? (
               <p>Unpaid</p>
             ) : (
               <>
-                {row.is_paid ===  "1" ? (
+                {row.is_paid === "1" ? (
                   <p>Paid</p>
                 ) : (
                   <p className="declined">Declined</p>
@@ -267,16 +296,19 @@ const Generated = ({ updateTab }) => {
               >
                 <DescriptionOutlinedIcon color="secondary" />
               </span>
-              {row.is_paid ===  "0" ? (
-                <div className="mx-1" onClick={() => addTdsToggle(row)}>
+              {row.is_paid === "0" ? (
+                <div className="mx-1" onClick={() => addTdsToggle(row)}
+                  // id={row.id}
+                  // ref={el => (myRefs.current[row.id] = el)}
+                >
                   <EditQuery title="Edit Invoice" />
                 </div>
               ) : (
                 ""
               )}
-              {row.is_paid ===  "0" && row.paymenturl !== null ? (
+              {row.is_paid === "0" && row.paymenturl !== null ? (
                 <span title={row.paymenturl}>
-                  {copy ===  row.id ? (
+                  {copy === row.id ? (
                     <span style={{ color: "red" }}>Copied</span>
                   ) : (
                     <FileCopyIcon

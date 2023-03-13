@@ -140,7 +140,12 @@ function AssignmentTab() {
   }, [ViewDiscussion]);
 
   useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs2`));
+    if (asd) {
+      console.log("searchDataAs2 is here");
+    }else{
     getAssignmentList();
+    }
   }, []);
 
   const getAssignmentList = () => {
@@ -231,6 +236,9 @@ function AssignmentTab() {
     setDateto(current_date);
     localStorage.removeItem(`searchDataAs2`);
   };
+
+  
+
 
   //assingmentStatus
 

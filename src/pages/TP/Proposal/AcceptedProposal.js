@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -26,6 +26,10 @@ function AcceptedProposal() {
   const [proposalId, setProposalId] = useState();
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignNo, setAssignNo] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("")
+  const [lastDown, setLastDown] = useState("")
+  const myRef = useRef([])
+  const myRefs = useRef([])
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -36,12 +40,42 @@ function AcceptedProposal() {
     console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
+    setLastDown(e);
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllQ", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllQ", scrolledTo)
+    } else {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log(myRef.current[scrolledTo], "ref element array")
+      }
+    }
   };
+
+  useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRef.current[scrolledTo], "ref element array")
+        let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    // console.log(viewProposalModal,"This in useEffect")
+    let runTo = myRefs.current[lastDown]
+    runTo?.scrollIntoView({ block: 'center' });
+}, [viewProposalModal]);
 
   useEffect(() => {
     const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataP3`));
@@ -74,7 +108,7 @@ function AcceptedProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -249,6 +283,8 @@ function AcceptedProposal() {
                     style={{ cursor: "pointer", marginLeft: "2px" }}
                     onClick={(e) => showProposalModal2(row.id)}
                     title="View Proposal"
+                    id={row.id}
+                    ref={el => (myRefs.current[row.id] = el)}
                   >
                     <EyeIcon />
                   </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef} from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
@@ -59,6 +59,13 @@ function AdminPermission(props) {
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [qid, setQid] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("")
+  const [query_no,setQuery_no] = useState("");
+  const [dateFrom,setdateFrom]=useState("");
+  const [dateto,setDateto]=useState(current_date);
+  const [p_status,setP_status]=useState("");
+  const [pCatid,setPcatid]=useState("")
+  const myRef = useRef([])
   const [error, setError] = useState(false);
   let des = false;
   var rowStyle2 = {};
@@ -83,10 +90,40 @@ function AdminPermission(props) {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered Key", key);
+      setScrolledTo(key)
+      console.log("Scrolled To set", scrolledTo)
+    }else{
+      console.log("Scrolled To Else AllA", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log(myRef.current[scrolledTo],"ref element array")
+      }
+    }
   };
 
   useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log("red",element);
+        console.log(myRef.current[scrolledTo],"ref element array")
+        let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+    }
+    }
+  }, [ViewDiscussion]);
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchTPDataAs4`));
+    console.log(asd);
+    if (asd) {
+      console.log("searchTPDataAs4 is here");
+    }else{
     getAssignmentList();
+    }
   }, []);
 
   const getAssignmentList = () => {
@@ -136,7 +173,6 @@ function AdminPermission(props) {
   //reset category
   const resetCategory = () => {
     console.log(error);
-
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
@@ -153,8 +189,22 @@ function AdminPermission(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
+    setQuery_no("");
+    setdateFrom("");
+    disabledHandler("");
+    setDateto(current_date);
+    localStorage.removeItem(`searchTPDataAs4`);
     getAssignmentList();
   };
+
+  //handle date
+  const handleDatefrom = (e) => {
+    setdateFrom(e.target.value)
+  };
+  const handleDateto = (e) => {
+    setDateto(e.target.value)
+  };
+
 
   //assingmentStatus
   const assingmentStatus = (value) => {
@@ -168,7 +218,7 @@ function AdminPermission(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -487,47 +537,139 @@ function AdminPermission(props) {
   };
 
   const onSubmit = (data) => {
-    if (status.length > 0) {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
-          }&pcat_id=${selectedData}`
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+
+    console.log(data)
+    let obj ={}
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data?.fromDate,
+        toDate: data?.toDate,
+        pcatid: data?.pcatid,
+        status:data.status,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
     } else {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
-          }&pcat_id=${selectedData}`
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        });
+      obj = {
+        store: store2,
+        fromDate: data?.p_dateFrom,
+        toDate: data?.p_dateTo,
+        pcatid: selectedData,
+        status:status,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+      };
     }
+    localStorage.setItem(`searchTPDataAs4`, JSON.stringify(obj));
+    if (data.route){
+      if (data.status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data?.fromDate}&to=${
+              data?.toDate
+            }&assignment_status=${data.status}&stages_status=${
+              data.p_status
+            }&pcat_id=${data?.pcatid}`
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data?.fromDate}&to=${
+              data?.toDate
+            }&assignment_status=${data.status}&stages_status=${
+              data.p_status
+            }&pcat_id=${data?.pcatid}`
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    }else{
+      if (status.length > 0) {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&assignment_status=${status}&stages_status=${
+              data.p_status
+            }&pcat_id=${selectedData}`
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&assignment_status=${status}&stages_status=${
+              data.p_status
+            }&pcat_id=${selectedData}`
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      }
+    }
+    
   };
+
+  useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchTPDataAs4`));
+    console.log(asd);
+    if (asd) {
+    // setTax2([]);
+    // setError(false);
+    // setHide("");
+    setP_status(asd.p_status)
+    assingmentStatus(asd.status)
+    setQuery_no(asd.query_no)
+    setStatus(asd.status);
+    setSelectedData(asd.pcatid);
+    setStore2(asd.store);
+    setdateFrom(asd.fromDate)
+    setDateto(asd.toDate)
+    setHide(asd.p_status);
+    onSubmit(asd)
+    }
+    getAssignmentList();
+  }, []);
 
   const Reset = () => {
     return (
@@ -547,6 +689,7 @@ function AdminPermission(props) {
     setStatus([]);
     setError(false);
     setHide(e.target.value);
+    setP_status(e.target.value);
   };
 
   return (
@@ -621,6 +764,8 @@ function AdminPermission(props) {
                   className="form-select form-control"
                   ref={register}
                   max={item}
+                  value={dateFrom}
+                  onChange= {handleDatefrom}
                 />
               </div>
 
@@ -634,6 +779,8 @@ function AdminPermission(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
+                  value={dateto}
+                  onChange= {handleDateto}
                   defaultValue={item}
                   max={item}
                 />
@@ -645,6 +792,7 @@ function AdminPermission(props) {
                   name="p_status"
                   ref={register}
                   style={{ height: "33px" }}
+                  value={p_status}
                   onChange={(e) => disabledHandler(e)}
                 >
                   <option value="">--select--</option>
@@ -697,7 +845,7 @@ function AdminPermission(props) {
                 " "
               )}
 
-              <div className="form-group mx-sm-1  mb-2">
+              {/* <div className="form-group mx-sm-1  mb-2">
                 <Select
                   mode="single"
                   style={{ width: 210 }}
@@ -732,7 +880,7 @@ function AdminPermission(props) {
                     </div>
                   </Option>
                 </Select>
-              </div>
+              </div> */}
 
               <div class="form-group mx-sm-1  mb-2">
                 <label className="form-select form-control">
