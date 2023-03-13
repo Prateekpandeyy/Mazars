@@ -364,12 +364,12 @@ const InvoiceFilter = (props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-3">
             {props.invoice === "tpcreate" ||
               props.invoice === "admincreate" ||
               props.invoice === "create" ? (
               ""
             ) : (
+              <div className="col-md-3">
               <select
                 name="opt"
                 className="form-select form-control"
@@ -383,8 +383,9 @@ const InvoiceFilter = (props) => {
                 <option value="1">Paid</option>
                 <option value="2">Declined</option>
               </select>
+              </div>
             )}
-          </div>
+          
           <div className="col-md-6">
             <button
               className="customBtn"

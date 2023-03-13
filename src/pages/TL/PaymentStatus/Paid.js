@@ -46,6 +46,8 @@ function AllPayment() {
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
   const myRef = useRef([]);
+  const myRefs = useRef([]);
+  const [lastDown, setLastDown] = useState("")
   const [assignNo, setAssignNo] = useState("");
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);

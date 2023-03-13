@@ -78,7 +78,12 @@ function InprogressProposal() {
   }, [viewProposalModal]);
 
   useEffect(() => {
+    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP2`));
+    if (tlProposalFilterData) {
+        console.log("Not called in Complete Data P axios");
+    } else {
     getProposalList();
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -87,10 +92,7 @@ function InprogressProposal() {
     },
   };
   const getProposalList = () => {
-    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP2`));
-    if (tlProposalFilterData) {
-        console.log("Not called in Complete Data P axios");
-    } else {
+    
     axios
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`,
@@ -103,7 +105,7 @@ function InprogressProposal() {
           setRecords(res.data.result.length);
         }
       });
-  };
+  
 }
 
   const columns = [
@@ -220,11 +222,11 @@ function InprogressProposal() {
           <>
             <div>
               {row.status}/
-              {row.status == "Inprogress" ? (
+              {row.status === "Inprogress" ? (
                 <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status == "Customer Declined; Proposal" ? (
+              ) : row.status === "Customer Declined; Proposal" ? (
                 <p className="declined">{row.statusdescription}</p>
-              ) : row.status == "Accepted; Proposal" ? (
+              ) : row.status === "Accepted; Proposal" ? (
                 <p className="completed">{row.statusdescription}</p>
               ) : null}
             </div>
@@ -303,7 +305,7 @@ function InprogressProposal() {
                   >
                     <EditQuery titleName="Edit Proposal" />
                   </Link>
-                ) : row.status_code == "2" && row.work_by != "0" ? (
+                ) : row.status_code === "2" && row.work_by != "0" ? (
                   <Link
                     to={{
                       pathname: `/teamleader_sendproposal/${row.id}`,

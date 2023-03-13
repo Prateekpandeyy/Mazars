@@ -67,8 +67,15 @@ function CompletedQuery({ updateTab }) {
   }, [ViewDiscussion]);
 
   useEffect(() => {
+    const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ4`));
+    if (tlQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }
+    else {
     getInCompleteAssingment();
+    }
   }, []);
+
   const toggle = (key) => {
     setModal(!modal);
     axios

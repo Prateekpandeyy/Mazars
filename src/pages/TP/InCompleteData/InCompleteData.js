@@ -64,15 +64,17 @@ function InCompleteData({ CountIncomplete, data ,setIncompleteData ,getIncomplet
     },
   };
   useEffect(() => {
-    getInCompleteAssingment();
-  }, []);
-
-  const getInCompleteAssingment = () => {
     const tpQueryFilterData = JSON.parse(localStorage.getItem(`searchTPDataQ3`));
     if (tpQueryFilterData) {
       console.log("Not called in all Q axios");
     }
     else {
+    getInCompleteAssingment();
+    }
+  }, []);
+
+  const getInCompleteAssingment = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`,
@@ -84,7 +86,7 @@ function InCompleteData({ CountIncomplete, data ,setIncompleteData ,getIncomplet
           setRecords(res.data.result.length);
         }
       });
-    }
+    
   };
 
   const columns = [

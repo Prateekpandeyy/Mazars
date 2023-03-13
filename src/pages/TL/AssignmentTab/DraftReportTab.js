@@ -586,7 +586,9 @@ function AssignmentTab() {
     if (data.route) {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatid}`,
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${data.store
+          }&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatid}`,
           myConfig
         )
         .then((res) => {
@@ -601,7 +603,9 @@ function AssignmentTab() {
     else {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}`,
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${store2
+          }&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}`,
           myConfig
         )
         .then((res) => {

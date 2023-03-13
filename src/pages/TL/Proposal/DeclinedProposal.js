@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
@@ -72,14 +72,20 @@ function DeclinedProposal() {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-      // console.log(viewProposalModal,"This in useEffect")
-      let runTo = myRefs.current[lastDown]
-      runTo?.scrollIntoView({ block: 'center' });
+    // console.log(viewProposalModal,"This in useEffect")
+    let runTo = myRefs.current[lastDown]
+    runTo?.scrollIntoView({ block: 'center' });
   }, [viewProposalModal]);
 
   useEffect(() => {
-    getProposalList();
+    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP4`));
+    if (tlProposalFilterData) {
+      console.log("Not called in Complete Data P axios");
+    } else {
+      getProposalList();
+    }
   }, []);
+
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -87,10 +93,7 @@ function DeclinedProposal() {
     },
   };
   const getProposalList = () => {
-    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP4`));
-            if (tlProposalFilterData) {
-                console.log("Not called in Complete Data P axios");
-            } else {
+
     axios
       .get(
         `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=3`,
@@ -103,8 +106,7 @@ function DeclinedProposal() {
           setRecords(res.data.result.length);
         }
       });
-  };
-}
+  }
 
   const columns = [
     {

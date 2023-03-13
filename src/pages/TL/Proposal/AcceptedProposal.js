@@ -59,8 +59,14 @@ function AcceptedProposal() {
   };
 
   useEffect(() => {
+    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP3`));
+    if (tlProposalFilterData) {
+      console.log("Not called in Complete Data P axios");
+    } else {
     getProposalList();
+    }
   }, []);
+  
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -88,10 +94,7 @@ function AcceptedProposal() {
 
   
   const getProposalList = () => {
-    const tlProposalFilterData = JSON.parse(localStorage.getItem(`searchDataP3`));
-    if (tlProposalFilterData) {
-      console.log("Not called in Complete Data P axios");
-    } else {
+    
       axios
         .get(
           `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=2`,
@@ -104,7 +107,7 @@ function AcceptedProposal() {
             setRecords(res.data.result.length);
           }
         });
-    };
+    
   }
 
   const columns = [

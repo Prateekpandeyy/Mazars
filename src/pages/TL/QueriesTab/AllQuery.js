@@ -68,7 +68,13 @@ function AllQuery() {
 
 
   useEffect(() => {
+    const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ1`));
+    if (tlQueryFilterData) {
+      console.log("Not called in all Q axios");
+    }
+    else {
     getInCompleteAssingment();
+    }
   }, []);
 
 
@@ -77,11 +83,7 @@ function AllQuery() {
   // }, [ViewDiscussion]);
 
   const getInCompleteAssingment = () => {
-    const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ1`));
-    if (tlQueryFilterData) {
-      console.log("Not called in all Q axios");
-    }
-    else {
+   
       axios
         .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
@@ -90,7 +92,7 @@ function AllQuery() {
             setRecords(res.data.result.length);
           }
         });
-    }
+    
   };
 
   const columns = [

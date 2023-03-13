@@ -117,7 +117,12 @@ useEffect(() => {
   
 
   useEffect(() => {
+    const tlPayFilterData = JSON.parse(localStorage.getItem(`searchDataY1`));
+            if (tlPayFilterData) {
+                console.log("Not called in Complete Data P axios");
+            } else {
     getPaymentStatus();
+            }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -126,10 +131,7 @@ useEffect(() => {
     },
   };
   const getPaymentStatus = () => {
-    const tlPayFilterData = JSON.parse(localStorage.getItem(`searchDataY1`));
-            if (tlPayFilterData) {
-                console.log("Not called in Complete Data P axios");
-            } else {
+    
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}`,
@@ -142,7 +144,7 @@ useEffect(() => {
           setRecords(res.data.result.length);
         }
       });
-  };
+  
 }
 
   const toggle = (key) => {

@@ -69,16 +69,18 @@ function InCompleteData({ CountIncomplete }) {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    getInCompleteAssingment();
-  }, []);
-
-  const getInCompleteAssingment = () => {
     const tlQueryFilterData = JSON.parse(localStorage.getItem(`searchDataQ2`));
     if (tlQueryFilterData)
       {
         console.log("Not called in all Q axios");
       }
     else{
+    getInCompleteAssingment();
+    }
+  }, []);
+
+  const getInCompleteAssingment = () => {
+    
     axios
       .get(
         `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=1`,
@@ -90,7 +92,7 @@ function InCompleteData({ CountIncomplete }) {
           setRecords(res.data.result.length);
         }
       });
-    }
+    
   };
 
   const columns = [

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
@@ -47,6 +47,10 @@ function AllPayment() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignNo, setAssignNo] = useState("");
   const [addPaymentModal, setPaymentModal] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("")
+  const [lastDown, setLastDown] = useState("")
+  const myRef = useRef([])
+  const myRefs = useRef([])
 
   // UseState end
   // Global veriable
@@ -54,14 +58,70 @@ function AllPayment() {
   const rejectHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setAssignNo(key.assign_no);
+    console.log(key.id,"Declined Payment");
+    if (addPaymentModal === false) {
+     console.log("Rendered AllY", key.id);
+     setLastDown(key.id)
+     console.log("Scrolled To AllY", lastDown)
+   } else {
+     console.log("Scrolled To Else AllY", lastDown)
+     var element = document.getElementById(lastDown);
+     if (element) {
+       console.log(myRefs.current[lastDown], "ref element array")
+     }
+   }
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllQ", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllQ", scrolledTo)
+    } else {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log(myRef.current[scrolledTo], "ref element array")
+      }
+    }
   };
+
   useEffect(() => {
+    if (ViewDiscussion === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRef.current[scrolledTo], "ref element array")
+        let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [ViewDiscussion]);
+
+  useEffect(() => {
+    if (addPaymentModal === false) {
+      console.log("Scrolled To Else AllQ", lastDown)
+      var element = document.getElementById(lastDown);
+      if (element) {
+        console.log("red", element);
+        console.log(myRefs.current[lastDown], "ref element array")
+        let runTo = myRefs.current[lastDown]
+        runTo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [addPaymentModal]);
+
+
+  useEffect(() => {
+    const tlPayFilterData = JSON.parse(localStorage.getItem(`searchDataY2`));
+            if (tlPayFilterData) {
+                console.log("Not called in Complete Data P axios");
+            } else {
     getPaymentStatus();
+            }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -70,10 +130,7 @@ function AllPayment() {
     },
   };
   const getPaymentStatus = () => {
-    const tlPayFilterData = JSON.parse(localStorage.getItem(`searchDataY2`));
-            if (tlPayFilterData) {
-                console.log("Not called in Complete Data P axios");
-            } else {
+    
     axios
       .get(
         `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=1`,
@@ -86,7 +143,6 @@ function AllPayment() {
           setRecords(res.data.result.length);
         }
       });
-  };
 }
 
   const toggle = (key) => {
@@ -146,7 +202,7 @@ function AllPayment() {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -340,7 +396,10 @@ function AllPayment() {
               </Link>
 
               {row.paid_status == "0" ? (
-                <div title="Payment decline" onClick={() => rejectHandler(row)}>
+                <div title="Payment decline" onClick={() => rejectHandler(row)}
+                id={row.id}
+                ref={el => (myRefs.current[row.id] = el)}
+                >
                   <PaymentDecline />
                 </div>
               ) : null}
