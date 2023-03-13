@@ -1034,12 +1034,10 @@ const Report = () => {
           let remainQu = [];
           b.forEach((i) => {
             selectQuery.forEach((q) => {
-              console.log(q);
               if (q.value === i.assign_no) {
                 remainQu.push(q);
               }
             });
-            console.log("remainQu", remainQu);
           });
           setSelectedQuery(remainQu);
           setQno(b.map(getqNo));
@@ -1084,7 +1082,8 @@ const Report = () => {
                     name="p_from"
                     ref={register}
                     value={fromDate}
-                    onChange={(e) => {
+                    onBlur={(e) => {
+                      console.log(e.target.value);
                       setFromDate(e.target.value);
                       filterQuery({
                         name: "fromdate",
@@ -1109,7 +1108,7 @@ const Report = () => {
                       "is-invalid": errors.p_type,
                     })}
                     value={toDate}
-                    onChange={(e) => {
+                    onBlur={(e) => {
                       setToDate(e.target.value);
                       filterQuery({
                         name: "todate",

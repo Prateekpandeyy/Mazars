@@ -231,7 +231,16 @@ const Report = () => {
     });
   };
   const filterQuery = (cust) => {
+    let data = {};
     var { name, value } = cust;
+    let sub_cat = [];
+    if (name === "cat") {
+      sub_cat = [];
+    } else if (name === "sub_cat") {
+      sub_cat = value;
+    } else {
+      sub_cat = querySearchData.sub_cat;
+    }
 
     setQueryString((payload) => {
       return {
@@ -239,10 +248,22 @@ const Report = () => {
         [name]: value,
       };
     });
-    let data = {
-      ...querySearchData,
-      [name]: value,
-    };
+    if (cust) {
+      data = {
+        ...querySearchData,
+        [name]: value,
+      };
+    } else {
+      data = {
+        fromdate: "",
+        todate: current_date,
+        tl: "",
+        tp: "",
+        cat: "",
+        sub_cat: "",
+        cid: "",
+      };
+    }
 
     axios
       .get(
@@ -314,6 +335,16 @@ const Report = () => {
     let proposValue = proposalValue;
     let bValue = basicValue;
     let manualValue = manualReceipt;
+    setQueryString({
+      fromdate: "",
+      todate: current_date,
+      tl: "",
+      tp: "",
+      cat: "",
+      sub_cat: "",
+      cid: "",
+    });
+
     setFromDate("");
     setToDate(current_date);
     Object.keys(bValue).forEach((key) => {
@@ -794,6 +825,10 @@ const Report = () => {
       kk.push(i.value);
     });
     setDd(kk);
+    filterQuery({
+      name: "sub_cat",
+      value: kk,
+    });
   };
 
   const queryNumber = (e) => {

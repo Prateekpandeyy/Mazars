@@ -24,11 +24,6 @@ import $ from "jquery";
 const Report = () => {
   const userid = window.localStorage.getItem("tlkey");
 
-  const selectInputRef = useRef();
-  const selectInputRef2 = useRef();
-  const selectInputRef3 = useRef();
-  const selectInputRef4 = useRef();
-  const selectInputRef5 = useRef();
   const selectInputRef6 = useRef();
 
   const [subData, subCategeryData] = useState([]);
@@ -120,6 +115,7 @@ const Report = () => {
     mpayment_info: false,
     other_info: false,
   });
+  const [clientId, setClientId] = useState([]);
   var kk = [];
   var vv = [];
   const token = window.localStorage.getItem("tlToken");
@@ -141,6 +137,7 @@ const Report = () => {
 
   const [item] = useState(current_date);
   const [toDate, setToDate] = useState(current_date);
+  const [tpValue, setTpValue] = useState([]);
   const [fromDate, setFromDate] = useState("");
   const [querySearchData, setQueryString] = useState({
     fromdate: "",
@@ -151,6 +148,7 @@ const Report = () => {
     sub_cat: "",
     cid: "",
   });
+
   const [selectQuery, setSelectedQuery] = useState([]);
   useEffect(() => {
     const getCategory = async () => {
@@ -247,6 +245,7 @@ const Report = () => {
   };
   let pk = [];
   const custName = (a) => {
+    setClientId(a);
     a.map((r) => {
       pk.push(r.value);
     });
@@ -315,16 +314,35 @@ const Report = () => {
     let proposValue = proposalValue;
     let bValue = basicValue;
     let manualValue = manualReceipt;
-    setFromDate("");
+    setQueryString({
+      fromdate: "",
+      todate: current_date,
+      tl: "",
+      tp: "",
+      cat: "",
+      sub_cat: "",
+      cid: "",
+    });
     setManualSearch(false);
+    setSelectedQuery([]);
+    setCategoryData([]);
+    setCompanyName([]);
+    setCompanyName2([]);
+    setFromDate("");
+    subCategeryData([]);
+    setTaxId([]);
+    subCategeryData([]);
+    setSelectedQuery([]);
+    setCompanyName2([]);
+    setTpValue([]);
+    setClientId([]);
+    setTaxprofessional44([]);
+    setTeamleader44([]);
+    setcName([]);
+    setQqno([]);
+    setDd([]);
+    setmcatname([]);
     setToDate(current_date);
-    selectInputRef.current.select.clearValue();
-    selectInputRef2.current.select.clearValue();
-    selectInputRef3.current.select.clearValue();
-    selectInputRef4.current.select.clearValue();
-    selectInputRef5.current.select.clearValue();
-    selectInputRef6.current.select.clearValue();
-
     Object.keys(bValue).forEach((key) => {
       bValue[key] = false;
     });
@@ -375,9 +393,21 @@ const Report = () => {
     setCheckBox(false);
     setProposalCheckbox(false);
     setQno([]);
+    getData();
+    filterQuery("");
+    getCompany();
   };
   const filterQuery = (cust) => {
+    let data = {};
     var { name, value } = cust;
+    let sub_cat = [];
+    if (name === "cat") {
+      sub_cat = [];
+    } else if (name === "sub_cat") {
+      sub_cat = value;
+    } else {
+      sub_cat = querySearchData.sub_cat;
+    }
 
     setQueryString((payload) => {
       return {
@@ -385,10 +415,22 @@ const Report = () => {
         [name]: value,
       };
     });
-    let data = {
-      ...querySearchData,
-      [name]: value,
-    };
+    if (cust) {
+      data = {
+        ...querySearchData,
+        [name]: value,
+      };
+    } else {
+      data = {
+        fromdate: "",
+        todate: current_date,
+        tl: "",
+        tp: "",
+        cat: "",
+        sub_cat: "",
+        cid: "",
+      };
+    }
 
     axios
       .get(
@@ -855,9 +897,15 @@ const Report = () => {
       kk.push(i.value);
     });
     setDd(kk);
+    filterQuery({
+      name: "sub_cat",
+      value: kk,
+    });
   };
 
   const taxProfessional = (e) => {
+    setTpValue(e);
+    setClientId([]);
     let kk2 = [];
     e.map((i) => {
       kk2.push(i.value);
@@ -1026,7 +1074,7 @@ const Report = () => {
                     name="p_from"
                     ref={register}
                     value={fromDate}
-                    onChange={(e) => {
+                    onBlur={(e) => {
                       setFromDate(e.target.value);
                       filterQuery({
                         name: "fromdate",
@@ -1051,7 +1099,7 @@ const Report = () => {
                       "is-invalid": errors.p_type,
                     })}
                     value={toDate}
-                    onChange={(e) => {
+                    onBlur={(e) => {
                       setToDate(e.target.value);
                       filterQuery({
                         name: "todate",
@@ -1069,7 +1117,6 @@ const Report = () => {
                   <label className="form-label">Teamleader</label>
                   <Select
                     isDisabled={true}
-                    ref={selectInputRef}
                     value={options3[0]}
                     options={options3}
                   />
@@ -1081,7 +1128,7 @@ const Report = () => {
                   <label className="form-label">Tax Professional</label>
                   <Select
                     isMulti={true}
-                    ref={selectInputRef2}
+                    value={tpValue}
                     options={options4}
                     onChange={(e) => taxProfessional(e)}
                   />
@@ -1095,7 +1142,6 @@ const Report = () => {
                   isMulti
                   options={options}
                   className={error ? "customError" : ""}
-                  ref={selectInputRef3}
                   styles={{
                     option: (styles, { data }) => {
                       return {
@@ -1108,6 +1154,7 @@ const Report = () => {
                       color: data.value == 2 ? "green" : "blue",
                     }),
                   }}
+                  value={categoryData}
                   onChange={category2}
                 ></Select>
               </div>
@@ -1117,7 +1164,6 @@ const Report = () => {
                   isMulti
                   options={options2}
                   className={error2 ? "customError" : ""}
-                  ref={selectInputRef4}
                   onChange={subCategory22}
                   styles={{
                     option: (styles, { data }) => {
@@ -1140,7 +1186,7 @@ const Report = () => {
                   <Select
                     isMulti
                     options={custData}
-                    ref={selectInputRef5}
+                    value={clientId}
                     onChange={(e) => custName(e)}
                   ></Select>
                 </div>
@@ -1150,7 +1196,6 @@ const Report = () => {
                   <label className="form-label">Query Number</label>
                   <Select
                     isMulti={true}
-                    ref={selectInputRef6}
                     options={qno}
                     value={selectQuery}
                     onChange={(e) => queryNumber(e)}
