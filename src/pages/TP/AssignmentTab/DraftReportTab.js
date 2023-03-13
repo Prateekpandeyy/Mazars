@@ -86,6 +86,18 @@ function AssignmentTab() {
     } else {
       setDraftModal(!draftModal);
       setId(id);
+      console.log(id);
+    }
+    if (draftModal === false) {
+      console.log("Rendered Key", id);
+      setRunTo(id)
+      console.log("Scrolled To set", runTo)
+    } else {
+      console.log("Scrolled To Else AllA", runTo)
+      var element = document.getElementById(runTo);
+      if (element) {
+        console.log(myRefs.current[runTo], "ref element array")
+      }
     }
   };
 
@@ -118,6 +130,19 @@ function AssignmentTab() {
       }
     }
   }, [ViewDiscussion]);
+
+  useEffect(() => {
+    if (draftModal === false) {
+      console.log("Scrolled To Else AllQ", runTo)
+      var element = document.getElementById(runTo);
+      if (element) {
+        console.log("red", element);
+        console.log(myRefs.current[runTo], "ref element array")
+        let runToo = myRefs.current[runTo]
+        runToo.scrollIntoView({ block: 'center' });
+      }
+    }
+  }, [draftModal]);
 
 
   useEffect(() => {
@@ -462,6 +487,8 @@ function AssignmentTab() {
                         color: "green",
                       }}
                       onClick={() => uploadDraftReport(row.id)}
+                      id={row.id} 
+                      ref={el => (myRefs.current[row.id] = el)}
                     >
                       <DraftReportUploadIcon />
                       draft

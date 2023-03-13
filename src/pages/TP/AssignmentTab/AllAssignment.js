@@ -209,8 +209,8 @@ function AssignmentTab(props) {
       setdateFrom(asd.fromDate)
       setDateto(asd.toDate)
       setHide(asd.p_status);
-      onSubmit(asd);
       getAssignmentList();
+      onSubmit(asd);
     }
     
   }, []);
