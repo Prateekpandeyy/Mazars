@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../../components/Layout/Layout";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
@@ -20,27 +19,46 @@ function InprogressProposal() {
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
   const [id, setId] = useState(null);
-
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
-  const [proposalId, setProposalId] = useState();
+  const [proposalId, setProposalId] = useState("");
+  const [assignNo, setAssignNo] = useState("");
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+
   const chatHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setId(key.assign_no);
   };
 
-  const [assignNo, setAssignNo] = useState("");
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
   };
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
 
   useEffect(() => {
     getProposalList();
@@ -62,7 +80,7 @@ function InprogressProposal() {
         .then((res) => {
           if (res.data.code === 1) {
             setProposal(res.data.result);
-            setCount(res.data.result.length);
+
             setRecords(res.data.result.length);
           }
         });
@@ -74,7 +92,14 @@ function InprogressProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
       style: {
         fontSize: "11px",

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
@@ -19,23 +18,35 @@ function AcceptedProposal() {
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
-  const [id, setId] = useState(null);
-
-  const [addPaymentModal, setPaymentModal] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
-  const chatHandler = (key) => {
-    setPaymentModal(!addPaymentModal);
-    setId(key.assign_no);
-  };
-
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
+
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
@@ -61,7 +72,7 @@ function AcceptedProposal() {
         .then((res) => {
           if (res.data.code === 1) {
             setProposal(res.data.result);
-            setCount(res.data.result.length);
+
             setRecords(res.data.result.length);
           }
         });
@@ -73,7 +84,14 @@ function AcceptedProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {
