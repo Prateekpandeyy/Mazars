@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -40,6 +40,8 @@ function AdminPermission(props) {
   const [dateFrom, setdateFrom] = useState("");
   const [dateto, setDateto] = useState(current_date);
   const [p_status, setP_status] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("")
+  const myRef = useRef([]);
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -65,9 +67,33 @@ function AdminPermission(props) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      console.log("Rendered AllA", key);
+      setScrolledTo(key)
+      console.log("Scrolled To AllA", scrolledTo)
+    } else {
+      console.log("Scrolled To Else AllA", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        console.log(myRef.current[scrolledTo], "ref element array")
+      }
+    }
   };
+
+  useEffect(() => {
+    // if (ViewDiscussion === true) {
+    console.log("Scrolled To Else AllQ", scrolledTo)
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      console.log("red", element);
+      console.log(myRef.current[scrolledTo], "ref element array")
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+    // }
+  }, [ViewDiscussion]);
 
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
@@ -77,7 +103,12 @@ function AdminPermission(props) {
   };
 
   useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs4`));
+    if (asd) {
+      console.log("searchDataAs4 is here");
+    }else{
     getAssignmentData();
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -216,7 +247,7 @@ function AdminPermission(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };

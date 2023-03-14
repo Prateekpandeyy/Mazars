@@ -41,7 +41,9 @@ const Invoice = (updateTab) => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("")
   const myRef = useRef([]);
+  const myRefs = useRef([])
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
@@ -68,24 +70,54 @@ const Invoice = (updateTab) => {
     }
   };
   useEffect(() => {
-    if (tdsForm === false) {
+    // if (tdsForm === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element){
         console.log("red",element);
         console.log(myRef.current[scrolledTo],"ref element array")
         let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
     }
-    }
+    // }
   }, [tdsForm]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
+    if (ViewDiscussion === false) {
+      console.log("Rendered CI", key);
+      setScrolledTo(key.assign_no)
+    }else{
+      console.log("Scrolled To Else CI", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log(myRef.current[scrolledTo],"ref element array")
+      }
+    }
   };
 
   useEffect(() => {
+    // if (tdsForm === false) {
+      console.log("Scrolled To Else AllQ", scrolledTo)
+      var element = document.getElementById(scrolledTo);
+      if (element){
+        console.log("red",element);
+        console.log(myRef.current[scrolledTo],"ref element array")
+        let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
+        runTo.scrollIntoView({ block: 'center' });
+    }
+    // }
+  }, [ViewDiscussion]);
+
+  useEffect(() => {
+    const tlInFilterData = JSON.parse(localStorage.getItem(`searchDataI2`));
+    if (tlInFilterData) {
+      console.log("Not called in Complete Data P axios");
+    } else {
     getProposalList();
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -94,10 +126,7 @@ const Invoice = (updateTab) => {
     },
   };
   const getProposalList = () => {
-    const tlInFilterData = JSON.parse(localStorage.getItem(`searchDataI2`));
-    if (tlInFilterData) {
-      console.log("Not called in Complete Data P axios");
-    } else {
+   
     axios
       .get(
         `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=0`,
@@ -110,7 +139,7 @@ const Invoice = (updateTab) => {
           setRecords(res.data.payment_detail.length);
         }
       });
-  };
+ 
 }
   const [hasinput , setHasinput]=useState(false);
   console.log(hasinput,"has not changed the filter")

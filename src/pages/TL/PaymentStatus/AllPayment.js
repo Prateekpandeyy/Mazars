@@ -74,16 +74,17 @@ function AllPayment() {
   };
 //for declined payment
 useEffect(() => {
-  if (addPaymentModal === false) {
+  // if (addPaymentModal === false) {
     console.log("Scrolled To Else AllQ", lastDown)
     var element = document.getElementById(lastDown);
     if (element) {
       console.log("red", element);
       console.log(myRefs.current[lastDown], "ref element array")
       let runTo = myRefs.current[lastDown]
+      runTo.scrollIntoView(false)
       runTo.scrollIntoView({ block: 'center' });
     }
-  }
+  // }
 }, [addPaymentModal]);
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -103,16 +104,17 @@ useEffect(() => {
     }
   };
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element) {
         console.log("red", element);
         console.log(myRef.current[scrolledTo], "ref element array")
         let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [ViewDiscussion]);
   
 

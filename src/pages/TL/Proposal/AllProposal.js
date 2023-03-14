@@ -51,6 +51,7 @@ function AllProposal() {
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
     setLastDown(e);
+    
     // console.log(viewProposalModal)
   };
   const ViewDiscussionToggel = (key) => {
@@ -59,21 +60,23 @@ function AllProposal() {
     
   };
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element) {
         console.log("red", element);
         console.log(myRef.current[scrolledTo], "ref element array")
         let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [ViewDiscussion]);
 
   useEffect(() => {
       // console.log(viewProposalModal,"This in useEffect")
       let runTo = myRefs.current[lastDown]
+      runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
   }, [viewProposalModal]);
 

@@ -82,7 +82,7 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element){
@@ -91,11 +91,16 @@ function AssignmentTab() {
         let runTo=myRef.current[scrolledTo]
         runTo.scrollIntoView({ block: 'center' });
     }
-    }
+    // }
   }, [ViewDiscussion]);
 
   useEffect(() => {
+    let asd = JSON.parse(localStorage.getItem(`searchDataAs3`));
+    if (asd) {
+      console.log("searchDataAs3");
+    }else{
     getAssignmentList();
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {

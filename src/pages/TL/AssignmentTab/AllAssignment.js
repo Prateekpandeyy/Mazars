@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../../config/config";
@@ -49,16 +49,16 @@ function AssignmentTab(props) {
   const [qid, setQid] = useState("");
   const [error, setError] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const [query_no,setQuery_no] = useState("");
-  const [dateFrom,setdateFrom]=useState("");
-  const [dateto,setDateto]=useState(current_date);
-  const [p_status,setP_status]=useState("");
-  const [pCatid,setPcatid]=useState("")
+  const [query_no, setQuery_no] = useState("");
+  const [dateFrom, setdateFrom] = useState("");
+  const [dateto, setDateto] = useState(current_date);
+  const [p_status, setP_status] = useState("");
+  const [pCatid, setPcatid] = useState("")
 
   const [item] = useState(current_date);
   const [client, setClient] = useState([]);
-  const [scrolledTo, setScrolledTo] = useState("")
-  const myRef = useRef([])
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -81,25 +81,26 @@ function AssignmentTab(props) {
       console.log("Rendered AllA", key);
       setScrolledTo(key)
       console.log("Scrolled To AllA", scrolledTo)
-    }else{
+    } else {
       console.log("Scrolled To Else AllA", scrolledTo)
       var element = document.getElementById(scrolledTo);
-      if (element){
-        console.log(myRef.current[scrolledTo],"ref element array")
+      if (element) {
+        console.log(myRef.current[scrolledTo], "ref element array")
       }
     }
   };
   useEffect(() => {
-    if (ViewDiscussion === false) {
-      console.log("Scrolled To Else AllQ", scrolledTo)
-      var element = document.getElementById(scrolledTo);
-      if (element){
-        console.log("red",element);
-        console.log(myRef.current[scrolledTo],"ref element array")
-        let runTo=myRef.current[scrolledTo]
-        runTo.scrollIntoView({ block: 'center' });
+    // if (ViewDiscussion === true) {
+    console.log("Scrolled To Else AllQ", scrolledTo)
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      console.log("red", element);
+      console.log(myRef.current[scrolledTo], "ref element array")
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
     }
-    }
+    // }
   }, [ViewDiscussion]);
 
   useEffect(() => {
@@ -113,17 +114,17 @@ function AssignmentTab(props) {
   };
   const getAssignmentList = () => {
     let asd = JSON.parse(localStorage.getItem(`searchDataAs1`));
-    if (asd) {console.log("no preload list")}
-    else{
-    axios
-      .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setAssignment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    if (asd) { console.log("no preload list") }
+    else {
+      axios
+        .get(`${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAssignment(res.data.result);
+            setCount(res.data.result.length);
+            setRecords(res.data.result.length);
+          }
+        });
     }
   };
 
@@ -189,7 +190,7 @@ function AssignmentTab(props) {
     setStore2([]);
   };
 
-  
+
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -235,19 +236,19 @@ function AssignmentTab(props) {
     let asd = JSON.parse(localStorage.getItem(`searchDataAs1`));
     console.log(asd);
     if (asd) {
-    // setTax2([]);
-    // setError(false);
-    // setHide("");
-    setP_status(asd.p_status)
-    assingmentStatus(asd.status)
-    setQuery_no(asd.query_no)
-    setStatus(asd.status);
-    setSelectedData(asd.pcatid);
-    setStore2(asd.store);
-    setdateFrom(asd.fromDate)
-    setDateto(asd.toDate)
-    setHide(asd.p_status);
-    onSubmit(asd)
+      // setTax2([]);
+      // setError(false);
+      // setHide("");
+      setP_status(asd.p_status)
+      assingmentStatus(asd.status)
+      setQuery_no(asd.query_no)
+      setStatus(asd.status);
+      setSelectedData(asd.pcatid);
+      setStore2(asd.store);
+      setdateFrom(asd.fromDate)
+      setDateto(asd.toDate)
+      setHide(asd.p_status);
+      onSubmit(asd)
     }
     getAssignmentList();
   }, []);
@@ -503,9 +504,9 @@ function AssignmentTab(props) {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -520,9 +521,9 @@ function AssignmentTab(props) {
                     </p>
                   ) : null}
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                    row.draft_report == "completed" &&
+                    row.final_discussion == "completed" &&
+                    row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -600,14 +601,14 @@ function AssignmentTab(props) {
 
   const onSubmit = (data) => {
     console.log(data)
-    let obj ={}
+    let obj = {}
     if (data.route) {
       obj = {
         store: data.store,
         fromDate: data?.fromDate,
         toDate: data?.toDate,
         pcatid: data?.pcatid,
-        status:data.status,
+        status: data.status,
         query_no: data?.query_no,
         p_status: data?.p_status,
         route: window.location.pathname,
@@ -618,7 +619,7 @@ function AssignmentTab(props) {
         fromDate: data?.p_dateFrom,
         toDate: data?.p_dateTo,
         pcatid: selectedData,
-        status:status,
+        status: status,
         query_no: data?.query_no,
         p_status: data?.p_status,
         route: window.location.pathname,
@@ -629,106 +630,98 @@ function AssignmentTab(props) {
     if (status.length > 0) {
       console.log("done");
       if (data.route) {
-        console.log("////p_status",data.p_status,"////status",data.p_status ,"if1");
+        console.log("////p_status", data.p_status, "////status", data.p_status, "if1");
         axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&cat_id=${data.store}&from=${data.fromDate
-          }&to=${
-            data.toDate
-          }&assignment_status=${data.status}&stages_status=${
-            data.p_status
-          }&pcat_id=${data.pcatid}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate
+            }&to=${data.toDate
+            }&assignment_status=${data.status}&stages_status=${data.p_status
+            }&pcat_id=${data.pcatid}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
       }
 
-      else{
-        console.log("/////p_status",data.p_status,"/////status",data.p_status,"else2");
+      else {
+        console.log("/////p_status", data.p_status, "/////status", data.p_status, "else2");
         axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
       }
-      
+
     } else {
       if (data.route) {
-        console.log("////p_status",data.p_status,"////status",status ,"if2");
+        console.log("////p_status", data.p_status, "////status", status, "if2");
         axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&assignment_status=${data.status}&stages_status=${
-            data.p_status
-          }&pcat_id=${data.pcatid}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          console.log("done");
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&assignment_status=${data.status}&stages_status=${data.p_status
+            }&pcat_id=${data.pcatid}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            console.log("done");
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
+          });
       }
 
-      else{
-        console.log("/////p_status",data.p_status,"/////status",status,"else2");
+      else {
+        console.log("/////p_status", data.p_status, "/////status", status, "else2");
         axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
-          }&pcat_id=${selectedData}&qno=${data.query_no}`,
-          myConfig
-        )
-        .then((res) => {
-          console.log("done");
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
+          .get(
+            `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            console.log("done");
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setAssignment(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        });
-      } 
+          });
+      }
     }
   };
 
-  
+
   const Reset = () => {
     return (
       <>
@@ -773,25 +766,25 @@ function AssignmentTab(props) {
                 </Select>
               </div>
 
-              
-                <div class="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="multiple"
-                    style={{ width: 250 }}
-                    placeholder="Select Sub Category"
-                    defaultValue={[]}
-                    onChange={handleSubCategory}
-                    value={store2}
-                    allowClear
-                  >
-                    {tax2.map((p, index) => (
-                      <Option value={p.id} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-              
+
+              <div class="form-group mx-sm-1  mb-2">
+                <Select
+                  mode="multiple"
+                  style={{ width: 250 }}
+                  placeholder="Select Sub Category"
+                  defaultValue={[]}
+                  onChange={handleSubCategory}
+                  value={store2}
+                  allowClear
+                >
+                  {tax2.map((p, index) => (
+                    <Option value={p.id} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+
               <div>
                 <button
                   type="submit"
@@ -814,7 +807,7 @@ function AssignmentTab(props) {
                   ref={register}
                   max={item}
                   value={dateFrom}
-                  onChange= {handleDatefrom}
+                  onChange={handleDatefrom}
                 />
               </div>
 
@@ -831,7 +824,7 @@ function AssignmentTab(props) {
                   defaultValue={current_date}
                   max={item}
                   value={dateto}
-                  onChange= {handleDateto}
+                  onChange={handleDateto}
                 />
               </div>
 

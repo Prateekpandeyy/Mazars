@@ -25,41 +25,41 @@ function ProposalTab(props) {
 
     const token = window.localStorage.getItem("tptoken")
     const myConfig = {
-        headers : {
-         "uit" : token
+        headers: {
+            "uit": token
         }
-      }
+    }
 
 
     const tableIndex = (index) => {
         setTabIndex(index)
         console.log(index)
-        if(index === 0){
-          setbgColor("#42566a")
+        if (index === 0) {
+            setbgColor("#42566a")
         }
-        else if(index === 1){
-          setbgColor("#5f7b97")
+        else if (index === 1) {
+            setbgColor("#5f7b97")
         }
-        else if(index === 2){
-          setbgColor("#5f7b97")
+        else if (index === 2) {
+            setbgColor("#5f7b97")
         }
-        else if(index === 3){
-          setbgColor("#5f7b97")
+        else if (index === 3) {
+            setbgColor("#5f7b97")
         }
-      }
-      const myStyle1 = {
+    }
+    const myStyle1 = {
         margin: "10px auto",
-        fontSize : "18px",
-    cursor : "pointer"
-      };
-      const myStyle2 = {
-     margin: "10px auto",
-     
-     color : "#42566a",
-     fontSize : "18px",
-     cursor : "pointer"
-      };
-    
+        fontSize: "18px",
+        cursor: "pointer"
+    };
+    const myStyle2 = {
+        margin: "10px auto",
+
+        color: "#42566a",
+        fontSize: "18px",
+        cursor: "pointer"
+    };
+
 
     useLayoutEffect(() => {
         setTabIndex(props.location.index || 0);
@@ -73,7 +73,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`, myConfig)
                 .then((response) => {
-                   
+
                     if (response.data.code === 1) {
                         setAllProposal(response.data.result.length);
                     }
@@ -84,7 +84,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`, myConfig)
                 .then((response) => {
-                   
+
                     if (response.data.code === 1) {
                         setInprogressProposal(response.data.result.length);
                     }
@@ -95,7 +95,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2`, myConfig)
                 .then((response) => {
-                   
+
                     if (response.data.code === 1) {
                         setAcceptedProposal(response.data.result.length);
                     }
@@ -106,7 +106,7 @@ function ProposalTab(props) {
             axios
                 .get(`${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`, myConfig)
                 .then((response) => {
-                   
+
                     if (response.data.code === 1) {
                         setDeclinedProposal(response.data.result.length);
                     }
@@ -123,37 +123,37 @@ function ProposalTab(props) {
 
     return (
         <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-                       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
-          <TabList
-className="fixedTab">
-                        <Tab style={tabIndex ===  0 ? myStyle2 : myStyle1} className="tabHover">
-                            All proposals ({allProposal})
-                        </Tab>
-                        <Tab style={tabIndex ===  1 ? myStyle2 : myStyle1} className="tabHover">
-                            Inprogress; Proposals ({inprogressProposal})
-                        </Tab>
-                        <Tab style={tabIndex ===  2 ? myStyle2 : myStyle1} className="tabHover">
-                            Accepted; Proposals ({acceptedProposal})
-                        </Tab>
-                        <Tab style={tabIndex ===  3 ? myStyle2 : myStyle1} className="tabHover">
-                            Client declined; Proposals ({declinedProposal})
-                        </Tab>
-                    </TabList>
+            <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+                <TabList
+                    className="fixedTab">
+                    <Tab style={tabIndex === 0 ? myStyle2 : myStyle1} className="tabHover">
+                        All proposals ({allProposal})
+                    </Tab>
+                    <Tab style={tabIndex === 1 ? myStyle2 : myStyle1} className="tabHover">
+                        Inprogress; Proposals ({inprogressProposal})
+                    </Tab>
+                    <Tab style={tabIndex === 2 ? myStyle2 : myStyle1} className="tabHover">
+                        Accepted; Proposals ({acceptedProposal})
+                    </Tab>
+                    <Tab style={tabIndex === 3 ? myStyle2 : myStyle1} className="tabHover">
+                        Client declined; Proposals ({declinedProposal})
+                    </Tab>
+                </TabList>
 
-                    <TabPanel>
-                        <AllProposal />
-                    </TabPanel>
-                    <TabPanel>
-                        <InprogressProposal />
-                    </TabPanel>
-                    <TabPanel>
-                        <AcceptedProposal />
-                    </TabPanel>
-                    <TabPanel>
-                        <DeclinedProposal />
-                    </TabPanel>
-                </Tabs>
-         
+                <TabPanel>
+                    <AllProposal />
+                </TabPanel>
+                <TabPanel>
+                    <InprogressProposal />
+                </TabPanel>
+                <TabPanel>
+                    <AcceptedProposal />
+                </TabPanel>
+                <TabPanel>
+                    <DeclinedProposal />
+                </TabPanel>
+            </Tabs>
+
         </Layout>
     );
 }

@@ -106,16 +106,17 @@ function AllPayment() {
   };
 
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element) {
         console.log("red", element);
         console.log(myRef.current[scrolledTo], "ref element array")
         let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [ViewDiscussion]);
 
   const toggle = (key) => {

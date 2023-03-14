@@ -103,7 +103,7 @@ function AssignmentTab(props) {
   };
 
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element) {
@@ -112,7 +112,7 @@ function AssignmentTab(props) {
         let runTo = myRef.current[scrolledTo]
         runTo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [ViewDiscussion]);
 
   useEffect(() => {

@@ -119,29 +119,31 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element) {
         console.log("red", element);
         console.log(myRef.current[scrolledTo], "ref element array")
         let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    if (draftModal === false) {
+    // if (draftModal === false) {
       console.log("Scrolled To Else AllQ", runTo)
       var element = document.getElementById(runTo);
       if (element) {
         console.log("red", element);
         console.log(myRefs.current[runTo], "ref element array")
-        let runToo = myRefs.current[runTo]
+        let runToo = myRefs.current[runTo];
+        runToo.scrollIntoView(false);
         runToo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [draftModal]);
 
 

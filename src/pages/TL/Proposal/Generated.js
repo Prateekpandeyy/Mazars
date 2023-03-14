@@ -77,20 +77,26 @@ const Generated = ({ updateTab }) => {
   };
 
   useEffect(() => {
-    if (tdsForm === false) {
+    // if (tdsForm === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element) {
         console.log("red", element);
         console.log(myRef.current[scrolledTo], "ref element array")
         let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
       }
-    }
+    // }
   }, [tdsForm]);
 
   useEffect(() => {
+    const tlInFilterData = JSON.parse(localStorage.getItem(`searchDataI1`));
+    if (tlInFilterData) {
+      console.log("Not called in Complete Data invoice axios");
+    } else {
     getProposalList();
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -99,10 +105,7 @@ const Generated = ({ updateTab }) => {
     },
   };
   const getProposalList = () => {
-    const tlInFilterData = JSON.parse(localStorage.getItem(`searchDataI1`));
-    if (tlInFilterData) {
-      console.log("Not called in Complete Data A axios");
-    } else {
+    
       axios
         .get(
           `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(userid)}&invoice=1`,
@@ -114,7 +117,7 @@ const Generated = ({ updateTab }) => {
             setRecords(res.data.payment_detail.length);
           }
         });
-    };
+    
   }
 
   const downloadpdf = (qno, id, installmentNumber) => {

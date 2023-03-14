@@ -54,16 +54,17 @@ function CompletedQuery({ updateTab }) {
   };
 
   useEffect(() => {
-    if (ViewDiscussion === false) {
+    // if (ViewDiscussion === false) {
       console.log("Scrolled To Else AllQ", scrolledTo)
       var element = document.getElementById(scrolledTo);
       if (element){
         console.log("red",element);
         console.log(myRef.current[scrolledTo],"ref element array")
         let runTo=myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
         runTo.scrollIntoView({ block: 'center' });
     }
-    }
+    // }
   }, [ViewDiscussion]);
 
   useEffect(() => {
@@ -121,7 +122,7 @@ function CompletedQuery({ updateTab }) {
       text: "S.no",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
