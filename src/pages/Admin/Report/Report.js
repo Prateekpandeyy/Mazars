@@ -107,9 +107,7 @@ const Report = () => {
     mpayment_info: false,
     other_info: false,
   });
-  var kk = [];
-  var pp = [];
-  var vv = [];
+
   let pk = [];
 
   const [dd, setDd] = useState([]);
@@ -248,7 +246,6 @@ const Report = () => {
   const getTeamLeader = () => {
     axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
       if (res.data.code === 1) {
-        pp.push(res.data.result);
         setData(res.data.result);
       }
     });
@@ -822,47 +819,25 @@ const Report = () => {
 
   // Category
   const category2 = (v) => {
-    let cc = [];
+    console.log("vvvv", v);
+
     setCatValue(v);
     setError("");
 
-    v.map((val) => {
-      vv.push(val.value);
-      cc.push(val.value);
-
-      setStore(val.value);
-    });
+    subCategeryData([]);
+    setDd([]);
+    setStore(v.value);
     setQueryString((payload) => {
       return {
         ...payload,
         sub_cat: [],
       };
     });
-    setmcatname(cc);
+    setmcatname(v.value);
     filterQuery({
       name: "cat",
-      value: cc,
+      value: v.value,
     });
-    if (vv.length > 0) {
-      if (vv.includes("1") && vv.includes("2")) {
-      } else if (vv.includes("1")) {
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value < 9) {
-            kk.push(subData[i]);
-          }
-        }
-        subCategeryData(kk);
-      } else if (vv.includes("2")) {
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value > 8) {
-            kk.push(subData[i]);
-          }
-        }
-        subCategeryData(kk);
-      }
-    } else if (vv.length === 0) {
-      subCategeryData("");
-    }
   };
 
   // Sub Category Function
@@ -1082,7 +1057,7 @@ const Report = () => {
                     name="p_from"
                     ref={register}
                     value={fromDate}
-                    onBlur={(e) => {
+                    onChange={(e) => {
                       console.log(e.target.value);
                       setFromDate(e.target.value);
                       filterQuery({
@@ -1108,7 +1083,7 @@ const Report = () => {
                       "is-invalid": errors.p_type,
                     })}
                     value={toDate}
-                    onBlur={(e) => {
+                    onChange={(e) => {
                       setToDate(e.target.value);
                       filterQuery({
                         name: "todate",
@@ -1149,7 +1124,7 @@ const Report = () => {
               <div className="col-md-3">
                 <label className="form-label">Category</label>
                 <Select
-                  isMulti
+                  isMulti={false}
                   options={options}
                   className={error ? "customError" : ""}
                   styles={{

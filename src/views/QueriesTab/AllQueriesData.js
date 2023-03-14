@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
@@ -36,7 +36,7 @@ function AllQueriesData({
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false);
-
+  const tableId = React.createRef("");
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
@@ -52,6 +52,9 @@ function AllQueriesData({
   };
 
   const ViewDiscussionToggel = (key) => {
+    // console.log(tableId);
+
+    // document.getElementById("root").scrollIntoView(false);
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
   };
@@ -316,7 +319,7 @@ function AllQueriesData({
   };
 
   return (
-    <Card>
+    <Card ref={tableId}>
       <CardHeader>
         <span onClick={(e) => needHelp()}>
           {" "}

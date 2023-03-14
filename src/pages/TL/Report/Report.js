@@ -148,7 +148,7 @@ const Report = () => {
     sub_cat: "",
     cid: "",
   });
-
+  const [catValue, setCatValue] = useState([]);
   const [selectQuery, setSelectedQuery] = useState([]);
   useEffect(() => {
     const getCategory = async () => {
@@ -436,11 +436,9 @@ const Report = () => {
       .get(
         `${baseUrl}/tl/getAllQueryList?from=${data.fromdate}&to=${
           data.todate
-        }&category=${data.cat}&subcategory=${
-          data.sub_cat
-        }&teamleader=${JSON.parse(userid)}&taxprofessional=${
-          data.tp
-        }&customer=${data.cid}`,
+        }&category=${data.cat}&subcategory=${sub_cat}&teamleader=${JSON.parse(
+          userid
+        )}&taxprofessional=${data.tp}&customer=${data.cid}`,
         myConfig
       )
       .then((res) => {
@@ -844,46 +842,23 @@ const Report = () => {
 
   // Category
   const category2 = (v) => {
-    let cc = [];
-    setCategoryData(v);
-    setNn((oldData) => {
-      return [...oldData, mcategory];
-    });
+    setCatValue(v);
     setError("");
-    setCustcate(v);
 
-    v.map((val) => {
-      vv.push(val.value);
-      cc.push(val.value);
-      setmcategory(val.value);
-
-      setStore(val.value);
+    subCategeryData([]);
+    setDd([]);
+    setStore(v.value);
+    setQueryString((payload) => {
+      return {
+        ...payload,
+        sub_cat: [],
+      };
     });
+    setmcatname(v.value);
     filterQuery({
       name: "cat",
-      value: cc,
+      value: v.value,
     });
-    setmcatname(cc);
-    if (vv.length > 0) {
-      if (vv.includes("1") && vv.includes("2")) {
-      } else if (vv.includes("1")) {
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value < 9) {
-            kk.push(subData[i]);
-          }
-        }
-        subCategeryData(kk);
-      } else if (vv.includes("2")) {
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value > 8) {
-            kk.push(subData[i]);
-          }
-        }
-        subCategeryData(kk);
-      }
-    } else if (vv.length === 0) {
-      subCategeryData("");
-    }
   };
 
   // Sub Category Function
@@ -1074,7 +1049,7 @@ const Report = () => {
                     name="p_from"
                     ref={register}
                     value={fromDate}
-                    onBlur={(e) => {
+                    onChange={(e) => {
                       setFromDate(e.target.value);
                       filterQuery({
                         name: "fromdate",
@@ -1099,7 +1074,7 @@ const Report = () => {
                       "is-invalid": errors.p_type,
                     })}
                     value={toDate}
-                    onBlur={(e) => {
+                    onChange={(e) => {
                       setToDate(e.target.value);
                       filterQuery({
                         name: "todate",
@@ -1139,7 +1114,7 @@ const Report = () => {
               <div className="col-md-3">
                 <label className="form-label">Category</label>
                 <Select
-                  isMulti
+                  isMulti={false}
                   options={options}
                   className={error ? "customError" : ""}
                   styles={{
@@ -1154,7 +1129,7 @@ const Report = () => {
                       color: data.value == 2 ? "green" : "blue",
                     }),
                   }}
-                  value={categoryData}
+                  value={catValue}
                   onChange={category2}
                 ></Select>
               </div>

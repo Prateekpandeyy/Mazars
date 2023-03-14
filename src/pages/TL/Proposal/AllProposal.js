@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -34,7 +34,11 @@ function AllProposal() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [tdsForm, setTdsForm] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
-  const [proposalId, setProposalId] = useState();
+  const [proposalId, setProposalId] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
   const chatHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setId(key.assign_no);
@@ -49,11 +53,28 @@ function AllProposal() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
 
   useEffect(() => {
     getProposalList();
   }, []);
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
+
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -80,7 +101,14 @@ function AllProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {
