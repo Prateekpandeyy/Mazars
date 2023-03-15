@@ -17,13 +17,9 @@ import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {
   ViewDiscussionIcon,
-  Payment,
 } from "../../../components/Common/MessageIcon";
-import { Spinner } from "reactstrap";
 
 function AssignmentComponent(props) {
-  const [loading, setLoading] = useState(false);
-
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -77,7 +73,6 @@ function AssignmentComponent(props) {
           setAssignmentDisplay(res.data.result);
 
           setRecords(res?.data?.result?.length);
-          setLoading(true);
         }
       });
     }
