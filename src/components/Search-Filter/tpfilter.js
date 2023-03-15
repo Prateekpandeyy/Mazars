@@ -4,9 +4,9 @@ import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
 import "antd/dist/antd.css";
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
 import moment from "moment";
-const dateFormat = "YYYY/MM/DD";
+
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function TaxProfessionalFilter(props) {
   const { Option } = Select;
@@ -44,23 +44,14 @@ function TaxProfessionalFilter(props) {
   const [queryNo, setQueryNo] = useState("");
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef(null);
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
 
-  const [item] = useState(current_date);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  const fromDateFun = (e) => {
-    setFromDate(e.format("YYYY-MM-DD"));
-  };
+
   useEffect(() => {
     const getSubCategory = () => {
       if (selectedData.length > 0) {

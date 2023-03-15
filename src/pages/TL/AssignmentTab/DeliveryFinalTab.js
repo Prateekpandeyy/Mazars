@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
-import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import FinalReportUpload from "./FinalReportUpload";
 import ViewAllReportModal from "./ViewAllReport";
@@ -17,45 +16,31 @@ import MessageIcon, {
   ViewDiscussionIcon,
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
-
+import { current_date } from "../../../common/globalVeriable";
 function AssignmentTab() {
-  const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
-
   const { handleSubmit, register, errors, reset } = useForm();
-  const { Option, OptGroup } = Select;
-  const [count, setCount] = useState("");
+  const { Option } = Select;
   const [assignment, setAssignment] = useState([]);
-  const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [hide, setHide] = useState();
-
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
-
-  const [item] = useState(current_date);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [dataItem, setDataItem] = useState({});
 
-  const [report, setReport] = useState();
+  const [report, setReport] = useState("");
   const [reportModal, setReportModal] = useState(false);
   const [qid, setQid] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
+  const [categoryData, setCategory] = useState([]);
   var rowStyle2 = {};
 
   let des = false;
@@ -63,9 +48,7 @@ function AssignmentTab() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
   };
-  useEffect(() => {
-    getAssignmentList();
-  }, []);
+
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -86,13 +69,17 @@ function AssignmentTab() {
         .then((res) => {
           if (res.data.code === 1) {
             setAssignment(res.data.result);
-            setCount(res.data.result.length);
+
             setRecords(res.data.result.length);
           }
         });
     }
   };
+
   useEffect(() => {
+    getAssignmentList();
+    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    setCategory(data);
     let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
 
     if (dk) {
@@ -107,25 +94,11 @@ function AssignmentTab() {
       }
     }
   }, []);
-  //get category
-  useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
   };
 
@@ -554,12 +527,11 @@ function AssignmentTab() {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 
@@ -606,7 +578,7 @@ function AssignmentTab() {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  max={item}
+                  max={current_date}
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
                 />
@@ -624,7 +596,7 @@ function AssignmentTab() {
                   ref={register}
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
-                  max={item}
+                  max={current_date}
                 />
               </div>
               <div className="form-group mx-sm-1  mb-2">

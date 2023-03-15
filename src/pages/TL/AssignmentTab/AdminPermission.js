@@ -65,9 +65,17 @@ function AdminPermission(props) {
 
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
-  const ViewHandler = (key) => {
-    setViewModal(!viewModal);
-    setViewData(key);
+  const [categoryData, setCategory] = useState([]);
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    setCategory(data);
+  }, []);
+
+  //handleCategory
+  const handleCategory = (value) => {
+    setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
+    setStore2([]);
   };
 
   useEffect(() => {
@@ -107,28 +115,6 @@ function AdminPermission(props) {
       }
     }
   }, []);
-  //get category
-  useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
-
-  //handleCategory
-  const handleCategory = (value) => {
-    setError(false);
-    setSelectedData(value);
-    setStore2([]);
-  };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -549,12 +535,11 @@ function AdminPermission(props) {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 

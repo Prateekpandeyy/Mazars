@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { getErrorMessage } from "../../../constants";
-import Loader from "../../../components/Loader/Loader";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
@@ -17,9 +14,9 @@ import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {
   ViewDiscussionIcon,
-  Payment,
 } from "../../../components/Common/MessageIcon";
 import { Spinner } from "reactstrap";
+import { current_date } from "../../../common/globalVeriable";
 
 function AdminPermission(props) {
   const [loading, setLoading] = useState(false);
@@ -40,14 +37,7 @@ function AdminPermission(props) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
 
-  const [item] = useState(current_date);
   var rowStyle2 = {};
 
   const [reportModal, setReportModal] = useState(false);
@@ -582,7 +572,7 @@ function AdminPermission(props) {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  max={item}
+                  max={current_date}
                   onChange={(e) => setFromDate(e.target.value)}
                   value={fromDate}
                 />
@@ -600,7 +590,7 @@ function AdminPermission(props) {
                   ref={register}
                   onChange={(e) => setToDate(e.target.value)}
                   value={toDate}
-                  max={item}
+                  max={current_date}
                 />
               </div>
 

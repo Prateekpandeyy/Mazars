@@ -9,14 +9,7 @@ const InvoiceFilter = (props) => {
   const [toDate, setToDate] = useState("");
   const [status, setStatus] = useState("");
   const [installmentno, setInstallmentNo] = useState("");
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
 
-  const [item] = useState(current_date);
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem(`${props.invoice}`));
     if (data) {

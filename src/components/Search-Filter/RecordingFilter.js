@@ -1,37 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
-import { Select } from "antd";
 
 function RecordingFilter(props) {
-  const { Option } = Select;
-  const { handleSubmit, register, errors, reset } = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   const { records, setRecords, setData, getRecording, SearchQuery, userid } =
     props;
-  // const userid = window.localStorage.getItem("tpkey");
-
-  const [selectedData, setSelectedData] = useState([]);
-  const [tax2, setTax2] = useState([]);
-  const [store2, setStore2] = useState([]);
-  const [status1, setStatus1] = useState(1);
-
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
-
-  const [item] = useState(current_date);
 
   //reset date
   const resetData = () => {
     reset();
-    setSelectedData([]);
-    setStore2([]);
-    setStatus1(1);
     getRecording();
   };
 

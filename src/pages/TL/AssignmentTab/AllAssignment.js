@@ -17,7 +17,7 @@ import MessageIcon, {
   DraftReportUploadIcon,
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
-
+import { current_date } from "../../../common/globalVeriable";
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
 
@@ -43,17 +43,11 @@ function AssignmentTab(props) {
   const [qid, setQid] = useState("");
   const [error, setError] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
-  const [item] = useState(current_date);
+
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
+  const [categoryData, setCategory] = useState([]);
 
   let des = false;
   var rowStyle2 = {};
@@ -94,6 +88,18 @@ function AssignmentTab(props) {
         });
     }
   };
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    setCategory(data);
+  }, []);
+
+  //handleCategory
+  const handleCategory = (value) => {
+    setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
+    setStore2([]);
+    setError(false);
+  };
 
   //get category
   useEffect(() => {
@@ -110,13 +116,6 @@ function AssignmentTab(props) {
     };
     getSubCategory();
   }, [selectedData]);
-
-  //handleCategory
-  const handleCategory = (value) => {
-    setError(false);
-    setSelectedData(value);
-    setStore2([]);
-  };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -466,7 +465,6 @@ function AssignmentTab(props) {
   // draft modal
 
   const uploadDraftReport = (id) => {
-    let collectData = [];
     if (id.id !== undefined) {
       setQid(id.q_id);
 
@@ -632,12 +630,11 @@ function AssignmentTab(props) {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 
@@ -678,7 +675,7 @@ function AssignmentTab(props) {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  max={item}
+                  max={current_date}
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
                 />
@@ -696,7 +693,7 @@ function AssignmentTab(props) {
                   ref={register}
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
-                  max={item}
+                  max={current_date}
                 />
               </div>
 

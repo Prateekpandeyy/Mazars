@@ -52,6 +52,7 @@ function AssignmentTab() {
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -61,6 +62,18 @@ function AssignmentTab() {
   var rowStyle2 = {};
 
   let des = false;
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    setCategory(data);
+  }, []);
+
+  //handleCategory
+  const handleCategory = (value) => {
+    setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
+    setStore2([]);
+  };
+
   const uploadDraftReport = (id) => {
     if (typeof id == "object") {
       setQid(id.q_id);
@@ -97,28 +110,6 @@ function AssignmentTab() {
           }
         });
     }
-  };
-
-  //get category
-  useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
-
-  //handleCategory
-  const handleCategory = (value) => {
-    setSelectedData(value);
-    setStore2([]);
   };
 
   //handleSubCategory
@@ -548,12 +539,11 @@ function AssignmentTab() {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 

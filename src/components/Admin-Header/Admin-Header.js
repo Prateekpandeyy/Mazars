@@ -115,6 +115,15 @@ function AdminHeader({
       localStorage.removeItem("searchDatatlAssignment4");
       localStorage.removeItem("tlcreate");
       localStorage.removeItem("tlgenerated");
+      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+        if (res.data.code === 1) {
+          localStorage.removeItem("tlcategoryData");
+          let data = res.data.result;
+          data.map((i) => {
+            localStorage.removeItem(`tl${i.details}`);
+          });
+        }
+      });
       history.push("/teamleader/login");
     });
   };

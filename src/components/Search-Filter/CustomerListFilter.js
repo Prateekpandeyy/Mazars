@@ -1,21 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
-import { baseUrl, baseUrl3 } from "../../config/config";
-import "antd/dist/antd.css";
-import { Select } from "antd";
+import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
-
+import { current_date } from "../../common/globalVeriable";
 function CustomerListFilter(props) {
   const { handleSubmit, register, reset } = useForm();
   const { setData, searchQuery, setRecords, records, getCustomer } = props;
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
 
-  const [item] = useState(current_date);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -138,7 +129,7 @@ function CustomerListFilter(props) {
                       name="p_dateFrom"
                       className="form-select form-control"
                       ref={register}
-                      max={item}
+                      max={current_date}
                     />
                   </div>
 
@@ -152,8 +143,8 @@ function CustomerListFilter(props) {
                       name="p_dateTo"
                       className="form-select form-control"
                       ref={register}
-                      defaultValue={item}
-                      max={item}
+                      defaultValue={current_date}
+                      max={current_date}
                     />
                   </div>
                 </div>

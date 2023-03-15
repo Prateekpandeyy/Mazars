@@ -3,11 +3,9 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
-import { Spinner } from "reactstrap";
 import "antd/dist/antd.css";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
-const dateFormat = "YYYY/MM/DD";
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function TeamFilter(props) {
   const dateValue = useRef(null);
@@ -45,33 +43,16 @@ function TeamFilter(props) {
   const [queryNo, setQueryNo] = useState("");
   const [status, setStatus] = useState("");
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
-
-  const [item] = useState(current_date);
-
+  const [categoryData, setCategory] = useState([]);
   useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length != 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
+    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    setCategory(data);
+  }, []);
 
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
   };
 
@@ -884,12 +865,11 @@ function TeamFilter(props) {
                     onChange={handleCategory}
                     value={selectedData}
                   >
-                    <Option value="1" label="Compilance">
-                      <div className="demo-option-label-item">Direct Tax</div>
-                    </Option>
-                    <Option value="2" label="Compilance">
-                      <div className="demo-option-label-item">Indirect Tax</div>
-                    </Option>
+                    {categoryData.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                   </Select>
                 </div>
 

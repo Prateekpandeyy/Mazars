@@ -6,6 +6,7 @@ import { Select } from "antd";
 import { Spinner } from "reactstrap";
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
+import { current_date } from "../../common/globalVeriable";
 function CustomerFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -36,22 +37,14 @@ function CustomerFilter(props) {
   const [store2, setStore2] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categoryData, setCategory] = useState([]);
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
 
-  const [item] = useState(current_date);
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  let directSubCat = JSON.parse(localStorage.getItem("directSubCategory"));
-  let indirectSubCat = JSON.parse(localStorage.getItem("indirectSubCategory"));
+
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("categoryData"));
     setCategory(data);
@@ -583,7 +576,7 @@ function CustomerFilter(props) {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  max={item}
+                  max={current_date}
                 />
               </div>
               <div className="form-group mx-sm-1  mb-2">
@@ -595,8 +588,8 @@ function CustomerFilter(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={item}
-                  max={item}
+                  defaultValue={current_date}
+                  max={current_date}
                 />
               </div>
               <div className="form-group mx-sm-1  mb-2">

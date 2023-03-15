@@ -6,6 +6,7 @@ import { Select } from "antd";
 import "antd/dist/antd.css";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
+
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function AdminFilter(props) {
   const { Option } = Select;
@@ -30,7 +31,7 @@ function AdminFilter(props) {
     unpaid,
     index,
   } = props;
-  const [searchValue, setSearchVlue] = useState("");
+
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
@@ -38,17 +39,9 @@ function AdminFilter(props) {
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
   const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
-
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
   const dateValue = useRef();
-  const [item] = useState(current_date);
+
   const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
