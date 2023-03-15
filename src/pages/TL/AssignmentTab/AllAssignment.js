@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -48,6 +48,23 @@ function AssignmentTab(props) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [categoryData, setCategory] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
 
   let des = false;
   var rowStyle2 = {};
@@ -55,11 +72,17 @@ function AssignmentTab(props) {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+    if (reportModal === false) {
+      setScrolledTo(key);
+    }
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
 
   useEffect(() => {
@@ -160,7 +183,14 @@ function AssignmentTab(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {

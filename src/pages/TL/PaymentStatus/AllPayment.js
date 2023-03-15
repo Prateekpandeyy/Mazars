@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
@@ -18,10 +18,7 @@ import {
 
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
-import PaymentIcon from "@material-ui/icons/Payment";
-import AssessmentIcon from "@material-ui/icons/Assessment";
 import RejectedModal from "./RejectedModal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
@@ -47,9 +44,19 @@ function AllPayment() {
   const [modal, setModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
   const [addPaymentModal, setPaymentModal] = useState(false);
-
-  // Use State end
-  //Global veriable
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
   var rowStyle2 = {};
 
   const rejectHandler = (key) => {
@@ -57,10 +64,12 @@ function AllPayment() {
     setAssignNo(key.assign_no);
   };
 
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
 
   useEffect(() => {
@@ -148,7 +157,14 @@ function AllPayment() {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {

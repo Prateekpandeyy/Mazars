@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
@@ -18,12 +18,8 @@ import {
 
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
-import ChangeHistoryIcon from "@material-ui/icons/ChangeHistory";
-import PaymentIcon from "@material-ui/icons/Payment";
 import RejectedModal from "./RejectedModal";
-import AssessmentIcon from "@material-ui/icons/Assessment";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {
@@ -36,7 +32,6 @@ import MessageIcon, {
 import moment from "moment";
 
 function AllPayment() {
-  const { id } = useParams();
   const userid = window.localStorage.getItem("tlkey");
   const cust_id = window.localStorage.getItem("userid");
   const [records, setRecords] = useState([]);
@@ -50,6 +45,18 @@ function AllPayment() {
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [addPaymentModal, setPaymentModal] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
   const rejectHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setAssignNo(key.assign_no);
@@ -84,6 +91,9 @@ function AllPayment() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
 
   const toggle = (key) => {
@@ -107,7 +117,14 @@ function AllPayment() {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {

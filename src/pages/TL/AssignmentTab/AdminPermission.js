@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -37,6 +37,23 @@ function AdminPermission(props) {
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
   const [error, setError] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -53,19 +70,23 @@ function AdminPermission(props) {
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
+    if (reportModal === false) {
+      setScrolledTo(key);
+    }
   };
 
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [categoryData, setCategory] = useState([]);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
 
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+    }
   };
 
-  const [viewData, setViewData] = useState({});
-  const [viewModal, setViewModal] = useState(false);
-  const [categoryData, setCategory] = useState([]);
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
@@ -159,8 +180,16 @@ function AdminPermission(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
+
       headerStyle: () => {
         return { width: "50px" };
       },
