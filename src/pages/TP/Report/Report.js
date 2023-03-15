@@ -14,22 +14,10 @@ import CustomHeading from "../../../components/Common/CustomHeading";
 import Cookies from "js-cookie";
 const Report = () => {
   const userid = window.localStorage.getItem("tpkey");
-
-  const selectInputRef2 = useRef();
-  const selectInputRef3 = useRef();
-  const selectInputRef4 = useRef();
-  const selectInputRef5 = useRef();
-  const selectInputRef6 = useRef();
-
   const [subData, subCategeryData] = useState([]);
-
-  const [tax, setTax] = useState([]);
+  const [clientName, setClientName] = useState([]);
   const [tax2, setTax2] = useState([]);
-  const [store, setStore] = useState([]);
-  const [error, setError] = useState();
   const [error2, setError2] = useState();
-  const [mcatname, setmcatname] = useState([]);
-  const [data, setData] = useState([]);
   const [qno, setQno] = useState();
   const [custData, setcustData] = useState();
   const [cname, setcName] = useState("");
@@ -43,7 +31,10 @@ const Report = () => {
   const [companyName, setCompanyName] = useState([]);
   const [companyName2, setCompanyName2] = useState([]);
   const [tlName, setTlName] = useState("");
-
+  const [categoryName, setCategoryName] = useState({
+    label: "",
+    value: "",
+  });
   const [basicValue, setBasicValue] = useState({
     brief_fact_case: false,
     assessment: false,
@@ -103,8 +94,6 @@ const Report = () => {
     other_info: false,
   });
   const gettpName = Cookies.get("tpName");
-  const tpkey = localStorage.getItem("tpkey");
-  var kk = [];
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -112,7 +101,6 @@ const Report = () => {
     },
   };
 
-  var vv = [];
   const tpName = {
     value: JSON.parse(userid),
     label: gettpName,
@@ -121,7 +109,7 @@ const Report = () => {
   const [dd, setDd] = useState([]);
   const history = useHistory();
   const { handleSubmit, register, errors, getValues, reset } = useForm();
-  let date = new Date();
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -142,39 +130,18 @@ const Report = () => {
     cid: "",
   });
   const [selectQuery, setSelectedQuery] = useState([]);
-  useEffect(() => {
-    const getCategory = async () => {
-      await axios
-        .get(`${baseUrl}/customers/getCategory?pid=0`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setTax(res.data.result);
-          }
-        });
-    };
 
-    getCategory();
-  }, []);
-
-  useEffect(() => {
-    const getSubCategory = async () => {
-      if (store.length > 0) {
-        await axios
-          .get(`${baseUrl}/customers/getCategory?pid=${store}`)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
+  const getSubCategory = async (e) => {
+    await axios.get(`${baseUrl}/customers/getCategory?pid=${e}`).then((res) => {
+      if (res.data.code === 1) {
+        setTax2(res.data.result);
       }
-    };
-    getSubCategory();
-  }, [store]);
+    });
+  };
   const getCompany = () => {
     let company = [];
     let a = {};
     axios.get(`${baseUrl}/tl/getcompany`, myConfig).then((res) => {
-      console.log("response", res);
       res.data.result.map((i) => {
         a = {
           value: i.company_prefix,
@@ -186,7 +153,6 @@ const Report = () => {
     });
   };
   useEffect(() => {
-    getTeamLeader();
     getData();
     getupdateQuery();
     getTeamLeader();
@@ -210,17 +176,21 @@ const Report = () => {
     axios
       .get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        console.log("res", res.data.result);
+        getSubCategory(res.data.result.pcat_id);
         setTlName({
           label: res.data.result.parent_post_name,
           value: res.data.result.parent_user,
+        });
+        setCategoryName({
+          label: res.data.result.category,
+          value: res.data.result.pcat_id,
         });
       });
   };
 
   let pk = [];
   const custName = (a) => {
-    console.log(a, qno);
+    setClientName(a);
     a.map((r) => {
       pk.push(r.value);
     });
@@ -232,8 +202,9 @@ const Report = () => {
   };
   const filterQuery = (cust) => {
     let data = {};
-    var { name, value } = cust;
     let sub_cat = [];
+    var { name, value } = cust;
+
     if (name === "cat") {
       sub_cat = [];
     } else if (name === "sub_cat") {
@@ -269,9 +240,11 @@ const Report = () => {
       .get(
         `${baseUrl}/tl/getAllQueryList?from=${data.fromdate}&to=${
           data.todate
-        }&category=${data.cat}&subcategory=${data.sub_cat}&teamleader=${
-          tlName.value
-        }&taxprofessional=${JSON.parse(userid)}&customer=${data.cid}`,
+        }&category=${categoryName.value}&subcategory=${
+          data.sub_cat
+        }&teamleader=${tlName.value}&taxprofessional=${JSON.parse(
+          userid
+        )}&customer=${data.cid}`,
         myConfig
       )
       .then((res) => {
@@ -280,12 +253,10 @@ const Report = () => {
           let remainQu = [];
           b.forEach((i) => {
             selectQuery.forEach((q) => {
-              console.log(q);
               if (q.value === i.assign_no) {
                 remainQu.push(q);
               }
             });
-            console.log("remainQu", remainQu);
           });
 
           setSelectedQuery(remainQu);
@@ -297,7 +268,6 @@ const Report = () => {
     axios
       .get(`${baseUrl}/tl/allClient?tp_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        console.log("dataClinet", res.data.result);
         var a = res.data.result;
         if (a) {
           setcustData(a.map(mapAppointmentData));
@@ -313,23 +283,19 @@ const Report = () => {
     label: i.assign_no,
     value: i.assign_no,
   });
-  const options = tax.map((d) => ({
-    value: d.id,
-    label: d.details,
-  }));
 
   const options2 = tax2.map((v) => ({
     value: v.id,
     label: v.details,
   }));
-  const options3 = data.map((d) => ({
-    value: d.id,
-    label: d.name,
-  }));
 
   const resetData = () => {
     reset();
     setManualSearch(false);
+    setSelectedQuery([]);
+    subCategeryData([]);
+    setClientName([]);
+    setCompanyName2([]);
     let assignValue = assignmeneValue;
     let pVAlue = paymentValue;
     let proposValue = proposalValue;
@@ -397,12 +363,10 @@ const Report = () => {
     setCheckBox(false);
     setProposalCheckbox(false);
     setQno([]);
-
-    selectInputRef2.current.select.clearValue();
-    selectInputRef3.current.select.clearValue();
-    selectInputRef4.current.select.clearValue();
-    selectInputRef5.current.select.clearValue();
-    selectInputRef6.current.select.clearValue();
+    getData();
+    getupdateQuery();
+    getTeamLeader();
+    getCompany();
   };
   const onSubmit = (value) => {
     let comp = [];
@@ -498,7 +462,7 @@ const Report = () => {
         formData.append("customer_name", cname);
         formData.append("teamleader", tlName.value);
         formData.append("query_no", qqno);
-        formData.append("category", mcatname);
+        formData.append("category", categoryName.value);
         formData.append("subCategory", dd);
         formData.append("dateofacceptance", Number(value.dateofacceptance));
         formData.append("q_no", Number(value.qno));
@@ -601,7 +565,7 @@ const Report = () => {
                   document.body.appendChild(a);
                   a.style = "display: none";
                   a.href = url;
-                  console.log(res2);
+
                   a.download = "report.xlsx";
                   a.target = "_blank";
                   a.click();
@@ -653,7 +617,7 @@ const Report = () => {
       formData.append("customer_name", cname);
       formData.append("teamleader", tlName.value);
       formData.append("query_no", qqno);
-      formData.append("category", mcatname);
+      formData.append("category", categoryName.value);
       formData.append("subCategory", dd);
       formData.append("dateofacceptance", Number(value.dateofacceptance));
       formData.append("q_no", Number(value.qno));
@@ -753,7 +717,7 @@ const Report = () => {
                 document.body.appendChild(a);
                 a.style = "display: none";
                 a.href = url;
-                console.log(res2);
+
                 a.download = "report.xlsx";
                 a.target = "_blank";
                 a.click();
@@ -772,45 +736,6 @@ const Report = () => {
           }
         })
         .catch((error) => {});
-    }
-  };
-
-  // Category
-  const category2 = (v) => {
-    let cc = [];
-
-    setError("");
-
-    v.map((val) => {
-      vv.push(val.value);
-      cc.push(val.value);
-
-      setStore(val.value);
-    });
-    filterQuery({
-      name: "cat",
-      value: cc,
-    });
-    setmcatname(cc);
-    if (vv.length > 0) {
-      if (vv.includes("1") && vv.includes("2")) {
-      } else if (vv.includes("1")) {
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value < 9) {
-            kk.push(subData[i]);
-          }
-        }
-        subCategeryData(kk);
-      } else if (vv.includes("2")) {
-        for (let i = 0; i < subData.length; i++) {
-          if (subData[i].value > 8) {
-            kk.push(subData[i]);
-          }
-        }
-        subCategeryData(kk);
-      }
-    } else if (vv.length === 0) {
-      subCategeryData("");
     }
   };
 
@@ -1044,41 +969,14 @@ const Report = () => {
               <div className="col-md-3">
                 <div className="mb-3">
                   <label className="form-label">Tax Professional</label>
-                  <Select
-                    value={tpName}
-                    isDisabled={true}
-                    styles={{
-                      singleValue: (styles, { data }) => ({
-                        ...styles,
-                        color: "#000",
-                      }),
-                    }}
-                  />
+                  <Select value={tpName} isDisabled={true} />
                 </div>
               </div>
             </div>
             <div className="row">
               <div className="col-md-3">
                 <label className="form-label">Category</label>
-                <Select
-                  isMulti
-                  options={options}
-                  className={error ? "customError" : ""}
-                  ref={selectInputRef3}
-                  styles={{
-                    option: (styles, { data }) => {
-                      return {
-                        ...styles,
-                        color: data.value == 2 ? "green" : "blue",
-                      };
-                    },
-                    multiValueLabel: (styles, { data }) => ({
-                      ...styles,
-                      color: data.value == 2 ? "green" : "blue",
-                    }),
-                  }}
-                  onChange={category2}
-                ></Select>
+                <Select value={categoryName} isDisabled={true}></Select>
               </div>
               <div className="col-md-3">
                 <label className="form-label">Sub Category</label>
@@ -1086,7 +984,6 @@ const Report = () => {
                   isMulti
                   options={options2}
                   className={error2 ? "customError" : ""}
-                  ref={selectInputRef4}
                   onChange={subCategory22}
                   styles={{
                     option: (styles, { data }) => {
@@ -1109,7 +1006,7 @@ const Report = () => {
                   <Select
                     isMulti
                     options={custData}
-                    ref={selectInputRef5}
+                    value={clientName}
                     onChange={(e) => custName(e)}
                   ></Select>
                 </div>
@@ -1119,7 +1016,6 @@ const Report = () => {
                   <label className="form-label">Query Number</label>
                   <Select
                     isMulti={true}
-                    ref={selectInputRef2}
                     options={qno}
                     value={selectQuery}
                     onChange={(e) => queryNumber(e)}
@@ -1639,7 +1535,6 @@ const Report = () => {
                       <span>
                         <Select
                           isMulti={true}
-                          ref={selectInputRef6}
                           options={companyName}
                           value={companyName2}
                           placeholder="Select Company"
