@@ -293,7 +293,7 @@ function AllProposal() {
       },
     },
   ];
-
+  console.log("done");
   return (
     <>
       <Card>
