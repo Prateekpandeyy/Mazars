@@ -31,9 +31,28 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
   }, [num]);
 
   useEffect(() => {
+    getCategory();
     LoadingTime.timer2(setTime, setDisabled);
   }, []);
+  function getCategory() {
+    axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        data.map((i) => {
+          getSubCategory(i);
+        });
+        localStorage.setItem("tpcategoryData", JSON.stringify(data));
+      }
+    });
+  }
 
+  const getSubCategory = (e) => {
+    axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
+      if (res.data.code === 1) {
+        localStorage.setItem(`tp${e.details}`, JSON.stringify(res.data.result));
+      }
+    });
+  };
   const validOtp = (e) => {
     if (isNaN(e.target.value)) {
       Alerts.ErrorNormal("Please enter number only");

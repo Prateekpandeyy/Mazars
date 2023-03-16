@@ -42,6 +42,9 @@ function TaxProfessionalFilter(props) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
+  const [showSubCat, setShowSubCat] = useState([]);
+  const [catShowData, setCatShowData] = useState([]);
+  const [categoryData, setCategory] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef(null);
 
@@ -51,44 +54,51 @@ function TaxProfessionalFilter(props) {
       uit: token,
     },
   };
-
   useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
+    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    setCategory(data);
+  }, []);
 
   //handleCategory
   const handleCategory = (value) => {
-    setSelectedData(value);
+    categoryData.map((i) => {
+      if (i.details === value) {
+        setSelectedData(i.id);
+        setCatShowData(i.details);
+      }
+    });
+
+    setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
+    setShowSubCat([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    setStore2(value);
+    setShowSubCat(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
-
   //reset category
   const resetCategory = () => {
     setSelectedData([]);
     setStore2([]);
     setTax2([]);
+    setShowSubCat([]);
+    setCatShowData([]);
     getData();
   };
 
   //reset date
   const resetData = () => {
     reset();
+    setShowSubCat([]);
+    setCatShowData([]);
     setSelectedData([]);
     setStore2([]);
     setStatus1(1);
@@ -109,6 +119,24 @@ function TaxProfessionalFilter(props) {
 
     if (dk) {
       if (dk.route === window.location.pathname && dk.index === index) {
+        let parentId = "";
+        let catData = JSON.parse(localStorage.getItem("tpcategoryData"));
+        catData.forEach((element) => {
+          if (element.id === dk.pcatId) {
+            console.log("eleent", element.details);
+            setCatShowData(element.details);
+            parentId = element.details;
+          }
+        });
+        let subCat = JSON.parse(localStorage.getItem(parentId));
+
+        subCat.map((i) => {
+          if (dk.store.includes(i.id)) {
+            setShowSubCat((payload) => {
+              return [...payload, i.details];
+            });
+          }
+        });
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -715,14 +743,13 @@ function TaxProfessionalFilter(props) {
                     placeholder="Select Category"
                     defaultValue={[]}
                     onChange={handleCategory}
-                    value={selectedData}
+                    value={catShowData}
                   >
-                    <Option value="1" label="Compilance">
-                      <div className="demo-option-label-item">Direct Tax</div>
-                    </Option>
-                    <Option value="2" label="Compilance">
-                      <div className="demo-option-label-item">Indirect Tax</div>
-                    </Option>
+                    {categoryData.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                   </Select>
                 </div>
 
@@ -733,20 +760,14 @@ function TaxProfessionalFilter(props) {
                     placeholder="Select Sub Category"
                     defaultValue={[]}
                     onChange={(e) => handleSubCategory(e)}
-                    value={store2}
+                    value={showSubCat}
                     allowClear
                   >
-                    {tax2.length > 0 ? (
-                      <>
-                        {tax2?.map((p, index) => (
-                          <Option value={p.id} key={index}>
-                            {p.details}
-                          </Option>
-                        ))}
-                      </>
-                    ) : (
-                      ""
-                    )}
+                    {tax2.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                   </Select>
                 </div>
 

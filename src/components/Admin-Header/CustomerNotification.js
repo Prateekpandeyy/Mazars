@@ -145,6 +145,15 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDatatpAssignment4");
       localStorage.removeItem("tpcreate");
       localStorage.removeItem("tpgenerated");
+      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+        if (res.data.code === 1) {
+          localStorage.removeItem("tpcategoryData");
+          let data = res.data.result;
+          data.map((i) => {
+            localStorage.removeItem(`tp${i.details}`);
+          });
+        }
+      });
       history.push("/taxprofessional/login");
     });
   };
