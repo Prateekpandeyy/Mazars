@@ -33,12 +33,10 @@ function TaxProfessionalFilter(props) {
     index,
   } = props;
   const userid = window.localStorage.getItem("tpkey");
-
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [status1, setStatus1] = useState("");
-
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
@@ -55,7 +53,7 @@ function TaxProfessionalFilter(props) {
     },
   };
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("tlcategoryData"));
+    let data = JSON.parse(localStorage.getItem("tpcategoryData"));
     setCategory(data);
   }, []);
 
@@ -67,8 +65,9 @@ function TaxProfessionalFilter(props) {
         setCatShowData(i.details);
       }
     });
+    console.log(value);
 
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    setTax2(JSON.parse(localStorage.getItem(`tp${value}`)));
     setStore2([]);
     setShowSubCat([]);
   };
@@ -129,7 +128,7 @@ function TaxProfessionalFilter(props) {
           }
         });
         let subCat = JSON.parse(localStorage.getItem(parentId));
-
+        setTax2(subCat);
         subCat.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
@@ -745,7 +744,7 @@ function TaxProfessionalFilter(props) {
                     onChange={handleCategory}
                     value={catShowData}
                   >
-                    {categoryData.map((p, index) => (
+                    {categoryData?.map((p, index) => (
                       <Option value={p.details} key={index}>
                         {p.details}
                       </Option>
@@ -763,7 +762,7 @@ function TaxProfessionalFilter(props) {
                     value={showSubCat}
                     allowClear
                   >
-                    {tax2.map((p, index) => (
+                    {tax2?.map((p, index) => (
                       <Option value={p.details} key={index}>
                         {p.details}
                       </Option>

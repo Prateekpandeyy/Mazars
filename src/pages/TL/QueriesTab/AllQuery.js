@@ -18,7 +18,7 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
-
+import { TestData } from "../TestData";
 function AllQuery({ setAllQuery }) {
   const userid = window.localStorage.getItem("tlkey");
 

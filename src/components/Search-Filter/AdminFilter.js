@@ -65,7 +65,7 @@ function AdminFilter(props) {
       }
     });
 
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    setTax2(JSON.parse(localStorage.getItem(`admin${value}`)));
     setStore2([]);
     setShowSubCat([]);
   };
@@ -716,7 +716,7 @@ function AdminFilter(props) {
           }
         });
         let subCat = JSON.parse(localStorage.getItem(parentId));
-
+        setTax2(subCat);
         subCat.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {

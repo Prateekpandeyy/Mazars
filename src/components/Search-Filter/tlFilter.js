@@ -60,7 +60,7 @@ function TeamFilter(props) {
       }
     });
 
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    setTax2(JSON.parse(localStorage.getItem(`tl${value}`)));
     setStore2([]);
     setShowSubCat([]);
   };
@@ -127,7 +127,7 @@ function TeamFilter(props) {
           }
         });
         let subCat = JSON.parse(localStorage.getItem(parentId));
-
+        setTax2(subCat);
         subCat.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
@@ -901,7 +901,7 @@ function TeamFilter(props) {
                     onChange={handleCategory}
                     value={catShowData}
                   >
-                    {categoryData.map((p, index) => (
+                    {categoryData?.map((p, index) => (
                       <Option value={p.details} key={index}>
                         {p.details}
                       </Option>
