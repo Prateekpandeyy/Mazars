@@ -105,7 +105,7 @@ function AssignmentTab(props) {
         .then((res) => {
           if (res.data.code === 1) {
             setAssignment(res.data.result);
-
+            props.setAllAssignmentCount(res.data.result.length);
             setRecords(res.data.result.length);
           }
         });

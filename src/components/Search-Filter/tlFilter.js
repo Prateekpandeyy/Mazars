@@ -6,6 +6,7 @@ import { Select } from "antd";
 import "antd/dist/antd.css";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
+import { current_date } from "../../common/globalVeriable";
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function TeamFilter(props) {
   const dateValue = useRef(null);
@@ -37,13 +38,14 @@ function TeamFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
   const [status, setStatus] = useState("");
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const [categoryData, setCategory] = useState([]);
+  const [showSubCat, setShowSubCat] = useState([]);
+  const [catShowData, setCatShowData] = useState([]);
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
@@ -51,14 +53,28 @@ function TeamFilter(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-    setSelectedData(value);
+    categoryData.map((i) => {
+      if (i.details === value) {
+        setSelectedData(i.id);
+        setCatShowData(i.details);
+      }
+    });
+
     setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
+    setShowSubCat([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    setStore2(value);
+    setShowSubCat(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
 
   //reset category
@@ -66,7 +82,8 @@ function TeamFilter(props) {
     setSelectedData([]);
     setStore2([]);
     setTax2([]);
-
+    setShowSubCat([]);
+    setCatShowData([]);
     getData();
   };
 
@@ -78,7 +95,8 @@ function TeamFilter(props) {
     setStore2([]);
     setStatus(1);
     setTax2([]);
-
+    setShowSubCat([]);
+    setCatShowData([]);
     setFromDate("");
     setStatus("");
     setQueryNo("");
@@ -99,6 +117,24 @@ function TeamFilter(props) {
 
     if (dk) {
       if (dk.route === window.location.pathname && dk.index === index) {
+        let parentId = "";
+        let catData = JSON.parse(localStorage.getItem("tlcategoryData"));
+        catData.forEach((element) => {
+          if (element.id === dk.pcatId) {
+            console.log("eleent", element.details);
+            setCatShowData(element.details);
+            parentId = element.details;
+          }
+        });
+        let subCat = JSON.parse(localStorage.getItem(parentId));
+
+        subCat.map((i) => {
+          if (dk.store.includes(i.id)) {
+            setShowSubCat((payload) => {
+              return [...payload, i.details];
+            });
+          }
+        });
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -147,7 +183,7 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
               data.p_status
-            }&cat_id=${store2}&from=${data.fromDate
+            }&cat_id=${data.store}&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -172,7 +208,7 @@ function TeamFilter(props) {
             }&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -849,7 +885,7 @@ function TeamFilter(props) {
   const fromDateFun = (e) => {
     setFromDate(e.format("YYYY-MM-DD"));
   };
-
+  console.log("selectedData", selectedData);
   return (
     <>
       <div className="row">
@@ -863,7 +899,7 @@ function TeamFilter(props) {
                     placeholder="Select Category"
                     defaultValue={[]}
                     onChange={handleCategory}
-                    value={selectedData}
+                    value={catShowData}
                   >
                     {categoryData.map((p, index) => (
                       <Option value={p.details} key={index}>
@@ -880,11 +916,11 @@ function TeamFilter(props) {
                     placeholder="Select Sub Category"
                     defaultValue={[]}
                     onChange={handleSubCategory}
-                    value={store2}
+                    value={showSubCat}
                     allowClear
                   >
                     {tax2.map((p, index) => (
-                      <Option value={p.id} key={index}>
+                      <Option value={p.details} key={index}>
                         {p.details}
                       </Option>
                     ))}

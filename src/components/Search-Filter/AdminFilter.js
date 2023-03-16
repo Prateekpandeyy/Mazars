@@ -39,10 +39,12 @@ function AdminFilter(props) {
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
   const [status, setStatus] = useState("");
+  const [categoryData, setCategory] = useState([]);
+  const [showSubCat, setShowSubCat] = useState([]);
+  const [catShowData, setCatShowData] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef();
 
-  const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -56,42 +58,36 @@ function AdminFilter(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-    setSelectedData(value);
+    categoryData.map((i) => {
+      if (i.details === value) {
+        setSelectedData(i.id);
+        setCatShowData(i.details);
+      }
+    });
+
     setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
+    setShowSubCat([]);
   };
-  // //get category
-  // useEffect(() => {
-  //   const getSubCategory = () => {
-  //     if (selectedData != undefined && selectedData.length > 0) {
-  //       axios
-  //         .get(`${baseUrl}/admin/getCategory?pid=${selectedData}`, myConfig)
-  //         .then((res) => {
-  //           if (res.data.code === 1) {
-  //             setTax2(res.data.result);
-  //             setLoading(true);
-  //           }
-  //         });
-  //     }
-  //   };
-  //   getSubCategory();
-  // }, [selectedData]);
-
-  // //handleCategory
-  // const handleCategory = (value) => {
-  //   setSelectedData(value);
-  //   setStore2([]);
-  // };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    setStore2(value);
+    setShowSubCat(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
 
   //reset category
   const resetCategory = () => {
     setSelectedData([]);
     setTax2([]);
+    setShowSubCat([]);
+    setCatShowData([]);
     setStore2([]);
     getData();
   };
@@ -101,6 +97,8 @@ function AdminFilter(props) {
     localStorage.removeItem(`searchData${index}`);
     reset();
     setSelectedData([]);
+    setShowSubCat([]);
+    setCatShowData([]);
     setStore2([]);
     setTax2([]);
     getData();
@@ -708,6 +706,24 @@ function AdminFilter(props) {
 
     if (dk) {
       if (dk.route === window.location.pathname && dk.index === index) {
+        let parentId = "";
+        let catData = JSON.parse(localStorage.getItem("tlcategoryData"));
+        catData.forEach((element) => {
+          if (element.id === dk.pcatId) {
+            console.log("eleent", element.details);
+            setCatShowData(element.details);
+            parentId = element.details;
+          }
+        });
+        let subCat = JSON.parse(localStorage.getItem(parentId));
+
+        subCat.map((i) => {
+          if (dk.store.includes(i.id)) {
+            setShowSubCat((payload) => {
+              return [...payload, i.details];
+            });
+          }
+        });
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -735,7 +751,7 @@ function AdminFilter(props) {
                     style={{ width: 150 }}
                     placeholder="Select Category"
                     onChange={handleCategory}
-                    value={selectedData}
+                    value={catShowData}
                   >
                     {categoryData.map((p, index) => (
                       <Option value={p.details} key={index}>
@@ -752,7 +768,7 @@ function AdminFilter(props) {
                     placeholder="Select Sub Category"
                     defaultValue={[]}
                     onChange={handleSubCategory}
-                    value={store2}
+                    value={showSubCat}
                     allowClear
                   >
                     {tax2.map((p, index) => (

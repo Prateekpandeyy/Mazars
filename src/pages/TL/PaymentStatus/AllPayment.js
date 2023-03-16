@@ -32,14 +32,14 @@ import MessageIcon, {
 } from "../../../components/Common/MessageIcon";
 import Swal from "sweetalert2";
 
-function AllPayment() {
+function AllPayment({ setAllPayment }) {
   const { id } = useParams();
   const userid = window.localStorage.getItem("tlkey");
   const cust_id = window.localStorage.getItem("userid");
   const [records, setRecords] = useState([]);
 
   const [pay, setPay] = useState([]);
-  const [count, setCount] = useState("");
+
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -93,7 +93,7 @@ function AllPayment() {
         .then((res) => {
           if (res.data.code === 1) {
             setPayment(res.data.result);
-            setCount(res.data.result.length);
+            setAllPayment(res.data.result.length);
             setRecords(res.data.result.length);
           }
         });

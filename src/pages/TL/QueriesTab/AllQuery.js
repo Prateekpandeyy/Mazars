@@ -19,7 +19,7 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
 
-function AllQuery() {
+function AllQuery({ setAllQuery }) {
   const userid = window.localStorage.getItem("tlkey");
 
   const [incompleteData, setInCompleteData] = useState([]);
@@ -69,6 +69,7 @@ function AllQuery() {
         .then((res) => {
           if (res.data.code === 1) {
             setInCompleteData(res.data.result);
+            setAllQuery(res.data.result.length);
             setRecords(res.data.result.length);
           }
         });

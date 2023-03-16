@@ -53,19 +53,6 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
   useEffect(() => {
-    const AllAssignment = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&count=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAllAssignmentCount(res?.data?.result?.recordcount);
-          }
-        });
-    };
-
     const getDraftReports = () => {
       axios
         .get(
@@ -104,7 +91,7 @@ function QueriesTab(props) {
           }
         });
     };
-    AllAssignment();
+
     getDraftReports();
     getFinalReports();
     getAdminPermissionCount();
@@ -129,7 +116,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllAssignment />
+          <AllAssignment setAllAssignmentCount={setAllAssignmentCount} />
         </TabPanel>
 
         <TabPanel>

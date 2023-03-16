@@ -57,19 +57,6 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
   useEffect(() => {
-    const AllQuery = () => {
-      axios
-        .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&count=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAllQuery(res?.data?.result?.recordcount);
-          }
-        });
-    };
-
     const getPendindForAccepttence = () => {
       axios
         .get(
@@ -124,7 +111,6 @@ function QueriesTab(props) {
     getPendindForAccepttence();
     getIncomplete();
     getComplete();
-    AllQuery();
   }, []);
 
   const updateTab = (key) => {
@@ -151,7 +137,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllQuery />
+          <AllQuery setAllQuery={setAllQuery} />
         </TabPanel>
 
         <TabPanel>

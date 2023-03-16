@@ -20,11 +20,10 @@ import MessageIcon, {
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
 
-function AllProposal() {
+function AllProposal({ setAllProposal }) {
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
 
   const [id, setId] = useState(null);
   const [id2, setId2] = useState(null);
@@ -89,7 +88,8 @@ function AllProposal() {
         .then((res) => {
           if (res.data.code === 1) {
             setProposal(res.data.result);
-            setCount(res.data.result.length);
+
+            setAllProposal(res.data.result.length);
             setRecords(res.data.result.length);
           }
         });

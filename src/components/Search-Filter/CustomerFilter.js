@@ -37,7 +37,8 @@ function CustomerFilter(props) {
   const [store2, setStore2] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categoryData, setCategory] = useState([]);
-
+  const [showSubCat, setShowSubCat] = useState([]);
+  const [catShowData, setCatShowData] = useState([]);
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -52,14 +53,28 @@ function CustomerFilter(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-    setSelectedData(value);
+    categoryData.map((i) => {
+      if (i.details === value) {
+        setSelectedData(i.id);
+        setCatShowData(i.details);
+      }
+    });
+
     setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
+    setShowSubCat([]);
   };
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    setStore2(value);
+    setShowSubCat(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
 
   //reset category
@@ -67,6 +82,8 @@ function CustomerFilter(props) {
     setSelectedData("");
     setStore2([]);
     setTax2([]);
+    setShowSubCat([]);
+    setCatShowData([]);
   };
 
   //reset date
@@ -75,6 +92,8 @@ function CustomerFilter(props) {
     setSelectedData("");
     setStore2([]);
     setTax2([]);
+    setShowSubCat([]);
+    setCatShowData([]);
     getData();
   };
 
@@ -532,7 +551,7 @@ function CustomerFilter(props) {
                   style={{ width: 150 }}
                   placeholder="Select Category"
                   onChange={handleCategory}
-                  value={selectedData}
+                  value={catShowData}
                 >
                   {categoryData.map((p, index) => (
                     <Option value={p.details} key={index}>
@@ -548,7 +567,7 @@ function CustomerFilter(props) {
                   placeholder="Select Sub Category"
                   defaultValue={[]}
                   onChange={handleSubCategory}
-                  value={store2}
+                  value={showSubCat}
                   allowClear
                 >
                   {tax2?.map((p, index) => (
