@@ -304,7 +304,7 @@ function AllProposal() {
             AllProposal="AllProposal"
             setRecords={setRecords}
             records={records}
-            index="tlproposal1"
+            index="tpproposal1"
           />
         </CardHeader>
         <CardBody>
