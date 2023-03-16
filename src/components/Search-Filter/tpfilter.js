@@ -127,9 +127,9 @@ function TaxProfessionalFilter(props) {
             parentId = element.details;
           }
         });
-        let subCat = JSON.parse(localStorage.getItem(parentId));
+        let subCat = JSON.parse(localStorage.getItem(`tp${parentId}`));
         setTax2(subCat);
-        subCat.map((i) => {
+        subCat?.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];

@@ -126,7 +126,7 @@ function TeamFilter(props) {
             parentId = element.details;
           }
         });
-        let subCat = JSON.parse(localStorage.getItem(parentId));
+        let subCat = JSON.parse(localStorage.getItem(`tl${parentId}`));
         setTax2(subCat);
         subCat.map((i) => {
           if (dk.store.includes(i.id)) {

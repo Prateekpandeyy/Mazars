@@ -715,7 +715,7 @@ function AdminFilter(props) {
             parentId = element.details;
           }
         });
-        let subCat = JSON.parse(localStorage.getItem(parentId));
+        let subCat = JSON.parse(localStorage.getItem(`admin${parentId}`));
         setTax2(subCat);
         subCat.map((i) => {
           if (dk.store.includes(i.id)) {
