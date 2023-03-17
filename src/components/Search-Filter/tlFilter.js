@@ -885,7 +885,7 @@ function TeamFilter(props) {
   const fromDateFun = (e) => {
     setFromDate(e.format("YYYY-MM-DD"));
   };
-  console.log("selectedData", selectedData);
+  // console.log("selectedData", selectedData);
   return (
     <>
       <div className="row">

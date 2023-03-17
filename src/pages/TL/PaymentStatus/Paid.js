@@ -46,9 +46,7 @@ function AllPayment() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
-  const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
-  const myRefs = useRef([]);
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -60,7 +58,19 @@ function AllPayment() {
   const rejectHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setAssignNo(key.assign_no);
+    if (addPaymentModal === false) {
+      setScrolledTo(key.assign_no);
+      }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [addPaymentModal]);
 
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {

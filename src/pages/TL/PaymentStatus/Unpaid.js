@@ -65,7 +65,19 @@ function AllPayment() {
   const rejectHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setAssignNo(key.assign_no);
+    if (addPaymentModal === false) {
+      setScrolledTo(key.assign_no);
+      }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [addPaymentModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
