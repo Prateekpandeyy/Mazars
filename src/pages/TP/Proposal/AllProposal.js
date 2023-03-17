@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -25,6 +25,8 @@ function AllProposal() {
   const [count, setCount] = useState("");
   const [id, setId] = useState(null);
   const [assignNo, setAssignNo] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
@@ -41,21 +43,47 @@ function AllProposal() {
   };
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.id);
+    // console.log(e.assign_no);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [viewProposalModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
 
   useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
+    if (!data) {
+      console.log("getting all TP proposal");
     getProposalList();
+  }
   }, []);
 
   const getProposalList = () => {
-    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
-    if (!data) {
+    
       axios
         .get(
           `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`,
@@ -68,7 +96,7 @@ function AllProposal() {
             setRecords(res.data.result.length);
           }
         });
-    }
+  
   };
 
   const columns = [
@@ -76,7 +104,7 @@ function AllProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -280,7 +308,7 @@ function AllProposal() {
               {row.status_code > "3" || row.status_code == "10" ? (
                 <>
                   <div
-                    onClick={(e) => showProposalModal2(row.id)}
+                    onClick={(e) => showProposalModal2(row)}
                     title="View Proposal"
                   >
                     <EyeIcon />

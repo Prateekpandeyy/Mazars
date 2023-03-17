@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
@@ -35,6 +35,7 @@ function AssignmentTab(props) {
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
+  const [stored , setStored] =useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -42,6 +43,8 @@ function AssignmentTab(props) {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   var current_date =
     new Date().getFullYear() +
@@ -61,6 +64,7 @@ function AssignmentTab(props) {
   const [qid, setQid] = useState("");
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
+  const [categoryData, setCategory] = useState([]);
   const [error, setError] = useState(false);
   let des = false;
   var rowStyle2 = {};
@@ -80,12 +84,35 @@ function AssignmentTab(props) {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+    if (reportModal === false) {
+      setScrolledTo(key.assign_no)
+    }
   };
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+      var element = document.getElementById(scrolledTo);
+      if (element) {
+        let runTo = myRef.current[scrolledTo]
+        runTo.scrollIntoView(false);
+        runTo.scrollIntoView({ block: 'center' });
+      }
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     getAssignmentList();
@@ -109,26 +136,16 @@ function AssignmentTab(props) {
     }
   };
 
-  //get category
   useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
+    let data = JSON.parse(localStorage.getItem("categoryData"));
+    setCategory(data);
+  }, []);
 
   //handleCategory
   const handleCategory = (value) => {
     setError(false);
     setSelectedData(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
   };
 
@@ -137,6 +154,10 @@ function AssignmentTab(props) {
     setError(false);
     setStore2(value);
   };
+
+  useEffect(() => {
+    setTax2(JSON.parse(localStorage.getItem(selectedData)));
+  }, [selectedData]);
 
   //reset category
   const resetCategory = () => {
@@ -179,7 +200,7 @@ function AssignmentTab(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -328,7 +349,7 @@ function AssignmentTab(props) {
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
+        if (oldDate == null || oldDate ===  "0000-00-00 00:00:00") {
           return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
@@ -473,15 +494,26 @@ function AssignmentTab(props) {
     console.log("sss", id.id);
     if (id.id !== undefined) {
       setQid(id.q_id);
-
       setId(id.id);
       setDraftModal(!draftModal);
+      setScrolledTo(id.assign_no);
     } else {
       setDraftModal(!draftModal);
       setLoading(false);
       setId(id.id);
+      console.log(id,"defined Draft");
     }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [draftModal]);
+
 
   // final modal
 
@@ -664,12 +696,11 @@ function AssignmentTab(props) {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                 </Select>
               </div>
 
@@ -683,22 +714,17 @@ function AssignmentTab(props) {
                   value={store2}
                   allowClear
                 >
-                  {/* {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))} */}
-                  {tax2.length > 0 ? (
-                    <>
-                      {tax2?.map((p, index) => (
-                        <Option value={p.id} key={index}>
-                          {p.details}
-                        </Option>
-                      ))}
-                    </>
-                  ) : (
-                    ""
-                  )}
+                  {tax2?.length > 0 ? (
+                      <>
+                        {tax2?.map((p, index) => (
+                          <Option value={p.id} key={index}>
+                            {p.details}
+                          </Option>
+                        ))}
+                      </>
+                    ) : (
+                      ""
+                    )}
                 </Select>
               </div>
               <div>

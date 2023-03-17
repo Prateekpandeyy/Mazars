@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef} from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -27,6 +27,7 @@ function AssignmentTab() {
 
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
+  const [stored , setStored] =useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -34,6 +35,13 @@ function AssignmentTab() {
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [hide, setHide] = useState();
+
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [lastDown, setLastDown] = useState("");
+  const [runTo, setRunTo] = useState("");
+  const myRef = useRef([]);
+  const myRefs = useRef([]);
+  const myRefss = useRef([]);
 
   var current_date =
     new Date().getFullYear() +
@@ -51,6 +59,7 @@ function AssignmentTab() {
   const [loading, setLoading] = useState(false);
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
+  const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -62,24 +71,64 @@ function AssignmentTab() {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+    if (reportModal === false) {
+      setScrolledTo(key.assign_no)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [reportModal]);
+
   // draft modal
   const uploadDraftReport = (id) => {
-    if (typeof id == "object") {
+    if (typeof id.id == "object") {
       let des = true;
       setLoading(false);
       setDraftModal(!draftModal);
     } else {
       setDraftModal(!draftModal);
-      setId(id);
+      setId(id.id);
+    }
+    if (id.id !== undefined) {
+      setScrolledTo(id.assign_no);
     }
   };
+
+  
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [draftModal]);
+
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
+
   useEffect(() => {
     getAssignmentList();
   }, []);
@@ -105,26 +154,22 @@ function AssignmentTab() {
   };
 
   //get category
-  useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
+
 
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
     setStore2([]);
   };
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("categoryData"));
+    setCategory(data);
+  }, []);
+
+  useEffect(() => {
+    setTax2(JSON.parse(localStorage.getItem(selectedData)));
+  }, [selectedData]);
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -159,7 +204,7 @@ function AssignmentTab() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -400,7 +445,7 @@ function AssignmentTab() {
                         cursor: "pointer",
                         color: "green",
                       }}
-                      onClick={() => uploadDraftReport(row.id)}
+                      onClick={() => uploadDraftReport(row)}
                     >
                       <DraftReportUploadIcon />
                       draft
@@ -529,12 +574,11 @@ function AssignmentTab() {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                   {categoryData.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                 </Select>
               </div>
 
@@ -548,11 +592,17 @@ function AssignmentTab() {
                   value={store2}
                   allowClear
                 >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
+                   {tax2?.length > 0 ? (
+                    <>
+                      {tax2?.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </Select>
               </div>
               <div>

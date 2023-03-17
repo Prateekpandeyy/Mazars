@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -24,6 +24,8 @@ function InprogressProposal() {
   const [proposal, setProposal] = useState([]);
   const [count, setCount] = useState("");
   const [id, setId] = useState(null);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -44,12 +46,35 @@ function InprogressProposal() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
+
   const showProposalModal2 = (e) => {
     console.log("eeee");
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.id);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [viewProposalModal]);
 
   useEffect(() => {
     getProposalList();
@@ -78,7 +103,7 @@ function InprogressProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       style: {
         fontSize: "11px",
@@ -283,7 +308,7 @@ function InprogressProposal() {
               {row.status_code > "3" || row.status_code == "10" ? (
                 <>
                   <div
-                    onClick={(e) => showProposalModal2(row.id)}
+                    onClick={(e) => showProposalModal2(row)}
                     title="View Proposal"
                   >
                     <EyeIcon />
