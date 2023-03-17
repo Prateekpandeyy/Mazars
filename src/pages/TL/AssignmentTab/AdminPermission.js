@@ -92,6 +92,7 @@ function AdminPermission(props) {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [reportModal]);
+  
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
