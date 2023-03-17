@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import {
@@ -35,6 +35,8 @@ function Paid() {
   const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [pay, setPay] = useState({
     pay: "",
@@ -88,7 +90,16 @@ function Paid() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [ViewDiscussion]);
 
   useEffect(() => {
     getPaymentStatus();
@@ -132,7 +143,8 @@ function Paid() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {

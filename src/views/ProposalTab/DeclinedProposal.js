@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
@@ -31,6 +31,8 @@ function DeclinedProposal() {
   const [id, setId] = useState(null);
   const [reject, setRejected] = useState(true);
   const [openManual, setManual] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -65,6 +67,7 @@ function DeclinedProposal() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    console.log(key);
   };
 
   const columns = [
@@ -73,7 +76,8 @@ function DeclinedProposal() {
       dataField: "",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -31,16 +31,42 @@ function InprogressAllocation({
   const [additionalQuery, setAdditionalQuery] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const additionalHandler = (key) => {
     setAdditionalQuery(!additionalQuery);
     setAssignNo(key);
+    if (additionalQuery === false) {
+      setScrolledTo(key)
+    }
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [additionalQuery]);
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
 
   const needHelp = () => {
     setManual(!openManual);
@@ -51,7 +77,8 @@ function InprogressAllocation({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {

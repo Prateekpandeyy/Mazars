@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
@@ -27,6 +27,8 @@ function ProposalTab() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [proposalCount, setCountProposal] = useState("");
   const [records, setRecords] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
@@ -49,7 +51,18 @@ function ProposalTab() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+      console.log(key);
+    }
   };
+
+  useEffect(() => {
+      let runTo = myRef.current[scrolledTo]
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
+}, [ViewDiscussion]);
+
   const showProposalModal2 = (e) => {
     // setViewProposalModal(!viewProposalModal);
     // setProposalId(e)
@@ -115,7 +128,8 @@ function ProposalTab() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {
