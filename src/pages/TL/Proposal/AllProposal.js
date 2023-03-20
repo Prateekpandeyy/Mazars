@@ -369,7 +369,7 @@ function AllProposal({ setAllProposal }) {
             getData={getProposalList}
             headColor="#42566a"
           />
-          <Tds tdsForm={tdsForm} addTdsToggle={addTdsToggle} />
+
           {viewProposalModal === true ? (
             <CommonShowProposal
               setViewProposalModal={setViewProposalModal}

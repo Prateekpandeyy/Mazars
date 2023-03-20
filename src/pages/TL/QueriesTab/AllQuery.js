@@ -1,24 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
-import { TestData } from "../TestData";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 function AllQuery({ setAllQuery }) {
   const userid = window.localStorage.getItem("tlkey");
 
@@ -28,7 +21,7 @@ function AllQuery({ setAllQuery }) {
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
-  const [lastDown, setLastDown] = useState("");
+  const [open, setOpen] = useState(true);
   const myRef = useRef([]);
   const myRefs = useRef([]);
   useEffect(() => {
@@ -71,6 +64,7 @@ function AllQuery({ setAllQuery }) {
             setInCompleteData(res.data.result);
             setAllQuery(res.data.result.length);
             setRecords(res.data.result.length);
+            setOpen(false);
           }
         });
     }
@@ -224,6 +218,15 @@ function AllQuery({ setAllQuery }) {
 
   return (
     <>
+      <Backdrop
+        sx={{
+          color: "#000",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Card>
         <CardHeader>
           <TeamFilter

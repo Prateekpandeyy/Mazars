@@ -45,29 +45,20 @@ function CompletedQuery({ updateTab }) {
     getInCompleteAssingment();
   }, []);
   const toggle = (key) => {
+    console.log("keyyyy", typeof key);
     setModal(!modal);
-    axios
-      .get(
-        `${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setHistory(res.data.result);
-        }
-      });
-    // fetch(`${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`, {
-    //   method: "GET",
-    //   headers: new Headers({
-    //     Accept: "application/vnd.github.cloak-preview",
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((response) => {
-
-    //     setHistory(response.result);
-    //   })
-    //   .catch((error) => console.log(error));
+    if (typeof key === "string") {
+      axios
+        .get(
+          `${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setHistory(res.data.result);
+          }
+        });
+    }
   };
   const getInCompleteAssingment = () => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery4"));
