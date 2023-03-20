@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -22,6 +22,8 @@ function PendingForAcceptence(props) {
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [pay, setPay] = useState({
     id: "",
@@ -43,11 +45,13 @@ function PendingForAcceptence(props) {
   };
 
   useEffect(() => {
-    getPendingforAcceptance();
-  }, []);
-  const getPendingforAcceptance = () => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
     if (!data) {
+    getPendingforAcceptance();
+    }
+  }, []);
+  const getPendingforAcceptance = () => {
+    
       axios
         .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
         .then((res) => {
@@ -56,7 +60,7 @@ function PendingForAcceptence(props) {
             setRecords(res.data.result.length);
           }
         });
-    }
+    
   };
 
   const columns = [
@@ -64,7 +68,7 @@ function PendingForAcceptence(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {

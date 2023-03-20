@@ -52,19 +52,8 @@ function AssignmentTab(props) {
   const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
   const myRefs = useRef([]);
-  useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
-      let runTo = myRef.current[scrolledTo];
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: "center" });
-    }
-  }, [ViewDiscussion]);
-  useEffect(() => {
-    let runTo = myRefs.current[lastDown];
-    runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: "center" });
-  }, [reportModal]);
+  
+ 
 
   let des = false;
   var rowStyle2 = {};
@@ -73,9 +62,16 @@ function AssignmentTab(props) {
     setReport(key.assign_no);
     setDataItem(key);
     if (reportModal === false) {
-      setScrolledTo(key);
+      setScrolledTo(key.assign_no);
+      console.log(key.assign_no);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -84,6 +80,14 @@ function AssignmentTab(props) {
       setScrolledTo(key);
     }
   };
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     getAssignmentList();

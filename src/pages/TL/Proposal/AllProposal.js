@@ -47,8 +47,17 @@ function AllProposal({ setAllProposal }) {
   };
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.id);
+    console.log(e);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+      let runTo = myRef.current[scrolledTo]
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
+}, [viewProposalModal]);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -323,7 +332,7 @@ function AllProposal({ setAllProposal }) {
               {row.status_code > "3" || row.status_code == "10" ? (
                 <>
                   <div
-                    onClick={(e) => showProposalModal2(row.id)}
+                    onClick={(e) => showProposalModal2(row)}
                     title="View Proposal"
                   >
                     <EyeIcon />

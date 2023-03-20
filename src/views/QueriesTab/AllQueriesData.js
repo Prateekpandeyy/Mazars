@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
@@ -36,28 +36,52 @@ function AllQueriesData({
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [openManual, setManual] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const tableId = React.createRef("");
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
       setAdditionalQuery(!additionalQuery);
-
       des = true;
       setLoading2(false);
       return false;
+      console.log("1");
     } else {
       setAdditionalQuery(!additionalQuery);
       setAssignNo(key);
+      console.log("2");
+      setScrolledTo(key)
     }
   };
 
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [additionalQuery]);
+
   const ViewDiscussionToggel = (key) => {
     // console.log(tableId);
-
     // document.getElementById("root").scrollIntoView(false);
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
 
   const needHelp = () => {
     setManual(!openManual);
@@ -68,7 +92,8 @@ function AllQueriesData({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {

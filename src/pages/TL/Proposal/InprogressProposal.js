@@ -44,8 +44,15 @@ function InprogressProposal() {
   };
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.id);
+    setScrolledTo(e.assign_no);
   };
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [viewProposalModal]);
+
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -307,7 +314,7 @@ function InprogressProposal() {
               {row.status_code > "3" || row.status_code == "10" ? (
                 <>
                   <div
-                    onClick={(e) => showProposalModal2(row.id)}
+                    onClick={(e) => showProposalModal2(row)}
                     title="View Proposal"
                   >
                     <EyeIcon />

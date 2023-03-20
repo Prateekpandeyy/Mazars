@@ -49,8 +49,15 @@ function AcceptedProposal() {
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.id);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [viewProposalModal]);
 
   useEffect(() => {
     getProposalList();
@@ -276,7 +283,7 @@ function AcceptedProposal() {
                 <>
                   <div
                     style={{ cursor: "pointer", marginLeft: "2px" }}
-                    onClick={(e) => showProposalModal2(row.id)}
+                    onClick={(e) => showProposalModal2(row)}
                     title="View Proposal"
                   >
                     <EyeIcon />

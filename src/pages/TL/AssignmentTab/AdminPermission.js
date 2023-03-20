@@ -41,19 +41,7 @@ function AdminPermission(props) {
   const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
   const myRefs = useRef([]);
-  useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
-      let runTo = myRef.current[scrolledTo];
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: "center" });
-    }
-  }, [ViewDiscussion]);
-  useEffect(() => {
-    let runTo = myRefs.current[lastDown];
-    runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: "center" });
-  }, [reportModal]);
+  
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -91,7 +79,20 @@ function AdminPermission(props) {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
   }, []);
-
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: "center" });
+    }
+  }, [ViewDiscussion]);
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
+  
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);

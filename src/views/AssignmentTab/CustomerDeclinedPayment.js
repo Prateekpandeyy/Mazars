@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -28,6 +28,8 @@ function CustomerDeclinedPayment() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [openManual, setManual] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const token = window.localStorage.getItem("clientToken");
   let history = useHistory();
   const myConfig = {
@@ -42,12 +44,22 @@ function CustomerDeclinedPayment() {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [ViewDiscussion]);
 
   useEffect(() => {
     getAssignmentData();
@@ -76,7 +88,8 @@ function CustomerDeclinedPayment() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {

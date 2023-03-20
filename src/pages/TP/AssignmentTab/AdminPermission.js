@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
@@ -35,6 +35,7 @@ function AdminPermission(props) {
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
+  const [stored, setStored] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -63,9 +64,12 @@ function AdminPermission(props) {
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [categoryData, setCategory] = useState([]);
   let des = false;
   var rowStyle2 = {};
 
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -81,7 +85,20 @@ function AdminPermission(props) {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+      console.log("work");
+    }
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     getAssignmentList();
@@ -106,20 +123,6 @@ function AdminPermission(props) {
   };
 
   //get category
-  useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
-  }, [selectedData]);
 
   //handleCategory
   const handleCategory = (value) => {
@@ -127,6 +130,17 @@ function AdminPermission(props) {
     setSelectedData(value);
     setStore2([]);
   };
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("categoryData"));
+    setCategory(data);
+  }, []);
+
+
+
+  useEffect(() => {
+    setTax2(JSON.parse(localStorage.getItem(selectedData)));
+  }, [selectedData]);
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -170,7 +184,7 @@ function AdminPermission(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -231,7 +245,7 @@ function AdminPermission(props) {
         return (
           <>
             <div>
-              {row.paid_status == "2" && (
+              {row.paid_status === "2" && (
                 <p>
                   <span className="declined">Payment declined</span>
                 </p>
@@ -319,7 +333,7 @@ function AdminPermission(props) {
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
+        if (oldDate == null || oldDate === "0000-00-00 00:00:00") {
           return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
@@ -333,7 +347,7 @@ function AdminPermission(props) {
       formatter: function (cell, row) {
         return (
           <>
-            {row.paid_status == "2" ? null : (
+            {row.paid_status === "2" ? null : (
               <div>
                 {row.assignement_draft_report || row.final_report ? (
                   <div
@@ -398,12 +412,12 @@ function AdminPermission(props) {
               >
                 <ViewDiscussionIcon />
               </div>
-              {row.paid_status == "2" ? null : (
+              {row.paid_status === "2" ? null : (
                 <>
-                  {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                  {row.client_discussion === "completed" &&
+                    row.draft_report === "inprogress" &&
+                    row.final_discussion === "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -417,10 +431,10 @@ function AdminPermission(props) {
                       draft
                     </p>
                   ) : null}
-                  {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                  {row.client_discussion === "completed" &&
+                    row.draft_report === "completed" &&
+                    row.final_discussion === "completed" &&
+                    row.delivery_report === "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -535,10 +549,8 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${data.fromDate}&to=${
-              data.toDate
-            }&assignment_status=${data.stage_status}&stages_status=${
-              data.p_status
+            )}&cat_id=${store2}&from=${data.fromDate}&to=${data.toDate
+            }&assignment_status=${data.stage_status}&stages_status=${data.p_status
             }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -556,10 +568,8 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-              data.toDate
-            }&assignment_status=${data.stage_status}&stages_status=${
-              data.p_status
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&assignment_status=${data.stage_status}&stages_status=${data.p_status
             }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -578,10 +588,8 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-              data.p_dateTo
-            }&assignment_status=${status}&stages_status=${
-              data.p_status
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -599,10 +607,8 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-              data.p_dateTo
-            }&assignment_status=${status}&stages_status=${
-              data.p_status
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -652,12 +658,11 @@ function AdminPermission(props) {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  <Option value="1" label="Compilance">
-                    <div className="demo-option-label-item">Direct Tax</div>
-                  </Option>
-                  <Option value="2" label="Compilance">
-                    <div className="demo-option-label-item">Indirect Tax</div>
-                  </Option>
+                  {categoryData.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 
@@ -671,12 +676,7 @@ function AdminPermission(props) {
                   value={store2}
                   allowClear
                 >
-                  {/* {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))} */}
-                  {tax2.length > 0 ? (
+                  {tax2?.length > 0 ? (
                     <>
                       {tax2?.map((p, index) => (
                         <Option value={p.id} key={index}>
