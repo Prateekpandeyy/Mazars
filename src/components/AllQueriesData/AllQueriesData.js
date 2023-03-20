@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link } from "react-router-dom";
@@ -15,12 +15,27 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
   const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
+
+
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -53,7 +68,8 @@ function AllQueriesData({ CountAllQuery, setAllData, allData }) {
       },
 
       formatter: (cellContent, row, rowIndex, index) => {
-        return <div>{rowIndex + 1}</div>;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
     },
     {
