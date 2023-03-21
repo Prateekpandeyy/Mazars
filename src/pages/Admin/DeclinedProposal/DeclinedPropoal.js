@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -24,6 +24,8 @@ function DeclinedProposal({ declinedProposal }) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -33,11 +35,27 @@ function DeclinedProposal({ declinedProposal }) {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [ViewDiscussion]);
+
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.q_id);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [viewProposalModal]);
 
   useEffect(() => {
     getDeclinedProposal();
@@ -60,15 +78,25 @@ function DeclinedProposal({ declinedProposal }) {
 
   const retviewProposal = (e) => {
     setRetview(!retview);
-    setAssignNo(e);
+    setAssignNo(e.q_id);
+    if(retview === false){
+    setScrolledTo(e.assign_no);
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [retview]);
 
   const columns = [
     {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -259,7 +287,7 @@ function DeclinedProposal({ declinedProposal }) {
 
               {row.statuscode > "3" ? (
                 <div
-                  onClick={(e) => showProposalModal2(row.q_id)}
+                  onClick={(e) => showProposalModal2(row)}
                   className="ml-1"
                 >
                   <EyeIcon />
@@ -268,7 +296,7 @@ function DeclinedProposal({ declinedProposal }) {
               {row.statuscode == "6" ? (
                 <>
                   <div
-                    onClick={(e) => retviewProposal(row.q_id)}
+                    onClick={(e) => retviewProposal(row)}
                     className="ml-1"
                   >
                     <DiscussProposal titleName="Restore Proposal" />

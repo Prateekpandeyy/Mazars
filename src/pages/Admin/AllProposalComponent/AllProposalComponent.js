@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -26,6 +26,8 @@ function AllProposalComponent({ allProposal }) {
   const [retview, setRetview] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -39,14 +41,30 @@ function AllProposalComponent({ allProposal }) {
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.q_id);
+    setScrolledTo(e.assign_no);
   };
+
+useEffect(() => {
+  let runTo = myRef.current[scrolledTo]
+  runTo?.scrollIntoView(false);
+  runTo?.scrollIntoView({ block: 'center' }); 
+}, [viewProposalModal]);
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [ViewDiscussion]);
 
   useEffect(() => {
     getProposalData();
@@ -66,13 +84,23 @@ function AllProposalComponent({ allProposal }) {
 
   const retviewProposal = (e) => {
     setRetview(!retview);
-    setAssignNo(e);
+    setAssignNo(e.q_id);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [retview]);
+
+
   const columns = [
     {
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -266,7 +294,7 @@ function AllProposalComponent({ allProposal }) {
 
               {row.statuscode > "3" || row.statuscode == "10" ? (
                 <div
-                  onClick={(e) => showProposalModal2(row.q_id)}
+                  onClick={(e) => showProposalModal2(row)}
                   className="ml-1"
                 >
                   <EyeIcon />
@@ -274,7 +302,7 @@ function AllProposalComponent({ allProposal }) {
               ) : null}
               {row.statuscode === "6" && row.paid_status !== "2" ? (
                 <>
-                  <div onClick={(e) => retviewProposal(row.q_id)}>
+                  <div onClick={(e) => retviewProposal(row)}>
                     <DiscussProposal titleName="Restore Proposal" />
                   </div>
                 </>

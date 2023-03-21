@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link } from "react-router-dom";
@@ -30,6 +30,10 @@ function PendingForProposals({ CountPendingProposal }) {
   const [nonpendingData, setNonPendingData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [records, setRecords] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const [jumpTo, setJumpTo] = useState("");
+  const myRefs = useRef([]);
 
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
@@ -42,7 +46,9 @@ function PendingForProposals({ CountPendingProposal }) {
   const toggle = (key) => {
     if (key.length > 0) {
       setModal(!modal);
-
+      if (modal === false) {
+        setJumpTo(key)
+      }
       fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
         method: "GET",
         headers: new Headers({
@@ -57,8 +63,16 @@ function PendingForProposals({ CountPendingProposal }) {
         .catch((error) => console.log(error));
     } else {
       setModal(!modal);
+      console.log(key," else more");
     }
   };
+
+  useEffect(() => {
+    let runTo = myRefs.current[jumpTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [modal]);
+
 
   useEffect(() => {
     getPendingForProposals();
@@ -82,7 +96,8 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -167,6 +182,8 @@ function PendingForProposals({ CountPendingProposal }) {
             <button
               type="button"
               className="autoWidthBtn"
+              div id={row.id}
+              ref={el => (myRefs.current[row.id] = el)}
               onClick={() => toggle(row.id)}
             >
               History

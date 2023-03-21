@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import "./index.css";
 import { Link } from "react-router-dom";
@@ -21,6 +21,10 @@ function TeamLeaderTab() {
   var pp = [];
 
   const [modal, setModal] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const [jumpTo, setJumpTo] = useState("");
+  const myRefs = useRef([]);
 
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -30,10 +34,12 @@ function TeamLeaderTab() {
   };
   const toggle = (key) => {
     setModal(!modal);
+    
 
     if (typeof key == "object") {
     } else {
-      {
+        setJumpTo(key);
+
         fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
           method: "GET",
           headers: new Headers({
@@ -46,15 +52,23 @@ function TeamLeaderTab() {
             setHistory(response.result);
           })
           .catch((error) => console.log(error));
-      }
+          
     }
   };
+
+  useEffect(() => {
+    let runTo = myRefs.current[jumpTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [modal]);
+
   const columns = [
     {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.id}
+          ref={el => (myRefs.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -257,7 +271,7 @@ function TeamLeaderTab() {
           Swal.fire("Oops...", "Errorr ", "error");
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   return (
