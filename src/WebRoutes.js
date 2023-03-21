@@ -6,14 +6,13 @@ import TlRoute from "./RouteFolder/TlRoute/TlRoute";
 import AdminRoute from "./RouteFolder/AdminRoute/AdminRoute";
 import CmsRoute from "./RouteFolder/CmsRoute/CmsRoute";
 import ClientRoute from "./RouteFolder/ClientRoute/ClientRoute";
-import CmsRoute from "./RouteFolder/CmsRoute/CmsRoute";
 function WebRoutes() {
   const getLayout = () => {
     let comp;
 
     if (window.location.pathname.split("/")[1] === "taxprofessional") {
       comp = <TpRoute />;
-    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+    } else if (window.location.pathname.split("/")[1] === "teamleader") {
       comp = <TlRoute />;
     } else if (window.location.pathname.split("/")[1] === "admin") {
       comp = <AdminRoute />;
@@ -21,8 +20,8 @@ function WebRoutes() {
       comp = <CmsRoute />;
     } else if (window.location.pathname.split("/")[1] === "customer") {
       comp = <ClientRoute />;
-    } else if (window.location.pathname.split("/")[1] === "cms") {
-      comp = <CmsRoute />;
+    } else {
+      comp = <ClientRoute />;
     }
     return comp;
   };

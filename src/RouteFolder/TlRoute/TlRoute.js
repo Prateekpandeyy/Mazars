@@ -31,80 +31,88 @@ import TlInvoiceTab from "../..//pages/TL/Proposal/InvoiceTab";
 import TlpayDetails from "../..//pages/TL/PaymentStatus/Paydetails";
 import Custompay from "../../pages/TL/Custompay/Custompay";
 const TlRoute = () => {
-  <BrowserRouter>
-    <Switch>
-      <PublicRouteTL path="/teamleader/start" component={TlStart} />
-      <PublicRouteTL path="/teamleader/login" component={TlLogin} />
-      <PublicRouteTL
-        path="/teamleader/forget-password"
-        component={TlForgetPassword}
-      />
-      <PublicRouteTL
-        path="/teamleader_new-password/:id"
-        component={TlNewPassword}
-      />
+  return (
+    <BrowserRouter>
+      <Switch>
+        <PublicRouteTL path="/teamleader/start" component={TlStart} />
+        <PublicRouteTL path="/teamleader/login" component={TlLogin} />
+        <PublicRouteTL
+          path="/teamleader/forget-password"
+          component={TlForgetPassword}
+        />
+        <PublicRouteTL
+          path="/teamleader_new-password/:id"
+          component={TlNewPassword}
+        />
 
-      <PrivateRouteTL path="/teamleader/dashboard" component={TlDashboard} />
-      <PrivateRouteTL path="/teamleader/addnew" component={TlAddNew} />
-      <PrivateRouteTL
-        path="/teamleader/addteamprof"
-        component={TlAddTeamProf}
-      />
-      <PrivateRouteTL path="/teamleader/proposal" component={TlProposalTab} />
-      <PrivateRouteTL
-        path="/teamleader_addassingment/:id"
-        component={TlAddAssingmentStages}
-      />
-      <PrivateRouteTL
-        path="/teamleader_queries/:id"
-        component={TlQueriesRecevied}
-      />
-      <PrivateRouteTL
-        path="/teamleader_queryassing/:id"
-        component={TlQueryAssingment}
-      />
+        <PrivateRouteTL path="/teamleader/dashboard" component={TlDashboard} />
+        <PrivateRouteTL path="/teamleader/addnew" component={TlAddNew} />
+        <PrivateRouteTL
+          path="/teamleader/addteamprof"
+          component={TlAddTeamProf}
+        />
+        <PrivateRouteTL path="/teamleader/proposal" component={TlProposalTab} />
+        <PrivateRouteTL
+          path="/teamleader_addassingment/:id"
+          component={TlAddAssingmentStages}
+        />
+        <PrivateRouteTL
+          path="/teamleader_queries/:id"
+          component={TlQueriesRecevied}
+        />
+        <PrivateRouteTL
+          path="/teamleader_queryassing/:id"
+          component={TlQueryAssingment}
+        />
 
-      <PrivateRouteTL path="/teamleader/feedback" component={TlFeedbackTab} />
-      <PrivateRouteTL
-        path="/teamleader/paymentstatus"
-        component={TlPaymentStatus}
-      />
-      <PrivateRouteTL
-        path="/teamleader/assignment"
-        component={TlAssignmentTab}
-      />
-      <PrivateRouteTL
-        path="/teamleader_sendproposal/:id"
-        component={TlSendProposal}
-      />
-      <PrivateRouteTL path="/teamleader/queriestab" component={TlQueriesTab} />
-      <PrivateRouteTL
-        path="/teamleader_edit-proposal/:id"
-        component={TlEditProposal}
-      />
+        <PrivateRouteTL path="/teamleader/feedback" component={TlFeedbackTab} />
+        <PrivateRouteTL
+          path="/teamleader/paymentstatus"
+          component={TlPaymentStatus}
+        />
+        <PrivateRouteTL
+          path="/teamleader/assignment"
+          component={TlAssignmentTab}
+        />
+        <PrivateRouteTL
+          path="/teamleader_sendproposal/:id"
+          component={TlSendProposal}
+        />
+        <PrivateRouteTL
+          path="/teamleader/queriestab"
+          component={TlQueriesTab}
+        />
+        <PrivateRouteTL
+          path="/teamleader_edit-proposal/:id"
+          component={TlEditProposal}
+        />
 
-      <PrivateRouteTL
-        path="/teamleader_meeting/:id"
-        component={TlMeetingComponent}
-      />
+        <PrivateRouteTL
+          path="/teamleader_meeting/:id"
+          component={TlMeetingComponent}
+        />
 
-      <PrivateRouteTL path="/teamleader/schedule" component={TlSchedule} />
-      <PrivateRouteTL
-        path="/teamleader_view-notification/:id"
-        component={TlViewNotification}
-      />
-      <PrivateRouteTL path="/teamleader_chatting/:id" component={TlChatting} />
-      <PrivateRouteTL path="/teamleader/message" component={TlMessage} />
-      <PrivateRouteTL path="/teamleader/recording" component={TlRecording} />
-      <PrivateRouteTL path="/teamleader/reports" component={TlReport} />
-      <PrivateRouteTL path="/teamleader/invoice" component={TlInvoice} />
-      <PrivateRouteTL path="/teamleader/tlinvoice" component={TlInvoiceTab} />
-      <PrivateRouteTL
-        path="/teamleader_paydetails/:id"
-        component={TlpayDetails}
-      />
-      <PrivateRouteTL path="/teamleader/custompay" component={Custompay} />
-    </Switch>
-  </BrowserRouter>;
+        <PrivateRouteTL path="/teamleader/schedule" component={TlSchedule} />
+        <PrivateRouteTL
+          path="/teamleader_view-notification/:id"
+          component={TlViewNotification}
+        />
+        <PrivateRouteTL
+          path="/teamleader_chatting/:id"
+          component={TlChatting}
+        />
+        <PrivateRouteTL path="/teamleader/message" component={TlMessage} />
+        <PrivateRouteTL path="/teamleader/recording" component={TlRecording} />
+        <PrivateRouteTL path="/teamleader/reports" component={TlReport} />
+        <PrivateRouteTL path="/teamleader/invoice" component={TlInvoice} />
+        <PrivateRouteTL path="/teamleader/tlinvoice" component={TlInvoiceTab} />
+        <PrivateRouteTL
+          path="/teamleader_paydetails/:id"
+          component={TlpayDetails}
+        />
+        <PrivateRouteTL path="/teamleader/custompay" component={Custompay} />
+      </Switch>
+    </BrowserRouter>
+  );
 };
 export default TlRoute;
