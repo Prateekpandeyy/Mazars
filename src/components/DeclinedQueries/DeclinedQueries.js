@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef} from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -16,6 +16,8 @@ function DeclinedQueries() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignNo, setAssignNo] = useState("");
   const token = window.localStorage.getItem("adminToken");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const myConfig = {
     headers: {
       uit: token,
@@ -40,7 +42,19 @@ function DeclinedQueries() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo.scrollIntoView(false);
+      runTo.scrollIntoView({ block: 'center' });
+    }
+}, [ViewDiscussion]);
 
   const columns = [
     {
@@ -51,7 +65,8 @@ function DeclinedQueries() {
       },
 
       formatter: (cellContent, row, rowIndex, index) => {
-        return <div>{rowIndex + 1}</div>;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
     },
     {

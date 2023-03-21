@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -23,6 +23,11 @@ const Generated = () => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [copy, setCopy] = useState(0);
+  const [copiedHere, setCopiedHere] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const [jumpTo, setJumpTo] = useState("");
+  const myRefs = useRef([]);
   const [showCopyUrl, setShowCopyUrl] = useState("click");
   let copyTitle = "";
   const token = window.localStorage.getItem("adminToken");
@@ -91,7 +96,8 @@ const Generated = () => {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -246,6 +252,7 @@ const Generated = () => {
                     ) : (
                       <FileCopyIcon
                         id={row.id}
+                        ref={el => (myRefs.current[row.id] = el)}
                         onClick={() => {
                           copyFun(row.paymenturl, row.id);
                         }}
@@ -269,8 +276,18 @@ const Generated = () => {
   const noPointer = { cursor: "pointer", color: "blue" };
   const copyFun = (e, id) => {
     setCopy(id);
+    setCopiedHere(!copiedHere)
+    console.log(id);
+    setJumpTo(id)
     navigator.clipboard.writeText(e);
   };
+
+  useEffect(() => {
+    let runTo = myRefs.current[jumpTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [copiedHere]);
+
   rowStyle2 = (row, index) => {
     const style = {};
     var warningDate = moment(row.due_date).subtract(5, "day").toDate();

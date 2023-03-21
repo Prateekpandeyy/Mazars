@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -34,6 +34,9 @@ function PendingForAcceptence({ pendingProposal }) {
   const [retview, setRetview] = useState(false);
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
   const token = window.localStorage.getItem("adminToken");
@@ -45,12 +48,29 @@ function PendingForAcceptence({ pendingProposal }) {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
-    setProposalId(e);
+    setProposalId(e.q_id);
+    setScrolledTo(e.assign_no);
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' }); 
+  }, [viewProposalModal]);
+
   useEffect(() => {
     getPendingAcceptedProposal();
   }, []);
@@ -79,7 +99,8 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {
@@ -271,7 +292,7 @@ function PendingForAcceptence({ pendingProposal }) {
 
               {row.statuscode > "3" ? (
                 <div
-                  onClick={(e) => showProposalModal2(row.q_id)}
+                  onClick={(e) => showProposalModal2(row)}
                   className="ml-1"
                 >
                   <EyeIcon />

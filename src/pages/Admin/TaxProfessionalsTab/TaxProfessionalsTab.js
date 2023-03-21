@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import "./style.css";
 import Layout from "../../../components/Layout/Layout";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
@@ -14,6 +14,10 @@ function TaxProfessionalsTab() {
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
   const [history, setHistory] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const [jumpTo, setJumpTo] = useState("");
+  const myRefs = useRef([]);
   const userid = window.localStorage.getItem("adminkey");
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -41,6 +45,8 @@ function TaxProfessionalsTab() {
     setModal(!modal);
     if (typeof key == "object") {
     } else {
+      setJumpTo(key);
+      
       fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
         method: "GET",
         headers: new Headers({
@@ -55,13 +61,18 @@ function TaxProfessionalsTab() {
         .catch((error) => console.log(error));
     }
   };
-
+  useEffect(() => {
+    let runTo = myRefs.current[jumpTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [modal]);
   const columns = [
     {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.id}
+        ref={el => (myRefs.current[row.id] = el)}>{rowIndex + 1}</div>
       },
       headerStyle: () => {
         return { width: "50px" };

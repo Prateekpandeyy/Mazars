@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Allocation.css";
 import { baseUrl } from "../../config/config";
@@ -17,6 +17,10 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const [pendingData, setPendingData] = useState([]);
   const [history, setHistory] = useState([]);
   const [records, setRecords] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const [jumpTo, setJumpTo] = useState("");
+  const myRefs = useRef([]);
 
   const [modal, setModal] = useState(false);
   const token = window.localStorage.getItem("adminToken");
@@ -28,7 +32,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const toggle = (key) => {
     if (key.length > 0) {
       setModal(!modal);
-
+      if (modal === false) {
+        setJumpTo(key)
+      }
       fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
         method: "GET",
         headers: new Headers({
@@ -53,6 +59,12 @@ function PendingAllocation({ CountPendingForAllocation }) {
   };
 
   useEffect(() => {
+    let runTo = myRefs.current[jumpTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [modal]);
+
+  useEffect(() => {
     getPendingForAllocation();
   }, []);
 
@@ -75,7 +87,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -183,6 +196,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
             <button
               type="button"
               className="autoWidthBtn"
+              div id={row.id}
+              ref={el => (myRefs.current[row.id] = el)}
               onClick={() => toggle(row.id)}
             >
               History
