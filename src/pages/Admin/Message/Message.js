@@ -35,6 +35,7 @@ function Message(props) {
       uit: token,
     },
   };
+  console.log("done");
 
   const getMessage = () => {
     axios
