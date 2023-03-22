@@ -84,8 +84,8 @@ function AssignmentTab(props) {
     var element = document.getElementById(scrolledTo);
     if (element) {
       let runTo = myRef.current[scrolledTo];
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: "center" });
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
@@ -501,15 +501,21 @@ function AssignmentTab(props) {
   const uploadDraftReport = (id) => {
     if (id.id !== undefined) {
       setQid(id.q_id);
-
       setId(id.id);
       setDraftModal(!draftModal);
+      setScrolledTo(id.assign_no);
     } else {
       setDraftModal(!draftModal);
       setLoading(false);
       setId(id.id);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [draftModal]);
 
   // final modal
 

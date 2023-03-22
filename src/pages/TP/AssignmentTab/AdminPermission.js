@@ -94,9 +94,8 @@ function AdminPermission(props) {
     var element = document.getElementById(scrolledTo);
     if (element) {
       let runTo = myRef.current[scrolledTo]
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
-      console.log("work");
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
     }
   }, [ViewDiscussion]);
 

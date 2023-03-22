@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
@@ -27,6 +27,8 @@ const Generated = () => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [copy, setCopy] = useState(0);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -38,7 +40,7 @@ const Generated = () => {
     setTdsForm(!tdsForm);
     if (key) {
       setGstinNo(key.gstin_no);
-
+      console.log(key.assign_no);
       setAssignNo(key.assign_no);
       setPaidAmount(key.paid_amount);
       setId(key.id);
@@ -47,6 +49,12 @@ const Generated = () => {
       setId2(key.id);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [tdsForm]);
 
   useEffect(() => {
     getProposalList();

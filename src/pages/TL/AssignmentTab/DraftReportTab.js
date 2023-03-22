@@ -61,7 +61,7 @@ function AssignmentTab() {
     var element = document.getElementById(scrolledTo);
     if (element) {
       let runTo = myRef.current[scrolledTo];
-      runTo.scrollIntoView(false);
+      runTo?.scrollIntoView(false);
       runTo.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
@@ -96,11 +96,19 @@ function AssignmentTab() {
       setQid(id.q_id);
       setLoading(false);
       setDraftModal(!draftModal);
+      setScrolledTo(id.assign_no);
     } else {
       setDraftModal(!draftModal);
       setId(id.id);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [draftModal]);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);

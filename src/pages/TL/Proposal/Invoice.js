@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -27,6 +27,8 @@ const Invoice = (updateTab) => {
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [count, setCount] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [id, setId] = useState();
 
@@ -43,6 +45,10 @@ const Invoice = (updateTab) => {
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
+    if(tdsForm === false){
+      setScrolledTo(key.assign_no);
+    }
+   
     if (key) {
       setGstinNo(key.gstin_no);
 
@@ -54,6 +60,14 @@ const Invoice = (updateTab) => {
       setId2(key.id);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+    console.log("There is myRef here");
+}, [tdsForm]);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   };
@@ -92,7 +106,8 @@ const Invoice = (updateTab) => {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
 
       headerStyle: () => {

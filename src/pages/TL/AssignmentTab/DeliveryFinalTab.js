@@ -45,19 +45,7 @@ function AssignmentTab() {
   const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
   const myRefs = useRef([]);
-  useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
-      let runTo = myRef.current[scrolledTo];
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: "center" });
-    }
-  }, [ViewDiscussion]);
-  useEffect(() => {
-    let runTo = myRefs.current[lastDown];
-    runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: "center" });
-  }, [reportModal]);
+  
   var rowStyle2 = {};
 
   let des = false;
@@ -66,8 +54,16 @@ function AssignmentTab() {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key);
+      console.log(key);
     }
   };
+
+  useEffect(() => {
+      let runTo = myRef.current[scrolledTo];
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
+
 
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -158,8 +154,19 @@ function AssignmentTab() {
       setFianlModal(!fianlModal);
       setFinalId(id);
       setQid(id.q_id);
+      console.log("else");
+      setScrolledTo(id.assign_no);
     }
+    
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    console.log("ref");
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [fianlModal]);
+
   // view report
   const ViewReport = (key) => {
     setReportModal(!reportModal);
@@ -167,8 +174,16 @@ function AssignmentTab() {
     setDataItem(key);
     if (reportModal === false) {
       setScrolledTo(key);
+      console.log(key);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRefs.current[lastDown];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
+
   //columns
   const columns = [
     {

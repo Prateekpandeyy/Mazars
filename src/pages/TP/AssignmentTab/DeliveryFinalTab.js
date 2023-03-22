@@ -80,13 +80,10 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
       let runTo = myRef.current[scrolledTo]
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
       console.log("work");
-    }
 }, [ViewDiscussion]);
 
   const uploadFinalReport = (id) => {
@@ -104,12 +101,10 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
       let runTo = myRef.current[scrolledTo]
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
-    }
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
+      console.log("ref");
 }, [fianlModal]);
 
   useEffect(() => {
@@ -195,13 +190,10 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
       let runTo = myRef.current[scrolledTo]
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
       console.log("work report");
-    }
 }, [reportModal]);
 
   //columns

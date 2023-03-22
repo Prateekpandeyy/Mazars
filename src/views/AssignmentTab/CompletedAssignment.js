@@ -43,8 +43,17 @@ function CompleteAssignment() {
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key.assign_no);
-    console.log(key);
+    if (reportModal === false) {
+      setScrolledTo(key)
+      console.log("object");
+    }
   };
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+    console.log('work');
+}, [reportModal]);
 
   var clcomp = {
     color: "green",
@@ -58,6 +67,7 @@ function CompleteAssignment() {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key)
+      console.log("object");
     }
   };
 
@@ -65,6 +75,7 @@ function CompleteAssignment() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
+    console.log("work");
 }, [ViewDiscussion]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -24,6 +24,8 @@ function CompletedQuery({ updateTab }) {
   const hist = useHistory();
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -46,6 +48,10 @@ function CompletedQuery({ updateTab }) {
   }, []);
   const toggle = (key) => {
     setModal(!modal);
+    
+    if(modal === false){
+      setScrolledTo(key);
+    }
     axios
       .get(
         `${baseUrl}/tl/getQueryHistory?q_id=${key}&uid=${JSON.parse(userid)}`,
@@ -69,6 +75,14 @@ function CompletedQuery({ updateTab }) {
     //   })
     //   .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+      let runTo = myRef.current[scrolledTo]
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
+}, [modal]);
+
+  
   const getInCompleteAssingment = () => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery4"));
     if (!searchData) {
@@ -91,7 +105,8 @@ function CompletedQuery({ updateTab }) {
       text: "S.no",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.id} 
+        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };

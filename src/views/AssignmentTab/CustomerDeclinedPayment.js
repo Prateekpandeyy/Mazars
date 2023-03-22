@@ -44,8 +44,16 @@ function CustomerDeclinedPayment() {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+    if (reportModal === false) {
+      setScrolledTo(key)
+    }
 
   };
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);

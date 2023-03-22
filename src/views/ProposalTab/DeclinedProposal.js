@@ -67,8 +67,16 @@ function DeclinedProposal() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
-    console.log(key);
+    if(ViewDiscussion === false){
+    setScrolledTo(key);
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [ViewDiscussion]);
 
   const columns = [
     {
@@ -220,7 +228,7 @@ function DeclinedProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },

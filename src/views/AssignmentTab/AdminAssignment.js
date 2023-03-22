@@ -50,12 +50,20 @@ function AdminAssignment() {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     setDataItem(key);
+    if (reportModal === false) {
+      setScrolledTo(key.assign_no)
+    }
     if (!key) {
       document.getElementById("veRep").style.overflowY = "hidden";
     } else {
       document.getElementById("veRep").style.overflowY = "auto";
     }
   };
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);

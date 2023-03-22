@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef,useEffect } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -23,10 +23,24 @@ function InprogressProposal({
   const [assignNo, setAssignNo] = useState("");
   const [openManual, setManual] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+      console.log(key,'set');
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+  console.log("object");
+}, [ViewDiscussion]);
+
   const needHelp = () => {
     setManual(!openManual);
   };
@@ -36,7 +50,8 @@ function InprogressProposal({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {

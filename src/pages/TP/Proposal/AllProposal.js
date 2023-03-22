@@ -49,12 +49,9 @@ function AllProposal() {
   };
 
   useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
       let runTo = myRef.current[scrolledTo]
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
-    }
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
 }, [viewProposalModal]);
 
   const ViewDiscussionToggel = (key) => {
@@ -66,12 +63,9 @@ function AllProposal() {
   };
 
   useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
       let runTo = myRef.current[scrolledTo]
-      runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
-    }
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
 }, [ViewDiscussion]);
 
   useEffect(() => {
