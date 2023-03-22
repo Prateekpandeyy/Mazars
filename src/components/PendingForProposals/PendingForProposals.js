@@ -96,8 +96,8 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.id} 
+        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -182,8 +182,7 @@ function PendingForProposals({ CountPendingProposal }) {
             <button
               type="button"
               className="autoWidthBtn"
-              div id={row.id}
-              ref={el => (myRefs.current[row.id] = el)}
+              id={row.id}
               onClick={() => toggle(row.id)}
             >
               History

@@ -19,8 +19,6 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
-  const [jumpTo, setJumpTo] = useState("");
-  const myRefs = useRef([]);
 
   const [modal, setModal] = useState(false);
   const token = window.localStorage.getItem("adminToken");
@@ -33,7 +31,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     if (key.length > 0) {
       setModal(!modal);
       if (modal === false) {
-        setJumpTo(key)
+        setScrolledTo(key)
       }
       fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
         method: "GET",
@@ -59,7 +57,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
   };
 
   useEffect(() => {
-    let runTo = myRefs.current[jumpTo]
+    let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });   
 }, [modal]);
@@ -87,8 +85,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no}
-          ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.id}
+          ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -197,7 +195,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
               type="button"
               className="autoWidthBtn"
               div id={row.id}
-              ref={el => (myRefs.current[row.id] = el)}
+              ref={el => (myRef.current[row.id] = el)}
               onClick={() => toggle(row.id)}
             >
               History
