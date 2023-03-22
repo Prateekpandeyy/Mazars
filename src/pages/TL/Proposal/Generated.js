@@ -47,6 +47,9 @@ const Generated = ({ updateTab }) => {
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
+    if(tdsForm === false){
+      setScrolledTo(key.id)
+    }
     if (key) {
       setGstinNo(key.gstin_no);
       setCopy(0);
@@ -58,6 +61,12 @@ const Generated = ({ updateTab }) => {
       setId2(key.id);
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [tdsForm]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);

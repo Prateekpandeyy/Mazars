@@ -62,7 +62,7 @@ const Login = () => {
           });
           // Alerts.SuccessNormal("As per your request, OTP has been sent to your registered email address.")
           setUid(response.data["user id"]);
-          logout();
+          // logout();
         } else if (response.data.code === 0) {
           setLoading(false);
           Alerts.ErrorNormal("Invalid email or password.");

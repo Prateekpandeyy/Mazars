@@ -39,6 +39,9 @@ const Generated = () => {
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
+    if(tdsForm === false){
+      setScrolledTo(key.id)
+    }
     if (key) {
       setGstinNo(key.gstin_no);
       console.log(key.assign_no);
