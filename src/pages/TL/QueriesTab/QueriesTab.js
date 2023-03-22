@@ -3,7 +3,10 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-
+import AllQuery from "./AllQuery";
+import PendingForAcceptence from "../PendingForAcceptence/PendingForAcceptence";
+import InCompleteData from "../InCompleteData/InCompleteData";
+import CompleteData from "../CompleteData/CompleteData";
 function QueriesTab(props) {
   const userid = window.localStorage.getItem("tlkey");
   const [tabIndex, setTabIndex] = useState(0);
@@ -13,16 +16,9 @@ function QueriesTab(props) {
   const [complete, setcomplete] = useState("");
 
   const [allQuery, setAllQuery] = useState("");
-  const [declined, setDeclined] = useState("");
+
   const [bgColor, setbgColor] = useState("#55425F");
-  const AllQuery = React.lazy(() => import("./AllQuery"));
-  const PendingForAcceptence = React.lazy(() =>
-    import("../PendingForAcceptence/PendingForAcceptence")
-  );
-  const InCompleteData = React.lazy(() =>
-    import("../InCompleteData/InCompleteData")
-  );
-  const CompleteData = React.lazy(() => import("../CompleteData/CompleteData"));
+
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -140,25 +136,17 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <Suspense fallback={<div>Loading...</div>}>
-            <AllQuery setAllQuery={setAllQuery} />
-          </Suspense>
+          <AllQuery setAllQuery={setAllQuery} />
         </TabPanel>
 
         <TabPanel>
-          <Suspense fallback={<div>Loading...</div>}>
-            <InCompleteData />
-          </Suspense>
+          <InCompleteData />
         </TabPanel>
         <TabPanel>
-          <Suspense fallback={<div>Loading...</div>}>
-            <PendingForAcceptence updateTab={updateTab} />
-          </Suspense>
+          <PendingForAcceptence updateTab={updateTab} />
         </TabPanel>
         <TabPanel>
-          <Suspense fallback={<div>Loading...</div>}>
-            <CompleteData updateTab={updateTab} />
-          </Suspense>
+          <CompleteData updateTab={updateTab} />
         </TabPanel>
       </Tabs>
     </Layout>
