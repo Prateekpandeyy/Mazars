@@ -86,16 +86,16 @@ function AdminPermission(props) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
@@ -131,11 +131,9 @@ function AdminPermission(props) {
   };
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("categoryData"));
+    let data = JSON.parse(localStorage.getItem("tpcategoryData"));
     setCategory(data);
   }, []);
-
-
 
   useEffect(() => {
     setTax2(JSON.parse(localStorage.getItem(selectedData)));
@@ -183,7 +181,14 @@ function AdminPermission(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -414,9 +419,9 @@ function AdminPermission(props) {
               {row.paid_status === "2" ? null : (
                 <>
                   {row.client_discussion === "completed" &&
-                    row.draft_report === "inprogress" &&
-                    row.final_discussion === "inprogress" &&
-                    row.paid_status != 2 ? (
+                  row.draft_report === "inprogress" &&
+                  row.final_discussion === "inprogress" &&
+                  row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -431,9 +436,9 @@ function AdminPermission(props) {
                     </p>
                   ) : null}
                   {row.client_discussion === "completed" &&
-                    row.draft_report === "completed" &&
-                    row.final_discussion === "completed" &&
-                    row.delivery_report === "inprogress" ? (
+                  row.draft_report === "completed" &&
+                  row.final_discussion === "completed" &&
+                  row.delivery_report === "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -548,8 +553,10 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${data.fromDate}&to=${data.toDate
-            }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+            )}&cat_id=${store2}&from=${data.fromDate}&to=${
+              data.toDate
+            }&assignment_status=${data.stage_status}&stages_status=${
+              data.p_status
             }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -567,8 +574,10 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-            }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&assignment_status=${data.stage_status}&stages_status=${
+              data.p_status
             }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -587,8 +596,10 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&assignment_status=${status}&stages_status=${
+              data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -606,8 +617,10 @@ function AdminPermission(props) {
           .get(
             `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
+            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&assignment_status=${status}&stages_status=${
+              data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
