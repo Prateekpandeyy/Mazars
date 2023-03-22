@@ -49,6 +49,9 @@ function CompletedQuery({ updateTab }) {
   const toggle = (key) => {
     console.log("keyyyy", typeof key);
     setModal(!modal);
+    if(modal === false){
+      setScrolledTo(key)
+    }
     if (typeof key === "string") {
       axios
         .get(
