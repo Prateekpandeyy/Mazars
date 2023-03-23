@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody } from "reactstrap";
@@ -28,7 +28,7 @@ function AssignmentTab() {
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
-  const [stored , setStored] =useState("");
+  const [stored, setStored] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -75,16 +75,16 @@ function AssignmentTab() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-      console.log("work");
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+    console.log("work");
+  }, [ViewDiscussion]);
 
   const uploadFinalReport = (id) => {
     if (id && id.id === undefined) {
@@ -101,11 +101,11 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-      console.log("ref");
-}, [fianlModal]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+    console.log("ref");
+  }, [fianlModal]);
 
   useEffect(() => {
     getAssignmentList();
@@ -132,7 +132,6 @@ function AssignmentTab() {
 
   //get category
 
-
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
@@ -140,11 +139,9 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("categoryData"));
+    let data = JSON.parse(localStorage.getItem("tpcategoryData"));
     setCategory(data);
   }, []);
-
-
 
   useEffect(() => {
     setTax2(JSON.parse(localStorage.getItem(selectedData)));
@@ -185,16 +182,16 @@ function AssignmentTab() {
     setReport(key.assign_no);
     setDataItem(key);
     if (reportModal === false) {
-      setScrolledTo(key.assign_no)
+      setScrolledTo(key.assign_no);
     }
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-      console.log("work report");
-}, [reportModal]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+    console.log("work report");
+  }, [reportModal]);
 
   //columns
   const columns = [
@@ -202,7 +199,14 @@ function AssignmentTab() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -575,10 +579,10 @@ function AssignmentTab() {
                   value={selectedData}
                 >
                   {categoryData.map((p, index) => (
-                      <Option value={p.details} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 

@@ -31,6 +31,7 @@ import CustomHeading from "../../components/Common/CustomHeading";
 import MainHeading from "../../components/Common/MainHeading";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
+import GetEmail from "../GetEmail/GetEmail";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
   p_password: yup.string().required(""),
@@ -83,6 +84,7 @@ function LoginForm() {
   const [showCookie, setShowCookie] = useState(false);
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [showEmail, setShowEmail] = useState(false);
   const token = localStorage.getItem("clientToken");
   const [cookieEnable, setCookieEnable] = useState("");
   const userEmail = JSON.parse(localStorage.getItem("custEmail"));
@@ -98,6 +100,11 @@ function LoginForm() {
   }, [load]);
 
   useEffect(() => {
+    if (window.location.pathname === "/6b382b8c26") {
+      setShowEmail(true);
+    } else {
+      setShowEmail(false);
+    }
     latestNews();
   }, []);
   const latestNews = () => {
@@ -213,7 +220,7 @@ function LoginForm() {
     <>
       <MainContainer>
         <Header noSign="noSign" showCook={showCook} />
-
+        {showEmail === true ? <GetEmail /> : ""}
         <MyContainer>
           {news.length > 0 ? (
             <FlashSection>

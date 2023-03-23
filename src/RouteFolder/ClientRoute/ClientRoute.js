@@ -48,7 +48,6 @@ import Direct from "../../views/Tax/Direct";
 import Indirect from "../../views/Tax/Indirect";
 import Details from "../../views/Tax/Details";
 import LatestUpdates from "../../views/Tax/LatestUpdats";
-
 import MediaContentCustomer from "../../views/Tax/MediaContentCustomer";
 import GalleryVideo from "../../views/Tax/GalleryVideo";
 import VideoList from "../../views/Tax/VideoList";
@@ -59,18 +58,17 @@ import UpdateMiscellenous from "../../views/Tax/UpdateMiscellenous";
 import UpdateDetails from "../../views/Tax/UpdateDetails";
 import OuterLinkVideo from "../../views/outerLinkVideo.js/OuterLinkVideo";
 import EditProfile from "../../views/EditProfile/EditProfile";
-import UploadLinkContent from "../../pages/Admin/CMS/UploadLInkContent";
-import CommingSoon from "../../views/ComingSoon/CommingSoon";
 import PublicRouteUser from "../../Service/PublicRouteUser";
 import PrivateRouteUser from "../../Service/PrivateRouteUser";
 import PageNotFound from "../../components/PageNotFound/PageNotFound";
 import Videogallery from "../../views/Tax/VideoGallary";
+import GetEmail from "../../views/GetEmail/GetEmail";
 const ClientRoute = () => {
   return (
     <BrowserRouter>
       <Switch>
         <PublicRouteUser exact path="/" component={Login} />
-
+        <PublicRouteUser exact path="/:id" component={Login} />
         <PublicRouteUser exact path="/customer/signup" component={SignUp} />
         <PublicRouteUser
           exact
@@ -150,6 +148,7 @@ const ClientRoute = () => {
           path="/customer_meetingouter/:id"
           component={OuterMeetingJoin}
         />
+
         <PublicRouteUser
           exact
           path="/customer/miscellaneous"

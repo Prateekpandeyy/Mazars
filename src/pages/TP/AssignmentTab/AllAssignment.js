@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
@@ -35,7 +35,7 @@ function AssignmentTab(props) {
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
-  const [stored , setStored] =useState("");
+  const [stored, setStored] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -85,33 +85,33 @@ function AssignmentTab(props) {
     setReport(key.assign_no);
     setDataItem(key);
     if (reportModal === false) {
-      setScrolledTo(key.assign_no)
+      setScrolledTo(key.assign_no);
     }
   };
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
-}, [reportModal]);
+  }, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-      var element = document.getElementById(scrolledTo);
-      if (element) {
-        let runTo = myRef.current[scrolledTo]
-        runTo?.scrollIntoView(false);
-        runTo?.scrollIntoView({ block: 'center' });
-      }
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo];
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: "center" });
+    }
   }, [ViewDiscussion]);
 
   useEffect(() => {
@@ -137,7 +137,7 @@ function AssignmentTab(props) {
   };
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("categoryData"));
+    let data = JSON.parse(localStorage.getItem("tpcategoryData"));
     setCategory(data);
   }, []);
 
@@ -200,7 +200,14 @@ function AssignmentTab(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -349,7 +356,7 @@ function AssignmentTab(props) {
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
-        if (oldDate == null || oldDate ===  "0000-00-00 00:00:00") {
+        if (oldDate == null || oldDate === "0000-00-00 00:00:00") {
           return null;
         }
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
@@ -501,19 +508,18 @@ function AssignmentTab(props) {
       setDraftModal(!draftModal);
       setLoading(false);
       setId(id.id);
-      console.log(id,"defined Draft");
+      console.log(id, "defined Draft");
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
-}, [draftModal]);
-
+  }, [draftModal]);
 
   // final modal
 
@@ -696,11 +702,11 @@ function AssignmentTab(props) {
                   onChange={handleCategory}
                   value={selectedData}
                 >
-                  {categoryData.map((p, index) => (
-                      <Option value={p.details} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
+                  {categoryData?.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
                 </Select>
               </div>
 
@@ -715,16 +721,16 @@ function AssignmentTab(props) {
                   allowClear
                 >
                   {tax2?.length > 0 ? (
-                      <>
-                        {tax2?.map((p, index) => (
-                          <Option value={p.id} key={index}>
-                            {p.details}
-                          </Option>
-                        ))}
-                      </>
-                    ) : (
-                      ""
-                    )}
+                    <>
+                      {tax2?.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </Select>
               </div>
               <div>

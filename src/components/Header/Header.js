@@ -228,8 +228,13 @@ export const CmsCont = (props) => {
   const cookieEnable = Cookies.get("accept");
 
   let history = useHistory();
+  const userId = window.localStorage.getItem("userid");
   useEffect(() => {
-    if (history.location.pathname === "/") {
+    if (
+      history.location.pathname === "/" ||
+      history.location.pathname === "/6b382b8c26" ||
+      userId
+    ) {
     } else if (cookieEnable) {
       setShowCookie(false);
     } else {
