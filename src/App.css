@@ -991,7 +991,7 @@ color: #ffffff;
 footer a:hover{
   color: #0071CE !important;
 }
-.css-1xmq6wq-MuiModal-root-MuiDialog-root{
+/* css-1xmq6wq-MuiModal-root-MuiDialog-root{
   position: fixed;
     z-index: 1300;
     right: 0;
@@ -999,4 +999,4 @@ footer a:hover{
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,0.9) !important;
-}
+} */
