@@ -45,7 +45,6 @@ function CompleteAssignment() {
     setReport(key.assign_no);
     if (reportModal === false) {
       setScrolledTo(key.assign_no)
-      console.log("object");
     }
   };
   useEffect(() => {
@@ -67,7 +66,6 @@ function CompleteAssignment() {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key)
-      console.log("object");
     }
   };
 
