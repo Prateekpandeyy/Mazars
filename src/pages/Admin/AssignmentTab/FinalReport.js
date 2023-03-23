@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -45,6 +45,9 @@ function FinalReport() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -72,7 +75,16 @@ function FinalReport() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if(ViewDiscussion === false){
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [ViewDiscussion]);
 
   useEffect(() => {
     getAssignmentData();
@@ -149,13 +161,24 @@ function FinalReport() {
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
+    if(reportModal === false){
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [reportModal]);
+
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };

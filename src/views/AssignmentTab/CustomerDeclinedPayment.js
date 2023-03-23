@@ -45,7 +45,7 @@ function CustomerDeclinedPayment() {
     setReport(key.assign_no);
     setDataItem(key);
     if (reportModal === false) {
-      setScrolledTo(key)
+      setScrolledTo(key.assign_no)
     }
 
   };

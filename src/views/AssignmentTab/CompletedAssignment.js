@@ -44,7 +44,7 @@ function CompleteAssignment() {
     setReportModal(!reportModal);
     setReport(key.assign_no);
     if (reportModal === false) {
-      setScrolledTo(key)
+      setScrolledTo(key.assign_no)
       console.log("object");
     }
   };

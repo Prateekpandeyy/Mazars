@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -36,6 +36,9 @@ function AssignmentComponent(props) {
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+
   const token = window.localStorage.getItem("adminToken");
   var rowStyle2 = {};
   const myConfig = {
@@ -54,12 +57,30 @@ function AssignmentComponent(props) {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
+    if(ViewDiscussion === false){
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [ViewDiscussion]);
 
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
+    if(reportModal === false){
+      setScrolledTo(key)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [reportModal]);
 
   useEffect(() => {
     getAssignmentData();
@@ -144,7 +165,8 @@ function AssignmentComponent(props) {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no} 
+        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return { width: "50px" };
