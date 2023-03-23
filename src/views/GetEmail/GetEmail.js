@@ -44,6 +44,9 @@ const GetEmail = () => {
             opacity: 0.9,
             maxHeight: 335,
           },
+          "& .MuiDialog-backdrop": {
+            backgroundColor: "#000",
+          },
         }}
         open={open}
       >
