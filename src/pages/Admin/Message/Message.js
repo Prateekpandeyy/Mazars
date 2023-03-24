@@ -19,35 +19,141 @@ import { useHistory } from "react-router";
 import CommonServices from "../../../common/common";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import paginationFactory, {
+  PaginationProvider,
+  paginationTableProps,
+  PaginationListStandalone,
+  PaginationTotalStandalone,
+  SizePerPageDropdownStandalone,
+} from "react-bootstrap-table2-paginator";
+
+import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 
 function Message(props) {
   const userId = window.localStorage.getItem("adminkey");
   const [query, setQuery] = useState([]);
-  const [data, setData] = useState(null);
+  const [allId, setAllId] = useState([]);
 
   const history = useHistory();
   useEffect(() => {
     getMessage();
   }, []);
+  const paginationOption = {
+    custom: false,
+    totalSize: query.length,
+  };
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  console.log("done");
+  const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">
+      Showing {from} to {to} of {size} Results
+    </span>
+  );
+  const pageButtonRenderer = ({
+    page,
+    active,
+    disabled,
+    title,
+    onPageChange,
+  }) => {
+    const handleClick = (e) => {
+      console.log(e, page, active);
+      e.preventDefault();
+      onPageChange(page);
+      loadMessage(page + 1);
+    };
+    // ....
+    return (
+      <li className="page-item nexIconCss">
+        <a href="#" onClick={handleClick}>
+          {page + 1}
+        </a>
+      </li>
+    );
+  };
+  const options = {
+    paginationSize: 4,
+    pageStartIndex: 0,
+    // alwaysShowAllBtns: true, // Always show next and previous button
+    // withFirstAndLast: false, // Hide the going to First and Last page button
+    // hideSizePerPage: true, // Hide the sizePerPage dropdown always
+    // hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
+    firstPageText: "First",
+    prePageText: "Back",
+    nextPageText: "Next",
+    lastPageText: "Last",
+    nextPageTitle: "First page",
+    prePageTitle: "Pre page",
+    firstPageTitle: "Next page",
+    lastPageTitle: "Last page",
+    showTotal: true,
+    paginationTotalRenderer: customTotal,
+    disablePageTitle: true,
+    pageButtonRenderer,
+    sizePerPageList: [
+      {
+        text: "50",
+        value: 50,
+      },
+
+      {
+        text: "All",
+        value: query.length,
+      },
+    ], // A numeric array is also available. the purpose of above example is custom the text
+  };
+
+  const loadMessage = (e) => {
+    let clickedId = allId.filter((i) => {
+      return i === e;
+    });
+    console.log(clickedId.length);
+    if (clickedId.length === 0 && isNaN(e) === false) {
+      axios
+        .get(`${baseUrl}/admin/getNotification?page=${e}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            let data = query.concat(res.data.result);
+            let all = [];
+            let customId = 1;
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setQuery(all);
+
+            setAllId((payload) => {
+              return [...payload, e];
+            });
+          }
+        });
+    }
+  };
 
   const getMessage = () => {
     axios
-      .get(
-        `${baseUrl}/admin/getNotification?id=${JSON.parse(
-          userId
-        )}&type_list=all`,
-        myConfig
-      )
+      .get(`${baseUrl}/admin/getNotification?page=1`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
-          setQuery(res.data.result);
+          let all = [];
+          let customId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setQuery(all);
         }
       });
   };
@@ -57,7 +163,7 @@ function Message(props) {
       text: "S.No",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return row.cid;
       },
       headerStyle: () => {
         return { fontSize: "12px", width: "20px" };
@@ -135,7 +241,7 @@ function Message(props) {
       .then(function (response) {})
       .catch((error) => {});
   };
-
+  console.log("query", query);
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <Card>
@@ -152,12 +258,65 @@ function Message(props) {
           </Row>
         </CardHeader>
         <CardBody>
-          <DataTablepopulated
+          <BootstrapTable
+            keyField="id"
+            data={query}
+            columns={columns}
+            pagination={paginationFactory(options)}
+          />
+          {/* <PaginationProvider pagination={paginationFactory(options)}>
+            {({ paginationProps, paginationTableProps }) => (
+              <div>
+
+                <PaginationTotalStandalone {...paginationProps} />
+                <BootstrapTable
+                  bgColor="#42566a"
+                  keyField={"assign_no"}
+                  data={query}
+                  columns={columns}
+                  {...paginationTableProps}
+                />
+             
+              </div>
+            )}
+          </PaginationProvider> */}
+
+          {/* <PaginationProvider pagination={paginationFactory(paginationOption)}>
+            {({ paginationProps, paginationTableProps }) => (
+              <div>
+                <BootstrapTable
+                  bgColor="#42566a"
+                  keyField={"assign_no"}
+                  data={query}
+                  columns={columns}
+                  pagination={ paginationFactory() }
+                />
+              </div>
+            )}
+          </PaginationProvider> */}
+          {/* <BootstrapTable
             bgColor="#42566a"
             keyField={"assign_no"}
             data={query}
             columns={columns}
-          ></DataTablepopulated>
+            pagination={paginationFactory()}
+          /> */}
+          {/* <PaginationProvider pagination={paginationFactory(options)}>
+            {({ paginationProps, paginationTableProps }) => (
+              <div>
+                <SizePerPageDropdownStandalone {...paginationProps} />
+                <PaginationTotalStandalone {...paginationProps} />
+                <BootstrapTable
+                  bgColor="#42566a"
+                  keyField={"assign_no"}
+                  data={query}
+                  columns={columns}
+                  pagination={paginationFactory()}
+                />
+                <PaginationListStandalone {...paginationProps} />
+              </div>
+            )}
+          </PaginationProvider> */}
         </CardBody>
       </Card>
     </Layout>
