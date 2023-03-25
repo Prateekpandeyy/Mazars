@@ -60,30 +60,24 @@ function Message(props) {
     title,
     onPageChange,
   }) => {
-    let num = page;
     const handleClick = (e) => {
-      console.log(e, page, active);
       e.preventDefault();
       onPageChange(page);
       loadMessage(page + 1);
     };
-    if (isNaN(page)) {
-      num = page;
-    } else {
-      num = page + 1;
-    }
+
     return (
       <li className="page-item nexIconCss">
         <a href="#" onClick={handleClick}>
-          {num}
+          {page}
         </a>
       </li>
     );
   };
-  console.log("checking files");
+
   const options = {
     paginationSize: 4,
-    pageStartIndex: 0,
+    pageStartIndex: 1,
     // alwaysShowAllBtns: true, // Always show next and previous button
     // withFirstAndLast: false, // Hide the going to First and Last page button
     // hideSizePerPage: true, // Hide the sizePerPage dropdown always
@@ -105,11 +99,6 @@ function Message(props) {
         text: "50",
         value: 50,
       },
-
-      {
-        text: "All",
-        value: query.length,
-      },
     ], // A numeric array is also available. the purpose of above example is custom the text
   };
 
@@ -117,8 +106,8 @@ function Message(props) {
     let clickedId = allId.filter((i) => {
       return i === e;
     });
-    console.log(clickedId.length);
-    if (clickedId.length === 0 && isNaN(e) === false) {
+
+    if (clickedId.length === 0 && isNaN(e) === false && e > 1) {
       axios
         .get(`${baseUrl}/admin/getNotification?page=${e}`, myConfig)
         .then((res) => {
@@ -159,6 +148,26 @@ function Message(props) {
             customId++;
             all.push(data);
           });
+
+          setQuery(all);
+        }
+      });
+  };
+  const sortMessage = (val) => {
+    axios
+      .get(`${baseUrl}/admin/getNotification?orderby=${val}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let customId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
           setQuery(all);
         }
       });
@@ -179,9 +188,19 @@ function Message(props) {
     {
       text: "Date",
       dataField: "setdate",
-      sort: true,
+
       headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
+      },
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val);
       },
     },
 
@@ -247,7 +266,7 @@ function Message(props) {
       .then(function (response) {})
       .catch((error) => {});
   };
-  console.log("query", query);
+
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
       <Card>
