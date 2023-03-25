@@ -60,17 +60,22 @@ function Message(props) {
     title,
     onPageChange,
   }) => {
+    let num = page;
     const handleClick = (e) => {
       console.log(e, page, active);
       e.preventDefault();
       onPageChange(page);
       loadMessage(page + 1);
     };
-    // ....
+    if (isNaN(page)) {
+      num = page;
+    } else {
+      num = page + 1;
+    }
     return (
       <li className="page-item nexIconCss">
         <a href="#" onClick={handleClick}>
-          {page + 1}
+          {num}
         </a>
       </li>
     );
