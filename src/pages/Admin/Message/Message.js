@@ -80,6 +80,7 @@ function Message(props) {
       </li>
     );
   };
+  console.log("checking files");
   const options = {
     paginationSize: 4,
     pageStartIndex: 0,
