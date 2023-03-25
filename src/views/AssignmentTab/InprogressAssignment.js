@@ -58,7 +58,16 @@ function InprogressAssignment() {
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key.assign_no);
+    if(reportModal === false) {
+      setScrolledTo(key.assign_no)
+    }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);

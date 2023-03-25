@@ -48,6 +48,9 @@ function AllAssignment() {
     //   document.documentElement.style.setProperty('--scroll-y', `${body.scrollY}px`);
     // });
     setReportModal(!reportModal);
+    if(reportModal === false){
+      setScrolledTo(key.assign_no)
+    }
     setReport(key.assign_no);
     setDataItem(key);
     if (!key) {
@@ -56,6 +59,12 @@ function AllAssignment() {
       document.getElementById("veRep").style.overflowY = "auto";
     }
   };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+}, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
