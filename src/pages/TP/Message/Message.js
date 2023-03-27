@@ -21,10 +21,8 @@ import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function Message(props) {
   const userId = window.localStorage.getItem("tpkey");
-  const [getting, setGetting] = useState([]);
   const [query, setQuery] = useState([]);
   const [atPage, setAtpage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [pages, setPages] = useState([]);
@@ -48,28 +46,7 @@ function Message(props) {
   useEffect(() => {
     getMessage();
     totalMsg();
-    setEnd(50);
   }, []);
-
-
-  const onChangeRowsPerPage = (e) => {
-    setRowsPerPage(e.target.value);
-  };
-
-
-  const chunkSize = 24;
-
-  const sliceIntoChunks = (query, chunkSize) => {
-    const res = [];
-    for (let i = 0; i < query.length; i += chunkSize) {
-      const chunk = query.slice(i, i + chunkSize);
-      res.push(chunk);
-    }
-    return res;
-  }
-  const divided = [];
-  divided.push(sliceIntoChunks(query, chunkSize))
-  const un = divided[0];
 
 
   const totalMsg = () => {

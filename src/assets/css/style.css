@@ -403,7 +403,13 @@ html body a {
   transform: all 0.3s;
   vertical-align: middle;
 }
-
+.navButton:hover{
+  background-color: #dbdbdb;
+}
+.navButton:focus{
+  background-color: #dbdbdb;
+  border: 1px solid #dbdbdb;
+}
 .btnWhite{
   border-bottom-left-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.01);
