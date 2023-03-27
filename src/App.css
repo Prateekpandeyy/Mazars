@@ -999,3 +999,6 @@ footer a:hover{
   background: whitesmoke;
   padding: 5px;
 }
+#messageBody table thead {
+  background-color: #b0bec5;
+}

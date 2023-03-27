@@ -33,7 +33,7 @@ function Message(props) {
   const userId = window.localStorage.getItem("adminkey");
   const [query, setQuery] = useState([]);
   const [allId, setAllId] = useState([]);
-
+  const [sortVal, setSortVal] = useState(0);
   const history = useHistory();
   useEffect(() => {
     getMessage();
@@ -153,22 +153,26 @@ function Message(props) {
         }
       });
   };
-  const sortMessage = (val) => {
+  const sortMessage = (val, field) => {
     axios
-      .get(`${baseUrl}/admin/getNotification?orderby=${val}`, myConfig)
+      .get(
+        `${baseUrl}/admin/getNotification?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
-          let customId = 1;
+          let sortId = 1;
           res.data.result.map((i) => {
             let data = {
               ...i,
-              cid: customId,
+              cid: sortId,
             };
-            customId++;
+            sortId++;
             all.push(data);
           });
           setQuery(all);
+          setSortVal(field);
         }
       });
   };
@@ -200,7 +204,7 @@ function Message(props) {
         } else {
           val = 1;
         }
-        sortMessage(val);
+        sortMessage(val, 1);
       },
     },
 
@@ -213,12 +217,32 @@ function Message(props) {
       formatter: function nameFormatter(cell, row) {
         return <>{row.assign_no}</>;
       },
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Message",
-      sort: true,
+
       headerStyle: () => {
         return { fontSize: "12px", width: "180px" };
+      },
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -282,66 +306,47 @@ function Message(props) {
             </Col>
           </Row>
         </CardHeader>
-        <CardBody>
-          <BootstrapTable
-            keyField="id"
-            data={query}
-            columns={columns}
-            pagination={paginationFactory(options)}
-          />
-          {/* <PaginationProvider pagination={paginationFactory(options)}>
-            {({ paginationProps, paginationTableProps }) => (
-              <div>
-
-                <PaginationTotalStandalone {...paginationProps} />
-                <BootstrapTable
-                  bgColor="#42566a"
-                  keyField={"assign_no"}
-                  data={query}
-                  columns={columns}
-                  {...paginationTableProps}
-                />
-             
-              </div>
-            )}
-          </PaginationProvider> */}
-
-          {/* <PaginationProvider pagination={paginationFactory(paginationOption)}>
-            {({ paginationProps, paginationTableProps }) => (
-              <div>
-                <BootstrapTable
-                  bgColor="#42566a"
-                  keyField={"assign_no"}
-                  data={query}
-                  columns={columns}
-                  pagination={ paginationFactory() }
-                />
-              </div>
-            )}
-          </PaginationProvider> */}
-          {/* <BootstrapTable
-            bgColor="#42566a"
-            keyField={"assign_no"}
-            data={query}
-            columns={columns}
-            pagination={paginationFactory()}
-          /> */}
-          {/* <PaginationProvider pagination={paginationFactory(options)}>
-            {({ paginationProps, paginationTableProps }) => (
-              <div>
-                <SizePerPageDropdownStandalone {...paginationProps} />
-                <PaginationTotalStandalone {...paginationProps} />
-                <BootstrapTable
-                  bgColor="#42566a"
-                  keyField={"assign_no"}
-                  data={query}
-                  columns={columns}
-                  pagination={paginationFactory()}
-                />
-                <PaginationListStandalone {...paginationProps} />
-              </div>
-            )}
-          </PaginationProvider> */}
+        <CardBody id="messageBody">
+          {sortVal === 0 ? (
+            <BootstrapTable
+              keyField="id"
+              data={query}
+              columns={columns}
+              pagination={paginationFactory(options)}
+            />
+          ) : (
+            ""
+          )}
+          {sortVal === 1 ? (
+            <BootstrapTable
+              keyField="id"
+              data={query}
+              columns={columns}
+              pagination={paginationFactory(options)}
+            />
+          ) : (
+            ""
+          )}
+          {sortVal === 2 ? (
+            <BootstrapTable
+              keyField="id"
+              data={query}
+              columns={columns}
+              pagination={paginationFactory(options)}
+            />
+          ) : (
+            ""
+          )}
+          {sortVal === 3 ? (
+            <BootstrapTable
+              keyField="id"
+              data={query}
+              columns={columns}
+              pagination={paginationFactory(options)}
+            />
+          ) : (
+            ""
+          )}
         </CardBody>
       </Card>
     </Layout>
