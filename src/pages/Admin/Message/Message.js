@@ -32,89 +32,45 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 function Message(props) {
   const userId = window.localStorage.getItem("adminkey");
   const [query, setQuery] = useState([]);
-  const [allId, setAllId] = useState([]);
-  const [sortVal, setSortVal] = useState(0);
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const history = useHistory();
   useEffect(() => {
     getMessage();
   }, []);
-  const paginationOption = {
-    custom: false,
-    totalSize: query.length,
-  };
+
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  const customTotal = (from, to, size) => (
-    <span className="react-bootstrap-table-pagination-total">
-      Showing {from} to {to} of {size} Results
-    </span>
-  );
-  const pageButtonRenderer = ({
-    page,
-    active,
-    disabled,
-    title,
-    onPageChange,
-  }) => {
-    const handleClick = (e) => {
-      e.preventDefault();
-      onPageChange(page);
-      loadMessage(page + 1);
-    };
-
-    return (
-      <li className="page-item nexIconCss">
-        <a href="#" onClick={handleClick}>
-          {page}
-        </a>
-      </li>
-    );
-  };
-
-  const options = {
-    paginationSize: 4,
-    pageStartIndex: 1,
-    // alwaysShowAllBtns: true, // Always show next and previous button
-    // withFirstAndLast: false, // Hide the going to First and Last page button
-    // hideSizePerPage: true, // Hide the sizePerPage dropdown always
-    // hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
-    firstPageText: "First",
-    prePageText: "Back",
-    nextPageText: "Next",
-    lastPageText: "Last",
-    nextPageTitle: "First page",
-    prePageTitle: "Pre page",
-    firstPageTitle: "Next page",
-    lastPageTitle: "Last page",
-    showTotal: true,
-    paginationTotalRenderer: customTotal,
-    disablePageTitle: true,
-    pageButtonRenderer,
-    sizePerPageList: [
-      {
-        text: "50",
-        value: 50,
-      },
-    ], // A numeric array is also available. the purpose of above example is custom the text
-  };
-
-  const loadMessage = (e) => {
-    let clickedId = allId.filter((i) => {
-      return i === e;
-    });
-
-    if (clickedId.length === 0 && isNaN(e) === false && e > 1) {
+  useEffect(() => {
+    setPage(1);
+    setEnd(50);
+    getMessage(1);
+  }, []);
+  const getMessage = (e) => {
+    if (e) {
       axios
-        .get(`${baseUrl}/admin/getNotification?page=${e}`, myConfig)
+        .get(
+          `${baseUrl}/admin/getNotification?id=${JSON.parse(userId)}&page=${e}`,
+          myConfig
+        )
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            let data = query.concat(res.data.result);
+            let data = res.data.result;
             let all = [];
             let customId = 1;
+            if (e > 1) {
+              customId = 50 * (e - 1) + 1;
+            }
             data.map((i) => {
               let data = {
                 ...i,
@@ -125,58 +81,51 @@ function Message(props) {
             });
             setQuery(all);
 
-            setAllId((payload) => {
-              return [...payload, e];
-            });
+            setCountNotification(res.data.total);
+            let dynamicPage = Math.round(res.data.total / 50);
+            let rem = (e - 1) * 50;
+            let end = e * 50;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
   };
 
-  const getMessage = () => {
-    axios
-      .get(`${baseUrl}/admin/getNotification?page=1`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-
-          setQuery(all);
-        }
-      });
+  //page counter
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getMessage(1);
   };
-  const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getNotification?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setQuery(all);
-          setSortVal(field);
-        }
-      });
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(page - 1);
+    getMessage(page - 1);
   };
-
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(page + 1);
+    getMessage(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getMessage(defaultPage.at(-1));
+    setAtpage(totalPages);
+  };
   const columns = [
     {
       text: "S.No",
@@ -204,7 +153,6 @@ function Message(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 1);
       },
     },
 
@@ -225,7 +173,6 @@ function Message(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
       },
     },
     {
@@ -242,7 +189,6 @@ function Message(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -305,49 +251,78 @@ function Message(props) {
               <CustomHeading>Message</CustomHeading>
             </Col>
           </Row>
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => firstChunk()}
+                    >
+                      &lt; &lt;
+                    </button>
+
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => prevChunk()}
+                    >
+                      &lt;
+                    </button>
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "100px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getMessage(e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => nextChunk()}
+                    >
+                      &gt;
+                    </button>
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => lastChunk()}
+                    >
+                      &gt; &gt;
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </CardHeader>
-        <CardBody id="messageBody">
-          {sortVal === 0 ? (
-            <BootstrapTable
-              keyField="id"
+        {page && (
+          <CardBody
+            style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
+          >
+            <DataTablepopulated
+              bgColor="#42566a"
+              keyField={"assign_no"}
               data={query}
               columns={columns}
-              pagination={paginationFactory(options)}
-            />
-          ) : (
-            ""
-          )}
-          {sortVal === 1 ? (
-            <BootstrapTable
-              keyField="id"
-              data={query}
-              columns={columns}
-              pagination={paginationFactory(options)}
-            />
-          ) : (
-            ""
-          )}
-          {sortVal === 2 ? (
-            <BootstrapTable
-              keyField="id"
-              data={query}
-              columns={columns}
-              pagination={paginationFactory(options)}
-            />
-          ) : (
-            ""
-          )}
-          {sortVal === 3 ? (
-            <BootstrapTable
-              keyField="id"
-              data={query}
-              columns={columns}
-              pagination={paginationFactory(options)}
-            />
-          ) : (
-            ""
-          )}
-        </CardBody>
+            ></DataTablepopulated>
+          </CardBody>
+        )}
       </Card>
     </Layout>
   );

@@ -177,21 +177,10 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
-import {
-  // Table,
-  // TableContainer,
-  // TableHead,
-  TablePagination,
-  // TableBody,
-  // TableRow,
-  // TableCell,
-} from "@material-ui/core";
+import CustomHeading from "../../../components/Common/CustomHeading";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import PaymentModal from "./PaymentModal";
-import CommonServices from "../../../common/common";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 function Message(props) {
@@ -199,8 +188,7 @@ function Message(props) {
 
   const [query, setQuery] = useState([]);
   const [atPage, setAtpage] = useState(1);
-  const [allId, setAllId] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
+
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const history = useHistory();
@@ -219,42 +207,6 @@ function Message(props) {
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
-  // const loadMessage = (e) => {
-  //   let clickedId = allId.filter((i) => {
-  //     return i === e;
-  //   });
-
-  //   if (clickedId.length === 0 && isNaN(e) === false && e > 1) {
-  //     axios
-  //       .get(`${baseUrl}/tl/getNotification?page=${e}`, myConfig)
-  //       .then((res) => {
-  //         if (res.data.code === 1) {
-  //           let data = query.concat(res.data.result);
-  //           let all = [];
-  //           let customId = 1;
-  //           data.map((i) => {
-  //             let data = {
-  //               ...i,
-  //               cid: customId,
-  //             };
-  //             customId++;
-  //             all.push(data);
-  //           });
-  //           setQuery(all);
-
-  //           setAllId((payload) => {
-  //             return [...payload, e];
-  //           });
-  //         }
-  //       });
-  //   }
-  // };
-
-  useEffect(() => {
-    getMessage();
-
-    setEnd(50);
-  }, []);
 
   const chunkSize = 24;
 
@@ -445,16 +397,19 @@ function Message(props) {
         <CardHeader>
           <Row>
             <Col md="4">
-              <button class="autoWidthBtn" onClick={() => history.goBack()}>
+              <button className="autoWidthBtn" onClick={() => history.goBack()}>
                 Go Back
               </button>
             </Col>
-            <Col md="2">
-              <h4>Message</h4>
+            <Col md="8">
+              <CustomHeading>Message</CustomHeading>
             </Col>
-            <Col md="6">
+          </Row>
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
               <div className="customPagination">
-                <div className="mx-2 d-flex w-100 align-items-center">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                   <span>
                     {big}-{end} of {countNotification}
                   </span>
