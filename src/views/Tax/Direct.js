@@ -29,6 +29,7 @@ const Direct = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+
   const [filterValue, setFilterValue] = useState("");
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
@@ -349,7 +350,6 @@ const Direct = () => {
                         <TableCell style={{ width: "400px", margin: "0 10px" }}>
                           <SubHeading>Heading</SubHeading>
                         </TableCell>
-
                         <TableCell>
                           <SubHeading>Name of writer</SubHeading>
                         </TableCell>
