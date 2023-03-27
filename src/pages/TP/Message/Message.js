@@ -219,46 +219,42 @@ function Message(props) {
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
-  const loadMessage = (e) => {
-    let clickedId = allId.filter((i) => {
-      return i === e;
-    });
+  // const loadMessage = (e) => {
+  //   let clickedId = allId.filter((i) => {
+  //     return i === e;
+  //   });
 
-    if (clickedId.length === 0 && isNaN(e) === false && e > 1) {
-      axios
-        .get(`${baseUrl}/tl/getNotification?page=${e}`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = query.concat(res.data.result);
-            let all = [];
-            let customId = 1;
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setQuery(all);
+  //   if (clickedId.length === 0 && isNaN(e) === false && e > 1) {
+  //     axios
+  //       .get(`${baseUrl}/tl/getNotification?page=${e}`, myConfig)
+  //       .then((res) => {
+  //         if (res.data.code === 1) {
+  //           let data = query.concat(res.data.result);
+  //           let all = [];
+  //           let customId = 1;
+  //           data.map((i) => {
+  //             let data = {
+  //               ...i,
+  //               cid: customId,
+  //             };
+  //             customId++;
+  //             all.push(data);
+  //           });
+  //           setQuery(all);
 
-            setAllId((payload) => {
-              return [...payload, e];
-            });
-          }
-        });
-    }
-  };
+  //           setAllId((payload) => {
+  //             return [...payload, e];
+  //           });
+  //         }
+  //       });
+  //   }
+  // };
 
   useEffect(() => {
     getMessage();
 
     setEnd(50);
   }, []);
-
-  const onChangeRowsPerPage = (e) => {
-    setRowsPerPage(e.target.value);
-  };
 
   const chunkSize = 24;
 
@@ -272,84 +268,65 @@ function Message(props) {
   };
   const divided = [];
   divided.push(sliceIntoChunks(query, chunkSize));
-  const un = divided[0];
-
-  // const totalMsg = () => {
-  //   axios
-  //     .get(
-  //       `${baseUrl}/tl/getNotification?id=${JSON.parse(
-  //         userId
-  //       )}&type_list=uread`,
-  //       myConfig
-  //     )
-  //     .then((res) => {
-  //       if (res.data.code === 1) {
-  //         setCountNotification(res.data.result[0].total);
-  //       }
-  //     });
-  // };
 
   useEffect(() => {
-    const totalP = Math.ceil(countNotification / 50);
-    setTotalPages(totalP);
+    setPage(1);
     setEnd(50);
-  }, [countNotification]);
+    getMessage(1);
+  }, []);
 
   // set intial query here
-  const getMessage = () => {
+  const getMessage = (e) => {
+    if (e) {
+      getAllcountMessage();
+      axios
+        .get(
+          `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=${e}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setQuery(res.data.result);
+          }
+        });
+    }
+  };
+
+  const getAllcountMessage = () => {
     axios
-      .get(
-        `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=1`,
-        myConfig
-      )
+      .get(`${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
-          setQuery(res.data.result);
           setCountNotification(res.data.result.length);
         }
       });
   };
-
   //page counter
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
+    getMessage(1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(page - 1);
+    getMessage(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(page + 1);
+    getMessage(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
+    getMessage(defaultPage.at(-1));
     setAtpage(totalPages);
   };
   //page counter Ends here
-
-  //call for more notification on page Change
-  useEffect(() => {
-    // console.log(atPage);
-    setBig(50 * (atPage - 1) + 1);
-    if (atPage == totalPages) {
-      setEnd(countNotification);
-    } else {
-      setEnd(50 * atPage);
-    }
-    axios
-      .get(`${baseUrl}/tl/getNotification?page=${atPage}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setQuery(res.data.result);
-        }
-      });
-  }, [atPage]);
 
   const columns = [
     {
@@ -485,7 +462,7 @@ function Message(props) {
                         value={page}
                         onChange={(e) => {
                           setPage(e.target.value);
-                          loadMessage(e.target.value);
+                          getMessage(e.target.value);
                         }}
                         className="form-control"
                       >
@@ -512,20 +489,22 @@ function Message(props) {
             </Col>
           </Row>
         </CardHeader>
-        <CardBody
-          style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
-        >
-          <DataTablepopulated
-            bgColor="#42566a"
-            keyField={"assign_no"}
-            data={query}
-            columns={columns}
-          ></DataTablepopulated>
-          <PaymentModal
-            paymentHandler={paymentHandler}
-            addPaymentModal={addPaymentModal}
-          />
-        </CardBody>
+        {page && (
+          <CardBody
+            style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
+          >
+            <DataTablepopulated
+              bgColor="#42566a"
+              keyField={"assign_no"}
+              data={query}
+              columns={columns}
+            ></DataTablepopulated>
+            <PaymentModal
+              paymentHandler={paymentHandler}
+              addPaymentModal={addPaymentModal}
+            />
+          </CardBody>
+        )}
       </Card>
     </Layout>
   );
