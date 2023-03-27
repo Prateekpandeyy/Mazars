@@ -209,7 +209,7 @@ function Message(props) {
   const [countNotification, setCountNotification] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(0);
-  const defaultPage = ["1", "2", "3", "4", "5"];
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myConfig = {
     headers: {
       uit: token,
@@ -284,9 +284,39 @@ function Message(props) {
           myConfig
         )
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            setQuery(res.data.result);
+            let data = res.data.result;
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = 50 * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setQuery(all);
+
             setCountNotification(res.data.total);
+            let dynamicPage = Math.round(res.data.total / 50);
+            let rem = (e - 1) * 50;
+            let end = e * 50;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
@@ -324,7 +354,7 @@ function Message(props) {
       text: "S.No",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1 * ((atPage - 1) * 50) + 1;
+        return row.cid;
       },
       headerStyle: () => {
         return { fontSize: "12px", width: "30px" };
