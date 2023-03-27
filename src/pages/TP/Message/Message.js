@@ -430,7 +430,7 @@ function Message(props) {
                     <div
                       style={{
                         display: "flex",
-                        maxWidth: "100px",
+                        maxWidth: "70px",
                         width: "100%",
                       }}
                     >

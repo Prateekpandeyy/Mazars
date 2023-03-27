@@ -3,30 +3,12 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import { useHistory } from "react-router";
-// import PaymentModal from "./PaymentModal";
-import CommonServices from "../../../common/common";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import paginationFactory, {
-  PaginationProvider,
-  paginationTableProps,
-  PaginationListStandalone,
-  PaginationTotalStandalone,
-  SizePerPageDropdownStandalone,
-} from "react-bootstrap-table2-paginator";
-
+import { Backdrop } from "@mui/material";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 
 function Message(props) {
@@ -38,6 +20,8 @@ function Message(props) {
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const history = useHistory();
   useEffect(() => {
@@ -52,10 +36,12 @@ function Message(props) {
   };
   useEffect(() => {
     setPage(1);
-    setEnd(50);
+    setEnd(Number(localStorage.getItem("record_per_page")));
     getMessage(1);
   }, []);
   const getMessage = (e) => {
+    setLoading(true);
+    let allEnd = Number(localStorage.getItem("record_per_page"));
     if (e) {
       axios
         .get(
@@ -69,7 +55,7 @@ function Message(props) {
             let all = [];
             let customId = 1;
             if (e > 1) {
-              customId = 50 * (e - 1) + 1;
+              customId = allEnd * (e - 1) + 1;
             }
             data.map((i) => {
               let data = {
@@ -80,11 +66,11 @@ function Message(props) {
               all.push(data);
             });
             setQuery(all);
-
+            setLoading(false);
             setCountNotification(res.data.total);
             let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * 50;
-            let end = e * 50;
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -99,6 +85,31 @@ function Message(props) {
           }
         });
     }
+  };
+  const sortMessage = (val, field) => {
+    setLoading(true);
+    axios
+      .get(
+        `${baseUrl}/admin/getNotification?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setLoading(false);
+          setQuery(all);
+          setSortVal(field);
+        }
+      });
   };
 
   //page counter
@@ -165,7 +176,15 @@ function Message(props) {
       formatter: function nameFormatter(cell, row) {
         return <>{row.assign_no}</>;
       },
-      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       onSort: (field, order) => {
         let val = 0;
         if (order === "asc") {
@@ -189,6 +208,7 @@ function Message(props) {
         } else {
           val = 1;
         }
+        sortMessage(val, 3);
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -276,7 +296,7 @@ function Message(props) {
                     <div
                       style={{
                         display: "flex",
-                        maxWidth: "100px",
+                        maxWidth: "70px",
                         width: "100%",
                       }}
                     >
