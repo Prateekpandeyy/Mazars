@@ -278,7 +278,6 @@ function Message(props) {
   // set intial query here
   const getMessage = (e) => {
     if (e) {
-      getAllcountMessage();
       axios
         .get(
           `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=${e}`,
@@ -287,20 +286,12 @@ function Message(props) {
         .then((res) => {
           if (res.data.code === 1) {
             setQuery(res.data.result);
+            setCountNotification(res.data.total);
           }
         });
     }
   };
 
-  const getAllcountMessage = () => {
-    axios
-      .get(`${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}`, myConfig)
-      .then((res) => {
-        if (res.data.code === 1) {
-          setCountNotification(res.data.result.length);
-        }
-      });
-  };
   //page counter
   const firstChunk = () => {
     setAtpage(1);
