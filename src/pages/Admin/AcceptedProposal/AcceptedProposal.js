@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -30,12 +30,18 @@ import MessageIcon, {
 function AcceptedProposal({ acceptedProposal }) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
   const [scrolledTo, setScrolledTo] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -47,15 +53,15 @@ function AcceptedProposal({ acceptedProposal }) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
@@ -64,35 +70,144 @@ function AcceptedProposal({ acceptedProposal }) {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [viewProposalModal]);
-
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
   useEffect(() => {
-    getAcceptedProposal();
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal3`));
+    if (!searchData) {
+      getAcceptedProposal(1);
+    }
   }, []);
-  const getAcceptedProposal = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadproposal3"));
-    if (!data) {
+
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getAcceptedProposal(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(page - 1);
+    getAcceptedProposal(page - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(page + 1);
+    getAcceptedProposal(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getAcceptedProposal(defaultPage.at(-1));
+    setAtpage(totalPages);
+  };
+
+  const getAcceptedProposal = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+
+    if (e) {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
+        .get(`${baseUrl}/admin/getProposals?status1=2&page=${e}`, myConfig)
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            setProposalDisplay(res.data.result);
+            let data = res.data.result;
             setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setProposalDisplay(all);
+
+            setCountNotification(res.data.total);
+            let dynamicPage = Math.round(res.data.total / 50);
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
   };
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+
+          setProposalDisplay(all);
+        }
+      });
+  };
+
+  // const getAcceptedProposal = () => {
+  //   let data = JSON.parse(localStorage.getItem("searchDataadproposal3"));
+  //   if (!data) {
+  //     axios
+  //       .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
+  //       .then((res) => {
+  //         if (res.data.code === 1) {
+  //           setProposalDisplay(res.data.result);
+  //           setRecords(res.data.result.length);
+  //         }
+  //       });
+  //   }
+  // };
 
   const columns = [
     {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {
@@ -277,10 +392,7 @@ function AcceptedProposal({ acceptedProposal }) {
                 <ViewDiscussionIcon />
               </div>
               {row.statuscode > "3" || row.statuscode == "10" ? (
-                <div
-                  onClick={(e) => showProposalModal2(row)}
-                  className="ml-1"
-                >
+                <div onClick={(e) => showProposalModal2(row)} className="ml-1">
                   <EyeIcon />
                 </div>
               ) : null}
@@ -305,6 +417,65 @@ function AcceptedProposal({ acceptedProposal }) {
           />
         </CardHeader>
         <CardBody>
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => firstChunk()}
+                    >
+                      &lt; &lt;
+                    </button>
+
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => prevChunk()}
+                    >
+                      &lt;
+                    </button>
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getAcceptedProposal(e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => nextChunk()}
+                    >
+                      &gt;
+                    </button>
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => lastChunk()}
+                    >
+                      &gt; &gt;
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
           {/* <Records records={records} /> */}
           <DataTablepopulated
             bgColor="#42566a"
