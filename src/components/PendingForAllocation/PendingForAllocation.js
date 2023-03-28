@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Allocation.css";
 import { baseUrl } from "../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import History from "./History";
 import Swal from "sweetalert2";
@@ -14,13 +14,19 @@ import {
 } from "../../components/Common/MessageIcon";
 
 function PendingAllocation({ CountPendingForAllocation }) {
+  const myRef = useRef([]);
   const [pendingData, setPendingData] = useState([]);
   const [history, setHistory] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
-  const myRef = useRef([]);
-
   const [modal, setModal] = useState(false);
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -31,7 +37,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     if (key.length > 0) {
       setModal(!modal);
       if (modal === false) {
-        setScrolledTo(key)
+        setScrolledTo(key);
       }
       fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
         method: "GET",
@@ -55,38 +61,126 @@ function PendingAllocation({ CountPendingForAllocation }) {
       setModal(!modal);
     }
   };
-
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
-    runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [modal]);
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
 
-  useEffect(() => {
-    getPendingForAllocation();
-  }, []);
-
-  const getPendingForAllocation = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadquery2"));
-
-    if (!data) {
-      axios.get(`${baseUrl}/admin/pendingAllocation`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          // CountPendingForAllocation(res.data.result.length);
-          setPendingData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    if (!searchData) {
+      getPendingForAllocation(1);
     }
+  }, []);
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [modal]);
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getPendingForAllocation(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(page - 1);
+    getPendingForAllocation(page - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(page + 1);
+    getPendingForAllocation(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getPendingForAllocation(defaultPage.at(-1));
+    setAtpage(totalPages);
   };
 
+  const getPendingForAllocation = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+
+    if (e) {
+      axios
+        .get(`${baseUrl}/admin/pendingAllocation?page=${e}`, myConfig)
+        .then((res) => {
+          let droppage = [];
+          if (res.data.code === 1) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setPendingData(all);
+
+            setCountNotification(res.data.total);
+            let dynamicPage = Math.round(res.data.total / 50);
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
+          }
+        });
+    }
+  };
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+
+          setPendingData(all);
+        }
+      });
+  };
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id}
-          ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -194,8 +288,9 @@ function PendingAllocation({ CountPendingForAllocation }) {
             <button
               type="button"
               className="autoWidthBtn"
-              div id={row.id}
-              ref={el => (myRef.current[row.id] = el)}
+              div
+              id={row.id}
+              ref={(el) => (myRef.current[row.id] = el)}
               onClick={() => toggle(row.id)}
             >
               History
@@ -220,6 +315,67 @@ function PendingAllocation({ CountPendingForAllocation }) {
           />
         </CardHeader>
         <CardBody className="card-body">
+          <CardHeader>
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span>
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => firstChunk()}
+                      >
+                        &lt; &lt;
+                      </button>
+
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                      <div
+                        style={{
+                          display: "flex",
+                          maxWidth: "70px",
+                          width: "100%",
+                        }}
+                      >
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(e.target.value);
+                            getPendingForAllocation(e.target.value);
+                          }}
+                          className="form-control"
+                        >
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => lastChunk()}
+                      >
+                        &gt; &gt;
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </CardHeader>
           {/* <Records records={records} /> */}
           <DataTablepopulated
             bgColor="#55425f"
