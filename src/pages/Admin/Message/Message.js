@@ -22,7 +22,7 @@ function Message(props) {
   const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [defaultPage, setDefaultPage] = useState([]);
   const history = useHistory();
   useEffect(() => {
     getMessage();
@@ -68,7 +68,7 @@ function Message(props) {
             setQuery(all);
             setLoading(false);
             setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
+            let dynamicPage = Math.round(res.data.total / allEnd);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
             if (e === 1) {
@@ -79,7 +79,7 @@ function Message(props) {
               setEnd(end);
             }
             for (let i = 1; i < dynamicPage; i++) {
-              droppage.push(i);
+              droppage.push(Number(i));
             }
             setDefaultPage(droppage);
           }
@@ -126,15 +126,15 @@ function Message(props) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
-    getMessage(page - 1);
+    setPage(Number(page) - 1);
+    getMessage(Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
-    getMessage(page + 1);
+    setPage(Number(page) + 1);
+    getMessage(Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
@@ -284,12 +284,16 @@ function Message(props) {
                       &lt; &lt;
                     </button>
 
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
+                    {page > 1 ? (
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    ) : (
+                      ""
+                    )}
                     <div
                       style={{
                         display: "flex",
@@ -310,12 +314,17 @@ function Message(props) {
                         ))}
                       </select>
                     </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
+                    {defaultPage.length > page ? (
+                      <button
+                        disabled={defaultPage.length > page}
+                        className="navButton mx-1"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                    ) : (
+                      ""
+                    )}
                     <button
                       className="navButton mx-1"
                       onClick={(e) => lastChunk()}
