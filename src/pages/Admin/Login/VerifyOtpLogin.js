@@ -92,7 +92,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             JSON.stringify(response.data.name)
           );
           localStorage.setItem(
-            "record_per_page",
+            "admin_record_per_page",
             response.data.record_per_page
           );
 

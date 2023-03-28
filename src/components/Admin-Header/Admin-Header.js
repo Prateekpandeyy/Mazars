@@ -60,6 +60,7 @@ function AdminHeader({
       localStorage.removeItem("searchDataadAssignment4");
       localStorage.removeItem("admincreate");
       localStorage.removeItem("admingenerated");
+      localStorage.removeItem("admin_record_per_page");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("admincategoryData");
@@ -115,6 +116,7 @@ function AdminHeader({
       localStorage.removeItem("searchDatatlAssignment4");
       localStorage.removeItem("tlcreate");
       localStorage.removeItem("tlgenerated");
+      localStorage.removeItem("tl_record_per_page");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tlcategoryData");

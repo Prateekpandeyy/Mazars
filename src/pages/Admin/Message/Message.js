@@ -36,12 +36,12 @@ function Message(props) {
   };
   useEffect(() => {
     setPage(1);
-    setEnd(Number(localStorage.getItem("record_per_page")));
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getMessage(1);
   }, []);
   const getMessage = (e) => {
     setLoading(true);
-    let allEnd = Number(localStorage.getItem("record_per_page"));
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     if (e) {
       axios
         .get(
@@ -96,7 +96,11 @@ function Message(props) {
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
+
           let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -176,6 +180,7 @@ function Message(props) {
       formatter: function nameFormatter(cell, row) {
         return <>{row.assign_no}</>;
       },
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         if (order === "asc") {
@@ -184,14 +189,6 @@ function Message(props) {
           val = 1;
         }
         sortMessage(val, 2);
-      },
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
       },
     },
     {
