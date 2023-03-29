@@ -80,6 +80,8 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "tpEmail",
             JSON.stringify(response.data.displayname)
           );
+          localStorage.setItem("tp_record_per_page", JSON.stringify(response.data.record_per_page
+            ));
           localStorage.setItem("tptoken", response.data.token);
           var timeStampInMs = Date.now();
           localStorage.setItem("tploginTime", timeStampInMs);
