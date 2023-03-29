@@ -21,13 +21,24 @@ import MessageIcon, {
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
-
+  let total= CountIncomplete;
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+
+  const [count, setCount] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -45,18 +56,58 @@ function InCompleteData({ CountIncomplete, data }) {
     }
 }, [ViewDiscussion]);
 
+useEffect(() => {
+  setCount(total)
+  // getInCompleteAssingment(1);
+}, [total]);
+
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
+
+  useEffect(() => {
+    setPage(1);
+    setEnd(
+      Number(localStorage.getItem("tp_record_per_page"))
+    );
+    setAtpage(1);
+  }, []);
+
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     if (!data) {
     getInCompleteAssingment();
     }
   }, []);
+
+   //page counter
+   const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    // getInCompleteAssingment(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    // getInCompleteAssingment(Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    // getInCompleteAssingment(Number(page) + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    // getInCompleteAssingment(defaultPage.at(-1));
+    setAtpage(totalPages);
+  };
 
   const getInCompleteAssingment = () => {
    
@@ -210,6 +261,7 @@ function InCompleteData({ CountIncomplete, data }) {
     <>
       <Card>
         <CardHeader>
+        <Row>
           <TaxProfessionalFilter
             setData={setInCompleteData}
             getData={getInCompleteAssingment}
@@ -218,6 +270,74 @@ function InCompleteData({ CountIncomplete, data }) {
             records={records}
             index="tpquery3"
           />
+          </Row>
+          <Row>
+          <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {count}
+                  </span>
+                  <span className="d-flex">
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => firstChunk()}
+                    >
+                      &lt; &lt;
+                    </button>
+
+                    {page > 1 ? (
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getInCompleteAssingment(e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => lastChunk()}
+                    >
+                      &gt; &gt;
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </CardHeader>
         <CardBody>
           <DataTablepopulated

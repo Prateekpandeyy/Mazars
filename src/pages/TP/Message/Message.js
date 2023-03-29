@@ -30,7 +30,7 @@ function Message(props) {
   const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -42,9 +42,9 @@ function Message(props) {
     setPaymentModal(!addPaymentModal);
   };
 
-  useEffect(() => {
-    getMessage();
-  }, []);
+  // useEffect(() => {
+  //   getMessage();
+  // }, []);
 
   useEffect(() => {
     setPage(1);
@@ -55,7 +55,7 @@ function Message(props) {
   }, []);
 
   const sortMessage = (val, field) => {
-    console.log("sort", val, field);
+    // console.log("sort", val, field);
     setLoading(true);
     axios
       .get(
@@ -160,6 +160,7 @@ function Message(props) {
         });
     }
   };
+
 
   const columns = [
     {

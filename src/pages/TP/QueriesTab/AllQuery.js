@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useRef } from "react";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody ,Row,Col,} from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -12,11 +12,21 @@ import MessageIcon, {
 
 function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
-
+  let total= props.data;
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+
+  const [count, setCount] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -43,25 +53,99 @@ function AllQuery(props) {
       uit: token,
     },
   };
-  useEffect(() => {
-    getInCompleteAssingment();
-  }, []);
 
-  const getInCompleteAssingment = () => {
+  useEffect(() => {
+    setPage(1);
+    setEnd(
+      Number(localStorage.getItem("tp_record_per_page"))
+    );
+    setCount(props.data)
+  }, []);
+  useEffect(() => {
+    setCount(total)
+    getInCompleteAssingment(1);
+  }, [total]);
+
+  //page counter
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getInCompleteAssingment(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getInCompleteAssingment(Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    getInCompleteAssingment(Number(page) + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getInCompleteAssingment(defaultPage.at(-1));
+    setAtpage(totalPages);
+  };
+
+  const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+    setLoading(true);
+    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+    if (e) {
     if (!data) {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&page=${e}`,
           myConfig
         )
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
+            let data = res.data.result;
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
             setInCompleteData(res.data.result);
             setRecords(res.data.result.length);
+            setCount(props.data)
+
+            const dynamicPage = Math.ceil(props.data / allEnd);
+            setTotalPages(dynamicPage+1)
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            }else if(e === (dynamicPage+1)){
+              setBig(rem + 1);
+              setEnd(res.data.total);
+            }else{
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < (dynamicPage+1); i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
+  }
   };
 
   const columns = [
@@ -199,6 +283,7 @@ function AllQuery(props) {
     <>
       <Card>
         <CardHeader>
+        <Row>
           <TaxProfessionalFilter
             setData={setInCompleteData}
             getData={getInCompleteAssingment}
@@ -207,6 +292,75 @@ function AllQuery(props) {
             records={records}
             index="tpquery1"
           />
+          </Row>
+          <Row>
+          <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {count}
+                  </span>
+                  <span className="d-flex">
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => firstChunk()}
+                    >
+                      &lt; &lt;
+                    </button>
+
+                    {page > 1 ? (
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getInCompleteAssingment(e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => lastChunk()}
+                    >
+                      &gt; &gt;
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
+
         </CardHeader>
         <CardBody>
           <DataTablepopulated

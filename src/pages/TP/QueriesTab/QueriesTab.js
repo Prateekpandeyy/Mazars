@@ -159,7 +159,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllQuery />
+          <AllQuery data={allQuery} />
         </TabPanel>
         <TabPanel>
           <PendingForAcceptence data={pendingData} updateTab={updateTab} />

@@ -199,6 +199,7 @@ function Sidebar({
           setLogo("taxprofessional/dashboard");
           if (res.data.result != undefined) {
             setfeedbackNumbertp(res.data.result[0].total);
+            localStorage.setItem("TPfeedbacks", res.data.result[0].total);
             setLogo("/taxprofessional/dashboard");
           } else if (res.data.code === 102) {
             history.push("/taxprofessional/login");

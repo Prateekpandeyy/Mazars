@@ -30,55 +30,88 @@ const history = useHistory();
   const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const token = window.localStorage.getItem("tptoken");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const token = window.localStorage.getItem("tptoken")
   const myConfig = {
       headers : {
        "uit" : token
       }
     }
-    useEffect(() => {
-      setPage(1);
-      setEnd(
-        Number(localStorage.getItem("tp_record_per_page"))
-      );
-      getFeedback(1);
-    }, []);
+    
 
-
-    //page counter
-  const firstChunk = () => {
-    setAtpage(1);
-    setPage(1);
-    getFeedback(1);
-    console.log(1);
-  };
-  const prevChunk = () => {
-    if (atPage > 1) {
-      setAtpage((atPage) => atPage - 1);
-    }
-    console.log("prev");
-    setPage(Number(page) - 1);
-    getFeedback(Number(page) - 1);
-  };
-  const nextChunk = () => {
-    console.log("next");
-    if (atPage < totalPages) {
-      setAtpage((atPage) => atPage + 1);
-    }
-    setPage(Number(page) + 1);
-    getFeedback(Number(page) + 1);
-  };
-  const lastChunk = () => {
-    console.log("last");
-    setPage(defaultPage.at(-1));
-    getFeedback(defaultPage.at(-1));
-    setAtpage(totalPages);
-  };
+  // useEffect(() => {
+  //   getFeedback();
+  // }, []);
 
   useEffect(() => {
-    getFeedback();
+    setPage(1);
+    setEnd(
+      Number(localStorage.getItem("tp_record_per_page"))
+    );
+    getFeedback(1);
   }, []);
+
+    //page counter
+    const firstChunk = () => {
+      setAtpage(1);
+      setPage(1);
+      getFeedback(1);
+      console.log(1);
+    };
+    const prevChunk = () => {
+      if (atPage > 1) {
+        setAtpage((atPage) => atPage - 1);
+      }
+      console.log("prev");
+      setPage(Number(page) - 1);
+      getFeedback(Number(page) - 1);
+    };
+    const nextChunk = () => {
+      console.log("next");
+      if (atPage < totalPages) {
+        setAtpage((atPage) => atPage + 1);
+      }
+      setPage(Number(page) + 1);
+      getFeedback(Number(page) + 1);
+    };
+    const lastChunk = () => {
+      console.log("last");
+      setPage(defaultPage.at(-1));
+      getFeedback(defaultPage.at(-1));
+      setAtpage(totalPages);
+    };
+
+    const sortFeedback = (val, field) => {
+      console.log("sort", val, field);
+      setLoading(true);
+      axios
+      .get(
+        `${baseUrl}/tl/getFeedback?orderby=${val}&orderbyfield=${field}`, myConfig
+        )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setLoading(false);
+          setFeedBackData(all);
+          setSortVal(field);
+        }
+        });
+
+    };
+
 
   const getFeedback = (e) => {
     setLoading(true);
@@ -105,66 +138,40 @@ const history = useHistory();
             });
           setFeedBackData(res.data.result);
           setLoading(false);
-            setFeedBackData(res.data.total);
-            const dynamicPage = Math.ceil(res.data.total / allEnd);
-            setTotalPages(dynamicPage+1)
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            }else if(e === (dynamicPage+1)){
-              setBig(rem + 1);
-              setEnd(res.data.total);
-            }else{
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i < (dynamicPage+1); i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
-        }
-      });
-  };
-};
-
-  const sortFeedback = (val, field) => {
-    console.log("sorting....",val,field);
-    setLoading(true);
-    axios
-      .get(
-        `${baseUrl}/tl/getFeedback?orderby=${val}&orderbyfield=${field}`, myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-
-          let sortId = 1;
-          if (page > 1) {
-            sortId = big;
+          setCountFeedBack(res.data.total);
+          const dynamicPage = Math.ceil(res.data.total / allEnd);
+          setTotalPages(dynamicPage+1)
+          let rem = (e - 1) * allEnd;
+          let end = e * allEnd;
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          }else if(e === (dynamicPage+1)){
+            setBig(rem + 1);
+            setEnd(res.data.total);
+          }else{
+            setBig(rem + 1);
+            setEnd(end);
           }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setLoading(false);
-          setFeedBackData(all);
-          setSortVal(field);
+          for (let i = 1; i < (dynamicPage+1); i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
+    };
   };
+
+  
 
   const columns = [
     {
       text: "S.No",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
+        // return row.cid;
         return rowIndex + 1;
+        // return rowIndex + (1 * ((atPage - 1) * (Number(localStorage.getItem("tp_record_per_page"))))) + 1;
       },
       headerStyle: () => {
         return {width: "10px" };
@@ -173,15 +180,7 @@ const history = useHistory();
     {
       text: "Date",
       dataField: "created",
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-      },
+      // sort: true,
       headerStyle: () => {
         return {  width: "60px" };
       },
