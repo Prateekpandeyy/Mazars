@@ -27,7 +27,7 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
-function AcceptedProposal({ acceptedProposal }) {
+function AcceptedProposal(props) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -82,7 +82,7 @@ function AcceptedProposal({ acceptedProposal }) {
     if (!searchData) {
       getAcceptedProposal(1);
     }
-  }, []);
+  }, [props]);
 
   const firstChunk = () => {
     setAtpage(1);
@@ -93,14 +93,14 @@ function AcceptedProposal({ acceptedProposal }) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
+    setPage(Number(page) - 1);
     getAcceptedProposal(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
+    setPage(Number(page) + 1);
     getAcceptedProposal(page + 1);
   };
   const lastChunk = () => {
@@ -135,10 +135,15 @@ function AcceptedProposal({ acceptedProposal }) {
             });
             setProposalDisplay(all);
 
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * allEnd;
             let end = e * allEnd;
+            setCountNotification(props.count);
+            if (end > props.count) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(props.count / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -146,7 +151,7 @@ function AcceptedProposal({ acceptedProposal }) {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -157,7 +162,7 @@ function AcceptedProposal({ acceptedProposal }) {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/getProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -197,18 +202,8 @@ function AcceptedProposal({ acceptedProposal }) {
 
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
-      },
 
       headerStyle: () => {
         return { width: "50px" };
@@ -218,6 +213,15 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -230,7 +234,16 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -251,16 +264,44 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
         if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
@@ -284,7 +325,15 @@ function AcceptedProposal({ acceptedProposal }) {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
@@ -297,6 +346,15 @@ function AcceptedProposal({ acceptedProposal }) {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -325,12 +383,14 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "ProposedAmount",
       text: "Proposed amount",
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
+      onSort: (field, order) => {
+        let val = 0;
         if (order === "asc") {
-          return b - a;
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 8);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -343,13 +403,16 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
+      onSort: (field, order) => {
+        let val = 0;
         if (order === "asc") {
-          return b - a;
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 9);
       },
+
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;

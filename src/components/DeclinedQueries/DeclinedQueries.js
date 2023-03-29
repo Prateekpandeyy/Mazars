@@ -10,7 +10,7 @@ import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import { ViewDiscussionIcon } from "../../components/Common/MessageIcon";
 
-function DeclinedQueries() {
+function DeclinedQueries(props) {
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -48,14 +48,14 @@ function DeclinedQueries() {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
+    setPage(Number(page) - 1);
     getPendingForPayment(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
+    setPage(Number(page) + 1);
     getPendingForPayment(page + 1);
   };
   const lastChunk = () => {
@@ -88,11 +88,15 @@ function DeclinedQueries() {
               all.push(data);
             });
             setPendingData(all);
-
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * allEnd;
             let end = e * allEnd;
+            setCountNotification(props.count);
+            if (end > props.count) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(props.count / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -100,7 +104,7 @@ function DeclinedQueries() {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -111,7 +115,7 @@ function DeclinedQueries() {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/declinedQueries?orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -152,27 +156,25 @@ function DeclinedQueries() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       headerStyle: () => {
         return { width: "50px" };
-      },
-
-      formatter: (cellContent, row, rowIndex, index) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
       },
     },
     {
       text: "Date",
       dataField: "created",
-      sort: true,
 
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -184,7 +186,16 @@ function DeclinedQueries() {
     {
       text: "Query no",
       dataField: "assign_no",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -204,17 +215,47 @@ function DeclinedQueries() {
     {
       text: "Category",
       dataField: "parent_id",
+
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
 
     {
@@ -240,7 +281,6 @@ function DeclinedQueries() {
     {
       text: "Action",
       dataField: "",
-      sort: true,
 
       formatter: function forma(cell, row) {
         return (

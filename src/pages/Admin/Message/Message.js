@@ -68,7 +68,7 @@ function Message(props) {
             setQuery(all);
             setLoading(false);
             setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
             if (e === 1) {
@@ -168,6 +168,7 @@ function Message(props) {
         } else {
           val = 1;
         }
+        sortMessage(val, 1);
       },
     },
 
@@ -316,7 +317,6 @@ function Message(props) {
                     </div>
                     {defaultPage.length > page ? (
                       <button
-                        disabled={defaultPage.length > page}
                         className="navButton mx-1"
                         onClick={(e) => nextChunk()}
                       >

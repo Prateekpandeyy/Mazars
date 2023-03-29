@@ -17,7 +17,7 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
-function AllProposalComponent({ allProposal }) {
+function AllProposalComponent(props) {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -81,7 +81,7 @@ function AllProposalComponent({ allProposal }) {
     if (!searchData) {
       getProposalData(1);
     }
-  }, []);
+  }, [props]);
 
   const firstChunk = () => {
     setAtpage(1);
@@ -92,14 +92,14 @@ function AllProposalComponent({ allProposal }) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
+    setPage(Number(page) - 1);
     getProposalData(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
+    setPage(Number(page) + 1);
     getProposalData(page + 1);
   };
   const lastChunk = () => {
@@ -135,9 +135,15 @@ function AllProposalComponent({ allProposal }) {
             setProposalDisplay(all);
 
             setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * allEnd;
             let end = e * allEnd;
+            setCountNotification(props.count);
+            if (end > props.count) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(props.count / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -145,7 +151,7 @@ function AllProposalComponent({ allProposal }) {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -156,7 +162,7 @@ function AllProposalComponent({ allProposal }) {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/getProposals?orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -195,17 +201,7 @@ function AllProposalComponent({ allProposal }) {
   const columns = [
     {
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
-      },
-
+      dataField: "cid",
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -214,7 +210,15 @@ function AllProposalComponent({ allProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -226,7 +230,16 @@ function AllProposalComponent({ allProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -247,16 +260,42 @@ function AllProposalComponent({ allProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
         if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
@@ -280,7 +319,15 @@ function AllProposalComponent({ allProposal }) {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
@@ -293,7 +340,15 @@ function AllProposalComponent({ allProposal }) {
       text: "Date of acceptance / decline of proposal",
       dataField: "cust_accept_date",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
@@ -328,7 +383,15 @@ function AllProposalComponent({ allProposal }) {
       dataField: "ProposedAmount",
       text: "Proposed amount",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
           return b - a;
@@ -347,11 +410,14 @@ function AllProposalComponent({ allProposal }) {
       text: "Accepted amount",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
+      onSort: (field, order) => {
+        let val = 0;
         if (order === "asc") {
-          return b - a;
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 9);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");

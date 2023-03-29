@@ -13,7 +13,7 @@ import {
   DiscussProposal,
 } from "../../components/Common/MessageIcon";
 
-function PendingAllocation({ CountPendingForAllocation }) {
+function PendingAllocation(props) {
   const myRef = useRef([]);
   const [pendingData, setPendingData] = useState([]);
   const [history, setHistory] = useState([]);
@@ -69,7 +69,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
     if (!searchData) {
       getPendingForAllocation(1);
     }
-  }, []);
+  }, [props]);
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -84,14 +84,14 @@ function PendingAllocation({ CountPendingForAllocation }) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
+    setPage(Number(page) - 1);
     getPendingForAllocation(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
+    setPage(Number(page) + 1);
     getPendingForAllocation(page + 1);
   };
   const lastChunk = () => {
@@ -99,7 +99,6 @@ function PendingAllocation({ CountPendingForAllocation }) {
     getPendingForAllocation(defaultPage.at(-1));
     setAtpage(totalPages);
   };
-
   const getPendingForAllocation = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
 
@@ -125,11 +124,15 @@ function PendingAllocation({ CountPendingForAllocation }) {
               all.push(data);
             });
             setPendingData(all);
-
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * allEnd;
             let end = e * allEnd;
+            setCountNotification(props.count);
+            if (end > props.count) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(props.count / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -137,7 +140,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -148,7 +151,7 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/pendingAllocation?orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -174,14 +177,8 @@ function PendingAllocation({ CountPendingForAllocation }) {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
-            {rowIndex + 1}
-          </div>
-        );
-      },
+      dataField: "cid",
+
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -190,7 +187,15 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "Date",
       dataField: "created",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -202,7 +207,15 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "Query no",
       dataField: "assign_no",
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -223,21 +236,56 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Status",
       dataField: "status",
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>

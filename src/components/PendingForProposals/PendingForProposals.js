@@ -23,7 +23,7 @@ import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 
-function PendingForProposals({ CountPendingProposal }) {
+function PendingForProposals(props) {
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
 
@@ -87,6 +87,7 @@ function PendingForProposals({ CountPendingProposal }) {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [modal]);
+
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
@@ -96,14 +97,14 @@ function PendingForProposals({ CountPendingProposal }) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
+    setPage(Number(page) - 1);
     getPendingForProposals(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
+    setPage(Number(page) + 1);
     getPendingForProposals(page + 1);
   };
   const lastChunk = () => {
@@ -136,11 +137,15 @@ function PendingForProposals({ CountPendingProposal }) {
               all.push(data);
             });
             setNonPendingData(all);
-
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * allEnd;
             let end = e * allEnd;
+            setCountNotification(props.count);
+            if (end > props.count) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(props.count / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -148,7 +153,7 @@ function PendingForProposals({ CountPendingProposal }) {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -159,7 +164,7 @@ function PendingForProposals({ CountPendingProposal }) {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/pendingProposal?orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -185,15 +190,9 @@ function PendingForProposals({ CountPendingProposal }) {
 
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
-            {rowIndex + 1}
-          </div>
-        );
-      },
+
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -202,7 +201,15 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
         if (oldDate == null) {
@@ -214,7 +221,16 @@ function PendingForProposals({ CountPendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -235,16 +251,43 @@ function PendingForProposals({ CountPendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Status",
