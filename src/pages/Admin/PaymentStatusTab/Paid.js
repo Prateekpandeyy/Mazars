@@ -53,7 +53,7 @@ function Paid(props) {
     setPage(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
 
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment1`));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment2`));
     if (!searchData) {
       getPaymentStatus(1);
     }
@@ -114,11 +114,11 @@ function Paid(props) {
             setPaymentCount(all.length);
             setRecords(all.length);
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -437,9 +437,7 @@ function Paid(props) {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md="6">
-              <Records records={records} />
-            </Col>
+            <Col md="6"></Col>
             <Col md="6" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">

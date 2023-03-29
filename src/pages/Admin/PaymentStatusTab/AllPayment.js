@@ -128,12 +128,12 @@ function AllPayment(props) {
             setPaymentCount(all.length);
             setRecords(all.length);
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
-
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
+            console.log("dynamicPage", dynamicPage);
             let rem = (e - 1) * allEnd;
 
             if (e === 1) {
