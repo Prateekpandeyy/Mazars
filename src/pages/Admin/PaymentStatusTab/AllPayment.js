@@ -562,7 +562,7 @@ function AllPayment(props) {
               </div>
             </Col>
           </Row>
-          <Records records={records} />
+
           <DataTablepopulated
             bgColor="#2b5f55"
             rowStyle2={rowStyle2}

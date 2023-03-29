@@ -30,6 +30,7 @@ function AdminFilter(props) {
     paid,
     unpaid,
     index,
+    resetPaging,
   } = props;
 
   const [selectedData, setSelectedData] = useState([]);
@@ -492,6 +493,7 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               setData(res.data.result);
+              resetPaging();
               setRecords(res.data.result.length);
             }
           });
