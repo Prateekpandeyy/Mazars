@@ -454,7 +454,6 @@ function AllProposalComponent() {
     {
       dataField: "tl_name",
       text: "TL name",
-      sort: true,
     },
     {
       text: "Action",
