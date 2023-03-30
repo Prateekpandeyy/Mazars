@@ -108,6 +108,7 @@ function AdminFilter(props) {
     setFromDate("");
     setStatus("");
     setQueryNo("");
+    resetPaging();
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
@@ -983,7 +984,6 @@ function AdminFilter(props) {
         setTax2(subCat);
 
         subCat.map((i) => {
-          console.log(i, dk);
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];

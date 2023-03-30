@@ -41,6 +41,7 @@ function Paid() {
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
 
   const token = window.localStorage.getItem("adminToken");
@@ -213,7 +214,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -235,7 +238,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -264,7 +269,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -278,7 +285,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -292,7 +301,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -314,7 +325,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -339,7 +352,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -361,7 +376,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -384,7 +401,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -405,7 +424,9 @@ function Paid() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
