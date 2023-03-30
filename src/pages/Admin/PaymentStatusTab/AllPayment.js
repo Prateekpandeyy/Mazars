@@ -64,18 +64,19 @@ function AllPayment(props) {
     runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment1`));
-    if (!searchData) {
-      getPaymentStatus(1);
+    let localPage = Number(localStorage.getItem("adminpayt1"));
+    if (!localPage) {
+      localPage = 1;
     }
-  }, [props]);
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPaymentStatus(localPage);
+  }, []);
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getPaymentStatus(1);
+    localStorage.setItem("adminpayt1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -83,6 +84,7 @@ function AllPayment(props) {
     }
     setPage(Number(page) - 1);
     getPaymentStatus(page - 1);
+    localStorage.setItem("adminpayt1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -90,11 +92,13 @@ function AllPayment(props) {
     }
     setPage(Number(page) + 1);
     getPaymentStatus(page + 1);
+    localStorage.setItem("adminpayt1", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getPaymentStatus(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminpayt1", defaultPage.at(-1));
   };
 
   const getPaymentStatus = (e) => {
@@ -110,7 +114,7 @@ function AllPayment(props) {
           let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
-            setRecords(res.data.result.length);
+            setRecords(res.data.total);
             let all = [];
             let customId = 1;
             if (e > 1) {
@@ -488,7 +492,10 @@ function AllPayment(props) {
 
     return style;
   };
-
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <div>
       <Card>
@@ -499,6 +506,8 @@ function AllPayment(props) {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adpayment1"
           />
         </CardHeader>
@@ -512,19 +521,24 @@ function AllPayment(props) {
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                     <div
                       style={{
                         display: "flex",
@@ -537,6 +551,7 @@ function AllPayment(props) {
                         onChange={(e) => {
                           setPage(e.target.value);
                           getPaymentStatus(e.target.value);
+                          localStorage.setItem("adminpayt1", e.target.value);
                         }}
                         className="form-control"
                       >
@@ -545,18 +560,24 @@ function AllPayment(props) {
                         ))}
                       </select>
                     </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>

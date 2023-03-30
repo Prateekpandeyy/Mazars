@@ -31,6 +31,7 @@ function AdminFilter(props) {
     unpaid,
     index,
     resetPaging,
+    setCountNotification,
   } = props;
 
   const [selectedData, setSelectedData] = useState([]);
@@ -45,7 +46,7 @@ function AdminFilter(props) {
   const [catShowData, setCatShowData] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef();
-
+  var allEnd = Number(localStorage.getItem("admin_record_per_page"));
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -74,6 +75,7 @@ function AdminFilter(props) {
   //handleSubCategory
   const handleSubCategory = (value) => {
     setShowSubCat(value);
+
     tax2.map((i) => {
       if (i.details == value.at(-1)) {
         setStore2((payload) => {
@@ -102,14 +104,14 @@ function AdminFilter(props) {
     setCatShowData([]);
     setStore2([]);
     setTax2([]);
-    getData();
+    getData(1);
     setFromDate("");
     setStatus("");
     setQueryNo("");
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    dateValue.current.clearValue();
+    // dateValue.current.clearValue();
   };
 
   const onSubmit = (data) => {
@@ -139,6 +141,289 @@ function AdminFilter(props) {
     }
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
+    if (allQueries == "allQueries") {
+      let customId = 1;
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getAllQueries?cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId}&qno=${
+              data?.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data?.p_status
+            }&pcat_id=${selectedData}&qno=${data?.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              let customId = 1;
+              let data = res.data.result;
+              let all = [];
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              resetPaging();
+            }
+          });
+      }
+    }
+
+    if (pendingAlloation == "pendingAlloation") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/pendingAllocation?category=${
+              data.store
+            }&date1=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&date2=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&date2=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            }
+          });
+      }
+    }
+    if (pendingForProposal == "pendingForProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/pendingProposal?category=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            }
+          });
+      }
+    }
+    if (declinedQueries == "declinedQueries") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/declinedQueries?cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            }
+          });
+      }
+    }
 
     if (allProposal == "allProposal") {
       if (data.route) {
@@ -159,10 +444,20 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              let customId = 1;
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
             }
           });
       } else {
@@ -181,61 +476,24 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              let customId = 1;
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
             }
           });
       }
     }
-
-    if (acceptedProposal == "acceptedProposal") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?status1=2&cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
       if (data.route) {
         if (data.p_status.length > 0) {
@@ -254,10 +512,20 @@ function AdminFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                let customId = 1;
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
               }
             });
         } else {
@@ -268,10 +536,20 @@ function AdminFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                let customId = 1;
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
               }
             });
         }
@@ -315,6 +593,71 @@ function AdminFilter(props) {
         }
       }
     }
+    if (acceptedProposal == "acceptedProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?status1=2&cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              let customId = 1;
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              let customId = 1;
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+            }
+          });
+      }
+    }
 
     if (declinedProposal == "declinedProposal") {
       if (data.route) {
@@ -334,8 +677,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -354,192 +710,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (declinedQueries == "declinedQueries") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/declinedQueries?cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (pendingForProposal == "pendingForProposal") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/pendingProposal?category=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (allQueries == "allQueries") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/getAllQueries?cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId}&qno=${
-              data?.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/getAllQueries?cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data?.p_status
-            }&pcat_id=${selectedData}&qno=${data?.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              setData(res.data.result);
-              resetPaging();
-              setRecords(res.data.result.length);
-            }
-          });
-      }
-    }
-
-    if (pendingAlloation == "pendingAlloation") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/pendingAllocation?category=${
-              data.store
-            }&date1=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&date2=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/pendingAllocation?category=${store2}&date1=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&date2=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -566,8 +751,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -585,8 +783,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -611,8 +822,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -633,8 +857,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -659,8 +896,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -681,8 +931,21 @@ function AdminFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             }
           });
@@ -709,17 +972,18 @@ function AdminFilter(props) {
     if (dk) {
       if (dk.route === window.location.pathname && dk.index === index) {
         let parentId = "";
-        let catData = JSON.parse(localStorage.getItem("tlcategoryData"));
+        let catData = JSON.parse(localStorage.getItem("admincategoryData"));
         catData.forEach((element) => {
           if (element.id === dk.pcatId) {
-            console.log("eleent", element.details);
             setCatShowData(element.details);
             parentId = element.details;
           }
         });
         let subCat = JSON.parse(localStorage.getItem(`admin${parentId}`));
         setTax2(subCat);
+
         subCat.map((i) => {
+          console.log(i, dk);
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];
@@ -774,7 +1038,7 @@ function AdminFilter(props) {
                     allowClear
                   >
                     {tax2.map((p, index) => (
-                      <Option value={p.id} key={index}>
+                      <Option value={p.details} key={index}>
                         {p.details}
                       </Option>
                     ))}
@@ -967,12 +1231,6 @@ function AdminFilter(props) {
                   Search
                 </button>
                 <Reset />
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">
-                    Total records : {records}
-                  </label>
-                </div>
               </div>
             </form>
           </div>

@@ -28,7 +28,7 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../components/Common/MessageIcon";
-function PendingForAcceptence(props) {
+function PendingForAcceptence() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [retview, setRetview] = useState(false);
@@ -78,15 +78,14 @@ function PendingForAcceptence(props) {
   }, [viewProposalModal]);
 
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
-    if (!searchData) {
-      getPendingAcceptedProposal(1);
+    let localPage = Number(localStorage.getItem("adminprot2"));
+    if (!localPage) {
+      localPage = 1;
     }
-  }, [props]);
-
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPendingAcceptedProposal(localPage);
+  }, []);
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
@@ -98,6 +97,7 @@ function PendingForAcceptence(props) {
     }
     setPage(Number(page) - 1);
     getPendingAcceptedProposal(page - 1);
+    localStorage.setItem("adminprot2", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -105,10 +105,12 @@ function PendingForAcceptence(props) {
     }
     setPage(Number(page) + 1);
     getPendingAcceptedProposal(page + 1);
+    localStorage.setItem("adminprot2", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getPendingAcceptedProposal(defaultPage.at(-1));
+    localStorage.setItem("adminprot2", defaultPage.at(-1));
     setAtpage(totalPages);
   };
 
@@ -122,7 +124,7 @@ function PendingForAcceptence(props) {
           let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
-            setRecords(res.data.result.length);
+            setRecords(res.data.tota);
             let all = [];
             let customId = 1;
             if (e > 1) {
@@ -139,11 +141,11 @@ function PendingForAcceptence(props) {
             setProposalDisplay(all);
 
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -473,7 +475,10 @@ function PendingForAcceptence(props) {
       },
     },
   ];
-
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <div>
       <Card>
@@ -484,6 +489,8 @@ function PendingForAcceptence(props) {
             pendingAcceptedProposal="pendingAcceptedProposal"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adproposal2"
           />
         </CardHeader>
@@ -497,19 +504,24 @@ function PendingForAcceptence(props) {
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                     <div
                       style={{
                         display: "flex",
@@ -522,6 +534,7 @@ function PendingForAcceptence(props) {
                         onChange={(e) => {
                           setPage(e.target.value);
                           getPendingAcceptedProposal(e.target.value);
+                          localStorage.setItem("adminprot2", e.target.value);
                         }}
                         className="form-control"
                       >
@@ -530,18 +543,24 @@ function PendingForAcceptence(props) {
                         ))}
                       </select>
                     </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>

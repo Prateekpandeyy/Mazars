@@ -26,7 +26,7 @@ import MessageIcon, {
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
 
-function Unpaid(props) {
+function Unpaid() {
   const [payment, setPayment] = useState([]);
 
   const [paymentcount, setPaymentCount] = useState("");
@@ -52,24 +52,26 @@ function Unpaid(props) {
     },
   };
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment2`));
-    if (!searchData) {
-      getPaymentStatus(1);
+    let localPage = Number(localStorage.getItem("adminpayt3"));
+    if (!localPage) {
+      localPage = 1;
     }
-  }, [props]);
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPaymentStatus(localPage);
+  }, []);
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getPaymentStatus(1);
+    localStorage.setItem("adminpayt3", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(Number(page) - 1);
+    localStorage.setItem("adminpayt3", Number(page) - 1);
     getPaymentStatus(page - 1);
   };
   const nextChunk = () => {
@@ -77,12 +79,14 @@ function Unpaid(props) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
+    localStorage.setItem("adminpayt3", Number(page) + 1);
     getPaymentStatus(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getPaymentStatus(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminpayt3", defaultPage.at(-1));
   };
 
   const getPaymentStatus = (e) => {
@@ -200,19 +204,8 @@ function Unpaid(props) {
 
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
-      },
-
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -221,7 +214,15 @@ function Unpaid(props) {
       dataField: "query_created_date",
       text: "Date",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created_date;
         if (oldDate == null) {
@@ -233,7 +234,16 @@ function Unpaid(props) {
     {
       dataField: "assign_no",
       text: "Query no",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -254,16 +264,43 @@ function Unpaid(props) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -292,12 +329,14 @@ function Unpaid(props) {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
+      onSort: (field, order) => {
+        let val = 0;
         if (order === "asc") {
-          return b - a;
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 6);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -311,12 +350,14 @@ function Unpaid(props) {
       text: "Amount paid",
       dataField: "paid_amount",
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
+      onSort: (field, order) => {
+        let val = 0;
         if (order === "asc") {
-          return b - a;
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 7);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -331,12 +372,14 @@ function Unpaid(props) {
       text: "Outstanding amount",
       dataField: "amount_outstanding",
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
+      onSort: (field, order) => {
+        let val = 0;
         if (order === "asc") {
-          return b - a;
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -350,6 +393,15 @@ function Unpaid(props) {
       text: "Date of payment",
       dataField: "cust_paid_date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_paid_date;
@@ -424,6 +476,10 @@ function Unpaid(props) {
 
     return style;
   };
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <div>
       <Card>
@@ -434,6 +490,8 @@ function Unpaid(props) {
             paid="paid"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adpayment3"
           />
         </CardHeader>
@@ -447,19 +505,24 @@ function Unpaid(props) {
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                     <div
                       style={{
                         display: "flex",
@@ -472,6 +535,7 @@ function Unpaid(props) {
                         onChange={(e) => {
                           setPage(e.target.value);
                           getPaymentStatus(e.target.value);
+                          localStorage.setItem("adminpayt3", e.target.value);
                         }}
                         className="form-control"
                       >
@@ -480,18 +544,24 @@ function Unpaid(props) {
                         ))}
                       </select>
                     </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>

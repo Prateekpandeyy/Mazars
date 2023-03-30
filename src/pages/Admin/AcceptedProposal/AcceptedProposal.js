@@ -27,7 +27,7 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
-function AcceptedProposal(props) {
+function AcceptedProposal() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -75,14 +75,14 @@ function AcceptedProposal(props) {
     runTo?.scrollIntoView({ block: "center" });
   }, [viewProposalModal]);
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal3`));
-    if (!searchData) {
-      getAcceptedProposal(1);
+    let localPage = Number(localStorage.getItem("adminprot3"));
+    if (!localPage) {
+      localPage = 1;
     }
-  }, [props]);
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getAcceptedProposal(localPage);
+  }, []);
 
   const firstChunk = () => {
     setAtpage(1);
@@ -119,7 +119,7 @@ function AcceptedProposal(props) {
           let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
-            setRecords(res.data.result.length);
+            setRecords(res.data.total);
             let all = [];
             let customId = 1;
             if (e > 1) {
@@ -136,11 +136,11 @@ function AcceptedProposal(props) {
             setProposalDisplay(all);
 
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -185,20 +185,6 @@ function AcceptedProposal(props) {
         }
       });
   };
-
-  // const getAcceptedProposal = () => {
-  //   let data = JSON.parse(localStorage.getItem("searchDataadproposal3"));
-  //   if (!data) {
-  //     axios
-  //       .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
-  //       .then((res) => {
-  //         if (res.data.code === 1) {
-  //           setProposalDisplay(res.data.result);
-  //           setRecords(res.data.result.length);
-  //         }
-  //       });
-  //   }
-  // };
 
   const columns = [
     {
@@ -466,6 +452,10 @@ function AcceptedProposal(props) {
     },
   ];
 
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <>
       <Card>
@@ -476,6 +466,8 @@ function AcceptedProposal(props) {
             acceptedProposal="acceptedProposal"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adproposal3"
           />
         </CardHeader>
@@ -489,19 +481,24 @@ function AcceptedProposal(props) {
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                     <div
                       style={{
                         display: "flex",
@@ -522,24 +519,30 @@ function AcceptedProposal(props) {
                         ))}
                       </select>
                     </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>
             </Col>
           </Row>
-          {/* <Records records={records} /> */}
+
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}

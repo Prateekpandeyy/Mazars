@@ -10,7 +10,7 @@ import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import { ViewDiscussionIcon } from "../../components/Common/MessageIcon";
 
-function DeclinedQueries(props) {
+function DeclinedQueries() {
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -43,6 +43,7 @@ function DeclinedQueries(props) {
     setAtpage(1);
     setPage(1);
     getPendingForPayment(1);
+    localStorage.setItem("adminqp3", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -50,6 +51,7 @@ function DeclinedQueries(props) {
     }
     setPage(Number(page) - 1);
     getPendingForPayment(page - 1);
+    localStorage.setItem("adminqp4", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -57,11 +59,13 @@ function DeclinedQueries(props) {
     }
     setPage(Number(page) + 1);
     getPendingForPayment(page + 1);
+    localStorage.setItem("adminqp4", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getPendingForPayment(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminqp4", defaultPage.at(-1));
   };
   const getPendingForPayment = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
@@ -89,11 +93,11 @@ function DeclinedQueries(props) {
             });
             setPendingData(all);
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -296,6 +300,10 @@ function DeclinedQueries(props) {
       },
     },
   ];
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
 
   return (
     <>
@@ -307,6 +315,8 @@ function DeclinedQueries(props) {
             declinedQueries="declinedQueries"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adquery4"
           />
         </CardHeader>
@@ -346,6 +356,7 @@ function DeclinedQueries(props) {
                           onChange={(e) => {
                             setPage(e.target.value);
                             getPendingForPayment(e.target.value);
+                            localStorage.setItem("adminqp4", e.target.value);
                           }}
                           className="form-control"
                         >

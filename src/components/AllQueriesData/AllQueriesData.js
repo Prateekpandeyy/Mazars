@@ -11,7 +11,7 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../components/Common/MessageIcon";
 
-function AllQueriesData(props) {
+function AllQueriesData() {
   const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -27,10 +27,14 @@ function AllQueriesData(props) {
   const myRef = useRef([]);
 
   useEffect(() => {
-    setPage(1);
+    let localPage = Number(localStorage.getItem("adminqp1"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
-    getAllQueriesData(1);
-  }, [props]);
+    getAllQueriesData(localPage);
+  }, []);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -42,6 +46,7 @@ function AllQueriesData(props) {
     setAtpage(1);
     setPage(1);
     getAllQueriesData(1);
+    localStorage.setItem("adminqp1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -49,18 +54,21 @@ function AllQueriesData(props) {
     }
     setPage(Number(page) - 1);
     getAllQueriesData(page - 1);
+    localStorage.setItem("adminqp1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
+    localStorage.setItem("adminqp1", Number(page) + 1);
     getAllQueriesData(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getAllQueriesData(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminqp1", defaultPage.at(-1));
   };
   const getAllQueriesData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
@@ -86,7 +94,9 @@ function AllQueriesData(props) {
         let droppage = [];
         if (res.data.code === 1) {
           let data = res.data.result;
-          setRecords(res.data.result.length);
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
           let all = [];
           let customId = 1;
           if (e > 1) {
@@ -102,11 +112,11 @@ function AllQueriesData(props) {
           });
           setAllQueriesData(all);
           let end = e * allEnd;
-          setCountNotification(props.count);
-          if (end > props.count) {
+
+          if (end > res.data.total) {
             end = res.data.total;
           }
-          let dynamicPage = Math.ceil(props.count / allEnd);
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
 
           let rem = (e - 1) * allEnd;
 
@@ -362,7 +372,6 @@ function AllQueriesData(props) {
     },
   ];
   const resetPaging = () => {
-    console.log("reset");
     setPage(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
@@ -377,6 +386,7 @@ function AllQueriesData(props) {
             setRecords={setRecords}
             records={records}
             resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adquery1"
           />
         </CardHeader>
@@ -393,19 +403,24 @@ function AllQueriesData(props) {
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => firstChunk()}
-                      >
-                        &lt; &lt;
-                      </button>
-
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        &lt;
-                      </button>
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => firstChunk()}
+                          >
+                            &lt; &lt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            &lt;
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                       <div
                         style={{
                           display: "flex",
@@ -418,6 +433,7 @@ function AllQueriesData(props) {
                           onChange={(e) => {
                             setPage(e.target.value);
                             getAllQueriesData(e.target.value);
+                            localStorage.setItem("adminqp1", e.target.value);
                           }}
                           className="form-control"
                         >
@@ -426,18 +442,24 @@ function AllQueriesData(props) {
                           ))}
                         </select>
                       </div>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        &gt;
-                      </button>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => lastChunk()}
-                      >
-                        &gt; &gt;
-                      </button>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => nextChunk()}
+                          >
+                            &gt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => lastChunk()}
+                          >
+                            &gt; &gt;
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>

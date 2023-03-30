@@ -74,13 +74,13 @@ function PendingForProposals(props) {
     }
   };
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
-    if (!searchData) {
-      getPendingForProposals(1);
+    let localPage = Number(localStorage.getItem("adminqp3"));
+    if (!localPage) {
+      localPage = 1;
     }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPendingForProposals(localPage);
   }, []);
   useEffect(() => {
     let runTo = myRefs.current[jumpTo];
@@ -92,6 +92,7 @@ function PendingForProposals(props) {
     setAtpage(1);
     setPage(1);
     getPendingForProposals(1);
+    localStorage.setItem("adminqp3", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -99,6 +100,7 @@ function PendingForProposals(props) {
     }
     setPage(Number(page) - 1);
     getPendingForProposals(page - 1);
+    localStorage.setItem("adminqp3", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -106,11 +108,13 @@ function PendingForProposals(props) {
     }
     setPage(Number(page) + 1);
     getPendingForProposals(page + 1);
+    localStorage.setItem("adminqp3", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getPendingForProposals(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminqp3", defaultPage.at(-1));
   };
   const getPendingForProposals = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
@@ -138,11 +142,11 @@ function PendingForProposals(props) {
             });
             setNonPendingData(all);
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -330,7 +334,10 @@ function PendingForProposals(props) {
       },
     },
   ];
-
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <>
       <Card>
@@ -341,6 +348,8 @@ function PendingForProposals(props) {
             pendingForProposal="pendingForProposal"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adquery3"
           />
         </CardHeader>
@@ -380,6 +389,7 @@ function PendingForProposals(props) {
                           onChange={(e) => {
                             setPage(e.target.value);
                             getPendingForProposals(e.target.value);
+                            localStorage.setItem("adminqp3", e.target.value);
                           }}
                           className="form-control"
                         >

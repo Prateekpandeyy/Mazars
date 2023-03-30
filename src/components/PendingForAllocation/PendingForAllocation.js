@@ -62,14 +62,14 @@ function PendingAllocation(props) {
     }
   };
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
-    if (!searchData) {
-      getPendingForAllocation(1);
+    let localPage = Number(localStorage.getItem("adminqp2"));
+    if (!localPage) {
+      localPage = 1;
     }
-  }, [props]);
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPendingForAllocation(localPage);
+  }, []);
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -79,6 +79,7 @@ function PendingAllocation(props) {
     setAtpage(1);
     setPage(1);
     getPendingForAllocation(1);
+    localStorage.setItem("adminqp2", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -86,6 +87,7 @@ function PendingAllocation(props) {
     }
     setPage(Number(page) - 1);
     getPendingForAllocation(page - 1);
+    localStorage.setItem("adminqp2", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -93,11 +95,13 @@ function PendingAllocation(props) {
     }
     setPage(Number(page) + 1);
     getPendingForAllocation(page + 1);
+    localStorage.setItem("adminqp2", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getPendingForAllocation(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminqp2", defaultPage.at(-1));
   };
   const getPendingForAllocation = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
@@ -109,7 +113,8 @@ function PendingAllocation(props) {
           let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
-            setRecords(res.data.result.length);
+            setCountNotification(res.data.total);
+            setRecords(res.data.total);
             let all = [];
             let customId = 1;
             if (e > 1) {
@@ -125,11 +130,11 @@ function PendingAllocation(props) {
             });
             setPendingData(all);
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -348,7 +353,10 @@ function PendingAllocation(props) {
       },
     },
   ];
-
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <>
       <Card>
@@ -359,6 +367,8 @@ function PendingAllocation(props) {
             pendingAlloation="pendingAlloation"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adquery2"
           />
         </CardHeader>
@@ -373,19 +383,24 @@ function PendingAllocation(props) {
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => firstChunk()}
-                      >
-                        &lt; &lt;
-                      </button>
-
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        &lt;
-                      </button>
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => firstChunk()}
+                          >
+                            &lt; &lt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            &lt;
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                       <div
                         style={{
                           display: "flex",
@@ -398,6 +413,7 @@ function PendingAllocation(props) {
                           onChange={(e) => {
                             setPage(e.target.value);
                             getPendingForAllocation(e.target.value);
+                            localStorage.setItem("adminqp2", e.target.value);
                           }}
                           className="form-control"
                         >
@@ -406,25 +422,31 @@ function PendingAllocation(props) {
                           ))}
                         </select>
                       </div>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        &gt;
-                      </button>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => lastChunk()}
-                      >
-                        &gt; &gt;
-                      </button>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => nextChunk()}
+                          >
+                            &gt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => lastChunk()}
+                          >
+                            &gt; &gt;
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>
               </Col>
             </Row>
           </CardHeader>
-          {/* <Records records={records} /> */}
+
           <DataTablepopulated
             bgColor="#55425f"
             keyField={"assign_no"}

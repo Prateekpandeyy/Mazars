@@ -17,7 +17,7 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
-function AllProposalComponent(props) {
+function AllProposalComponent() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -74,19 +74,20 @@ function AllProposalComponent(props) {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal1`));
-    if (!searchData) {
-      getProposalData(1);
+    let localPage = Number(localStorage.getItem("adminprot1"));
+    if (!localPage) {
+      localPage = 1;
     }
-  }, [props]);
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getProposalData(localPage);
+  }, []);
 
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getProposalData(1);
+    localStorage.setItem("adminprot1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -94,6 +95,7 @@ function AllProposalComponent(props) {
     }
     setPage(Number(page) - 1);
     getProposalData(page - 1);
+    localStorage.setItem("adminprot1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -101,11 +103,13 @@ function AllProposalComponent(props) {
     }
     setPage(Number(page) + 1);
     getProposalData(page + 1);
+    localStorage.setItem("adminprot1", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getProposalData(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminprot1", defaultPage.at(-1));
   };
 
   const getProposalData = (e) => {
@@ -136,11 +140,11 @@ function AllProposalComponent(props) {
 
             setCountNotification(res.data.total);
             let end = e * allEnd;
-            setCountNotification(props.count);
-            if (end > props.count) {
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
               end = res.data.total;
             }
-            let dynamicPage = Math.ceil(props.count / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
 
             let rem = (e - 1) * allEnd;
 
@@ -480,6 +484,11 @@ function AllProposalComponent(props) {
     },
   ];
 
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
+
   return (
     <>
       <Card>
@@ -490,6 +499,8 @@ function AllProposalComponent(props) {
             allProposal="allProposal"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adproposal1"
           />
         </CardHeader>
@@ -504,19 +515,24 @@ function AllProposalComponent(props) {
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                     <div
                       style={{
                         display: "flex",
@@ -529,6 +545,7 @@ function AllProposalComponent(props) {
                         onChange={(e) => {
                           setPage(e.target.value);
                           getProposalData(e.target.value);
+                          localStorage.setItem("adminprot1", e.target.value);
                         }}
                         className="form-control"
                       >
@@ -537,24 +554,30 @@ function AllProposalComponent(props) {
                         ))}
                       </select>
                     </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>
             </Col>
           </Row>
-          {/* <Records records={records} /> */}
+
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}
