@@ -59,6 +59,7 @@ function AllQuery(props) {
     setEnd(
       Number(localStorage.getItem("tp_record_per_page"))
     );
+    setAtpage(1);
     setCount(props.data)
   }, []);
   useEffect(() => {
@@ -94,19 +95,35 @@ function AllQuery(props) {
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+    let remainApiPath = "";
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-    if (e) {
-    if (!data) {
+    if (data) {
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${
+        data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${data?.p_status}&pcat_id=${
+        data.pcatId
+      }&qno=${data?.query_no}`;
+    }else{
+      remainApiPath = `tl/getIncompleteQues?page=${e}`;
+    }
+    if(e){
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&page=${e}`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
+            setRecords(res.data.result.length);
             let all = [];
             let customId = 1;
             if (e > 1) {
@@ -144,8 +161,35 @@ function AllQuery(props) {
             setDefaultPage(droppage);
           }
         });
+      }
     }
-  }
+  
+  
+
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/tl/getIncompleteQues?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setInCompleteData(all);
+        }
+      });
   };
 
   const columns = [
@@ -164,11 +208,37 @@ function AllQuery(props) {
       text: "Query date",
       dataField: "created",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        console.log("sort");
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.created;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.toString().split("-").reverse().join("-");
+      },
     },
     {
       text: "Query no",
       dataField: "assign_no",
-
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -189,22 +259,57 @@ function AllQuery(props) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
@@ -215,6 +320,16 @@ function AllQuery(props) {
     },
     {
       text: "Status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -278,6 +393,11 @@ function AllQuery(props) {
       },
     },
   ];
+  const resetPaging = () => {
+    console.log("reset");
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
 
   return (
     <>
@@ -291,6 +411,9 @@ function AllQuery(props) {
             setRecords={setRecords}
             records={records}
             index="tpquery1"
+            atPage={atPage}
+            resetPaging={resetPaging}
+            setCount={setCount}
           />
           </Row>
           <Row>

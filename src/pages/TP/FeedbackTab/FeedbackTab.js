@@ -167,7 +167,7 @@ const history = useHistory();
   const columns = [
     {
       text: "S.No",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         // return row.cid;
         return rowIndex + 1;

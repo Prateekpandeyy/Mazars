@@ -21,7 +21,9 @@ import MessageIcon, {
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
-  let total= CountIncomplete;
+  console.log(data);
+  let total=  Number(data.recordcount);
+  console.log(total,"total");
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -47,19 +49,7 @@ function InCompleteData({ CountIncomplete, data }) {
     }
   };
 
-  useEffect(() => {
-    var element = document.getElementById(scrolledTo);
-    if (element) {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-    }
-}, [ViewDiscussion]);
-
-useEffect(() => {
-  setCount(total)
-  // getInCompleteAssingment(1);
-}, [total]);
+ 
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -77,54 +67,110 @@ useEffect(() => {
   }, []);
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
-    if (!data) {
-    getInCompleteAssingment();
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
     }
-  }, []);
+}, [ViewDiscussion]);
+
+useEffect(() => {
+  console.log(total,"total in effect");
+  
+  setCount(total)
+  console.log(count);
+  
+  let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+    if (!data) {
+    getInCompleteAssingment(1);
+    }
+}, [total]);
+
+  // useEffect(() => {
+  //   let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+  //   if (!data) {
+  //   getInCompleteAssingment();
+  //   }
+  // }, []);
 
    //page counter
    const firstChunk = () => {
     setAtpage(1);
     setPage(1);
-    // getInCompleteAssingment(1);
+    getInCompleteAssingment(1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(Number(page) - 1);
-    // getInCompleteAssingment(Number(page) - 1);
+    getInCompleteAssingment(Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    // getInCompleteAssingment(Number(page) + 1);
+    getInCompleteAssingment(Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
-    // getInCompleteAssingment(defaultPage.at(-1));
+    getInCompleteAssingment(defaultPage.at(-1));
     setAtpage(totalPages);
   };
 
-  const getInCompleteAssingment = () => {
-   
+  const getInCompleteAssingment = (e) => {
+    setLoading(true);
+    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+    if (e) {
       axios
         .get(
           `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
             userid
-          )}&status=1`,
+          )}&page=${e}&status=1`,
           myConfig
         )
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
+            let data = res.data.result;
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
             setInCompleteData(res.data.result);
             setRecords(res.data.result.length);
+            const dynamicPage = Math.ceil(count / allEnd);
+            setTotalPages(dynamicPage+1)
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            }else if(e === (dynamicPage+1)){
+              setBig(rem + 1);
+              setEnd(res.data.total);
+            }else{
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < (dynamicPage+1); i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
-    
+      }
   };
 
   const columns = [

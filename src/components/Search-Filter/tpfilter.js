@@ -21,13 +21,14 @@ function TaxProfessionalFilter(props) {
     pendingForAcceptence,
     InprogressQuery,
     DeclinedQuery,
-
+    resetPaging,
     completeAssignment,
     proposal,
     AllProposal,
     InprogressProposal,
     assignment,
     AllPayment,
+    setCount,
     Unpaid,
     Paid,
     index,
@@ -45,6 +46,8 @@ function TaxProfessionalFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef(null);
+
+
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -109,7 +112,7 @@ function TaxProfessionalFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    getData();
+    getData(1);
 
     dateValue.current.clearValue();
   };
@@ -179,6 +182,7 @@ function TaxProfessionalFilter(props) {
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     if (AllQuery == "AllQuery") {
+      let customId = 1;
       if (data.route) {
         axios
           .get(
@@ -188,17 +192,27 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              setCount(res.data.result.length);
+              setRecords(res.data.result.length);
+
             }
           });
       } else {
@@ -210,16 +224,28 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                resetPaging();
               }
             }
           });
@@ -230,15 +256,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -258,9 +283,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -284,9 +309,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -306,9 +331,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -326,15 +351,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
-              data.p_status
+            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status
             }&cat_id=${data.store}&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -348,15 +372,14 @@ function TaxProfessionalFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
-              data.p_status
+            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status
             }&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -374,15 +397,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -402,9 +424,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -422,16 +444,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -451,8 +471,7 @@ function TaxProfessionalFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -471,16 +490,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -500,8 +517,7 @@ function TaxProfessionalFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -520,15 +536,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -548,10 +563,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -575,10 +589,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -598,8 +611,7 @@ function TaxProfessionalFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -624,9 +636,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -646,10 +658,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=1&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=1&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -674,9 +685,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -696,10 +707,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
