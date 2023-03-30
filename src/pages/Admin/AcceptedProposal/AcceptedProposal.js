@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -27,15 +27,22 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
-function AcceptedProposal({ acceptedProposal }) {
+function AcceptedProposal() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
   const [scrolledTo, setScrolledTo] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -47,15 +54,15 @@ function AcceptedProposal({ acceptedProposal }) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
@@ -64,36 +71,126 @@ function AcceptedProposal({ acceptedProposal }) {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [viewProposalModal]);
-
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
   useEffect(() => {
-    getAcceptedProposal();
+    let localPage = Number(localStorage.getItem("adminprot3"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getAcceptedProposal(localPage);
   }, []);
-  const getAcceptedProposal = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadproposal3"));
-    if (!data) {
+
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getAcceptedProposal(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getAcceptedProposal(page - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    getAcceptedProposal(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getAcceptedProposal(defaultPage.at(-1));
+    setAtpage(totalPages);
+  };
+
+  const getAcceptedProposal = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+
+    if (e) {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
+        .get(`${baseUrl}/admin/getProposals?status1=2&page=${e}`, myConfig)
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            setProposalDisplay(res.data.result);
-            setRecords(res.data.result.length);
+            let data = res.data.result;
+            setRecords(res.data.total);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setProposalDisplay(all);
+
+            let end = e * allEnd;
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i <= dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
   };
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/getProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+
+          setProposalDisplay(all);
+        }
+      });
+  };
 
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
 
       headerStyle: () => {
         return { width: "50px" };
@@ -103,6 +200,17 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -115,7 +223,18 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -136,16 +255,50 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
         if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
@@ -169,7 +322,17 @@ function AcceptedProposal({ acceptedProposal }) {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
@@ -182,6 +345,17 @@ function AcceptedProposal({ acceptedProposal }) {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -210,12 +384,16 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "ProposedAmount",
       text: "Proposed amount",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 8);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -228,13 +406,18 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 9);
       },
+
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
@@ -277,10 +460,7 @@ function AcceptedProposal({ acceptedProposal }) {
                 <ViewDiscussionIcon />
               </div>
               {row.statuscode > "3" || row.statuscode == "10" ? (
-                <div
-                  onClick={(e) => showProposalModal2(row)}
-                  className="ml-1"
-                >
+                <div onClick={(e) => showProposalModal2(row)} className="ml-1">
                   <EyeIcon />
                 </div>
               ) : null}
@@ -291,6 +471,10 @@ function AcceptedProposal({ acceptedProposal }) {
     },
   ];
 
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <>
       <Card>
@@ -301,11 +485,83 @@ function AcceptedProposal({ acceptedProposal }) {
             acceptedProposal="acceptedProposal"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adproposal3"
           />
         </CardHeader>
         <CardBody>
-          {/* <Records records={records} /> */}
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getAcceptedProposal(e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
+
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}

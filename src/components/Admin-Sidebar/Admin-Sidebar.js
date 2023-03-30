@@ -24,6 +24,7 @@ import PermMediaOutlinedIcon from "@mui/icons-material/PermMediaOutlined";
 import MissedVideoCallIcon from "@mui/icons-material/MissedVideoCall";
 import MediaBluetoothOffIcon from "@mui/icons-material/MediaBluetoothOff";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+
 function Sidebar({
   adminDashboard,
   cmsDashboard,
@@ -239,9 +240,7 @@ function Sidebar({
         <div className="navbar-header">
           <ul className="nav navbar-nav flex-row">
             <li className="nav-item mr-auto">
-              <a
-                className="navbar-brand"
-                href={logo}
+              <NavLink
                 style={{
                   display: "flex",
                   height: "75px",
@@ -249,6 +248,7 @@ function Sidebar({
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                to={logo}
               >
                 <img
                   className="brand-logo"
@@ -261,7 +261,7 @@ function Sidebar({
                     objectFit: "contain",
                   }}
                 />
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item d-md-none">
               <a className="nav-link close-navbar">
@@ -282,9 +282,7 @@ function Sidebar({
                 <div className="navbar-header">
                   <ul className="nav navbar-nav flex-row">
                     <li className="nav-item mr-auto">
-                      <a
-                        className="navbar-brand"
-                        href={logo}
+                      <NavLink
                         style={{
                           display: "flex",
                           height: "75px",
@@ -292,6 +290,7 @@ function Sidebar({
                           justifyContent: "center",
                           alignItems: "center",
                         }}
+                        to={logo}
                       >
                         <img
                           className="brand-logo"
@@ -304,7 +303,7 @@ function Sidebar({
                             objectFit: "contain",
                           }}
                         />
-                      </a>
+                      </NavLink>
                     </li>
                     <li className="nav-item d-md-none">
                       <a className="nav-link close-navbar">

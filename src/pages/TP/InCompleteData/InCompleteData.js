@@ -28,6 +28,7 @@ function InCompleteData({ CountIncomplete, data }) {
   const myRef = useRef([]);
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [accend, setAccend] = useState(false);
 
   const [count, setCount] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -233,8 +234,9 @@ function InCompleteData({ CountIncomplete, data }) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        console.log(order, "sort");
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -245,6 +247,18 @@ function InCompleteData({ CountIncomplete, data }) {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -266,21 +280,64 @@ function InCompleteData({ CountIncomplete, data }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
+      
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -292,6 +349,18 @@ function InCompleteData({ CountIncomplete, data }) {
     },
     {
       text: "Status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (

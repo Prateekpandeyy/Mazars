@@ -52,16 +52,16 @@ function ProposalTab() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
       console.log(key);
     }
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     // setViewProposalModal(!viewProposalModal);
@@ -86,7 +86,7 @@ function ProposalTab() {
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
-          a.setAttribute("download", "download");
+          a.setAttribute("download", "Proposal.pdf");
           a.setAttribute("target", "_blank");
           a.click();
         }
@@ -128,8 +128,14 @@ function ProposalTab() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return {

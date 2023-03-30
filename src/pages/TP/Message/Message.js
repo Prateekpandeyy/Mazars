@@ -2,86 +2,101 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import CustomHeading from "../../../components/Common/CustomHeading";
 import { Link } from "react-router-dom";
 import PaymentModal from "./PaymentModal";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-
 function Message(props) {
   const userId = window.localStorage.getItem("tpkey");
+
   const [query, setQuery] = useState([]);
-  const [data, setData] = useState(null);
-  const history = useHistory();
-  const [addPaymentModal, setPaymentModal] = useState(false);
-  const [countNotification, setCountNotification] = useState("");
-  const [totalPages, setTotalPages] = useState(1);
+  const [atPage, setAtpage] = useState(1);
+
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
-  const [page, setPage] = useState(0);
-  const [atPage, setAtpage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [sortVal, setSortVal] = useState(0);
-  const [defaultPage, setDefaultPage] = useState(["1"]);
-
+  const history = useHistory();
+  const [addPaymentModal, setPaymentModal] = useState(false);
   const token = window.localStorage.getItem("tptoken");
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(0);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myConfig = {
     headers: {
       uit: token,
     },
   };
+
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
 
-  // useEffect(() => {
-  //   getMessage();
-  // }, []);
+  const chunkSize = 24;
+
+  const sliceIntoChunks = (query, chunkSize) => {
+    const res = [];
+    for (let i = 0; i < query.length; i += chunkSize) {
+      const chunk = query.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  };
+  const divided = [];
+  divided.push(sliceIntoChunks(query, chunkSize));
 
   useEffect(() => {
     setPage(1);
-    setEnd(
-      Number(localStorage.getItem("tp_record_per_page"))
-    );
+    setEnd(50);
     getMessage(1);
   }, []);
 
-  const sortMessage = (val, field) => {
-    // console.log("sort", val, field);
-    setLoading(true);
-    axios
-      .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`, myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
+  // set intial query here
+  const getMessage = (e) => {
+    if (e) {
+      axios
+        .get(
+          `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=${e}`,
+          myConfig
+        )
+        .then((res) => {
+          let droppage = [];
+          if (res.data.code === 1) {
+            let data = res.data.result;
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = 50 * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setQuery(all);
 
-          let sortId = 1;
-          if (page > 1) {
-            sortId = big;
+            setCountNotification(res.data.total);
+            let dynamicPage = Math.round(res.data.total / 50);
+            let rem = (e - 1) * 50;
+            let end = e * 50;
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i < dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setLoading(false);
-          setQuery(all);
-          setSortVal(field);
-        }
-      });
+        });
+    }
   };
 
   //page counter
@@ -94,73 +109,22 @@ function Message(props) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(Number(page) - 1);
-    getMessage(Number(page) - 1);
+    setPage(page - 1);
+    getMessage(page - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(Number(page) + 1);
-    getMessage(Number(page) + 1);
+    setPage(page + 1);
+    getMessage(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getMessage(defaultPage.at(-1));
     setAtpage(totalPages);
   };
-
-  const getMessage = (e) => {
-    setLoading(true);
-    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-    if (e) {
-      axios
-        .get(
-          `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=${e}`
-          , myConfig)
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setQuery(all);
-            setLoading(false);
-            setCountNotification(res.data.total);
-            const dynamicPage = Math.ceil(res.data.total / allEnd);
-            setTotalPages(dynamicPage+1)
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            }else if(e === (dynamicPage+1)){
-              setBig(rem + 1);
-              setEnd(res.data.total);
-            }else{
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i < (dynamicPage+1); i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
-          }
-        });
-    }
-  };
-
+  //page counter Ends here
 
   const columns = [
     {
@@ -178,14 +142,6 @@ function Message(props) {
       text: "Date",
       dataField: "setdate",
       sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-      },
       headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
       },
@@ -196,16 +152,6 @@ function Message(props) {
       dataField: "assign_no",
       headerStyle: () => {
         return { fontSize: "12px", width: "30px" };
-      },
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -220,15 +166,6 @@ function Message(props) {
     {
       text: "Message",
       sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
       headerStyle: () => {
         return { fontSize: "12px", width: "180px" };
       },
@@ -275,8 +212,8 @@ function Message(props) {
   const readNotification = (id) => {
     axios
       .get(`${baseUrl}/tl/markReadNotification?id=${id}`, myConfig)
-      .then(function (response) { })
-      .catch((error) => { });
+      .then(function (response) {})
+      .catch((error) => {});
   };
 
   return (
@@ -285,12 +222,12 @@ function Message(props) {
         <CardHeader>
           <Row>
             <Col md="4">
-              <button class="autoWidthBtn" onClick={() => history.goBack()}>
+              <button className="autoWidthBtn" onClick={() => history.goBack()}>
                 Go Back
               </button>
             </Col>
             <Col md="8">
-              <h4>Message</h4>
+              <CustomHeading>Message</CustomHeading>
             </Col>
           </Row>
           <Row>
@@ -309,16 +246,12 @@ function Message(props) {
                       &lt; &lt;
                     </button>
 
-                    {page > 1 ? (
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        &lt;
-                      </button>
-                    ) : (
-                      ""
-                    )}
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => prevChunk()}
+                    >
+                      &lt;
+                    </button>
                     <div
                       style={{
                         display: "flex",
@@ -339,16 +272,12 @@ function Message(props) {
                         ))}
                       </select>
                     </div>
-                    {defaultPage.length > page ? (
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        &gt;
-                      </button>
-                    ) : (
-                      ""
-                    )}
+                    <button
+                      className="navButton mx-1"
+                      onClick={(e) => nextChunk()}
+                    >
+                      &gt;
+                    </button>
                     <button
                       className="navButton mx-1"
                       onClick={(e) => lastChunk()}
@@ -361,20 +290,22 @@ function Message(props) {
             </Col>
           </Row>
         </CardHeader>
-        <CardBody
-          style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
-        >
-          <DataTablepopulated
-            bgColor="#42566a"
-            keyField={"assign_no"}
-            data={query}
-            columns={columns}
-          ></DataTablepopulated>
-          <PaymentModal
-            paymentHandler={paymentHandler}
-            addPaymentModal={addPaymentModal}
-          />
-        </CardBody>
+        {page && (
+          <CardBody
+            style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
+          >
+            <DataTablepopulated
+              bgColor="#42566a"
+              keyField={"assign_no"}
+              data={query}
+              columns={columns}
+            ></DataTablepopulated>
+            <PaymentModal
+              paymentHandler={paymentHandler}
+              addPaymentModal={addPaymentModal}
+            />
+          </CardBody>
+        )}
       </Card>
     </Layout>
   );

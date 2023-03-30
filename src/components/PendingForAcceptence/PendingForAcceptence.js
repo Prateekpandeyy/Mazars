@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -28,7 +28,7 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../components/Common/MessageIcon";
-function PendingForAcceptence({ pendingProposal }) {
+function PendingForAcceptence() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [retview, setRetview] = useState(false);
@@ -36,9 +36,16 @@ function PendingForAcceptence({ pendingProposal }) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
-
   const [viewProposalModal, setViewProposalModal] = useState(false);
-  const [proposalId, setProposalId] = useState();
+  const [proposalId, setProposalId] = useState(0);
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -49,15 +56,15 @@ function PendingForAcceptence({ pendingProposal }) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
@@ -66,28 +73,123 @@ function PendingForAcceptence({ pendingProposal }) {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' }); 
+    runTo?.scrollIntoView({ block: "center" });
   }, [viewProposalModal]);
 
   useEffect(() => {
-    getPendingAcceptedProposal();
+    let localPage = Number(localStorage.getItem("adminprot2"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPendingAcceptedProposal(localPage);
   }, []);
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getPendingAcceptedProposal(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getPendingAcceptedProposal(page - 1);
+    localStorage.setItem("adminprot2", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    getPendingAcceptedProposal(page + 1);
+    localStorage.setItem("adminprot2", Number(page) + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getPendingAcceptedProposal(defaultPage.at(-1));
+    localStorage.setItem("adminprot2", defaultPage.at(-1));
+    setAtpage(totalPages);
+  };
 
-  const getPendingAcceptedProposal = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadproposal2"));
-    if (!data) {
+  const getPendingAcceptedProposal = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+
+    if (e) {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=1`, myConfig)
+        .get(`${baseUrl}/admin/getProposals?status1=1&page=${e}`, myConfig)
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            setProposalDisplay(res.data.result);
-            setRecords(res.data.result.length);
-            // pendingProposal(res.data.result.length);
+            let data = res.data.result;
+            setRecords(res.data.tota);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setProposalDisplay(all);
+
+            let end = e * allEnd;
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i <= dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
+  };
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/admin/getProposals?status1=1&orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+
+          setProposalDisplay(all);
+        }
+      });
   };
 
   const retviewProposal = (e) => {
@@ -96,12 +198,8 @@ function PendingForAcceptence({ pendingProposal }) {
   };
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
 
       headerStyle: () => {
         return { width: "50px" };
@@ -111,6 +209,17 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "created",
       text: "Date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -123,7 +232,18 @@ function PendingForAcceptence({ pendingProposal }) {
     {
       dataField: "assign_no",
       text: "Query no",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -144,16 +264,49 @@ function PendingForAcceptence({ pendingProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
         if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
@@ -177,6 +330,17 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
@@ -190,6 +354,17 @@ function PendingForAcceptence({ pendingProposal }) {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -218,13 +393,18 @@ function PendingForAcceptence({ pendingProposal }) {
     {
       dataField: "",
       text: "Proposed amount",
-      sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 7);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -242,11 +422,16 @@ function PendingForAcceptence({ pendingProposal }) {
         color: "#21a3ce",
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 8);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -291,10 +476,7 @@ function PendingForAcceptence({ pendingProposal }) {
               </div>
 
               {row.statuscode > "3" ? (
-                <div
-                  onClick={(e) => showProposalModal2(row)}
-                  className="ml-1"
-                >
+                <div onClick={(e) => showProposalModal2(row)} className="ml-1">
                   <EyeIcon />
                 </div>
               ) : null}
@@ -312,7 +494,10 @@ function PendingForAcceptence({ pendingProposal }) {
       },
     },
   ];
-
+  const resetPaging = () => {
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
   return (
     <div>
       <Card>
@@ -323,10 +508,83 @@ function PendingForAcceptence({ pendingProposal }) {
             pendingAcceptedProposal="pendingAcceptedProposal"
             setRecords={setRecords}
             records={records}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
             index="adproposal2"
           />
         </CardHeader>
         <CardBody>
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getPendingAcceptedProposal(e.target.value);
+                          localStorage.setItem("adminprot2", e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
           {/* <Records records={records} /> */}
           <DataTablepopulated
             bgColor="#42566a"
@@ -344,7 +602,7 @@ function PendingForAcceptence({ pendingProposal }) {
           <RetviewModal
             retview={retview}
             retviewProposal={retviewProposal}
-            getProposalData={getPendingAcceptedProposal}
+            getPendingAcceptedProposal={getPendingAcceptedProposal}
             assignNo={assignNo}
           />
           {/* <ShowProposal 

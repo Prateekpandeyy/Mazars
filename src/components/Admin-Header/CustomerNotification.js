@@ -59,6 +59,18 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDataadAssignment4");
       localStorage.removeItem("admincreate");
       localStorage.removeItem("admingenerated");
+      localStorage.removeItem("admin_record_per_page");
+      localStorage.removeItem("adminqp1");
+      localStorage.removeItem("adminqp2");
+      localStorage.removeItem("adminqp3");
+      localStorage.removeItem("adminqp4");
+      localStorage.removeItem("adminprot1");
+      localStorage.removeItem("adminprot2");
+      localStorage.removeItem("adminprot3");
+      localStorage.removeItem("adminprot4");
+      localStorage.removeItem("adminpayt1");
+      localStorage.removeItem("adminpayt2");
+      localStorage.removeItem("adminpayt3");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("admincategoryData");
@@ -101,6 +113,7 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDatatlAssignment4");
       localStorage.removeItem("tlcreate");
       localStorage.removeItem("tlgenerated");
+      localStorage.removeItem("tl_record_per_page");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tlcategoryData");

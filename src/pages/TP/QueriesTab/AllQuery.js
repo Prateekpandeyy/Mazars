@@ -26,6 +26,7 @@ function AllQuery(props) {
   const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
+  const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const [assignNo, setAssignNo] = useState("");
@@ -97,7 +98,6 @@ function AllQuery(props) {
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
     let remainApiPath = "";
-
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
     if (data) {
@@ -198,10 +198,6 @@ function AllQuery(props) {
     {
       text: "S.No",
       dataField: "cid",
-      // formatter: (cellContent, row, rowIndex) => {
-      //   return <div id={row.assign_no} 
-      //   ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      // },
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -212,8 +208,9 @@ function AllQuery(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        console.log(order, "sort");
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -234,7 +231,9 @@ function AllQuery(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -263,7 +262,9 @@ function AllQuery(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -275,9 +276,11 @@ function AllQuery(props) {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-      onSort: (field, order) => {
+       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -305,7 +308,9 @@ function AllQuery(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -314,10 +319,12 @@ function AllQuery(props) {
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
-        if (oldDate == null) {
+
+        if (oldDate == "0000-00-00") {
           return null;
+        } else {
+          return oldDate.toString().split("-").reverse().join("-");
         }
-        return oldDate.toString().split("-").reverse().join("-");
       },
     },
     {
@@ -325,7 +332,9 @@ function AllQuery(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;

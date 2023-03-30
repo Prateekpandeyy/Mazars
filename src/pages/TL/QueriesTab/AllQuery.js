@@ -218,7 +218,7 @@ function AllQuery({ setAllQuery }) {
 
   return (
     <>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: "#000",
           zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -226,7 +226,7 @@ function AllQuery({ setAllQuery }) {
         open={open}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
       <Card>
         <CardHeader>
           <TeamFilter
