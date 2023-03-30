@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useRef } from "react";
-import { Card, CardHeader, CardBody ,Row,Col,} from "reactstrap";
+import React, { useState, useEffect, useRef } from "react";
+import { Card, CardHeader, CardBody, Row, Col, } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ import MessageIcon, {
 
 function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
-  let total= props.data;
+  let total = props.data;
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -45,7 +45,7 @@ function AllQuery(props) {
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -61,11 +61,12 @@ function AllQuery(props) {
     );
     setAtpage(1);
     setCount(props.data)
+
   }, []);
   useEffect(() => {
     setCount(total)
     getInCompleteAssingment(1);
-  }, [total]);
+  }, [props]);
 
   //page counter
   const firstChunk = () => {
@@ -96,24 +97,23 @@ function AllQuery(props) {
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
     let remainApiPath = "";
+
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
     if (data) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${
-        data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&status=${data?.p_status}&pcat_id=${
-        data.pcatId
-      }&qno=${data?.query_no}`;
-    }else{
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}`;
+    } else {
       remainApiPath = `tl/getIncompleteQues?page=${e}`;
     }
-    if(e){
+    if (e) {
       axios
         .get(
           `${baseUrl}/${remainApiPath}`,
@@ -126,9 +126,11 @@ function AllQuery(props) {
             setRecords(res.data.result.length);
             let all = [];
             let customId = 1;
+
             if (e > 1) {
               customId = allEnd * (e - 1) + 1;
             }
+            console.log(customId);
             data.map((i) => {
               let data = {
                 ...i,
@@ -137,34 +139,34 @@ function AllQuery(props) {
               customId++;
               all.push(data);
             });
-            setInCompleteData(res.data.result);
+            setInCompleteData(all);
             setRecords(res.data.result.length);
             setCount(props.data)
 
             const dynamicPage = Math.ceil(props.data / allEnd);
-            setTotalPages(dynamicPage+1)
+            setTotalPages(dynamicPage + 1)
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
-            }else if(e === (dynamicPage+1)){
+            } else if (e === (dynamicPage + 1)) {
               setBig(rem + 1);
               setEnd(res.data.total);
-            }else{
+            } else {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < (dynamicPage+1); i++) {
+            for (let i = 1; i < (dynamicPage + 1); i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
           }
         });
-      }
     }
-  
-  
+  }
+
+
 
   const sortMessage = (val, field) => {
     axios
@@ -195,11 +197,11 @@ function AllQuery(props) {
   const columns = [
     {
       text: "S.No",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
+      dataField: "cid",
+      // formatter: (cellContent, row, rowIndex) => {
+      //   return <div id={row.assign_no} 
+      //   ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+      // },
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -210,7 +212,7 @@ function AllQuery(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        console.log("sort");
+        console.log(order, "sort");
         if (order === "asc") {
           val = 0;
         } else {
@@ -403,30 +405,28 @@ function AllQuery(props) {
     <>
       <Card>
         <CardHeader>
-        <Row>
-          <TaxProfessionalFilter
-            setData={setInCompleteData}
-            getData={getInCompleteAssingment}
-            AllQuery="AllQuery"
-            setRecords={setRecords}
-            records={records}
-            index="tpquery1"
-            atPage={atPage}
-            resetPaging={resetPaging}
-            setCount={setCount}
-          />
+          <Row>
+            <TaxProfessionalFilter
+              setData={setInCompleteData}
+              getData={getInCompleteAssingment}
+              AllQuery="AllQuery"
+              setRecords={setRecords}
+              records={records}
+              index="tpquery1"
+              resetPaging={resetPaging}
+              setCount={setCount}
+            />
           </Row>
           <Row>
-          <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span style={{ "width": "40%" }}>
                     {big}-{end} of {count}
                   </span>
                   <span className="d-flex">
                     <button
-                      className="navButton mx-1"
+                      className="navButton"
                       onClick={(e) => firstChunk()}
                     >
                       &lt; &lt;
@@ -434,7 +434,7 @@ function AllQuery(props) {
 
                     {page > 1 ? (
                       <button
-                        className="navButton mx-1"
+                        className="navButton"
                         onClick={(e) => prevChunk()}
                       >
                         &lt;
@@ -445,7 +445,7 @@ function AllQuery(props) {
                     <div
                       style={{
                         display: "flex",
-                        maxWidth: "70px",
+                        maxWidth: "75px",
                         width: "100%",
                       }}
                     >
@@ -456,15 +456,16 @@ function AllQuery(props) {
                           getInCompleteAssingment(e.target.value);
                         }}
                         className="form-control"
+                        style={{ "paddingLeft": "0px", "paddingRight": "0px" }}
                       >
                         {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
+                          <option value={i} style={{ "textAlign": "center" }}>{i}</option>
                         ))}
                       </select>
                     </div>
                     {defaultPage.length > page ? (
                       <button
-                        className="navButton mx-1"
+                        className="navButton"
                         onClick={(e) => nextChunk()}
                       >
                         &gt;
@@ -473,7 +474,7 @@ function AllQuery(props) {
                       ""
                     )}
                     <button
-                      className="navButton mx-1"
+                      className="navButton"
                       onClick={(e) => lastChunk()}
                     >
                       &gt; &gt;
@@ -483,8 +484,8 @@ function AllQuery(props) {
               </div>
             </Col>
           </Row>
-
         </CardHeader>
+
         <CardBody>
           <DataTablepopulated
             bgColor="#55425f"

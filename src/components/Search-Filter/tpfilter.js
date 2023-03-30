@@ -113,7 +113,6 @@ function TaxProfessionalFilter(props) {
     let fullDate = date;
     setToDate(fullDate);
     getData(1);
-
     dateValue.current.clearValue();
   };
   useEffect(() => {
@@ -300,6 +299,7 @@ function TaxProfessionalFilter(props) {
     }
 
     if (InprogressQuery == "InprogressQuery") {
+      let customId = 1;
       if (data.route) {
         axios
           .get(
@@ -316,10 +316,19 @@ function TaxProfessionalFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+                setData(all);
+                setCount(res.data.result.length);
                 setRecords(res.data.result.length);
-              }
             }
           });
       } else {
@@ -339,8 +348,20 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                resetPaging();
               }
             }
           });
@@ -968,11 +989,11 @@ function TaxProfessionalFilter(props) {
                   Search
                 </button>
                 <Reset />
-                <div className="form-group mx-sm-1  mb-2">
+                {/* <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
               </div>
             </form>
           </div>

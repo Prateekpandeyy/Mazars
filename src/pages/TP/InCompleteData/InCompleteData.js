@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -21,9 +21,7 @@ import MessageIcon, {
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
-  console.log(data);
-  let total=  Number(data.recordcount);
-  console.log(total,"total");
+  let total = Number(data.recordcount);
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -31,7 +29,7 @@ function InCompleteData({ CountIncomplete, data }) {
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
 
-  const [count, setCount] = useState("");
+  const [count, setCount] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
@@ -49,7 +47,7 @@ function InCompleteData({ CountIncomplete, data }) {
     }
   };
 
- 
+
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -67,25 +65,26 @@ function InCompleteData({ CountIncomplete, data }) {
   }, []);
 
   useEffect(() => {
+    setCount(total)
+  }, [total]);
+
+
+  useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
       let runTo = myRef.current[scrolledTo]
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
-useEffect(() => {
-  console.log(total,"total in effect");
-  
-  setCount(total)
-  console.log(count);
-  
-  let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+  useEffect(() => {
+    setCount(total)
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     if (!data) {
-    getInCompleteAssingment(1);
+      getInCompleteAssingment(1);
     }
-}, [total]);
+  }, [total]);
 
   // useEffect(() => {
   //   let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
@@ -94,8 +93,8 @@ useEffect(() => {
   //   }
   // }, []);
 
-   //page counter
-   const firstChunk = () => {
+  //page counter
+  const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getInCompleteAssingment(1);
@@ -121,14 +120,30 @@ useEffect(() => {
   };
 
   const getInCompleteAssingment = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+    let remainApiPath = "";
+    setLoading(true);
+    if (data) {
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=1&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}`;
+    } else {
+      remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
+        userid
+      )}&page=${e}&status=1`;
+    }
     if (e) {
       axios
         .get(
-          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
-            userid
-          )}&page=${e}&status=1`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
@@ -148,29 +163,56 @@ useEffect(() => {
               customId++;
               all.push(data);
             });
-            setInCompleteData(res.data.result);
+            setInCompleteData(all);
             setRecords(res.data.result.length);
-            const dynamicPage = Math.ceil(count / allEnd);
-            setTotalPages(dynamicPage+1)
+            console.log(count);
+            const dynamicPage = Math.ceil(total / allEnd);
+            setTotalPages(dynamicPage + 1)
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
-            }else if(e === (dynamicPage+1)){
+            } else if (e === (dynamicPage + 1)) {
               setBig(rem + 1);
               setEnd(res.data.total);
-            }else{
+            } else {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < (dynamicPage+1); i++) {
+            for (let i = 1; i < (dynamicPage + 1); i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
           }
         });
-      }
+    }
+  };
+
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/tl/getIncompleteQues?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setInCompleteData(all);
+        }
+      });
   };
 
   const columns = [
@@ -189,6 +231,16 @@ useEffect(() => {
       text: "Query date",
       dataField: "created",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        console.log(order, "sort");
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
     },
     {
       text: "Query no",
@@ -303,22 +355,30 @@ useEffect(() => {
     },
   ];
 
+  const resetPaging = () => {
+    console.log("reset");
+    setPage(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
+
   return (
     <>
       <Card>
         <CardHeader>
-        <Row>
-          <TaxProfessionalFilter
-            setData={setInCompleteData}
-            getData={getInCompleteAssingment}
-            InprogressQuery="InprogressQuery"
-            setRecords={setRecords}
-            records={records}
-            index="tpquery3"
-          />
+          <Row>
+            <TaxProfessionalFilter
+              setData={setInCompleteData}
+              getData={getInCompleteAssingment}
+              InprogressQuery="InprogressQuery"
+              setRecords={setRecords}
+              records={records}
+              index="tpquery3"
+              resetPaging={resetPaging}
+              setCount={setCount}
+            />
           </Row>
           <Row>
-          <Col md="6"></Col>
+            <Col md="6"></Col>
             <Col md="6" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
