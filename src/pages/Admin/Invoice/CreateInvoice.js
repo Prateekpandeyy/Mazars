@@ -66,61 +66,73 @@ const CreateInvoice = () => {
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
 
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`admincreate`));
+    if (searchData) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}`;
+    }
     if (e) {
-      axios
-        .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0&page=${e}`, myConfig)
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.total);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setProposal(all);
-
-            let end = e * allEnd;
-            setCountNotification(res.data.total);
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.payment_detail;
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposal(all);
+
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
-      },
+      dataField: "cid",
 
       headerStyle: () => {
         return { width: "50px" };
@@ -191,7 +203,7 @@ const CreateInvoice = () => {
     setAtpage(1);
     setPage(1);
     getProposalList(1);
-    localStorage.setItem("adminprot4", 1);
+    localStorage.setItem("admininvt1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -199,21 +211,21 @@ const CreateInvoice = () => {
     }
     setPage(Number(page) - 1);
     getProposalList(page - 1);
-    localStorage.setItem("adminprot4", Number(page) - 1);
+    localStorage.setItem("admininvt1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("adminprot4", Number(page) + 1);
+    localStorage.setItem("admininvt1", Number(page) + 1);
     getProposalList(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getProposalList(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("adminprot4", defaultPage.at(-1));
+    localStorage.setItem("admininvt1", defaultPage.at(-1));
   };
   return (
     <>
@@ -226,6 +238,7 @@ const CreateInvoice = () => {
             records={records}
             invoice="admincreate"
             userid={JSON.parse(userid)}
+            resetPaging={resetPaging}
           />
           <Row>
             <Col md="6"></Col>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
@@ -23,6 +23,15 @@ const Generated = () => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [copy, setCopy] = useState(0);
+
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [accend, setAccend] = useState(false);
   const [copiedHere, setCopiedHere] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
@@ -48,21 +57,77 @@ const Generated = () => {
   };
 
   useEffect(() => {
-    getProposalList();
+    let localPage = Number(localStorage.getItem("admininvt2"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getProposalList(localPage);
   }, []);
 
-  const getProposalList = () => {
-    let data = JSON.parse(localStorage.getItem("admingenerated"));
-    if (!data) {
-      axios
-        .get(`${baseUrl}/admin/getPaymentDetail?&invoice=1`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setProposal(res.data.payment_detail);
-            setRecords(res.data.payment_detail.length);
-          }
-        });
+  const getProposalList = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
+    if (searchData) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}`;
     }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let droppage = [];
+      if (res.data.code === 1) {
+        let data = res.data.payment_detail;
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
+        }
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposal(all);
+
+        let end = e * allEnd;
+        setCountNotification(res.data.total);
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
   const downloadpdf = (qno, id, installmentNumber) => {
     const myConfig2 = {
@@ -80,7 +145,7 @@ const Generated = () => {
         if (res.status === 200) {
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
-          var a = document.createElement("a");
+          var a = document?.createElement("a");
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
@@ -94,11 +159,7 @@ const Generated = () => {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id} 
-        ref={el => (myRefs.current[row.id] = el)}>{rowIndex + 1}</div>;
-      },
+      dataField: "cid",
 
       headerStyle: () => {
         return { width: "50px" };
@@ -252,7 +313,7 @@ const Generated = () => {
                     ) : (
                       <FileCopyIcon
                         id={row.id}
-                        ref={el => (myRefs.current[row.id] = el)}
+                        ref={(el) => (myRefs.current[row.id] = el)}
                         onClick={() => {
                           copyFun(row.paymenturl, row.id);
                         }}
@@ -272,21 +333,53 @@ const Generated = () => {
       },
     },
   ];
-
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getProposalList(1);
+    localStorage.setItem("admininvt2", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getProposalList(page - 1);
+    localStorage.setItem("admininvt2", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("admininvt2", Number(page) + 1);
+    getProposalList(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getProposalList(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("admininvt2", defaultPage.at(-1));
+  };
   const noPointer = { cursor: "pointer", color: "blue" };
   const copyFun = (e, id) => {
     setCopy(id);
-    setCopiedHere(!copiedHere)
+    setCopiedHere(!copiedHere);
     console.log(id);
-    setJumpTo(id)
+    setJumpTo(id);
     navigator.clipboard.writeText(e);
   };
 
   useEffect(() => {
-    let runTo = myRefs.current[jumpTo]
+    let runTo = myRefs.current[jumpTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [copiedHere]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [copiedHere]);
 
   rowStyle2 = (row, index) => {
     const style = {};
@@ -330,11 +423,83 @@ const Generated = () => {
             invoice="admingenerated"
             setRec={setRecords}
             records={records}
+            resetPaging={resetPaging}
             userid={JSON.parse(userid)}
           />
         </CardHeader>
 
         <CardBody>
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getProposalList(Number(e.target.value));
+                          localStorage.setItem("admininvt2", e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
           <DataTablepopulated
             bgColor="#42566a"
             keyField="id"
