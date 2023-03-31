@@ -425,6 +425,7 @@ const Generated = () => {
             records={records}
             resetPaging={resetPaging}
             userid={JSON.parse(userid)}
+            setCountNotification={setCountNotification}
           />
         </CardHeader>
 

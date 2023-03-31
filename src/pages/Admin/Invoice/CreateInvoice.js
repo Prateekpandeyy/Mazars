@@ -239,6 +239,7 @@ const CreateInvoice = () => {
             invoice="admincreate"
             userid={JSON.parse(userid)}
             resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
           />
           <Row>
             <Col md="6"></Col>

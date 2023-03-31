@@ -92,6 +92,8 @@ const InvoiceFilter = (props) => {
       });
     } else if (props.invoice == "admingenerated") {
       const token = window.localStorage.getItem("adminToken");
+
+      let customId = 1;
       axios({
         method: "POST",
         url: `${baseUrl}/admin/getPaymentDetail?&invoice=1`,
@@ -101,12 +103,26 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
+          let all = [];
+          let data = res.data.payment_detail;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          props.setData(all);
+          props.setCountNotification(res.data.total);
+          props.setRecords(res.data.total);
+          props.resetPaging();
           props.setRec(res.data.payment_detail.length);
         }
       });
     } else if (props.invoice == "admincreate") {
       const token = window.localStorage.getItem("adminToken");
+      let customId = 1;
       axios({
         method: "POST",
         url: `${baseUrl}/admin/getPaymentDetail?&invoice=0`,
@@ -116,8 +132,20 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
+          let all = [];
+          let data = res.data.payment_detail;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          props.setData(all);
+          props.setCountNotification(res.data.total);
+          props.setRecords(res.data.total);
+          props.resetPaging();
         }
       });
     }
