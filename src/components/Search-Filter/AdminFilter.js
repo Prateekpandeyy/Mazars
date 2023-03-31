@@ -175,6 +175,7 @@ function AdminFilter(props) {
               setData(all);
               setCountNotification(res.data.total);
               setRecords(res.data.total);
+              resetPaging();
             }
           });
       } else {
@@ -459,6 +460,7 @@ function AdminFilter(props) {
               setData(all);
               setCountNotification(res.data.total);
               setRecords(res.data.total);
+              resetPaging();
             }
           });
       } else {
@@ -491,6 +493,7 @@ function AdminFilter(props) {
               setData(all);
               setCountNotification(res.data.total);
               setRecords(res.data.total);
+              resetPaging();
             }
           });
       }
@@ -527,6 +530,7 @@ function AdminFilter(props) {
                 setData(all);
                 setCountNotification(res.data.total);
                 setRecords(res.data.total);
+                resetPaging();
               }
             });
         } else {
@@ -551,6 +555,7 @@ function AdminFilter(props) {
                 setData(all);
                 setCountNotification(res.data.total);
                 setRecords(res.data.total);
+                resetPaging();
               }
             });
         }
@@ -571,10 +576,21 @@ function AdminFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                let customId = 1;
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             });
         } else {
@@ -585,10 +601,21 @@ function AdminFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                let customId = 1;
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
               }
             });
         }
@@ -625,6 +652,7 @@ function AdminFilter(props) {
               setData(all);
               setCountNotification(res.data.total);
               setRecords(res.data.total);
+              resetPaging();
             }
           });
       } else {
@@ -655,6 +683,7 @@ function AdminFilter(props) {
               setData(all);
               setCountNotification(res.data.total);
               setRecords(res.data.total);
+              resetPaging();
             }
           });
       }

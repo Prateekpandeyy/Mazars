@@ -346,6 +346,7 @@ function PendingForProposals(props) {
     },
   ];
   const resetPaging = () => {
+    setBig(1);
     setPage(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
