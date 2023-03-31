@@ -326,9 +326,9 @@ function TaxProfessionalFilter(props) {
                 customId++;
                 all.push(data);
               });
-                setData(all);
-                setCount(res.data.result.length);
-                setRecords(res.data.result.length);
+              setData(all);
+              setCount(res.data.result.length);
+              setRecords(res.data.result.length);
             }
           });
       } else {

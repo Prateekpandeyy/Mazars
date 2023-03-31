@@ -136,7 +136,7 @@ const history = useHistory();
               customId++;
               all.push(data);
             });
-          setFeedBackData(res.data.result);
+          setFeedBackData(all);
           setLoading(false);
           setCountFeedBack(res.data.total);
           const dynamicPage = Math.ceil(res.data.total / allEnd);
@@ -168,11 +168,7 @@ const history = useHistory();
     {
       text: "S.No",
       dataField: "cid",
-      formatter: (cellContent, row, rowIndex) => {
-        // return row.cid;
-        return rowIndex + 1;
-        // return rowIndex + (1 * ((atPage - 1) * (Number(localStorage.getItem("tp_record_per_page"))))) + 1;
-      },
+      
       headerStyle: () => {
         return {width: "10px" };
       },
@@ -180,9 +176,18 @@ const history = useHistory();
     {
       text: "Date",
       dataField: "created",
-      // sort: true,
+      sort: true,
       headerStyle: () => {
         return {  width: "60px" };
+      },
+      onSort: (field, order) => {
+        let val = 0;
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortFeedback(val, 1);
       },
      
     },

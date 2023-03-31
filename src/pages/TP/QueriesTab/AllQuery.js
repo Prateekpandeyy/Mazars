@@ -54,19 +54,31 @@ function AllQuery(props) {
       uit: token,
     },
   };
-
+  let pageno = JSON.parse(localStorage.getItem("tpallQueryPageno"));
+  console.log(pageno);
+  
   useEffect(() => {
+    if(pageno){
+    setPage(pageno);
+    setAtpage(pageno);
+    }else{
     setPage(1);
+    setAtpage(1);
+    }
     setEnd(
       Number(localStorage.getItem("tp_record_per_page"))
     );
-    setAtpage(1);
+    
     setCount(props.data)
 
   }, []);
   useEffect(() => {
     setCount(total)
+    if(pageno){
+      getInCompleteAssingment(pageno);
+    }else{
     getInCompleteAssingment(1);
+    }
   }, [props]);
 
   //page counter
@@ -97,6 +109,7 @@ function AllQuery(props) {
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+    localStorage.setItem(`tpallQueryPageno`, JSON.stringify(e));
     let remainApiPath = "";
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
@@ -130,7 +143,6 @@ function AllQuery(props) {
             if (e > 1) {
               customId = allEnd * (e - 1) + 1;
             }
-            console.log(customId);
             data.map((i) => {
               let data = {
                 ...i,
@@ -150,7 +162,7 @@ function AllQuery(props) {
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
-            } else if (e === (dynamicPage + 1)) {
+            } else if (e === (dynamicPage)) {
               setBig(rem + 1);
               setEnd(res.data.total);
             } else {
