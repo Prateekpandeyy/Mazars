@@ -388,7 +388,7 @@ function AllQueriesData() {
   ];
   const resetPaging = () => {
     setPage(1);
-
+    setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
 
@@ -448,8 +448,8 @@ function AllQueriesData() {
                         <select
                           value={page}
                           onChange={(e) => {
-                            setPage(e.target.value);
-                            getAllQueriesData(e.target.value);
+                            setPage(Number(e.target.value));
+                            getAllQueriesData(Number(e.target.value));
                             localStorage.setItem("adminqp1", e.target.value);
                           }}
                           className="form-control"

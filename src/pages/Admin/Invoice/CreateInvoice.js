@@ -23,6 +23,14 @@ const CreateInvoice = () => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [records, setRecords] = useState([]);
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -46,16 +54,61 @@ const CreateInvoice = () => {
   useEffect(() => {
     getProposalList();
   }, []);
+  useEffect(() => {
+    let localPage = Number(localStorage.getItem("admininvt1"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getProposalList(localPage);
+  }, []);
+  const getProposalList = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
 
-  const getProposalList = () => {
-    let data = JSON.parse(localStorage.getItem("admincreate"));
-    if (!data) {
+    if (e) {
       axios
-        .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0`, myConfig)
+        .get(`${baseUrl}/admin/getPaymentDetail?status=6&page=${e}`, myConfig)
         .then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            setProposal(res.data.payment_detail);
-            setRecords(res.data.payment_detail.length);
+            let data = res.data.result;
+            setRecords(res.data.total);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setProposal(all);
+
+            let end = e * allEnd;
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i <= dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
     }
@@ -129,7 +182,39 @@ const CreateInvoice = () => {
       },
     },
   ];
-
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  };
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getProposalList(1);
+    localStorage.setItem("adminprot4", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getProposalList(page - 1);
+    localStorage.setItem("adminprot4", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("adminprot4", Number(page) + 1);
+    getProposalList(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getProposalList(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("adminprot4", defaultPage.at(-1));
+  };
   return (
     <>
       <Card>
@@ -142,6 +227,77 @@ const CreateInvoice = () => {
             invoice="admincreate"
             userid={JSON.parse(userid)}
           />
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          &lt; &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "70px",
+                        width: "100%",
+                      }}
+                    >
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getProposalList(Number(e.target.value));
+                          localStorage.setItem("admininvt1", e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          &gt; &gt;
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>
