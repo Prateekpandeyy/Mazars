@@ -115,53 +115,67 @@ function AllProposalComponent() {
 
   const getProposalData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal1`));
+    if (searchData) {
+      remainApiPath = `/admin/getProposals?page=${e}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getProposals?page=${e}`;
+    }
     if (e) {
-      axios
-        .get(`${baseUrl}/admin/getProposals?page=${e}`, myConfig)
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setProposalDisplay(all);
-
-            setCountNotification(res.data.total);
-            let end = e * allEnd;
-            setCountNotification(res.data.total);
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+
+          setCountNotification(res.data.total);
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
   const sortMessage = (val, field) => {

@@ -68,7 +68,7 @@ const CreateInvoice = () => {
 
     if (e) {
       axios
-        .get(`${baseUrl}/admin/getPaymentDetail?status=6&page=${e}`, myConfig)
+        .get(`${baseUrl}/admin/getPaymentDetail?&invoice=0&page=${e}`, myConfig)
         .then((res) => {
           let droppage = [];
           if (res.data.code === 1) {
