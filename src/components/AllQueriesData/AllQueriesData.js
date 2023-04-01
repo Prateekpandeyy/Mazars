@@ -10,6 +10,10 @@ import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function AllQueriesData() {
   const [allQueriesData, setAllQueriesData] = useState([]);
@@ -162,6 +166,7 @@ function AllQueriesData() {
         }
       });
   };
+
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -390,6 +395,7 @@ function AllQueriesData() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminqp1");
   };
 
   return (
@@ -402,8 +408,12 @@ function AllQueriesData() {
             allQueries="allQueries"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adquery1"
           />
         </CardHeader>
@@ -412,39 +422,32 @@ function AllQueriesData() {
           {/* <Records records={records} /> */}
           <CardHeader>
             <Row>
-              <Col md="6"></Col>
-              <Col md="6" align="right">
+              <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
+                    <span className="customPaginationSpan">
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
                       {page > 1 ? (
                         <>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => firstChunk()}
                           >
-                            &lt; &lt;
+                            <KeyboardDoubleArrowLeftIcon />
                           </button>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => prevChunk()}
                           >
-                            &lt;
+                            <KeyboardArrowLeftIcon />
                           </button>
                         </>
                       ) : (
                         ""
                       )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
@@ -454,24 +457,24 @@ function AllQueriesData() {
                           }}
                           className="form-control"
                         >
-                          {defaultPage.map((i) => (
+                          {defaultPage?.map((i) => (
                             <option value={i}>{i}</option>
                           ))}
                         </select>
                       </div>
-                      {defaultPage.length > page ? (
+                      {defaultPage?.length > page ? (
                         <>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => nextChunk()}
                           >
-                            &gt;
+                            <KeyboardArrowRightIcon />
                           </button>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => lastChunk()}
                           >
-                            &gt; &gt;
+                            <KeyboardDoubleArrowRightIcon />
                           </button>
                         </>
                       ) : (

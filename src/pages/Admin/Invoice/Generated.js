@@ -24,7 +24,7 @@ const Generated = () => {
   const [gstNo, setGstinNo] = useState();
   const [copy, setCopy] = useState(0);
 
-  const [countNotification, setCountNotification] = useState("");
+  const [countNotification, setCountNotification] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
@@ -71,18 +71,26 @@ const Generated = () => {
 
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
-    if (searchData) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&cat_id=${
-        searchData.store
-      }&from=${searchData.fromDate
+
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.p_dateFrom ||
+      searchData?.p_dateTo ||
+      searchData?.query_no
+    ) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&cquery_no=${
+        searchData.query_no
+      }
+      }&from=${searchData.p_dateFrom
         ?.split("-")
         .reverse()
-        .join("-")}&to=${searchData.toDate
+        .join("-")}&to=${searchData.p_dateTo
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status=${searchData.opt}&installment_no=${
+        searchData?.installment_no
+      }`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}`;
     }
@@ -423,9 +431,13 @@ const Generated = () => {
             invoice="admingenerated"
             setRec={setRecords}
             records={records}
-            resetPaging={resetPaging}
             userid={JSON.parse(userid)}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
           />
         </CardHeader>
 

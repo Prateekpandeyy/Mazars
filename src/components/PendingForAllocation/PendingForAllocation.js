@@ -12,6 +12,10 @@ import {
   DeleteIcon,
   DiscussProposal,
 } from "../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function PendingAllocation(props) {
   const myRef = useRef([]);
@@ -109,17 +113,15 @@ function PendingAllocation(props) {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
     if (searchData) {
-      remainApiPath = `/admin/pendingAllocation?page=${e}&cat_id=${
+      remainApiPath = `/admin/pendingAllocation?page=${e}&category=${
         searchData.store
-      }&from=${searchData.fromDate
+      }&date1=${searchData.fromDate
         ?.split("-")
         .reverse()
-        .join("-")}&to=${searchData.toDate
+        .join("-")}&date2=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
       remainApiPath = `admin/pendingAllocation?page=${e}`;
     }
@@ -384,6 +386,7 @@ function PendingAllocation(props) {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminqp2");
   };
   return (
     <>
@@ -395,19 +398,22 @@ function PendingAllocation(props) {
             pendingAlloation="pendingAlloation"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adquery2"
           />
         </CardHeader>
         <CardBody className="card-body">
           <CardHeader>
             <Row>
-              <Col md="6"></Col>
-              <Col md="6" align="right">
+              <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
+                    <span className="customPaginationSpan">
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
@@ -417,25 +423,19 @@ function PendingAllocation(props) {
                             className="navButton mx-1"
                             onClick={(e) => firstChunk()}
                           >
-                            &lt; &lt;
+                            <KeyboardDoubleArrowLeftIcon />
                           </button>
                           <button
                             className="navButton mx-1"
                             onClick={(e) => prevChunk()}
                           >
-                            &lt;
+                            <KeyboardArrowLeftIcon />
                           </button>
                         </>
                       ) : (
                         ""
                       )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
@@ -456,13 +456,13 @@ function PendingAllocation(props) {
                             className="navButton mx-1"
                             onClick={(e) => nextChunk()}
                           >
-                            &gt;
+                            <KeyboardArrowRightIcon />
                           </button>
                           <button
                             className="navButton mx-1"
                             onClick={(e) => lastChunk()}
                           >
-                            &gt; &gt;
+                            <KeyboardDoubleArrowRightIcon />
                           </button>
                         </>
                       ) : (

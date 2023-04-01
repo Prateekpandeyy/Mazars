@@ -79,7 +79,7 @@ function DeclinedProposal() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal4`));
     if (searchData) {
-      remainApiPath = `/getProposals?status1=6&page=${e}&cat_id=${
+      remainApiPath = `/getProposals?status=6&page=${e}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -91,7 +91,7 @@ function DeclinedProposal() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `getProposals?status1=6&page=${e}`;
+      remainApiPath = `getProposals?status=6&page=${e}`;
     }
 
     if (e) {
@@ -529,11 +529,10 @@ function DeclinedProposal() {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
@@ -555,13 +554,7 @@ function DeclinedProposal() {
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {

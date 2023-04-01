@@ -9,6 +9,10 @@ import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import { ViewDiscussionIcon } from "../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function DeclinedQueries() {
   const [pendingData, setPendingData] = useState([]);
@@ -32,13 +36,13 @@ function DeclinedQueries() {
     },
   };
   useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery4`));
-    if (!searchData) {
-      getPendingForPayment(1);
+    let localPage = Number(localStorage.getItem("adminqp4"));
+    if (!localPage) {
+      localPage = 1;
     }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPendingForPayment(localPage);
   }, []);
   const firstChunk = () => {
     setAtpage(1);
@@ -329,6 +333,7 @@ function DeclinedQueries() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminqp4");
   };
 
   return (
@@ -341,19 +346,22 @@ function DeclinedQueries() {
             declinedQueries="declinedQueries"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adquery4"
           />
         </CardHeader>
         <CardBody>
           <CardHeader>
             <Row>
-              <Col md="6"></Col>
-              <Col md="6" align="right">
+              <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
+                    <span className="customPaginationSpan">
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
@@ -361,28 +369,25 @@ function DeclinedQueries() {
                         className="navButton mx-1"
                         onClick={(e) => firstChunk()}
                       >
-                        &lt; &lt;
+                        <KeyboardDoubleArrowLeftIcon />
                       </button>
 
                       <button
                         className="navButton mx-1"
                         onClick={(e) => prevChunk()}
                       >
-                        &lt;
+                        <KeyboardArrowLeftIcon />
                       </button>
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
-                            setPage(e.target.value);
-                            getPendingForPayment(e.target.value);
-                            localStorage.setItem("adminqp4", e.target.value);
+                            setPage(Number(e.target.value));
+                            getPendingForPayment(Number(e.target.value));
+                            localStorage.setItem(
+                              "adminqp4",
+                              Number(e.target.value)
+                            );
                           }}
                           className="form-control"
                         >
@@ -395,13 +400,13 @@ function DeclinedQueries() {
                         className="navButton mx-1"
                         onClick={(e) => nextChunk()}
                       >
-                        &gt;
+                        <KeyboardArrowRightIcon />
                       </button>
                       <button
                         className="navButton mx-1"
                         onClick={(e) => lastChunk()}
                       >
-                        &gt; &gt;
+                        <KeyboardDoubleArrowRightIcon />
                       </button>
                     </span>
                   </div>

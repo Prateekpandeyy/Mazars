@@ -22,6 +22,10 @@ import { Select } from "antd";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
 import Records from "../../components/Records/Records";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function PendingForProposals(props) {
   const { handleSubmit, register, errors, reset } = useForm();
@@ -122,7 +126,7 @@ function PendingForProposals(props) {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
     if (searchData) {
-      remainApiPath = `/admin/pendingProposal?page=${e}&cat_id=${
+      remainApiPath = `/admin/pendingProposal?page=${e}&category=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -363,6 +367,7 @@ function PendingForProposals(props) {
     setBig(1);
     setPage(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminqp3");
   };
   return (
     <>
@@ -374,19 +379,22 @@ function PendingForProposals(props) {
             pendingForProposal="pendingForProposal"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adquery3"
           />
         </CardHeader>
         <CardBody>
           <CardHeader>
             <Row>
-              <Col md="6"></Col>
-              <Col md="6" align="right">
+              <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
+                    <span className="customPaginationSpan">
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
@@ -394,28 +402,25 @@ function PendingForProposals(props) {
                         className="navButton mx-1"
                         onClick={(e) => firstChunk()}
                       >
-                        &lt; &lt;
+                        <KeyboardDoubleArrowLeftIcon />
                       </button>
 
                       <button
                         className="navButton mx-1"
                         onClick={(e) => prevChunk()}
                       >
-                        &lt;
+                        <KeyboardArrowLeftIcon />
                       </button>
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
-                            setPage(e.target.value);
-                            getPendingForProposals(e.target.value);
-                            localStorage.setItem("adminqp3", e.target.value);
+                            setPage(Number(e.target.value));
+                            getPendingForProposals(Number(e.target.value));
+                            localStorage.setItem(
+                              "adminqp3",
+                              Number(e.target.value)
+                            );
                           }}
                           className="form-control"
                         >
@@ -428,13 +433,13 @@ function PendingForProposals(props) {
                         className="navButton mx-1"
                         onClick={(e) => nextChunk()}
                       >
-                        &gt;
+                        <KeyboardArrowRightIcon />
                       </button>
                       <button
                         className="navButton mx-1"
                         onClick={(e) => lastChunk()}
                       >
-                        &gt; &gt;
+                        <KeyboardDoubleArrowRightIcon />
                       </button>
                     </span>
                   </div>

@@ -68,18 +68,26 @@ const CreateInvoice = () => {
 
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`admincreate`));
-    if (searchData) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&cat_id=${
-        searchData.store
-      }&from=${searchData.fromDate
+
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.p_dateFrom ||
+      searchData?.p_dateTo ||
+      searchData?.query_no
+    ) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&cquery_no=${
+        searchData.query_no
+      }
+      }&from=${searchData.p_dateFrom
         ?.split("-")
         .reverse()
-        .join("-")}&to=${searchData.toDate
+        .join("-")}&to=${searchData.p_dateTo
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status=${searchData.opt}&installment_no=${
+        searchData?.installment_no
+      }`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}`;
     }
@@ -238,8 +246,12 @@ const CreateInvoice = () => {
             records={records}
             invoice="admincreate"
             userid={JSON.parse(userid)}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
           />
           <Row>
             <Col md="6"></Col>

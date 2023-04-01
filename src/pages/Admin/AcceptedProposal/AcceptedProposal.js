@@ -508,11 +508,10 @@ function AcceptedProposal() {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
@@ -534,13 +533,7 @@ function AcceptedProposal() {
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {

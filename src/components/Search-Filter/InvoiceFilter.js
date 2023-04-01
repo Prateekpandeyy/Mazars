@@ -102,23 +102,24 @@ const InvoiceFilter = (props) => {
         },
         data: formData,
       }).then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let data = res.data.payment_detail;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          props.setData(all);
-          props.setCountNotification(res.data.total);
-          props.setRecords(res.data.total);
-          props.resetPaging();
-          props.setRec(res.data.payment_detail.length);
-        }
+        updateResult(res);
+        // if (res.data.code === 1) {
+        //   let all = [];
+        //   let data = res.data.payment_detail;
+        //   data.map((i) => {
+        //     let data = {
+        //       ...i,
+        //       cid: customId,
+        //     };
+        //     customId++;
+        //     all.push(data);
+        //   });
+        //   props.setData(all);
+        //   props.setCountNotification(res.data.total);
+        //   props.setRecords(res.data.total);
+        //   props.resetPaging();
+        //   props.setRec(res.data.payment_detail.length);
+        // }
       });
     } else if (props.invoice == "admincreate") {
       const token = window.localStorage.getItem("adminToken");
@@ -131,22 +132,7 @@ const InvoiceFilter = (props) => {
         },
         data: formData,
       }).then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let data = res.data.payment_detail;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          props.setData(all);
-          props.setCountNotification(res.data.total);
-          props.setRecords(res.data.total);
-          props.resetPaging();
-        }
+        updateResult(res);
       });
     }
   };
@@ -157,11 +143,58 @@ const InvoiceFilter = (props) => {
     setFromDate("");
     setToDate("");
     setStatus("");
-
+    props.resetPaging();
     localStorage.removeItem(props.invoice);
     props.getData();
   };
+  const updateResult = (res) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
 
+    let returnData = JSON.parse(localStorage.getItem(`${props.invoice}`));
+    let droppage = [];
+    let customId = 1;
+    if (res.data.code === 1) {
+      let all = [];
+      let data = res.data.payment_detail;
+      props.setCountNotification(res.data.total);
+      data.map((i) => {
+        let data = {
+          ...i,
+          cid: customId,
+        };
+        customId++;
+        all.push(data);
+      });
+      let end = props.page * allEnd;
+
+      if (end > res.data.total) {
+        end = res.data.total;
+      }
+      let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+      let rem = (props.page - 1) * allEnd;
+
+      if (props.page === 1) {
+        props.setBig(rem + props.page);
+        props.setEnd(end);
+      } else {
+        props.setBig(rem + 1);
+        props.setEnd(end);
+      }
+      for (let i = 1; i <= dynamicPage; i++) {
+        droppage.push(i);
+      }
+
+      props.setDefaultPage(droppage);
+      props.setData(all);
+
+      props.setRec(res.data.total);
+      console.log(returnData);
+      if (returnData === null) {
+        props.resetPaging();
+      }
+    }
+  };
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -259,11 +292,11 @@ const InvoiceFilter = (props) => {
               Reset
             </button>
           </div>
-          <div className="col-md-3">
+          {/* <div className="col-md-3">
             <label className="form-select form-control">
               Total records : {props.records}
             </label>
-          </div>
+          </div> */}
         </div>
       </form>
       {/* <form onSubmit={handleSubmit(onSubmit)}> 
