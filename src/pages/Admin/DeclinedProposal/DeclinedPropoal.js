@@ -16,6 +16,11 @@ import MessageIcon, {
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 function DeclinedProposal() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -79,7 +84,7 @@ function DeclinedProposal() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal4`));
     if (searchData) {
-      remainApiPath = `/getProposals?status=6&page=${e}&cat_id=${
+      remainApiPath = `admin/getProposals?status=6&page=${e}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -91,7 +96,7 @@ function DeclinedProposal() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `getProposals?status=6&page=${e}`;
+      remainApiPath = `/admin/getProposals?status=6&page=${e}`;
     }
 
     if (e) {
@@ -522,8 +527,12 @@ function DeclinedProposal() {
             declinedProposal="declinedProposal"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adproposal4"
           />
         </CardHeader>
@@ -539,16 +548,16 @@ function DeclinedProposal() {
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
@@ -572,16 +581,16 @@ function DeclinedProposal() {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (
