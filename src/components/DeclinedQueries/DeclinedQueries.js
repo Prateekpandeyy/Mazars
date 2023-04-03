@@ -148,9 +148,7 @@ function DeclinedQueries() {
           setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -335,7 +333,7 @@ function DeclinedQueries() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
     localStorage.removeItem("adminqp4");
   };
 
@@ -368,19 +366,25 @@ function DeclinedQueries() {
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => firstChunk()}
-                      >
-                        <KeyboardDoubleArrowLeftIcon />
-                      </button>
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
 
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        <KeyboardArrowLeftIcon />
-                      </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                       <div className="navButtonSelectDiv">
                         <select
                           value={page}
@@ -399,18 +403,24 @@ function DeclinedQueries() {
                           ))}
                         </select>
                       </div>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        <KeyboardArrowRightIcon />
-                      </button>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => lastChunk()}
-                      >
-                        <KeyboardDoubleArrowRightIcon />
-                      </button>
+                      {defaultPage?.length > page ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>

@@ -102,6 +102,7 @@ function AdminFilter(props) {
   //reset date
   const resetData = () => {
     localStorage.removeItem(`searchData${index}`);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
     reset();
     setSelectedData([]);
     setShowSubCat([]);
@@ -135,19 +136,19 @@ function AdminFilter(props) {
       });
       let end = page * allEnd;
 
-      if (end > res.data.total) {
+      if (allEnd > res.data.total) {
         end = res.data.total;
       }
+      console.log("myValue", end);
+      setEnd(end);
       let dynamicPage = Math.ceil(res.data.total / allEnd);
 
       let rem = (page - 1) * allEnd;
       console.log("page", page);
       if (page === 1) {
         setBig(rem + page);
-        setEnd(end);
       } else {
         setBig(rem + 1);
-        setEnd(end);
       }
       for (let i = 1; i <= dynamicPage; i++) {
         droppage.push(i);

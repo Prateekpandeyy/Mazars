@@ -369,7 +369,7 @@ function PendingForProposals(props) {
   const resetPaging = () => {
     setBig(1);
     setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
     localStorage.removeItem("adminqp3");
   };
   return (
@@ -401,19 +401,24 @@ function PendingForProposals(props) {
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => firstChunk()}
-                      >
-                        <KeyboardDoubleArrowLeftIcon />
-                      </button>
-
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        <KeyboardArrowLeftIcon />
-                      </button>
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                       <div className="navButtonSelectDiv">
                         <select
                           value={page}
@@ -432,18 +437,24 @@ function PendingForProposals(props) {
                           ))}
                         </select>
                       </div>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        <KeyboardArrowRightIcon />
-                      </button>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => lastChunk()}
-                      >
-                        <KeyboardDoubleArrowRightIcon />
-                      </button>
+                      {defaultPage?.length > page ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>

@@ -198,9 +198,7 @@ function PendingForAcceptence() {
           setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -520,7 +518,7 @@ function PendingForAcceptence() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
     localStorage.removeItem("adminprot2");
   };
   return (

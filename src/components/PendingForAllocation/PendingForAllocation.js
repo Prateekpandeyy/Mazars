@@ -183,9 +183,7 @@ function PendingAllocation(props) {
           setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -388,7 +386,7 @@ function PendingAllocation(props) {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
     localStorage.removeItem("adminqp2");
   };
   return (
