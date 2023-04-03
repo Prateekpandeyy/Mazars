@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -27,6 +27,10 @@ import MessageIcon, {
   ViewDiscussionIcon,
   Payment,
 } from "../../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function FinalReport() {
   const userid = window.localStorage.getItem("adminkey");
@@ -59,6 +63,14 @@ function FinalReport() {
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   var rowStyle2 = {};
   var clcomp = {
     color: "green",
@@ -75,39 +87,110 @@ function FinalReport() {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
-    if(ViewDiscussion === false){
-      setScrolledTo(key)
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   useEffect(() => {
-    getAssignmentData();
+    let localPage = Number(localStorage.getItem("adminassign3"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getAssignmentData(localPage);
   }, []);
 
-  const getAssignmentData = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadAssignment3"));
-    if (!data) {
-      axios
-        .get(
-          `${baseUrl}/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAssignmentDisplay(res.data.result);
-            setCountAssignment(res.data.result.length);
-            setRecords(res.data.result.length);
+  // const getAssignmentData = () => {
+  //   let data = JSON.parse(localStorage.getItem("searchDataadAssignment3"));
+  //   if (!data) {
+  //     axios
+  //       .get(
+  //         `${baseUrl}/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1`,
+  //         myConfig
+  //       )
+  //       .then((res) => {
+  //         if (res.data.code === 1) {
+  //           setAssignmentDisplay(res.data.result);
+  //           setCountAssignment(res.data.result.length);
+  //           setRecords(res.data.result.length);
+  //         }
+  //       });
+  //   }
+  // };
+  const getAssignmentData = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let remainApiPath = "";
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment3`)
+    );
+
+    if (searchData) {
+      remainApiPath = `admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1&page=${e}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1&page=${e}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAssignmentDisplay(all);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
-
   //get category
   useEffect(() => {
     const getSubCategory = () => {
@@ -146,39 +229,95 @@ function FinalReport() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-
+    resetPaging();
     localStorage.removeItem("searchDataadAssignment3");
     setQueryNo("");
     setFromDate("");
     setToDate("");
     getAssignmentData();
   };
+  const sortMessage = (val, field) => {
+    axios
+      .get(
+        `${baseUrl}/admin/getAssignments?orderby=${val}&orderbyfield=${field}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
 
-  //assingmentStatus
-
-  // View Report
+          setAssignmentDisplay(all);
+        }
+      });
+  };
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getAssignmentData(1);
+    localStorage.setItem("adminassign3", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getAssignmentData(page - 1);
+    localStorage.setItem("adminassign3", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("adminassign3", Number(page) + 1);
+    getAssignmentData(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getAssignmentData(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("adminassign3", defaultPage.at(-1));
+  };
 
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
-    if(reportModal === false){
-      setScrolledTo(key)
+    if (reportModal === false) {
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [reportModal]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
 
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -440,6 +579,7 @@ function FinalReport() {
         route: window.location.pathname,
       };
     }
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     localStorage.setItem(`searchDataadAssignment3`, JSON.stringify(obj));
     if (data.route) {
       axios
@@ -450,8 +590,43 @@ function FinalReport() {
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
+              let droppage = [];
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let all = [];
+              let customId = 1;
+              let data = res.data.result;
+
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignmentDisplay(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let end = allEnd;
+
+              if (allEnd > res.data.total) {
+                end = res.data.total;
+              }
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+              setBig(1);
+
+              setEnd(end);
+
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+
+              setDefaultPage(droppage);
+              droppage = [];
+              setBig(1);
+              setPage(1);
             }
           }
         });
@@ -464,8 +639,43 @@ function FinalReport() {
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              setAssignmentDisplay(res.data.result);
-              setRecords(res.data.result.length);
+              let droppage = [];
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let all = [];
+              let customId = 1;
+              let data = res.data.result;
+
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignmentDisplay(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let end = allEnd;
+
+              if (allEnd > res.data.total) {
+                end = res.data.total;
+              }
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+              setBig(1);
+
+              setEnd(end);
+
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+
+              setDefaultPage(droppage);
+              droppage = [];
+              setBig(1);
+              setPage(1);
             }
           }
         });
@@ -482,7 +692,6 @@ function FinalReport() {
         setSelectedData(dk.pcatId);
 
         setQueryNo(dk.query_no);
-        onSubmit(dk);
       }
     }
   }, []);
@@ -499,7 +708,12 @@ function FinalReport() {
       </>
     );
   };
-
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminassign3");
+  };
   return (
     <div>
       <Card>
@@ -602,7 +816,73 @@ function FinalReport() {
         </CardHeader>
 
         <CardBody className="card-body">
-          <Records records={records} />
+          <Row>
+            <Col md="12" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div className="navButtonSelectDiv">
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getAssignmentData(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminassign3",
+                            Number(e.target.value)
+                          );
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
           <DataTablepopulated
             bgColor="#7c887c"
             keyField={"assign_no"}

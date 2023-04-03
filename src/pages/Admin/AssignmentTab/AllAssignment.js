@@ -18,6 +18,10 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function AssignmentComponent(props) {
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
@@ -101,7 +105,9 @@ function AssignmentComponent(props) {
   const getAssignmentData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment1`)
+    );
     if (searchData) {
       remainApiPath = `/admin/getAssignments?page=${e}&cat_id=${
         searchData.store
@@ -195,7 +201,7 @@ function AssignmentComponent(props) {
     setAtpage(1);
     setPage(1);
     getAssignmentData(1);
-    localStorage.setItem("adminqp1", 1);
+    localStorage.setItem("adminassign1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -203,21 +209,21 @@ function AssignmentComponent(props) {
     }
     setPage(Number(page) - 1);
     getAssignmentData(page - 1);
-    localStorage.setItem("adminqp1", Number(page) - 1);
+    localStorage.setItem("adminassign1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("adminqp1", Number(page) + 1);
+    localStorage.setItem("adminassign1", Number(page) + 1);
     getAssignmentData(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getAssignmentData(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("adminqp1", defaultPage.at(-1));
+    localStorage.setItem("adminassign1", defaultPage.at(-1));
   };
   //get category
   useEffect(() => {
@@ -272,7 +278,8 @@ function AssignmentComponent(props) {
     setQueryNo("");
     setPage(1);
     localStorage.removeItem("searchDataadAssignment1");
-    getAssignmentData();
+
+    getAssignmentData(1);
   };
 
   //assingmentStatus
@@ -556,6 +563,7 @@ function AssignmentComponent(props) {
         route: window.location.pathname,
       };
     }
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(obj));
     if (data.route) {
       if (status?.length > 0) {
@@ -567,23 +575,43 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                if (res.data.result) {
-                  let customId = 1;
-                  let data = res.data.result;
-                  let all = [];
-                  data.map((i) => {
-                    let data = {
-                      ...i,
-                      cid: customId,
-                    };
-                    customId++;
-                    all.push(data);
-                  });
-                  setAssignmentDisplay(all);
-                  setCountNotification(res.data.total);
-                  setRecords(res.data.total);
-                  resetPaging();
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
                 }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -596,9 +624,13 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
                 let customId = 1;
                 let data = res.data.result;
-                let all = [];
+
                 data.map((i) => {
                   let data = {
                     ...i,
@@ -610,7 +642,25 @@ function AssignmentComponent(props) {
                 setAssignmentDisplay(all);
                 setCountNotification(res.data.total);
                 setRecords(res.data.total);
-                resetPaging();
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -625,23 +675,43 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                if (res.data.result) {
-                  let customId = 1;
-                  let data = res.data.result;
-                  let all = [];
-                  data.map((i) => {
-                    let data = {
-                      ...i,
-                      cid: customId,
-                    };
-                    customId++;
-                    all.push(data);
-                  });
-                  setAssignmentDisplay(all);
-                  setCountNotification(res.data.total);
-                  setRecords(res.data.total);
-                  resetPaging();
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
                 }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -654,23 +724,43 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                if (res.data.result) {
-                  let customId = 1;
-                  let data = res.data.result;
-                  let all = [];
-                  data.map((i) => {
-                    let data = {
-                      ...i,
-                      cid: customId,
-                    };
-                    customId++;
-                    all.push(data);
-                  });
-                  setAssignmentDisplay(all);
-                  setCountNotification(res.data.total);
-                  setRecords(res.data.total);
-                  resetPaging();
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
                 }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -689,7 +779,7 @@ function AssignmentComponent(props) {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     }
   }, []);
@@ -716,6 +806,7 @@ function AssignmentComponent(props) {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminassign1");
   };
 
   return (
@@ -891,28 +982,22 @@ function AssignmentComponent(props) {
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
@@ -930,16 +1015,16 @@ function AssignmentComponent(props) {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (
