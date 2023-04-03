@@ -175,7 +175,7 @@ function AllPayment(props) {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/getUploadedProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/getUploadedProposals?orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -185,9 +185,7 @@ function AllPayment(props) {
           setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -535,7 +533,6 @@ function AllPayment(props) {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
   return (
     <div>

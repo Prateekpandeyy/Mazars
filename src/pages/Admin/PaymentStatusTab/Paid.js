@@ -105,9 +105,9 @@ function Paid() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
     } else {
       remainApiPath = `admin/getUploadedProposals?status=1&page=${e}`;
     }
@@ -161,7 +161,7 @@ function Paid() {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/getUploadedProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/getUploadedProposals?status=1&orderby==${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -171,9 +171,7 @@ function Paid() {
           setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -522,7 +520,6 @@ function Paid() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
   return (
     <div>
@@ -534,8 +531,12 @@ function Paid() {
             unpaid="unpaid"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adpayment2"
           />
         </CardHeader>

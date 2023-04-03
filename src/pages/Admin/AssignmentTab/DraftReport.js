@@ -165,16 +165,16 @@ function DraftReport() {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/admin/getAssignments?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -297,17 +297,8 @@ function DraftReport() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
-      },
+      dataField: "cid",
+
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -316,7 +307,17 @@ function DraftReport() {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
         if (oldDate == null) {
@@ -328,7 +329,17 @@ function DraftReport() {
     {
       text: "Query no",
       dataField: "assign_no",
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -349,11 +360,33 @@ function DraftReport() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "status",
@@ -437,7 +470,17 @@ function DraftReport() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
@@ -450,7 +493,18 @@ function DraftReport() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {

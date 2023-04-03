@@ -527,7 +527,7 @@ function AllProposalComponent() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
     localStorage.removeItem("adminprot1");
   };
 
