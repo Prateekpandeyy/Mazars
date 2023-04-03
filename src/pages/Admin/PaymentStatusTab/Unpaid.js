@@ -168,6 +168,9 @@ function Unpaid() {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
           if (page > 1) {
