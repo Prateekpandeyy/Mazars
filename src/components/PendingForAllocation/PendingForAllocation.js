@@ -171,31 +171,41 @@ function PendingAllocation(props) {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/pendingAllocation?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    if (searchData) {
+      remainApiPath = `/admin/pendingAllocation?orderby=${val}&orderbyfield=${field}&category=${
+        searchData.store
+      }&date1=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&date2=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/pendingAllocation?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setPendingData(all);
-        }
-      });
+        setPendingData(all);
+      }
+    });
   };
   const columns = [
     {

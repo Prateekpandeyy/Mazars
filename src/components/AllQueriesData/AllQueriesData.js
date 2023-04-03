@@ -141,31 +141,43 @@ function AllQueriesData() {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAllQueries?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/admin/getAllQueries?cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}&aorderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `admin/getAllQueries?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setAllQueriesData(all);
-        }
-      });
+        setAllQueriesData(all);
+      }
+    });
   };
 
   useEffect(() => {
