@@ -18,7 +18,6 @@ const InvoiceFilter = (props) => {
       setFromDate(data.p_dateFrom);
       setToDate(data.p_dateTo);
       setStatus(data.opt);
-      onSubmit(data);
     }
   }, []);
   const onSubmit = (data) => {
@@ -145,11 +144,11 @@ const InvoiceFilter = (props) => {
     setStatus("");
     props.resetPaging();
     localStorage.removeItem(props.invoice);
-    props.getData();
+    props.getData(1);
   };
   const updateResult = (res) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-
+    console.log("doen");
     let returnData = JSON.parse(localStorage.getItem(`${props.invoice}`));
     let droppage = [];
     let customId = 1;
@@ -175,10 +174,10 @@ const InvoiceFilter = (props) => {
       let rem = (props.page - 1) * allEnd;
 
       if (props.page === 1) {
-        props.setBig(rem + props.page);
+        props.setBig(1);
         props.setEnd(end);
       } else {
-        props.setBig(rem + 1);
+        props.setBig(1);
         props.setEnd(end);
       }
       for (let i = 1; i <= dynamicPage; i++) {
@@ -285,6 +284,7 @@ const InvoiceFilter = (props) => {
               Search
             </button>
             <button
+              type="button"
               className="customBtn mx-2"
               onClick={() => resetData()}
               style={{ height: "33px" }}

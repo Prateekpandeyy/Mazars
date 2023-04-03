@@ -9,6 +9,11 @@ import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 const Generated = () => {
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("adminkey");
@@ -67,6 +72,7 @@ const Generated = () => {
   }, []);
 
   const getProposalList = (e) => {
+    console.log("ePage", e);
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
 
     let remainApiPath = "";
@@ -79,9 +85,8 @@ const Generated = () => {
       searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&cquery_no=${
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&qno=${
         searchData.query_no
-      }
       }&from=${searchData.p_dateFrom
         ?.split("-")
         .reverse()
@@ -344,7 +349,9 @@ const Generated = () => {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
+    console.log(Number(localStorage.getItem("admin_record_per_page")));
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("admininvt2");
   };
   const firstChunk = () => {
     setAtpage(1);
@@ -447,35 +454,29 @@ const Generated = () => {
             <Col md="6" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
@@ -493,16 +494,16 @@ const Generated = () => {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

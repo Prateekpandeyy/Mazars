@@ -125,7 +125,7 @@ function PendingForAcceptence() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
     if (searchData) {
-      remainApiPath = `/admin/getProposals?status1=1&page=${e}&cat_id=${
+      remainApiPath = `/admin/getProposals?page=${e}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -133,7 +133,7 @@ function PendingForAcceptence() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
@@ -193,6 +193,9 @@ function PendingForAcceptence() {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
           if (page > 1) {
@@ -518,6 +521,7 @@ function PendingForAcceptence() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminprot2");
   };
   return (
     <div>

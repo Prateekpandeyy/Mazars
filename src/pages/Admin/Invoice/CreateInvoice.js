@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
-import Records from "../../../components/Records/Records";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 const CreateInvoice = () => {
   const userid = window.localStorage.getItem("adminkey");
   const [proposal, setProposal] = useState([]);
@@ -205,6 +207,7 @@ const CreateInvoice = () => {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
+    localStorage.removeItem("admininvt1");
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
   const firstChunk = () => {
@@ -258,7 +261,7 @@ const CreateInvoice = () => {
             <Col md="6" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
@@ -268,25 +271,19 @@ const CreateInvoice = () => {
                           className="navButton mx-1"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
                           className="navButton mx-1"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
@@ -307,13 +304,13 @@ const CreateInvoice = () => {
                           className="navButton mx-1"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
                           className="navButton mx-1"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

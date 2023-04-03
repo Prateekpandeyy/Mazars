@@ -24,6 +24,10 @@ import MessageIcon, {
   ViewDiscussionIcon,
   Payment,
 } from "../../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function Paid() {
   const [payment, setPayment] = useState([]);
@@ -93,7 +97,7 @@ function Paid() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment2`));
     if (searchData) {
-      remainApiPath = `/admin/getUploadedProposals?status1=2&page=${e}&cat_id=${
+      remainApiPath = `/admin/getUploadedProposals?page=${e}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -105,7 +109,7 @@ function Paid() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getUploadedProposals?status1=2&page=${e}`;
+      remainApiPath = `admin/getUploadedProposals?status=1&page=${e}`;
     }
 
     if (e) {
@@ -544,16 +548,16 @@ function Paid() {
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
@@ -577,16 +581,16 @@ function Paid() {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

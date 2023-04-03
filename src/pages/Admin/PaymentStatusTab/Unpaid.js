@@ -25,6 +25,10 @@ import MessageIcon, {
   Payment,
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function Unpaid() {
   const [payment, setPayment] = useState([]);
@@ -95,7 +99,7 @@ function Unpaid() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment3`));
     if (searchData) {
-      remainApiPath = `/admin/getUploadedProposals?status1=3&page=${e}&cat_id=${
+      remainApiPath = `/admin/getUploadedProposals?&page=${e}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -107,7 +111,7 @@ function Unpaid() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getUploadedProposals?status1=3&page=${e}`;
+      remainApiPath = `admin/getUploadedProposals?status=2&page=${e}`;
     }
 
     if (e) {
@@ -159,7 +163,7 @@ function Unpaid() {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/getUploadedProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
+        `${baseUrl}/getUploadedProposals?status=2&orderby==${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -539,16 +543,16 @@ function Unpaid() {
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
@@ -572,16 +576,16 @@ function Unpaid() {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

@@ -92,9 +92,7 @@ function DeclinedProposal() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
       remainApiPath = `/admin/getProposals?status=6&page=${e}`;
     }
@@ -154,6 +152,9 @@ function DeclinedProposal() {
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let sortId = 1;
           if (page > 1) {
             sortId = big;
@@ -516,6 +517,7 @@ function DeclinedProposal() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminprot4");
   };
   return (
     <>

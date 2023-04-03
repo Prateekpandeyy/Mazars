@@ -93,6 +93,7 @@ function AcceptedProposal() {
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
+    localStorage.setItem("adminprot3", 1);
     getAcceptedProposal(1);
   };
   const prevChunk = () => {
@@ -101,6 +102,7 @@ function AcceptedProposal() {
     }
     setPage(Number(page) - 1);
     getAcceptedProposal(page - 1);
+    localStorage.setItem("adminprot3", Number(page - 1));
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
@@ -108,11 +110,13 @@ function AcceptedProposal() {
     }
     setPage(Number(page) + 1);
     getAcceptedProposal(page + 1);
+    localStorage.setItem("adminprot3", Number(page + 1));
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getAcceptedProposal(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminprot3", defaultPage.at(-1));
   };
 
   const getAcceptedProposal = (e) => {
@@ -128,9 +132,7 @@ function AcceptedProposal() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
       remainApiPath = `/admin/getProposals?status1=2&page=${e}`;
     }
@@ -188,6 +190,9 @@ function AcceptedProposal() {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
           if (page > 1) {
@@ -495,6 +500,7 @@ function AcceptedProposal() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminprot3");
   };
   return (
     <>
@@ -548,6 +554,10 @@ function AcceptedProposal() {
                         onChange={(e) => {
                           setPage(e.target.value);
                           getAcceptedProposal(e.target.value);
+                          localStorage.setItem(
+                            "adminprot3",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >

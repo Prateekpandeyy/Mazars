@@ -119,7 +119,7 @@ function AdminFilter(props) {
     // dateValue.current.clearValue();
   };
   const updateResult = (res) => {
-    let returnData = localStorage.getItem(`searchData${index}`);
+    let returnData = JSON.parse(localStorage.getItem(`searchData${index}`));
     let droppage = [];
     let customId = 1;
     if (res.data.code === 1) {
@@ -141,7 +141,7 @@ function AdminFilter(props) {
       let dynamicPage = Math.ceil(res.data.total / allEnd);
 
       let rem = (page - 1) * allEnd;
-
+      console.log("page", page);
       if (page === 1) {
         setBig(rem + page);
         setEnd(end);
@@ -158,12 +158,17 @@ function AdminFilter(props) {
       setRecords(res.data.total);
 
       setDefaultPage(droppage);
-      if (!returnData) {
-        resetPaging();
-      }
+      resetPaging();
+      // if (
+      //   Object.keys(returnData).length === 0 &&
+      //   returnData.constructor === Object
+      // ) {
+
+      // }
     }
   };
   const onSubmit = (data) => {
+    console.log("data", data);
     let obj = {};
     if (data.route) {
       obj = {
@@ -672,7 +677,7 @@ function AdminFilter(props) {
         let subCat = JSON.parse(localStorage.getItem(`admin${parentId}`));
         setTax2(subCat);
 
-        subCat.map((i) => {
+        subCat?.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];
@@ -685,7 +690,7 @@ function AdminFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     } else if (!dk?.toDate) {
       let date = moment().format("DD-MM-YYYY");
@@ -726,7 +731,7 @@ function AdminFilter(props) {
                     value={showSubCat}
                     allowClear
                   >
-                    {tax2.map((p, index) => (
+                    {tax2?.map((p, index) => (
                       <Option value={p.details} key={index}>
                         {p.details}
                       </Option>

@@ -24,6 +24,10 @@ import MessageIcon, {
   Payment,
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function AllPayment(props) {
   const [payment, setPayment] = useState([]);
@@ -107,7 +111,7 @@ function AllPayment(props) {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment1`));
     if (searchData) {
-      remainApiPath = `/admin/getUploadedProposals?status1=1&page=${e}&cat_id=${
+      remainApiPath = `/admin/getUploadedProposals?page=${e}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -119,7 +123,7 @@ function AllPayment(props) {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getUploadedProposals?status1=1&page=${e}`;
+      remainApiPath = `admin/getUploadedProposals?page=${e}`;
     }
 
     if (e) {
@@ -176,6 +180,9 @@ function AllPayment(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
           if (page > 1) {
@@ -540,8 +547,12 @@ function AllPayment(props) {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adpayment1"
           />
         </CardHeader>
@@ -557,16 +568,16 @@ function AllPayment(props) {
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
@@ -578,7 +589,10 @@ function AllPayment(props) {
                         onChange={(e) => {
                           setPage(e.target.value);
                           getPaymentStatus(e.target.value);
-                          localStorage.setItem("adminpayt1", e.target.value);
+                          localStorage.setItem(
+                            "adminpayt1",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >
@@ -590,16 +604,16 @@ function AllPayment(props) {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (
