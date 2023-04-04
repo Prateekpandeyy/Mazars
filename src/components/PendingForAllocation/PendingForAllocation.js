@@ -73,6 +73,14 @@ function PendingAllocation(props) {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue2", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPendingForAllocation(localPage);
@@ -182,6 +190,7 @@ function PendingAllocation(props) {
       orderBy: val,
       fieldBy: field,
     };
+    localStorage.setItem("adminqp2", 1);
     localStorage.setItem("sortedValue2", JSON.stringify(sort));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));

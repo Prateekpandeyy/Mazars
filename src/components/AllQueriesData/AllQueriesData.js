@@ -39,6 +39,15 @@ function AllQueriesData() {
     if (!localPage) {
       localPage = 1;
     }
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue1", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getAllQueriesData(localPage);
@@ -98,7 +107,7 @@ function AllQueriesData() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getAllQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/getAllQueries?page=${e}&orderby=${sortVal.orderBy}&orderbyfield=${sortVal.fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -151,6 +160,7 @@ function AllQueriesData() {
       orderBy: val,
       fieldBy: field,
     };
+    localStorage.setItem("adminqp1", 1);
     localStorage.setItem("sortedValue1", JSON.stringify(sort));
     setOrderBy(val);
     setFiledBy(field);

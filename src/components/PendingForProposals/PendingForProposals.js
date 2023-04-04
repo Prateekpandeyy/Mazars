@@ -85,6 +85,14 @@ function PendingForProposals(props) {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue3"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue3", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPendingForProposals(localPage);
@@ -196,6 +204,7 @@ function PendingForProposals(props) {
       orderBy: val,
       fieldBy: field,
     };
+    localStorage.setItem("adminqp3", 1);
     localStorage.setItem("sortedValue3", JSON.stringify(sort));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));

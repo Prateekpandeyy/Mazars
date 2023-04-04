@@ -42,6 +42,14 @@ function DeclinedQueries() {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue4", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPendingForPayment(localPage);
@@ -148,6 +156,7 @@ function DeclinedQueries() {
       orderBy: val,
       fieldBy: field,
     };
+    localStorage.setItem("adminqp4", 1);
     localStorage.setItem("sortedValue4", JSON.stringify(sort));
     let remainApiPath = "";
     if (searchData) {
