@@ -242,6 +242,7 @@ function PendingAllocation(props) {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);

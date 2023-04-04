@@ -357,6 +357,17 @@ function PendingForProposals(props) {
       dataField: "tname",
       text: "TL name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
     },
     {
       text: "History",
