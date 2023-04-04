@@ -299,7 +299,7 @@ function PendingAllocation(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -315,7 +315,7 @@ function PendingAllocation(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
     },
     {
@@ -330,7 +330,7 @@ function PendingAllocation(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         return (

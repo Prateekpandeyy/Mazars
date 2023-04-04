@@ -154,7 +154,7 @@ function AllQueriesData() {
         .reverse()
         .join("-")}&status=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
-      }&qno=${searchData?.query_no}&aorderby=${val}&orderbyfield=${field}`;
+      }&qno=${searchData?.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `admin/getAllQueries?orderby=${val}&orderbyfield=${field}`;
     }
