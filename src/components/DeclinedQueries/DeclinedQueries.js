@@ -26,6 +26,8 @@ function DeclinedQueries() {
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
@@ -77,7 +79,7 @@ function DeclinedQueries() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery4`));
     if (searchData) {
-      remainApiPath = `/admin/declinedQueries?page=${e}&cat_id=${
+      remainApiPath = `/admin/declinedQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -89,7 +91,7 @@ function DeclinedQueries() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/declinedQueries?page=${e}`;
+      remainApiPath = `admin/declinedQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -136,31 +138,45 @@ function DeclinedQueries() {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/declinedQueries?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery4`));
+    setOrderBy(val);
+    setFiledBy(field);
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/admin/declinedQueries?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/declinedQueries?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setPendingData(all);
-        }
-      });
+        setPendingData(all);
+      }
+    });
   };
 
   const ViewDiscussionToggel = (key) => {
@@ -333,7 +349,8 @@ function DeclinedQueries() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
+    setOrderBy("");
+    setFiledBy("");
     localStorage.removeItem("adminqp4");
   };
 

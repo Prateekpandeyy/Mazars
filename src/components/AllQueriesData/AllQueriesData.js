@@ -14,6 +14,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { orderBy } from "lodash";
 
 function AllQueriesData() {
   const [allQueriesData, setAllQueriesData] = useState([]);
@@ -28,6 +29,8 @@ function AllQueriesData() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
 
@@ -80,7 +83,7 @@ function AllQueriesData() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
     if (searchData) {
-      remainApiPath = `/admin/getAllQueries?page=${e}&cat_id=${
+      remainApiPath = `/admin/getAllQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -92,7 +95,7 @@ function AllQueriesData() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getAllQueries?page=${e}`;
+      remainApiPath = `admin/getAllQueries?page=${e}}&orderby=${orderby}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -141,6 +144,8 @@ function AllQueriesData() {
     }
   };
   const sortMessage = (val, field) => {
+    setOrderBy(val);
+    setFiledBy(field);
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
     let remainApiPath = "";
     if (searchData) {
@@ -407,7 +412,8 @@ function AllQueriesData() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
+    setOrderBy("");
+    setFiledBy("");
     localStorage.removeItem("adminqp1");
   };
 

@@ -31,6 +31,8 @@ function PendingAllocation(props) {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -113,7 +115,7 @@ function PendingAllocation(props) {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
     if (searchData) {
-      remainApiPath = `/admin/pendingAllocation?page=${e}&category=${
+      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&category=${
         searchData.store
       }&date1=${searchData.fromDate
         ?.split("-")
@@ -123,7 +125,7 @@ function PendingAllocation(props) {
         .reverse()
         .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/pendingAllocation?page=${e}`;
+      remainApiPath = `admin/pendingAllocation?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -171,6 +173,8 @@ function PendingAllocation(props) {
     }
   };
   const sortMessage = (val, field) => {
+    setOrderBy(val);
+    setFiledBy(field);
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
     if (searchData) {
@@ -397,7 +401,8 @@ function PendingAllocation(props) {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
+    setOrderBy("");
+    setFiledBy("");
     localStorage.removeItem("adminqp2");
   };
   return (

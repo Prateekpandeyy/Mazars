@@ -134,12 +134,12 @@ function AdminFilter(props) {
         customId++;
         all.push(data);
       });
-      let end = page * allEnd;
+      let end = allEnd;
 
       if (allEnd > res.data.total) {
         end = res.data.total;
       }
-      console.log("myValue", end);
+
       setEnd(end);
       let dynamicPage = Math.ceil(res.data.total / allEnd);
 

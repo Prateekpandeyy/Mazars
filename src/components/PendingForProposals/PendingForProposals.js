@@ -48,6 +48,8 @@ function PendingForProposals(props) {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -126,7 +128,7 @@ function PendingForProposals(props) {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
     if (searchData) {
-      remainApiPath = `/admin/pendingProposal?page=${e}&category=${
+      remainApiPath = `/admin/pendingProposal?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&category=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -138,7 +140,7 @@ function PendingForProposals(props) {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/pendingProposal?page=${e}`;
+      remainApiPath = `admin/pendingProposal?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -185,6 +187,8 @@ function PendingForProposals(props) {
     }
   };
   const sortMessage = (val, field) => {
+    setOrderBy(val);
+    setFiledBy(field);
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
     if (searchData) {
@@ -392,7 +396,8 @@ function PendingForProposals(props) {
   const resetPaging = () => {
     setBig(1);
     setPage(1);
-
+    setOrderBy("");
+    setFiledBy("");
     localStorage.removeItem("adminqp3");
   };
   return (
