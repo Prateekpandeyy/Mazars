@@ -114,8 +114,11 @@ function PendingAllocation(props) {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
     if (searchData) {
-      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&category=${
+      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${
+        sortVal.orderBy
+      }&orderbyfield=${sortVal.fieldBy}&category=${
         searchData.store
       }&date1=${searchData.fromDate
         ?.split("-")
@@ -175,6 +178,11 @@ function PendingAllocation(props) {
   const sortMessage = (val, field) => {
     setOrderBy(val);
     setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("sortedValue2", JSON.stringify(sort));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
     if (searchData) {
@@ -404,6 +412,7 @@ function PendingAllocation(props) {
     setOrderBy("");
     setFiledBy("");
     localStorage.removeItem("adminqp2");
+    localStorage.removeItem("sortedValue2");
   };
   return (
     <>

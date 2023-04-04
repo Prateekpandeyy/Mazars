@@ -127,8 +127,11 @@ function PendingForProposals(props) {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue3"));
     if (searchData) {
-      remainApiPath = `/admin/pendingProposal?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&category=${
+      remainApiPath = `/admin/pendingProposal?page=${e}&orderby=${
+        sortVal.orderBy
+      }&orderbyfield=${sortVal.fieldBy}&category=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -189,6 +192,11 @@ function PendingForProposals(props) {
   const sortMessage = (val, field) => {
     setOrderBy(val);
     setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("sortedValue3", JSON.stringify(sort));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
     if (searchData) {
@@ -213,9 +221,7 @@ function PendingForProposals(props) {
         setEnd(Number(localStorage.getItem("admin_record_per_page")));
         let all = [];
         let sortId = 1;
-        if (page > 1) {
-          sortId = big;
-        }
+
         res.data.result.map((i) => {
           let data = {
             ...i,
@@ -343,7 +349,18 @@ function PendingForProposals(props) {
     },
     {
       text: "Status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -370,7 +387,7 @@ function PendingForProposals(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
     },
     {
@@ -398,6 +415,7 @@ function PendingForProposals(props) {
     setPage(1);
     setOrderBy("");
     setFiledBy("");
+    localStorage.removeItem("sortedValue3");
     localStorage.removeItem("adminqp3");
   };
   return (

@@ -81,9 +81,12 @@ function AllQueriesData() {
   const getAllQueriesData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
     if (searchData) {
-      remainApiPath = `/admin/getAllQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&cat_id=${
+      remainApiPath = `/admin/getAllQueries?page=${e}&orderby=${
+        sortVal.orderBy
+      }&orderbyfield=${sortVal.fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -144,6 +147,11 @@ function AllQueriesData() {
     }
   };
   const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("sortedValue1", JSON.stringify(sort));
     setOrderBy(val);
     setFiledBy(field);
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
@@ -415,6 +423,7 @@ function AllQueriesData() {
     setOrderBy("");
     setFiledBy("");
     localStorage.removeItem("adminqp1");
+    localStorage.removeItem("sortedValue1");
   };
 
   return (

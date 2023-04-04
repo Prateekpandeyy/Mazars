@@ -78,8 +78,11 @@ function DeclinedQueries() {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery4`));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
     if (searchData) {
-      remainApiPath = `/admin/declinedQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}&cat_id=${
+      remainApiPath = `/admin/declinedQueries?page=${e}&orderby=${
+        sortVal.orderBy
+      }&orderbyfield=${sortVal.fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -141,6 +144,11 @@ function DeclinedQueries() {
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery4`));
     setOrderBy(val);
     setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("sortedValue4", JSON.stringify(sort));
     let remainApiPath = "";
     if (searchData) {
       remainApiPath = `/admin/declinedQueries?orderby=${val}&orderbyfield=${field}&cat_id=${
@@ -310,7 +318,18 @@ function DeclinedQueries() {
 
     {
       text: "Status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -351,6 +370,7 @@ function DeclinedQueries() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
+    localStorage.removeItem("sortedValue4");
     localStorage.removeItem("adminqp4");
   };
 
