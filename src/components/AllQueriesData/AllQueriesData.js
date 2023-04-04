@@ -29,8 +29,8 @@ function AllQueriesData() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
-  const [orderby, setOrderBy] = useState("");
-  const [fieldBy, setFiledBy] = useState("");
+  const [orderby, setOrderBy] = useState("0");
+  const [fieldBy, setFiledBy] = useState("0");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
 
@@ -95,7 +95,7 @@ function AllQueriesData() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getAllQueries?page=${e}}&orderby=${orderby}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/getAllQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
