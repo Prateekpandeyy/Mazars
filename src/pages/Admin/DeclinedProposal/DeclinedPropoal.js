@@ -38,6 +38,8 @@ function DeclinedProposal() {
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -49,6 +51,14 @@ function DeclinedProposal() {
     let localPage = Number(localStorage.getItem("adminprot4"));
     if (!localPage) {
       localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuepro4", JSON.stringify(sort));
     }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
@@ -80,11 +90,20 @@ function DeclinedProposal() {
   }, [viewProposalModal]);
 
   const getDeclinedProposal = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal4`));
+
     if (searchData) {
-      remainApiPath = `admin/getProposals?status=6&page=${e}&cat_id=${
+      remainApiPath = `admin/getProposals?status=6&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -94,7 +113,7 @@ function DeclinedProposal() {
         .reverse()
         .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `/admin/getProposals?status=6&page=${e}`;
+      remainApiPath = `/admin/getProposals?status=6&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
     if (e) {
@@ -145,7 +164,16 @@ function DeclinedProposal() {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminprot4", 1);
+    localStorage.setItem("sortedValuepro4", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal4`));
+
     if (searchData) {
       remainApiPath = `admin/getProposals?status=6&orderby=${val}&orderbyfield=${field}&cat_id=${
         searchData.store
@@ -527,8 +555,10 @@ function DeclinedProposal() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
-    localStorage.removeItem("adminprot4");
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminpro4");
+    localStorage.removeItem("sortedValuepro4");
   };
   return (
     <>

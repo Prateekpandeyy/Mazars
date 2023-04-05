@@ -50,6 +50,8 @@ function PendingForAcceptence() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -88,6 +90,14 @@ function PendingForAcceptence() {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuepro2", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPendingAcceptedProposal(localPage);
@@ -122,10 +132,18 @@ function PendingForAcceptence() {
 
   const getPendingAcceptedProposal = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro2"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
     if (searchData) {
-      remainApiPath = `/admin/getProposals?page=${e}&cat_id=${
+      remainApiPath = `/admin/getProposals?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -137,7 +155,7 @@ function PendingForAcceptence() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `/admin/getProposals?status1=1&page=${e}`;
+      remainApiPath = `/admin/getProposals?status1=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
     if (e) {
@@ -186,31 +204,51 @@ function PendingForAcceptence() {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getProposals?status1=1&orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminprot2", 1);
+    localStorage.setItem("sortedValuepro2", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
+    if (searchData) {
+      remainApiPath = `/admin/getProposals?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `/admin/getProposals?status1=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setProposalDisplay(all);
-        }
-      });
+        setProposalDisplay(all);
+      }
+    });
   };
 
   const retviewProposal = (e) => {
@@ -518,8 +556,10 @@ function PendingForAcceptence() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
-    localStorage.removeItem("adminprot2");
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminpro2");
+    localStorage.removeItem("sortedValuepro2");
   };
   return (
     <div>

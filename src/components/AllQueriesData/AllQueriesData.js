@@ -89,13 +89,18 @@ function AllQueriesData() {
   };
   const getAllQueriesData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-    let remainApiPath = "";
+    let orderBy = 0;
+    let fieldBy = 0;
     let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
     if (searchData) {
-      remainApiPath = `/admin/getAllQueries?page=${e}&orderby=${
-        sortVal.orderBy
-      }&orderbyfield=${sortVal.fieldBy}&cat_id=${
+      remainApiPath = `/admin/getAllQueries?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -107,7 +112,7 @@ function AllQueriesData() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getAllQueries?page=${e}&orderby=${sortVal.orderBy}&orderbyfield=${sortVal.fieldBy}`;
+      remainApiPath = `admin/getAllQueries?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {

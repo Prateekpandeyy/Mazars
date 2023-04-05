@@ -122,11 +122,15 @@ function PendingAllocation(props) {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    let orderBy = 0;
+    let fieldBy = 0;
     let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     if (searchData) {
-      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${
-        sortVal.orderBy
-      }&orderbyfield=${sortVal.fieldBy}&category=${
+      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&category=${
         searchData.store
       }&date1=${searchData.fromDate
         ?.split("-")
@@ -136,7 +140,7 @@ function PendingAllocation(props) {
         .reverse()
         .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/pendingAllocation?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/pendingAllocation?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {

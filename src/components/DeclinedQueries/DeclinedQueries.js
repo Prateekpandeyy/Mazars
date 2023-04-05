@@ -87,10 +87,15 @@ function DeclinedQueries() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery4`));
     let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     if (searchData) {
-      remainApiPath = `/admin/declinedQueries?page=${e}&orderby=${
-        sortVal.orderBy
-      }&orderbyfield=${sortVal.fieldBy}&cat_id=${
+      remainApiPath = `/admin/declinedQueries?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -102,7 +107,7 @@ function DeclinedQueries() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/declinedQueries?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/declinedQueries?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {

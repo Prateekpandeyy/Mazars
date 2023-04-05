@@ -109,7 +109,7 @@ function AdminFilter(props) {
     setCatShowData([]);
     setStore2([]);
     setTax2([]);
-    getData(1);
+
     setFromDate("");
     setStatus("");
     setQueryNo("");
@@ -117,10 +117,10 @@ function AdminFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
+    getData(1);
     // dateValue.current.clearValue();
   };
   const updateResult = (res) => {
-    let returnData = JSON.parse(localStorage.getItem(`searchData${index}`));
     let droppage = [];
     let customId = 1;
     if (res.data.code === 1) {

@@ -135,11 +135,15 @@ function PendingForProposals(props) {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
+    let orderBy = 0;
+    let fieldBy = 0;
     let sortVal = JSON.parse(localStorage.getItem("sortedValue3"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     if (searchData) {
-      remainApiPath = `/admin/pendingProposal?page=${e}&orderby=${
-        sortVal.orderBy
-      }&orderbyfield=${sortVal.fieldBy}&category=${
+      remainApiPath = `/admin/pendingProposal?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&category=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -151,7 +155,7 @@ function PendingForProposals(props) {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/pendingProposal?page=${e}&orderby=${orderby}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/pendingProposal?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {

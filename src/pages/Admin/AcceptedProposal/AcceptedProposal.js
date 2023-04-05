@@ -48,6 +48,8 @@ function AcceptedProposal() {
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -85,6 +87,14 @@ function AcceptedProposal() {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuepro3", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getAcceptedProposal(localPage);
@@ -120,11 +130,19 @@ function AcceptedProposal() {
   };
 
   const getAcceptedProposal = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal3`));
     if (searchData) {
-      remainApiPath = `admin/getProposals?status1=2&page=${e}&cat_id=${
+      remainApiPath = `admin/getProposals?status1=2&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -134,7 +152,7 @@ function AcceptedProposal() {
         .reverse()
         .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `/admin/getProposals?status1=2&page=${e}`;
+      remainApiPath = `/admin/getProposals?status1=2&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
     if (e) {
@@ -183,31 +201,51 @@ function AcceptedProposal() {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/getProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminprot3", 1);
+    localStorage.setItem("sortedValuepro3", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal3`));
+    if (searchData) {
+      remainApiPath = `/admin/getProposals?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status1=2&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `/admin/getProposals?status1=2&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setProposalDisplay(all);
-        }
-      });
+        setProposalDisplay(all);
+      }
+    });
   };
 
   const columns = [
@@ -497,8 +535,10 @@ function AcceptedProposal() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
-    localStorage.removeItem("adminprot3");
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminpro3");
+    localStorage.removeItem("sortedValuepro3");
   };
   return (
     <>
