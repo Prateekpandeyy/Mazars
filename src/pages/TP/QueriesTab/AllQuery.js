@@ -86,7 +86,7 @@ function AllQuery(props) {
     } else {
       getInCompleteAssingment(1);
     }
-  }, [props]);
+  }, []);
 
 //   useEffect(() => {
 //     const N = Math.ceil(count / allEnd);
