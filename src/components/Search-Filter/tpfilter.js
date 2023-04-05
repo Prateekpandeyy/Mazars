@@ -21,7 +21,8 @@ function TaxProfessionalFilter(props) {
     pendingForAcceptence,
     InprogressQuery,
     DeclinedQuery,
-    resetPaging,
+    // resetPaging,
+    resetTriggerFunc,
     completeAssignment,
     proposal,
     AllProposal,
@@ -109,6 +110,9 @@ function TaxProfessionalFilter(props) {
     setFromDate("");
     setStatus1("");
     setQueryNo("");
+    // resetPaging();
+    resetTriggerFunc();
+    console.log('reset is triggred in tpfilter');
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
@@ -209,7 +213,8 @@ function TaxProfessionalFilter(props) {
                 all.push(data);
               });
               setData(all);
-              setCount(res.data.result.length);
+              // setCount(res.data.total);
+              // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
 
             }
@@ -243,8 +248,13 @@ function TaxProfessionalFilter(props) {
                   all.push(data);
                 });
                 setData(all);
+                // console.log(all);
                 setRecords(res.data.result.length);
-                resetPaging();
+                setCount(res.data.total);
+                // console.log(res.data.total, "count updated");
+                // resetPaging();
+                resetTriggerFunc();
+
               }
             }
           });
@@ -327,7 +337,8 @@ function TaxProfessionalFilter(props) {
                 all.push(data);
               });
               setData(all);
-              setCount(res.data.result.length);
+              // setCount(res.data.total);
+              // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
             }
           });
@@ -361,7 +372,10 @@ function TaxProfessionalFilter(props) {
                 });
                 setData(all);
                 setRecords(res.data.result.length);
-                resetPaging();
+                setCount(res.data.total);
+                // console.log(res.data.total, "count updated");
+                // resetPaging();
+                resetTriggerFunc();
               }
             }
           });

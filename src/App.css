@@ -1028,3 +1028,19 @@ footer a:hover{
   width: 100%;
   align-items: center;
 }
+.customPaginationSpan{
+  width: 40%;
+}
+.navButtonSelectDiv{
+  display: flex;
+  max-width: 75px;
+  width: 100%;
+}
+.navButtonSelectDiv select{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.navButtonSelectDiv option{
+  text-align: center;
+}
+

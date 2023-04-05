@@ -9,25 +9,29 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
+import Paginator from "../../../components/Paginator/Paginator";
 
 function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
+  let allEnd = Number(localStorage.getItem("tp_record_per_page"));
   let total = props.data;
+  // console.log(total,"total is that props");
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
-  const [count, setCount] = useState("");
+  const [count, setCount] = useState("0");
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(50);
+  const [end, setEnd] = useState(allEnd);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1"]);
+  const [resetTrigger,setresetTrigger]=useState(false);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -54,62 +58,72 @@ function AllQuery(props) {
       uit: token,
     },
   };
-  let pageno = JSON.parse(localStorage.getItem("tpallQueryPageno"));
-  console.log(pageno);
-  
-  useEffect(() => {
-    if(pageno){
-    setPage(pageno);
-    setAtpage(pageno);
-    }else{
-    setPage(1);
-    setAtpage(1);
-    }
-    setEnd(
-      Number(localStorage.getItem("tp_record_per_page"))
-    );
-    
-    setCount(props.data)
+  let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
 
-  }, []);
+  // console.log(count,"count in all Query");
+
+  // useEffect(() => {
+  //   if (pageno) {
+  //     setPage(pageno);
+  //     setAtpage(pageno);
+  //   } else {
+  //     setPage(1);
+  //     setAtpage(1);
+  //   }
+  //   setEnd(
+  //     Number(localStorage.getItem("tp_record_per_page"))
+  //   );
+
+  //   // setCount(props.data)
+
+  // }, []);
+
   useEffect(() => {
-    setCount(total)
-    if(pageno){
+    if (pageno) {
       getInCompleteAssingment(pageno);
-    }else{
-    getInCompleteAssingment(1);
+      // setCount(total)
+      // console.log(count,"count in all Query useEffect");
+    } else {
+      getInCompleteAssingment(1);
     }
   }, [props]);
 
+//   useEffect(() => {
+//     const N = Math.ceil(count / allEnd);
+//     const arr = Array.from({ length: N }, (_, index) => index + 1);
+//     setDefaultPage(arr);
+//     console.log(arr,"array");
+// }, [count]);
+
   //page counter
-  const firstChunk = () => {
-    setAtpage(1);
-    setPage(1);
-    getInCompleteAssingment(1);
-  };
-  const prevChunk = () => {
-    if (atPage > 1) {
-      setAtpage((atPage) => atPage - 1);
-    }
-    setPage(Number(page) - 1);
-    getInCompleteAssingment(Number(page) - 1);
-  };
-  const nextChunk = () => {
-    if (atPage < totalPages) {
-      setAtpage((atPage) => atPage + 1);
-    }
-    setPage(Number(page) + 1);
-    getInCompleteAssingment(Number(page) + 1);
-  };
-  const lastChunk = () => {
-    setPage(defaultPage.at(-1));
-    getInCompleteAssingment(defaultPage.at(-1));
-    setAtpage(totalPages);
-  };
+  // const firstChunk = () => {
+  //   setAtpage(1);
+  //   setPage(1);
+  //   getInCompleteAssingment(1);
+  // };
+  // const prevChunk = () => {
+  //   if (atPage > 1) {
+  //     setAtpage((atPage) => atPage - 1);
+  //   }
+  //   setPage(Number(page) - 1);
+  //   getInCompleteAssingment(Number(page) - 1);
+  // };
+  // const nextChunk = () => {
+  //   if (atPage < totalPages) {
+  //     setAtpage((atPage) => atPage + 1);
+  //   }
+  //   setPage(Number(page) + 1);
+  //   getInCompleteAssingment(Number(page) + 1);
+  // };
+  // const lastChunk = () => {
+  //   setPage(defaultPage.at(-1));
+  //   getInCompleteAssingment(defaultPage.at(-1));
+  //   setAtpage(totalPages);
+  // };
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
-    localStorage.setItem(`tpallQueryPageno`, JSON.stringify(e));
+    localStorage.setItem(`tpQuery1`, JSON.stringify(e));
     let remainApiPath = "";
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
@@ -153,26 +167,30 @@ function AllQuery(props) {
             });
             setInCompleteData(all);
             setRecords(res.data.result.length);
-            setCount(props.data)
+            setCount(res.data.total);
+            // console.log(count,"count in all Query submit in all Query");
+            
 
-            const dynamicPage = Math.ceil(props.data / allEnd);
-            setTotalPages(dynamicPage + 1)
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else if (e === (dynamicPage)) {
-              setBig(rem + 1);
-              setEnd(res.data.total);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i < (dynamicPage + 1); i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+            // const dynamicPage = Math.ceil(props.data / allEnd);
+            // setTotalPages(dynamicPage + 1)
+            // let rem = (e - 1) * allEnd;
+            // let end = e * allEnd;
+            // if (e === 1) {
+            //   setBig(rem + e);
+            //   setEnd(end);
+            // }
+            // else if (e === (dynamicPage + 1)) {
+            //   setBig(rem + 1);
+            //   setEnd(res.data.total);
+            // }
+            // else {
+            //   setBig(rem + 1);
+            //   setEnd(end);
+            // }
+            // for (let i = 1; i <= dynamicPage ; i++) {
+            //   droppage.push(i);
+            // }
+            // setDefaultPage(droppage);
           }
         });
     }
@@ -288,7 +306,7 @@ function AllQuery(props) {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
-       onSort: (field, order) => {
+      onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);
 
@@ -417,10 +435,15 @@ function AllQuery(props) {
     },
   ];
   const resetPaging = () => {
-    console.log("reset");
-    setPage(1);
+    // console.log("reset in Parent");
+    // setPage(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
+
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger)
+    // console.log(resetTrigger,"resetTrigger in allQ");
+  }
 
   return (
     <>
@@ -435,14 +458,15 @@ function AllQuery(props) {
               records={records}
               index="tpquery1"
               resetPaging={resetPaging}
+              resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
           </Row>
-          <Row>
+          {/* <Row>
             <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span style={{ "width": "40%" }}>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {count}
                   </span>
                   <span className="d-flex">
@@ -463,24 +487,16 @@ function AllQuery(props) {
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "75px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
                           setPage(e.target.value);
                           getInCompleteAssingment(e.target.value);
                         }}
-                        className="form-control"
-                        style={{ "paddingLeft": "0px", "paddingRight": "0px" }}
-                      >
+                        className="form-control">
                         {defaultPage.map((i) => (
-                          <option value={i} style={{ "textAlign": "center" }}>{i}</option>
+                          <option value={i} >{i}</option>
                         ))}
                       </select>
                     </div>
@@ -503,6 +519,23 @@ function AllQuery(props) {
                   </span>
                 </div>
               </div>
+            </Col>
+          </Row> */}
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+                count={count}
+                setData={setInCompleteData}
+                getData={getInCompleteAssingment}
+                AllQuery="AllQuery"
+                // setRecords={setRecords}
+                records={records}
+                index="tpquery1"
+                // resetPaging={resetPaging}
+                // setCount={setCount}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
             </Col>
           </Row>
         </CardHeader>

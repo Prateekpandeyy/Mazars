@@ -18,10 +18,15 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
+import Paginator from "../../../components/Paginator/Paginator";
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
   let total = Number(data.recordcount);
+  // console.log(total,"total at incomQ");
+  let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  let pageno = JSON.parse(localStorage.getItem("tpQuery3"));
+  
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -30,14 +35,15 @@ function InCompleteData({ CountIncomplete, data }) {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [accend, setAccend] = useState(false);
 
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState("0");
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(50);
+  const [end, setEnd] = useState(allEnd);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
+  const [resetTrigger,setresetTrigger]=useState(false);
   const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const ViewDiscussionToggel = (key) => {
@@ -48,7 +54,7 @@ function InCompleteData({ CountIncomplete, data }) {
     }
   };
 
-
+// console.log(count,"count in incompQ begin");
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -56,18 +62,19 @@ function InCompleteData({ CountIncomplete, data }) {
       uit: token,
     },
   };
+  
 
-  useEffect(() => {
-    setPage(1);
-    setEnd(
-      Number(localStorage.getItem("tp_record_per_page"))
-    );
-    setAtpage(1);
-  }, []);
+  // useEffect(() => {
+  //   setPage(1);
+  //   setEnd(
+  //     Number(localStorage.getItem("tp_record_per_page"))
+  //   );
+  //   setAtpage(1);
+  // }, []);
 
-  useEffect(() => {
-    setCount(total)
-  }, [total]);
+  // useEffect(() => {
+  //   setCount(total)
+  // }, [total]);
 
 
   useEffect(() => {
@@ -79,51 +86,50 @@ function InCompleteData({ CountIncomplete, data }) {
     }
   }, [ViewDiscussion]);
 
-  useEffect(() => {
-    setCount(total)
-    let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
-    if (!data) {
-      getInCompleteAssingment(1);
-    }
-  }, [total]);
 
-  // useEffect(() => {
-  //   let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
-  //   if (!data) {
-  //   getInCompleteAssingment();
-  //   }
-  // }, []);
+  useEffect(() => {
+    //   setCount(total)
+    // let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+    if (!pageno) {
+      pageno = 1;
+    }
+      getInCompleteAssingment(pageno);
+      // setPage(pageno);
+      // console.log("getting useEfect incomp");
+  }, []);
+
 
   //page counter
-  const firstChunk = () => {
-    setAtpage(1);
-    setPage(1);
-    getInCompleteAssingment(1);
-  };
-  const prevChunk = () => {
-    if (atPage > 1) {
-      setAtpage((atPage) => atPage - 1);
-    }
-    setPage(Number(page) - 1);
-    getInCompleteAssingment(Number(page) - 1);
-  };
-  const nextChunk = () => {
-    if (atPage < totalPages) {
-      setAtpage((atPage) => atPage + 1);
-    }
-    setPage(Number(page) + 1);
-    getInCompleteAssingment(Number(page) + 1);
-  };
-  const lastChunk = () => {
-    setPage(defaultPage.at(-1));
-    getInCompleteAssingment(defaultPage.at(-1));
-    setAtpage(totalPages);
-  };
+  // const firstChunk = () => {
+  //   setAtpage(1);
+  //   setPage(1);
+  //   getInCompleteAssingment(1);
+  // };
+  // const prevChunk = () => {
+  //   if (atPage > 1) {
+  //     setAtpage((atPage) => atPage - 1);
+  //   }
+  //   setPage(Number(page) - 1);
+  //   getInCompleteAssingment(Number(page) - 1);
+  // };
+  // const nextChunk = () => {
+  //   if (atPage < totalPages) {
+  //     setAtpage((atPage) => atPage + 1);
+  //   }
+  //   setPage(Number(page) + 1);
+  //   getInCompleteAssingment(Number(page) + 1);
+  // };
+  // const lastChunk = () => {
+  //   setPage(defaultPage.at(-1));
+  //   getInCompleteAssingment(defaultPage.at(-1));
+  //   setAtpage(totalPages);
+  // };
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+    localStorage.setItem(`tpQuery3`, JSON.stringify(e));
     setLoading(true);
-    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+    
     let remainApiPath = "";
     setLoading(true);
     if (data) {
@@ -148,7 +154,7 @@ function InCompleteData({ CountIncomplete, data }) {
           myConfig
         )
         .then((res) => {
-          let droppage = [];
+          // let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
             let all = [];
@@ -166,25 +172,30 @@ function InCompleteData({ CountIncomplete, data }) {
             });
             setInCompleteData(all);
             setRecords(res.data.result.length);
-            console.log(count);
-            const dynamicPage = Math.ceil(total / allEnd);
-            setTotalPages(dynamicPage + 1)
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else if (e === (dynamicPage + 1)) {
-              setBig(rem + 1);
-              setEnd(res.data.total);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i < (dynamicPage + 1); i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+            setCount(res.data.total);
+            // console.log(res.data.total,"total in setCount response");
+            // console.log(count,"count in submit");
+            // const dynamicPage = Math.ceil(count / allEnd);
+            // console.log(dynamicPage,"dynamic in submit");
+            // setTotalPages(dynamicPage)
+            // let rem = (e - 1) * allEnd;
+            // let end = e * allEnd;
+            // if (e === 1) {
+            //   setBig(rem + e);
+            //   setEnd(allEnd);
+            // } 
+            // else if (e === (dynamicPage)) {
+            //   setBig(rem + 1);
+            //   setEnd(res.data.total);
+            // } 
+            // else {
+            //   setBig(rem + 1);
+            //   setEnd(end);
+            // }
+            // for (let i = 1; i <= dynamicPage; i++) {
+            //   droppage.push(i);
+            // }
+            // setDefaultPage(droppage);
           }
         });
     }
@@ -219,11 +230,7 @@ function InCompleteData({ CountIncomplete, data }) {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
-
+      dataField: "cid",
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -291,7 +298,7 @@ function InCompleteData({ CountIncomplete, data }) {
         }
         sortMessage(val, 3);
       },
-      
+
     },
     {
       text: "Sub category",
@@ -424,11 +431,15 @@ function InCompleteData({ CountIncomplete, data }) {
     },
   ];
 
-  const resetPaging = () => {
-    console.log("reset");
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-  };
+  // const resetPaging = () => {
+  //   console.log("reset");
+  //   setPage(1);
+  //   setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  // };
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger)
+    // console.log(resetTrigger,"resetTrigger in incompQ");
+  }
 
   return (
     <>
@@ -442,13 +453,13 @@ function InCompleteData({ CountIncomplete, data }) {
               setRecords={setRecords}
               records={records}
               index="tpquery3"
-              resetPaging={resetPaging}
+              // resetPaging={resetPaging}
+              resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
           </Row>
-          <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+          {/* <Row>
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                   <span>
@@ -511,6 +522,20 @@ function InCompleteData({ CountIncomplete, data }) {
                   </span>
                 </div>
               </div>
+            </Col>
+          </Row> */}
+          <Row>
+            <Col md="12" align="right">
+              <Paginator 
+                count={count}
+                setData={setInCompleteData}
+                getData={getInCompleteAssingment}
+                InprogressQuery="InprogressQuery"
+                // setRecords={setRecords}
+                records={records}
+                index="tpquery3"
+                resetTrigger={resetTrigger}
+                />
             </Col>
           </Row>
         </CardHeader>
