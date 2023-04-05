@@ -24,6 +24,10 @@ import MessageIcon, {
   Payment,
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function AllPayment(props) {
   const [payment, setPayment] = useState([]);
@@ -104,71 +108,84 @@ function AllPayment(props) {
 
   const getPaymentStatus = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment1`));
+    if (searchData) {
+      remainApiPath = `/admin/getUploadedProposals?page=${e}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getUploadedProposals?page=${e}`;
+    }
 
     if (e) {
-      axios
-        .get(
-          `${baseUrl}/admin/getUploadedProposals?status1=2&page=${e}`,
-          myConfig
-        )
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.total);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setPayment(all);
-            setPaymentCount(all.length);
-            setRecords(all.length);
-            let end = e * allEnd;
-            setCountNotification(res.data.total);
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-            console.log("dynamicPage", dynamicPage);
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setPaymentCount(all.length);
+          setRecords(all.length);
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+          console.log("dynamicPage", dynamicPage);
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/getUploadedProposals?status1=2&orderby==${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/getUploadedProposals?orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -516,7 +533,6 @@ function AllPayment(props) {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
   return (
     <div>
@@ -528,52 +544,52 @@ function AllPayment(props) {
             AllPayment="AllPayment"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adpayment1"
           />
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
                           setPage(e.target.value);
                           getPaymentStatus(e.target.value);
-                          localStorage.setItem("adminpayt1", e.target.value);
+                          localStorage.setItem(
+                            "adminpayt1",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >
@@ -585,16 +601,16 @@ function AllPayment(props) {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

@@ -16,6 +16,11 @@ import MessageIcon, {
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 function DeclinedProposal() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -33,6 +38,8 @@ function DeclinedProposal() {
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -44,6 +51,14 @@ function DeclinedProposal() {
     let localPage = Number(localStorage.getItem("adminprot4"));
     if (!localPage) {
       localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuepro4", JSON.stringify(sort));
     }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
@@ -75,81 +90,126 @@ function DeclinedProposal() {
   }, [viewProposalModal]);
 
   const getDeclinedProposal = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal4`));
+
+    if (searchData) {
+      remainApiPath = `admin/getProposals?status=6&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `/admin/getProposals?status=6&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
 
     if (e) {
-      axios
-        .get(`${baseUrl}/admin/getProposals?status=6&page=${e}`, myConfig)
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.total);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setProposalDisplay(all);
-
-            let end = e * allEnd;
-            setCountNotification(res.data.total);
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getProposals?status=6&page=${page}&orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminprot4", 1);
+    localStorage.setItem("sortedValuepro4", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal4`));
 
-          setProposalDisplay(all);
+    if (searchData) {
+      remainApiPath = `admin/getProposals?status=6&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `/admin/getProposals?status=6&orderby=${val}&orderbyfield=${field}`;
+    }
+
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let sortId = 1;
+        if (page > 1) {
+          sortId = big;
         }
-      });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setProposalDisplay(all);
+      }
+    });
   };
   const firstChunk = () => {
     setAtpage(1);
@@ -495,7 +555,10 @@ function DeclinedProposal() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminpro4");
+    localStorage.removeItem("sortedValuepro4");
   };
   return (
     <>
@@ -507,46 +570,43 @@ function DeclinedProposal() {
             declinedProposal="declinedProposal"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adproposal4"
           />
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
@@ -564,16 +624,16 @@ function DeclinedProposal() {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

@@ -12,6 +12,10 @@ import {
   DeleteIcon,
   DiscussProposal,
 } from "../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function PendingAllocation(props) {
   const myRef = useRef([]);
@@ -27,6 +31,8 @@ function PendingAllocation(props) {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -67,6 +73,14 @@ function PendingAllocation(props) {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue2", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPendingForAllocation(localPage);
@@ -106,79 +120,117 @@ function PendingAllocation(props) {
   };
   const getPendingForAllocation = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    if (searchData) {
+      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&category=${
+        searchData.store
+      }&date1=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&date2=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/pendingAllocation?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
     if (e) {
-      axios
-        .get(`${baseUrl}/admin/pendingAllocation?page=${e}`, myConfig)
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setCountNotification(res.data.total);
-            setRecords(res.data.total);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setPendingData(all);
-            let end = e * allEnd;
-
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPendingData(all);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/pendingAllocation?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminqp2", 1);
+    localStorage.setItem("sortedValue2", JSON.stringify(sort));
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    if (searchData) {
+      remainApiPath = `/admin/pendingAllocation?orderby=${val}&orderbyfield=${field}&category=${
+        searchData.store
+      }&date1=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&date2=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/pendingAllocation?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          setPendingData(all);
-        }
-      });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setPendingData(all);
+      }
+    });
   };
   const columns = [
     {
@@ -215,6 +267,7 @@ function PendingAllocation(props) {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);
@@ -271,7 +324,7 @@ function PendingAllocation(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -287,7 +340,7 @@ function PendingAllocation(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
     },
     {
@@ -302,7 +355,7 @@ function PendingAllocation(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -369,7 +422,10 @@ function PendingAllocation(props) {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminqp2");
+    localStorage.removeItem("sortedValue2");
   };
   return (
     <>
@@ -381,19 +437,22 @@ function PendingAllocation(props) {
             pendingAlloation="pendingAlloation"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adquery2"
           />
         </CardHeader>
         <CardBody className="card-body">
           <CardHeader>
             <Row>
-              <Col md="6"></Col>
-              <Col md="6" align="right">
+              <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
+                    <span className="customPaginationSpan">
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
@@ -403,25 +462,19 @@ function PendingAllocation(props) {
                             className="navButton mx-1"
                             onClick={(e) => firstChunk()}
                           >
-                            &lt; &lt;
+                            <KeyboardDoubleArrowLeftIcon />
                           </button>
                           <button
                             className="navButton mx-1"
                             onClick={(e) => prevChunk()}
                           >
-                            &lt;
+                            <KeyboardArrowLeftIcon />
                           </button>
                         </>
                       ) : (
                         ""
                       )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
@@ -442,13 +495,13 @@ function PendingAllocation(props) {
                             className="navButton mx-1"
                             onClick={(e) => nextChunk()}
                           >
-                            &gt;
+                            <KeyboardArrowRightIcon />
                           </button>
                           <button
                             className="navButton mx-1"
                             onClick={(e) => lastChunk()}
                           >
-                            &gt; &gt;
+                            <KeyboardDoubleArrowRightIcon />
                           </button>
                         </>
                       ) : (

@@ -32,6 +32,10 @@ function AdminFilter(props) {
     index,
     resetPaging,
     setCountNotification,
+    setDefaultPage,
+    page,
+    setBig,
+    setEnd,
   } = props;
 
   const [selectedData, setSelectedData] = useState([]);
@@ -98,13 +102,14 @@ function AdminFilter(props) {
   //reset date
   const resetData = () => {
     localStorage.removeItem(`searchData${index}`);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
     reset();
     setSelectedData([]);
     setShowSubCat([]);
     setCatShowData([]);
     setStore2([]);
     setTax2([]);
-    getData(1);
+
     setFromDate("");
     setStatus("");
     setQueryNo("");
@@ -112,10 +117,59 @@ function AdminFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
+    getData(1);
     // dateValue.current.clearValue();
   };
+  const updateResult = (res) => {
+    let droppage = [];
+    let customId = 1;
+    if (res.data.code === 1) {
+      let all = [];
+      let data = res.data.result;
+      data.map((i) => {
+        let data = {
+          ...i,
+          cid: customId,
+        };
+        customId++;
+        all.push(data);
+      });
+      let end = allEnd;
 
+      if (allEnd > res.data.total) {
+        end = res.data.total;
+      }
+
+      setEnd(end);
+      let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+      let rem = (page - 1) * allEnd;
+      console.log("page", page);
+      if (page === 1) {
+        setBig(rem + page);
+      } else {
+        setBig(rem + 1);
+      }
+      for (let i = 1; i <= dynamicPage; i++) {
+        droppage.push(i);
+      }
+      setDefaultPage(droppage);
+      setData(all);
+      setCountNotification(res.data.total);
+      setRecords(res.data.total);
+
+      setDefaultPage(droppage);
+      resetPaging();
+      // if (
+      //   Object.keys(returnData).length === 0 &&
+      //   returnData.constructor === Object
+      // ) {
+
+      // }
+    }
+  };
   const onSubmit = (data) => {
+    console.log("data", data);
     let obj = {};
     if (data.route) {
       obj = {
@@ -143,7 +197,6 @@ function AdminFilter(props) {
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     if (allQueries == "allQueries") {
-      let customId = 1;
       if (data.route) {
         axios
           .get(
@@ -162,20 +215,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              let all = [];
-              let data = res.data.result;
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setData(all);
-              setCountNotification(res.data.total);
-              setRecords(res.data.total);
-              resetPaging();
+              updateResult(res);
             }
           });
       } else {
@@ -191,21 +231,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              let customId = 1;
-              let data = res.data.result;
-              let all = [];
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setData(all);
-              setCountNotification(res.data.total);
-              setRecords(res.data.total);
-              resetPaging();
+              updateResult(res);
             }
           });
       }
@@ -228,23 +254,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -261,23 +271,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
+              updateResult(res);
             }
           });
       }
@@ -300,25 +294,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -332,25 +308,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -372,25 +330,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -404,25 +344,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -445,23 +367,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              let customId = 1;
-              let all = [];
-              let data = res.data.result;
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setData(all);
-              setCountNotification(res.data.total);
-              setRecords(res.data.total);
-              resetPaging();
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -478,23 +384,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              let customId = 1;
-              let all = [];
-              let data = res.data.result;
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setData(all);
-              setCountNotification(res.data.total);
-              setRecords(res.data.total);
-              resetPaging();
-            }
+            updateResult(res);
           });
       }
     }
@@ -515,23 +405,7 @@ function AdminFilter(props) {
               myConfig
             )
             .then((res) => {
-              if (res.data.code === 1) {
-                let customId = 1;
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
+              updateResult(res);
             });
         } else {
           axios
@@ -575,23 +449,7 @@ function AdminFilter(props) {
               myConfig
             )
             .then((res) => {
-              if (res.data.code === 1) {
-                let customId = 1;
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
+              updateResult(res);
             });
         } else {
           axios
@@ -600,23 +458,7 @@ function AdminFilter(props) {
               myConfig
             )
             .then((res) => {
-              if (res.data.code === 1) {
-                let customId = 1;
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
+              updateResult(res);
             });
         }
       }
@@ -637,23 +479,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              let customId = 1;
-              let all = [];
-              let data = res.data.result;
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setData(all);
-              setCountNotification(res.data.total);
-              setRecords(res.data.total);
-              resetPaging();
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -668,23 +494,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              let customId = 1;
-              let all = [];
-              let data = res.data.result;
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setData(all);
-              setCountNotification(res.data.total);
-              setRecords(res.data.total);
-              resetPaging();
-            }
+            updateResult(res);
           });
       }
     }
@@ -705,25 +515,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -738,25 +530,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -779,25 +553,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -811,25 +567,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -850,25 +588,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -885,25 +605,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -924,25 +626,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -959,25 +643,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -1012,7 +678,7 @@ function AdminFilter(props) {
         let subCat = JSON.parse(localStorage.getItem(`admin${parentId}`));
         setTax2(subCat);
 
-        subCat.map((i) => {
+        subCat?.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];
@@ -1025,7 +691,7 @@ function AdminFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     } else if (!dk?.toDate) {
       let date = moment().format("DD-MM-YYYY");
@@ -1066,7 +732,7 @@ function AdminFilter(props) {
                     value={showSubCat}
                     allowClear
                   >
-                    {tax2.map((p, index) => (
+                    {tax2?.map((p, index) => (
                       <Option value={p.details} key={index}>
                         {p.details}
                       </Option>

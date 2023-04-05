@@ -10,6 +10,11 @@ import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { orderBy } from "lodash";
 
 function AllQueriesData() {
   const [allQueriesData, setAllQueriesData] = useState([]);
@@ -24,6 +29,8 @@ function AllQueriesData() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("0");
+  const [fieldBy, setFiledBy] = useState("0");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
 
@@ -31,6 +38,15 @@ function AllQueriesData() {
     let localPage = Number(localStorage.getItem("adminqp1"));
     if (!localPage) {
       localPage = 1;
+    }
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue1", JSON.stringify(sort));
     }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
@@ -73,10 +89,18 @@ function AllQueriesData() {
   };
   const getAllQueriesData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let remainApiPath = "";
+
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
     if (searchData) {
-      remainApiPath = `/admin/getAllQueries?page=${e}&cat_id=${
+      remainApiPath = `/admin/getAllQueries?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -88,7 +112,7 @@ function AllQueriesData() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getAllQueries?page=${e}`;
+      remainApiPath = `admin/getAllQueries?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -137,31 +161,53 @@ function AllQueriesData() {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAllQueries?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminqp1", 1);
+    localStorage.setItem("sortedValue1", JSON.stringify(sort));
+    setOrderBy(val);
+    setFiledBy(field);
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/admin/getAllQueries?cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `admin/getAllQueries?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          setAllQueriesData(all);
-        }
-      });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setAllQueriesData(all);
+      }
+    });
   };
+
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -389,7 +435,10 @@ function AllQueriesData() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminqp1");
+    localStorage.removeItem("sortedValue1");
   };
 
   return (
@@ -402,8 +451,12 @@ function AllQueriesData() {
             allQueries="allQueries"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adquery1"
           />
         </CardHeader>
@@ -412,39 +465,32 @@ function AllQueriesData() {
           {/* <Records records={records} /> */}
           <CardHeader>
             <Row>
-              <Col md="6"></Col>
-              <Col md="6" align="right">
+              <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
+                    <span className="customPaginationSpan">
                       {big}-{end} of {countNotification}
                     </span>
                     <span className="d-flex">
                       {page > 1 ? (
                         <>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => firstChunk()}
                           >
-                            &lt; &lt;
+                            <KeyboardDoubleArrowLeftIcon />
                           </button>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => prevChunk()}
                           >
-                            &lt;
+                            <KeyboardArrowLeftIcon />
                           </button>
                         </>
                       ) : (
                         ""
                       )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
@@ -454,24 +500,24 @@ function AllQueriesData() {
                           }}
                           className="form-control"
                         >
-                          {defaultPage.map((i) => (
+                          {defaultPage?.map((i) => (
                             <option value={i}>{i}</option>
                           ))}
                         </select>
                       </div>
-                      {defaultPage.length > page ? (
+                      {defaultPage?.length > page ? (
                         <>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => nextChunk()}
                           >
-                            &gt;
+                            <KeyboardArrowRightIcon />
                           </button>
                           <button
-                            className="navButton mx-1"
+                            className="navButton"
                             onClick={(e) => lastChunk()}
                           >
-                            &gt; &gt;
+                            <KeyboardDoubleArrowRightIcon />
                           </button>
                         </>
                       ) : (

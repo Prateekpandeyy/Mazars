@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
-import Records from "../../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import ViewAllReportModal from "./ViewAllReport";
@@ -17,6 +16,10 @@ import MessageIcon, {
   ViewDiscussionIcon,
   Payment,
 } from "../../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function DraftReport() {
   const userid = window.localStorage.getItem("adminkey");
@@ -85,19 +88,21 @@ function DraftReport() {
     runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
 
-  var clcomp = {
-    color: "green",
-  };
-  var clinpro = {
-    color: "blue",
-  };
   useEffect(() => {
-    getAssignmentData();
+    let localPage = Number(localStorage.getItem("adminassign2"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getAssignmentData(localPage);
   }, []);
   const getAssignmentData = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment2`)
+    );
     if (searchData) {
       remainApiPath = `/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&page=${e}&cat_id=${
         searchData.store
@@ -107,11 +112,7 @@ function DraftReport() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&assignment_status=${
-        searchData.stage_status
-      }&stages_status=${searchData.p_status}&pcat_id=${searchData.pcatId}&qno=${
-        searchData?.query_no
-      }`;
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
       remainApiPath = `admin/getAssignments?assignment_status=Draft_Report&stages_status=1&page=${e}`;
     }
@@ -164,16 +165,16 @@ function DraftReport() {
   const sortMessage = (val, field) => {
     axios
       .get(
-        `${baseUrl}/admin/getAssignments?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -296,17 +297,8 @@ function DraftReport() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
-      },
+      dataField: "cid",
+
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -315,7 +307,17 @@ function DraftReport() {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
         if (oldDate == null) {
@@ -327,7 +329,17 @@ function DraftReport() {
     {
       text: "Query no",
       dataField: "assign_no",
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -348,11 +360,33 @@ function DraftReport() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "status",
@@ -436,7 +470,17 @@ function DraftReport() {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
@@ -449,7 +493,18 @@ function DraftReport() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
@@ -545,6 +600,7 @@ function DraftReport() {
     return style;
   };
   const onSubmit = (data) => {
+    console.log("eeeee");
     let obj = {};
     if (data.route) {
       obj = {
@@ -567,33 +623,54 @@ function DraftReport() {
         route: window.location.pathname,
       };
     }
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     localStorage.setItem(`searchDataadAssignment2`, JSON.stringify(obj));
     if (data.route) {
       axios
         .get(
-          `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&qno=${data.query_no}`,
+          `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setAssignmentDisplay(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
+              let droppage = [];
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let all = [];
+              let customId = 1;
+              let data = res.data.result;
+
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignmentDisplay(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let end = allEnd;
+
+              if (allEnd > res.data.total) {
+                end = res.data.total;
               }
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+              setBig(1);
+
+              setEnd(end);
+
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+
+              setDefaultPage(droppage);
+              droppage = [];
+              setBig(1);
+              setPage(1);
             }
           }
         });
@@ -606,23 +683,43 @@ function DraftReport() {
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              if (res.data.result) {
-                let customId = 1;
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setAssignmentDisplay(all);
-                setCountNotification(res.data.total);
-                setRecords(res.data.total);
-                resetPaging();
+              let droppage = [];
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let all = [];
+              let customId = 1;
+              let data = res.data.result;
+
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignmentDisplay(all);
+              setCountNotification(res.data.total);
+              setRecords(res.data.total);
+              let end = allEnd;
+
+              if (allEnd > res.data.total) {
+                end = res.data.total;
               }
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+              setBig(1);
+
+              setEnd(end);
+
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+
+              setDefaultPage(droppage);
+              droppage = [];
+              setBig(1);
+              setPage(1);
             }
           }
         });
@@ -639,18 +736,14 @@ function DraftReport() {
         setSelectedData(dk.pcatId);
         // setHide(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     }
   }, []);
   const Reset = () => {
     return (
       <>
-        <button
-          type="submit"
-          className="customBtn mb-2"
-          onClick={() => resetData()}
-        >
+        <button type="submit" className="customBtn" onClick={() => resetData()}>
           Reset
         </button>
       </>
@@ -766,8 +859,7 @@ function DraftReport() {
 
         <CardBody className="card-body">
           <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                   <span>
@@ -777,34 +869,31 @@ function DraftReport() {
                     {page > 1 ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
-                          setPage(e.target.value);
-                          getAssignmentData(e.target.value);
-                          localStorage.setItem("adminassign2", e.target.value);
+                          setPage(Number(e.target.value));
+                          getAssignmentData(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminassign2",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >
@@ -816,16 +905,16 @@ function DraftReport() {
                     {defaultPage.length > page ? (
                       <>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (

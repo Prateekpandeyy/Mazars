@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
-import Records from "../../../components/Records/Records";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 const CreateInvoice = () => {
   const userid = window.localStorage.getItem("adminkey");
   const [proposal, setProposal] = useState([]);
@@ -66,61 +68,81 @@ const CreateInvoice = () => {
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
 
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`admincreate`));
+
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.p_dateFrom ||
+      searchData?.p_dateTo ||
+      searchData?.query_no
+    ) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&cquery_no=${
+        searchData.query_no
+      }
+      }&from=${searchData.p_dateFrom
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.p_dateTo
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData.opt}&installment_no=${
+        searchData?.installment_no
+      }`;
+    } else {
+      remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}`;
+    }
     if (e) {
-      axios
-        .get(`${baseUrl}/admin/getPaymentDetail?status=6&page=${e}`, myConfig)
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.total);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setProposal(all);
-
-            let end = e * allEnd;
-            setCountNotification(res.data.total);
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.payment_detail;
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposal(all);
+
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
-      },
+      dataField: "cid",
 
       headerStyle: () => {
         return { width: "50px" };
@@ -185,13 +207,14 @@ const CreateInvoice = () => {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
+    localStorage.removeItem("admininvt1");
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
   };
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getProposalList(1);
-    localStorage.setItem("adminprot4", 1);
+    localStorage.setItem("admininvt1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -199,21 +222,21 @@ const CreateInvoice = () => {
     }
     setPage(Number(page) - 1);
     getProposalList(page - 1);
-    localStorage.setItem("adminprot4", Number(page) - 1);
+    localStorage.setItem("admininvt1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("adminprot4", Number(page) + 1);
+    localStorage.setItem("admininvt1", Number(page) + 1);
     getProposalList(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getProposalList(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("adminprot4", defaultPage.at(-1));
+    localStorage.setItem("admininvt1", defaultPage.at(-1));
   };
   return (
     <>
@@ -226,13 +249,19 @@ const CreateInvoice = () => {
             records={records}
             invoice="admincreate"
             userid={JSON.parse(userid)}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
           />
           <Row>
             <Col md="6"></Col>
             <Col md="6" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
+                  <span className="customPaginationSpan">
                     {big}-{end} of {countNotification}
                   </span>
                   <span className="d-flex">
@@ -242,25 +271,19 @@ const CreateInvoice = () => {
                           className="navButton mx-1"
                           onClick={(e) => firstChunk()}
                         >
-                          &lt; &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                         <button
                           className="navButton mx-1"
                           onClick={(e) => prevChunk()}
                         >
-                          &lt;
+                          <KeyboardArrowLeftIcon />
                         </button>
                       </>
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="navButtonSelectDiv">
                       <select
                         value={page}
                         onChange={(e) => {
@@ -281,13 +304,13 @@ const CreateInvoice = () => {
                           className="navButton mx-1"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                         <button
                           className="navButton mx-1"
                           onClick={(e) => lastChunk()}
                         >
-                          &gt; &gt;
+                          <KeyboardDoubleArrowRightIcon />
                         </button>
                       </>
                     ) : (
