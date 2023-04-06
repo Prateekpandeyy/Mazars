@@ -297,18 +297,7 @@ function AllProposalComponent() {
     {
       dataField: "assign_no",
       text: "Query no",
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -360,6 +349,7 @@ function AllProposalComponent() {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);
@@ -438,7 +428,18 @@ function AllProposalComponent() {
     },
     {
       text: "Status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -471,7 +472,7 @@ function AllProposalComponent() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
       sortFunc: (a, b, order, dataField) => {
         setAccend(!accend);
@@ -502,7 +503,7 @@ function AllProposalComponent() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -514,6 +515,18 @@ function AllProposalComponent() {
     {
       dataField: "tl_name",
       text: "TL name",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 11);
+      },
     },
     {
       text: "Action",

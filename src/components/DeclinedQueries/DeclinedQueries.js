@@ -251,17 +251,7 @@ function DeclinedQueries() {
       text: "Query no",
       dataField: "assign_no",
       sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
