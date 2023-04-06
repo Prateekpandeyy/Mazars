@@ -69,6 +69,14 @@ function DraftReport() {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueassign2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValueassign2", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getAssignmentData(localPage);
@@ -88,23 +96,23 @@ function DraftReport() {
     runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
 
-  useEffect(() => {
-    let localPage = Number(localStorage.getItem("adminassign2"));
-    if (!localPage) {
-      localPage = 1;
-    }
-    setPage(localPage);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-    getAssignmentData(localPage);
-  }, []);
   const getAssignmentData = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueassign2"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(
       localStorage.getItem(`searchDataadAssignment2`)
     );
     if (searchData) {
-      remainApiPath = `/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&page=${e}&cat_id=${
+      remainApiPath = `/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -114,7 +122,7 @@ function DraftReport() {
         .reverse()
         .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getAssignments?assignment_status=Draft_Report&stages_status=1&page=${e}`;
+      remainApiPath = `admin/getAssignments?assignment_status=Draft_Report&stages_status=1&&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
