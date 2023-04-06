@@ -14,7 +14,7 @@ import Paginator from "../../../components/Paginator/Paginator";
 function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-  let total = props.data;
+  // let total = props.data;
   // console.log(total,"total is that props");
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -22,16 +22,15 @@ function AllQuery(props) {
   const myRef = useRef([]);
 
   const [count, setCount] = useState("0");
-  const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(allEnd);
   const [page, setPage] = useState(0);
-  const [atPage, setAtpage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [sortVal, setSortVal] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [sortVal, setSortVal] = useState('');
+  const [sortField, setSortField] = useState('');
   const [accend, setAccend] = useState(false);
-  const [defaultPage, setDefaultPage] = useState(["1"]);
-  const [resetTrigger,setresetTrigger]=useState(false);
+  const [resetTrigger, setresetTrigger] = useState(false);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -60,74 +59,30 @@ function AllQuery(props) {
   };
   let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
 
-  // console.log(count,"count in all Query");
-
-  // useEffect(() => {
-  //   if (pageno) {
-  //     setPage(pageno);
-  //     setAtpage(pageno);
-  //   } else {
-  //     setPage(1);
-  //     setAtpage(1);
-  //   }
-  //   setEnd(
-  //     Number(localStorage.getItem("tp_record_per_page"))
-  //   );
-
-  //   // setCount(props.data)
-
-  // }, []);
+  let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
 
   useEffect(() => {
     if (pageno) {
       getInCompleteAssingment(pageno);
-      // setCount(total)
-      // console.log(count,"count in all Query useEffect");
     } else {
       getInCompleteAssingment(1);
     }
   }, []);
 
-//   useEffect(() => {
-//     const N = Math.ceil(count / allEnd);
-//     const arr = Array.from({ length: N }, (_, index) => index + 1);
-//     setDefaultPage(arr);
-//     console.log(arr,"array");
-// }, [count]);
-
-  //page counter
-  // const firstChunk = () => {
-  //   setAtpage(1);
-  //   setPage(1);
-  //   getInCompleteAssingment(1);
-  // };
-  // const prevChunk = () => {
-  //   if (atPage > 1) {
-  //     setAtpage((atPage) => atPage - 1);
-  //   }
-  //   setPage(Number(page) - 1);
-  //   getInCompleteAssingment(Number(page) - 1);
-  // };
-  // const nextChunk = () => {
-  //   if (atPage < totalPages) {
-  //     setAtpage((atPage) => atPage + 1);
-  //   }
-  //   setPage(Number(page) + 1);
-  //   getInCompleteAssingment(Number(page) + 1);
-  // };
-  // const lastChunk = () => {
-  //   setPage(defaultPage.at(-1));
-  //   getInCompleteAssingment(defaultPage.at(-1));
-  //   setAtpage(totalPages);
-  // };
-
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
     localStorage.setItem(`tpQuery1`, JSON.stringify(e));
+    // let getsort = JSON.parse(localStorage.getItem("freezetpQuery1"));
+    console.log(pagetry, "getsort");
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    console.log(val, "if getsort val");
+    console.log(field, "if getsort field");
     let remainApiPath = "";
+    setOnPage(e);
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-    if (data) {
+    if ((data) && (!pagetry)) {
       remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
         }&from=${data.fromDate
           ?.split("-")
@@ -137,7 +92,21 @@ function AllQuery(props) {
             .reverse()
             .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
         }&qno=${data?.query_no}`;
-    } else {
+    }
+    else if ((data) && (pagetry)) {
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    }else if((!data) && (pagetry)){
+      remainApiPath = `tl/getIncompleteQues?page=${e}orderby=${val}&orderbyfield=${field}`
+    }
+    else {
       remainApiPath = `tl/getIncompleteQues?page=${e}`;
     }
     if (e) {
@@ -153,7 +122,6 @@ function AllQuery(props) {
             setRecords(res.data.result.length);
             let all = [];
             let customId = 1;
-
             if (e > 1) {
               customId = allEnd * (e - 1) + 1;
             }
@@ -168,48 +136,34 @@ function AllQuery(props) {
             setInCompleteData(all);
             setRecords(res.data.result.length);
             setCount(res.data.total);
-            // console.log(count,"count in all Query submit in all Query");
-            
-
-            // const dynamicPage = Math.ceil(props.data / allEnd);
-            // setTotalPages(dynamicPage + 1)
-            // let rem = (e - 1) * allEnd;
-            // let end = e * allEnd;
-            // if (e === 1) {
-            //   setBig(rem + e);
-            //   setEnd(end);
-            // }
-            // else if (e === (dynamicPage + 1)) {
-            //   setBig(rem + 1);
-            //   setEnd(res.data.total);
-            // }
-            // else {
-            //   setBig(rem + 1);
-            //   setEnd(end);
-            // }
-            // for (let i = 1; i <= dynamicPage ; i++) {
-            //   droppage.push(i);
-            // }
-            // setDefaultPage(droppage);
           }
         });
     }
   }
 
-
-
   const sortMessage = (val, field) => {
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      pageno: onPage,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpQuery1`, JSON.stringify(obj));
+
     axios
       .get(
-        `${baseUrl}/tl/getIncompleteQues?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/tl/getIncompleteQues?page=${onPage}orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
+          let record =Number(localStorage.getItem("tp_record_per_page"))
+          let startAt = ((onPage - 1) * record)+1;
+          if (onPage > 1) {
+            sortId = startAt;
           }
           res.data.result.map((i) => {
             let data = {
@@ -437,11 +391,13 @@ function AllQuery(props) {
   const resetPaging = () => {
     // console.log("reset in Parent");
     // setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setEnd(Number(localStorage.getItem("tp_record_per_page")));
   };
 
   const resetTriggerFunc = () => {
-    setresetTrigger(!resetTrigger)
+    setresetTrigger(!resetTrigger);
+    localStorage.removeItem(`freezetpQuery1`);
+
     // console.log(resetTrigger,"resetTrigger in allQ");
   }
 
@@ -462,65 +418,6 @@ function AllQuery(props) {
               setCount={setCount}
             />
           </Row>
-          {/* <Row>
-            <Col md="12" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span className="customPaginationSpan">
-                    {big}-{end} of {count}
-                  </span>
-                  <span className="d-flex">
-                    <button
-                      className="navButton"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    {page > 1 ? (
-                      <button
-                        className="navButton"
-                        onClick={(e) => prevChunk()}
-                      >
-                        &lt;
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                    <div className="navButtonSelectDiv">
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(e.target.value);
-                          getInCompleteAssingment(e.target.value);
-                        }}
-                        className="form-control">
-                        {defaultPage.map((i) => (
-                          <option value={i} >{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <button
-                        className="navButton"
-                        onClick={(e) => nextChunk()}
-                      >
-                        &gt;
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                    <button
-                      className="navButton"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row> */}
           <Row>
             <Col md="12" align="right">
               <Paginator
@@ -531,6 +428,7 @@ function AllQuery(props) {
                 // setRecords={setRecords}
                 records={records}
                 index="tpquery1"
+                setOnPage={setOnPage}
                 // resetPaging={resetPaging}
                 // setCount={setCount}
                 resetTrigger={resetTrigger}

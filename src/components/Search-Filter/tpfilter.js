@@ -148,7 +148,7 @@ function TaxProfessionalFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus1(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     } else if (!dk?.toDate) {
       let date = moment().format("DD-MM-YYYY");

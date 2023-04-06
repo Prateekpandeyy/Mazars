@@ -25,8 +25,11 @@ function InCompleteData({ CountIncomplete, data }) {
   let total = Number(data.recordcount);
   // console.log(total,"total at incomQ");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+
   let pageno = JSON.parse(localStorage.getItem("tpQuery3"));
-  
+
+  let pagetry = JSON.parse(localStorage.getItem("freezetpQuery3"));
+
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -36,14 +39,14 @@ function InCompleteData({ CountIncomplete, data }) {
   const [accend, setAccend] = useState(false);
 
   const [count, setCount] = useState("0");
-  const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(allEnd);
   const [page, setPage] = useState(0);
-  const [atPage, setAtpage] = useState(1);
+  const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [resetTrigger,setresetTrigger]=useState(false);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const ViewDiscussionToggel = (key) => {
@@ -54,7 +57,7 @@ function InCompleteData({ CountIncomplete, data }) {
     }
   };
 
-// console.log(count,"count in incompQ begin");
+  // console.log(count,"count in incompQ begin");
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -62,20 +65,6 @@ function InCompleteData({ CountIncomplete, data }) {
       uit: token,
     },
   };
-  
-
-  // useEffect(() => {
-  //   setPage(1);
-  //   setEnd(
-  //     Number(localStorage.getItem("tp_record_per_page"))
-  //   );
-  //   setAtpage(1);
-  // }, []);
-
-  // useEffect(() => {
-  //   setCount(total)
-  // }, [total]);
-
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
@@ -93,46 +82,21 @@ function InCompleteData({ CountIncomplete, data }) {
     if (!pageno) {
       pageno = 1;
     }
-      getInCompleteAssingment(pageno);
-      // setPage(pageno);
-      // console.log("getting useEfect incomp");
+    getInCompleteAssingment(pageno);
+    // setPage(pageno);
+    // console.log("getting useEfect incomp");
   }, []);
 
-
-  //page counter
-  // const firstChunk = () => {
-  //   setAtpage(1);
-  //   setPage(1);
-  //   getInCompleteAssingment(1);
-  // };
-  // const prevChunk = () => {
-  //   if (atPage > 1) {
-  //     setAtpage((atPage) => atPage - 1);
-  //   }
-  //   setPage(Number(page) - 1);
-  //   getInCompleteAssingment(Number(page) - 1);
-  // };
-  // const nextChunk = () => {
-  //   if (atPage < totalPages) {
-  //     setAtpage((atPage) => atPage + 1);
-  //   }
-  //   setPage(Number(page) + 1);
-  //   getInCompleteAssingment(Number(page) + 1);
-  // };
-  // const lastChunk = () => {
-  //   setPage(defaultPage.at(-1));
-  //   getInCompleteAssingment(defaultPage.at(-1));
-  //   setAtpage(totalPages);
-  // };
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     localStorage.setItem(`tpQuery3`, JSON.stringify(e));
     setLoading(true);
-    
+    let val = pagetry?.val;
+    let field = pagetry?.field;
     let remainApiPath = "";
     setLoading(true);
-    if (data) {
+    if ((data) && (!pagetry)) {
       remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
         }&from=${data.fromDate
           ?.split("-")
@@ -142,7 +106,24 @@ function InCompleteData({ CountIncomplete, data }) {
             .reverse()
             .join("-")}&status=1&pcat_id=${data.pcatId
         }&qno=${data?.query_no}`;
-    } else {
+    }
+    else if ((data) && (pagetry)) {
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=1&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+    }
+    else if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
+        userid
+      )}&page=${e}orderby=${val}&orderbyfield=${field}&status=1`;
+    }
+    else {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
         userid
       )}&page=${e}&status=1`;
@@ -202,17 +183,29 @@ function InCompleteData({ CountIncomplete, data }) {
   };
 
   const sortMessage = (val, field) => {
+
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      pageno: onPage,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpQuery3`, JSON.stringify(obj));
+
     axios
       .get(
-        `${baseUrl}/tl/getIncompleteQues?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/tl/getIncompleteQues?page=${onPage}orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
+          let record = Number(localStorage.getItem("tp_record_per_page"))
+          let startAt = ((onPage - 1) * record) + 1;
           if (page > 1) {
-            sortId = big;
+            sortId = startAt;
           }
           res.data.result.map((i) => {
             let data = {
@@ -437,7 +430,8 @@ function InCompleteData({ CountIncomplete, data }) {
   //   setEnd(Number(localStorage.getItem("admin_record_per_page")));
   // };
   const resetTriggerFunc = () => {
-    setresetTrigger(!resetTrigger)
+    setresetTrigger(!resetTrigger);
+    localStorage.removeItem(`freezetpQuery3`);
     // console.log(resetTrigger,"resetTrigger in incompQ");
   }
 
@@ -458,75 +452,9 @@ function InCompleteData({ CountIncomplete, data }) {
               setCount={setCount}
             />
           </Row>
-          {/* <Row>
-            <Col md="12" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
-                    {big}-{end} of {count}
-                  </span>
-                  <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    {page > 1 ? (
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        &lt;
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(e.target.value);
-                          getInCompleteAssingment(e.target.value);
-                        }}
-                        className="form-control"
-                      >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        &gt;
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row> */}
           <Row>
             <Col md="12" align="right">
-              <Paginator 
+              <Paginator
                 count={count}
                 setData={setInCompleteData}
                 getData={getInCompleteAssingment}
@@ -534,8 +462,10 @@ function InCompleteData({ CountIncomplete, data }) {
                 // setRecords={setRecords}
                 records={records}
                 index="tpquery3"
+                setOnPage={setOnPage}
                 resetTrigger={resetTrigger}
-                />
+                setresetTrigger={setresetTrigger}
+              />
             </Col>
           </Row>
         </CardHeader>

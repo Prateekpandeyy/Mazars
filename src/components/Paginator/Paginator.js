@@ -18,7 +18,6 @@ function Paginator(props) {
     const [page, setPage] = useState(1);
     const [atPage, setAtpage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [sortVal, setSortVal] = useState(0);
     const [pageno, setPageno] = useState(1);
     const [defaultPage, setDefaultPage] = useState(["1"]);
 
@@ -39,6 +38,9 @@ function Paginator(props) {
         resetTrigger,
         AllQuery,
         count,
+        sortVal,
+        sortField,
+        setOnPage,
         // pendingForAcceptence,
         InprogressQuery,
         // DeclinedQuery,
@@ -55,8 +57,8 @@ function Paginator(props) {
         index,
     } = props;
 
-    console.log(props,"props is logged");
-    console.log(props.count, "count at beginning of pagination");
+    // console.log(props, "props is logged");
+    // console.log(props.count, "count at beginning of pagination");
     // console.log(defaultPage);
     // console.log(big, "big");
     // console.log(end, "end");
@@ -110,7 +112,7 @@ function Paginator(props) {
 
     const setting = (e) => {
         let droppage = [];
-        console.log(count,"count in setting");
+        // console.log(count, "count in setting");
         const dynamicPage = Math.ceil(count / allEnd);
         console.log(dynamicPage, "to check dynamic page");
         setTotalPages(dynamicPage)
@@ -145,8 +147,12 @@ function Paginator(props) {
 
         if (AllQuery == "AllQuery") {
             let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
             localStorage.setItem(`tpQuery1`, JSON.stringify(e));
-            if (data) {
+            if ((data) && (!pagetry)) {
+                console.log('if data inpagination');
                 remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
@@ -156,14 +162,32 @@ function Paginator(props) {
                             .reverse()
                             .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
                     }&qno=${data?.query_no}`;
-            } else {
+            }else if ((data) && (pagetry)) {
+                // console.log('else if data and freeze in pagination');
+                remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+                  }&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                      ?.split("-")
+                      .reverse()
+                      .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+                  }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+              }else if ((!data) && (pagetry)){
+                remainApiPath = `tl/getIncompleteQues?page=${e}orderby=${val}&orderbyfield=${field}`;
+              }
+             else {
+                console.log('else in pagination');
                 remainApiPath = `tl/getIncompleteQues?page=${e}`;
             }
         }
         else if (InprogressQuery == "InprogressQuery") {
             let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpQuery3"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
             localStorage.setItem(`tpQuery3`, JSON.stringify(e));
-            if (data) {
+            if ((data) && (!pagetry)) {
                 //if Data then Api Path
                 remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
                     }&from=${data.fromDate
@@ -175,7 +199,22 @@ function Paginator(props) {
                             .join("-")}&status=1&pcat_id=${data.pcatId
                     }&qno=${data?.query_no}`;
 
-            } else {
+            } else if ((data) && (pagetry)){
+                remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+                }&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&status=1&pcat_id=${data.pcatId
+                }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+            }else if ((!data) && (pagetry)){
+                remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
+                    userid
+                )}&page=${e}orderby=${val}&orderbyfield=${field}&status=1`;
+            }
+            else {
                 //else if Empty then api path
                 remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
                     userid
@@ -207,32 +246,33 @@ function Paginator(props) {
                             all.push(data);
                         });
                         setData(all);
+                        setOnPage(e);
                         // setRecords(res.data.result.length);
                         const dynamicPage = Math.ceil(count / allEnd);
-                        console.log(dynamicPage, "to check dynamic page");
+                        // console.log(dynamicPage, "to check dynamic page");
                         setTotalPages(dynamicPage)
                         let rem = (e - 1) * allEnd;
                         let end = e * allEnd;
                         if (e == 1) {
                             setBig(rem + e);
                             setEnd(allEnd);
-                            console.log("e at 1", big, end);
+                            // console.log("e at 1", big, end);
                         }
                         else if ((e == (dynamicPage))) {
                             setBig(rem + 1);
                             setEnd(res.data.total);
-                            console.log("e at last page");
+                            // console.log("e at last page");
                         }
                         else {
                             setBig(rem + 1);
                             setEnd(end);
-                            console.log(`e at between page ${e}`, big, end);
+                            // console.log(`e at between page ${e}`, big, end);
                         }
                         for (let i = 1; i <= dynamicPage; i++) {
                             droppage.push(i);
                         }
                         setDefaultPage(droppage);
-                        console.log(defaultPage, "in submit of defaultPage");
+                        // console.log(defaultPage, "in submit of defaultPage");
                     }
                 });
         }
@@ -250,29 +290,29 @@ function Paginator(props) {
             // setBig(1);
             // setEnd(allEnd);
             setting(1)
-            console.log(resetTrigger, "reset at trigger");
+            // console.log(resetTrigger, "reset at trigger");
         }
     }, [resetTrigger]);
 
     useEffect(() => {
-        console.log("setup at count", count);
+        // console.log("setup at count", count);
         if (count > 0) {
-            console.log("setup has more count")
+            // console.log("setup has more count")
             const N = Math.ceil(count / allEnd);
             const arr = Array.from({ length: N }, (_, index) => index + 1);
             setDefaultPage(arr);
-            console.log(defaultPage, "default in useEffect defaultPage");
+            // console.log(defaultPage, "default in useEffect defaultPage");
         }
     }, [count]);
 
     useEffect(() => {
-        console.log('in useEffect pageno', pageno);
+        // console.log('in useEffect pageno', pageno);
         if (pageno > 1) {
             setPage(pageno);
             setAtpage(pageno);
             setting(pageno);
             // getNewPage(pageno);
-            console.log(pageno, 'in if render check pageno is more than 1 ');
+            // console.log(pageno, 'in if render check pageno is more than 1 ');
         } else {
             setPage(1);
             setAtpage(1);
@@ -281,7 +321,7 @@ function Paginator(props) {
             // const N = Math.ceil(count / allEnd);
             // const arr = Array.from({ length: N }, (_, index) => index + 1);
             // setDefaultPage(arr);
-            console.log('in else render check of getting page ');
+            // console.log('in else render check of getting page ');
         }
     }, [pageno]);
 
