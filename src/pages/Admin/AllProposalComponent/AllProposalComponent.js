@@ -151,7 +151,7 @@ function AllProposalComponent() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
@@ -223,7 +223,7 @@ function AllProposalComponent() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
@@ -582,7 +582,7 @@ function AllProposalComponent() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpro1");
+    localStorage.removeItem("adminprot1");
     localStorage.removeItem("sortedValuepro1");
   };
 
