@@ -183,7 +183,7 @@ function InCompleteData({ CountIncomplete, data }) {
   };
 
   const sortMessage = (val, field) => {
-
+    let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -192,10 +192,25 @@ function InCompleteData({ CountIncomplete, data }) {
       field: field,
     }
     localStorage.setItem(`freezetpQuery3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+
+    if(data){
+      remainApiPath = `tl/getIncompleteQues?page=${onPage}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=1&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    }else{
+      remainApiPath = `tl/getIncompleteQues?page=${onPage}orderby=${val}&orderbyfield=${field}`
+    }
 
     axios
       .get(
-        `${baseUrl}/tl/getIncompleteQues?page=${onPage}orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
@@ -204,7 +219,8 @@ function InCompleteData({ CountIncomplete, data }) {
           let sortId = 1;
           let record = Number(localStorage.getItem("tp_record_per_page"))
           let startAt = ((onPage - 1) * record) + 1;
-          if (page > 1) {
+          console.log(onPage,startAt,"sort check");
+          if (onPage > 1) {
             sortId = startAt;
           }
           res.data.result.map((i) => {

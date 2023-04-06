@@ -284,14 +284,14 @@ function Paginator(props) {
     }, []);
 
     useEffect(() => {
-        if (resetTrigger == true) {
+        // if (resetTrigger == true) {
             setPage(1);
             setAtpage(1);
             // setBig(1);
             // setEnd(allEnd);
             setting(1)
             // console.log(resetTrigger, "reset at trigger");
-        }
+        // }
     }, [resetTrigger]);
 
     useEffect(() => {
