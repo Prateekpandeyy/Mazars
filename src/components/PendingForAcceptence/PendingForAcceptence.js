@@ -568,7 +568,7 @@ function PendingForAcceptence() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpro2");
+    localStorage.removeItem("adminprot2");
     localStorage.removeItem("sortedValuepro2");
   };
   return (

@@ -569,7 +569,7 @@ function DeclinedProposal() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpro4");
+    localStorage.removeItem("adminprot4");
     localStorage.removeItem("sortedValuepro4");
   };
   return (

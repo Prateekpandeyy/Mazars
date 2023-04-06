@@ -549,7 +549,7 @@ function AcceptedProposal() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpro3");
+    localStorage.removeItem("adminprot3");
     localStorage.removeItem("sortedValuepro3");
   };
   return (
