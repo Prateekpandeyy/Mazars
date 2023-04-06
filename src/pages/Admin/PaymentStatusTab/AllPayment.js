@@ -44,7 +44,8 @@ function AllPayment(props) {
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
-
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
 
   const [assignNo, setAssignNo] = useState("");
@@ -68,12 +69,30 @@ function AllPayment(props) {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
+  // useEffect(() => {
+  //   let localPage = Number(localStorage.getItem("adminpayt1"));
+  //   if (!localPage) {
+  //     localPage = 1;
+  //   }
+  //   setPage(localPage);
+  //   setEnd(Number(localStorage.getItem("admin_record_per_page")));
+  //   getPaymentStatus(localPage);
+  // }, []);
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminpayt1"));
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuePay1", JSON.stringify(sort));
+    }
     setPage(localPage);
+
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPaymentStatus(localPage);
   }, []);
@@ -108,10 +127,18 @@ function AllPayment(props) {
 
   const getPaymentStatus = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay1"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment1`));
     if (searchData) {
-      remainApiPath = `/admin/getUploadedProposals?page=${e}&cat_id=${
+      remainApiPath = `/admin/getUploadedProposals?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -123,7 +150,7 @@ function AllPayment(props) {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `admin/getUploadedProposals?page=${e}`;
+      remainApiPath = `admin/getUploadedProposals?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
     if (e) {
@@ -173,31 +200,52 @@ function AllPayment(props) {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getUploadedProposals?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminpayt1", 1);
+    localStorage.setItem("sortedValuepay1", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment1`));
+    if (searchData) {
+      remainApiPath = `/admin/getUploadedProposals?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getUploadedProposals?orderby=${val}&orderbyfield=${field}`;
+    }
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          setPayment(all);
-        }
-      });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setPayment(all);
+      }
+    });
   };
 
   const [modal, setModal] = useState(false);
@@ -533,6 +581,10 @@ function AllPayment(props) {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminpay1");
+    localStorage.removeItem("sortedValuepay1");
   };
   return (
     <div>

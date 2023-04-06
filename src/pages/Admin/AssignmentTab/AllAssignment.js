@@ -49,6 +49,9 @@ function AssignmentComponent(props) {
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [scrolledTo, setScrolledTo] = useState("");
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
+
   const myRef = useRef([]);
 
   const token = window.localStorage.getItem("adminToken");
@@ -98,18 +101,34 @@ function AssignmentComponent(props) {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueassign1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValueassign1", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getAssignmentData(localPage);
   }, []);
   const getAssignmentData = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueassign1"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(
       localStorage.getItem(`searchDataadAssignment1`)
     );
     if (searchData) {
-      remainApiPath = `/admin/getAssignments?page=${e}&cat_id=${
+      remainApiPath = `/admin/getAssignments?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -123,7 +142,7 @@ function AssignmentComponent(props) {
         searchData?.query_no
       }`;
     } else {
-      remainApiPath = `admin/getAssignments?page=${e}`;
+      remainApiPath = `admin/getAssignments?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -172,30 +191,54 @@ function AssignmentComponent(props) {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAssignments?orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminassign1", 1);
+    localStorage.setItem("sortedValueassign1", JSON.stringify(sort));
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment1`)
+    );
+    if (searchData) {
+      remainApiPath = `/admin/getAssignments?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&assignment_status=${
+        searchData.stage_status
+      }&stages_status=${searchData.p_status}&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `admin/getAssignments?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setAssignmentDisplay(all);
-        }
-      });
+        setAssignmentDisplay(all);
+      }
+    });
   };
   const firstChunk = () => {
     setAtpage(1);
@@ -278,6 +321,7 @@ function AssignmentComponent(props) {
     setQueryNo("");
     setPage(1);
     localStorage.removeItem("searchDataadAssignment1");
+    localStorage.removeItem("sortedValueassign1");
 
     getAssignmentData(1);
   };

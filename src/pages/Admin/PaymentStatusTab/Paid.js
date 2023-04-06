@@ -47,7 +47,8 @@ function Paid() {
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
-
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -59,7 +60,16 @@ function Paid() {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuePay2", JSON.stringify(sort));
+    }
     setPage(localPage);
+
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getPaymentStatus(localPage);
   }, []);
@@ -94,10 +104,19 @@ function Paid() {
 
   const getPaymentStatus = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay2"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment2`));
+
     if (searchData) {
-      remainApiPath = `/admin/getUploadedProposals?page=${e}&cat_id=${
+      remainApiPath = `/admin/getUploadedProposals?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -109,7 +128,7 @@ function Paid() {
         searchData?.query_no
       }`;
     } else {
-      remainApiPath = `admin/getUploadedProposals?status=1&page=${e}`;
+      remainApiPath = `admin/getUploadedProposals?status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
     if (e) {
@@ -159,31 +178,51 @@ function Paid() {
     }
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getUploadedProposals?status=1&orderby==${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminpayt2", 1);
+    localStorage.setItem("sortedValuepay2", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadpayment2`));
+    if (searchData) {
+      remainApiPath = `/admin/getUploadedProposals?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `admin/getUploadedProposals?status=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setPayment(all);
-        }
-      });
+        setPayment(all);
+      }
+    });
   };
 
   const toggle = (key) => {
@@ -520,139 +559,141 @@ function Paid() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminpay2");
+    localStorage.removeItem("sortedValuepay2");
   };
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <AdminFilter
-            setData={setPayment}
-            getData={getPaymentStatus}
-            unpaid="unpaid"
-            setRecords={setRecords}
-            records={records}
-            setDefaultPage={setDefaultPage}
-            resetPaging={resetPaging}
-            setCountNotification={setCountNotification}
-            page={page}
-            setBig={setBig}
-            setEnd={setEnd}
-            index="adpayment2"
-          />
-        </CardHeader>
-        <CardBody>
-          <Row>
-            <Col md="12" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span className="customPaginationSpan">
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => firstChunk()}
-                        >
-                          <KeyboardDoubleArrowLeftIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => prevChunk()}
-                        >
-                          <KeyboardArrowLeftIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div className="navButtonSelectDiv">
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(e.target.value);
-                          getPaymentStatus(e.target.value);
-                          localStorage.setItem("adminpayt2", e.target.value);
-                        }}
-                        className="form-control"
+    <Card>
+      <CardHeader>
+        <AdminFilter
+          setData={setPayment}
+          getData={getPaymentStatus}
+          unpaid="unpaid"
+          setRecords={setRecords}
+          records={records}
+          setDefaultPage={setDefaultPage}
+          resetPaging={resetPaging}
+          setCountNotification={setCountNotification}
+          page={page}
+          setBig={setBig}
+          setEnd={setEnd}
+          index="adpayment2"
+        />
+      </CardHeader>
+      <CardBody>
+        <Row>
+          <Col md="12" align="right">
+            <div className="customPagination">
+              <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <span className="customPaginationSpan">
+                  {big}-{end} of {countNotification}
+                </span>
+                <span className="d-flex">
+                  {page > 1 ? (
+                    <>
+                      <button
+                        className="navButton"
+                        onClick={(e) => firstChunk()}
                       >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => nextChunk()}
-                        >
-                          <KeyboardArrowRightIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => lastChunk()}
-                        >
-                          <KeyboardDoubleArrowRightIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
-                </div>
+                        <KeyboardDoubleArrowLeftIcon />
+                      </button>
+                      <button
+                        className="navButton"
+                        onClick={(e) => prevChunk()}
+                      >
+                        <KeyboardArrowLeftIcon />
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div className="navButtonSelectDiv">
+                    <select
+                      value={page}
+                      onChange={(e) => {
+                        setPage(e.target.value);
+                        getPaymentStatus(e.target.value);
+                        localStorage.setItem("adminpayt2", e.target.value);
+                      }}
+                      className="form-control"
+                    >
+                      {defaultPage.map((i) => (
+                        <option value={i}>{i}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {defaultPage.length > page ? (
+                    <>
+                      <button
+                        className="navButton"
+                        onClick={(e) => nextChunk()}
+                      >
+                        <KeyboardArrowRightIcon />
+                      </button>
+                      <button
+                        className="navButton"
+                        onClick={(e) => lastChunk()}
+                      >
+                        <KeyboardDoubleArrowRightIcon />
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </span>
               </div>
-            </Col>
-          </Row>
-          <DataTablepopulated
-            bgColor="#3e8678"
-            keyField={"assign_no"}
-            data={payment}
-            rowStyle2={rowStyle2}
-            columns={columns}
-          ></DataTablepopulated>
+            </div>
+          </Col>
+        </Row>
+        <DataTablepopulated
+          bgColor="#3e8678"
+          keyField={"assign_no"}
+          data={payment}
+          rowStyle2={rowStyle2}
+          columns={columns}
+        ></DataTablepopulated>
 
-          <Modal isOpen={modal} fade={false} toggle={toggle}>
-            <ModalHeader toggle={toggle}>History</ModalHeader>
-            <ModalBody>
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="row">S.No</th>
-                    <th scope="row">Date</th>
-                    <th scope="row">Amount</th>
-                  </tr>
-                </thead>
-                {pay.length > 0
-                  ? pay.map((p, i) => (
-                      <tbody>
-                        <tr>
-                          <td>{i + 1}</td>
-                          <td>{CommonServices.removeTime(p.payment_date)}</td>
-                          <td>{p.paid_amount}</td>
-                        </tr>
-                      </tbody>
-                    ))
-                  : null}
-              </table>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="secondary" onClick={toggle}>
-                Cancel
-              </Button>
-            </ModalFooter>
-          </Modal>
-          <DiscardReport
-            ViewDiscussionToggel={ViewDiscussionToggel}
-            ViewDiscussion={ViewDiscussion}
-            report={assignNo}
-            getData={getPaymentStatus}
-            headColor="#3e8678"
-          />
-        </CardBody>
-      </Card>
-    </div>
+        <Modal isOpen={modal} fade={false} toggle={toggle}>
+          <ModalHeader toggle={toggle}>History</ModalHeader>
+          <ModalBody>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="row">S.No</th>
+                  <th scope="row">Date</th>
+                  <th scope="row">Amount</th>
+                </tr>
+              </thead>
+              {pay.length > 0
+                ? pay.map((p, i) => (
+                    <tbody>
+                      <tr>
+                        <td>{i + 1}</td>
+                        <td>{CommonServices.removeTime(p.payment_date)}</td>
+                        <td>{p.paid_amount}</td>
+                      </tr>
+                    </tbody>
+                  ))
+                : null}
+            </table>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <DiscardReport
+          ViewDiscussionToggel={ViewDiscussionToggel}
+          ViewDiscussion={ViewDiscussion}
+          report={assignNo}
+          getData={getPaymentStatus}
+          headColor="#3e8678"
+        />
+      </CardBody>
+    </Card>
   );
 }
 

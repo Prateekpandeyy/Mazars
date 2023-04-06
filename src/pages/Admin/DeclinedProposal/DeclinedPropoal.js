@@ -290,18 +290,7 @@ function DeclinedProposal() {
     {
       dataField: "assign_no",
       text: "Query no",
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -434,7 +423,18 @@ function DeclinedProposal() {
     },
     {
       text: "Status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -460,7 +460,7 @@ function DeclinedProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -488,7 +488,7 @@ function DeclinedProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -500,6 +500,18 @@ function DeclinedProposal() {
     {
       dataField: "tl_name",
       text: "TL name",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 11);
+      },
     },
     {
       text: "Action",
@@ -557,7 +569,7 @@ function DeclinedProposal() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpro4");
+    localStorage.removeItem("adminprot4");
     localStorage.removeItem("sortedValuepro4");
   };
   return (
