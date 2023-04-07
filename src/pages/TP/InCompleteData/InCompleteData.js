@@ -26,9 +26,8 @@ function InCompleteData({ CountIncomplete, data }) {
   // console.log(total,"total at incomQ");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
 
-  let pageno = JSON.parse(localStorage.getItem("tpQuery3"));
 
-  let pagetry = JSON.parse(localStorage.getItem("freezetpQuery3"));
+
 
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -71,6 +70,7 @@ function InCompleteData({ CountIncomplete, data }) {
 
 
   useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem("tpQuery3"));
     if (!pageno) {
       pageno = 1;
     }
@@ -80,6 +80,7 @@ function InCompleteData({ CountIncomplete, data }) {
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpQuery3"));
     localStorage.setItem(`tpQuery3`, JSON.stringify(e));
     setLoading(true);
     let val = pagetry?.val;

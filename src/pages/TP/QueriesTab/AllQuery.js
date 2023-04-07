@@ -57,11 +57,13 @@ function AllQuery(props) {
       uit: token,
     },
   };
-  let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
 
-  let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
+
+
+ 
 
   useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
     if (pageno) {
       getInCompleteAssingment(pageno);
     } else {
@@ -71,8 +73,8 @@ function AllQuery(props) {
 
   const getInCompleteAssingment = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
     localStorage.setItem(`tpQuery1`, JSON.stringify(e));
-    // let getsort = JSON.parse(localStorage.getItem("freezetpQuery1"));
     console.log(pagetry, "getsort");
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -145,6 +147,8 @@ function AllQuery(props) {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
+    let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
+
     let obj = {
       pageno: pageno,
       val: val,

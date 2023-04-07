@@ -42,19 +42,19 @@ function Paginator(props) {
         sortField,
         setOnPage,
         setresetTrigger,
-        // pendingForAcceptence,
+        pendingForAcceptence,
         InprogressQuery,
-        // DeclinedQuery,
+        DeclinedQuery,
         // resetPaging,
-        // completeAssignment,
-        // proposal,
-        // AllProposal,
-        // InprogressProposal,
-        // assignment,
-        // AllPayment,
+        completeAssignment,
+        proposal,
+        AllProposal,
+        InprogressProposal,
+        assignment,
+        AllPayment,
         // setCount,
-        // Unpaid,
-        // Paid,
+        Unpaid,
+        Paid,
         index,
     } = props;
 
@@ -181,6 +181,23 @@ function Paginator(props) {
                 remainApiPath = `tl/getIncompleteQues?page=${e}`;
             }
         }
+        else if (pendingForAcceptence == "pendingForAcceptence"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpQuery2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+
+        }
         else if (InprogressQuery == "InprogressQuery") {
             let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpQuery3"));
@@ -221,7 +238,136 @@ function Paginator(props) {
                     userid
                   )}&page=${e}&status=1`;
             }
-        } else { console.log("into else void of pagination"); }
+        } 
+        else if (DeclinedQuery == "DeclinedQuery"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpQuery2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (AllProposal == "AllProposal"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal1"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpProposal1`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (InprogressProposal == "InprogressProposal"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpProposal2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (proposal == "proposal"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal3"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpProposal3`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (DeclinedQuery == "DeclinedQuery"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal4"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpProposal4`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (AllPayment == "AllPayment"){
+            let data = JSON.parse(localStorage.getItem("searchDatatppayment1"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetppayment1"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpPayment1`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (Unpaid == "Unpaid"){
+            let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetppayment2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpPayment2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else if (Paid == "Paid"){
+            let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetppayment3"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpPayment3`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+
+            }else if ((data) && (pagetry)) {
+
+            }else if ((!data) && (pagetry)) {
+
+            }else {
+
+            }
+        }
+        else { console.log("into else void of pagination"); }
 
         if (e) {
             axios
@@ -288,8 +434,6 @@ function Paginator(props) {
         if (resetTrigger == true) {
             setPage(1);
             setAtpage(1);
-            // setBig(1);
-            // setEnd(allEnd);
             setting(1)
             setresetTrigger(!resetTrigger);
             // console.log(resetTrigger, "reset at trigger");
@@ -314,18 +458,11 @@ function Paginator(props) {
             setAtpage(pageno);
             setting(pageno);
             setOnPage(pageno);
-            // getNewPage(pageno);
-            // console.log(pageno, 'in if render check pageno is more than 1 ');
         } else {
             setPage(1);
             setAtpage(1);
             setOnPage(1);
             setting(1);
-            // setEnd(allEnd);
-            // const N = Math.ceil(count / allEnd);
-            // const arr = Array.from({ length: N }, (_, index) => index + 1);
-            // setDefaultPage(arr);
-            // console.log('in else render check of getting page ');
         }
     }, [pageno]);
 

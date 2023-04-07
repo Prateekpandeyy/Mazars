@@ -168,7 +168,10 @@ function AdminHeader({
       localStorage.removeItem("searchDatatpAssignment2");
       localStorage.removeItem("searchDatatpAssignment3");
       localStorage.removeItem("searchDatatpAssignment4");
+      localStorage.removeItem("tp_record_per_page");
       localStorage.removeItem("tpcreate");
+      localStorage.removeItem("tpFeedback");
+      localStorage.removeItem("tpMsg");
       localStorage.removeItem("tpgenerated");
       localStorage.removeItem(`freezetpQuery1`);
       localStorage.removeItem(`freezetpQuery3`);

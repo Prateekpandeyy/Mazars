@@ -8,14 +8,21 @@ import { Link } from "react-router-dom";
 import PaymentModal from "./PaymentModal";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 function Message(props) {
   const userId = window.localStorage.getItem("tpkey");
+  let allEnd = Number(localStorage.getItem("tp_record_per_page"));
 
   const [query, setQuery] = useState([]);
   const [atPage, setAtpage] = useState(1);
+  const [count, setCount] = useState("0");
 
   const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(50);
+  const [end, setEnd] = useState(allEnd);
   const history = useHistory();
   const [addPaymentModal, setPaymentModal] = useState(false);
   const token = window.localStorage.getItem("tptoken");
@@ -33,27 +40,15 @@ function Message(props) {
     setPaymentModal(!addPaymentModal);
   };
 
-  const chunkSize = 24;
-
-  const sliceIntoChunks = (query, chunkSize) => {
-    const res = [];
-    for (let i = 0; i < query.length; i += chunkSize) {
-      const chunk = query.slice(i, i + chunkSize);
-      res.push(chunk);
-    }
-    return res;
-  };
-  const divided = [];
-  divided.push(sliceIntoChunks(query, chunkSize));
-
   useEffect(() => {
     setPage(1);
-    setEnd(50);
+    setEnd(allEnd);
     getMessage(1);
   }, []);
 
   // set intial query here
   const getMessage = (e) => {
+    // localStorage.setItem(`tpMsg`, JSON.stringify(e));
     if (e) {
       axios
         .get(
@@ -67,7 +62,7 @@ function Message(props) {
             let all = [];
             let customId = 1;
             if (e > 1) {
-              customId = 50 * (e - 1) + 1;
+              customId = allEnd * (e - 1) + 1;
             }
             data.map((i) => {
               let data = {
@@ -78,19 +73,24 @@ function Message(props) {
               all.push(data);
             });
             setQuery(all);
-
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
-            let rem = (e - 1) * 50;
-            let end = e * 50;
+            setCount(res.data.total)
+            // setCountNotification(res.data.total);
+            let dynamicPage = Math.round(res.data.total / allEnd);
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
-            } else {
+            } else if ((e == (dynamicPage))) {
+              setBig(rem + 1);
+              setEnd(res.data.total);
+              // console.log("e at last page");
+          } 
+            else {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -212,8 +212,8 @@ function Message(props) {
   const readNotification = (id) => {
     axios
       .get(`${baseUrl}/tl/markReadNotification?id=${id}`, myConfig)
-      .then(function (response) {})
-      .catch((error) => {});
+      .then(function (response) { })
+      .catch((error) => { });
   };
 
   return (
@@ -231,60 +231,62 @@ function Message(props) {
             </Col>
           </Row>
           <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
+            <Col md="12" align="right">
               <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => firstChunk()}
-                    >
-                      &lt; &lt;
-                    </button>
-
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(e.target.value);
-                          getMessage(e.target.value);
-                        }}
-                        className="form-control"
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {count}
+                    </span>
+                    <span className="d-flex">
+                      <button
+                        className="navButton"
+                        onClick={(e) => firstChunk()}
                       >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => lastChunk()}
-                    >
-                      &gt; &gt;
-                    </button>
-                  </span>
+                        <KeyboardDoubleArrowLeftIcon />
+                      </button>
+
+                      {page > 1 ? (
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(e.target.value);
+                            getMessage(e.target.value);
+                          }}
+                          className="form-control">
+                          {defaultPage.map((i) => (
+                            <option value={i} >{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      <button
+                        className="navButton"
+                        onClick={(e) => lastChunk()}
+                      >
+                        <KeyboardDoubleArrowRightIcon />
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </Col>
