@@ -32,6 +32,8 @@ const CreateInvoice = () => {
   const [page, setPage] = useState(0);
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -54,21 +56,35 @@ const CreateInvoice = () => {
   };
 
   useEffect(() => {
-    getProposalList();
-  }, []);
-  useEffect(() => {
-    let localPage = Number(localStorage.getItem("admininvt1"));
+    let localPage = Number(localStorage.getItem("admininvt2"));
     if (!localPage) {
       localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuevt2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuevt2", JSON.stringify(sort));
     }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getProposalList(localPage);
   }, []);
+
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuevt2"));
+    let orderBy = 0;
+    let fieldBy = 0;
 
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let remainApiPath = "";
+
     let searchData = JSON.parse(localStorage.getItem(`admincreate`));
 
     if (
@@ -78,7 +94,7 @@ const CreateInvoice = () => {
       searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&cquery_no=${
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cquery_no=${
         searchData.query_no
       }
       }&from=${searchData.p_dateFrom
@@ -91,7 +107,7 @@ const CreateInvoice = () => {
         searchData?.installment_no
       }`;
     } else {
-      remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}`;
+      remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -138,6 +154,60 @@ const CreateInvoice = () => {
       });
     }
   };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("admininvt2", 1);
+    localStorage.setItem("sortedValuevt2", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`admincreate`));
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.p_dateFrom ||
+      searchData?.p_dateTo ||
+      searchData?.query_no
+    ) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&qno=${
+        searchData.query_no
+      }&from=${searchData.p_dateFrom
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.p_dateTo
+        ?.split("-")
+        .reverse()
+        .join("-")}&installment_no=${
+        searchData?.installment_no
+      }&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `admin/getPaymentDetail?&invoice=0&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.payment_detail.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setProposal(all);
+        console.log("proposal", all);
+      }
+    });
+  };
 
   const columns = [
     {
@@ -152,7 +222,18 @@ const CreateInvoice = () => {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -173,12 +254,35 @@ const CreateInvoice = () => {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Due date",
       dataField: "due_date",
       sort: true,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
 
@@ -188,13 +292,18 @@ const CreateInvoice = () => {
     {
       text: "Amount",
       dataField: "paid_amount",
-      sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 4);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -207,14 +316,16 @@ const CreateInvoice = () => {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    localStorage.removeItem("admininvt1");
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("admininvt2");
+    localStorage.removeItem("sortedValuevt2");
   };
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getProposalList(1);
-    localStorage.setItem("admininvt1", 1);
+    localStorage.setItem("admininvt2", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -222,21 +333,21 @@ const CreateInvoice = () => {
     }
     setPage(Number(page) - 1);
     getProposalList(page - 1);
-    localStorage.setItem("admininvt1", Number(page) - 1);
+    localStorage.setItem("admininvt2", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("admininvt1", Number(page) + 1);
+    localStorage.setItem("admininvt2", Number(page) + 1);
     getProposalList(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getProposalList(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("admininvt1", defaultPage.at(-1));
+    localStorage.setItem("admininvt2", defaultPage.at(-1));
   };
   return (
     <>
@@ -289,7 +400,7 @@ const CreateInvoice = () => {
                         onChange={(e) => {
                           setPage(Number(e.target.value));
                           getProposalList(Number(e.target.value));
-                          localStorage.setItem("admininvt1", e.target.value);
+                          localStorage.setItem("admininvt2", e.target.value);
                         }}
                         className="form-control"
                       >

@@ -1,32 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
-import { Select } from "antd";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
-import Records from "../../components/Records/Records";
 import DiscardReport from "../../pages/Admin/AssignmentTab/DiscardReport";
 import RetviewModal from "../../pages/Admin/AllProposalComponent/RetviewModal";
-import ShowProposal from "../../pages/Admin/AllProposalComponent/ShowProposal";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import CommonShowProposal from "../commonShowProposal/CommonShowProposal";
 import MessageIcon, {
   EyeIcon,
   ViewDiscussionIcon,
   DiscussProposal,
-  HelpIcon,
 } from "../../components/Common/MessageIcon";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
@@ -151,9 +137,9 @@ function PendingForAcceptence() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status1=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
     } else {
       remainApiPath = `/admin/getProposals?status1=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -223,9 +209,9 @@ function PendingForAcceptence() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status1=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
     } else {
       remainApiPath = `/admin/getProposals?status1=1&orderby=${val}&orderbyfield=${field}`;
     }
@@ -387,7 +373,7 @@ function PendingForAcceptence() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -411,7 +397,7 @@ function PendingForAcceptence() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -433,7 +419,7 @@ function PendingForAcceptence() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
       formatter: function nameFormatter(cell, row) {
         return (
@@ -462,7 +448,7 @@ function PendingForAcceptence() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -489,7 +475,7 @@ function PendingForAcceptence() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -511,7 +497,7 @@ function PendingForAcceptence() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 11);
       },
     },
     {
