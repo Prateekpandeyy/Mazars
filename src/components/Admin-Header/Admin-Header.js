@@ -170,6 +170,8 @@ function AdminHeader({
       localStorage.removeItem("searchDatatpAssignment4");
       localStorage.removeItem("tpcreate");
       localStorage.removeItem("tpgenerated");
+      localStorage.removeItem(`freezetpQuery1`);
+      localStorage.removeItem(`freezetpQuery3`);
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tpcategoryData");

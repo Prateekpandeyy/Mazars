@@ -80,7 +80,7 @@ function AllProposal() {
     
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}`,
           myConfig
         )
         .then((res) => {

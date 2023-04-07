@@ -104,7 +104,7 @@ function AllQuery(props) {
             .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
         }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     }else if((!data) && (pagetry)){
-      remainApiPath = `tl/getIncompleteQues?page=${e}orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`
     }
     else {
       remainApiPath = `tl/getIncompleteQues?page=${e}`;
@@ -164,7 +164,7 @@ function AllQuery(props) {
           .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath =`tl/getIncompleteQues?page=${onPage}orderby=${val}&orderbyfield=${field}`
+      remainApiPath =`tl/getIncompleteQues?page=${onPage}&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -405,11 +405,10 @@ function AllQuery(props) {
       },
     },
   ];
-  const resetPaging = () => {
-    // console.log("reset in Parent");
-    // setPage(1);
-    setEnd(Number(localStorage.getItem("tp_record_per_page")));
-  };
+
+  // const resetPaging = () => {
+  //   setEnd(Number(localStorage.getItem("tp_record_per_page")));
+  // };
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
@@ -430,7 +429,7 @@ function AllQuery(props) {
               setRecords={setRecords}
               records={records}
               index="tpquery1"
-              resetPaging={resetPaging}
+              // resetPaging={resetPaging}
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
@@ -447,7 +446,6 @@ function AllQuery(props) {
                 index="tpquery1"
                 setOnPage={setOnPage}
                 // resetPaging={resetPaging}
-                // setCount={setCount}
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
               />

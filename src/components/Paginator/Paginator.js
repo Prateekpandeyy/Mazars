@@ -41,6 +41,7 @@ function Paginator(props) {
         sortVal,
         sortField,
         setOnPage,
+        setresetTrigger,
         // pendingForAcceptence,
         InprogressQuery,
         // DeclinedQuery,
@@ -153,7 +154,7 @@ function Paginator(props) {
             localStorage.setItem(`tpQuery1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+                remainApiPath = `tl/getIncompleteQues?page=${e}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -162,21 +163,20 @@ function Paginator(props) {
                             .reverse()
                             .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
                     }&qno=${data?.query_no}`;
-            }else if ((data) && (pagetry)) {
-                // console.log('else if data and freeze in pagination');
-                remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-                  }&from=${data.fromDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&to=${data.toDate
-                      ?.split("-")
-                      .reverse()
-                      .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-                  }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-              }else if ((!data) && (pagetry)){
-                remainApiPath = `tl/getIncompleteQues?page=${e}orderby=${val}&orderbyfield=${field}`;
-              }
-             else {
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getIncompleteQues?page=${e}&cat_id=${data.store
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+                    }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`;
+            }
+            else {
                 console.log('else in pagination');
                 remainApiPath = `tl/getIncompleteQues?page=${e}`;
             }
@@ -189,36 +189,37 @@ function Paginator(props) {
             localStorage.setItem(`tpQuery3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 //if Data then Api Path
-                remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-                    }&from=${data.fromDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&to=${data.toDate
-                            ?.split("-")
-                            .reverse()
-                            .join("-")}&status=1&pcat_id=${data.pcatId
-                    }&qno=${data?.query_no}`;
-
-            } else if ((data) && (pagetry)){
-                remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-                }&from=${data.fromDate
+                remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
                         ?.split("-")
                         .reverse()
-                        .join("-")}&status=1&pcat_id=${data.pcatId
-                }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-            }else if ((!data) && (pagetry)){
-                remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
+                        .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
                     userid
-                )}&page=${e}orderby=${val}&orderbyfield=${field}&status=1`;
+                )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
             }
+            else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
+                  userid
+                )}&page=${e}&orderby=${val}&orderbyfield=${field}&status=1`;
+              }
             else {
                 //else if Empty then api path
                 remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
                     userid
-                )}&page=${e}&status=1`;
+                  )}&page=${e}&status=1`;
             }
         } else { console.log("into else void of pagination"); }
 
@@ -284,14 +285,15 @@ function Paginator(props) {
     }, []);
 
     useEffect(() => {
-        // if (resetTrigger == true) {
+        if (resetTrigger == true) {
             setPage(1);
             setAtpage(1);
             // setBig(1);
             // setEnd(allEnd);
             setting(1)
+            setresetTrigger(!resetTrigger);
             // console.log(resetTrigger, "reset at trigger");
-        // }
+        }
     }, [resetTrigger]);
 
     useEffect(() => {
@@ -311,11 +313,13 @@ function Paginator(props) {
             setPage(pageno);
             setAtpage(pageno);
             setting(pageno);
+            setOnPage(pageno);
             // getNewPage(pageno);
             // console.log(pageno, 'in if render check pageno is more than 1 ');
         } else {
             setPage(1);
             setAtpage(1);
+            setOnPage(1);
             setting(1);
             // setEnd(allEnd);
             // const N = Math.ceil(count / allEnd);

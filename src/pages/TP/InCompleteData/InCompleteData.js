@@ -39,15 +39,11 @@ function InCompleteData({ CountIncomplete, data }) {
   const [accend, setAccend] = useState(false);
 
   const [count, setCount] = useState("0");
-  const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(allEnd);
-  const [page, setPage] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
-  const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -56,8 +52,6 @@ function InCompleteData({ CountIncomplete, data }) {
       setScrolledTo(key)
     }
   };
-
-  // console.log(count,"count in incompQ begin");
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -77,14 +71,10 @@ function InCompleteData({ CountIncomplete, data }) {
 
 
   useEffect(() => {
-    //   setCount(total)
-    // let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     if (!pageno) {
       pageno = 1;
     }
     getInCompleteAssingment(pageno);
-    // setPage(pageno);
-    // console.log("getting useEfect incomp");
   }, []);
 
 
@@ -97,31 +87,31 @@ function InCompleteData({ CountIncomplete, data }) {
     let remainApiPath = "";
     setLoading(true);
     if ((data) && (!pagetry)) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
+      remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
+        userid
+    )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
             ?.split("-")
             .reverse()
-            .join("-")}&status=1&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}`;
+            .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
     }
     else if ((data) && (pagetry)) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
+      remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
+        userid
+    )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
             ?.split("-")
             .reverse()
-            .join("-")}&status=1&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+            .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     }
     else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
         userid
-      )}&page=${e}orderby=${val}&orderbyfield=${field}&status=1`;
+      )}&page=${e}&orderby=${val}&orderbyfield=${field}&status=1`;
     }
     else {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
@@ -135,7 +125,6 @@ function InCompleteData({ CountIncomplete, data }) {
           myConfig
         )
         .then((res) => {
-          // let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
             let all = [];
@@ -154,29 +143,6 @@ function InCompleteData({ CountIncomplete, data }) {
             setInCompleteData(all);
             setRecords(res.data.result.length);
             setCount(res.data.total);
-            // console.log(res.data.total,"total in setCount response");
-            // console.log(count,"count in submit");
-            // const dynamicPage = Math.ceil(count / allEnd);
-            // console.log(dynamicPage,"dynamic in submit");
-            // setTotalPages(dynamicPage)
-            // let rem = (e - 1) * allEnd;
-            // let end = e * allEnd;
-            // if (e === 1) {
-            //   setBig(rem + e);
-            //   setEnd(allEnd);
-            // } 
-            // else if (e === (dynamicPage)) {
-            //   setBig(rem + 1);
-            //   setEnd(res.data.total);
-            // } 
-            // else {
-            //   setBig(rem + 1);
-            //   setEnd(end);
-            // }
-            // for (let i = 1; i <= dynamicPage; i++) {
-            //   droppage.push(i);
-            // }
-            // setDefaultPage(droppage);
           }
         });
     }
@@ -202,10 +168,10 @@ function InCompleteData({ CountIncomplete, data }) {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${data.pcatId
+          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     }else{
-      remainApiPath = `tl/getIncompleteQues?page=${onPage}orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getIncompleteQues?page=${onPage}&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -440,15 +406,9 @@ function InCompleteData({ CountIncomplete, data }) {
     },
   ];
 
-  // const resetPaging = () => {
-  //   console.log("reset");
-  //   setPage(1);
-  //   setEnd(Number(localStorage.getItem("admin_record_per_page")));
-  // };
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     localStorage.removeItem(`freezetpQuery3`);
-    // console.log(resetTrigger,"resetTrigger in incompQ");
   }
 
   return (
@@ -463,7 +423,6 @@ function InCompleteData({ CountIncomplete, data }) {
               setRecords={setRecords}
               records={records}
               index="tpquery3"
-              // resetPaging={resetPaging}
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
@@ -475,7 +434,6 @@ function InCompleteData({ CountIncomplete, data }) {
                 setData={setInCompleteData}
                 getData={getInCompleteAssingment}
                 InprogressQuery="InprogressQuery"
-                // setRecords={setRecords}
                 records={records}
                 index="tpquery3"
                 setOnPage={setOnPage}
