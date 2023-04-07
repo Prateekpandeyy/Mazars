@@ -14,12 +14,14 @@ function CustomerListFilter(props) {
     },
   };
   const resetData = () => {
+    localStorage.removeItem("searchDataadclient");
     reset();
     getCustomer();
   };
 
   const onSubmit = (data) => {
-    if (searchQuery == "SearchQuery")
+    localStorage.setItem("searchDataadclient", JSON.stringify(data));
+    if (Object.values(data).length > 0)
       axios
         .get(
           `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`,

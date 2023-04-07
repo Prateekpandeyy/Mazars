@@ -77,9 +77,25 @@ function Customer() {
     localStorage.setItem("admininvt1", defaultPage.at(-1));
   };
   const getCustomer = (e) => {
-    console.log("dta", data);
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueclient"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+    let data = JSON.parse(localStorage.getItem(`searchDataadclient`));
+    console.log("data", data);
+    if (data === null) {
+      remainApiPath = `/admin/getAllList?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    } else {
+      remainApiPath = `admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-    axios.get(`${baseUrl}/admin/getAllList?page=${e}`, myConfig).then((res) => {
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       let droppage = [];
 
       if (res.data.code === 1) {
