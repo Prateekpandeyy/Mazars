@@ -26,9 +26,8 @@ function Message(props) {
   const history = useHistory();
   const [addPaymentModal, setPaymentModal] = useState(false);
   const token = window.localStorage.getItem("tptoken");
-  const [countNotification, setCountNotification] = useState("");
   const [totalPages, setTotalPages] = useState(1);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myConfig = {
     headers: {
@@ -49,6 +48,7 @@ function Message(props) {
   // set intial query here
   const getMessage = (e) => {
     // localStorage.setItem(`tpMsg`, JSON.stringify(e));
+    console.log(e,"page test");
     if (e) {
       axios
         .get(
@@ -109,15 +109,15 @@ function Message(props) {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    setPage(page - 1);
-    getMessage(page - 1);
+    setPage(Number(page) - 1);
+    getMessage(Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
-    setPage(page + 1);
-    getMessage(page + 1);
+    setPage(Number(page) + 1);
+    getMessage(Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
