@@ -39,6 +39,8 @@ const Generated = () => {
   const [accend, setAccend] = useState(false);
   const [copiedHere, setCopiedHere] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const [jumpTo, setJumpTo] = useState("");
   const myRefs = useRef([]);
@@ -66,15 +68,29 @@ const Generated = () => {
     if (!localPage) {
       localPage = 1;
     }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuevt2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuevt2", JSON.stringify(sort));
+    }
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getProposalList(localPage);
   }, []);
 
   const getProposalList = (e) => {
-    console.log("ePage", e);
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuevt2"));
+    let orderBy = 0;
+    let fieldBy = 0;
 
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
 
@@ -85,7 +101,7 @@ const Generated = () => {
       searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&qno=${
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${
         searchData.query_no
       }&from=${searchData.p_dateFrom
         ?.split("-")
@@ -97,7 +113,7 @@ const Generated = () => {
         searchData?.installment_no
       }`;
     } else {
-      remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}`;
+      remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       let droppage = [];
@@ -168,6 +184,60 @@ const Generated = () => {
         }
       });
   };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("admininvt2", 1);
+    localStorage.setItem("sortedValuevt2", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.p_dateFrom ||
+      searchData?.p_dateTo ||
+      searchData?.query_no
+    ) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${
+        searchData.query_no
+      }&from=${searchData.p_dateFrom
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.p_dateTo
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData.opt}&installment_no=${
+        searchData?.installment_no
+      }&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `admin/getPaymentDetail?&invoice=1`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.payment_detail.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setProposal(all);
+        console.log("proposal", all);
+      }
+    });
+  };
 
   const columns = [
     {
@@ -182,7 +252,18 @@ const Generated = () => {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -202,28 +283,50 @@ const Generated = () => {
     {
       text: "Installment no",
       dataField: "installment_no",
+
       sort: true,
-      sortFunc: (a, b, order, dataField, rowA, rowB) => {
-        if (order === "asc") {
-          return b - a;
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 2);
       },
     },
     {
       text: "Invoice no",
       dataField: "billno",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Due date",
       dataField: "due_date",
       sort: true,
-      sortFunc: (a, b, order) => {
-        if (order === "asc") {
-          return Date.parse(a) - Date.parse(b);
-        } else if (order === "desc") {
-          return Date.parse(b) - Date.parse(a);
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
+        sortMessage(val, 4);
       },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
@@ -235,12 +338,16 @@ const Generated = () => {
       text: "Invoice amount",
       dataField: "invoice_amount",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 5);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -253,12 +360,16 @@ const Generated = () => {
       text: "Tds deducted",
       dataField: "tds_amount",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
         }
-        return a - b; // desc
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -279,6 +390,17 @@ const Generated = () => {
       text: "Status",
       dataField: "is_paid",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function (cell, row) {
         return (
@@ -349,9 +471,10 @@ const Generated = () => {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    console.log(Number(localStorage.getItem("admin_record_per_page")));
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-    localStorage.removeItem("admininvt2");
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminvt2");
+    localStorage.removeItem("sortedValuevt2");
   };
   const firstChunk = () => {
     setAtpage(1);

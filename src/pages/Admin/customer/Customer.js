@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 
@@ -21,10 +13,10 @@ function Customer() {
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
   const userid = window.localStorage.getItem("adminkey");
-  const [myPurpose, setPurpose] = useState([]);
+
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
-  const [records, setRecords] = useState([]);
+
   const [countNotification, setCountNotification] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
@@ -33,8 +25,7 @@ function Customer() {
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
-  const [scrolledTo, setScrolledTo] = useState("");
-  const myRef = useRef([]);
+
   const [jumpTo, setJumpTo] = useState("");
   const myRefs = useRef([]);
   const token = window.localStorage.getItem("adminToken");
@@ -43,7 +34,6 @@ function Customer() {
       uit: token,
     },
   };
-  var digit2 = [];
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminClient"));
     if (!localPage) {
@@ -53,19 +43,54 @@ function Customer() {
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getCustomer(localPage);
   }, []);
-
+  useEffect(() => {
+    let runTo = myRefs.current[jumpTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [modal]);
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getCustomer(1);
+    localStorage.setItem("admininvt1", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getCustomer(page - 1);
+    localStorage.setItem("admininvt1", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("admininvt1", Number(page) + 1);
+    getCustomer(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getCustomer(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("admininvt1", defaultPage.at(-1));
+  };
   const getCustomer = (e) => {
+    console.log("dta", data);
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     axios.get(`${baseUrl}/admin/getAllList?page=${e}`, myConfig).then((res) => {
       let droppage = [];
+
       if (res.data.code === 1) {
-        let data = res.data.payment_detail;
+        let data = res.data.result;
         setTpCount(res.data.total);
         let all = [];
         let customId = 1;
         if (e > 1) {
           customId = allEnd * (e - 1) + 1;
         }
+
         data.map((i) => {
           let data = {
             ...i,
@@ -99,6 +124,24 @@ function Customer() {
       }
     });
   };
+  const show = (key) => {
+    setModal(!modal);
+    setJumpTo(key);
+    if (typeof key == "object") {
+    } else {
+      {
+        axios
+          .get(`${baseUrl}/admin/totalComplete?uid=${key}`, myConfig)
+
+          .then((response) => {
+            if (response.data.code === 1) {
+              setHistory(response.data.result);
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    }
+  };
   const clientEnable = (e, value) => {
     let formData = new FormData();
     if (e.target.checked === true) {
@@ -129,7 +172,6 @@ function Customer() {
       }
     });
   };
-
   const toggle = (key) => {
     setModal(!modal);
     if (typeof key == "object") {
@@ -148,7 +190,6 @@ function Customer() {
         .catch((error) => console.log(error));
     }
   };
-
   const columns = [
     {
       dataField: "cid",
@@ -265,74 +306,6 @@ function Customer() {
     },
   ];
 
-  //check
-  const show = (key) => {
-    setModal(!modal);
-    setJumpTo(key);
-    if (typeof key == "object") {
-    } else {
-      {
-        axios
-          .get(`${baseUrl}/admin/totalComplete?uid=${key}`, myConfig)
-
-          .then((response) => {
-            if (response.data.code === 1) {
-              setHistory(response.data.result);
-            }
-          })
-          .catch((error) => console.log(error));
-      }
-    }
-  };
-
-  useEffect(() => {
-    let runTo = myRefs.current[jumpTo];
-    runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: "center" });
-  }, [modal]);
-
-  // delete data
-  const deleteCliente = (id) => {
-    axios
-      .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
-      .then(function (response) {
-        if (response.data.code === 1) {
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
-          getCustomer();
-        } else {
-          Swal.fire("Oops...", "Errorr ", "error");
-        }
-      })
-      .catch((error) => {});
-  };
-  const firstChunk = () => {
-    setAtpage(1);
-    setPage(1);
-    getCustomer(1);
-    localStorage.setItem("admininvt1", 1);
-  };
-  const prevChunk = () => {
-    if (atPage > 1) {
-      setAtpage((atPage) => atPage - 1);
-    }
-    setPage(Number(page) - 1);
-    getCustomer(page - 1);
-    localStorage.setItem("admininvt1", Number(page) - 1);
-  };
-  const nextChunk = () => {
-    if (atPage < totalPages) {
-      setAtpage((atPage) => atPage + 1);
-    }
-    setPage(Number(page) + 1);
-    localStorage.setItem("admininvt1", Number(page) + 1);
-    getCustomer(page + 1);
-  };
-  const lastChunk = () => {
-    setPage(defaultPage.at(-1));
-    getCustomer(defaultPage.at(-1));
-    setAtpage(totalPages);
-    localStorage.setItem("admininvt1", defaultPage.at(-1));
-  };
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>

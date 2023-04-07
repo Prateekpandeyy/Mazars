@@ -71,6 +71,26 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("adminpayt1");
       localStorage.removeItem("adminpayt2");
       localStorage.removeItem("adminpayt3");
+      localStorage.removeItem("sortedValue1");
+      localStorage.removeItem("sortedValue2");
+      localStorage.removeItem("sortedValue3");
+      localStorage.removeItem("sortedValue4");
+      localStorage.removeItem("sortedValuepro1");
+      localStorage.removeItem("sortedValuepro2");
+      localStorage.removeItem("sortedValuepro3");
+      localStorage.removeItem("sortedValuepro4");
+      localStorage.removeItem("admininvt2");
+      localStorage.removeItem("admininvt1");
+      localStorage.removeItem("sortedValuevt1");
+      localStorage.removeItem("sortedValuevt2");
+      localStorage.removeItem("sortedValuepay1");
+      localStorage.removeItem("sortedValuepay2");
+      localStorage.removeItem("sortedValuepay3");
+      localStorage.removeItem("sortedValueassign1");
+      localStorage.removeItem("sortedValueassign2");
+      localStorage.removeItem("sortedValueassign3");
+      localStorage.removeItem("sortedValueassign4");
+
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("admincategoryData");
