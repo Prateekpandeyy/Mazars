@@ -413,6 +413,7 @@ function Customer() {
             setCountNotification={setCountNotification}
             setBig={setBig}
             setDefaultPage={setDefaultPage}
+            localName="adminClient"
             getCustomer={getCustomer}
           />
           <DataTablepopulated

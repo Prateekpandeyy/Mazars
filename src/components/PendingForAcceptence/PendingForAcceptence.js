@@ -410,6 +410,7 @@ function PendingForAcceptence() {
     },
     {
       text: "Status",
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);
@@ -460,23 +461,7 @@ function PendingForAcceptence() {
     {
       dataField: "accepted_amount",
       text: "Accepted amount ",
-      sort: true,
-      style: {
-        fontSize: "11px",
-        color: "#21a3ce",
-      },
 
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 10);
-      },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;

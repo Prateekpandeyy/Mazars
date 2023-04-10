@@ -340,6 +340,7 @@ const CreateInvoice = () => {
             records={records}
             invoice="admincreate"
             userid={JSON.parse(userid)}
+            localPage="admininvt2"
             setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}

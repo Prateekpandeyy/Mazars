@@ -154,7 +154,7 @@ const InvoiceFilter = (props) => {
   };
   const updateResult = (res) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-
+    localStorage.setItem(props.localPage, 1);
     let returnData = JSON.parse(localStorage.getItem(`${props.invoice}`));
     let droppage = [];
     let customId = 1;
