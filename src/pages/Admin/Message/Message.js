@@ -78,7 +78,7 @@ function Message(props) {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(Number(i));
             }
             setDefaultPage(droppage);
