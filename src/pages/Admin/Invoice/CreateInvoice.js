@@ -94,16 +94,8 @@ const CreateInvoice = () => {
       searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${
-        searchData.query_no
-      }
-      &from=${searchData.p_dateFrom
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${searchData.p_dateTo
-        ?.split("-")
-        .reverse()
-        .join("-")}&installment_no=${searchData?.installment_no}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
+      &from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -170,17 +162,7 @@ const CreateInvoice = () => {
       searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=0&qno=${
-        searchData.query_no
-      }&from=${searchData.p_dateFrom
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${searchData.p_dateTo
-        ?.split("-")
-        .reverse()
-        .join("-")}&installment_no=${
-        searchData?.installment_no
-      }&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=0&orderby=${val}&orderbyfield=${field}`;
     }
