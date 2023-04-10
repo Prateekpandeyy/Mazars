@@ -669,6 +669,7 @@ function AdminPermission(props) {
     return style;
   };
   const onSubmit = (data) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let obj = {};
     if (data.route) {
       obj = {
@@ -704,8 +705,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -718,8 +754,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -734,8 +805,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -748,8 +854,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });

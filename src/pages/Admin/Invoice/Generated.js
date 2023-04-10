@@ -533,6 +533,7 @@ const Generated = () => {
             setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            setPage={setPage}
             page={page}
             setBig={setBig}
             setEnd={setEnd}

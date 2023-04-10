@@ -344,6 +344,7 @@ const CreateInvoice = () => {
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
             page={page}
+            setPage={setPage}
             setBig={setBig}
             setEnd={setEnd}
           />
