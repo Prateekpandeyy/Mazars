@@ -204,33 +204,28 @@ function Unpaid() {
         searchData?.query_no
       }`;
     } else {
-      remainApiPath = `admin/getUploadedProposals?status=1&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `admin/getUploadedProposals?status=2&orderby=${val}&orderbyfield=${field}`;
     }
-    axios
-      .get(
-        `${baseUrl}/getUploadedProposals?status=2&orderby==${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          let all = [];
-          let sortId = 1;
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-          setPayment(all);
-        }
-      });
+        setPayment(all);
+      }
+    });
   };
 
   const toggle = (key) => {
@@ -386,6 +381,18 @@ function Unpaid() {
     {
       text: "Status",
       dataField: "status",
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -411,7 +418,7 @@ function Unpaid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -434,7 +441,7 @@ function Unpaid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -458,7 +465,7 @@ function Unpaid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -481,7 +488,7 @@ function Unpaid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -496,6 +503,17 @@ function Unpaid() {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 11);
+      },
     },
     {
       text: "Action",
