@@ -389,7 +389,6 @@ function AdminFilter(props) {
       }
     }
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
-      console.log("searchData", data);
       if (data.route) {
         if (data.p_status.length > 0) {
           axios
