@@ -76,6 +76,10 @@ function Paginator(props) {
             console.log(JSON.parse(localStorage.getItem("tpQuery1")), "from storage one");
             setPageno(JSON.parse(localStorage.getItem("tpQuery1")))
             console.log(pageno, "in all Q render check");
+        }else if (index === "tpquery2"){
+            console.log(JSON.parse(localStorage.getItem("tpQuery2")), "from storage two");
+            setPageno(JSON.parse(localStorage.getItem("tpQuery2")))
+            console.log(pageno, "in PendingForAccept render check");
         }
         else if (index === "tpquery3") {
             console.log(JSON.parse(localStorage.getItem("tpQuery3")), "from storage three");
@@ -113,7 +117,6 @@ function Paginator(props) {
 
     const setting = (e) => {
         let droppage = [];
-        // console.log(count, "count in setting");
         const dynamicPage = Math.ceil(count / allEnd);
         console.log(dynamicPage, "to check dynamic page");
         setTotalPages(dynamicPage)
@@ -441,30 +444,39 @@ function Paginator(props) {
     }, [resetTrigger]);
 
     useEffect(() => {
-        // console.log("setup at count", count);
+        console.log("useEffect count", count);
         if (count > 0) {
-            // console.log("setup has more count")
-            const N = Math.ceil(count / allEnd);
-            const arr = Array.from({ length: N }, (_, index) => index + 1);
-            setDefaultPage(arr);
-            // console.log(defaultPage, "default in useEffect defaultPage");
+            // const N = Math.ceil(count / allEnd);
+            // const arr = Array.from({ length: N }, (_, index) => index + 1);
+            // setDefaultPage(arr);
+            if (pageno > 1) {
+                setPage(pageno);
+                setAtpage(pageno);
+                setting(pageno);
+                setOnPage(pageno);
+            } else {
+                setPage(1);
+                setAtpage(1);
+                setOnPage(1);
+                setting(1);
+            }
         }
     }, [count]);
 
-    useEffect(() => {
-        // console.log('in useEffect pageno', pageno);
-        if (pageno > 1) {
-            setPage(pageno);
-            setAtpage(pageno);
-            setting(pageno);
-            setOnPage(pageno);
-        } else {
-            setPage(1);
-            setAtpage(1);
-            setOnPage(1);
-            setting(1);
-        }
-    }, [pageno]);
+    // useEffect(() => {
+    //     console.log('in useEffect pageno', pageno);
+    //     if (pageno > 1) {
+    //         setPage(pageno);
+    //         setAtpage(pageno);
+    //         setting(pageno);
+    //         setOnPage(pageno);
+    //     } else {
+    //         setPage(1);
+    //         setAtpage(1);
+    //         setOnPage(1);
+    //         setting(1);
+    //     }
+    // }, [pageno]);
 
 
 

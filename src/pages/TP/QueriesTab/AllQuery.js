@@ -15,7 +15,6 @@ function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
   // let total = props.data;
-  // console.log(total,"total is that props");
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -75,11 +74,8 @@ function AllQuery(props) {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
     localStorage.setItem(`tpQuery1`, JSON.stringify(e));
-    console.log(pagetry, "getsort");
     let val = pagetry?.val;
     let field = pagetry?.field;
-    console.log(val, "if getsort val");
-    console.log(field, "if getsort field");
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
@@ -118,7 +114,6 @@ function AllQuery(props) {
           myConfig
         )
         .then((res) => {
-          let droppage = [];
           if (res.data.code === 1) {
             let data = res.data.result;
             setRecords(res.data.result.length);
@@ -182,7 +177,6 @@ function AllQuery(props) {
           let sortId = 1;
           let record =Number(localStorage.getItem("tp_record_per_page"))
           let startAt = ((onPage - 1) * record) +1;
-          console.log(onPage,startAt,"sort check");
           if (onPage > 1) {
             sortId = startAt;
           }
@@ -417,8 +411,6 @@ function AllQuery(props) {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     localStorage.removeItem(`freezetpQuery1`);
-
-    // console.log(resetTrigger,"resetTrigger in allQ");
   }
 
   return (

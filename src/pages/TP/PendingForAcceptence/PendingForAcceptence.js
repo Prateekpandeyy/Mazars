@@ -1,8 +1,8 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col,} from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import RejectedModal from "./RejectedModal";
@@ -19,6 +19,7 @@ function PendingForAcceptence(props) {
   let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const [loading, setLoading] = useState(false);
+  const [onPage, setOnPage] = useState(1);
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -45,22 +46,67 @@ function PendingForAcceptence(props) {
   };
 
   useEffect(() => {
+
+    // let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
+    // if (!pageno) {
+    //   pageno = 1;
+    // }
+    // getPendingforAcceptance(pageno);
+
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
     if (!data) {
-    getPendingforAcceptance();
+      getPendingforAcceptance(1);
     }
   }, []);
-  const getPendingforAcceptance = () => {
-    
-      axios
-        .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setPendingData(res.data.result);
-            setRecords(res.data.result.length);
-          }
-        });
-    
+  const getPendingforAcceptance = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
+    // let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
+    // localStorage.setItem(`tpQuery2`, JSON.stringify(e));
+    // console.log(pagetry, "getsort");
+    // let val = pagetry?.val;
+    // let field = pagetry?.field;
+    // console.log(val, "if getsort val");
+    // console.log(field, "if getsort field");
+    let remainApiPath = "";
+    setOnPage(e);
+    // setLoading(true);
+    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+    // if ((data) && (!pagetry)) {
+    //   remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)
+    //     }&cat_id=${data.store
+    //     }&from=${data.fromDate
+    //       ?.split("-")
+    //       .reverse()
+    //       .join("-")}&to=${data.toDate
+    //         ?.split("-")
+    //         .reverse()
+    //         .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    // } else if ((data) && (pagetry)) {
+    //   remainApiPath = `/tl/pendingQues?page=${e}&cat_id=${data.store
+    //   }&from=${data.fromDate
+    //     ?.split("-")
+    //     .reverse()
+    //     .join("-")}&to=${data.toDate
+    //       ?.split("-")
+    //       .reverse()
+    //       .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+    //   }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    // } else if ((!data) && (pagetry)) {
+    //   remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
+    // } else {
+    //   remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`
+    // }
+
+    axios
+      .get(`${baseUrl}/tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          setPendingData(res.data.result);
+          setRecords(res.data.result.length);
+        }
+      });
+
   };
 
   const columns = [
@@ -188,13 +234,14 @@ function PendingForAcceptence(props) {
           setLoading(false);
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   return (
     <>
       <Card>
         <CardHeader>
+        <Row>
           <TaxProfessionalFilter
             setData={setPendingData}
             getData={getPendingforAcceptance}
@@ -203,6 +250,24 @@ function PendingForAcceptence(props) {
             index="tpquery2"
             records={records}
           />
+          </Row>
+          {/* <Row>
+            <Col md="12" align="right">
+              <Paginator
+                count={count}
+                setData={setInCompleteData}
+                getData={getInCompleteAssingment}
+                AllQuery="AllQuery"
+                // setRecords={setRecords}
+                records={records}
+                index="tpquery1"
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row> */}
         </CardHeader>
         <CardBody>
           {loading ? (

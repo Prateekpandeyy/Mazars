@@ -315,11 +315,12 @@ function AllProposal() {
       },
     },
   ];
-  console.log("done");
+
   return (
     <>
       <Card>
         <CardHeader>
+          <Row>
           <TaxProfessionalFilter
             setData={setProposal}
             getData={getProposalList}
@@ -328,6 +329,24 @@ function AllProposal() {
             records={records}
             index="tpproposal1"
           />
+          </Row>
+          {/* <Row>
+            <Col md="12" align="right">
+              <Paginator
+                count={count}
+                setData={setInCompleteData}
+                getData={getInCompleteAssingment}
+                AllQuery="AllQuery"
+                // setRecords={setRecords}
+                records={records}
+                index="tpquery1"
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row> */}
         </CardHeader>
         <CardBody>
           <DataTablepopulated
