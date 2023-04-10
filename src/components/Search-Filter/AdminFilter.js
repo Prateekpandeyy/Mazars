@@ -462,7 +462,13 @@ function AdminFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
+              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {
