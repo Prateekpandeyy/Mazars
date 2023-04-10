@@ -388,7 +388,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 6);
       },
       formatter: function (cell, row) {
         return (
@@ -415,7 +415,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 10);
+        sortMessage(val, 7);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -428,7 +428,7 @@ function Paid() {
     {
       text: "Amount paid",
       dataField: "paid_amount",
-      sort: true,
+
       sort: true,
       onSort: (field, order) => {
         let val = 0;
@@ -439,7 +439,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 11);
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -453,7 +453,7 @@ function Paid() {
     {
       text: "Outstanding amount",
       dataField: "amount_outstanding",
-      sort: true,
+
       sort: true,
       onSort: (field, order) => {
         let val = 0;
@@ -464,7 +464,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 12);
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -487,13 +487,25 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 13);
+        sortMessage(val, 10);
       },
     },
     {
       dataField: "tl_name",
       text: "TL name",
+
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 11);
+      },
     },
     {
       text: "Action",

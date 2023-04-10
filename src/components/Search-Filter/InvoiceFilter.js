@@ -26,7 +26,13 @@ const InvoiceFilter = (props) => {
     formData.append("from", data.p_dateFrom);
     formData.append("to", data.p_dateTo);
     formData.append("installment_no", data.installment_no);
-    formData.append("status", data.opt);
+    {
+      props.invoice === "admincreate"
+        ? formData.append("status", "")
+        : formData.append("status", data.opt);
+    }
+
+    // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
     if (props.invoice == "generated") {
       const token = window.localStorage.getItem("tlToken");

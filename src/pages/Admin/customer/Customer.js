@@ -52,7 +52,7 @@ function Customer() {
     setAtpage(1);
     setPage(1);
     getCustomer(1);
-    localStorage.setItem("admininvt1", 1);
+    localStorage.setItem("adminClient", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -60,21 +60,21 @@ function Customer() {
     }
     setPage(Number(page) - 1);
     getCustomer(page - 1);
-    localStorage.setItem("admininvt1", Number(page) - 1);
+    localStorage.setItem("adminClient", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("admininvt1", Number(page) + 1);
+    localStorage.setItem("adminClient", Number(page) + 1);
     getCustomer(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getCustomer(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("admininvt1", defaultPage.at(-1));
+    localStorage.setItem("adminClient", defaultPage.at(-1));
   };
   const getCustomer = (e) => {
     let sortVal = JSON.parse(localStorage.getItem("sortedValueclient"));
@@ -88,16 +88,16 @@ function Customer() {
     let remainApiPath = "";
     let data = JSON.parse(localStorage.getItem(`searchDataadclient`));
     console.log("data", data);
-    if (data === null) {
-      remainApiPath = `/admin/getAllList?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
-    } else {
+    if (data && Object.values(data).length > 0) {
       remainApiPath = `admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    } else {
+      remainApiPath = `/admin/getAllList?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       let droppage = [];
-
+      setPage(Number(e));
       if (res.data.code === 1) {
         let data = res.data.result;
         setTpCount(res.data.total);
@@ -367,7 +367,10 @@ function Customer() {
                         onChange={(e) => {
                           setPage(Number(e.target.value));
                           getCustomer(Number(e.target.value));
-                          localStorage.setItem("adminClient", e.target.value);
+                          localStorage.setItem(
+                            "adminClient",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >
@@ -404,8 +407,12 @@ function Customer() {
           <CustomerListFilter
             setData={setData}
             searchQuery="SearchQuery"
-            setRecords={setTpCount}
             records={tpCount}
+            setPage={setPage}
+            setEnd={setEnd}
+            setCountNotification={setCountNotification}
+            setBig={setBig}
+            setDefaultPage={setDefaultPage}
             getCustomer={getCustomer}
           />
           <DataTablepopulated

@@ -368,17 +368,7 @@ function AssignmentComponent(props) {
     {
       text: "Query no",
       dataField: "assign_no",
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -398,6 +388,7 @@ function AssignmentComponent(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);
@@ -413,6 +404,7 @@ function AssignmentComponent(props) {
     {
       text: "Sub category",
       dataField: "cat_name",
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         setAccend(!accend);
@@ -428,7 +420,7 @@ function AssignmentComponent(props) {
     {
       dataField: "status",
       text: "Status",
-
+      sort: true,
       headerStyle: () => {
         return { width: "200px" };
       },
@@ -590,6 +582,17 @@ function AssignmentComponent(props) {
       text: "TL name",
       dataField: "tl_name",
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        setAccend(!accend);
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
     },
     {
       text: "Action",

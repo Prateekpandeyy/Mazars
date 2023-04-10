@@ -144,7 +144,7 @@ function AdminFilter(props) {
       let dynamicPage = Math.ceil(res.data.total / allEnd);
 
       let rem = (page - 1) * allEnd;
-      console.log("page", page);
+
       if (page === 1) {
         setBig(rem + page);
       } else {
@@ -455,7 +455,7 @@ function AdminFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
+              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {

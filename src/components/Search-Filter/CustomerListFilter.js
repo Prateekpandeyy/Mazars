@@ -5,7 +5,16 @@ import { useForm } from "react-hook-form";
 import { current_date } from "../../common/globalVeriable";
 function CustomerListFilter(props) {
   const { handleSubmit, register, reset } = useForm();
-  const { setData, searchQuery, setRecords, records, getCustomer } = props;
+  const {
+    setData,
+    records,
+    getCustomer,
+    setBig,
+    setEnd,
+    setCountNotification,
+    setPage,
+    setDefaultPage,
+  } = props;
 
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -16,7 +25,7 @@ function CustomerListFilter(props) {
   const resetData = () => {
     localStorage.removeItem("searchDataadclient");
     reset();
-    getCustomer();
+    getCustomer(1);
   };
 
   const onSubmit = (data) => {
@@ -31,7 +40,25 @@ function CustomerListFilter(props) {
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
-              setRecords(res.data.result.length);
+              let droppage = [];
+              setPage(1);
+              let allEnd = Number(
+                localStorage.getItem("admin_record_per_page")
+              );
+              console.log(Number(allEnd) < Number(res.data.total));
+              if (allEnd > Number(res.data.total)) {
+                setEnd(Number(res.data.total));
+              } else {
+                setEnd(Number(allEnd));
+              }
+
+              setBig(1);
+              setCountNotification(res.data.total);
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+              setDefaultPage(droppage);
             }
           }
         });
