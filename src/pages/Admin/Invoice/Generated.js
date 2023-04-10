@@ -95,17 +95,7 @@ const Generated = () => {
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
 
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${
-        searchData.query_no
-      }&from=${searchData.p_dateFrom
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${searchData.p_dateTo
-        ?.split("-")
-        .reverse()
-        .join("-")}&status=${searchData.opt}&installment_no=${
-        searchData?.installment_no
-      }`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -188,25 +178,9 @@ const Generated = () => {
     };
     localStorage.setItem("admininvt1", 1);
     localStorage.setItem("sortedValuevt1", JSON.stringify(sort));
-    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
-    if (
-      searchData?.installment_no ||
-      searchData?.opt ||
-      searchData?.p_dateFrom ||
-      searchData?.p_dateTo ||
-      searchData?.query_no
-    ) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${
-        searchData.query_no
-      }&from=${searchData.p_dateFrom
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${searchData.p_dateTo
-        ?.split("-")
-        .reverse()
-        .join("-")}&status=${searchData.opt}&installment_no=${
-        searchData?.installment_no
-      }&orderby=${val}&orderbyfield=${field}`;
+    let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
+    if (searchData && Object.values(searchData).length > 0) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
     }
