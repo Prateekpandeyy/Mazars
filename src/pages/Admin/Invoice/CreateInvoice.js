@@ -199,28 +199,48 @@ const CreateInvoice = () => {
       },
     },
 
+    // {
+    //   text: "Query no",
+    //   dataField: "assign_no",
+    //   sort: true,
+    //   onSort: (field, order) => {
+    //     let val = 0;
+    //     setAccend(!accend);
+
+    //     if (accend === true) {
+    //       val = 0;
+    //     } else {
+    //       val = 1;
+    //     }
+    //     sortMessage(val, 1);
+    //   },
+    //   formatter: function nameFormatter(cell, row) {
+    //     return (
+    //       <>
+    //         <Link
+    //           to={{
+    //             pathname: `/admin_queries/${row.assign_id}`,
+    //             index: 1,
+    //             routes: "adinvoice",
+    //           }}
+    //         >
+    //           {row.assign_no}
+    //         </Link>
+    //       </>
+    //     );
+    //   },
+    // },
     {
       text: "Query no",
       dataField: "assign_no",
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 1);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <Link
               to={{
-                pathname: `/admin_queries/${row.assign_id}`,
-                index: 1,
+                pathname: `/admin_queries/${row.id}`,
+                index: 9,
                 routes: "adinvoice",
               }}
             >

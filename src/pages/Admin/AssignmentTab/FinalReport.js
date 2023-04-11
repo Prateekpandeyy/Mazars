@@ -459,25 +459,7 @@ function FinalReport() {
       headerStyle: () => {
         return { width: "200px" };
       },
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendassign3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendassign3");
-        }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 6);
-      },
       formatter: function (cell, row) {
         return (
           <>

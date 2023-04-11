@@ -452,28 +452,11 @@ function AssignmentComponent(props) {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
+
       headerStyle: () => {
         return { width: "200px" };
       },
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendassign1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendassign1");
-        }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
       formatter: function (cell, row) {
         return (
           <>
