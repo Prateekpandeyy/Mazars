@@ -439,6 +439,17 @@ function Paginator(props) {
             setAtpage(1);
             setting(1)
             setresetTrigger(!resetTrigger);
+            // if (index === "tpquery1") {
+            //     localStorage.setItem(`tpQuery1`, JSON.stringify(1));
+            // }else if (index === "tpquery2"){
+            //     localStorage.setItem(`tpQuery2`, JSON.stringify(1));
+            // }
+            // else if (index === "tpquery3") {
+            //     localStorage.setItem(`tpQuery3`, JSON.stringify(1));
+            // } 
+            
+            // else {
+            // }
             // console.log(resetTrigger, "reset at trigger");
         }
     }, [resetTrigger]);

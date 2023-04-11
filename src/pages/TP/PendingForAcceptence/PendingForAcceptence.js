@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import { Card, CardHeader, CardBody, Row, Col,} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col, } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import RejectedModal from "./RejectedModal";
@@ -18,12 +18,19 @@ import MessageIcon, {
 function PendingForAcceptence(props) {
   let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
+
   const [loading, setLoading] = useState(false);
   const [onPage, setOnPage] = useState(1);
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [count, setCount] = useState("0");
+  const [sortVal, setSortVal] = useState('');
+  const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
+  
   const myRef = useRef([]);
 
   const [pay, setPay] = useState({
@@ -46,7 +53,6 @@ function PendingForAcceptence(props) {
   };
 
   useEffect(() => {
-
     // let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
     // if (!pageno) {
     //   pageno = 1;
@@ -58,6 +64,7 @@ function PendingForAcceptence(props) {
       getPendingforAcceptance(1);
     }
   }, []);
+
   const getPendingforAcceptance = (e) => {
 
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
@@ -109,6 +116,61 @@ function PendingForAcceptence(props) {
 
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
+
+    let obj = {
+      pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpQuery2`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
+
+    if(data){
+      remainApiPath =`tl/pendingQues?page=${onPage}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath =`tl/pendingQues?page=${onPage}&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          let record =Number(localStorage.getItem("tp_record_per_page"))
+          let startAt = ((onPage - 1) * record) +1;
+          if (onPage > 1) {
+            sortId = startAt;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setPendingData(all);
+        }
+      });
+  };
+
   const columns = [
     {
       text: "S.no",
@@ -125,6 +187,17 @@ function PendingForAcceptence(props) {
       text: "Date",
       dataField: "query_created",
       sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   setAccend(!accend);
+
+      //   if (accend === true) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 1);
+      // },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created;
@@ -158,21 +231,63 @@ function PendingForAcceptence(props) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   setAccend(!accend);
+
+      //   if (accend === true) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 3);
+      // },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   setAccend(!accend);
+
+      //   if (accend === true) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 4);
+      // },
     },
     {
       text: "Client name",
       dataField: "name",
       sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (order === "asc") {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
     },
     {
       text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
       sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   setAccend(!accend);
+
+      //   if (accend === true) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 6);
+      // },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -237,30 +352,37 @@ function PendingForAcceptence(props) {
       .catch((error) => { });
   };
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    localStorage.removeItem(`freezetpQuery2`);
+  }
+
   return (
     <>
       <Card>
         <CardHeader>
-        <Row>
-          <TaxProfessionalFilter
-            setData={setPendingData}
-            getData={getPendingforAcceptance}
-            pendingForAcceptence="pendingForAcceptence"
-            setRecords={setRecords}
-            index="tpquery2"
-            records={records}
-          />
+          <Row>
+            <TaxProfessionalFilter
+              setData={setPendingData}
+              getData={getPendingforAcceptance}
+              pendingForAcceptence="pendingForAcceptence"
+              setRecords={setRecords}
+              index="tpquery2"
+              records={records}
+              resetTriggerFunc={resetTriggerFunc}
+              setCount={setCount}
+            />
           </Row>
           {/* <Row>
             <Col md="12" align="right">
               <Paginator
                 count={count}
-                setData={setInCompleteData}
-                getData={getInCompleteAssingment}
-                AllQuery="AllQuery"
+                setData={setPendingData}
+                getData={getPendingforAcceptance}
+                pendingForAcceptence="pendingForAcceptence"
                 // setRecords={setRecords}
                 records={records}
-                index="tpquery1"
+                index="tpquery2"
                 setOnPage={setOnPage}
                 // resetPaging={resetPaging}
                 resetTrigger={resetTrigger}

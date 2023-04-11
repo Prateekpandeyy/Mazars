@@ -216,6 +216,7 @@ function TaxProfessionalFilter(props) {
               // setCount(res.data.total);
               // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
+              localStorage.setItem(`tpQuery1`, JSON.stringify(1));
 
             }
           });
@@ -254,6 +255,7 @@ function TaxProfessionalFilter(props) {
                 // console.log(res.data.total, "count updated");
                 // resetPaging();
                 resetTriggerFunc();
+                localStorage.setItem(`tpQuery1`, JSON.stringify(1));
 
               }
             }
@@ -280,6 +282,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                // localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
           });
@@ -302,6 +305,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                // localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
           });
@@ -340,6 +344,7 @@ function TaxProfessionalFilter(props) {
               // setCount(res.data.total);
               // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
+              localStorage.setItem(`tpQuery3`, JSON.stringify(1));
             }
           });
       } else {
@@ -376,6 +381,7 @@ function TaxProfessionalFilter(props) {
                 // console.log(res.data.total, "count updated");
                 // resetPaging();
                 resetTriggerFunc();
+                localStorage.setItem(`tpQuery3`, JSON.stringify(1));
               }
             }
           });
