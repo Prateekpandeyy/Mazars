@@ -28,7 +28,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function AllPayment(props) {
   const [payment, setPayment] = useState([]);
 
@@ -47,7 +48,6 @@ function AllPayment(props) {
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
-
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const token = window.localStorage.getItem("adminToken");
@@ -56,6 +56,18 @@ function AllPayment(props) {
       uit: token,
     },
   };
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -69,20 +81,13 @@ function AllPayment(props) {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
-  // useEffect(() => {
-  //   let localPage = Number(localStorage.getItem("adminpayt1"));
-  //   if (!localPage) {
-  //     localPage = 1;
-  //   }
-  //   setPage(localPage);
-  //   setEnd(Number(localStorage.getItem("admin_record_per_page")));
-  //   getPaymentStatus(localPage);
-  // }, []);
+
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminpayt1"));
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendpay1"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepay1"));
     if (!sortVal) {
       let sort = {
@@ -230,7 +235,16 @@ function AllPayment(props) {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         let all = [];
         let sortId = 1;
 
@@ -278,12 +292,18 @@ function AllPayment(props) {
     {
       dataField: "query_created_date",
       text: "Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -301,20 +321,7 @@ function AllPayment(props) {
     {
       dataField: "assign_no",
       text: "Query no",
-      sort: true,
 
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -334,13 +341,18 @@ function AllPayment(props) {
     {
       dataField: "parent_id",
       text: "Category",
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -352,12 +364,17 @@ function AllPayment(props) {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
-
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -369,12 +386,17 @@ function AllPayment(props) {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
-
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -392,12 +414,18 @@ function AllPayment(props) {
     {
       text: "Status",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -420,12 +448,17 @@ function AllPayment(props) {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
-
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -444,11 +477,17 @@ function AllPayment(props) {
       text: "Amount paid",
       dataField: "paid_amount",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -468,12 +507,17 @@ function AllPayment(props) {
       text: "Amount outstanding",
       dataField: "amount_outstanding",
       sort: true,
-
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -492,11 +536,17 @@ function AllPayment(props) {
       text: "Date of payment",
       dataField: "cust_paid_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -514,12 +564,18 @@ function AllPayment(props) {
     {
       dataField: "tl_name",
       text: "TL name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -594,8 +650,9 @@ function AllPayment(props) {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpay1");
+    localStorage.removeItem("adminpayt1");
     localStorage.removeItem("sortedValuepay1");
+    localStorage.removeItem("accendpay1");
   };
   return (
     <div>
@@ -647,8 +704,8 @@ function AllPayment(props) {
                       <select
                         value={page}
                         onChange={(e) => {
-                          setPage(e.target.value);
-                          getPaymentStatus(e.target.value);
+                          setPage(Number(e.target.value));
+                          getPaymentStatus(Number(e.target.value));
                           localStorage.setItem(
                             "adminpayt1",
                             Number(e.target.value)

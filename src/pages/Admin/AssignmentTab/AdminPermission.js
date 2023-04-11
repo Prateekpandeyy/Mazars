@@ -20,7 +20,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function AdminPermission(props) {
   const [loading, setLoading] = useState(false);
   const userid = window.localStorage.getItem("adminkey");
@@ -98,6 +99,7 @@ function AdminPermission(props) {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendassign4"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValueassign4"));
     if (!sortVal) {
       let sort = {
@@ -116,6 +118,19 @@ function AdminPermission(props) {
       uit: token,
     },
   };
+
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const getAssignmentData = (e) => {
     let sortVal = JSON.parse(localStorage.getItem("sortedValueassign4"));
     let orderBy = 0;
@@ -194,8 +209,7 @@ function AdminPermission(props) {
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-    setOrderBy(val);
-    setFiledBy(field);
+
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -220,7 +234,7 @@ function AdminPermission(props) {
         searchData?.query_no
       }`;
     } else {
-      remainApiPath = `admin/getadminpermissiona?orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `admin/getAssignments?orderby=${val}&orderbyfield=${field}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
@@ -228,7 +242,16 @@ function AdminPermission(props) {
         let sortId = 1;
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         res.data.result.map((i) => {
           let data = {
             ...i,
@@ -361,13 +384,19 @@ function AdminPermission(props) {
     {
       text: "Date",
       dataField: "date_of_query",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -392,7 +421,7 @@ function AdminPermission(props) {
             <Link
               to={{
                 pathname: `/admin_queries/${row.q_id}`,
-                index: 0,
+                index: 3,
                 routes: "assignment",
               }}
             >
@@ -405,13 +434,19 @@ function AdminPermission(props) {
     {
       text: "Category",
       dataField: "parent_id",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -423,11 +458,18 @@ function AdminPermission(props) {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -438,12 +480,19 @@ function AdminPermission(props) {
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -530,12 +579,18 @@ function AdminPermission(props) {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
       sort: true,
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -554,12 +609,18 @@ function AdminPermission(props) {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -601,13 +662,19 @@ function AdminPermission(props) {
     {
       text: "TL name",
       dataField: "tl_name",
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -669,6 +736,7 @@ function AdminPermission(props) {
     return style;
   };
   const onSubmit = (data) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let obj = {};
     if (data.route) {
       obj = {
@@ -684,8 +752,8 @@ function AdminPermission(props) {
     } else {
       obj = {
         store: store2,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: selectedData,
         query_no: data?.query_no,
         p_status: hide,
@@ -704,8 +772,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -718,8 +821,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -734,8 +872,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -748,8 +921,43 @@ function AdminPermission(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -780,6 +988,8 @@ function AdminPermission(props) {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminassign4");
+    localStorage.removeItem("sortedValueassign4");
     localStorage.removeItem("adminassign4");
   };
   return (
@@ -981,9 +1191,12 @@ function AdminPermission(props) {
                       <select
                         value={page}
                         onChange={(e) => {
-                          setPage(e.target.value);
-                          getAssignmentData(e.target.value);
-                          localStorage.setItem("adminassign4", e.target.value);
+                          setPage(Number(e.target.value));
+                          getAssignmentData(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminassign4",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >

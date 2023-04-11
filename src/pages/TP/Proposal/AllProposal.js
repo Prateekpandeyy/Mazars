@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -17,16 +17,24 @@ import MessageIcon, {
   EditQuery,
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
+import Paginator from "../../../components/Paginator/Paginator";
 
 function AllProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
   const [id, setId] = useState(null);
   const [assignNo, setAssignNo] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
@@ -49,10 +57,10 @@ function AllProposal() {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [viewProposalModal]);
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+  }, [viewProposalModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -63,35 +71,50 @@ function AllProposal() {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+  }, [ViewDiscussion]);
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
-    if (!data) {
-      console.log("getting all TP proposal");
-    getProposalList();
-  }
+    // let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
+    // if (!data) {
+    //   console.log("getting all TP proposal");
+    getProposalList(1);
+    // }
   }, []);
 
-  const getProposalList = () => {
-    
+  const getProposalList = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
+    let remainApiPath = "";
+    if (data) {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+        }`
+    } else {
+      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}`
+    }
 
-      axios
-        .get(
-          `${baseUrl}/tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setProposal(res.data.result);
-            setCount(res.data.result.length);
-            setRecords(res.data.result.length);
-          }
-        });
-  
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setProposal(res.data.result);
+          setCount(res.data.result.length);
+          setRecords(res.data.result.length);
+        }
+      });
+
   };
 
   const columns = [
@@ -316,19 +339,44 @@ function AllProposal() {
       },
     },
   ];
-  
+
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    localStorage.removeItem("tpPropsosal1");
+    localStorage.removeItem(`freezetpProposal1`);
+    localStorage.removeItem("tpArrowProposal1");
+  }
+
   return (
     <>
       <Card>
         <CardHeader>
-          <TaxProfessionalFilter
-            setData={setProposal}
-            getData={getProposalList}
-            AllProposal="AllProposal"
-            setRecords={setRecords}
-            records={records}
-            index="tpproposal1"
-          />
+          <Row>
+            <TaxProfessionalFilter
+              setData={setProposal}
+              getData={getProposalList}
+              AllProposal="AllProposal"
+              setRecords={setRecords}
+              records={records}
+              index="tpproposal1"
+            />
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+                count={count}
+                setData={setProposal}
+                getData={getProposalList}
+                AllProposal="AllProposal"
+                setRecords={setRecords} 
+                index="tpproposal1"
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         </CardHeader>
         <CardBody>
           <DataTablepopulated

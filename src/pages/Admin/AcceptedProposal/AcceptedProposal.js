@@ -31,7 +31,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function AcceptedProposal() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -57,6 +58,21 @@ function AcceptedProposal() {
       uit: token,
     },
   };
+  function priceFormatter(column, colIndex) {
+    console.log(column, colIndex);
+
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -87,6 +103,7 @@ function AcceptedProposal() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendpro3"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
     if (!sortVal) {
       let sort = {
@@ -230,7 +247,16 @@ function AcceptedProposal() {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         let all = [];
         let sortId = 1;
 
@@ -247,7 +273,18 @@ function AcceptedProposal() {
       }
     });
   };
-
+  function priceFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const columns = [
     {
       dataField: "cid",
@@ -261,11 +298,18 @@ function AcceptedProposal() {
       dataField: "created",
       text: "Date",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -305,12 +349,18 @@ function AcceptedProposal() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -321,12 +371,19 @@ function AcceptedProposal() {
     {
       dataField: "cat_name",
       text: "Sub category",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -337,12 +394,19 @@ function AcceptedProposal() {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -371,12 +435,19 @@ function AcceptedProposal() {
     {
       text: "Date of proposal",
       dataField: "DateofProposal",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -394,12 +465,19 @@ function AcceptedProposal() {
     {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -418,11 +496,18 @@ function AcceptedProposal() {
     {
       text: "Status",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -444,12 +529,19 @@ function AcceptedProposal() {
     {
       dataField: "ProposedAmount",
       text: "Proposed amount",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -467,11 +559,18 @@ function AcceptedProposal() {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -489,13 +588,19 @@ function AcceptedProposal() {
     {
       dataField: "tl_name",
       text: "TL name",
-
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -551,6 +656,7 @@ function AcceptedProposal() {
     setFiledBy("");
     localStorage.removeItem("adminprot3");
     localStorage.removeItem("sortedValuepro3");
+    localStorage.removeItem("accendpro3");
   };
   return (
     <>

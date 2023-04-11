@@ -19,6 +19,8 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
 import Paginator from "../../../components/Paginator/Paginator";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
@@ -59,6 +61,19 @@ function InCompleteData({ CountIncomplete, data }) {
     },
   };
 
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
+
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -71,6 +86,10 @@ function InCompleteData({ CountIncomplete, data }) {
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpQuery3"));
+    let arrow= localStorage.getItem("tpArrowQuery3")
+    if(arrow){
+      setAccend(arrow);
+    }
     if (!pageno) {
       pageno = 1;
     }
@@ -154,15 +173,16 @@ function InCompleteData({ CountIncomplete, data }) {
     setSortVal(val);
     setSortField(field);
     let obj = {
-      pageno: onPage,
+      // pageno: onPage,
       val: val,
       field: field,
     }
     localStorage.setItem(`freezetpQuery3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
+    setresetTrigger(!resetTrigger);
 
     if(data){
-      remainApiPath = `tl/getIncompleteQues?page=${onPage}&cat_id=${data.store
+      remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -172,7 +192,7 @@ function InCompleteData({ CountIncomplete, data }) {
           .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     }else{
-      remainApiPath = `tl/getIncompleteQues?page=${onPage}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -184,11 +204,11 @@ function InCompleteData({ CountIncomplete, data }) {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          let record = Number(localStorage.getItem("tp_record_per_page"))
-          let startAt = ((onPage - 1) * record) + 1;
-          console.log(onPage,startAt,"sort check");
+          // let record = Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = ((onPage - 1) * record) + 1;
+          // console.log(onPage,startAt,"sort check");
           if (onPage > 1) {
-            sortId = startAt;
+            sortId = 1;
           }
           res.data.result.map((i) => {
             let data = {
@@ -215,11 +235,20 @@ function InCompleteData({ CountIncomplete, data }) {
       text: "Query date",
       dataField: "created",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery3", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -230,12 +259,21 @@ function InCompleteData({ CountIncomplete, data }) {
     {
       text: "Query no",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery3", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -262,10 +300,19 @@ function InCompleteData({ CountIncomplete, data }) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery3", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery3");
+        }
 
         if (accend === true) {
           val = 0;
@@ -279,10 +326,19 @@ function InCompleteData({ CountIncomplete, data }) {
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery3", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery3");
+        }
 
         if (accend === true) {
           val = 0;
@@ -295,9 +351,19 @@ function InCompleteData({ CountIncomplete, data }) {
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery3", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery3");
+        }
         if (order === "asc") {
           val = 0;
         } else {
@@ -309,10 +375,17 @@ function InCompleteData({ CountIncomplete, data }) {
     {
       text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
 
         if (accend === true) {
           val = 0;
@@ -332,10 +405,18 @@ function InCompleteData({ CountIncomplete, data }) {
     },
     {
       text: "Status",
+      dataField: "Status",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
 
         if (accend === true) {
           val = 0;
@@ -409,7 +490,9 @@ function InCompleteData({ CountIncomplete, data }) {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    localStorage.removeItem("tpQuery3");
     localStorage.removeItem(`freezetpQuery3`);
+    localStorage.removeItem("tpArrowQuery3");
   }
 
   return (

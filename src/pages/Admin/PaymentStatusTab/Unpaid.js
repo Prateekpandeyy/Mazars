@@ -29,7 +29,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function Unpaid() {
   const [payment, setPayment] = useState([]);
 
@@ -63,6 +64,7 @@ function Unpaid() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendpay3"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepay3"));
     if (!sortVal) {
       let sort = {
@@ -210,7 +212,16 @@ function Unpaid() {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         let all = [];
         let sortId = 1;
 
@@ -253,7 +264,18 @@ function Unpaid() {
       setScrolledTo(key);
     }
   };
-
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -271,12 +293,19 @@ function Unpaid() {
     {
       dataField: "query_created_date",
       text: "Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -294,18 +323,7 @@ function Unpaid() {
     {
       dataField: "assign_no",
       text: "Query no",
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -326,11 +344,18 @@ function Unpaid() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -341,12 +366,19 @@ function Unpaid() {
     {
       dataField: "cat_name",
       text: "Sub category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -357,12 +389,19 @@ function Unpaid() {
     {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -381,12 +420,19 @@ function Unpaid() {
     {
       text: "Status",
       dataField: "status",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -408,12 +454,19 @@ function Unpaid() {
     {
       dataField: "accepted_amount",
       text: "Accepted amount ",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -430,13 +483,20 @@ function Unpaid() {
     },
     {
       text: "Amount paid",
+      headerFormatter: headerLabelFormatter,
       dataField: "paid_amount",
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -455,12 +515,19 @@ function Unpaid() {
     {
       text: "Outstanding amount",
       dataField: "amount_outstanding",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -478,12 +545,19 @@ function Unpaid() {
     {
       text: "Date of payment",
       dataField: "cust_paid_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -502,12 +576,19 @@ function Unpaid() {
     {
       dataField: "tl_name",
       text: "TL name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpay3");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -580,8 +661,9 @@ function Unpaid() {
     setBig(1);
     setOrderBy("");
     setFiledBy("");
-    localStorage.removeItem("adminpay3");
+    localStorage.removeItem("adminpayt3");
     localStorage.removeItem("sortedValuepay3");
+    localStorage.removeItem("accendpay3");
   };
   return (
     <Card>
@@ -632,9 +714,12 @@ function Unpaid() {
                     <select
                       value={page}
                       onChange={(e) => {
-                        setPage(e.target.value);
-                        getPaymentStatus(e.target.value);
-                        localStorage.setItem("adminpayt3", e.target.value);
+                        setPage(Number(e.target.value));
+                        getPaymentStatus(Number(e.target.value));
+                        localStorage.setItem(
+                          "adminpayt3",
+                          Number(e.target.value)
+                        );
                       }}
                       className="form-control"
                     >

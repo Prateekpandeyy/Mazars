@@ -528,11 +528,13 @@ const Generated = () => {
             getData={getProposalList}
             invoice="admingenerated"
             setRec={setRecords}
+            localPage="admininvt1"
             records={records}
             userid={JSON.parse(userid)}
             setDefaultPage={setDefaultPage}
             resetPaging={resetPaging}
             setCountNotification={setCountNotification}
+            setPage={setPage}
             page={page}
             setBig={setBig}
             setEnd={setEnd}

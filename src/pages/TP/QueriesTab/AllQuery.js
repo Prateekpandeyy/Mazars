@@ -10,6 +10,8 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
 import Paginator from "../../../components/Paginator/Paginator";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
@@ -58,11 +60,29 @@ function AllQuery(props) {
   };
 
 
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
  
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
+    let arrow= localStorage.getItem("tpArrowQuery1")
+    if(arrow){
+      setAccend(arrow);
+    }
+    console.log(accend);
+    
     if (pageno) {
       getInCompleteAssingment(pageno);
     } else {
@@ -142,10 +162,9 @@ function AllQuery(props) {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
-
+    localStorage.setItem(`tpQuery1`, JSON.stringify(1))
     let obj = {
-      pageno: pageno,
+      // pageno: pageno,
       val: val,
       field: field,
     }
@@ -153,7 +172,7 @@ function AllQuery(props) {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
 
     if(data){
-      remainApiPath =`tl/getIncompleteQues?page=${onPage}&cat_id=${data.store
+      remainApiPath =`tl/getIncompleteQues?page=1&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -163,7 +182,7 @@ function AllQuery(props) {
           .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath =`tl/getIncompleteQues?page=${onPage}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath =`tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -175,11 +194,11 @@ function AllQuery(props) {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          let record =Number(localStorage.getItem("tp_record_per_page"))
-          let startAt = ((onPage - 1) * record) +1;
-          if (onPage > 1) {
-            sortId = startAt;
-          }
+          // let record =Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = 1;
+          // if (onPage > 1) {
+          //   sortId = 1;
+          // }
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -189,6 +208,8 @@ function AllQuery(props) {
             all.push(data);
           });
           setInCompleteData(all);
+          // resetTriggerFunc();
+          setresetTrigger(!resetTrigger);
         }
       });
   };
@@ -204,12 +225,20 @@ function AllQuery(props) {
     {
       text: "Query date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -227,10 +256,18 @@ function AllQuery(props) {
     {
       text: "Query no",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
 
         if (accend === true) {
           val = 0;
@@ -258,10 +295,17 @@ function AllQuery(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
 
         if (accend === true) {
           val = 0;
@@ -274,11 +318,17 @@ function AllQuery(props) {
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
         if (accend === true) {
           val = 0;
         } else {
@@ -290,9 +340,17 @@ function AllQuery(props) {
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
         if (order === "asc") {
           val = 0;
         } else {
@@ -304,10 +362,17 @@ function AllQuery(props) {
     {
       text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
 
         if (accend === true) {
           val = 0;
@@ -328,10 +393,18 @@ function AllQuery(props) {
     },
     {
       text: "Status",
+      dataField: "Status",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
 
         if (accend === true) {
           val = 0;
@@ -410,7 +483,9 @@ function AllQuery(props) {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    localStorage.removeItem("tpQuery1");
     localStorage.removeItem(`freezetpQuery1`);
+    localStorage.removeItem("tpArrowQuery1");
   }
 
   return (

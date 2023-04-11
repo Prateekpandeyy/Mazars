@@ -1050,3 +1050,11 @@ footer a:hover{
 .navButtonSelectDiv option{
   text-align: center;
 }
+th.sortable::after {
+  font-family: FontAwesome;
+  content: "\f0dc";
+  position: absolute;
+  right: 8px;
+  color: #fff;
+  display: none;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -14,12 +14,14 @@ import MessageIcon, {
   EyeIcon,
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
+import Paginator from "../../../components/Paginator/Paginator";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function AcceptedProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
   const [id, setId] = useState(null);
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
@@ -27,6 +29,14 @@ function AcceptedProposal() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignNo, setAssignNo] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+
   const myRef = useRef([]);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -48,7 +58,7 @@ function AcceptedProposal() {
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [viewProposalModal]);
+  }, [viewProposalModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -65,7 +75,7 @@ function AcceptedProposal() {
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     getProposalList();
@@ -284,14 +294,33 @@ function AcceptedProposal() {
     <>
       <Card>
         <CardHeader>
-          <TaxProfessionalFilter
-            setData={setProposal}
-            getData={getProposalList}
-            proposal="proposal"
-            setRecords={setRecords}
-            index="tpproposal3"
-            records={records}
-          />
+          <Row>
+            <TaxProfessionalFilter
+              setData={setProposal}
+              getData={getProposalList}
+              proposal="proposal"
+              setRecords={setRecords}
+              index="tpproposal3"
+              records={records}
+            />
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+                setData={setProposal}
+                getData={getProposalList}
+                proposal="proposal"
+                setRecords={setRecords}
+                index="tpproposal3"
+                records={records}
+                count={count}
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         </CardHeader>
         <CardBody>
           <DataTablepopulated

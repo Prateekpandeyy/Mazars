@@ -154,7 +154,7 @@ const InvoiceFilter = (props) => {
   };
   const updateResult = (res) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-    console.log("doen");
+    localStorage.setItem(props.localPage, 1);
     let returnData = JSON.parse(localStorage.getItem(`${props.invoice}`));
     let droppage = [];
     let customId = 1;
@@ -178,13 +178,11 @@ const InvoiceFilter = (props) => {
       let dynamicPage = Math.ceil(res.data.total / allEnd);
 
       let rem = (props.page - 1) * allEnd;
-
-      if (props.page === 1) {
-        props.setBig(1);
-        props.setEnd(end);
+      props.setBig(1);
+      if (Number(res.data.total) < allEnd) {
+        props.setEnd(Number(res.data.total));
       } else {
-        props.setBig(1);
-        props.setEnd(end);
+        props.setEnd(allEnd);
       }
       for (let i = 1; i <= dynamicPage; i++) {
         droppage.push(i);
@@ -192,7 +190,7 @@ const InvoiceFilter = (props) => {
 
       props.setDefaultPage(droppage);
       props.setData(all);
-
+      props.setPage(1);
       props.setRec(res.data.total);
       console.log(returnData);
       if (returnData === null) {

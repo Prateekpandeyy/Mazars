@@ -21,7 +21,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function AllProposalComponent() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -38,7 +39,7 @@ function AllProposalComponent() {
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
-  const [accend, setAccend] = useState(false);
+  const [accend, setAccend] = useState("");
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
@@ -86,6 +87,7 @@ function AllProposalComponent() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendpro1"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro1"));
     if (!sortVal) {
       let sort = {
@@ -205,8 +207,7 @@ function AllProposalComponent() {
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-    setOrderBy(val);
-    setFiledBy(field);
+
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -233,10 +234,19 @@ function AllProposalComponent() {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+
         let all = [];
         let sortId = 1;
-
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         res.data.result.map((i) => {
           let data = {
             ...i,
@@ -262,6 +272,20 @@ function AllProposalComponent() {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [retview]);
+  function priceFormatter(column, colIndex) {
+    console.log(column, colIndex);
+
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   const columns = [
     {
@@ -274,12 +298,19 @@ function AllProposalComponent() {
     {
       dataField: "created",
       text: "Date",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -318,11 +349,18 @@ function AllProposalComponent() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -333,12 +371,19 @@ function AllProposalComponent() {
     {
       dataField: "cat_name",
       text: "Sub category",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -349,12 +394,19 @@ function AllProposalComponent() {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -383,12 +435,19 @@ function AllProposalComponent() {
     {
       text: "Date of proposal",
       dataField: "DateofProposal",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -405,13 +464,20 @@ function AllProposalComponent() {
     },
     {
       text: "Date of acceptance / decline of proposal",
+      headerFormatter: priceFormatter,
       dataField: "cust_accept_date",
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -429,11 +495,18 @@ function AllProposalComponent() {
     {
       text: "Status",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -462,12 +535,19 @@ function AllProposalComponent() {
     {
       dataField: "ProposedAmount",
       text: "Proposed amount",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -493,12 +573,18 @@ function AllProposalComponent() {
       dataField: "accepted_amount",
       text: "Accepted amount",
       sort: true,
-
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -516,11 +602,20 @@ function AllProposalComponent() {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          if (accend !== field) {
+            setAccend(field);
+          } else {
+            setAccend("");
+          }
+        } else {
+          setAccend("");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -580,10 +675,10 @@ function AllProposalComponent() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setOrderBy("");
-    setFiledBy("");
+
     localStorage.removeItem("adminprot1");
     localStorage.removeItem("sortedValuepro1");
+    localStorage.removeItem("accendpro1");
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
@@ -33,6 +33,9 @@ import MessageIcon, {
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
+import Paginator from "../../../components/Paginator/Paginator";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function AllPayment() {
   const { id } = useParams();
@@ -41,11 +44,17 @@ function AllPayment() {
   const [records, setRecords] = useState([]);
 
   const [pay, setPay] = useState([]);
-  const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
 
   const [assignNo, setAssignNo] = useState("");
 
@@ -80,7 +89,7 @@ function AllPayment() {
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const getPaymentStatus = () => {
     let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
@@ -327,14 +336,33 @@ function AllPayment() {
     <>
       <Card>
         <CardHeader>
-          <TaxProfessionalFilter
-            setData={setPayment}
-            getData={getPaymentStatus}
-            Paid="Paid"
-            setRecords={setRecords}
-            index="tppayment2"
-            records={records}
-          />
+          <Row>
+            <TaxProfessionalFilter
+              setData={setPayment}
+              getData={getPaymentStatus}
+              Paid="Paid"
+              setRecords={setRecords}
+              index="tppayment2"
+              records={records}
+            />
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+              setData={setPayment}
+              getData={getPaymentStatus}
+              Paid="Paid"
+              setRecords={setRecords}
+              index="tppayment2"
+              records={records}
+                count={count}
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>
@@ -372,14 +400,14 @@ function AllPayment() {
                 </thead>
                 {pay.length > 0
                   ? pay.map((p, i) => (
-                      <tbody>
-                        <tr>
-                          <td>{i + 1}</td>
-                          <td>{CommonServices.removeTime(p.payment_date)}</td>
-                          <td>{p.paid_amount}</td>
-                        </tr>
-                      </tbody>
-                    ))
+                    <tbody>
+                      <tr>
+                        <td>{i + 1}</td>
+                        <td>{CommonServices.removeTime(p.payment_date)}</td>
+                        <td>{p.paid_amount}</td>
+                      </tr>
+                    </tbody>
+                  ))
                   : null}
               </table>
             </ModalBody>

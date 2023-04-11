@@ -111,13 +111,13 @@ function TaxProfessionalFilter(props) {
     setStatus1("");
     setQueryNo("");
     // resetPaging();
-    resetTriggerFunc();
     console.log('reset is triggred in tpfilter');
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
     getData(1);
-    dateValue.current.clearValue();
+    resetTriggerFunc();
+    // dateValue.current.clearValue();
   };
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
@@ -492,7 +492,7 @@ function TaxProfessionalFilter(props) {
               .join("-")}&to=${data.toDate
                 ?.split("-")
                 .reverse()
-                .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no
+                .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )

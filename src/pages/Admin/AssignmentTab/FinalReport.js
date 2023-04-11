@@ -31,7 +31,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function FinalReport() {
   const userid = window.localStorage.getItem("adminkey");
 
@@ -103,6 +104,7 @@ function FinalReport() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendassign3"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getAssignmentData(localPage);
@@ -141,7 +143,7 @@ function FinalReport() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&qno=${searchData?.query_no}`;
+        .join("-")}&qno=${searchData?.query_no}&pcat_id=${searchData.pcatId}`;
     } else {
       remainApiPath = `admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1&page=${e}`;
     }
@@ -222,7 +224,18 @@ function FinalReport() {
     setStore2([]);
     getAssignmentData();
   };
-
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   //reset date
   const resetData = () => {
     reset();
@@ -234,33 +247,61 @@ function FinalReport() {
     setQueryNo("");
     setFromDate("");
     setToDate("");
-    getAssignmentData();
+    getAssignmentData(1);
   };
   const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
+    let remainApiPath = "";
 
-          setAssignmentDisplay(all);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminassign3", 1);
+    localStorage.setItem("sortedValueassign3", JSON.stringify(sort));
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment3`)
+    );
+    if (searchData) {
+      remainApiPath = `/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1&&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `/admin/getAssignments?assignment_status=Delivery_of_report&stages_status=1&&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        setPage(1);
+        setBig(1);
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
         }
-      });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setAssignmentDisplay(all);
+      }
+    });
   };
   const firstChunk = () => {
     setAtpage(1);
@@ -308,17 +349,8 @@ function FinalReport() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return (
-          <div
-            id={row.assign_no}
-            ref={(el) => (myRef.current[row.assign_no] = el)}
-          >
-            {rowIndex + 1}
-          </div>
-        );
-      },
+      dataField: "cid",
+
       headerStyle: () => {
         return { width: "50px" };
       },
@@ -326,8 +358,25 @@ function FinalReport() {
     {
       text: "Date",
       dataField: "date_of_query",
-
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -360,18 +409,74 @@ function FinalReport() {
     {
       text: "Category",
       dataField: "parent_id",
+
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       dataField: "status",
       text: "Status",
       headerStyle: () => {
         return { width: "200px" };
+      },
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
       },
       formatter: function (cell, row) {
         return (
@@ -448,8 +553,26 @@ function FinalReport() {
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
-      sort: true,
 
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
@@ -462,6 +585,24 @@ function FinalReport() {
       dataField: "final_date",
       text: "Actual date of delivery",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -500,6 +641,24 @@ function FinalReport() {
       text: "TL name",
       dataField: "tl_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
+      },
     },
     {
       text: "Action",
@@ -571,8 +730,8 @@ function FinalReport() {
     } else {
       obj = {
         store: store2,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: selectedData,
         query_no: data?.query_no,
 
@@ -712,6 +871,8 @@ function FinalReport() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminassign3");
+    localStorage.removeItem("sortedValueassign3");
     localStorage.removeItem("adminassign3");
   };
   return (

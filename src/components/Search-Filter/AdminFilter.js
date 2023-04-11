@@ -389,7 +389,6 @@ function AdminFilter(props) {
       }
     }
     if (pendingAcceptedProposal == "pendingAcceptedProposal") {
-      console.log("searchData", data);
       if (data.route) {
         if (data.p_status.length > 0) {
           axios
@@ -411,7 +410,15 @@ function AdminFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/admin/getProposals?status1=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+              `${baseUrl}/admin/getProposals?status1=1&cat_id=${
+                data.store
+              }&from=${data.fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {
@@ -455,7 +462,13 @@ function AdminFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}&qno=${data.query_no}`,
+              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {

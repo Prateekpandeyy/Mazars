@@ -10,6 +10,8 @@ import Alerts from "../../../common/Alerts";
 import { Spinner } from "reactstrap";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import MessageIcon, {
   Accept,
   Reject,
@@ -51,6 +53,19 @@ function PendingForAcceptence(props) {
       allocation_id: key.allocation_id,
     });
   };
+
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   useEffect(() => {
     // let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
@@ -121,9 +136,10 @@ function PendingForAcceptence(props) {
     setSortVal(val);
     setSortField(field);
     let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
+    setresetTrigger(!resetTrigger);
 
     let obj = {
-      pageno: pageno,
+      // pageno: pageno,
       val: val,
       field: field,
     }
@@ -131,7 +147,7 @@ function PendingForAcceptence(props) {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
 
     if(data){
-      remainApiPath =`tl/pendingQues?page=${onPage}&cat_id=${data.store
+      remainApiPath =`tl/pendingQues?page=1&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -141,7 +157,7 @@ function PendingForAcceptence(props) {
           .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath =`tl/pendingQues?page=${onPage}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath =`tl/pendingQues?page=1&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -153,10 +169,10 @@ function PendingForAcceptence(props) {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          let record =Number(localStorage.getItem("tp_record_per_page"))
-          let startAt = ((onPage - 1) * record) +1;
+          // let record =Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = ((onPage - 1) * record) +1;
           if (onPage > 1) {
-            sortId = startAt;
+            sortId = 1;
           }
           res.data.result.map((i) => {
             let data = {
@@ -354,7 +370,9 @@ function PendingForAcceptence(props) {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    localStorage.removeItem(`tpQuery2`);
     localStorage.removeItem(`freezetpQuery2`);
+    localStorage.removeItem("tpArrowQuery2");
   }
 
   return (

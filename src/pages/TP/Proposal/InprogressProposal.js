@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -17,15 +17,24 @@ import MessageIcon, {
   EditQuery,
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import Paginator from "../../../components/Paginator/Paginator";
 
 function InprogressProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
   const [id, setId] = useState(null);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -58,7 +67,7 @@ function InprogressProposal() {
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     console.log("eeee");
@@ -74,7 +83,7 @@ function InprogressProposal() {
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [viewProposalModal]);
+  }, [viewProposalModal]);
 
   useEffect(() => {
     getProposalList();
@@ -324,14 +333,33 @@ function InprogressProposal() {
   return (
     <Card>
       <CardHeader>
-        <TaxProfessionalFilter
-          setData={setProposal}
-          getData={getProposalList}
-          InprogressProposal="InprogressProposal"
-          setRecords={setRecords}
-          records={records}
-          index="tpproposal2"
-        />
+        <Row>
+          <TaxProfessionalFilter
+            setData={setProposal}
+            getData={getProposalList}
+            InprogressProposal="InprogressProposal"
+            setRecords={setRecords}
+            records={records}
+            index="tpproposal2"
+          />
+        </Row>
+        <Row>
+          <Col md="12" align="right">
+            <Paginator
+              setData={setProposal}
+              getData={getProposalList}
+              InprogressProposal="InprogressProposal"
+              setRecords={setRecords}
+              records={records}
+              index="tpproposal2"
+              count={count}
+              setOnPage={setOnPage}
+              // resetPaging={resetPaging}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
       </CardHeader>
       <CardBody>
         <DataTablepopulated

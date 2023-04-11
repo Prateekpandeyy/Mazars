@@ -13,6 +13,9 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 function Message(props) {
   const userId = window.localStorage.getItem("tpkey");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
@@ -38,6 +41,20 @@ function Message(props) {
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
+  
+
+  // function headerLabelFormatter(column) {
+  //   return (
+  //     <div className="d-flex text-white w-100 flex-wrap">
+  //       {column.text}
+  //       {accend === column.dataField ? (
+  //         <ArrowDownwardIcon />
+  //       ) : (
+  //         <ArrowUpwardIcon />
+  //       )}
+  //     </div>
+  //   );
+  // }
 
   useEffect(() => {
     setPage(1);

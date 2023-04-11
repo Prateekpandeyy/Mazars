@@ -16,7 +16,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function PendingAllocation(props) {
   const myRef = useRef([]);
   const [pendingData, setPendingData] = useState([]);
@@ -40,6 +41,18 @@ function PendingAllocation(props) {
       uit: token,
     },
   };
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const toggle = (key) => {
     if (key.length > 0) {
       setModal(!modal);
@@ -73,6 +86,8 @@ function PendingAllocation(props) {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendq2"));
+
     let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
     if (!sortVal) {
       let sort = {
@@ -244,12 +259,19 @@ function PendingAllocation(props) {
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -267,7 +289,6 @@ function PendingAllocation(props) {
     {
       text: "Query no",
       dataField: "assign_no",
-      sort: true,
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -289,11 +310,18 @@ function PendingAllocation(props) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -305,11 +333,18 @@ function PendingAllocation(props) {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -319,13 +354,20 @@ function PendingAllocation(props) {
     },
     {
       text: "Client name",
+      headerFormatter: headerLabelFormatter,
       dataField: "name",
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -336,11 +378,18 @@ function PendingAllocation(props) {
     {
       text: "Status",
       dataField: "status",
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -416,6 +465,7 @@ function PendingAllocation(props) {
     setFiledBy("");
     localStorage.removeItem("adminqp2");
     localStorage.removeItem("sortedValue2");
+    localStorage.removeItem("accendq2");
   };
   return (
     <>

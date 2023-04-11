@@ -26,7 +26,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function PendingForProposals(props) {
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -80,11 +81,25 @@ function PendingForProposals(props) {
       console.log(key, " else more");
     }
   };
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminqp3"));
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendq3"));
+
     let sortVal = JSON.parse(localStorage.getItem("sortedValue3"));
     if (!sortVal) {
       let sort = {
@@ -261,12 +276,18 @@ function PendingForProposals(props) {
     {
       dataField: "created",
       text: "Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq3");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -304,12 +325,18 @@ function PendingForProposals(props) {
     {
       dataField: "parent_id",
       text: "Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq3");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -320,12 +347,18 @@ function PendingForProposals(props) {
     {
       dataField: "cat_name",
       text: "Sub category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq3");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -336,12 +369,18 @@ function PendingForProposals(props) {
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq3");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -352,11 +391,17 @@ function PendingForProposals(props) {
     {
       text: "Status",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq3");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -378,13 +423,19 @@ function PendingForProposals(props) {
     },
     {
       dataField: "tname",
+      headerFormatter: headerLabelFormatter,
       text: "TL name",
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq3");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -419,6 +470,7 @@ function PendingForProposals(props) {
     setFiledBy("");
     localStorage.removeItem("sortedValue3");
     localStorage.removeItem("adminqp3");
+    localStorage.removeItem("accendq3");
   };
   return (
     <>
