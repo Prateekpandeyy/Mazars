@@ -13,7 +13,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function DeclinedQueries() {
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -32,6 +33,18 @@ function DeclinedQueries() {
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const myConfig = {
     headers: {
       uit: token,
@@ -42,6 +55,7 @@ function DeclinedQueries() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendq4"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
     if (!sortVal) {
       let sort = {
@@ -226,13 +240,19 @@ function DeclinedQueries() {
     {
       text: "Date",
       dataField: "created",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -250,7 +270,6 @@ function DeclinedQueries() {
     {
       text: "Query no",
       dataField: "assign_no",
-      sort: true,
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -271,13 +290,19 @@ function DeclinedQueries() {
     {
       text: "Category",
       dataField: "parent_id",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -288,13 +313,19 @@ function DeclinedQueries() {
     {
       text: "Sub category",
       dataField: "cat_name",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -305,13 +336,19 @@ function DeclinedQueries() {
     {
       text: "Client name",
       dataField: "name",
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -323,11 +360,18 @@ function DeclinedQueries() {
     {
       text: "Status",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq4");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -376,6 +420,7 @@ function DeclinedQueries() {
     setFiledBy("");
     localStorage.removeItem("sortedValue4");
     localStorage.removeItem("adminqp4");
+    localStorage.removeItem("accendq4");
   };
 
   return (

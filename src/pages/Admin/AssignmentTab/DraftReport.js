@@ -20,7 +20,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function DraftReport() {
   const userid = window.localStorage.getItem("adminkey");
 
@@ -69,6 +70,7 @@ function DraftReport() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendassign2"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValueassign2"));
     if (!sortVal) {
       let sort = {
@@ -89,7 +91,18 @@ function DraftReport() {
       setScrolledTo(key);
     }
   };
-
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -120,9 +133,11 @@ function DraftReport() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }&page=${e}`;
     } else {
-      remainApiPath = `admin/getAssignments?assignment_status=Draft_Report&stages_status=1&&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/getAssignments?assignment_status=Draft_Report&stages_status=1&&orderby=${orderBy}&orderbyfield=${fieldBy}&page=${e}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -170,49 +185,61 @@ function DraftReport() {
       });
     }
   };
-  const sortMessage = (val, field) => {
-    axios
-      .get(
-        `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          setPage(1);
-          setBig(1);
-          setEnd(Number(localStorage.getItem("admin_record_per_page")));
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
 
-          setAssignmentDisplay(all);
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminassign2", 1);
+    localStorage.setItem("sortedValueassign2", JSON.stringify(sort));
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment2`)
+    );
+    if (searchData) {
+      remainApiPath = `/admin/getAssignments?assignment_status=Draft_Report&stages_status=1&&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/getAssignments?assignment_status=Draft_Report&stages_status=1&&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        setPage(1);
+        setBig(1);
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
         }
-      });
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setAssignmentDisplay(all);
+      }
+    });
   };
-  // const getAssignmentData = () => {
-  //   let data = JSON.parse(localStorage.getItem("searchDataadAssignment2"));
-  //   if (!data) {
-  //     axios
-  //       .get(
-  //         `${baseUrl}/admin/getAssignments?assignment_status=Draft_Report&stages_status=1`,
-  //         myConfig
-  //       )
-  //       .then((res) => {
-  //         if (res.data.code === 1) {
-  //           setAssignmentDisplay(res.data.result);
-  //           setCountAssignment(res.data.result.length);
-  //           setRecords(res.data.result.length);
-  //         }
-  //       });
-  //   }
-  // };
 
   //get category
   useEffect(() => {
@@ -257,7 +284,7 @@ function DraftReport() {
     setToDate("");
     setQueryNo("");
     localStorage.removeItem("searchDataadAssignment2");
-    getAssignmentData();
+    getAssignmentData(1);
   };
 
   // view report
@@ -315,11 +342,18 @@ function DraftReport() {
       text: "Date",
       dataField: "date_of_query",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -337,17 +371,7 @@ function DraftReport() {
     {
       text: "Query no",
       dataField: "assign_no",
-      onSort: (field, order) => {
-        let val = 0;
-        setAccend(!accend);
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -368,11 +392,18 @@ function DraftReport() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -383,12 +414,19 @@ function DraftReport() {
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -477,12 +515,19 @@ function DraftReport() {
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -500,13 +545,20 @@ function DraftReport() {
     {
       dataField: "final_date",
       text: "Actual date of delivery",
-      sort: true,
+      headerFormatter: headerLabelFormatter,
+
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -550,6 +602,25 @@ function DraftReport() {
       text: "TL name",
       dataField: "tl_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
     },
     {
       text: "Action",
@@ -623,8 +694,8 @@ function DraftReport() {
     } else {
       obj = {
         store: store2,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: selectedData,
         query_no: data?.query_no,
         p_status: data?.p_status,
@@ -761,6 +832,9 @@ function DraftReport() {
     setPage(1);
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminassign2");
+    localStorage.removeItem("sortedValueassign2");
+    localStorage.removeItem("adminassign2");
   };
 
   return (

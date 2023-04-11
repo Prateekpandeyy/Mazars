@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { getErrorMessage } from "../../../constants";
-import Loader from "../../../components/Loader/Loader";
 import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
-import Records from "../../../components/Records/Records";
 import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -22,7 +18,9 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { current_date } from "../../../common/globalVeriable";
 function AssignmentComponent(props) {
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -33,7 +31,7 @@ function AssignmentComponent(props) {
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
   const [error, setError] = useState(false);
-  const [item] = useState(current_date);
+
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -49,8 +47,6 @@ function AssignmentComponent(props) {
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [scrolledTo, setScrolledTo] = useState("");
-  const [orderby, setOrderBy] = useState("");
-  const [fieldBy, setFiledBy] = useState("");
 
   const myRef = useRef([]);
 
@@ -61,12 +57,7 @@ function AssignmentComponent(props) {
       uit: token,
     },
   };
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
+
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option } = Select;
   const ViewDiscussionToggel = (key) => {
@@ -76,7 +67,18 @@ function AssignmentComponent(props) {
       setScrolledTo(key);
     }
   };
-
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
@@ -101,6 +103,7 @@ function AssignmentComponent(props) {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendassign1"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValueassign1"));
     if (!sortVal) {
       let sort = {
@@ -192,8 +195,7 @@ function AssignmentComponent(props) {
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-    setOrderBy(val);
-    setFiledBy(field);
+
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -226,7 +228,16 @@ function AssignmentComponent(props) {
         let sortId = 1;
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         res.data.result.map((i) => {
           let data = {
             ...i,
@@ -345,12 +356,19 @@ function AssignmentComponent(props) {
     {
       text: "Date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -388,12 +406,19 @@ function AssignmentComponent(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -404,12 +429,19 @@ function AssignmentComponent(props) {
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -420,15 +452,22 @@ function AssignmentComponent(props) {
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       headerStyle: () => {
         return { width: "200px" };
       },
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -510,12 +549,19 @@ function AssignmentComponent(props) {
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -534,12 +580,19 @@ function AssignmentComponent(props) {
     {
       dataField: "final_date",
       text: "Actual date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -581,12 +634,19 @@ function AssignmentComponent(props) {
     {
       text: "TL name",
       dataField: "tl_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -663,8 +723,8 @@ function AssignmentComponent(props) {
     } else {
       obj = {
         store: store2,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: selectedData,
         query_no: data?.query_no,
         p_status: hide,
@@ -916,6 +976,8 @@ function AssignmentComponent(props) {
     setBig(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     localStorage.removeItem("adminassign1");
+    localStorage.removeItem("sortedValueassign1");
+    localStorage.removeItem("accendassign1");
   };
 
   return (
@@ -978,7 +1040,7 @@ function AssignmentComponent(props) {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  max={item}
+                  max={current_date}
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
                 />
@@ -996,7 +1058,7 @@ function AssignmentComponent(props) {
                   ref={register}
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
-                  max={item}
+                  max={current_date}
                 />
               </div>
 
@@ -1110,9 +1172,12 @@ function AssignmentComponent(props) {
                       <select
                         value={page}
                         onChange={(e) => {
-                          setPage(e.target.value);
-                          getAssignmentData(e.target.value);
-                          localStorage.setItem("adminassign1", e.target.value);
+                          setPage(Number(e.target.value));
+                          getAssignmentData(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminassign1",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >

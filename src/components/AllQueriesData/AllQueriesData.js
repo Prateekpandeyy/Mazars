@@ -14,8 +14,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { orderBy } from "lodash";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function AllQueriesData() {
   const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -33,12 +33,24 @@ function AllQueriesData() {
   const [fieldBy, setFiledBy] = useState("0");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
-
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminqp1"));
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendq1"));
 
     let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
     if (!sortVal) {
@@ -232,12 +244,19 @@ function AllQueriesData() {
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -275,12 +294,19 @@ function AllQueriesData() {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -291,12 +317,19 @@ function AllQueriesData() {
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -306,13 +339,20 @@ function AllQueriesData() {
     },
     {
       text: "Client name",
+      headerFormatter: headerLabelFormatter,
       dataField: "name",
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -323,12 +363,19 @@ function AllQueriesData() {
     {
       text: "Delivery due date   / Acutal delivery date",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -347,12 +394,19 @@ function AllQueriesData() {
     },
     {
       text: "Status",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq1");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -428,6 +482,7 @@ function AllQueriesData() {
     setFiledBy("");
     localStorage.removeItem("adminqp1");
     localStorage.removeItem("sortedValue1");
+    localStorage.removeItem("accendq1");
   };
 
   return (

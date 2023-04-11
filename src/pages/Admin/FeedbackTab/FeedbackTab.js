@@ -21,7 +21,7 @@ function FeedbackTab() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
-
+  const [accend, setAccend] = useState(false);
   useEffect(() => {
     setPage(1);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
@@ -154,7 +154,9 @@ function FeedbackTab() {
       },
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -175,7 +177,9 @@ function FeedbackTab() {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
@@ -186,13 +190,15 @@ function FeedbackTab() {
     {
       text: "Feedback",
       dataField: "feedback",
-      sort: true,
+
       headerStyle: () => {
         return { width: "150px" };
       },
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        setAccend(!accend);
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;

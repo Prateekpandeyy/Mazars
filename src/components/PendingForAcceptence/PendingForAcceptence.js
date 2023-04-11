@@ -18,7 +18,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function PendingForAcceptence() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -45,6 +46,20 @@ function PendingForAcceptence() {
       uit: token,
     },
   };
+  function priceFormatter(column, colIndex) {
+    console.log(column, colIndex);
+
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -76,6 +91,7 @@ function PendingForAcceptence() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendpro2"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro2"));
     if (!sortVal) {
       let sort = {
@@ -129,6 +145,10 @@ function PendingForAcceptence() {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
     if (searchData) {
+      let status = 1;
+      if (searchData.p_status) {
+        status = searchData.p_status;
+      }
       remainApiPath = `/admin/getProposals?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
@@ -137,7 +157,7 @@ function PendingForAcceptence() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=1&pcat_id=${searchData.pcatId}&qno=${
+        .join("-")}&status1=${status}&pcat_id=${searchData.pcatId}&qno=${
         searchData?.query_no
       }`;
     } else {
@@ -201,6 +221,10 @@ function PendingForAcceptence() {
     localStorage.setItem("sortedValuepro2", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal2`));
     if (searchData) {
+      let status = 1;
+      if (searchData.p_status) {
+        status = searchData.p_status;
+      }
       remainApiPath = `/admin/getProposals?orderby=${val}&orderbyfield=${field}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
@@ -209,7 +233,7 @@ function PendingForAcceptence() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=1&pcat_id=${searchData.pcatId}&qno=${
+        .join("-")}&status1=${status}&pcat_id=${searchData.pcatId}&qno=${
         searchData?.query_no
       }`;
     } else {
@@ -219,7 +243,16 @@ function PendingForAcceptence() {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
         let all = [];
         let sortId = 1;
 
@@ -254,11 +287,18 @@ function PendingForAcceptence() {
       dataField: "created",
       text: "Date",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -297,12 +337,19 @@ function PendingForAcceptence() {
     {
       dataField: "parent_id",
       text: "Category",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -313,12 +360,19 @@ function PendingForAcceptence() {
     {
       dataField: "cat_name",
       text: "Sub category",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -329,12 +383,19 @@ function PendingForAcceptence() {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -363,12 +424,19 @@ function PendingForAcceptence() {
     {
       text: "Date of proposal",
       dataField: "DateofProposal",
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -386,13 +454,20 @@ function PendingForAcceptence() {
     },
     {
       text: "Date of acceptance of proposal",
+      headerFormatter: priceFormatter,
       dataField: "cust_accept_date",
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -411,11 +486,18 @@ function PendingForAcceptence() {
     {
       text: "Status",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -438,13 +520,19 @@ function PendingForAcceptence() {
     {
       dataField: "",
       text: "Proposed amount",
-
+      headerFormatter: priceFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -473,11 +561,18 @@ function PendingForAcceptence() {
       dataField: "tl_name",
       text: "TL name",
       sort: true,
+      headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro2");
+        }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -541,6 +636,7 @@ function PendingForAcceptence() {
     setFiledBy("");
     localStorage.removeItem("adminprot2");
     localStorage.removeItem("sortedValuepro2");
+    localStorage.removeItem("accendpro2");
   };
   return (
     <div>
@@ -592,9 +688,12 @@ function PendingForAcceptence() {
                       <select
                         value={page}
                         onChange={(e) => {
-                          setPage(e.target.value);
-                          getPendingAcceptedProposal(e.target.value);
-                          localStorage.setItem("adminprot2", e.target.value);
+                          setPage(Number(e.target.value));
+                          getPendingAcceptedProposal(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminprot2",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >
