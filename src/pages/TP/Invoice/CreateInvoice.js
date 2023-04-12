@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
@@ -7,17 +7,27 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Tds from "./Tds";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import Paginator from "../../../components/Paginator/Paginator";
+
 const CreateInvoice = () => {
   const userid = window.localStorage.getItem("tpkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
+  // const [count, setCount] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
   const [id, setId] = useState();
-
   const [tds, setTds] = useState(false);
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -35,7 +45,7 @@ const CreateInvoice = () => {
   };
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
-    if(tdsForm === false){
+    if (tdsForm === false) {
       setScrolledTo(key.id)
     }
     if (key) {
@@ -54,7 +64,7 @@ const CreateInvoice = () => {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [tdsForm]);
+  }, [tdsForm]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -88,8 +98,8 @@ const CreateInvoice = () => {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id} 
-        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.id}
+          ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       style: {
         fontSize: "11px",
@@ -200,14 +210,33 @@ const CreateInvoice = () => {
     <>
       <Card>
         <CardHeader>
-          <InvoiceFilter
-            setData={setProposal}
-            getData={getProposalList}
-            invoice="tpcreate"
-            setRec={setRecords}
-            records={records}
-            userid={JSON.parse(userid)}
-          />
+          <Row>
+            <InvoiceFilter
+              setData={setProposal}
+              getData={getProposalList}
+              invoice="tpcreate"
+              setRec={setRecords}
+              records={records}
+              userid={JSON.parse(userid)}
+            />
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+                setData={setProposal}
+                getData={getProposalList}
+                invoice="tpcreate"
+                index="tpInvoice2"
+                setRec={setRecords}
+                records={records}
+                userid={JSON.parse(userid)}
+                count={count}
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>

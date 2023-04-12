@@ -11,12 +11,23 @@ import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import Paginator from "../../../components/Paginator/Paginator";
+
 const Generated = () => {
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("tpkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-  const [count, setCount] = useState("");
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+
   const [id, setId] = useState();
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -39,7 +50,7 @@ const Generated = () => {
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
-    if(tdsForm === false){
+    if (tdsForm === false) {
       setScrolledTo(key.id)
     }
     if (key) {
@@ -58,7 +69,7 @@ const Generated = () => {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [tdsForm]);
+  }, [tdsForm]);
 
   useEffect(() => {
     getProposalList();
@@ -118,8 +129,8 @@ const Generated = () => {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id} 
-        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.id}
+          ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       style: {
         fontSize: "11px",
@@ -322,7 +333,7 @@ const Generated = () => {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
     console.log("work");
-}, [swing]);
+  }, [swing]);
 
 
   rowStyle2 = (row, index) => {
@@ -361,15 +372,36 @@ const Generated = () => {
     <>
       <Card>
         <CardHeader>
-          <InvoiceFilter
-            setData={setProposal}
-            getData={getProposalList}
-            invoice="tpgenerated"
-            panel="taxprofessional"
-            setRec={setRecords}
-            records={records}
-            userid={JSON.parse(userid)}
-          />
+          <Row>
+            <InvoiceFilter
+              setData={setProposal}
+              getData={getProposalList}
+              invoice="tpgenerated"
+              panel="taxprofessional"
+              setRec={setRecords}
+              records={records}
+              userid={JSON.parse(userid)}
+            />
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+                setData={setProposal}
+                getData={getProposalList}
+                invoice="tpgenerated"
+                index="tpInvoice2"
+                tpgenerated="tpgenerated"
+                panel="taxprofessional"
+                setRec={setRecords}
+                records={records}
+                userid={JSON.parse(userid)}
+                count={count}
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>

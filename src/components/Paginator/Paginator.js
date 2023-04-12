@@ -51,6 +51,8 @@ function Paginator(props) {
         AllProposal,
         InprogressProposal,
         assignment,
+        tpcreate,
+        tpgenerated,
         AllPayment,
         // setCount,
         Unpaid,
@@ -108,7 +110,10 @@ function Paginator(props) {
         else if (index === "tppayment3"){
 
         }
-        else if (index === ""){
+        else if (index === "tpInvoice1"){
+
+        }
+        else if (index === "tpInvoice2"){
 
         }
         else if (index === ""){
@@ -529,6 +534,38 @@ function Paginator(props) {
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
                     userid
                   )}&status=2`
+            }
+        }
+        else if(tpgenerated == "tpgenerated"){
+            let data = JSON.parse(localStorage.getItem("tpgenerated"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = ``
+            }else if ((data) && (pagetry)) {
+                remainApiPath =``
+            }else if ((!data) && (pagetry)){
+                remainApiPath =``
+            }else {
+                remainApiPath =``
+            }
+        }
+        else if (tpcreate == "tpcreate"){
+            let data = JSON.parse(localStorage.getItem("tpcreate"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpInvoice2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = ``
+            }else if ((data) && (pagetry)) {
+                remainApiPath =``
+            }else if ((!data) && (pagetry)){
+                remainApiPath =``
+            }else {
+                remainApiPath =``
             }
         }
         else { console.log("into else void of pagination"); }

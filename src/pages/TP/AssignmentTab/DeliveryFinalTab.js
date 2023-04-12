@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
@@ -17,6 +17,10 @@ import MessageIcon, {
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
 import DiscardReport from "../AssignmentTab/DiscardReport";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import Paginator from "../../../components/Paginator/Paginator";
+
 import moment from "moment";
 function AssignmentTab() {
   const history = useHistory();
@@ -24,11 +28,16 @@ function AssignmentTab() {
 
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
-  const [count, setCount] = useState("");
   const [assignment, setAssignment] = useState([]);
   const [id, setId] = useState("");
   const [finalId, setFinalId] = useState("");
   const [stored, setStored] = useState("");
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -125,6 +134,7 @@ function AssignmentTab() {
           if (res.data.code === 1) {
             setAssignment(res.data.result);
             setRecords(res.data.result.length);
+            setCount(res.data.result.length);
           }
         });
     }
@@ -437,9 +447,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                    row.draft_report == "completed" &&
+                    row.final_discussion == "completed" &&
+                    row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -489,12 +499,9 @@ function AssignmentTab() {
     if (data.route) {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${
-            data.store
-          }&from=${data.fromDate}&to=${
-            data.toDate
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${
-            data.pcatId
+          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+          }&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
           }&qno=${data.query_no}`,
           myConfig
         )
@@ -503,6 +510,7 @@ function AssignmentTab() {
             if (res.data.result) {
               setAssignment(res.data.result);
               setRecords(res.data.result.length);
+              setCount(res.data.result.length);
             }
           }
         });
@@ -511,10 +519,8 @@ function AssignmentTab() {
         .get(
           `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${
-            data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
           }`,
           myConfig
         )
@@ -523,6 +529,7 @@ function AssignmentTab() {
             if (res.data.result) {
               setAssignment(res.data.result);
               setRecords(res.data.result.length);
+              setCount(res.data.result.length);
             }
           }
         });
@@ -568,111 +575,124 @@ function AssignmentTab() {
     <>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.details} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+          <Row>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div class="form-inline">
+                <div class="form-group mb-2">
+                  <Select
+                    style={{ width: 130 }}
+                    placeholder="Select Category"
+                    defaultValue={[]}
+                    onChange={handleCategory}
+                    value={selectedData}
+                  >
+                    {categoryData.map((p, index) => (
+                      <Option value={p.details} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2?.length > 0 ? (
-                    <>
-                      {tax2?.map((p, index) => (
-                        <Option value={p.id} key={index}>
-                          {p.details}
-                        </Option>
-                      ))}
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  class="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
+                <div class="form-group mx-sm-1  mb-2">
+                  <Select
+                    mode="multiple"
+                    style={{ width: 250 }}
+                    placeholder="Select Sub Category"
+                    defaultValue={[]}
+                    onChange={handleSubCategory}
+                    value={store2}
+                    allowClear
+                  >
+                    {tax2?.length > 0 ? (
+                      <>
+                        {tax2?.map((p, index) => (
+                          <Option value={p.id} key={index}>
+                            {p.details}
+                          </Option>
+                        ))}
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </Select>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    class="btnSearch mb-2 ml-3"
+                    onClick={resetCategory}
+                  >
+                    X
+                  </button>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">From</label>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <input
+                    type="date"
+                    name="p_dateFrom"
+                    className="form-select form-control"
+                    ref={register}
+                    max={item}
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">To</label>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <input
+                    type="date"
+                    name="p_dateTo"
+                    className="form-select form-control"
+                    ref={register}
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                    max={item}
+                  />
+                </div>
+                <div className="form-group mx-sm-1  mb-2">
+                  <input
+                    type="text"
+                    name="query_no"
+                    ref={register}
+                    placeholder="Enter Query Number"
+                    className="form-control"
+                    value={queryNo}
+                    onChange={(e) => setQueryNo(e.target.value)}
+                  />
+                </div>
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">
+                    Total Records : {records}
+                  </label>
+                </div>
+                <button type="submit" class="customBtn mx-sm-1 mb-2">
+                  Search
                 </button>
-              </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
+                <Reset />
               </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  max={item}
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                />
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
-                  max={item}
-                />
-              </div>
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                  value={queryNo}
-                  onChange={(e) => setQueryNo(e.target.value)}
-                />
-              </div>
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">
-                  Total Records : {records}
-                </label>
-              </div>
-              <button type="submit" class="customBtn mx-sm-1 mb-2">
-                Search
-              </button>
-
-              <Reset />
-            </div>
-          </form>
+            </form>
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <Paginator
+                count={count}
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>

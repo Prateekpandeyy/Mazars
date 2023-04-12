@@ -260,26 +260,26 @@ function InCompleteData({ CountIncomplete, data }) {
       text: "Query no",
       dataField: "assign_no",
       headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          console.log("This is sorting 1");
-          localStorage.setItem("tpArrowQuery3", field);
-        } else {
-          setAccend("");
-          console.log("This is sorting 2");
-          localStorage.removeItem("tpArrowQuery3");
-        }
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     console.log("This is sorting 1");
+      //     localStorage.setItem("tpArrowQuery3", field);
+      //   } else {
+      //     setAccend("");
+      //     console.log("This is sorting 2");
+      //     localStorage.removeItem("tpArrowQuery3");
+      //   }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
