@@ -37,7 +37,7 @@ function FeedbackTab() {
   const [sortField, setSortField] = useState('');
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const token = window.localStorage.getItem("tptoken");
-  
+
   const myConfig = {
     headers: {
       "uit": token
@@ -62,6 +62,11 @@ function FeedbackTab() {
   // }, []);
 
   useEffect(() => {
+
+    let arrow = localStorage.getItem("tpArrowFeed")
+    if (arrow) {
+      setAccend(arrow);
+    }
     let pageno = JSON.parse(localStorage.getItem("tpFeedback"));
     if (pageno) {
       getFeedback(pageno);
@@ -157,16 +162,17 @@ function FeedbackTab() {
 
 
   const getFeedback = (e) => {
-    localStorage.setItem(`tpFeedback`, JSON.stringify(e));
+    localStorage.setItem(`tpFeedback`, e);
+
     setLoading(true);
     let pagetry = JSON.parse(localStorage.getItem("freezetpFeedback"));
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
-    if (pagetry){
+    if (pagetry) {
       remainApiPath = `tl/getFeedback?tp_id=${JSON.parse(userid)}&page=${e}&orderby=${val}&orderbyfield=${field}`
     }
-    else{
+    else {
       remainApiPath = `tl/getFeedback?tp_id=${JSON.parse(userid)}&page=${e}`
     }
 
@@ -239,11 +245,11 @@ function FeedbackTab() {
         if (accend !== field) {
           setAccend(field);
           console.log("This is sorting 1");
-          localStorage.setItem("tpArrowQuery1", field);
+          localStorage.setItem("tpArrowFeed", field);
         } else {
           setAccend("");
           console.log("This is sorting 2");
-          localStorage.removeItem("tpArrowQuery1");
+          localStorage.removeItem("tpArrowFeed");
         }
         if (accend === field) {
           val = 0;
@@ -264,10 +270,10 @@ function FeedbackTab() {
 
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
+          localStorage.setItem("tpArrowFeed", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
+          localStorage.removeItem("tpArrowFeed");
         }
 
         if (accend === true) {

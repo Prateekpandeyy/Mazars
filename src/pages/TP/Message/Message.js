@@ -58,19 +58,46 @@ function Message(props) {
   }
 
   useEffect(() => {
-    setPage(1);
-    setEnd(allEnd);
-    getMessage(1);
+
+    let arrow = localStorage.getItem("tpArrowMsg")
+  if (arrow) {
+    setAccend(arrow);
+  }
+
+    let pageno = JSON.parse(localStorage.getItem("tpMessage"));
+    if (pageno) {
+      getMessage(pageno);
+      setPage(pageno);
+    } else {
+      setPage(1);
+      getMessage(1);
+      setEnd(allEnd);
+    }
+
+    // setPage(1);
+    // setEnd(allEnd);
+    // getMessage(1);
   }, []);
 
   // set intial query here
   const getMessage = (e) => {
-    // localStorage.setItem(`tpMsg`, JSON.stringify(e));
+    localStorage.setItem(`tpMessage`, e);
     console.log(e, "page test");
+    let pagetry = JSON.parse(localStorage.getItem("freezetpMsg"));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    if(pagetry){
+      remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}&orderby=${val
+      }&orderbyfield=${field}`
+    }else{
+      remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}`
+    }
+
     if (e) {
       axios
         .get(
-          `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=${e}`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
@@ -119,13 +146,13 @@ function Message(props) {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-    localStorage.setItem(`tpMessage1`, JSON.stringify(1))
+    localStorage.setItem(`tpMessage`, 1)
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
     }
-    localStorage.setItem(`freezetpMsg1`, JSON.stringify(obj));
+    localStorage.setItem(`freezetpMsg`, JSON.stringify(obj));
     remainApiPath = `tl/getNotification?page=1&orderby=${val}&orderbyfield=${field}`
     axios
       .get(
@@ -212,11 +239,11 @@ function Message(props) {
         if (accend !== field) {
           setAccend(field);
           console.log("This is sorting 1");
-          localStorage.setItem("tpArrowQuery1", field);
+          localStorage.setItem("tpArrowMsg", field);
         } else {
           setAccend("");
           console.log("This is sorting 2");
-          localStorage.removeItem("tpArrowQuery1");
+          localStorage.removeItem("tpArrowMsg");
         }
         if (accend === field) {
           val = 0;
@@ -240,10 +267,10 @@ function Message(props) {
 
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
+          localStorage.setItem("tpArrowMsg", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
+          localStorage.removeItem("tpArrowMsg");
         }
 
         if (accend === true) {

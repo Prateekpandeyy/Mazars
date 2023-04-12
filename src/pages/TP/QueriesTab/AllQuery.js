@@ -59,6 +59,8 @@ function AllQuery(props) {
     },
   };
 
+
+
 function headerLabelFormatter(column) {
   return (
     <div className="d-flex text-white w-100 flex-wrap">
