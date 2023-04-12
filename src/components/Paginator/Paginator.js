@@ -547,9 +547,14 @@ function Paginator(props) {
             }else if ((data) && (pagetry)) {
                 remainApiPath =``
             }else if ((!data) && (pagetry)){
-                remainApiPath =``
+                remainApiPath =`tl/getPaymentDetail?tp_id=${JSON.parse(
+                    userid
+                  )}&invoice=1&orderby=${
+                    val}&orderbyfield=${field}`
             }else {
-                remainApiPath =``
+                remainApiPath =`tl/getPaymentDetail?tp_id=${JSON.parse(
+                    userid
+                  )}&invoice=1`
             }
         }
         else if (tpcreate == "tpcreate"){
@@ -563,9 +568,14 @@ function Paginator(props) {
             }else if ((data) && (pagetry)) {
                 remainApiPath =``
             }else if ((!data) && (pagetry)){
-                remainApiPath =``
+                remainApiPath =`tl/getPaymentDetail?tp_id=${JSON.parse(
+                    userid
+                  )}&invoice=0&orderby=${
+                    val}&orderbyfield=${field}`
             }else {
-                remainApiPath =``
+                remainApiPath =`tl/getPaymentDetail?tp_id=${JSON.parse(
+                    userid
+                  )}&invoice=0`
             }
         }
         else { console.log("into else void of pagination"); }

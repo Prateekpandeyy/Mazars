@@ -226,7 +226,8 @@ const CreateInvoice = () => {
                 setData={setProposal}
                 getData={getProposalList}
                 invoice="tpcreate"
-                index="tpInvoice2"
+                index="tpInvoice1"
+                tpcreate="tpcreate"
                 setRec={setRecords}
                 records={records}
                 userid={JSON.parse(userid)}

@@ -257,25 +257,25 @@ function AllQuery(props) {
       text: "Query no",
       dataField: "assign_no",
       headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
 
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     localStorage.setItem("tpArrowQuery1", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("tpArrowQuery1");
+      //   }
 
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
+      //   if (accend === true) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
