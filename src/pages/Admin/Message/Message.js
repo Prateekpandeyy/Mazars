@@ -10,7 +10,8 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import CustomHeading from "../../../components/Common/CustomHeading";
 import { Backdrop } from "@mui/material";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function Message(props) {
   const userId = window.localStorage.getItem("adminkey");
   const [query, setQuery] = useState([]);
@@ -23,29 +24,54 @@ function Message(props) {
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [defaultPage, setDefaultPage] = useState([]);
+  const [accend, setAccend] = useState(false);
   const history = useHistory();
   useEffect(() => {
-    getMessage();
+    let localPage = Number(localStorage.getItem("adminMessage"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setAccend(localStorage.getItem("accendMessage"));
+    getMessage(localPage);
   }, []);
-
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  useEffect(() => {
-    setPage(1);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
-    getMessage(1);
-  }, []);
+
   const getMessage = (e) => {
     setLoading(true);
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedMessage"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     if (e) {
       axios
         .get(
-          `${baseUrl}/admin/getNotification?id=${JSON.parse(userId)}&page=${e}`,
+          `${baseUrl}/admin/getNotification?id=${JSON.parse(
+            userId
+          )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`,
           myConfig
         )
         .then((res) => {
@@ -88,6 +114,12 @@ function Message(props) {
   };
   const sortMessage = (val, field) => {
     setLoading(true);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminMessage", 1);
+    localStorage.setItem("sortedMessage", JSON.stringify(sort));
     axios
       .get(
         `${baseUrl}/admin/getNotification?orderby=${val}&orderbyfield=${field}`,
@@ -96,11 +128,11 @@ function Message(props) {
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
-
+          setPage(1);
+          setBig(1);
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -121,33 +153,36 @@ function Message(props) {
     setAtpage(1);
     setPage(1);
     getMessage(1);
+    localStorage.setItem("adminMessage", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(Number(page) - 1);
-    getMessage(Number(page) - 1);
+    getMessage(page - 1);
+    localStorage.setItem("adminMessage", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    getMessage(Number(page) + 1);
+    getMessage(page + 1);
+    localStorage.setItem("adminMessage", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getMessage(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminMessage", defaultPage.at(-1));
   };
+
   const columns = [
     {
       text: "S.No",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return row.cid;
-      },
+      dataField: "cid",
+
       headerStyle: () => {
         return { fontSize: "12px", width: "20px" };
       },
@@ -156,14 +191,21 @@ function Message(props) {
     {
       text: "Date",
       dataField: "setdate",
-
+      headerFormatter: headerLabelFormatter,
       headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
       },
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendMessage", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendMessage");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -175,6 +217,7 @@ function Message(props) {
     {
       text: "Query No",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
       headerStyle: () => {
         return { fontSize: "12px", width: "30px" };
       },
@@ -184,7 +227,14 @@ function Message(props) {
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendMessage", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendMessage");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -198,16 +248,7 @@ function Message(props) {
       headerStyle: () => {
         return { fontSize: "12px", width: "180px" };
       },
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -305,8 +346,12 @@ function Message(props) {
                       <select
                         value={page}
                         onChange={(e) => {
-                          setPage(e.target.value);
-                          getMessage(e.target.value);
+                          setPage(Number(e.target.value));
+                          getMessage(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminMessage",
+                            Number(e.target.value)
+                          );
                         }}
                         className="form-control"
                       >

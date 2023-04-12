@@ -41,6 +41,7 @@ function Customer() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendClient"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getCustomer(localPage);
@@ -293,10 +294,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -316,10 +317,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -339,10 +340,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -356,15 +357,16 @@ function Customer() {
     {
       dataField: "phone",
       text: "Mobile no",
+      sort: true,
       headerFormatter: priceFormatter,
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -384,10 +386,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -407,10 +409,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -430,10 +432,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -454,10 +456,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -477,10 +479,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -500,10 +502,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -523,10 +525,10 @@ function Customer() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendpro3", field);
+          localStorage.setItem("accendClient", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendpro3");
+          localStorage.removeItem("accendClient");
         }
 
         if (accend === field) {
@@ -598,77 +600,81 @@ function Customer() {
             <Col md="6">
               <CustomHeading>Client ({tpCount})</CustomHeading>
             </Col>
-            <Col md="6" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => firstChunk()}
-                        >
-                          &lt; &lt;
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => prevChunk()}
-                        >
-                          &lt;
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(Number(e.target.value));
-                          getCustomer(Number(e.target.value));
-                          localStorage.setItem(
-                            "adminClient",
-                            Number(e.target.value)
-                          );
+            {data.length > 0 ? (
+              <Col md="6" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span>
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => firstChunk()}
+                          >
+                            &lt; &lt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            &lt;
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div
+                        style={{
+                          display: "flex",
+                          maxWidth: "70px",
+                          width: "100%",
                         }}
-                        className="form-control"
                       >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => nextChunk()}
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(Number(e.target.value));
+                            getCustomer(Number(e.target.value));
+                            localStorage.setItem(
+                              "adminClient",
+                              Number(e.target.value)
+                            );
+                          }}
+                          className="form-control"
                         >
-                          &gt;
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => lastChunk()}
-                        >
-                          &gt; &gt;
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => nextChunk()}
+                          >
+                            &gt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => lastChunk()}
+                          >
+                            &gt; &gt;
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Col>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
         </CardHeader>
         <CardBody>

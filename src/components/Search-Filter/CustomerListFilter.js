@@ -17,6 +17,14 @@ function CustomerListFilter(props) {
     setDefaultPage,
   } = props;
   const [searchedData, setSearchedData] = useState(null);
+  const [name, setName] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [email, setEmail] = useState("");
+  const [occupation, setOccuption] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -24,10 +32,27 @@ function CustomerListFilter(props) {
     },
   };
   useEffect(() => {
-    setSearchedData(JSON.parse(localStorage.getItem("searchDataadclient")));
+    let data = JSON.parse(localStorage.getItem("searchDataadclient"));
+    setName(data.name);
+    setCountry(data.country);
+    setCity(data.city);
+    setState(data.state);
+    setEmail(data.email);
+    setOccuption(data.occupation);
+    setFromDate(data.p_dateFrom);
+    setToDate(data.p_dateTo);
   }, []);
   const resetData = () => {
     localStorage.removeItem("searchDataadclient");
+    localStorage.removeItem("adminClient");
+    setName("");
+    setCountry("");
+    setCity("");
+    setState("");
+    setEmail("");
+    setOccuption("");
+    setFromDate("");
+    setToDate("");
     reset();
     getCustomer(1);
   };
@@ -108,7 +133,8 @@ function CustomerListFilter(props) {
               type="text"
               name="name"
               className="form-control"
-              defaultValue={searchedData?.name}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               ref={register}
             />
           </Grid>
@@ -117,7 +143,8 @@ function CustomerListFilter(props) {
               placeholder="Country"
               type="country"
               name="country"
-              defaultValue={searchedData?.country}
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
               className="form-control"
               ref={register}
             />
@@ -127,7 +154,8 @@ function CustomerListFilter(props) {
               placeholder="City"
               type="text"
               name="city2"
-              defaultValue={searchedData?.city2}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               className="form-control"
               ref={register}
             />
@@ -137,7 +165,8 @@ function CustomerListFilter(props) {
               placeholder="State"
               type="text"
               name="state"
-              defaultValue={searchedData?.state}
+              value={state}
+              onChange={(e) => setState(e.target.value)}
               className="form-control"
               ref={register}
             />
@@ -148,7 +177,8 @@ function CustomerListFilter(props) {
             <input
               placeholder="Email"
               type="text"
-              defaultValue={searchedData?.email}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               name="email"
               className="form-control"
               ref={register}
@@ -160,7 +190,8 @@ function CustomerListFilter(props) {
               type="text"
               name="occupation"
               className="form-control"
-              defaultValue={searchedData?.occupation}
+              value={occupation}
+              onChange={(e) => setOccuption(e.target.value)}
               ref={register}
             />
           </Grid>
@@ -176,7 +207,8 @@ function CustomerListFilter(props) {
                   className="form-select form-control"
                   ref={register}
                   max={current_date}
-                  defaultValue={searchedData?.p_dateFrom}
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -192,7 +224,8 @@ function CustomerListFilter(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={searchedData?.p_dateTo}
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
                   max={current_date}
                 />
               </Grid>

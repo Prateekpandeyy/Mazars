@@ -9,7 +9,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function FeedbackTab() {
   const userid = window.localStorage.getItem("adminkey");
   const [feedbackData, setFeedBackData] = useState([]);
@@ -22,10 +23,27 @@ function FeedbackTab() {
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [accend, setAccend] = useState(false);
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
-    setPage(1);
+    let localPage = Number(localStorage.getItem("adminFeedback"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
-    getFeedback(1);
+    setAccend(localStorage.getItem("accendFeedback"));
+    getFeedback(localPage);
   }, [userid]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -35,16 +53,65 @@ function FeedbackTab() {
   };
   const getFeedback = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedfeedback"));
+    let orderBy = 0;
+    let fieldBy = 0;
 
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     if (e) {
       axios
-        .get(`${baseUrl}/admin/getFeedback?page=${e}`, myConfig)
+        .get(
+          `${baseUrl}/admin/getFeedback?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`,
+          myConfig
+        )
         .then((res) => {
           let droppage = [];
+          // if (res.data.code === 1) {
+          //   let data = res.data.result;
+          //   setfeedbackNumber(res.data.result.length);
+
+          //   let all = [];
+          //   let customId = 1;
+          //   if (e > 1) {
+          //     customId = allEnd * (e - 1) + 1;
+          //   }
+          //   data.map((i) => {
+          //     let data = {
+          //       ...i,
+          //       cid: customId,
+          //     };
+          //     customId++;
+          //     all.push(data);
+          //   });
+          //   setFeedBackData(all);
+
+          //   setCountNotification(res.data.total);
+          //   let dynamicPage = Math.ceil(Number(res.data.total) / allEnd);
+
+          //   let rem = (e - 1) * allEnd;
+          //   let end = e * allEnd;
+          //   if (end > res.data.total) {
+          //     end = res.data.total;
+          //   }
+          //   if (e === 1) {
+          //     setBig(rem + e);
+          //     setEnd(end);
+          //   } else {
+          //     setBig(rem + 1);
+          //     setEnd(end);
+          //   }
+          //   for (let i = 1; i <= dynamicPage; i++) {
+          //     droppage.push(i);
+          //   }
+          //   setDefaultPage(droppage);
+          // }
+
           if (res.data.code === 1) {
             let data = res.data.result;
-            setfeedbackNumber(res.data.result.length);
-
+            setfeedbackNumber(res.data.total);
             let all = [];
             let customId = 1;
             if (e > 1) {
@@ -60,14 +127,15 @@ function FeedbackTab() {
             });
             setFeedBackData(all);
 
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.ceil(Number(res.data.total) / allEnd);
-
-            let rem = (e - 1) * allEnd;
             let end = e * allEnd;
+
             if (end > res.data.total) {
               end = res.data.total;
             }
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
@@ -84,6 +152,12 @@ function FeedbackTab() {
     }
   };
   const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminFeedback", 1);
+    localStorage.setItem("sortedfeedback", JSON.stringify(sort));
     axios
       .get(
         `${baseUrl}/admin/getFeedback?orderby=${val}&orderbyfield=${field}`,
@@ -111,31 +185,35 @@ function FeedbackTab() {
       });
   };
 
-  //page counter
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
     getFeedback(1);
+    localStorage.setItem("adminFeedback", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(Number(page) - 1);
-    getFeedback(Number(page) - 1);
+    getFeedback(page - 1);
+    localStorage.setItem("adminFeedback", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    getFeedback(Number(page) + 1);
+    getFeedback(page + 1);
+    localStorage.setItem("adminFeedback", Number(page) + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getFeedback(defaultPage.at(-1));
     setAtpage(totalPages);
+    localStorage.setItem("adminFeedback", defaultPage.at(-1));
   };
+
   const columns = [
     {
       text: "S.No",
@@ -149,14 +227,20 @@ function FeedbackTab() {
       text: "Date",
       dataField: "created",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       headerStyle: () => {
         return { width: "60px" };
       },
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendFeedback", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendFeedback");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -189,16 +273,22 @@ function FeedbackTab() {
     },
     {
       text: "Feedback",
+      sort: true,
       dataField: "feedback",
-
+      headerFormatter: headerLabelFormatter,
       headerStyle: () => {
         return { width: "150px" };
       },
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendFeedabck", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendFeedabck");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -311,8 +401,12 @@ function FeedbackTab() {
                         <select
                           value={page}
                           onChange={(e) => {
-                            setPage(e.target.value);
-                            getFeedback(e.target.value);
+                            setPage(Number(e.target.value));
+                            getFeedback(Number(e.target.value));
+                            localStorage.setItem(
+                              "adminFeedback",
+                              Number(e.target.value)
+                            );
                           }}
                           className="form-control"
                         >

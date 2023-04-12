@@ -11,7 +11,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 const CreateInvoice = () => {
   const userid = window.localStorage.getItem("adminkey");
   const [proposal, setProposal] = useState([]);
@@ -54,6 +55,18 @@ const CreateInvoice = () => {
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   };
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   useEffect(() => {
     let localPage = Number(localStorage.getItem("admininvt2"));
@@ -68,6 +81,7 @@ const CreateInvoice = () => {
       };
       localStorage.setItem("sortedValuevt2", JSON.stringify(sort));
     }
+    setAccend(localStorage.getItem("accendcreated"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getProposalList(localPage);
@@ -233,14 +247,31 @@ const CreateInvoice = () => {
     {
       text: "Query no",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreated");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
 
+        sortMessage(val, 1);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <Link
               to={{
                 pathname: `/admin_queries/${row.id}`,
-                index: 9,
+                index: 1,
                 routes: "adinvoice",
               }}
             >
@@ -254,12 +285,17 @@ const CreateInvoice = () => {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -271,12 +307,17 @@ const CreateInvoice = () => {
       text: "Due date",
       dataField: "due_date",
       sort: true,
-      sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -292,13 +333,18 @@ const CreateInvoice = () => {
     {
       text: "Amount",
       dataField: "paid_amount",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

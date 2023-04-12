@@ -13,7 +13,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 const Generated = () => {
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("adminkey");
@@ -52,6 +53,18 @@ const Generated = () => {
       uit: token,
     },
   };
+  function headerLabelFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   const addTdsToggle = (key) => {
     setGstinNo(key.gstin_no);
     setTdsForm(!tdsForm);
@@ -76,6 +89,7 @@ const Generated = () => {
       };
       localStorage.setItem("sortedValuevt1", JSON.stringify(sort));
     }
+    setAccend(localStorage.getItem("accendgenerated"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getProposalList(localPage);
@@ -221,15 +235,22 @@ const Generated = () => {
       text: "Query no",
       dataField: "assign_no",
       sort: true,
+      headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
+
         sortMessage(val, 1);
       },
       formatter: function nameFormatter(cell, row) {
@@ -251,13 +272,18 @@ const Generated = () => {
     {
       text: "Installment no",
       dataField: "installment_no",
-
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -268,12 +294,18 @@ const Generated = () => {
     {
       text: "Invoice no",
       dataField: "billno",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -284,12 +316,18 @@ const Generated = () => {
     {
       text: "Due date",
       dataField: "due_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -305,12 +343,18 @@ const Generated = () => {
     {
       text: "Invoice amount",
       dataField: "invoice_amount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -327,12 +371,18 @@ const Generated = () => {
     {
       text: "Tds deducted",
       dataField: "tds_amount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -357,12 +407,18 @@ const Generated = () => {
     {
       text: "Status",
       dataField: "is_paid",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

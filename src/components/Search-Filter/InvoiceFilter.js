@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
+import { current_date } from "../../common/globalVeriable";
 const InvoiceFilter = (props) => {
   const { handleSubmit, register, errors, reset } = useForm();
   const [queryNo, setQueryNo] = useState("");
@@ -240,6 +241,7 @@ const InvoiceFilter = (props) => {
               className="form-select form-control"
               ref={register}
               defaultValue={fromDate}
+              max={current_date}
               onChange={(e) => setFromDate(e.target.defaultValue)}
             />
           </div>
@@ -253,6 +255,7 @@ const InvoiceFilter = (props) => {
               className="form-select form-control"
               ref={register}
               defaultValue={toDate}
+              max={current_date}
               onChange={(e) => setToDate(e.target.value)}
             />
           </div>

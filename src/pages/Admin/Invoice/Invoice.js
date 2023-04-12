@@ -47,11 +47,11 @@ const InvoiceTab = () => {
         </TabList>
 
         <TabPanel>
-          <CreateInvoice />
+          <Generated />
         </TabPanel>
 
         <TabPanel>
-          <Generated />
+          <CreateInvoice />
         </TabPanel>
       </Tabs>
       {/* <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
