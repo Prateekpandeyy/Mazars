@@ -258,6 +258,7 @@ function FeedbackTab() {
       formatter: function nameFormatter(cell, row) {
         return <>{row.assign_no}</>;
       },
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
@@ -273,28 +274,13 @@ function FeedbackTab() {
     },
     {
       text: "Feedback",
-      sort: true,
+
       dataField: "feedback",
-      headerFormatter: headerLabelFormatter,
+
       headerStyle: () => {
         return { width: "150px" };
       },
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendFeedabck", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendFeedabck");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>

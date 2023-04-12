@@ -11,7 +11,12 @@ import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import RecordingEdit from "./RecordingEdit";
 import "./recording.css";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 function Recording() {
   const getId = useParams();
   const userid = window.localStorage.getItem("adminkey");
@@ -20,6 +25,14 @@ function Recording() {
   const [videoid, setVideoId] = useState(null);
   const [records, setRecords] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [editData, setEditData] = useState({
     participant: "",
     editMessage: "",
@@ -38,25 +51,73 @@ function Recording() {
   };
 
   useEffect(() => {
-    getRecording();
+    let localPage = Number(localStorage.getItem("adminRecording"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    // setAccend(localStorage.getItem("accendpay1"));
+    // let sortVal = JSON.parse(localStorage.getItem("sortedValuepay1"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("sortedValuePay1", JSON.stringify(sort));
+    // }
+    setPage(localPage);
+
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getRecording(localPage);
   }, []);
   const videoIcon = {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
   };
-  const getRecording = () => {
-    axios
-      .get(
-        `${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(userid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFeedBackData(res.data.result);
-          setRecords(res.data.result.length);
-        }
-      });
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getRecording(1);
+    localStorage.setItem("adminRecording", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getRecording(page - 1);
+    localStorage.setItem("adminRecording", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    getRecording(page + 1);
+    localStorage.setItem("adminRecording", Number(page) + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getRecording(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("adminRecording", defaultPage.at(-1));
+  };
+  const getRecording = (e) => {
+    if (e) {
+      axios
+        .get(
+          `${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(
+            userid
+          )}&page=${e}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setFeedBackData(res.data.result);
+            setRecords(res.data.result.length);
+          }
+        });
+    }
   };
 
   const editRecording = (participants, assign_id, message, id) => {
@@ -201,6 +262,73 @@ function Recording() {
               userid={userid}
               getRecording={getRecording}
             />
+            <Row>
+              <Col md="12" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(Number(e.target.value));
+                            getRecording(Number(e.target.value));
+                            localStorage.setItem(
+                              "adminRecording",
+                              Number(e.target.value)
+                            );
+                          }}
+                          className="form-control"
+                        >
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
             <DataTablepopulated
               bgColor="#42566a"
               keyField={"assign_no"}

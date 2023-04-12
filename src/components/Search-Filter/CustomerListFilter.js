@@ -15,6 +15,15 @@ function CustomerListFilter(props) {
     setCountNotification,
     setPage,
     setDefaultPage,
+    lastChunk,
+    nextChunk,
+    page,
+    big,
+    end,
+    defaultPage,
+    prevChunk,
+    countNotification,
+    firstChunk,
   } = props;
   const [searchedData, setSearchedData] = useState(null);
   const [name, setName] = useState("");
@@ -233,7 +242,7 @@ function CustomerListFilter(props) {
           </Grid>
         </Grid>
         <Grid container my={1} spacing={1}>
-          <Grid item lg={9}>
+          <Grid item lg={7}>
             <button type="submit" className="customBtn mx-sm-1 mb-2">
               Search
             </button>
@@ -244,17 +253,90 @@ function CustomerListFilter(props) {
             >
               Reset
             </button>
-            {/* <label className="form-control">Total Records : {records}</label> */}
-          </Grid>
-
-          <Grid item lg={3}>
             <button
               type="button"
-              class="autoWidthBtn"
+              class="autoWidthBtn mb-2"
               onClick={() => exportToExcel()}
             >
               Export to Excel
             </button>
+            {/* <label className="form-control">Total Records : {records}</label> */}
+          </Grid>
+
+          <Grid item lg={5}>
+            <div className="customPagination">
+              <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <span>
+                  {big}-{end} of {countNotification}
+                </span>
+                <span className="d-flex">
+                  {page > 1 ? (
+                    <>
+                      <button
+                        type="button"
+                        className="navButton mx-1"
+                        onClick={(e) => firstChunk()}
+                      >
+                        &lt; &lt;
+                      </button>
+                      <button
+                        type="button"
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      maxWidth: "70px",
+                      width: "100%",
+                    }}
+                  >
+                    <select
+                      value={page}
+                      onChange={(e) => {
+                        setPage(Number(e.target.value));
+                        getCustomer(Number(e.target.value));
+                        localStorage.setItem(
+                          "adminClient",
+                          Number(e.target.value)
+                        );
+                      }}
+                      className="form-control"
+                    >
+                      {defaultPage.map((i) => (
+                        <option value={i}>{i}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {defaultPage.length > page ? (
+                    <>
+                      <button
+                        className="navButton mx-1"
+                        type="button"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                      <button
+                        type="button"
+                        className="navButton mx-1"
+                        onClick={(e) => lastChunk()}
+                      >
+                        &gt; &gt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </span>
+              </div>
+            </div>
           </Grid>
         </Grid>
       </form>

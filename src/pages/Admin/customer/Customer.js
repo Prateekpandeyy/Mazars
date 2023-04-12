@@ -496,25 +496,6 @@ function Customer() {
     {
       dataField: "secondary_email",
       text: "Secondary email",
-      headerFormatter: priceFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendClient", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendClient");
-        }
-
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 10);
-      },
     },
     {
       dataField: "created",
@@ -600,81 +581,6 @@ function Customer() {
             <Col md="6">
               <CustomHeading>Client ({tpCount})</CustomHeading>
             </Col>
-            {data.length > 0 ? (
-              <Col md="6" align="right">
-                <div className="customPagination">
-                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
-                      {big}-{end} of {countNotification}
-                    </span>
-                    <span className="d-flex">
-                      {page > 1 ? (
-                        <>
-                          <button
-                            className="navButton mx-1"
-                            onClick={(e) => firstChunk()}
-                          >
-                            &lt; &lt;
-                          </button>
-                          <button
-                            className="navButton mx-1"
-                            onClick={(e) => prevChunk()}
-                          >
-                            &lt;
-                          </button>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
-                        <select
-                          value={page}
-                          onChange={(e) => {
-                            setPage(Number(e.target.value));
-                            getCustomer(Number(e.target.value));
-                            localStorage.setItem(
-                              "adminClient",
-                              Number(e.target.value)
-                            );
-                          }}
-                          className="form-control"
-                        >
-                          {defaultPage.map((i) => (
-                            <option value={i}>{i}</option>
-                          ))}
-                        </select>
-                      </div>
-                      {defaultPage.length > page ? (
-                        <>
-                          <button
-                            className="navButton mx-1"
-                            onClick={(e) => nextChunk()}
-                          >
-                            &gt;
-                          </button>
-                          <button
-                            className="navButton mx-1"
-                            onClick={(e) => lastChunk()}
-                          >
-                            &gt; &gt;
-                          </button>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </Col>
-            ) : (
-              ""
-            )}
           </Row>
         </CardHeader>
         <CardBody>
@@ -689,7 +595,89 @@ function Customer() {
             setDefaultPage={setDefaultPage}
             localName="adminClient"
             getCustomer={getCustomer}
+            lastChunk={lastChunk}
+            nextChunk={nextChunk}
+            page={page}
+            big={big}
+            end={end}
+            defaultPage={defaultPage}
+            prevChunk={prevChunk}
+            countNotification={countNotification}
+            firstChunk={firstChunk}
           />
+          {/* {data.length > 0 ? (
+            <div className="customPagination">
+              <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <span>
+                  {big}-{end} of {countNotification}
+                </span>
+                <span className="d-flex">
+                  {page > 1 ? (
+                    <>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => firstChunk()}
+                      >
+                        &lt; &lt;
+                      </button>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      maxWidth: "70px",
+                      width: "100%",
+                    }}
+                  >
+                    <select
+                      value={page}
+                      onChange={(e) => {
+                        setPage(Number(e.target.value));
+                        getCustomer(Number(e.target.value));
+                        localStorage.setItem(
+                          "adminClient",
+                          Number(e.target.value)
+                        );
+                      }}
+                      className="form-control"
+                    >
+                      {defaultPage.map((i) => (
+                        <option value={i}>{i}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {defaultPage.length > page ? (
+                    <>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => lastChunk()}
+                      >
+                        &gt; &gt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </span>
+              </div>
+            </div>
+          ) : (
+            ""
+          )} */}
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}

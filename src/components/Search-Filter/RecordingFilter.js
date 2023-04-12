@@ -90,7 +90,7 @@ function RecordingFilter(props) {
       <>
         <button
           type="submit"
-          className="customBtn mx-sm-1 mb-2"
+          className="customBtn mx-sm-1"
           onClick={() => resetData()}
         >
           Reset
@@ -112,11 +112,11 @@ function RecordingFilter(props) {
                   ref={register}
                   className="form-select form-control"
                 />
-                <button type="submit" className="customBtn mx-sm-1 mb-2">
+                <button type="submit" className="customBtn mx-sm-1">
                   Search
                 </button>
                 <Reset />
-                <div className="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
