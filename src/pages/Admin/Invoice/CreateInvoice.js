@@ -247,6 +247,7 @@ const CreateInvoice = () => {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;

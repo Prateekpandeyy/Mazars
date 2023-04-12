@@ -216,11 +216,10 @@ const Generated = () => {
         });
 
         setProposal(all);
-        console.log("proposal", all);
       }
     });
   };
-
+  console.log("allProposal", proposal);
   const columns = [
     {
       text: "S.no",
@@ -393,15 +392,7 @@ const Generated = () => {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.tds_amount;
 
-        return (
-          <>
-            {row.is_paid == "0" ? (
-              <p className="rightAli">0</p>
-            ) : (
-              <p className="rightAli">{nfObject.format(x)}</p>
-            )}
-          </>
-        );
+        return <span>{nfObject.format(x)}</span>;
       },
     },
     {
