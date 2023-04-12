@@ -98,7 +98,8 @@ function AllProposal() {
             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
         }`
     } else {
-      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}`
+      remainApiPath = `tl/getProposalTl?page=1`
+      // &tp_id=${JSON.parse(userid)}
     }
 
 

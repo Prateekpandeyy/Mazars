@@ -66,9 +66,9 @@ function InCompleteData({ CountIncomplete, data }) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
           <ArrowUpwardIcon />
+        ) : (
+          <ArrowDownwardIcon />
         )}
       </div>
     );
@@ -86,8 +86,8 @@ function InCompleteData({ CountIncomplete, data }) {
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpQuery3"));
-    let arrow= localStorage.getItem("tpArrowQuery3")
-    if(arrow){
+    let arrow = localStorage.getItem("tpArrowQuery3")
+    if (arrow) {
       setAccend(arrow);
     }
     if (!pageno) {
@@ -109,24 +109,24 @@ function InCompleteData({ CountIncomplete, data }) {
     if ((data) && (!pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-    )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+          ?.split("-")
+          .reverse()
+          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
     }
     else if ((data) && (pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-    )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+          ?.split("-")
+          .reverse()
+          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     }
     else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
@@ -181,17 +181,17 @@ function InCompleteData({ CountIncomplete, data }) {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     setresetTrigger(!resetTrigger);
 
-    if(data){
+    if (data) {
       remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId
-      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-    }else{
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    } else {
       remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
     }
 

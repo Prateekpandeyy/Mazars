@@ -65,24 +65,24 @@ function AllQuery(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
           <ArrowUpwardIcon />
+        ) : (
+          <ArrowDownwardIcon />
         )}
       </div>
     );
   }
 
- 
+
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
-    let arrow= localStorage.getItem("tpArrowQuery1")
-    if(arrow){
+    let arrow = localStorage.getItem("tpArrowQuery1")
+    if (arrow) {
       setAccend(arrow);
     }
     console.log(accend);
-    
+
     if (pageno) {
       getInCompleteAssingment(pageno);
     } else {
@@ -121,7 +121,7 @@ function AllQuery(props) {
             .reverse()
             .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
         }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-    }else if((!data) && (pagetry)){
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`
     }
     else {
@@ -171,18 +171,18 @@ function AllQuery(props) {
     localStorage.setItem(`freezetpQuery1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
 
-    if(data){
-      remainApiPath =`tl/getIncompleteQues?page=1&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+    if (data) {
+      remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${data.store
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath =`tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -255,7 +255,7 @@ function AllQuery(props) {
     },
     {
       text: "Query no",
-      dataField: "assign_no",
+      // dataField: "assign_no",
       headerFormatter: headerLabelFormatter,
       // sort: true,
       // onSort: (field, order) => {

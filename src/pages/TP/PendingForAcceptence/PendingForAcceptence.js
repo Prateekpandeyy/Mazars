@@ -59,9 +59,9 @@ function PendingForAcceptence(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
           <ArrowUpwardIcon />
+        ) : (
+          <ArrowDownwardIcon />
         )}
       </div>
     );
