@@ -307,17 +307,18 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
                         .join("-")}&to=${data.toDate
                             ?.split("-")
                             .reverse()
-                            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                            .join("-")}&status=${data.p_status}&pcat_id=${
+                                data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -327,9 +328,9 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}`
+                remainApiPath = `tl/getProposalTl?page=${e}&orderby=${val}&orderbyfield=${field}&tp_id=${JSON.parse(userid)}`
             } else {
-                remainApiPath = `tl/getProposalTl?page=${e}&page=${e}&orderby=${val}&tp_id=${JSON.parse(userid)}`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}`
             }
         }
         else if (InprogressProposal == "InprogressProposal") {
@@ -339,7 +340,7 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -349,7 +350,7 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -359,9 +360,9 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
             } else {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1`
             }
         }
         else if (proposal == "proposal") {
@@ -371,7 +372,7 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -380,7 +381,7 @@ function Paginator(props) {
                             .reverse()
                             .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -389,9 +390,9 @@ function Paginator(props) {
                             .reverse()
                             .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2`
             }
         }
         else if (DeclinedQuery == "DeclinedQuery") {
@@ -401,7 +402,7 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal4`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status
+                remainApiPath = `tl/declinedQueries?page=${e}&tp_id=${JSON.parse(userid)}&status=${data.p_status
                     }&cat_id=${data.store}&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -410,7 +411,7 @@ function Paginator(props) {
                             .reverse()
                             .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status
+                remainApiPath = `tl/declinedQueries?page=${e}&tp_id=${JSON.parse(userid)}&status=${data.p_status
                     }&cat_id=${data.store}&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -419,9 +420,9 @@ function Paginator(props) {
                             .reverse()
                             .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3`
             }
         }
         else if (AllPayment == "AllPayment") {
@@ -662,9 +663,6 @@ function Paginator(props) {
     useEffect(() => {
         console.log("useEffect count", count);
         if (count > 0) {
-            // const N = Math.ceil(count / allEnd);
-            // const arr = Array.from({ length: N }, (_, index) => index + 1);
-            // setDefaultPage(arr);
             if (pageno > 1) {
                 setPage(pageno);
                 setAtpage(pageno);
@@ -725,8 +723,8 @@ function Paginator(props) {
                             <select
                                 value={page}
                                 onChange={(e) => {
-                                    setPage(e.target.value);
-                                    getNewPage(e.target.value);
+                                    setPage(Number(e.target.value));
+                                    getNewPage(Number(e.target.value));
                                 }}
                                 className="form-control">
                                 {defaultPage.map((i) => (

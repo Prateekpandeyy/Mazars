@@ -59,132 +59,74 @@ function AllQuery(props) {
     },
   };
 
+function headerLabelFormatter(column) {
+  return (
+    <div className="d-flex text-white w-100 flex-wrap">
+      {column.text}
+      {accend === column.dataField ? (
+        <ArrowDownwardIcon />
+      ) : (
+        <ArrowUpwardIcon />
+      )}
+    </div>
+  );
+}
 
-  function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowUpwardIcon />
-        ) : (
-          <ArrowDownwardIcon />
-        )}
-      </div>
-    );
+
+
+useEffect(() => {
+  let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
+  let arrow = localStorage.getItem("tpArrowQuery1")
+  if (arrow) {
+    setAccend(arrow);
   }
+  console.log(accend);
 
-
-
-  useEffect(() => {
-    let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
-    let arrow = localStorage.getItem("tpArrowQuery1")
-    if (arrow) {
-      setAccend(arrow);
-    }
-    console.log(accend);
-
-    if (pageno) {
-      getInCompleteAssingment(pageno);
-    } else {
-      getInCompleteAssingment(1);
-    }
-  }, []);
-
-  const getInCompleteAssingment = (e) => {
-    let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
-    let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
-    localStorage.setItem(`tpQuery1`, JSON.stringify(e));
-    let val = pagetry?.val;
-    let field = pagetry?.field;
-    let remainApiPath = "";
-    setOnPage(e);
-    setLoading(true);
-    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-    if ((data) && (!pagetry)) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}`;
-    }
-    else if ((data) && (pagetry)) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-    } else if ((!data) && (pagetry)) {
-      remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`
-    }
-    else {
-      remainApiPath = `tl/getIncompleteQues?page=${e}`;
-    }
-    if (e) {
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setInCompleteData(all);
-            setRecords(res.data.result.length);
-            setCount(res.data.total);
-          }
-        });
-    }
+  if (pageno) {
+    getInCompleteAssingment(pageno);
+  } else {
+    getInCompleteAssingment(1);
   }
+}, []);
 
-  const sortMessage = (val, field) => {
-    let remainApiPath = "";
-    setSortVal(val);
-    setSortField(field);
-    localStorage.setItem(`tpQuery1`, JSON.stringify(1))
-    let obj = {
-      // pageno: pageno,
-      val: val,
-      field: field,
-    }
-    localStorage.setItem(`freezetpQuery1`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
-
-    if (data) {
-      remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${data.store
-        }&from=${data.fromDate
+const getInCompleteAssingment = (e) => {
+  let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
+  let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
+  localStorage.setItem(`tpQuery1`, JSON.stringify(e));
+  let val = pagetry?.val;
+  let field = pagetry?.field;
+  let remainApiPath = "";
+  setOnPage(e);
+  setLoading(true);
+  let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  if ((data) && (!pagetry)) {
+    remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
-    } else {
-      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
-    }
-
+          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}`;
+  }
+  else if ((data) && (pagetry)) {
+    remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+  } else if ((!data) && (pagetry)) {
+    remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`
+  }
+  else {
+    remainApiPath = `tl/getIncompleteQues?page=${e}`;
+  }
+  if (e) {
     axios
       .get(
         `${baseUrl}/${remainApiPath}`,
@@ -192,356 +134,416 @@ function AllQuery(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
           let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
             let data = {
               ...i,
-              cid: sortId,
+              cid: customId,
             };
-            sortId++;
+            customId++;
             all.push(data);
           });
           setInCompleteData(all);
-          // resetTriggerFunc();
-          setresetTrigger(!resetTrigger);
+          setRecords(res.data.result.length);
+          setCount(res.data.total);
         }
       });
-  };
+  }
+}
 
-  const columns = [
-    {
-      text: "S.No",
-      dataField: "cid",
-      headerStyle: () => {
-        return { width: "50px" };
-      },
-    },
-    {
-      text: "Query date",
-      dataField: "created",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          console.log("This is sorting 1");
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          console.log("This is sorting 2");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 1);
-      },
-      formatter: function dateFormat(cell, row) {
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
-      },
-    },
-    {
-      text: "Query no",
-      // dataField: "assign_no",
-      headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
+const sortMessage = (val, field) => {
+  let remainApiPath = "";
+  setSortVal(val);
+  setSortField(field);
+  localStorage.setItem(`tpQuery1`, JSON.stringify(1))
+  let obj = {
+    // pageno: pageno,
+    val: val,
+    field: field,
+  }
+  localStorage.setItem(`freezetpQuery1`, JSON.stringify(obj));
+  let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
 
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     localStorage.setItem("tpArrowQuery1", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("tpArrowQuery1");
-      //   }
-
-      //   if (accend === true) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 2);
-      // },
-      formatter: function nameFormatter(cell, row) {
-        return (
-          <>
-            <Link
-              to={{
-                pathname: `/taxprofessional_queries/${row.id}`,
-                index: 0,
-                routes: "queriestab",
-              }}
-            >
-              {row.assign_no}
-            </Link>
-          </>
-        );
-      },
-    },
-    {
-      text: "Category",
-      dataField: "parent_id",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
-    },
-    {
-      text: "Sub category",
-      dataField: "cat_name",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 4);
-      },
-    },
-    {
-      text: "Client name",
-      dataField: "name",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
-    },
-    {
-      text: "Delivery due date / Actual delivery date",
-      dataField: "Exp_Delivery_Date",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 6);
-      },
-      formatter: function dateFormat(cell, row) {
-        var oldDate = row.Exp_Delivery_Date;
-
-        if (oldDate == "0000-00-00") {
-          return null;
-        } else {
-          return oldDate.toString().split("-").reverse().join("-");
-        }
-      },
-    },
-    {
-      text: "Status",
-      dataField: "Status",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 7);
-      },
-
-      formatter: function nameFormatter(cell, row) {
-        return (
-          <>
-            <div>
-              {row.status}/
-              {row.status == "Inprogress Query" ? (
-                <p className="inprogress">{row.statusdescription}</p>
-              ) : row.status == "Declined Query" ? (
-                <p className="declined">{row.statusdescription}</p>
-              ) : row.status == "Completed Query" ? (
-                <p className="completed">{row.statusdescription}</p>
-              ) : null}
-            </div>
-          </>
-        );
-      },
-    },
-    {
-      text: "Action",
-      dataField: "",
-
-      formatter: function (cell, row) {
-        return (
-          <>
-            {row.status_code == "1" ? null : (
-              <div
-                style={{
-                  display: "flex",
-                }}
-              >
-                {row.status == "Declined Query" ? null : (
-                  <Link
-                    to={{
-                      pathname: `/taxprofessional_chatting/${row.id}`,
-                      index: 0,
-                      routes: "queriestab",
-
-                      obj: {
-                        message_type: "4",
-                        query_No: row.assign_no,
-                        query_id: row.id,
-                        routes: `/taxprofessional/queriestab`,
-                      },
-                    }}
-                  >
-                    <MessageIcon />
-                  </Link>
-                )}
-
-                <span
-                  onClick={() => ViewDiscussionToggel(row.assign_no)}
-                  className="ml-2"
-                >
-                  <ViewDiscussionIcon />
-                </span>
-              </div>
-            )}{" "}
-          </>
-        );
-      },
-    },
-  ];
-
-  // const resetPaging = () => {
-  //   setEnd(Number(localStorage.getItem("tp_record_per_page")));
-  // };
-
-  const resetTriggerFunc = () => {
-    setresetTrigger(!resetTrigger);
-    localStorage.removeItem("tpQuery1");
-    localStorage.removeItem(`freezetpQuery1`);
-    localStorage.removeItem("tpArrowQuery1");
+  if (data) {
+    remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+  } else {
+    remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
   }
 
-  return (
-    <>
-      <Card>
-        <CardHeader>
-          <Row>
-            <TaxProfessionalFilter
+  axios
+    .get(
+      `${baseUrl}/${remainApiPath}`,
+      myConfig
+    )
+    .then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setInCompleteData(all);
+        // resetTriggerFunc();
+        setresetTrigger(!resetTrigger);
+      }
+    });
+};
+
+const columns = [
+  {
+    text: "S.No",
+    dataField: "cid",
+    headerStyle: () => {
+      return { width: "50px" };
+    },
+  },
+  {
+    text: "Query date",
+    dataField: "created",
+    headerFormatter: headerLabelFormatter,
+    sort: true,
+    onSort: (field, order) => {
+      let val = 0;
+      if (accend !== field) {
+        setAccend(field);
+        console.log("This is sorting 1");
+        localStorage.setItem("tpArrowQuery1", field);
+      } else {
+        setAccend("");
+        console.log("This is sorting 2");
+        localStorage.removeItem("tpArrowQuery1");
+      }
+      if (accend === field) {
+        val = 0;
+      } else {
+        val = 1;
+      }
+      sortMessage(val, 1);
+    },
+    formatter: function dateFormat(cell, row) {
+      var oldDate = row.created;
+      if (oldDate == null) {
+        return null;
+      }
+      return oldDate.toString().split("-").reverse().join("-");
+    },
+  },
+  {
+    text: "Query no",
+    // dataField: "assign_no",
+    headerFormatter: headerLabelFormatter,
+    // sort: true,
+    // onSort: (field, order) => {
+    //   let val = 0;
+
+    //   if (accend !== field) {
+    //     setAccend(field);
+    //     localStorage.setItem("tpArrowQuery1", field);
+    //   } else {
+    //     setAccend("");
+    //     localStorage.removeItem("tpArrowQuery1");
+    //   }
+
+    //   if (accend === true) {
+    //     val = 0;
+    //   } else {
+    //     val = 1;
+    //   }
+    //   sortMessage(val, 2);
+    // },
+    formatter: function nameFormatter(cell, row) {
+      return (
+        <>
+          <Link
+            to={{
+              pathname: `/taxprofessional_queries/${row.id}`,
+              index: 0,
+              routes: "queriestab",
+            }}
+          >
+            {row.assign_no}
+          </Link>
+        </>
+      );
+    },
+  },
+  {
+    text: "Category",
+    dataField: "parent_id",
+    headerFormatter: headerLabelFormatter,
+    sort: true,
+    onSort: (field, order) => {
+      let val = 0;
+      if (accend !== field) {
+        setAccend(field);
+        localStorage.setItem("tpArrowQuery1", field);
+      } else {
+        setAccend("");
+        localStorage.removeItem("tpArrowQuery1");
+      }
+
+      if (accend === true) {
+        val = 0;
+      } else {
+        val = 1;
+      }
+      sortMessage(val, 3);
+    },
+  },
+  {
+    text: "Sub category",
+    dataField: "cat_name",
+    headerFormatter: headerLabelFormatter,
+    sort: true,
+    onSort: (field, order) => {
+      let val = 0;
+      if (accend !== field) {
+        setAccend(field);
+        localStorage.setItem("tpArrowQuery1", field);
+      } else {
+        setAccend("");
+        localStorage.removeItem("tpArrowQuery1");
+      }
+      if (accend === true) {
+        val = 0;
+      } else {
+        val = 1;
+      }
+      sortMessage(val, 4);
+    },
+  },
+  {
+    text: "Client name",
+    dataField: "name",
+    headerFormatter: headerLabelFormatter,
+    sort: true,
+    onSort: (field, order) => {
+      let val = 0;
+      if (accend !== field) {
+        setAccend(field);
+        localStorage.setItem("tpArrowQuery1", field);
+      } else {
+        setAccend("");
+        localStorage.removeItem("tpArrowQuery1");
+      }
+      if (order === "asc") {
+        val = 0;
+      } else {
+        val = 1;
+      }
+      sortMessage(val, 5);
+    },
+  },
+  {
+    text: "Delivery due date / Actual delivery date",
+    dataField: "Exp_Delivery_Date",
+    headerFormatter: headerLabelFormatter,
+    sort: true,
+    headerStyle: () => {
+      return { width: "275px" };
+    },
+    onSort: (field, order) => {
+      let val = 0;
+      if (accend !== field) {
+        setAccend(field);
+        localStorage.setItem("tpArrowQuery1", field);
+      } else {
+        setAccend("");
+        localStorage.removeItem("tpArrowQuery1");
+      }
+
+      if (accend === true) {
+        val = 0;
+      } else {
+        val = 1;
+      }
+      sortMessage(val, 6);
+    },
+    formatter: function dateFormat(cell, row) {
+      var oldDate = row.Exp_Delivery_Date;
+
+      if (oldDate == "0000-00-00") {
+        return null;
+      } else {
+        return oldDate.toString().split("-").reverse().join("-");
+      }
+    },
+  },
+  {
+    text: "Status",
+    dataField: "Status",
+    sort: true,
+    headerFormatter: headerLabelFormatter,
+    onSort: (field, order) => {
+      let val = 0;
+      if (accend !== field) {
+        setAccend(field);
+        localStorage.setItem("tpArrowQuery1", field);
+      } else {
+        setAccend("");
+        localStorage.removeItem("tpArrowQuery1");
+      }
+
+      if (accend === true) {
+        val = 0;
+      } else {
+        val = 1;
+      }
+      sortMessage(val, 7);
+    },
+
+    formatter: function nameFormatter(cell, row) {
+      return (
+        <>
+          <div>
+            {row.status}/
+            {row.status == "Inprogress Query" ? (
+              <p className="inprogress">{row.statusdescription}</p>
+            ) : row.status == "Declined Query" ? (
+              <p className="declined">{row.statusdescription}</p>
+            ) : row.status == "Completed Query" ? (
+              <p className="completed">{row.statusdescription}</p>
+            ) : null}
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    text: "Action",
+    dataField: "",
+
+    formatter: function (cell, row) {
+      return (
+        <>
+          {row.status_code == "1" ? null : (
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              {row.status == "Declined Query" ? null : (
+                <Link
+                  to={{
+                    pathname: `/taxprofessional_chatting/${row.id}`,
+                    index: 0,
+                    routes: "queriestab",
+
+                    obj: {
+                      message_type: "4",
+                      query_No: row.assign_no,
+                      query_id: row.id,
+                      routes: `/taxprofessional/queriestab`,
+                    },
+                  }}
+                >
+                  <MessageIcon />
+                </Link>
+              )}
+
+              <span
+                onClick={() => ViewDiscussionToggel(row.assign_no)}
+                className="ml-2"
+              >
+                <ViewDiscussionIcon />
+              </span>
+            </div>
+          )}{" "}
+        </>
+      );
+    },
+  },
+];
+
+// const resetPaging = () => {
+//   setEnd(Number(localStorage.getItem("tp_record_per_page")));
+// };
+
+const resetTriggerFunc = () => {
+  setresetTrigger(!resetTrigger);
+  localStorage.removeItem("tpQuery1");
+  localStorage.removeItem(`freezetpQuery1`);
+  localStorage.removeItem("tpArrowQuery1");
+}
+
+return (
+  <>
+    <Card>
+      <CardHeader>
+        <Row>
+          <TaxProfessionalFilter
+            setData={setInCompleteData}
+            getData={getInCompleteAssingment}
+            AllQuery="AllQuery"
+            setRecords={setRecords}
+            records={records}
+            index="tpquery1"
+            // resetPaging={resetPaging}
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
+          />
+        </Row>
+        <Row>
+          <Col md="12" align="right">
+            <Paginator
+              count={count}
               setData={setInCompleteData}
               getData={getInCompleteAssingment}
               AllQuery="AllQuery"
-              setRecords={setRecords}
+              // setRecords={setRecords}
               records={records}
               index="tpquery1"
+              setOnPage={setOnPage}
               // resetPaging={resetPaging}
-              resetTriggerFunc={resetTriggerFunc}
-              setCount={setCount}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
             />
-          </Row>
-          <Row>
-            <Col md="12" align="right">
-              <Paginator
-                count={count}
-                setData={setInCompleteData}
-                getData={getInCompleteAssingment}
-                AllQuery="AllQuery"
-                // setRecords={setRecords}
-                records={records}
-                index="tpquery1"
-                setOnPage={setOnPage}
-                // resetPaging={resetPaging}
-                resetTrigger={resetTrigger}
-                setresetTrigger={setresetTrigger}
-              />
-            </Col>
-          </Row>
-        </CardHeader>
+          </Col>
+        </Row>
+      </CardHeader>
 
-        <CardBody>
-          <DataTablepopulated
-            bgColor="#55425f"
-            keyField={"assign_no"}
-            data={incompleteData}
-            columns={columns}
-          ></DataTablepopulated>
-          <DiscardReport
-            ViewDiscussionToggel={ViewDiscussionToggel}
-            ViewDiscussion={ViewDiscussion}
-            report={assignNo}
-            getData={getInCompleteAssingment}
-            headColor="#55425f"
-          />
-        </CardBody>
-      </Card>
-    </>
-  );
+      <CardBody>
+        <DataTablepopulated
+          bgColor="#55425f"
+          keyField={"assign_no"}
+          data={incompleteData}
+          columns={columns}
+        ></DataTablepopulated>
+        <DiscardReport
+          ViewDiscussionToggel={ViewDiscussionToggel}
+          ViewDiscussion={ViewDiscussion}
+          report={assignNo}
+          getData={getInCompleteAssingment}
+          headColor="#55425f"
+        />
+      </CardBody>
+    </Card>
+  </>
+);
 }
 
 export default AllQuery;

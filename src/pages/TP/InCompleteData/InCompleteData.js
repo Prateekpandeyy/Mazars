@@ -61,18 +61,49 @@ function InCompleteData({ CountIncomplete, data }) {
     },
   };
 
+  // function headerLabelFormatter(column) {
+  //   return (
+  //     <div className="d-flex text-white w-100 flex-wrap">
+  //       {column.text}
+  //       {accend === column.dataField ? (
+  //         <ArrowUpwardIcon />
+  //       ) : (
+  //         <ArrowDownwardIcon />
+  //       )}
+  //     </div>
+  //   );
+  // }
+
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowUpwardIcon />
-        ) : (
-          <ArrowDownwardIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === "Exp_Delivery_Date" ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap flex-row-reverse">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDownwardIcon />
+            ) : (
+              <ArrowUpwardIcon />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDownwardIcon />
+            ) : (
+              <ArrowUpwardIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
-  }
+    )
+}
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
