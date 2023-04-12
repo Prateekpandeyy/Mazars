@@ -30,6 +30,7 @@ function Message(props) {
   const [addPaymentModal, setPaymentModal] = useState(false);
   const token = window.localStorage.getItem("tptoken");
   const [totalPages, setTotalPages] = useState(1);
+  const [accend, setAccend] = useState(false);
   const [page, setPage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myConfig = {
@@ -41,20 +42,20 @@ function Message(props) {
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
-  
 
-  // function headerLabelFormatter(column) {
-  //   return (
-  //     <div className="d-flex text-white w-100 flex-wrap">
-  //       {column.text}
-  //       {accend === column.dataField ? (
-  //         <ArrowDownwardIcon />
-  //       ) : (
-  //         <ArrowUpwardIcon />
-  //       )}
-  //     </div>
-  //   );
-  // }
+
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   useEffect(() => {
     setPage(1);
@@ -65,7 +66,7 @@ function Message(props) {
   // set intial query here
   const getMessage = (e) => {
     // localStorage.setItem(`tpMsg`, JSON.stringify(e));
-    console.log(e,"page test");
+    console.log(e, "page test");
     if (e) {
       axios
         .get(
@@ -102,7 +103,7 @@ function Message(props) {
               setBig(rem + 1);
               setEnd(res.data.total);
               // console.log("e at last page");
-          } 
+            }
             else {
               setBig(rem + 1);
               setEnd(end);
@@ -115,6 +116,49 @@ function Message(props) {
         });
     }
   };
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    localStorage.setItem(`tpMessage1`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpMsg1`, JSON.stringify(obj));
+    remainApiPath = `tl/getNotification?page=1&orderby=${val}&orderbyfield=${field}`
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          // let record =Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = 1;
+          // if (onPage > 1) {
+          //   sortId = 1;
+          // }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setQuery(all);
+          setCount(res.data.total);
+          setAtpage(1);
+          setPage(1);
+          setBig(1);
+          setEnd(allEnd);
+        }
+      });
+  };
+
 
   //page counter
   const firstChunk = () => {
@@ -158,17 +202,56 @@ function Message(props) {
     {
       text: "Date",
       dataField: "setdate",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px", width: "60px" };
+      },
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
       },
     },
 
     {
       text: "Query No",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
       headerStyle: () => {
         return { fontSize: "12px", width: "30px" };
+      },
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
       },
       formatter: function nameFormatter(cell, row) {
         return (

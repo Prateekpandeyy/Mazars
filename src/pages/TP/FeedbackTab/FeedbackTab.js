@@ -17,15 +17,18 @@ import Swal from 'sweetalert2';
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function FeedbackTab() {
 
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [feedbackData, setFeedBackData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [countFeedBack, setCountFeedBack] = useState("");
   const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(50);
+  const [end, setEnd] = useState(allEnd);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
@@ -33,13 +36,26 @@ function FeedbackTab() {
   const [sortVal, setSortVal] = useState('');
   const [sortField, setSortField] = useState('');
   const [defaultPage, setDefaultPage] = useState(["1"]);
-  const token = window.localStorage.getItem("tptoken")
+  const token = window.localStorage.getItem("tptoken");
+  
   const myConfig = {
     headers: {
       "uit": token
     }
   }
 
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   // useEffect(() => {
   //   getFeedback();
@@ -99,7 +115,7 @@ function FeedbackTab() {
   const sortFeedback = (val, field) => {
 
     let obj = {
-      pageno: atPage,
+      // pageno: atPage,
       val: val,
       field: field,
     }
@@ -109,16 +125,16 @@ function FeedbackTab() {
     setLoading(true);
     axios
       .get(
-        `${baseUrl}/tl/getFeedback?page=${atPage}&orderby=${val}&orderbyfield=${field}`, myConfig
+        `${baseUrl}/tl/getFeedback?page=1&orderby=${val}&orderbyfield=${field}`, myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
 
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
+          // if (page > 1) {
+          //   sortId = 1;
+          // }
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -130,6 +146,10 @@ function FeedbackTab() {
           setLoading(false);
           setFeedBackData(all);
           setSortVal(field);
+          setAtpage(1);
+          setPage(1);
+          setBig(1);
+          setEnd(allEnd);
         }
       });
 
@@ -139,7 +159,6 @@ function FeedbackTab() {
   const getFeedback = (e) => {
     localStorage.setItem(`tpFeedback`, JSON.stringify(e));
     setLoading(true);
-    let allEnd = Number(localStorage.getItem("tp_record_per_page"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpFeedback"));
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -210,13 +229,23 @@ function FeedbackTab() {
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       headerStyle: () => {
         return { width: "60px" };
       },
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        if (accend !== field) {
+          setAccend(field);
+          console.log("This is sorting 1");
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          console.log("This is sorting 2");
+          localStorage.removeItem("tpArrowQuery1");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -228,10 +257,20 @@ function FeedbackTab() {
     {
       text: "Query no",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery1");
+        }
+
+        if (accend === true) {
           val = 0;
         } else {
           val = 1;
