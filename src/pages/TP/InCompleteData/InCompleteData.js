@@ -19,8 +19,8 @@ import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
 import Paginator from "../../../components/Paginator/Paginator";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
@@ -83,9 +83,9 @@ function InCompleteData({ CountIncomplete, data }) {
           <div className="d-flex text-white w-100 flex-wrap flex-row-reverse">
             {column.text}
             {accend === column.dataField ? (
-              <ArrowDownwardIcon />
+              <ArrowDropDownIcon />
             ) : (
-              <ArrowUpwardIcon />
+              <ArrowDropUpIcon />
             )}
           </div>
         )
@@ -94,9 +94,9 @@ function InCompleteData({ CountIncomplete, data }) {
           <div className="d-flex text-white w-100 flex-wrap">
             {column.text}
             {accend === column.dataField ? (
-              <ArrowDownwardIcon />
+              <ArrowDropDownIcon />
             ) : (
-              <ArrowUpwardIcon />
+              <ArrowDropUpIcon />
             )}
           </div>
         )

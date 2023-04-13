@@ -17,8 +17,8 @@ import MessageIcon, {
   EditQuery,
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
 
 function InprogressProposal() {
@@ -67,9 +67,9 @@ function InprogressProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
+          <ArrowDropDownIcon />
         ) : (
-          <ArrowUpwardIcon />
+          <ArrowDropUpIcon />
         )}
       </div>
     );
@@ -101,12 +101,56 @@ function InprogressProposal() {
   }, [viewProposalModal]);
 
   useEffect(() => {
-    getProposalList(1);
+    let pageno = JSON.parse(localStorage.getItem("tpProposal2"));
+    let arrow = localStorage.getItem("tpArrowProposal2")
+    if (arrow) {
+      setAccend(arrow);
+    }
+
+    if (pageno) {
+      getProposalList(pageno);
+    } else {
+      getProposalList(1);
+    }
+
+    // getProposalList(1);
   }, []);
 
   const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpProposal2"))
+    localStorage.setItem(`tpQuery1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
     let remainApiPath = "";
+    setOnPage(e);
+
+    if ((data) && (!pagetry)){
+      remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1`
+    }
+
     if (data) {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
         userid
@@ -288,7 +332,7 @@ function InprogressProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 2);
       },
     },
     {
@@ -310,7 +354,7 @@ function InprogressProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -355,7 +399,7 @@ function InprogressProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 4);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -385,7 +429,7 @@ function InprogressProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 5);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -398,6 +442,24 @@ function InprogressProposal() {
     },
     {
       text: "Status",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -420,6 +482,23 @@ function InprogressProposal() {
       dataField: "",
       text: "Proposed amount",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -432,6 +511,23 @@ function InprogressProposal() {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -533,6 +629,7 @@ function InprogressProposal() {
             records={records}
             index="tpproposal2"
             setCount={setCount}
+            resetTriggerFunc={resetTriggerFunc}
           />
         </Row>
         <Row>

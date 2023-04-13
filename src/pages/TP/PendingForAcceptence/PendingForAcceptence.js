@@ -17,6 +17,8 @@ import MessageIcon, {
   Reject,
 } from "../../../components/Common/MessageIcon";
 import Paginator from "../../../components/Paginator/Paginator";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 function PendingForAcceptence(props) {
   let history = useHistory();
@@ -60,9 +62,9 @@ function PendingForAcceptence(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowUpwardIcon />
+          <ArrowDropUpIcon />
         ) : (
-          <ArrowDownwardIcon />
+          <ArrowDropDownIcon />
         )}
       </div>
     );
