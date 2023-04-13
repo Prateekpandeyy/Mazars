@@ -250,7 +250,7 @@ function Paginator(props) {
                   .join("-")}&to=${data.toDate
                     ?.split("-")
                     .reverse()
-                    .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+                    .join("-")}&pcat_id=${data.pcatId
                 }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
               } else if ((!data) && (pagetry)) {
                 remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`

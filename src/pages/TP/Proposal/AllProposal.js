@@ -115,7 +115,7 @@ function AllProposal() {
   const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpProposal1"))
-    localStorage.setItem(`tpQuery1`, JSON.stringify(e));
+    localStorage.setItem(`tpProposal1`, JSON.stringify(e));
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
@@ -227,10 +227,10 @@ function AllProposal() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
+      dataField: "cid",
+      // formatter: (cellContent, row, rowIndex) => {
+      //   return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}></div>;
+      // },
 
       headerStyle: () => {
         return { width: "60px" };

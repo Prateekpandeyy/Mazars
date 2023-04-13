@@ -22,6 +22,7 @@ import Paginator from "../../../components/Paginator/Paginator";
 
 function DeclinedProposal() {
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
@@ -100,46 +101,74 @@ function DeclinedProposal() {
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpProposal4"));
-    // let arrow = localStorage.getItem("tpArrowProposal4")
-    // if (arrow) {
-    //   setAccend(arrow);
-    // }
-    // if (pageno) {
-    //   getProposalList(pageno);
-    // } else {
-    //   getProposalList(1);
-    // }
-    getProposalList();
+    let arrow = localStorage.getItem("tpArrowProposal4")
+    if (arrow) {
+      setAccend(arrow);
+    }
+    if (pageno) {
+      getProposalList(pageno);
+    } else {
+      getProposalList(1);
+    }
+    // getProposalList(1);
   }, []);
 
-  const getProposalList = () => {
+  const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpProposal4"))
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
     // setOnPage(e);
-    if ((data) && (!pagetry)){
-      remainApiPath = ``
-    }else if ((data) && (pagetry)){
-      remainApiPath = ``
-    }else if ((!data) && (pagetry)){
-      remainApiPath = ``
-    }else{
-      remainApiPath = ``
+    if ((data) && (!pagetry)) {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`
     }
 
     if (!data) {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setProposal(res.data.result);
-            setCount(res.data.result.length);
+            let data = res.data.result;
             setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setProposal(all);
+            setCount(res.data?.total);
           }
         });
     }
@@ -157,21 +186,19 @@ function DeclinedProposal() {
     }
     localStorage.setItem(`freezetpProposal4`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
-    if (data){
+    if (data) {
       remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${
-            val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `tl/getProposalTl?page=1&tp_id=${
-        JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
-      }
-        axios
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
       .get(
         `${baseUrl}/${remainApiPath}`,
         myConfig
@@ -198,10 +225,10 @@ function DeclinedProposal() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
+      dataField: "cid",
+      // formatter: (cellContent, row, rowIndex) => {
+      //   return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}></div>;
+      // },
 
       headerStyle: () => {
         return { width: "50px" };
@@ -228,7 +255,7 @@ function DeclinedProposal() {
         }
         sortMessage(val, 1);
       },
-      
+
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_date;

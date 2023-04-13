@@ -217,7 +217,6 @@ function TaxProfessionalFilter(props) {
               // setCount(res.data.total);
               // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
-              localStorage.setItem(`tpQuery1`, JSON.stringify(1));
 
             }
           });
@@ -304,7 +303,18 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
                 resetTriggerFunc();
@@ -429,9 +439,21 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 resetTriggerFunc();
+                localStorage.setItem(`tpQuery4`, JSON.stringify(1));
               }
             }
           });
@@ -523,9 +545,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal1`, JSON.stringify(1));
               }
             }
           });
@@ -569,9 +604,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal2`, JSON.stringify(1));
               }
             }
           });
@@ -618,9 +666,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal3`, JSON.stringify(1));
               }
             }
           });
@@ -667,9 +728,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal4`, JSON.stringify(1));
               }
             }
           });

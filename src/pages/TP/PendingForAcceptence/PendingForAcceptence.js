@@ -121,7 +121,7 @@ function PendingForAcceptence(props) {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+          .join("-")}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else if ((!data) && (pagetry)) {
       remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
@@ -179,7 +179,7 @@ function PendingForAcceptence(props) {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+          .join("-")}&pcat_id=${data.pcatId
       }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
     }else{
       remainApiPath =`tl/pendingQues?page=1&orderby=${val}&orderbyfield=${field}`
@@ -214,10 +214,10 @@ function PendingForAcceptence(props) {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
+      dataField: "cid",
+      // formatter: (cellContent, row, rowIndex) => {
+      //   return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+      // },
 
       headerStyle: () => {
         return { width: "50px" };
