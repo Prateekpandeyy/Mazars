@@ -18,9 +18,12 @@ import MessageIcon, {
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
 import Paginator from "../../../components/Paginator/Paginator";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function AllProposal() {
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
@@ -33,6 +36,7 @@ function AllProposal() {
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
   const [resetTrigger, setresetTrigger] = useState(false);
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -70,6 +74,7 @@ function AllProposal() {
     }
   };
 
+
   useEffect(() => {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
@@ -77,18 +82,41 @@ function AllProposal() {
   }, [ViewDiscussion]);
 
   useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem("tpProposal1"));
+    let arrow = localStorage.getItem("tpArrowProposal1")
+    if (arrow) {
+      setAccend(arrow);
+    }
+
+    if (pageno) {
+      getProposalList(pageno);
+    } else {
+      getProposalList(1);
+    }
     // let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
     // if (!data) {
     //   console.log("getting all TP proposal");
-    getProposalList(1);
     // }
   }, []);
+
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
     let remainApiPath = "";
     if (data) {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
         }&from=${data.fromDate
           ?.split("-")
           .reverse()
@@ -98,7 +126,7 @@ function AllProposal() {
             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
         }`
     } else {
-      remainApiPath = `tl/getProposalTl?page=1`
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&page=${e}`
       // &tp_id=${JSON.parse(userid)}
     }
 
@@ -110,13 +138,76 @@ function AllProposal() {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setProposal(res.data.result);
-          setCount(res.data.result.length);
+          let data = res.data.result;
           setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setCount(res.data?.total);
+          // setRecords(res.data.result.length);
         }
       });
 
   };
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`tpProposal1`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpProposal1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
+    if (data) {
+      remainApiPath = `tl/getProposalTl?page=1&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getProposalTl?page=1&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  }
 
   const columns = [
     {
@@ -133,7 +224,24 @@ function AllProposal() {
     {
       dataField: "query_date",
       text: "Query date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_date;
@@ -163,16 +271,50 @@ function AllProposal() {
         );
       },
     },
-
     {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal1");
+        }
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal1");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
@@ -201,6 +343,23 @@ function AllProposal() {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal1");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
@@ -214,6 +373,23 @@ function AllProposal() {
       text: "Date of acceptance / decline of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal1");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -225,6 +401,24 @@ function AllProposal() {
     },
     {
       text: "Status",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal1");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -358,6 +552,8 @@ function AllProposal() {
               getData={getProposalList}
               AllProposal="AllProposal"
               setRecords={setRecords}
+              resetTriggerFunc={resetTriggerFunc}
+              setCount={setCount}
               records={records}
               index="tpproposal1"
             />
@@ -369,7 +565,6 @@ function AllProposal() {
                 setData={setProposal}
                 getData={getProposalList}
                 AllProposal="AllProposal"
-                setRecords={setRecords} 
                 index="tpproposal1"
                 setOnPage={setOnPage}
                 // resetPaging={resetPaging}

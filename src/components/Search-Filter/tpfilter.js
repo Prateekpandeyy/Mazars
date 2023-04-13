@@ -305,6 +305,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
                 // localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
@@ -521,6 +522,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -567,6 +569,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -615,6 +618,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -661,6 +665,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -710,6 +715,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -736,6 +742,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -759,6 +766,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });

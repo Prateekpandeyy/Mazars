@@ -35,6 +35,8 @@ function AcceptedProposal() {
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
+
   const [resetTrigger, setresetTrigger] = useState(false);
 
   const myRef = useRef([]);
@@ -68,6 +70,19 @@ function AcceptedProposal() {
     }
   };
 
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
+
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -98,6 +113,26 @@ function AcceptedProposal() {
         });
     }
   };
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`tpProposal3`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpProposal3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
+    if (data){
+      remainApiPath = ` `
+    }else{
+      remainApiPath = ` `
+    }
+
+  }
 
   const columns = [
     {
@@ -302,6 +337,7 @@ function AcceptedProposal() {
               setRecords={setRecords}
               index="tpproposal3"
               records={records}
+              setCount={setCount}
             />
           </Row>
           <Row>

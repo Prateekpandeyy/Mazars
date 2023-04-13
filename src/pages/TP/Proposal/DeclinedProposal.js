@@ -332,6 +332,7 @@ function DeclinedProposal() {
               setRecords={setRecords}
               index="tpproposal4"
               records={records}
+              setCount={setCount}
             />
           </Row>
           <Row>

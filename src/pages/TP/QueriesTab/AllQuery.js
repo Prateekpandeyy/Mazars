@@ -23,8 +23,6 @@ function AllQuery(props) {
   const myRef = useRef([]);
 
   const [count, setCount] = useState("0");
-  const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(allEnd);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [onPage, setOnPage] = useState(1);
@@ -82,8 +80,6 @@ useEffect(() => {
   if (arrow) {
     setAccend(arrow);
   }
-  console.log(accend);
-
   if (pageno) {
     getInCompleteAssingment(pageno);
   } else {
@@ -232,11 +228,9 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
-        console.log("This is sorting 1");
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
-        console.log("This is sorting 2");
         localStorage.removeItem("tpArrowQuery1");
       }
       if (accend === field) {
@@ -256,27 +250,7 @@ const columns = [
   },
   {
     text: "Query no",
-    // dataField: "assign_no",
-    headerFormatter: headerLabelFormatter,
-    // sort: true,
-    // onSort: (field, order) => {
-    //   let val = 0;
-
-    //   if (accend !== field) {
-    //     setAccend(field);
-    //     localStorage.setItem("tpArrowQuery1", field);
-    //   } else {
-    //     setAccend("");
-    //     localStorage.removeItem("tpArrowQuery1");
-    //   }
-
-    //   if (accend === true) {
-    //     val = 0;
-    //   } else {
-    //     val = 1;
-    //   }
-    //   sortMessage(val, 2);
-    // },
+    dataField: "assign_no",
     formatter: function nameFormatter(cell, row) {
       return (
         <>
@@ -481,9 +455,6 @@ const columns = [
   },
 ];
 
-// const resetPaging = () => {
-//   setEnd(Number(localStorage.getItem("tp_record_per_page")));
-// };
 
 const resetTriggerFunc = () => {
   setresetTrigger(!resetTrigger);

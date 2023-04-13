@@ -90,16 +90,16 @@ function Paginator(props) {
             console.log(pageno, "in inCompQ render check");
         }
         else if (index === "tpproposal1") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpProposal1")))
         }
         else if (index === "tpproposal2") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpProposal2")))
         }
         else if (index === "tpproposal3") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpProposal3")))
         }
         else if (index === "tpproposal4") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpProposal4")))
         }
         else if (index === "tppayment1") {
 
@@ -233,15 +233,30 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpQuery2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-
-            } else if ((data) && (pagetry)) {
-
-            } else if ((!data) && (pagetry)) {
-
-            } else {
-
-            }
-
+                remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)
+                  }&cat_id=${data.store
+                  }&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                      ?.split("-")
+                      .reverse()
+                      .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+              } else if ((data) && (pagetry)) {
+                remainApiPath = `/tl/pendingQues?page=${e}&cat_id=${data.store
+                }&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+                }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+              } else if ((!data) && (pagetry)) {
+                remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
+              } else {
+                remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`
+              }
         }
         else if (InprogressQuery == "InprogressQuery") {
             let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
@@ -585,8 +600,10 @@ function Paginator(props) {
                         let data = res.data.result;
                         let all = [];
                         let customId = 1;
+                        console.log(e);
                         if (e > 1) {
                             customId = allEnd * (e - 1) + 1;
+                            console.log('why not serial updating');
                         }
                         data.map((i) => {
                             let data = {
@@ -597,6 +614,7 @@ function Paginator(props) {
                             all.push(data);
                         });
                         setData(all);
+                        console.log(all);
                         setOnPage(e);
                         // setRecords(res.data.result.length);
                         const dynamicPage = Math.ceil(count / allEnd);

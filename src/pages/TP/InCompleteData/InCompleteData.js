@@ -289,8 +289,7 @@ function InCompleteData({ CountIncomplete, data }) {
     },
     {
       text: "Query no",
-      // dataField: "assign_no",
-      headerFormatter: headerLabelFormatter,
+      dataField: "assign_no",
       // sort: true,
       // onSort: (field, order) => {
       //   let val = 0;

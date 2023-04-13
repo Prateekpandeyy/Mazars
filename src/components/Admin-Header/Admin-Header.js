@@ -198,7 +198,11 @@ function AdminHeader({
       localStorage.removeItem("tpArrowMsg");
       localStorage.removeItem("tpgenerated");
       localStorage.removeItem(`freezetpQuery1`);
+      localStorage.removeItem(`freezetpQuery2`);
       localStorage.removeItem(`freezetpQuery3`);
+      localStorage.removeItem("tpQuery1");
+      localStorage.removeItem("tpArrowProposal1");
+      localStorage.removeItem("freezetpProposal1");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tpcategoryData");

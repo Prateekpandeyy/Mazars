@@ -23,6 +23,7 @@ import Paginator from "../../../components/Paginator/Paginator";
 
 function InprogressProposal() {
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
@@ -35,6 +36,7 @@ function InprogressProposal() {
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -59,6 +61,19 @@ function InprogressProposal() {
       setScrolledTo(key)
     }
   };
+
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
@@ -86,26 +101,108 @@ function InprogressProposal() {
   }, [viewProposalModal]);
 
   useEffect(() => {
-    getProposalList();
+    getProposalList(1);
   }, []);
 
-  const getProposalList = () => {
+  const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
-    if (!data) {
+    let remainApiPath = "";
+    if (data) {
+      remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
+        userid
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    }
+    else{
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`
+    }
+
+    // if (!data) {
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
+            let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
             setProposal(res.data.result);
-            setCount(res.data.result.length);
-            setRecords(res.data.result.length);
+            setCount(res.data?.total);
+            // setRecords(res.data.result.length);
           }
         });
-    }
+    
   };
+
+  const sortMessage = (val, field) => {
+    console.log("Sorting...");
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`tpProposal2`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezetpProposal2`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
+    if (data) {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(
+        userid
+      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+
+
+  }
 
   const columns = [
     {
@@ -124,7 +221,24 @@ function InprogressProposal() {
     {
       dataField: "query_date",
       text: "Query date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_date;
@@ -158,11 +272,46 @@ function InprogressProposal() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
@@ -191,6 +340,23 @@ function InprogressProposal() {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
@@ -204,6 +370,23 @@ function InprogressProposal() {
       text: "Date of acceptance / decline of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -330,6 +513,14 @@ function InprogressProposal() {
       },
     },
   ];
+
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    localStorage.removeItem("tpPropsosal2");
+    localStorage.removeItem(`freezetpProposal2`);
+    localStorage.removeItem("tpArrowProposal2");
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -341,6 +532,7 @@ function InprogressProposal() {
             setRecords={setRecords}
             records={records}
             index="tpproposal2"
+            setCount={setCount}
           />
         </Row>
         <Row>

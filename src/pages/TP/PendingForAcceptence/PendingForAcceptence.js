@@ -16,6 +16,7 @@ import MessageIcon, {
   Accept,
   Reject,
 } from "../../../components/Common/MessageIcon";
+import Paginator from "../../../components/Paginator/Paginator";
 
 function PendingForAcceptence(props) {
   let history = useHistory();
@@ -68,64 +69,87 @@ function PendingForAcceptence(props) {
   }
 
   useEffect(() => {
-    // let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
-    // if (!pageno) {
-    //   pageno = 1;
-    // }
-    // getPendingforAcceptance(pageno);
 
-    let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
-    if (!data) {
-      getPendingforAcceptance(1);
+  let arrow = localStorage.getItem("tpArrowQuery2")
+  if (arrow) {
+    setAccend(arrow);
+  }
+
+    let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
+    if (!pageno) {
+      pageno = 1;
     }
+    getPendingforAcceptance(pageno);
+
+    // let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
+    // if (!data) {
+    //   getPendingforAcceptance(1);
+    // }
   }, []);
 
   const getPendingforAcceptance = (e) => {
 
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
-    // let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
-    // localStorage.setItem(`tpQuery2`, JSON.stringify(e));
-    // console.log(pagetry, "getsort");
-    // let val = pagetry?.val;
-    // let field = pagetry?.field;
-    // console.log(val, "if getsort val");
-    // console.log(field, "if getsort field");
+    let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
+    localStorage.setItem(`tpQuery2`, JSON.stringify(e));
+    console.log(pagetry, "getsort");
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    console.log(val, "if getsort val");
+    console.log(field, "if getsort field");
     let remainApiPath = "";
     setOnPage(e);
-    // setLoading(true);
+    setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-    // if ((data) && (!pagetry)) {
-    //   remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)
-    //     }&cat_id=${data.store
-    //     }&from=${data.fromDate
-    //       ?.split("-")
-    //       .reverse()
-    //       .join("-")}&to=${data.toDate
-    //         ?.split("-")
-    //         .reverse()
-    //         .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
-    // } else if ((data) && (pagetry)) {
-    //   remainApiPath = `/tl/pendingQues?page=${e}&cat_id=${data.store
-    //   }&from=${data.fromDate
-    //     ?.split("-")
-    //     .reverse()
-    //     .join("-")}&to=${data.toDate
-    //       ?.split("-")
-    //       .reverse()
-    //       .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-    //   }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-    // } else if ((!data) && (pagetry)) {
-    //   remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
-    // } else {
-    //   remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`
-    // }
+    if ((data) && (!pagetry)) {
+      remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)
+        }&cat_id=${data.store
+        }&from=${data.fromDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `/tl/pendingQues?page=${e}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    } else if ((!data) && (pagetry)) {
+      remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`
+    }
 
     axios
-      .get(`${baseUrl}/tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`, myConfig)
+      .get(`${baseUrl}/${remainApiPath}`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
-          setPendingData(res.data.result);
+          let data = res.data.result;
           setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPendingData(all);
+          setRecords(res.data.result.length);
+          setCount(res.data?.total);
+          setLoading(false);
         }
       });
 
@@ -135,7 +159,6 @@ function PendingForAcceptence(props) {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
     setresetTrigger(!resetTrigger);
 
     let obj = {
@@ -169,8 +192,6 @@ function PendingForAcceptence(props) {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = ((onPage - 1) * record) +1;
           if (onPage > 1) {
             sortId = 1;
           }
@@ -183,6 +204,7 @@ function PendingForAcceptence(props) {
             all.push(data);
           });
           setPendingData(all);
+          setresetTrigger(!resetTrigger);
         }
       });
   };
@@ -202,18 +224,24 @@ function PendingForAcceptence(props) {
     {
       text: "Date",
       dataField: "query_created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   setAccend(!accend);
-
-      //   if (accend === true) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 1);
-      // },
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created;
@@ -226,7 +254,6 @@ function PendingForAcceptence(props) {
     {
       text: "Query no",
       dataField: "assign_no",
-
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -246,65 +273,92 @@ function PendingForAcceptence(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   setAccend(!accend);
-
-      //   if (accend === true) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 3);
-      // },
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery2");
+        }
+  
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   setAccend(!accend);
-
-      //   if (accend === true) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 4);
-      // },
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (order === "asc") {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 5);
-      // },
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery2");
+        }
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date / Actual delivery date",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   setAccend(!accend);
-
-      //   if (accend === true) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 6);
-      // },
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowQuery2");
+        }
+  
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
@@ -391,7 +445,7 @@ function PendingForAcceptence(props) {
               setCount={setCount}
             />
           </Row>
-          {/* <Row>
+          <Row>
             <Col md="12" align="right">
               <Paginator
                 count={count}
@@ -407,7 +461,7 @@ function PendingForAcceptence(props) {
                 setresetTrigger={setresetTrigger}
               />
             </Col>
-          </Row> */}
+          </Row>
         </CardHeader>
         <CardBody>
           {loading ? (
