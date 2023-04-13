@@ -206,10 +206,10 @@ function CustomerListFilter(props) {
           </Grid>
           <Grid item sx={12} sm={6} md={4} lg={3}>
             <Grid container columnSpacing={2}>
-              <Grid item lg={6}>
+              <Grid item lg={4}>
                 <label className="form-control">From</label>
               </Grid>
-              <Grid item lg={6}>
+              <Grid item lg={8}>
                 <input
                   type="date"
                   name="p_dateFrom"
@@ -224,10 +224,10 @@ function CustomerListFilter(props) {
           </Grid>
           <Grid item lg={3}>
             <Grid container columnSpacing={2}>
-              <Grid item lg={6}>
+              <Grid item lg={3}>
                 <label className="form-select form-control">To</label>
               </Grid>
-              <Grid item lg={6}>
+              <Grid item lg={9}>
                 <input
                   type="date"
                   name="p_dateTo"

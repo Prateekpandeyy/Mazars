@@ -112,6 +112,7 @@ function FeedbackTab() {
           if (res.data.code === 1) {
             let data = res.data.result;
             setfeedbackNumber(res.data.total);
+            setCountNotification(res.data.total);
             let all = [];
             let customId = 1;
             if (e > 1) {

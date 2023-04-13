@@ -472,7 +472,7 @@ function Customer() {
     },
     {
       dataField: "gstin_no",
-      text: "Gstin",
+      text: "GSTIN",
       sort: true,
       headerFormatter: priceFormatter,
       onSort: (field, order) => {
