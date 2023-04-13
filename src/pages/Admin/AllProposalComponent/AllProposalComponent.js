@@ -23,6 +23,8 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function AllProposalComponent() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -279,9 +281,9 @@ function AllProposalComponent() {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
+          <ArrowDropDownIcon />
         ) : (
-          <ArrowUpwardIcon />
+          <ArrowDropUpIcon />
         )}
       </div>
     );

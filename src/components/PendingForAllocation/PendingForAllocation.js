@@ -16,8 +16,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function PendingAllocation(props) {
   const myRef = useRef([]);
   const [pendingData, setPendingData] = useState([]);
@@ -46,9 +46,9 @@ function PendingAllocation(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
+          <ArrowDropDownIcon />
         ) : (
-          <ArrowUpwardIcon />
+          <ArrowDropUpIcon />
         )}
       </div>
     );
