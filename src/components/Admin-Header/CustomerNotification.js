@@ -90,6 +90,32 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("sortedValueassign2");
       localStorage.removeItem("sortedValueassign3");
       localStorage.removeItem("sortedValueassign4");
+      localStorage.removeItem("accendq1");
+      localStorage.removeItem("accendq2");
+      localStorage.removeItem("accendq3");
+      localStorage.removeItem("accendq4");
+      localStorage.removeItem("accendpro1");
+      localStorage.removeItem("accendpro2");
+      localStorage.removeItem("accendpro3");
+      localStorage.removeItem("accendpro4");
+      localStorage.removeItem("accendcreated");
+      localStorage.removeItem("accendgenerated");
+      localStorage.removeItem("accendpay1");
+      localStorage.removeItem("accendpay2");
+      localStorage.removeItem("accendpay3");
+      localStorage.removeItem("accendassign1");
+      localStorage.removeItem("accendassign2");
+      localStorage.removeItem("accendassign3");
+      localStorage.removeItem("accendassign4");
+      localStorage.removeItem("adminClient");
+      localStorage.removeItem("accendClient");
+      localStorage.removeItem("sortedValueclient");
+      localStorage.removeItem("adminMessage");
+      localStorage.removeItem("accendMessage");
+      localStorage.removeItem("sortedMessage");
+      localStorage.removeItem("sortedfeedback");
+      localStorage.removeItem("adminFeedback");
+      localStorage.removeItem("accendFeedback");
 
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {

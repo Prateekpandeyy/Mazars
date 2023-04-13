@@ -532,7 +532,7 @@ function DraftReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -563,7 +563,7 @@ function DraftReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -619,7 +619,7 @@ function DraftReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
     },
     {

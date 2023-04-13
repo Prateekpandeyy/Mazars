@@ -430,25 +430,7 @@ function Paid() {
     {
       text: "Status",
       dataField: "",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendpay2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendpay2");
-        }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 6);
-      },
       formatter: function (cell, row) {
         return (
           <>

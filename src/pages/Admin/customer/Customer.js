@@ -9,6 +9,8 @@ import CustomerListFilter from "../../../components/Search-Filter/CustomerListFi
 import History from "./CustHistory";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 function Customer() {
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
@@ -39,10 +41,23 @@ function Customer() {
     if (!localPage) {
       localPage = 1;
     }
+    setAccend(localStorage.getItem("accendClient"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     getCustomer(localPage);
   }, []);
+  function priceFormatter(column, colIndex) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDownwardIcon />
+        ) : (
+          <ArrowUpwardIcon />
+        )}
+      </div>
+    );
+  }
   useEffect(() => {
     let runTo = myRefs.current[jumpTo];
     runTo?.scrollIntoView(false);
@@ -87,9 +102,9 @@ function Customer() {
     }
     let remainApiPath = "";
     let data = JSON.parse(localStorage.getItem(`searchDataadclient`));
-    console.log("data", data);
+
     if (data && Object.values(data).length > 0) {
-      remainApiPath = `admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+      remainApiPath = `admin/getAllList?&name=${data.name}&page=${e}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     } else {
       remainApiPath = `/admin/getAllList?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -137,6 +152,61 @@ function Customer() {
           droppage.push(i);
         }
         setDefaultPage(droppage);
+      }
+    });
+  };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminClient", 1);
+    localStorage.setItem("sortedValueclient", JSON.stringify(sort));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueclient"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let data = JSON.parse(localStorage.getItem(`searchDataadclient`));
+
+    if (data && Object.values(data).length > 0) {
+      remainApiPath = `admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    } else {
+      remainApiPath = `/admin/getAllList?orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setData(all);
       }
     });
   };
@@ -219,56 +289,236 @@ function Customer() {
       dataField: "name",
       text: "Name",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
     },
     {
       dataField: "user_id",
       text: "User Id",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       dataField: "email",
       text: "Email",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "phone",
       text: "Mobile no",
+      sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "occupation",
       text: "Occupation",
+      headerFormatter: priceFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       dataField: "country",
       text: "Country",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
     },
     {
       dataField: "state",
       text: "State",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
     },
 
     {
       dataField: "city",
       text: "City",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
     },
     {
       dataField: "gstin_no",
-      text: "Gstin",
+      text: "GSTIN",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
     },
     {
       dataField: "secondary_email",
       text: "Secondary email",
-      sort: true,
     },
     {
       dataField: "created",
       text: "Date of registration",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendClient", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendClient");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 11);
+      },
     },
 
     {
@@ -321,6 +571,7 @@ function Customer() {
       },
     },
   ];
+  console.log("data1111", data);
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -329,77 +580,6 @@ function Customer() {
           <Row>
             <Col md="6">
               <CustomHeading>Client ({tpCount})</CustomHeading>
-            </Col>
-            <Col md="6" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span>
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => firstChunk()}
-                        >
-                          &lt; &lt;
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => prevChunk()}
-                        >
-                          &lt;
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div
-                      style={{
-                        display: "flex",
-                        maxWidth: "70px",
-                        width: "100%",
-                      }}
-                    >
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(Number(e.target.value));
-                          getCustomer(Number(e.target.value));
-                          localStorage.setItem(
-                            "adminClient",
-                            Number(e.target.value)
-                          );
-                        }}
-                        className="form-control"
-                      >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => nextChunk()}
-                        >
-                          &gt;
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => lastChunk()}
-                        >
-                          &gt; &gt;
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
-                </div>
-              </div>
             </Col>
           </Row>
         </CardHeader>
@@ -415,7 +595,89 @@ function Customer() {
             setDefaultPage={setDefaultPage}
             localName="adminClient"
             getCustomer={getCustomer}
+            lastChunk={lastChunk}
+            nextChunk={nextChunk}
+            page={page}
+            big={big}
+            end={end}
+            defaultPage={defaultPage}
+            prevChunk={prevChunk}
+            countNotification={countNotification}
+            firstChunk={firstChunk}
           />
+          {/* {data.length > 0 ? (
+            <div className="customPagination">
+              <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <span>
+                  {big}-{end} of {countNotification}
+                </span>
+                <span className="d-flex">
+                  {page > 1 ? (
+                    <>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => firstChunk()}
+                      >
+                        &lt; &lt;
+                      </button>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      maxWidth: "70px",
+                      width: "100%",
+                    }}
+                  >
+                    <select
+                      value={page}
+                      onChange={(e) => {
+                        setPage(Number(e.target.value));
+                        getCustomer(Number(e.target.value));
+                        localStorage.setItem(
+                          "adminClient",
+                          Number(e.target.value)
+                        );
+                      }}
+                      className="form-control"
+                    >
+                      {defaultPage.map((i) => (
+                        <option value={i}>{i}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {defaultPage.length > page ? (
+                    <>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                      <button
+                        className="navButton mx-1"
+                        onClick={(e) => lastChunk()}
+                      >
+                        &gt; &gt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </span>
+              </div>
+            </div>
+          ) : (
+            ""
+          )} */}
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}

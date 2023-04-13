@@ -480,25 +480,7 @@ function AdminPermission(props) {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendassign4", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendassign4");
-        }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
       headerStyle: () => {
         return { width: "200px" };
       },
@@ -679,7 +661,7 @@ function AdminPermission(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
     },
     {

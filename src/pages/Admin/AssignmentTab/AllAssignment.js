@@ -452,28 +452,11 @@ function AssignmentComponent(props) {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
+
       headerStyle: () => {
         return { width: "200px" };
       },
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendassign1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendassign1");
-        }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
       formatter: function (cell, row) {
         return (
           <>
@@ -651,7 +634,7 @@ function AssignmentComponent(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
     },
     {
@@ -744,6 +727,7 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
+                localStorage.setItem("adminassign1", 1);
                 let droppage = [];
                 setCountNotification(res.data.total);
                 setRecords(res.data.total);
@@ -792,6 +776,7 @@ function AssignmentComponent(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
+              localStorage.setItem("adminassign1", 1);
               if (res.data.result) {
                 let droppage = [];
                 setCountNotification(res.data.total);
@@ -843,6 +828,7 @@ function AssignmentComponent(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
+              localStorage.setItem("adminassign1", 1);
               if (res.data.result) {
                 let droppage = [];
                 setCountNotification(res.data.total);
@@ -893,6 +879,8 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
+                localStorage.setItem("adminassign1", 1);
+                setBig(1);
                 let droppage = [];
                 setCountNotification(res.data.total);
                 setRecords(res.data.total);
@@ -918,8 +906,6 @@ function AssignmentComponent(props) {
                 }
                 let dynamicPage = Math.ceil(res.data.total / allEnd);
 
-                setBig(1);
-
                 setEnd(end);
 
                 for (let i = 1; i <= dynamicPage; i++) {
@@ -928,7 +914,7 @@ function AssignmentComponent(props) {
 
                 setDefaultPage(droppage);
                 droppage = [];
-                setBig(1);
+
                 setPage(1);
               }
             }
