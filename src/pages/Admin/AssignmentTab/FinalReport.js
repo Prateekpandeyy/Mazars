@@ -375,7 +375,7 @@ function FinalReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 1);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -427,7 +427,7 @@ function FinalReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -450,7 +450,7 @@ function FinalReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 4);
       },
     },
     {
@@ -553,7 +553,7 @@ function FinalReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 6);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -583,7 +583,7 @@ function FinalReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -639,7 +639,7 @@ function FinalReport() {
         } else {
           val = 1;
         }
-        sortMessage(val, 10);
+        sortMessage(val, 9);
       },
     },
     {

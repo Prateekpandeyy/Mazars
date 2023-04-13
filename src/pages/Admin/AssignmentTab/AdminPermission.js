@@ -661,7 +661,7 @@ function AdminPermission(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
     },
     {
