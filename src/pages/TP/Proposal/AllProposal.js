@@ -113,7 +113,7 @@ function AllProposal() {
   }
 
   const getProposalList = (e) => {
-    let data = JSON.parse(localStorage.getItem("searchDatatpProposal1"));
+    let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpProposal1"))
     localStorage.setItem(`tpQuery1`, JSON.stringify(e));
     let val = pagetry?.val;
@@ -130,8 +130,7 @@ function AllProposal() {
           .reverse()
           .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
       }`
-    }
-    else if ((data) && (pagetry)){
+    }else if ((data) && (pagetry)){
       remainApiPath =`tl/getProposalTl?page=${e}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")

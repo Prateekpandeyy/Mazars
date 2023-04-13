@@ -126,45 +126,45 @@ function InprogressProposal() {
     setOnPage(e);
 
     if ((data) && (!pagetry)){
-      remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
-        userid
-      )}&status=1&cat_id=${data.store}&from=${data.fromDate
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      }&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+      }`
     }else if ((data) && (pagetry)){
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
-        userid
-      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      }&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+      }&orderby=${val}&orderbyfield=${field}`
     }else if ((!data) && (pagetry)){
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1&orderby=${val}&orderbyfield=${field}`
     }else{
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1`
     }
 
-    if (data) {
-      remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
-        userid
-      )}&status=1&cat_id=${data.store}&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
-    }
-    else{
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`
-    }
+    // if (data) {
+    //   remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(
+    //     userid
+    //   )}&status=1&cat_id=${data.store}&from=${data.fromDate
+    //     ?.split("-")
+    //     .reverse()
+    //     .join("-")}&to=${data.toDate
+    //       ?.split("-")
+    //       .reverse()
+    //       .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    // }
+    // else{
+    //   remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1`
+    // }
 
     // if (!data) {
       axios
@@ -189,7 +189,7 @@ function InprogressProposal() {
             customId++;
             all.push(data);
           });
-            setProposal(res.data.result);
+            setProposal(all);
             setCount(res.data?.total);
             // setRecords(res.data.result.length);
           }
@@ -213,7 +213,7 @@ function InprogressProposal() {
     if (data) {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(
         userid
-      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
@@ -271,10 +271,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -321,10 +321,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
 
         if (accend === true) {
@@ -344,10 +344,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === true) {
           val = 0;
@@ -389,10 +389,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === true) {
           val = 0;
@@ -419,10 +419,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === true) {
           val = 0;
@@ -448,10 +448,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === true) {
           val = 0;
@@ -487,10 +487,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === true) {
           val = 0;
@@ -516,10 +516,10 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal2");
         }
         if (accend === true) {
           val = 0;

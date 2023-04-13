@@ -227,7 +227,13 @@ function AdminHeader({
       localStorage.removeItem(`freezetpQuery2`);
       localStorage.removeItem(`freezetpQuery3`);
       localStorage.removeItem("tpQuery1");
+      localStorage.removeItem("tpQuery2");
+      localStorage.removeItem("tpQuery3");
+      localStorage.removeItem("tpQuery4");
       localStorage.removeItem("tpArrowProposal1");
+      localStorage.removeItem("tpArrowProposal2");
+      localStorage.removeItem("tpArrowProposal3");
+      localStorage.removeItem("tpArrowProposal4");
       localStorage.removeItem("freezetpProposal1");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {

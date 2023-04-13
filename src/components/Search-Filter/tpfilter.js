@@ -28,6 +28,7 @@ function TaxProfessionalFilter(props) {
     AllProposal,
     InprogressProposal,
     assignment,
+    Decproposal,
     AllPayment,
     setCount,
     Unpaid,
@@ -306,7 +307,8 @@ function TaxProfessionalFilter(props) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
-                // localStorage.setItem(`tpQuery2`, JSON.stringify(1));
+                resetTriggerFunc();
+                localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
           });
@@ -429,6 +431,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                resetTriggerFunc();
               }
             }
           });
@@ -540,7 +543,7 @@ function TaxProfessionalFilter(props) {
               .join("-")}&to=${data.toDate
                 ?.split("-")
                 .reverse()
-                .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -560,8 +563,7 @@ function TaxProfessionalFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=1&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -624,6 +626,56 @@ function TaxProfessionalFilter(props) {
           });
       }
     }
+
+    if (Decproposal == "Decproposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=3&pcat_id=${selectedData}&qno=${data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+                setCount(res.data.total);
+              }
+            }
+          });
+      }
+    }
+
     if (AllPayment == "AllPayment") {
       if (data.route) {
         axios
@@ -772,6 +824,7 @@ function TaxProfessionalFilter(props) {
           });
       }
     }
+
   };
 
   const Reset = () => {

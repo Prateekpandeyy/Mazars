@@ -20,6 +20,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 function AcceptedProposal() {
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
@@ -93,27 +94,82 @@ function AcceptedProposal() {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    getProposalList(1);
+    let pageno = JSON.parse(localStorage.getItem("tpProposal3"));
+    let arrow = localStorage.getItem("tpArrowProposal3")
+    if (arrow) {
+      setAccend(arrow);
+    }
+    if (pageno) {
+      getProposalList(pageno);
+    } else {
+      getProposalList(1);
+    }
+    // getProposalList(1);
   }, []);
 
   const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpProposal3"))
+    let val = pagetry?.val;
+    let field = pagetry?.field;
     let remainApiPath = "";
+    setOnPage(e);
 
-    if (!data) {
+    if ((data) && (!pagetry)){
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=2&pcat_id=${
+            data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${
+        JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2`
+    }
+
+    
       axios
         .get(
-          `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=2`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setProposal(res.data.result);
-            setCount(res.data.result.length);
+            let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+            setProposal(all);
+            setCount(res.data.total);
             setRecords(res.data.result.length);
           }
         });
-    }
+    
   };
 
   const sortMessage = (val, field) => {
@@ -139,8 +195,9 @@ function AcceptedProposal() {
           .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${
             val}&orderbyfield=${field}`
     }else{
-      remainApiPath = `l/getProposalTl?page=1&tp_id=${
+      remainApiPath = `tl/getProposalTl?page=1&tp_id=${
         JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
+      }
         axios
       .get(
         `${baseUrl}/${remainApiPath}`,
@@ -162,8 +219,6 @@ function AcceptedProposal() {
           setresetTrigger(!resetTrigger);
         }
       });
-
-    }
   }
 
   const columns = [
@@ -187,10 +242,10 @@ function AcceptedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
+          localStorage.removeItem("tpArrowProposal3");
         }
         if (accend === field) {
           val = 0;
@@ -211,40 +266,7 @@ function AcceptedProposal() {
     {
       text: "Query no",
       dataField: "assign_no",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
-        }
-
-        if (accend === true) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
-      formatter: function nameFormatter(cell, row) {
-        return (
-          <>
-            <Link
-              to={{
-                pathname: `/taxprofessional_queries/${row.id}`,
-                index: 2,
-                routes: "proposal",
-              }}
-            >
-              {row.assign_no}
-            </Link>
-          </>
-        );
-      },
+      
     },
     {
       text: "Category",
@@ -255,10 +277,10 @@ function AcceptedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
+          localStorage.removeItem("tpArrowProposal3");
         }
 
         if (accend === true) {
@@ -266,7 +288,7 @@ function AcceptedProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 2);
       },
     },
     {
@@ -278,17 +300,17 @@ function AcceptedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
+          localStorage.removeItem("tpArrowProposal3");
         }
         if (accend === true) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -300,17 +322,17 @@ function AcceptedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
+          localStorage.removeItem("tpArrowProposal3");
         }
         if (accend === true) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 4);
       },
 
       formatter: function paymentPlan(cell, row) {
@@ -341,17 +363,17 @@ function AcceptedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
+          localStorage.removeItem("tpArrowProposal3");
         }
         if (accend === true) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 5);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -371,17 +393,17 @@ function AcceptedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowProposal1", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProposal1");
+          localStorage.removeItem("tpArrowProposal3");
         }
         if (accend === true) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -394,6 +416,24 @@ function AcceptedProposal() {
     },
     {
       text: "Status",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowProp2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProp2");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (

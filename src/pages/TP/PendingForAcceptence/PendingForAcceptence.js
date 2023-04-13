@@ -292,7 +292,7 @@ function PendingForAcceptence(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 2);
       },
     },
     {
@@ -314,7 +314,7 @@ function PendingForAcceptence(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -336,7 +336,7 @@ function PendingForAcceptence(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 4);
       },
     },
     {
@@ -359,7 +359,7 @@ function PendingForAcceptence(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 5);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
