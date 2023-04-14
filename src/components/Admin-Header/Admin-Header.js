@@ -218,6 +218,7 @@ function AdminHeader({
       localStorage.removeItem("tpMessage1");
       localStorage.removeItem("tpcreate");
       localStorage.removeItem("tpFeedback");
+      localStorage.removeItem("freezetpFeedback");
       localStorage.removeItem("tpArrowFeed");
       localStorage.removeItem("tpMessage");
       localStorage.removeItem("freezetpMsg");
@@ -230,11 +231,23 @@ function AdminHeader({
       localStorage.removeItem("tpQuery2");
       localStorage.removeItem("tpQuery3");
       localStorage.removeItem("tpQuery4");
+      localStorage.removeItem("tpProposal1");
+      localStorage.removeItem("tpProposal2");
+      localStorage.removeItem("tpProposal3");
+      localStorage.removeItem("tpProposal4");
+      localStorage.removeItem("tpPayment1");
+      localStorage.removeItem("tpArrowQuery1");
+      localStorage.removeItem("tpArrowQuery2");
+      localStorage.removeItem("tpArrowQuery3");
+      localStorage.removeItem("tpArrowQuery4");
       localStorage.removeItem("tpArrowProposal1");
       localStorage.removeItem("tpArrowProposal2");
       localStorage.removeItem("tpArrowProposal3");
       localStorage.removeItem("tpArrowProposal4");
       localStorage.removeItem("freezetpProposal1");
+      localStorage.removeItem("freezetpProposal2");
+      localStorage.removeItem("freezetpProposal3");
+      localStorage.removeItem("freezetpProposal4");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tpcategoryData");
