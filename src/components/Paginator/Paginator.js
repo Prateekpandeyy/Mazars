@@ -128,7 +128,6 @@ function Paginator(props) {
 
     //page counter
     const firstChunk = () => {
-        
         if(atPage > 1){
             setAtpage(1);
             setPage(1);
@@ -168,17 +167,17 @@ function Paginator(props) {
             if (e == 1) {
                 setBig(rem + e);
                 setEnd(allEnd);
-                console.log("e at 1", big, end);
+                // console.log("e at 1", big, end);
             }
             else if ((e == (dynamicPage))) {
                 setBig(rem + 1);
                 setEnd(count);
-                console.log("e at last page");
+                // console.log("e at last page");
             }
             else {
                 setBig(rem + 1);
                 setEnd(end);
-                console.log(`e at between page ${e}`, big, end);
+                // console.log(`e at between page ${e}`, big, end);
             }
         } else {
             setBig(rem + 1);
@@ -669,18 +668,6 @@ function Paginator(props) {
             setAtpage(1);
             setting(1)
             setresetTrigger(!resetTrigger);
-            // if (index === "tpquery1") {
-            //     localStorage.setItem(`tpQuery1`, JSON.stringify(1));
-            // }else if (index === "tpquery2"){
-            //     localStorage.setItem(`tpQuery2`, JSON.stringify(1));
-            // }
-            // else if (index === "tpquery3") {
-            //     localStorage.setItem(`tpQuery3`, JSON.stringify(1));
-            // } 
-
-            // else {
-            // }
-            // console.log(resetTrigger, "reset at trigger");
         }
     }, [resetTrigger]);
 

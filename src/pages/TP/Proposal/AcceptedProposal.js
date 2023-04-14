@@ -183,6 +183,7 @@ function AcceptedProposal() {
       field: field,
     }
     localStorage.setItem(`freezetpProposal3`, JSON.stringify(obj));
+    localStorage.setItem(`tpProposal3`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
     if (data){
       remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store

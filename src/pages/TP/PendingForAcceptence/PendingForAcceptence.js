@@ -169,6 +169,7 @@ function PendingForAcceptence(props) {
       field: field,
     }
     localStorage.setItem(`freezetpQuery2`, JSON.stringify(obj));
+    localStorage.setItem(`tpQuery2`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
 
     if(data){

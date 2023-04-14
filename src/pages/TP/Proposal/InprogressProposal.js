@@ -209,6 +209,7 @@ function InprogressProposal() {
       field: field,
     }
     localStorage.setItem(`freezetpProposal2`, JSON.stringify(obj));
+    localStorage.setItem(`tpProposal2`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
     if (data) {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
