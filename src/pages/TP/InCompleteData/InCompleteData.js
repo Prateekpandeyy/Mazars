@@ -208,6 +208,7 @@ function InCompleteData({ CountIncomplete, data }) {
       val: val,
       field: field,
     }
+    localStorage.setItem(`tpQuery3`, JSON.stringify(1))
     localStorage.setItem(`freezetpQuery3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     setresetTrigger(!resetTrigger);
