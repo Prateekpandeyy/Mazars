@@ -26,7 +26,13 @@ const InvoiceFilter = (props) => {
     formData.append("qno", data.query_no);
     formData.append("from", data.p_dateFrom);
     formData.append("to", data.p_dateTo);
-    formData.append("installment_no", data.installment_no);
+    formData.append("payment_plan", data.payment_plan);
+    {
+      data.installment_no
+        ? formData.append("installment_no", data.installment_no)
+        : formData.append("installment_no", "");
+    }
+
     {
       props.invoice === "admincreate"
         ? formData.append("status", "")
@@ -221,16 +227,129 @@ const InvoiceFilter = (props) => {
               onChange={(e) => setInstallmentNo(e.target.value)}
               className="form-select form-control"
               style={{ height: "33px" }}
-              name="installment_no"
+              name="payment_plan"
             >
-              <option value="">Please select installment</option>
-              <option value="0">Lumpsum</option>
-              <option value="1">1st installment</option>
-              <option value="2">2nd installment</option>
-              <option value="3">3rd installment</option>
-              <option value="4">4th installment</option>
+              <option value="">Please select Payment plan</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3A">3 (A)</option>
+              <option value="B">3 (B)</option>
+              <option value="4">4</option>
             </select>
           </div>
+          {installmentno === "3B" ? (
+            <div className="col-md-2">
+              <select
+                ref={register}
+                className="form-select form-control"
+                style={{ height: "33px" }}
+                name="installment_no"
+              >
+                <option value="">Please select installment</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+              </select>
+            </div>
+          ) : (
+            ""
+          )}
+          {installmentno === "2" ? (
+            <div className="col-md-2">
+              <select
+                ref={register}
+                className="form-select form-control"
+                style={{ height: "33px" }}
+                name="installment_no"
+              >
+                <option value="">Please select installment</option>
+
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          ) : (
+            ""
+          )}
+          {installmentno === "4" ? (
+            <div className="col-md-2">
+              <select
+                ref={register}
+                className="form-select form-control"
+                style={{ height: "33px" }}
+                name="installment_no"
+              >
+                <option value="">Please select installment</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+              </select>
+            </div>
+          ) : (
+            ""
+          )}
           {props.invoice == "tlcreate" ||
           props.invoice === "tpcreate" ||
           props.invoice === "admincreate" ? (

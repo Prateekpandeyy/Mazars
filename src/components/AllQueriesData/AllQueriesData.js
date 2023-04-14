@@ -53,12 +53,14 @@ function AllQueriesData() {
             : "d-flex text-white w-100 flex-wrap"
         }
       >
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+        <div style={{ display: "flex" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
