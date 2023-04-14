@@ -31,12 +31,28 @@ function AllQueriesData() {
   const [accend, setAccend] = useState(false);
   const [orderby, setOrderBy] = useState("0");
   const [fieldBy, setFiledBy] = useState("0");
+  const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
-  function headerLabelFormatter(column, colIndex) {
 
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevq1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
         {column.text}
         {accend === column.dataField ? (
           <ArrowDropDownIcon />
@@ -46,13 +62,14 @@ function AllQueriesData() {
       </div>
     );
   }
+  console.log("Previous", prev);
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminqp1"));
     if (!localPage) {
       localPage = 1;
     }
     setAccend(localStorage.getItem("accendq1"));
-    
+    setPrev(localStorage.getItem("prevq1"));
 
     let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
     if (!sortVal) {
@@ -485,6 +502,7 @@ function AllQueriesData() {
     localStorage.removeItem("adminqp1");
     localStorage.removeItem("sortedValue1");
     localStorage.removeItem("accendq1");
+    localStorage.removeItem("prevq1");
   };
 
   return (
