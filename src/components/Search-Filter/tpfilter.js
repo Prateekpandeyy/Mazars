@@ -116,8 +116,9 @@ function TaxProfessionalFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    getData(1);
     resetTriggerFunc();
+    getData(1);
+    
     // dateValue.current.clearValue();
   };
   useEffect(() => {
