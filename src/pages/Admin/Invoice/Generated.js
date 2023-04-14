@@ -109,7 +109,7 @@ const Generated = () => {
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
 
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -194,7 +194,7 @@ const Generated = () => {
     localStorage.setItem("sortedValuevt1", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
     }
@@ -219,7 +219,7 @@ const Generated = () => {
       }
     });
   };
-  console.log("allProposal", proposal);
+
   const columns = [
     {
       text: "S.no",
