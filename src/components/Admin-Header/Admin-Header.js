@@ -227,6 +227,13 @@ function AdminHeader({
       localStorage.removeItem(`freezetpQuery1`);
       localStorage.removeItem(`freezetpQuery2`);
       localStorage.removeItem(`freezetpQuery3`);
+      localStorage.removeItem("freezetpProposal1");
+      localStorage.removeItem("freezetpProposal2");
+      localStorage.removeItem("freezetpProposal3");
+      localStorage.removeItem("freezetpProposal4");
+      localStorage.removeItem("freezetpPayment1");
+      localStorage.removeItem("freezetpPayment2");
+      localStorage.removeItem("freezetpPayment3");
       localStorage.removeItem("tpQuery1");
       localStorage.removeItem("tpQuery2");
       localStorage.removeItem("tpQuery3");
@@ -236,6 +243,8 @@ function AdminHeader({
       localStorage.removeItem("tpProposal3");
       localStorage.removeItem("tpProposal4");
       localStorage.removeItem("tpPayment1");
+      localStorage.removeItem("tpPayment2");
+      localStorage.removeItem("tpPayment3");
       localStorage.removeItem("tpArrowQuery1");
       localStorage.removeItem("tpArrowQuery2");
       localStorage.removeItem("tpArrowQuery3");
@@ -244,10 +253,10 @@ function AdminHeader({
       localStorage.removeItem("tpArrowProposal2");
       localStorage.removeItem("tpArrowProposal3");
       localStorage.removeItem("tpArrowProposal4");
-      localStorage.removeItem("freezetpProposal1");
-      localStorage.removeItem("freezetpProposal2");
-      localStorage.removeItem("freezetpProposal3");
-      localStorage.removeItem("freezetpProposal4");
+      localStorage.removeItem("tpArrowPayment1");
+      localStorage.removeItem("tpArrowPayment2");
+      localStorage.removeItem("tpArrowPayment3");
+
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tpcategoryData");
