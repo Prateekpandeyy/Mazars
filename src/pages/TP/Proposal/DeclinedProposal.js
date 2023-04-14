@@ -119,32 +119,31 @@ function DeclinedProposal() {
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
-    // setOnPage(e);
+    setOnPage(e);
     if ((data) && (!pagetry)) {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
+          .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
     } else if ((data) && (pagetry)) {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`
     }
 
-    if (!data) {
       axios
         .get(
           `${baseUrl}/${remainApiPath}`,
@@ -171,7 +170,7 @@ function DeclinedProposal() {
             setCount(res.data?.total);
           }
         });
-    }
+    
   };
 
   const sortMessage = (val, field) => {
