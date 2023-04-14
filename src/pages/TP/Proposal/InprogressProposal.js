@@ -126,7 +126,7 @@ function InprogressProposal() {
     setOnPage(e);
 
     if ((data) && (!pagetry)){
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -136,7 +136,7 @@ function InprogressProposal() {
           .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
       }`
     }else if ((data) && (pagetry)){
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()

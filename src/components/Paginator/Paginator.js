@@ -355,25 +355,25 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-                    }&from=${data.fromDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&to=${data.toDate
-                            ?.split("-")
-                            .reverse()
-                            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-                    }`
+                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                }&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+                }`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-                    }&from=${data.fromDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&to=${data.toDate
-                            ?.split("-")
-                            .reverse()
-                            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-                    }&orderby=${val}&orderbyfield=${field}`
+                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                }&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+                }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
             } else {
