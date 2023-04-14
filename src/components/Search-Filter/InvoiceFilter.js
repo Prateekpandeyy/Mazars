@@ -10,15 +10,16 @@ const InvoiceFilter = (props) => {
   const [toDate, setToDate] = useState("");
   const [status, setStatus] = useState("");
   const [installmentno, setInstallmentNo] = useState("");
-
+  const [paymentPlan, setPaymentPlan] = useState("");
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem(`${props.invoice}`));
     if (data) {
       setQueryNo(data.query_no);
-      setInstallmentNo(data.installment_no);
+      setInstallmentNo(data.payment_plan);
       setFromDate(data.p_dateFrom);
       setToDate(data.p_dateTo);
       setStatus(data.opt);
+      setPaymentPlan(data.installment_no);
     }
   }, []);
   const onSubmit = (data) => {
@@ -33,11 +34,7 @@ const InvoiceFilter = (props) => {
         : formData.append("installment_no", "");
     }
 
-    {
-      props.invoice === "admincreate"
-        ? formData.append("status", "")
-        : formData.append("status", data.opt);
-    }
+    formData.append("status", paymentPlan);
 
     // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
@@ -224,7 +221,10 @@ const InvoiceFilter = (props) => {
             <select
               ref={register}
               value={installmentno}
-              onChange={(e) => setInstallmentNo(e.target.value)}
+              onChange={(e) => {
+                setInstallmentNo(e.target.value);
+                setPaymentPlan("");
+              }}
               className="form-select form-control"
               style={{ height: "33px" }}
               name="payment_plan"
@@ -232,17 +232,34 @@ const InvoiceFilter = (props) => {
               <option value="">Please select Payment plan</option>
               <option value="1">1</option>
               <option value="2">2</option>
-              <option value="3A">3 (A)</option>
-              <option value="B">3 (B)</option>
+              <option value="3A">3 A</option>
+              <option value="3B">3 B</option>
               <option value="4">4</option>
             </select>
           </div>
+          {installmentno === "3A" || installmentno === "4" ? (
+            <div className="col-md-2">
+              <input
+                ref={register}
+                name="installment_no"
+                placeholder="Enter installment number"
+                type="number"
+                className="form-control"
+                onChange={(e) => setPaymentPlan(e.target.value)}
+                value={paymentPlan}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           {installmentno === "3B" ? (
             <div className="col-md-2">
               <select
                 ref={register}
                 className="form-select form-control"
                 style={{ height: "33px" }}
+                onChange={(e) => setPaymentPlan(e.target.value)}
+                value={paymentPlan}
                 name="installment_no"
               >
                 <option value="">Please select installment</option>
@@ -294,9 +311,11 @@ const InvoiceFilter = (props) => {
                 className="form-select form-control"
                 style={{ height: "33px" }}
                 name="installment_no"
+                onChange={(e) => setPaymentPlan(e.target.value)}
+                value={paymentPlan}
               >
                 <option value="">Please select installment</option>
-
+                <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -312,6 +331,8 @@ const InvoiceFilter = (props) => {
                 className="form-select form-control"
                 style={{ height: "33px" }}
                 name="installment_no"
+                onChange={(e) => setPaymentPlan(e.target.value)}
+                value={paymentPlan}
               >
                 <option value="">Please select installment</option>
                 <option value="1">1</option>

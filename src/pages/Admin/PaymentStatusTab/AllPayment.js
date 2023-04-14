@@ -49,7 +49,9 @@ function AllPayment(props) {
   const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const [assignNo, setAssignNo] = useState("");
+  const [prev, setPrev] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -57,14 +59,31 @@ function AllPayment(props) {
     },
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevpay1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -87,6 +106,7 @@ function AllPayment(props) {
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("prevpay1"));
     setAccend(localStorage.getItem("accendpay1"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepay1"));
     if (!sortVal) {
@@ -653,6 +673,7 @@ function AllPayment(props) {
     localStorage.removeItem("adminpayt1");
     localStorage.removeItem("sortedValuepay1");
     localStorage.removeItem("accendpay1");
+    localStorage.removeItem("prevpay1");
   };
   return (
     <div>

@@ -41,6 +41,7 @@ const Generated = () => {
   const [copiedHere, setCopiedHere] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const [orderby, setOrderBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const [jumpTo, setJumpTo] = useState("");
@@ -54,14 +55,31 @@ const Generated = () => {
     },
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("previnv1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -82,6 +100,7 @@ const Generated = () => {
       localPage = 1;
     }
     let sortVal = JSON.parse(localStorage.getItem("sortedValuevt1"));
+    setPrev(localStorage.getItem("previnv1"));
     if (!sortVal) {
       let sort = {
         orderBy: 0,
@@ -109,7 +128,7 @@ const Generated = () => {
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
 
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -194,7 +213,7 @@ const Generated = () => {
     localStorage.setItem("sortedValuevt1", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
     }
@@ -219,7 +238,7 @@ const Generated = () => {
       }
     });
   };
-  console.log("allProposal", proposal);
+
   const columns = [
     {
       text: "S.no",
@@ -490,6 +509,7 @@ const Generated = () => {
     setFiledBy("");
     localStorage.removeItem("admininvt1");
     localStorage.removeItem("sortedValuevt1");
+    localStorage.removeItem("previnv1");
   };
   const firstChunk = () => {
     setAtpage(1);

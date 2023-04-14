@@ -58,6 +58,7 @@ function DraftReport() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -92,14 +93,31 @@ function DraftReport() {
     }
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevassign2", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }

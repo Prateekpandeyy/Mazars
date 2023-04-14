@@ -39,6 +39,7 @@ function PendingForAcceptence() {
   const [accend, setAccend] = useState(false);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -47,16 +48,31 @@ function PendingForAcceptence() {
     },
   };
   function priceFormatter(column, colIndex) {
-    console.log(column, colIndex);
+    let isActive = true;
 
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevro2", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -637,6 +653,7 @@ function PendingForAcceptence() {
     localStorage.removeItem("adminprot2");
     localStorage.removeItem("sortedValuepro2");
     localStorage.removeItem("accendpro2");
+    localStorage.removeItem("prevro2");
   };
   return (
     <div>

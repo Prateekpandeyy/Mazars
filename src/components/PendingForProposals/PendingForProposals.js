@@ -51,6 +51,7 @@ function PendingForProposals(props) {
   const [accend, setAccend] = useState(false);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -81,15 +82,33 @@ function PendingForProposals(props) {
       console.log(key, " else more");
     }
   };
+
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevq3", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -99,7 +118,7 @@ function PendingForProposals(props) {
       localPage = 1;
     }
     setAccend(localStorage.getItem("accendq3"));
-
+    setPrev(localStorage.getItem("prevq3"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValue3"));
     if (!sortVal) {
       let sort = {
@@ -471,6 +490,7 @@ function PendingForProposals(props) {
     localStorage.removeItem("sortedValue3");
     localStorage.removeItem("adminqp3");
     localStorage.removeItem("accendq3");
+    localStorage.removeItem("prevq3");
   };
   return (
     <>

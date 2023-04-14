@@ -35,6 +35,7 @@ const CreateInvoice = () => {
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [orderby, setOrderBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
@@ -57,14 +58,31 @@ const CreateInvoice = () => {
     setViewDiscussion(!ViewDiscussion);
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("previnv2", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -75,6 +93,7 @@ const CreateInvoice = () => {
       localPage = 1;
     }
     let sortVal = JSON.parse(localStorage.getItem("sortedValuevt2"));
+    setPrev(localStorage.getItem("previnv2"));
     if (!sortVal) {
       let sort = {
         orderBy: 0,
@@ -368,6 +387,7 @@ const CreateInvoice = () => {
     setFiledBy("");
     localStorage.removeItem("admininvt2");
     localStorage.removeItem("sortedValuevt2");
+    localStorage.removeItem("previn2");
   };
   const firstChunk = () => {
     setAtpage(1);
