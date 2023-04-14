@@ -41,6 +41,7 @@ const Generated = () => {
   const [copiedHere, setCopiedHere] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const [orderby, setOrderBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const myRef = useRef([]);
   const [jumpTo, setJumpTo] = useState("");
@@ -54,14 +55,31 @@ const Generated = () => {
     },
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("previnv1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -82,6 +100,7 @@ const Generated = () => {
       localPage = 1;
     }
     let sortVal = JSON.parse(localStorage.getItem("sortedValuevt1"));
+    setPrev(localStorage.getItem("previnv1"));
     if (!sortVal) {
       let sort = {
         orderBy: 0,
@@ -490,6 +509,7 @@ const Generated = () => {
     setFiledBy("");
     localStorage.removeItem("admininvt1");
     localStorage.removeItem("sortedValuevt1");
+    localStorage.removeItem("previnv1");
   };
   const firstChunk = () => {
     setAtpage(1);
