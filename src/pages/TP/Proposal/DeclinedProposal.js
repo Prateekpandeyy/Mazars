@@ -121,7 +121,7 @@ function DeclinedProposal() {
     let remainApiPath = "";
     setOnPage(e);
     if ((data) && (!pagetry)) {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -130,7 +130,7 @@ function DeclinedProposal() {
           .reverse()
           .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
     } else if ((data) && (pagetry)) {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -139,9 +139,9 @@ function DeclinedProposal() {
           .reverse()
           .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     } else if ((!data) && (pagetry)) {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
     } else {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=3`
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3`
     }
 
       axios

@@ -126,7 +126,7 @@ function InprogressProposal() {
     setOnPage(e);
 
     if ((data) && (!pagetry)){
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -136,7 +136,7 @@ function InprogressProposal() {
           .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
       }`
     }else if ((data) && (pagetry)){
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
       }&from=${data.fromDate
         ?.split("-")
         .reverse()
@@ -211,15 +211,15 @@ function InprogressProposal() {
     localStorage.setItem(`freezetpProposal2`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
     if (data) {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(
-        userid
-      )}&status=1&cat_id=${data.store}&from=${data.fromDate
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      }&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+      }&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1&orderby=${val}&orderbyfield=${field}`
     }

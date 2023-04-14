@@ -192,8 +192,8 @@ function AcceptedProposal() {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${
-            val}&orderbyfield=${field}`
+          .join("-")}&status=2&pcat_id=${
+            data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     }else{
       remainApiPath = `tl/getProposalTl?page=1&tp_id=${
         JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
