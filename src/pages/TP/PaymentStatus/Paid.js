@@ -73,18 +73,50 @@ function AllPayment() {
     },
   };
 
+  // function headerLabelFormatter(column) {
+  //   return (
+  //     <div className="d-flex text-white w-100 flex-wrap">
+  //       {column.text}
+  //       {accend === column.dataField ? (
+  //         <ArrowDropDownIcon />
+  //       ) : (
+  //         <ArrowDropUpIcon />
+  //       )}
+  //     </div>
+  //   );
+  // }
+
+
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === "Exp_Delivery_Date" ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
-  }
+    )
+}
 
   useEffect(() => {
 
@@ -261,11 +293,11 @@ function AllPayment() {
 
   const columns = [
     {
-      dataField: "cid",
+      dataField: "",
       text: "S.no",
-      // formatter: (cellContent, row, rowIndex) => {
-      //   return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      // },
+      formatter: (cellContent, row, rowIndex) => {
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+      },
 
       headerStyle: () => {
         return { width: "50px" };

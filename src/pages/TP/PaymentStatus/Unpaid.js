@@ -164,7 +164,7 @@ function AllPayment() {
     }
   };
 
-  function headerLabelFormatter(column) {
+  function headerLabelFormatter(column,row) {
     return (
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
