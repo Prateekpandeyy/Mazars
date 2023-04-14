@@ -21,6 +21,8 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { current_date } from "../../../common/globalVeriable";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function AssignmentComponent(props) {
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -72,9 +74,9 @@ function AssignmentComponent(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
+          <ArrowDropUpIcon />
         ) : (
-          <ArrowUpwardIcon />
+          <ArrowDropDownIcon />
         )}
       </div>
     );
