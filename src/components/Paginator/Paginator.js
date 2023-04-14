@@ -128,9 +128,12 @@ function Paginator(props) {
 
     //page counter
     const firstChunk = () => {
-        setAtpage(1);
-        setPage(1);
-        getNewPage(1);
+        
+        if(atPage > 1){
+            setAtpage(1);
+            setPage(1);
+            getNewPage(1);
+        }else{}
     };
     const prevChunk = () => {
         if (atPage > 1) {
@@ -147,9 +150,11 @@ function Paginator(props) {
         getNewPage(Number(page) + 1);
     };
     const lastChunk = () => {
+        if(atPage < (defaultPage.at(-1))){
         setPage(defaultPage.at(-1));
         setAtpage(totalPages);
         getNewPage(defaultPage.at(-1));
+        }
     };
 
     const setting = (e) => {
@@ -616,6 +621,7 @@ function Paginator(props) {
                         setData(all);
                         console.log(all);
                         setOnPage(e);
+                        setAtpage(e);
                         // setRecords(res.data.result.length);
                         const dynamicPage = Math.ceil(count / allEnd);
                         console.log(dynamicPage, "to check dynamic page");
