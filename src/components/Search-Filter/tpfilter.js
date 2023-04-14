@@ -769,7 +769,18 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
               }
             }
@@ -789,9 +800,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpPayment1`, JSON.stringify(1));
               }
             }
           });
@@ -816,7 +840,18 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
               }
             }
@@ -839,9 +874,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpPayment2`, JSON.stringify(1));
               }
             }
           });
@@ -866,7 +914,18 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
@@ -890,9 +949,22 @@ function TaxProfessionalFilter(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpPayment3`, JSON.stringify(1));
               }
             }
           });

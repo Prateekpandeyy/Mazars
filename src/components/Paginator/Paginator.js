@@ -102,7 +102,7 @@ function Paginator(props) {
             setPageno(JSON.parse(localStorage.getItem("tpProposal4")))
         }
         else if (index === "tppayment1") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpPayment1")))
         }
         else if (index === "tppayment2") {
 
@@ -446,37 +446,37 @@ function Paginator(props) {
         }
         else if (AllPayment == "AllPayment") {
             let data = JSON.parse(localStorage.getItem("searchDatatppayment1"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetppayment1"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpPayment1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpPayment1`, JSON.stringify(e));
-            if ((data) && (!pagetry)) {
+            if ((data) && (!pagetry)){
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                    userid
+                  userid
                 )}&cat_id=${data.store}&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
                     ?.split("-")
                     .reverse()
-                    .join("-")}&to=${data.toDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-                    }`
-            } else if ((data) && (pagetry)) {
+                    .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                }`
+              }else if ((data) && (pagetry)){
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                    userid
+                  userid
                 )}&cat_id=${data.store}&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
                     ?.split("-")
                     .reverse()
-                    .join("-")}&to=${data.toDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-                    }&orderby=${val}&orderbyfield=${field}`
-            } else if ((!data) && (pagetry)) {
+                    .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                }&orderby=${val}&orderbyfield=${field}`
+              }else if ((!data) && (pagetry)){
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
-            } else {
+              }else{
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`
-            }
+              }
         }
         else if (Unpaid == "Unpaid") {
             let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
@@ -484,35 +484,37 @@ function Paginator(props) {
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpPayment2`, JSON.stringify(e));
-            if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getUploadedProposals?&tp_id=${JSON.parse(
-                    userid
+            if ((data) && (!pagetry)){
+                remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
+                  userid
                 )}&cat_id=${data.store}&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
                     ?.split("-")
                     .reverse()
-                    .join("-")}&to=${data.toDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`
-            } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getUploadedProposals?&tp_id=${JSON.parse(
-                    userid
+                    .join("-")}&status=1&pcat_id=${
+                      data.pcatId}&qno=${data.query_no}`
+              }else if ((data) && (pagetry)){
+                remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
+                  userid
                 )}&cat_id=${data.store}&from=${data.fromDate
+                  ?.split("-")
+                  .reverse()
+                  .join("-")}&to=${data.toDate
                     ?.split("-")
                     .reverse()
-                    .join("-")}&to=${data.toDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-            } else if ((!data) && (pagetry)) {
+                    .join("-")}&status=1&pcat_id=${
+                      data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+              }else if ((!data) && (pagetry)){
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                    userid
+                  userid
                 )}&status=1&orderby=${val}&orderbyfield=${field}`
-            } else {
+              }else{
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                    userid
+                  userid
                 )}&status=1`
-            }
+              }
         }
         else if (Paid == "Paid") {
             let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
