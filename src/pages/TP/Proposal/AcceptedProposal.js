@@ -99,6 +99,14 @@ function AcceptedProposal() {
     if (arrow) {
       setAccend(arrow);
     }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal3"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpProposal3", JSON.stringify(sort));
+    }
     if (pageno) {
       getProposalList(pageno);
     } else {

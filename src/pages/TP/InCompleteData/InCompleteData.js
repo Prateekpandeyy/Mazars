@@ -121,6 +121,14 @@ function InCompleteData({ CountIncomplete, data }) {
     if (arrow) {
       setAccend(arrow);
     }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpQuery3", JSON.stringify(sort));
+    }
     if (!pageno) {
       pageno = 1;
     }

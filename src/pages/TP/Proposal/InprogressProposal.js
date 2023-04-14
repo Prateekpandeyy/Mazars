@@ -106,6 +106,14 @@ function InprogressProposal() {
     if (arrow) {
       setAccend(arrow);
     }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal2"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpProposal2", JSON.stringify(sort));
+    }
 
     if (pageno) {
       getProposalList(pageno);

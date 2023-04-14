@@ -105,6 +105,14 @@ function DeclinedProposal() {
     if (arrow) {
       setAccend(arrow);
     }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal4"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpProposal4", JSON.stringify(sort));
+    }
     if (pageno) {
       getProposalList(pageno);
     } else {

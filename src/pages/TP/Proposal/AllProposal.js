@@ -87,6 +87,14 @@ function AllProposal() {
     if (arrow) {
       setAccend(arrow);
     }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal1"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpProposal1", JSON.stringify(sort));
+    }
 
     if (pageno) {
       getProposalList(pageno);

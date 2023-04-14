@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
 import Loader from "../../../components/Loader/Loader";
-import { Card, CardHeader, CardBody ,Row,Col } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
 import { Link, useHistory } from "react-router-dom";
@@ -23,12 +23,13 @@ import MessageIcon, {
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
 import { Spinner } from "reactstrap";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
 
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
 
@@ -45,6 +46,7 @@ function AssignmentTab(props) {
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -89,6 +91,20 @@ function AssignmentTab(props) {
       uit: token,
     },
   };
+
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDropDownIcon />
+        ) : (
+          <ArrowDropUpIcon />
+        )}
+      </div>
+    );
+  }
+
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key.assign_no);
@@ -97,6 +113,7 @@ function AssignmentTab(props) {
       setScrolledTo(key.assign_no);
     }
   };
+
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -139,7 +156,7 @@ function AssignmentTab(props) {
           if (res.data.code === 1) {
             setAssignment(res.data.result);
             setRecords(res.data.result.length);
-            setCount(res.data.result.length)
+            setCount(res.data.total)
           }
         });
     }
@@ -202,6 +219,26 @@ function AssignmentTab(props) {
     setError(false);
     setStatus(value);
   };
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tpAssignment1`, JSON.stringify(1))
+    localStorage.setItem(`freezetpAssignment1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatp"));
+    if (data) {
+      remainApiPath = ` `
+    }
+    else {
+      remainApiPath = ` `
+    }
+  }
 
   //columns
   const columns = [
@@ -543,6 +580,7 @@ function AssignmentTab(props) {
       setQid(id.q_id);
     }
   };
+
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     console.log("dkk", dk);
@@ -559,6 +597,7 @@ function AssignmentTab(props) {
       }
     }
   }, []);
+
   const onSubmit = (data) => {
     let obj = {};
 
@@ -604,7 +643,7 @@ function AssignmentTab(props) {
               if (res.data.result) {
                 setAssignment(res.data.result);
                 setRecords(res.data.result.length);
-                setCount(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -622,7 +661,7 @@ function AssignmentTab(props) {
               if (res.data.result) {
                 setAssignment(res.data.result);
                 setRecords(res.data.result.length);
-                setCount(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -644,7 +683,7 @@ function AssignmentTab(props) {
               if (res.data.result) {
                 setAssignment(res.data.result);
                 setRecords(res.data.result.length);
-                setCount(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -663,7 +702,7 @@ function AssignmentTab(props) {
               if (res.data.result) {
                 setAssignment(res.data.result);
                 setRecords(res.data.result.length);
-                setCount(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -868,7 +907,6 @@ function AssignmentTab(props) {
               <Paginator
                 count={count}
                 setOnPage={setOnPage}
-                // resetPaging={resetPaging}
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
               />
