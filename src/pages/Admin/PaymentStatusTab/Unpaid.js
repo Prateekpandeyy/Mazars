@@ -52,7 +52,7 @@ function Unpaid() {
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
-
+  const [prev, setPrev] = useState("");
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -64,6 +64,7 @@ function Unpaid() {
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("prevpay3"));
     setAccend(localStorage.getItem("accendpay3"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepay3"));
     if (!sortVal) {
@@ -265,14 +266,31 @@ function Unpaid() {
     }
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevpay3", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -664,6 +682,7 @@ function Unpaid() {
     localStorage.removeItem("adminpayt3");
     localStorage.removeItem("sortedValuepay3");
     localStorage.removeItem("accendpay3");
+    localStorage.removeItem("prevpay3");
   };
   return (
     <Card>

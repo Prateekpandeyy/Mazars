@@ -49,7 +49,7 @@ function AssignmentComponent(props) {
   const [accend, setAccend] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [scrolledTo, setScrolledTo] = useState("");
-
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
 
   const token = window.localStorage.getItem("adminToken");
@@ -70,14 +70,31 @@ function AssignmentComponent(props) {
     }
   };
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevassign1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -105,6 +122,7 @@ function AssignmentComponent(props) {
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("prevassign1"));
     setAccend(localStorage.getItem("accendassign1"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValueassign1"));
     if (!sortVal) {

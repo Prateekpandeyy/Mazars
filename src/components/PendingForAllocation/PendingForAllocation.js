@@ -34,6 +34,7 @@ function PendingAllocation(props) {
   const [accend, setAccend] = useState(false);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -41,15 +42,33 @@ function PendingAllocation(props) {
       uit: token,
     },
   };
+
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevq2", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -87,7 +106,7 @@ function PendingAllocation(props) {
       localPage = 1;
     }
     setAccend(localStorage.getItem("accendq2"));
-
+    setPrev(localStorage.getItem("prevq2"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
     if (!sortVal) {
       let sort = {
@@ -466,6 +485,7 @@ function PendingAllocation(props) {
     localStorage.removeItem("adminqp2");
     localStorage.removeItem("sortedValue2");
     localStorage.removeItem("accendq2");
+    localStorage.removeItem("prevq2");
   };
   return (
     <>

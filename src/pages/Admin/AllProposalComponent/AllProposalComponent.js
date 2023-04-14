@@ -43,6 +43,7 @@ function AllProposalComponent() {
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState("");
   const [orderby, setOrderBy] = useState("");
+  const [prev, setPrev] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
@@ -89,6 +90,7 @@ function AllProposalComponent() {
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("prevro1"));
     setAccend(localStorage.getItem("accendpro1"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro1"));
     if (!sortVal) {
@@ -275,16 +277,31 @@ function AllProposalComponent() {
     runTo?.scrollIntoView({ block: "center" });
   }, [retview]);
   function priceFormatter(column, colIndex) {
-    console.log(column, colIndex);
+    let isActive = true;
 
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevro1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -681,6 +698,7 @@ function AllProposalComponent() {
     localStorage.removeItem("adminprot1");
     localStorage.removeItem("sortedValuepro1");
     localStorage.removeItem("accendpro1");
+    localStorage.removeItem("prevro1");
   };
 
   return (

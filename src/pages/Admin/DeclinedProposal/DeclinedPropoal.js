@@ -20,8 +20,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function DeclinedProposal() {
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
@@ -41,6 +41,7 @@ function DeclinedProposal() {
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -54,6 +55,7 @@ function DeclinedProposal() {
       localPage = 1;
     }
     setAccend(localStorage.getItem("accendpro4"));
+    setPrev(localStorage.getItem("prevro4"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
     if (!sortVal) {
       let sort = {
@@ -265,16 +267,31 @@ function DeclinedProposal() {
     runTo?.scrollIntoView({ block: "center" });
   }, [retview]);
   function priceFormatter(column, colIndex) {
-    console.log(column, colIndex);
+    let isActive = true;
 
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevro4", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
-          <ArrowUpwardIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -666,6 +683,7 @@ function DeclinedProposal() {
     localStorage.removeItem("adminprot4");
     localStorage.removeItem("sortedValuepro4");
     localStorage.removeItem("accendpro4");
+    localStorage.removeItem("prevro4");
   };
   return (
     <>

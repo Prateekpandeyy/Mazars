@@ -51,6 +51,7 @@ function AcceptedProposal() {
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -59,14 +60,31 @@ function AcceptedProposal() {
     },
   };
   function priceFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevro3", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -101,6 +119,7 @@ function AcceptedProposal() {
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("prevro3"));
     setAccend(localStorage.getItem("accendpro3"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
     if (!sortVal) {
@@ -626,6 +645,7 @@ function AcceptedProposal() {
     localStorage.removeItem("adminprot3");
     localStorage.removeItem("sortedValuepro3");
     localStorage.removeItem("accendpro3");
+    localStorage.removeItem("prevro3");
   };
   return (
     <>

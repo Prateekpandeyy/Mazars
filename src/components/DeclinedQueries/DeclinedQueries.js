@@ -32,16 +32,35 @@ function DeclinedQueries() {
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
+
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevq4", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
@@ -55,6 +74,7 @@ function DeclinedQueries() {
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("prevq4"));
     setAccend(localStorage.getItem("accendq4"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
     if (!sortVal) {
@@ -421,6 +441,7 @@ function DeclinedQueries() {
     localStorage.removeItem("sortedValue4");
     localStorage.removeItem("adminqp4");
     localStorage.removeItem("accendq4");
+    localStorage.removeItem("prevq4");
   };
 
   return (
