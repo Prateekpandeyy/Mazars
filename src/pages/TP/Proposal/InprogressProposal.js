@@ -260,11 +260,10 @@ function InprogressProposal() {
   const columns = [
     {
       text: "S.no",
-      dataField: "cid",
-      // formatter: (cellContent, row, rowIndex) => {
-      //   return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>
-      //   </div>;
-      // },
+      dataField: "",
+      formatter: (cellContent, row, rowIndex) => {
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+      },
       style: {
         fontSize: "11px",
       },

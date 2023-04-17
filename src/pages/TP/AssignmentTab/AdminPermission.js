@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
 import Loader from "../../../components/Loader/Loader";
-import { Card, CardHeader, CardBody,Row,Col } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
 import { Link, useHistory } from "react-router-dom";
@@ -23,14 +23,15 @@ import MessageIcon, {
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
 import { Spinner } from "reactstrap";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
 
 function AdminPermission(props) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
 
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -44,6 +45,7 @@ function AdminPermission(props) {
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
 
 
   const [records, setRecords] = useState([]);
@@ -51,7 +53,7 @@ function AdminPermission(props) {
   const [status, setStatus] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-  const [hide, setHide] = useState();
+  const [hide, setHide] = useState("");
 
   var current_date =
     new Date().getFullYear() +
@@ -108,26 +110,88 @@ function AdminPermission(props) {
     }
   }, [ViewDiscussion]);
 
-  useEffect(() => {
-    getAssignmentList();
-  }, []);
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDropDownIcon />
+        ) : (
+          <ArrowDropUpIcon />
+        )}
+      </div>
+    );
+  }
 
-  const getAssignmentList = () => {
+  useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment4"));
+    let arrow = localStorage.getItem("tpArrowAs4")
+    if (arrow) {
+      setAccend(arrow);
+    }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment4"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpAssignment4", JSON.stringify(sort));
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
     if (!data) {
-      axios
-        .get(
-          `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAssignment(res.data.result);
-            setCount(res.data.result.length);
-            setRecords(res.data.result.length);
-          }
-        });
+      if (pageno) {
+        getAssignmentList(pageno);
+      } else {
+        getAssignmentList(1);
+      }
     }
+    // getAssignmentList();
+  }, []);
+
+  const getAssignmentList = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment4"));
+    localStorage.setItem(`tpAssignment4`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (!pagetry)) {
+      remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(userid)}`
+    } else { }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setCount(res.data.total);
+          setRecords(res.data.result.length);
+        }
+      });
+
   };
 
   //get category
@@ -157,7 +221,6 @@ function AdminPermission(props) {
   //reset category
   const resetCategory = () => {
     console.log(error);
-
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
@@ -175,7 +238,15 @@ function AdminPermission(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    getAssignmentList();
+    setQueryNo("");
+    setFromDate("");
+    setToDate("");
+    getAssignmentList(1);
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    localStorage.removeItem("tpAssignment4");
+    localStorage.removeItem(`freezetpAssignment4`);
+    localStorage.removeItem("tpArrowAs4");
   };
 
   //assingmentStatus
@@ -183,6 +254,61 @@ function AdminPermission(props) {
     setError(false);
     setStatus(value);
   };
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tpAssignment4`, JSON.stringify(1))
+    localStorage.setItem(`freezetpAssignment4`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
+    if (data) {
+      if (data.stage_status.length > 0) {
+        remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+          }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      } else {
+        remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+          }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      }
+    }
+    else {
+      remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.total)
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  }
 
   //columns
   const columns = [
@@ -195,7 +321,7 @@ function AdminPermission(props) {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -206,7 +332,24 @@ function AdminPermission(props) {
     {
       text: "Date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -239,16 +382,68 @@ function AdminPermission(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
 
       headerStyle: () => {
         return { width: "200px" };
@@ -329,7 +524,24 @@ function AdminPermission(props) {
     {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -342,7 +554,24 @@ function AdminPermission(props) {
     {
       text: "Actual date of delivery",
       dataField: "final_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -469,6 +698,7 @@ function AdminPermission(props) {
       },
     },
   ];
+
   rowStyle2 = (row, index) => {
     const style = {};
     var warningDate = moment(row.Exp_Delivery_Date).subtract(2, "day").toDate();
@@ -516,6 +746,7 @@ function AdminPermission(props) {
   };
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment4"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -526,12 +757,28 @@ function AdminPermission(props) {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
-        onSubmit(dk);
+
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
       }
     }
   }, []);
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
+    let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment4"));
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment4"));
+    if (pageno) {
+      let e = pageno;
+    } else {
+      let e = 1;
+    }
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
     let obj = {};
+
     if (data.route) {
       obj = {
         store: data.store,
@@ -540,7 +787,7 @@ function AdminPermission(props) {
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
-        stage_status: data?.assignment_status,
+        stage_status: data?.stage_status,
         route: window.location.pathname,
       };
     } else {
@@ -558,86 +805,110 @@ function AdminPermission(props) {
     localStorage.setItem(`searchDatatpAssignment4`, JSON.stringify(obj));
     if (data.route) {
       if (status.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${store2}&from=${data.fromDate}&to=${data.toDate
+        if (pagetry) {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
             }&assignment_status=${data.stage_status}&stages_status=${data.p_status
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.result.length);
-              }
-            }
-          });
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        } else {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}`
+        }
       } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        if (pagetry) {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
             }&assignment_status=${data.stage_status}&stages_status=${data.p_status
-            }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.result.length);
-              }
-            }
-          });
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        } else {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+            }&pcat_id=${data.pcatId}&qno=${data.query_no}`
+        }
       }
+      axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              let data = res.data.result;
+              setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.result.length);
+            }
+          }
+        });
     } else {
       if (status.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.result.length);
-              }
-            }
-          });
+        remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=${status}&stages_status=${data.p_status
+          }&pcat_id=${selectedData}&qno=${data.query_no}`
       } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.result.length);
-              }
-            }
-          });
+        remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=${status}&stages_status=${data.p_status
+          }&pcat_id=${selectedData}&qno=${data.query_no}`
       }
+      axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              let data = res.data.result;
+              setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
+              setresetTrigger(!resetTrigger);
+              localStorage.removeItem(`freezetpAssignment4`);
+              localStorage.removeItem("tpArrowAs4");
+              setAccend("");
+            }
+          }
+        });
     }
   };
 
@@ -840,6 +1111,10 @@ function AdminPermission(props) {
                 // resetPaging={resetPaging}
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
+                index="tpAssignment4"
+                setData={setAssignment}
+                getData={getAssignmentList}
+                tpAsAdminPermission="tpAsAdminPermission"
               />
             </Col>
           </Row>

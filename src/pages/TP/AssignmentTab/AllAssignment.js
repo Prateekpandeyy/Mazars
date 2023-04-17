@@ -105,6 +105,10 @@ function AssignmentTab(props) {
     );
   }
 
+  useEffect(() => {
+  console.log(accend,"accend ");
+  }, [accend]);
+
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key.assign_no);
@@ -141,25 +145,98 @@ function AssignmentTab(props) {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    getAssignmentList();
-  }, []);
-
-  const getAssignmentList = () => {
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
+    let arrow = localStorage.getItem("tpArrowAs1")
+    if (arrow) {
+      setAccend(arrow);
+    }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment1"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpAssignment1", JSON.stringify(sort));
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     if (!data) {
+      if (pageno) {
+        getAssignmentList(pageno);
+      } else {
+        getAssignmentList(1);
+      }
+    }
+    // getAssignmentList();
+  }, []);
+
+  const getAssignmentList = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment1"));
+    localStorage.setItem(`tpAssignment1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAssignment(res.data.result);
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignment(all);
             setRecords(res.data.result.length);
             setCount(res.data.total)
           }
         });
-    }
+    } else if ((!data) && (!pagetry)) {
+      remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}`
+      axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignment(all);
+            setRecords(res.data.result.length);
+            setCount(res.data.total)
+          }
+        });
+    } else { }
   };
 
   useEffect(() => {
@@ -194,6 +271,7 @@ function AssignmentTab(props) {
     getAssignmentList();
     setError(false);
     setTax2([]);
+
   };
 
   //reset date
@@ -212,6 +290,11 @@ function AssignmentTab(props) {
 
     localStorage.removeItem("searchDatatpAssignment1");
     getAssignmentList();
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    localStorage.removeItem("tpAssignment1");
+    localStorage.removeItem(`freezetpAssignment1`);
+    localStorage.removeItem("tpArrowAs1");
   };
 
   //assingmentStatus
@@ -233,11 +316,44 @@ function AssignmentTab(props) {
     localStorage.setItem(`freezetpAssignment1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatp"));
     if (data) {
-      remainApiPath = ` `
+      if (status.length > 0) {
+        remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+          }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+          }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+          }&orderby=${val}&orderbyfield=${field}`
+      } else {
+        remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+          }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+          }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+          }&orderby=${val}&orderbyfield=${field}`
+      }
     }
     else {
-      remainApiPath = ` `
+      remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
     }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.total)
+          setresetTrigger(!resetTrigger);
+        }
+      });
   }
 
   //columns
@@ -251,7 +367,7 @@ function AssignmentTab(props) {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -262,7 +378,24 @@ function AssignmentTab(props) {
     {
       text: "Date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -295,16 +428,69 @@ function AssignmentTab(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+        if (accend === true) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
 
       headerStyle: () => {
         return { width: "200px" };
@@ -385,7 +571,24 @@ function AssignmentTab(props) {
     {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -398,7 +601,24 @@ function AssignmentTab(props) {
     {
       text: "Actual date of delivery",
       dataField: "final_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -411,7 +631,24 @@ function AssignmentTab(props) {
     {
       text: "Deliverable",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs1");
+        }
+        if (order === "asc") {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function (cell, row) {
         return (
@@ -525,6 +762,7 @@ function AssignmentTab(props) {
       },
     },
   ];
+
   rowStyle2 = (row, index) => {
     const style = {};
     var warningDate = moment(row.Exp_Delivery_Date).subtract(2, "day").toDate();
@@ -583,6 +821,7 @@ function AssignmentTab(props) {
 
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
     console.log("dkk", dk);
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -593,12 +832,27 @@ function AssignmentTab(props) {
         setStatus(dk.stage_status);
         setQid(dk.query_no);
         setHide(dk.p_status);
-        onSubmit(dk);
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
       }
     }
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
+    let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment1"));
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
+    if (pageno) {
+      let e = pageno;
+    } else {
+      let e = 1;
+    }
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+
     let obj = {};
 
     if (data.route) {
@@ -629,85 +883,158 @@ function AssignmentTab(props) {
 
     if (data.route) {
       if (status.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        if (pagetry) {
+          remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
             }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.total);
-              }
-            }
-          });
+            }&orderby=${val}&orderbyfield=${field}`
+        } else if (!pagetry) {
+          remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+            }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+            }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+            }`
+        } else { }
       } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        if (pagetry) {
+          remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
             }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.total);
-              }
-            }
-          });
+            }&orderby=${val}&orderbyfield=${field}`
+        } else if (!pagetry) {
+          remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+            }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+            }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+            }`
+        } else { }
       }
+      axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setLoading(false);
+            if (res.data.result) {
+              let data = res.data.result;
+              setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
+            }
+          }
+        });
     } else {
       if (status.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+        if (pagetry) {
+          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
             }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res.data.result.length);
-                setCount(res.data.total);
-              }
-            }
-          });
+            }&pcat_id=${selectedData}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        } else if (!pagetry) {
+          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`
+        } else { }
       } else {
+        if (pagetry) {
+          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        } else if (!pagetry) {
+          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+            userid
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            }&assignment_status=${status}&stages_status=${data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`
+        } else { }
         axios
           .get(
-            `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            `${baseUrl}/${remainApiPath}`,
             myConfig
           )
           .then((res) => {
+            localStorage.setItem(`tpAssignment1`, JSON.stringify(1))
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignment(res.data.result);
+                let data = res.data.result;
+                setRecords(res.data.result.length);
+                let all = [];
+                let customId = 1;
+                if (e > 1) {
+                  customId = allEnd * (e - 1) + 1;
+                }
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignment(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                setresetTrigger(!resetTrigger);
+                localStorage.removeItem(`freezetpAssignment1`);
+                localStorage.removeItem("tpArrowAs1");
+                setAccend("");
+
               }
             }
           });
       }
+      axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setLoading(false);
+            if (res.data.result) {
+              let data = res.data.result;
+              setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
+              setresetTrigger(!resetTrigger);
+            }
+          }
+        });
     }
+
   };
 
   const Reset = () => {
@@ -729,6 +1056,13 @@ function AssignmentTab(props) {
     setError(false);
     setHide(e.target.value);
   };
+
+  // const resetTriggerFunc = () => {
+  //   setresetTrigger(!resetTrigger);
+  //   localStorage.removeItem("tpAssignment1");
+  //   localStorage.removeItem(`freezetpAssignment1`);
+  //   localStorage.removeItem("tpArrowAssignment1");
+  // }
 
   return (
     <>
@@ -909,6 +1243,10 @@ function AssignmentTab(props) {
                 setOnPage={setOnPage}
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
+                AllAssignment="AllAssignment"
+                index="tpAssignment1"
+                setData={setAssignment}
+                getData={getAssignmentList}
               />
             </Col>
           </Row>

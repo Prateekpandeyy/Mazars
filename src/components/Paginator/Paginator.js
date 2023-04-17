@@ -45,6 +45,10 @@ function Paginator(props) {
         pendingForAcceptence,
         InprogressQuery,
         DeclinedQuery,
+        AllAssignment,
+        tpDraftReport,
+        tpDeliveryTab,
+        tpAsAdminPermission,
         // resetPaging,
         completeAssignment,
         proposal,
@@ -111,16 +115,23 @@ function Paginator(props) {
 
         }
         else if (index === "tpInvoice1") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpInvoice1")))
         }
         else if (index === "tpInvoice2") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpInvoice2")))
         }
-        else if (index === "") {
-
+        else if (index === "tpAssignment1") {
+            // tpAssignment1
+            setPageno(JSON.parse(localStorage.getItem("tpAssignment1")))
         }
-        else if (index === "") {
-
+        else if (index === "tpAssignment2") {
+            setPageno(JSON.parse(localStorage.getItem("tpAssignment2")))
+        }
+        else if (index === "tpAssignment3") {
+            setPageno(JSON.parse(localStorage.getItem("tpAssignment3")))
+        }
+        else if (index === "tpAssignment4") {
+            setPageno(JSON.parse(localStorage.getItem("tpAssignment4")))
         }
         else {
         }
@@ -128,11 +139,11 @@ function Paginator(props) {
 
     //page counter
     const firstChunk = () => {
-        if(atPage > 1){
+        if (atPage > 1) {
             setAtpage(1);
             setPage(1);
             getNewPage(1);
-        }else{}
+        } else { }
     };
     const prevChunk = () => {
         if (atPage > 1) {
@@ -149,10 +160,10 @@ function Paginator(props) {
         getNewPage(Number(page) + 1);
     };
     const lastChunk = () => {
-        if(atPage < (defaultPage.at(-1))){
-        setPage(defaultPage.at(-1));
-        setAtpage(totalPages);
-        getNewPage(defaultPage.at(-1));
+        if (atPage < (defaultPage.at(-1))) {
+            setPage(defaultPage.at(-1));
+            setAtpage(totalPages);
+            getNewPage(defaultPage.at(-1));
         }
     };
 
@@ -238,29 +249,29 @@ function Paginator(props) {
             localStorage.setItem(`tpQuery2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)
-                  }&cat_id=${data.store
-                  }&from=${data.fromDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&to=${data.toDate
-                      ?.split("-")
-                      .reverse()
-                      .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
-              } else if ((data) && (pagetry)) {
+                    }&cat_id=${data.store
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+            } else if ((data) && (pagetry)) {
                 remainApiPath = `/tl/pendingQues?page=${e}&cat_id=${data.store
-                }&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&pcat_id=${data.pcatId
-                }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-              } else if ((!data) && (pagetry)) {
-                remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
-              } else {
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&pcat_id=${data.pcatId
+                    }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
+            } else {
                 remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`
-              }
+            }
         }
         else if (InprogressQuery == "InprogressQuery") {
             let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
@@ -333,8 +344,7 @@ function Paginator(props) {
                         .join("-")}&to=${data.toDate
                             ?.split("-")
                             .reverse()
-                            .join("-")}&status=${data.p_status}&pcat_id=${
-                                data.pcatId}&qno=${data.query_no
+                            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
@@ -360,24 +370,24 @@ function Paginator(props) {
             localStorage.setItem(`tpProposal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-                }&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
-                }`
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+                    }`
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-                }&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
-                }&orderby=${val}&orderbyfield=${field}`
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+                    }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
             } else {
@@ -450,78 +460,6 @@ function Paginator(props) {
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpPayment1`, JSON.stringify(e));
-            if ((data) && (!pagetry)){
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                  userid
-                )}&cat_id=${data.store}&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-                }`
-              }else if ((data) && (pagetry)){
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                  userid
-                )}&cat_id=${data.store}&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-                }&orderby=${val}&orderbyfield=${field}`
-              }else if ((!data) && (pagetry)){
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
-              }else{
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`
-              }
-        }
-        else if (Unpaid == "Unpaid") {
-            let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetppayment2"));
-            let val = pagetry?.val;
-            let field = pagetry?.field;
-            localStorage.setItem(`tpPayment2`, JSON.stringify(e));
-            if ((data) && (!pagetry)){
-                remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
-                  userid
-                )}&cat_id=${data.store}&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&status=1&pcat_id=${
-                      data.pcatId}&qno=${data.query_no}`
-              }else if ((data) && (pagetry)){
-                remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
-                  userid
-                )}&cat_id=${data.store}&from=${data.fromDate
-                  ?.split("-")
-                  .reverse()
-                  .join("-")}&to=${data.toDate
-                    ?.split("-")
-                    .reverse()
-                    .join("-")}&status=1&pcat_id=${
-                      data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-              }else if ((!data) && (pagetry)){
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                  userid
-                )}&status=1&orderby=${val}&orderbyfield=${field}`
-              }else{
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
-                  userid
-                )}&status=1`
-              }
-        }
-        else if (Paid == "Paid") {
-            let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetppayment3"));
-            let val = pagetry?.val;
-            let field = pagetry?.field;
-            localStorage.setItem(`tpPayment3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
                     userid
@@ -531,7 +469,8 @@ function Paginator(props) {
                     .join("-")}&to=${data.toDate
                         ?.split("-")
                         .reverse()
-                        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                    }`
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
                     userid
@@ -541,13 +480,82 @@ function Paginator(props) {
                     .join("-")}&to=${data.toDate
                         ?.split("-")
                         .reverse()
+                        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                    }&orderby=${val}&orderbyfield=${field}`
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+            } else {
+                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`
+            }
+        }
+        else if (Unpaid == "Unpaid") {
+            let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetppayment2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpPayment2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&cat_id=${data.store}&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&cat_id=${data.store}&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&status=1&orderby=${val}&orderbyfield=${field}`
+            } else {
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&status=1`
+            }
+        }
+        else if (Paid == "Paid") {
+            let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetppayment3"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpPayment3`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&cat_id=${data.store}&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&cat_id=${data.store}&from=${data.fromDate
+                    ?.split("-")
+                    .reverse()
+                    .join("-")}&to=${data.toDate
+                        ?.split("-")
+                        .reverse()
                         .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&status=2&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&status=2`
             }
@@ -590,6 +598,136 @@ function Paginator(props) {
                 remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
                     userid
                 )}&invoice=0`
+            }
+        }
+        else if (AllAssignment == "AllAssignment") {
+            let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment1"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpAssignment1`, JSON.stringify(e));
+            if ((data) && (pagetry)) {
+                if (data?.stage_status?.length > 0) {
+                    remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                        }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+                        }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                        }&orderby=${val}&orderbyfield=${field}`
+                } else {
+                    remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                        }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+                        }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                        }&orderby=${val}&orderbyfield=${field}`
+                }
+            } else if ((data) && (!pagetry)) {
+                if (data?.stage_status?.length > 0) {
+                    remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                        }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+                        }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                        }`
+                }
+                else {
+                    remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                        }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
+                        }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+                        }`
+                }
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+            }
+            else {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}`
+            }
+        }
+        else if (tpDraftReport == "tpDraftReport") {
+            let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment2"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpAssignment2`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                    }&from=${data.fromDate}&to=${data.toDate
+                    }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+                    }&qno=${data.query_no}`
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                    }&from=${data.fromDate}&to=${data.toDate
+                    }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+                    }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+            } else {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&assignment_status=Draft_Report&stages_status=1`
+            }
+        }
+        else if (tpDeliveryTab = "tpDeliveryTab") {
+            let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment3"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpAssignment3`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                    }&from=${data.fromDate}&to=${data.toDate
+                    }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
+                    }&qno=${data.query_no}`
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                    }&from=${data.fromDate}&to=${data.toDate
+                    }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
+                    }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&assignment_status=Delivery_of_report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+            } else {
+                remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+                    userid
+                )}&assignment_status=Delivery_of_report&stages_status=1`
+            }
+        }
+        else if (tpAsAdminPermission = "tpAsAdminPermission") {
+            let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment4"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpAssignment4`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                if (data?.stage_status?.length > 0) {
+                    remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+                        userid
+                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+                        }&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                } else {
+                    remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+                        userid
+                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+                        }&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                }
+            } else if ((data) && (pagetry)) {
+                if (data?.stage_status?.length > 0) {
+                    remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+                        userid
+                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+                        }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+                } else {
+                    remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+                        userid
+                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&assignment_status=${data.stage_status}&stages_status=${data.p_status
+                        }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+                }
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+            } else {
+                remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(userid)}`
             }
         }
         else { console.log("into else void of pagination"); }

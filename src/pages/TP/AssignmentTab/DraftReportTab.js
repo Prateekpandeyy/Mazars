@@ -18,12 +18,13 @@ import MessageIcon, {
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
 
 function AssignmentTab() {
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
 
   const { handleSubmit, register, reset } = useForm();
   const { Option } = Select;
@@ -38,6 +39,7 @@ function AssignmentTab() {
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -138,27 +140,75 @@ function AssignmentTab() {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    getAssignmentList();
-  }, []);
-
-  const getAssignmentList = () => {
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
+    let arrow = localStorage.getItem("tpArrowAs2")
+    if (arrow) {
+      setAccend(arrow);
+    }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment2"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpAssignment2", JSON.stringify(sort));
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
     if (!data) {
+      if (pageno) {
+        getAssignmentList(pageno);
+      } else {
+        getAssignmentList(1);
+      }
+    }
+    // getAssignmentList();
+  }, []);
+
+  const getAssignmentList = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment2"));
+    localStorage.setItem(`tpAssignment2`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (!pagetry)) {
+      remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&assignment_status=Draft_Report&stages_status=1`
+    }else{}
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
-            userid
-          )}&assignment_status=Draft_Report&stages_status=1`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setAssignment(res.data.result);
-            setCount(res.data.result.length);
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignment(all);
+            setCount(res.data.total);
             setRecords(res.data.result.length);
           }
         });
-    }
   };
 
   //get category
@@ -200,11 +250,74 @@ function AssignmentTab() {
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatpAssignment2");
-    getAssignmentList();
+    getAssignmentList(1);
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    localStorage.removeItem("tpAssignment2");
+    localStorage.removeItem(`freezetpAssignment2`);
+    localStorage.removeItem("tpArrowAs2");
   };
 
   //assingmentStatus
-
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDropDownIcon />
+        ) : (
+          <ArrowDropUpIcon />
+        )}
+      </div>
+    );
+  }
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tpAssignment2`, JSON.stringify(1))
+    localStorage.setItem(`freezetpAssignment2`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
+    if (data) {
+      remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+      }&from=${data.fromDate}&to=${data.toDate
+      }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+      }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    }
+    else {
+      remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+        userid
+      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.total)
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  }
   //columns
   const columns = [
     {
@@ -216,7 +329,7 @@ function AssignmentTab() {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -227,7 +340,25 @@ function AssignmentTab() {
     {
       text: "Date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
+      
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -260,16 +391,68 @@ function AssignmentTab() {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
 
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
@@ -350,7 +533,24 @@ function AssignmentTab() {
     {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -363,7 +563,24 @@ function AssignmentTab() {
     {
       text: "Actual date of delivery",
       dataField: "final_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -376,7 +593,24 @@ function AssignmentTab() {
     {
       text: "Deliverable",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function (cell, row) {
         return (
@@ -473,7 +707,41 @@ function AssignmentTab() {
       },
     },
   ];
-  const onSubmit = (data) => {
+
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
+    console.log("dkk2", dk);
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        setStatus(dk.stage_status);
+        setQueryNo(dk.query_no);
+        setHide(dk.p_status);
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
+      }
+    }
+  }, []);
+
+  const onSubmit = (data,e) => {
+    let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment2"));
+    let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
+    if (pageno) {
+      let e = pageno;
+    } else {
+      let e = 1;
+    }
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+
     let obj = {};
     if (data.route) {
       obj = {
@@ -498,27 +766,51 @@ function AssignmentTab() {
     }
     localStorage.setItem(`searchDatatpAssignment2`, JSON.stringify(obj));
     if (data.route) {
+      if(pagetry){
+        remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate}&to=${data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      }else{
+        remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate}&to=${data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+        }&qno=${data.query_no}`
+      }
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-          }&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
           if (res.data.code === 1) {
+            setLoading(false);
             if (res.data.result) {
-              setAssignment(res.data.result);
+              let data = res.data.result;
               setRecords(res.data.result.length);
-              setCount(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
             }
           }
         });
     } else {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tp_id=${JSON.parse(
+          `${baseUrl}/tl/page=1&getAssignments?tp_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
           }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
@@ -528,9 +820,28 @@ function AssignmentTab() {
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              setAssignment(res.data.result);
-              setRecords(res.data.result.length);
-              setCount(res.data.result.length);
+              let data = res.data.result;
+                setRecords(res.data.result.length);
+                let all = [];
+                let customId = 1;
+                if (e > 1) {
+                  customId = allEnd * (e - 1) + 1;
+                }
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignment(all);
+                setRecords(res.data.result.length);
+                setCount(res.data.total);
+                setresetTrigger(!resetTrigger);
+                localStorage.removeItem(`freezetpAssignment2`);
+                localStorage.removeItem("tpArrowAs2");
+                setAccend("");
             }
           }
         });
@@ -689,6 +1000,10 @@ function AssignmentTab() {
                 setOnPage={setOnPage}
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
+                tpDraftReport="tpDraftReport"
+                index="tpAssignment2"
+                setData={setAssignment}
+                getData={getAssignmentList}
               />
             </Col>
           </Row>
