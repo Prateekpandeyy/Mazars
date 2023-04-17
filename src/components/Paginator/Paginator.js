@@ -20,6 +20,7 @@ function Paginator(props) {
     const [loading, setLoading] = useState(false);
     const [pageno, setPageno] = useState(1);
     const [defaultPage, setDefaultPage] = useState(["1"]);
+    const [result, setResult] = useState([]);
 
     const userid = window.localStorage.getItem("tpkey");
     const token = window.localStorage.getItem("tptoken");
@@ -571,11 +572,11 @@ function Paginator(props) {
             } else if ((data) && (pagetry)) {
                 remainApiPath = ``
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
+                remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&invoice=1&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
+                remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&invoice=1`
             }
@@ -591,11 +592,11 @@ function Paginator(props) {
             } else if ((data) && (pagetry)) {
                 remainApiPath = ``
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
+                remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&invoice=0&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
+                remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&invoice=0`
             }
@@ -700,13 +701,13 @@ function Paginator(props) {
                 if (data?.stage_status?.length > 0) {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
                         userid
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&assignment_status=${data.stage_status}&stages_status=${data.p_status
                         }&pcat_id=${data.pcatId}&qno=${data.query_no}`
                 } else {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
                         userid
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&assignment_status=${data.stage_status}&stages_status=${data.p_status
                         }&pcat_id=${data.pcatId}&qno=${data.query_no}`
                 }
@@ -714,13 +715,13 @@ function Paginator(props) {
                 if (data?.stage_status?.length > 0) {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
                         userid
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&assignment_status=${data.stage_status}&stages_status=${data.p_status
                         }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 } else {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
                         userid
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&assignment_status=${data.stage_status}&stages_status=${data.p_status
                         }&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 }
@@ -741,56 +742,104 @@ function Paginator(props) {
                 .then((res) => {
                     let droppage = [];
                     if (res.data.code === 1) {
-                        let data = res.data.result;
                         let all = [];
                         let customId = 1;
                         console.log(e);
                         if (e > 1) {
                             customId = allEnd * (e - 1) + 1;
-                            console.log('why not serial updating');
                         }
-                        data.map((i) => {
-                            let data = {
-                                ...i,
-                                cid: customId,
-                            };
-                            customId++;
-                            all.push(data);
-                        });
-                        setData(all);
-                        console.log(all);
-                        setOnPage(e);
-                        setAtpage(e);
-                        // setRecords(res.data.result.length);
-                        const dynamicPage = Math.ceil(count / allEnd);
-                        console.log(dynamicPage, "to check dynamic page");
-                        setTotalPages(dynamicPage)
-                        let rem = (e - 1) * allEnd;
-                        let end = e * allEnd;
-                        if (dynamicPage > 1) {
-                            if (e == 1) {
+                        if ((tpgenerated == "tpgenerated") || (tpcreate == "tpcreate")){
+                            setResult(res.data.payment_detail)
+                            let data = res.data.payment_detail;
+                            data.map((i) => {
+                                let data = {
+                                    ...i,
+                                    cid: customId,
+                                };
+                                customId++;
+                                all.push(data);
+                            });
+                            setData(all);
+                            console.log(all);
+                            setOnPage(e);
+                            setAtpage(e);
+                            // setRecords(res.data.result.length);
+                            const dynamicPage = Math.ceil(count / allEnd);
+                            console.log(dynamicPage, "to check dynamic page");
+                            setTotalPages(dynamicPage)
+                            let rem = (e - 1) * allEnd;
+                            let end = e * allEnd;
+                            if (dynamicPage > 1) {
+                                if (e == 1) {
+                                    setBig(rem + e);
+                                    setEnd(allEnd);
+                                    // console.log("e at 1", big, end);
+                                }
+                                else if ((e == (dynamicPage))) {
+                                    setBig(rem + 1);
+                                    setEnd(res.data.total);
+                                    // console.log("e at last page");
+                                }
+                                else {
+                                    setBig(rem + 1);
+                                    setEnd(end);
+                                    // console.log(`e at between page ${e}`, big, end);
+                                }
+                            } else {
                                 setBig(rem + e);
-                                setEnd(allEnd);
-                                // console.log("e at 1", big, end);
-                            }
-                            else if ((e == (dynamicPage))) {
-                                setBig(rem + 1);
                                 setEnd(res.data.total);
-                                // console.log("e at last page");
                             }
-                            else {
-                                setBig(rem + 1);
-                                setEnd(end);
-                                // console.log(`e at between page ${e}`, big, end);
+                            for (let i = 1; i <= dynamicPage; i++) {
+                                droppage.push(i);
                             }
+                            setDefaultPage(droppage);
                         } else {
-                            setBig(rem + e);
-                            setEnd(res.data.total);
+                            setResult(res.data.result)
+                            let data = res.data.result;
+                            data.map((i) => {
+                                let data = {
+                                    ...i,
+                                    cid: customId,
+                                };
+                                customId++;
+                                all.push(data);
+                            });
+                            setData(all);
+                            console.log(all);
+                            setOnPage(e);
+                            setAtpage(e);
+                            // setRecords(res.data.result.length);
+                            const dynamicPage = Math.ceil(count / allEnd);
+                            console.log(dynamicPage, "to check dynamic page");
+                            setTotalPages(dynamicPage)
+                            let rem = (e - 1) * allEnd;
+                            let end = e * allEnd;
+                            if (dynamicPage > 1) {
+                                if (e == 1) {
+                                    setBig(rem + e);
+                                    setEnd(allEnd);
+                                    // console.log("e at 1", big, end);
+                                }
+                                else if ((e == (dynamicPage))) {
+                                    setBig(rem + 1);
+                                    setEnd(res.data.total);
+                                    // console.log("e at last page");
+                                }
+                                else {
+                                    setBig(rem + 1);
+                                    setEnd(end);
+                                    // console.log(`e at between page ${e}`, big, end);
+                                }
+                            } else {
+                                setBig(rem + e);
+                                setEnd(res.data.total);
+                            }
+                            for (let i = 1; i <= dynamicPage; i++) {
+                                droppage.push(i);
+                            }
+                            setDefaultPage(droppage);
                         }
-                        for (let i = 1; i <= dynamicPage; i++) {
-                            droppage.push(i);
-                        }
-                        setDefaultPage(droppage);
+
                         // console.log(defaultPage, "in submit of defaultPage");
                     }
                 });

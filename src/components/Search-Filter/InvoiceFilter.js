@@ -95,8 +95,21 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
+          let customId = 1;
+          let data = res.data.payment_detail;
+          let all = [];
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          localStorage.setItem(`tpInvoice1`, JSON.stringify(1));
+          props.setData(all);
           props.setRec(res.data.payment_detail.length);
+          props.setCount(res.data.total);
         }
       });
     } else if (props.invoice == "admingenerated") {
@@ -152,9 +165,10 @@ const InvoiceFilter = (props) => {
     setFromDate("");
     setToDate("");
     setStatus("");
-    props.resetPaging();
     localStorage.removeItem(props.invoice);
+    props.resetPaging();
     props.getData(1);
+
   };
   const updateResult = (res) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
@@ -372,8 +386,8 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-          props.invoice === "tpcreate" ||
-          props.invoice === "admincreate" ? (
+            props.invoice === "tpcreate" ||
+            props.invoice === "admincreate" ? (
             ""
           ) : (
             <>

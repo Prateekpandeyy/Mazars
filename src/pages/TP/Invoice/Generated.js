@@ -11,13 +11,14 @@ import moment from "moment";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
 
 const Generated = () => {
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("tpkey");
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
 
@@ -27,6 +28,7 @@ const Generated = () => {
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
 
   const [id, setId] = useState();
   const [assignNo, setAssignNo] = useState("");
@@ -72,26 +74,75 @@ const Generated = () => {
   }, [tdsForm]);
 
   useEffect(() => {
-    getProposalList();
+    let pageno = JSON.parse(localStorage.getItem("tpInvoice1"));
+    let arrow = localStorage.getItem("tpArrowInvoice1")
+    if (arrow) {
+      setAccend(arrow);
+    }
+    let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice1"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetpInvoice1", JSON.stringify(sort));
+    }
+    if (pageno) {
+      getProposalList(pageno);
+    } else {
+      getProposalList(1);
+    }
+    // getProposalList();
   }, []);
 
-  const getProposalList = () => {
+  const getProposalList = (e) => {
     let data = JSON.parse(localStorage.getItem("tpgenerated"));
-    if (!data) {
-      axios
-        .get(
-          `${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(
-            userid
-          )}&invoice=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setProposal(res.data.payment_detail);
-            setRecords(res.data.payment_detail.length);
-          }
-        });
+    let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
+    localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((!data) && (!pagetry)) {
+      remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&invoice=1`
     }
+    else if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&invoice=1&orderby=${val}&orderbyfield=${field}`
+    }
+    else { }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.payment_detail;
+          // setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setCount(res.data?.total);
+          setRecords(res.data.payment_detail.length);
+        }
+      });
   };
 
   const downloadpdf = (qno, id, installmentNumber) => {
@@ -124,13 +175,70 @@ const Generated = () => {
         }
       });
   };
+
+  function headerLabelFormatter(column) {
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        {column.text}
+        {accend === column.dataField ? (
+          <ArrowDropDownIcon />
+        ) : (
+          <ArrowDropUpIcon />
+        )}
+      </div>
+    );
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tpInvoice1`, JSON.stringify(1))
+    localStorage.setItem(`freezetpInvoice1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("tpgenerated"));
+    if (data && Object.values(data).length > 0) {
+      remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
+    }
+    else {
+      remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
+        userid
+      )}&invoice=1&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.payment_detail.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  }
+
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return <div id={row.id}
-          ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+          ref={el => (myRef.current[row.id] = el)}>{row.cid}</div>;
       },
       style: {
         fontSize: "11px",
@@ -145,6 +253,24 @@ const Generated = () => {
       dataField: "assign_no",
       style: {
         fontSize: "11px",
+      },
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
       },
       headerStyle: () => {
         return { fontSize: "11px", width: "100px" };
@@ -168,16 +294,50 @@ const Generated = () => {
     {
       text: "Installment no",
       dataField: "installment_no",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
 
       headerStyle: () => {
-        return { width: "50px" };
+        return { width: "80px" };
       },
     },
     {
       text: "Invoice no",
       dataField: "billno",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
       style: {
         fontSize: "11px",
       },
@@ -188,7 +348,24 @@ const Generated = () => {
     {
       text: "Due date",
       dataField: "due_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
       style: {
         fontSize: "11px",
       },
@@ -202,7 +379,24 @@ const Generated = () => {
     {
       text: "Invoice amount",
       dataField: "invoice_amount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -214,7 +408,24 @@ const Generated = () => {
     {
       text: "Tds deducted",
       dataField: "tds_amount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -234,7 +445,24 @@ const Generated = () => {
     {
       text: "Status",
       dataField: "is_paid",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function (cell, row) {
         return (
@@ -317,6 +545,7 @@ const Generated = () => {
       },
     },
   ];
+
   const noPointer = { cursor: "pointer", color: "blue" };
   const copyFun = (e, id) => {
     setCopy(id);
@@ -368,6 +597,13 @@ const Generated = () => {
     return style;
   };
 
+  const resetPaging = () => {
+    setresetTrigger(!resetTrigger);
+    localStorage.removeItem("tpInvoice1");
+    localStorage.removeItem(`freezetpInvoice1`);
+    localStorage.removeItem("tpArrowInvoice1");
+  }
+
   return (
     <>
       <Card>
@@ -381,6 +617,8 @@ const Generated = () => {
               setRec={setRecords}
               records={records}
               userid={JSON.parse(userid)}
+              resetPaging={resetPaging}
+              setCount={setCount}
             />
           </Row>
           <Row>
@@ -389,7 +627,7 @@ const Generated = () => {
                 setData={setProposal}
                 getData={getProposalList}
                 invoice="tpgenerated"
-                index="tpInvoice2"
+                index="tpInvoice1"
                 tpgenerated="tpgenerated"
                 panel="taxprofessional"
                 setRec={setRecords}
@@ -398,7 +636,7 @@ const Generated = () => {
                 count={count}
                 setOnPage={setOnPage}
                 resetTrigger={resetTrigger}
-                setresetTrigger={setresetTrigger}
+                // setresetTrigger={setresetTrigger}
               />
             </Col>
           </Row>

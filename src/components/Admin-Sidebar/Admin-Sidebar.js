@@ -126,7 +126,7 @@ function Sidebar({
           }
           if (res.data.code === 1) {
             if (res.data.result != undefined) {
-              setfeedbackNumber2(res.data.result[0].total);
+              setfeedbackNumber2(res.data.result[0]?.total);
               if (role === "cms") {
                 setLogo("/cms/cms");
               } else {
@@ -163,7 +163,7 @@ function Sidebar({
           setLogo("teamleader/dashboard");
           if (res.data.result != undefined) {
             if (res.data.result[0]) {
-              setfeedbackNumbertl(res.data.result[0].total);
+              setfeedbackNumbertl(res.data.result[0]?.total);
             }
             setLogo("/teamleader/dashboard");
           } else if (res.data.code === 102) {
@@ -199,8 +199,8 @@ function Sidebar({
         .then((res) => {
           setLogo("taxprofessional/dashboard");
           if (res.data.result != undefined) {
-            setfeedbackNumbertp(res.data.result[0].total);
-            localStorage.setItem("TPfeedbacks", res.data.result[0].total);
+            setfeedbackNumbertp(res.data.result[0]?.total);
+            localStorage.setItem("TPfeedbacks", res.data.result[0]?.total);
             setLogo("/taxprofessional/dashboard");
           } else if (res.data.code === 102) {
             history.push("/taxprofessional/login");
