@@ -47,7 +47,10 @@ function AllQueriesData() {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendq1") === column.dataField ||
+      localStorage.getItem("prevq1") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevq1", column.dataField);
@@ -58,7 +61,7 @@ function AllQueriesData() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {localStorage.getItem("accendq1") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -422,6 +425,7 @@ function AllQueriesData() {
     },
     {
       text: "Status",
+      dataField: "statusdescription",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -512,6 +516,7 @@ function AllQueriesData() {
     localStorage.removeItem("sortedValue1");
     localStorage.removeItem("accendq1");
     localStorage.removeItem("prevq1");
+    getAllQueriesData();
   };
 
   return (
