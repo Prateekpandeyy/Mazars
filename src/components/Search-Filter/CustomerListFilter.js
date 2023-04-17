@@ -4,6 +4,8 @@ import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { current_date } from "../../common/globalVeriable";
 import { Grid } from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function CustomerListFilter(props) {
   const { handleSubmit, register, reset } = useForm();
   const {
@@ -42,18 +44,21 @@ function CustomerListFilter(props) {
   };
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("searchDataadclient"));
-    setName(data.name);
-    setCountry(data.country);
-    setCity(data.city);
-    setState(data.state);
-    setEmail(data.email);
-    setOccuption(data.occupation);
-    setFromDate(data.p_dateFrom);
-    setToDate(data.p_dateTo);
+    if (data) {
+      setName(data.name);
+      setCountry(data.country);
+      setCity(data.city);
+      setState(data.state);
+      setEmail(data.email);
+      setOccuption(data.occupation);
+      setFromDate(data.p_dateFrom);
+      setToDate(data.p_dateTo);
+    }
   }, []);
   const resetData = () => {
     localStorage.removeItem("searchDataadclient");
     localStorage.removeItem("adminClient");
+    localStorage.removeItem("cutomFilter");
     setName("");
     setCountry("");
     setCity("");
