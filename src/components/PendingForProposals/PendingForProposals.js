@@ -95,7 +95,10 @@ function PendingForProposals(props) {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendq3") === column.dataField ||
+      localStorage.getItem("prevq3") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevq3", column.dataField);
@@ -106,7 +109,8 @@ function PendingForProposals(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {(localStorage.getItem("accendq3") === column.dataField) ===
+          column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -416,6 +420,7 @@ function PendingForProposals(props) {
     },
     {
       text: "Status",
+      dataField: "statusdescription",
       sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
