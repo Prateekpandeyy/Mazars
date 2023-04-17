@@ -516,7 +516,7 @@ function AllQueriesData() {
     localStorage.removeItem("sortedValue1");
     localStorage.removeItem("accendq1");
     localStorage.removeItem("prevq1");
-    getAllQueriesData();
+    getAllQueriesData(1);
   };
 
   return (

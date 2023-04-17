@@ -55,7 +55,10 @@ function PendingAllocation(props) {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendq2") === column.dataField ||
+      localStorage.getItem("prevq2") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevq2", column.dataField);
@@ -66,7 +69,7 @@ function PendingAllocation(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {localStorage.getItem("accendq2") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -403,6 +406,7 @@ function PendingAllocation(props) {
     },
     {
       text: "Status",
+      sort: true,
       dataField: "status",
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
