@@ -39,6 +39,28 @@ function AdminHeader({
       },
     };
     axios.get(`${baseUrl}/admin/logout`, myConfig).then((res) => {
+      localStorage.removeItem("adminMessage");
+      localStorage.removeItem("adminFeedback");
+      localStorage.removeItem("cutomFilter");
+      localStorage.removeItem("recordingData");
+      localStorage.removeItem("prevassign1");
+      localStorage.removeItem("prevassign2");
+      localStorage.removeItem("prevassign3");
+      localStorage.removeItem("prevassign4");
+      localStorage.removeItem("prevpay1");
+      localStorage.removeItem("prevpay2");
+      localStorage.removeItem("prevpay3");
+      localStorage.removeItem("previnv2");
+      localStorage.removeItem("previnv1");
+      localStorage.removeItem("prevro3");
+      localStorage.removeItem("prevro4");
+      localStorage.removeItem("prevro2");
+      localStorage.removeItem("prevro3");
+      localStorage.removeItem("prevro1");
+      localStorage.removeItem("prevq4");
+      localStorage.removeItem("prevq3");
+      localStorage.removeItem("prevq2");
+      localStorage.removeItem("prevq1");
       localStorage.removeItem("adminkey");
       localStorage.removeItem("adminEmail");
       localStorage.removeItem("category");

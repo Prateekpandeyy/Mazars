@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import { Backdrop } from "@mui/material";
+
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function Message(props) {
   const userId = window.localStorage.getItem("adminkey");
   const [query, setQuery] = useState([]);
@@ -25,26 +25,45 @@ function Message(props) {
   const [sortVal, setSortVal] = useState(0);
   const [defaultPage, setDefaultPage] = useState([]);
   const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
   const history = useHistory();
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminMessage"));
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("adminMessage"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     setAccend(localStorage.getItem("accendMessage"));
     getMessage(localPage);
   }, []);
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("adminMessage", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
-          <ArrowUpwardIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }

@@ -9,8 +9,8 @@ import CustomerListFilter from "../../../components/Search-Filter/CustomerListFi
 import History from "./CustHistory";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function Customer() {
   const [data, setData] = useState([]);
   const [tpCount, setTpCount] = useState("");
@@ -27,7 +27,7 @@ function Customer() {
   const [accend, setAccend] = useState(false);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
-
+  const [prev, setPrev] = useState("");
   const [jumpTo, setJumpTo] = useState("");
   const myRefs = useRef([]);
   const token = window.localStorage.getItem("adminToken");
@@ -38,6 +38,7 @@ function Customer() {
   };
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminClient"));
+    setPrev(localStorage.getItem("cutomFilter"));
     if (!localPage) {
       localPage = 1;
     }
@@ -47,17 +48,35 @@ function Customer() {
     getCustomer(localPage);
   }, []);
   function priceFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("cutomFilter", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
-          <ArrowUpwardIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
+
   useEffect(() => {
     let runTo = myRefs.current[jumpTo];
     runTo?.scrollIntoView(false);

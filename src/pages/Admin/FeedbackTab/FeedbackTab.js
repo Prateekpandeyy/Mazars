@@ -9,8 +9,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function FeedbackTab() {
   const userid = window.localStorage.getItem("adminkey");
   const [feedbackData, setFeedBackData] = useState([]);
@@ -23,23 +23,43 @@ function FeedbackTab() {
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
   function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (accend === column.dataField || prev === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("adminFeedback", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDownwardIcon />
-        ) : (
-          <ArrowUpwardIcon />
-        )}
+      <div
+        className={
+          isActive === true
+            ? "d-flex filterActive text-white w-100 flex-wrap"
+            : "d-flex text-white w-100 flex-wrap"
+        }
+      >
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
       </div>
     );
   }
+
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminFeedback"));
     if (!localPage) {
       localPage = 1;
     }
+    setPrev(localStorage.getItem("adminFeedback"));
     setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
     setAccend(localStorage.getItem("accendFeedback"));
@@ -69,45 +89,6 @@ function FeedbackTab() {
         )
         .then((res) => {
           let droppage = [];
-          // if (res.data.code === 1) {
-          //   let data = res.data.result;
-          //   setfeedbackNumber(res.data.result.length);
-
-          //   let all = [];
-          //   let customId = 1;
-          //   if (e > 1) {
-          //     customId = allEnd * (e - 1) + 1;
-          //   }
-          //   data.map((i) => {
-          //     let data = {
-          //       ...i,
-          //       cid: customId,
-          //     };
-          //     customId++;
-          //     all.push(data);
-          //   });
-          //   setFeedBackData(all);
-
-          //   setCountNotification(res.data.total);
-          //   let dynamicPage = Math.ceil(Number(res.data.total) / allEnd);
-
-          //   let rem = (e - 1) * allEnd;
-          //   let end = e * allEnd;
-          //   if (end > res.data.total) {
-          //     end = res.data.total;
-          //   }
-          //   if (e === 1) {
-          //     setBig(rem + e);
-          //     setEnd(end);
-          //   } else {
-          //     setBig(rem + 1);
-          //     setEnd(end);
-          //   }
-          //   for (let i = 1; i <= dynamicPage; i++) {
-          //     droppage.push(i);
-          //   }
-          //   setDefaultPage(droppage);
-          // }
 
           if (res.data.code === 1) {
             let data = res.data.result;

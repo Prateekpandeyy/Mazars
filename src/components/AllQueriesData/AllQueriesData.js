@@ -16,7 +16,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AllQueriesData() {
+  const classes = useStyles();
   const [allQueriesData, setAllQueriesData] = useState([]);
   const [records, setRecords] = useState([]);
   const [assignNo, setAssignNo] = useState("");
@@ -38,7 +47,10 @@ function AllQueriesData() {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendq1") === column.dataField ||
+      localStorage.getItem("prevq1") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevq1", column.dataField);
@@ -46,19 +58,17 @@ function AllQueriesData() {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendq1") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -415,6 +425,7 @@ function AllQueriesData() {
     },
     {
       text: "Status",
+      dataField: "statusdescription",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -505,6 +516,7 @@ function AllQueriesData() {
     localStorage.removeItem("sortedValue1");
     localStorage.removeItem("accendq1");
     localStorage.removeItem("prevq1");
+    getAllQueriesData();
   };
 
   return (
