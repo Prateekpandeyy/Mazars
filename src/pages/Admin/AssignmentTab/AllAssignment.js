@@ -23,7 +23,16 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { current_date } from "../../../common/globalVeriable";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AssignmentComponent(props) {
+  const classes = useStyles();
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -72,27 +81,28 @@ function AssignmentComponent(props) {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendassign1") === column.dataField ||
+      localStorage.getItem("prevAssign1") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevassign1", column.dataField);
+      localStorage.setItem("prevAssign1", column.dataField);
     } else {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendassign1") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -353,6 +363,8 @@ function AssignmentComponent(props) {
     setPage(1);
     localStorage.removeItem("searchDataadAssignment1");
     localStorage.removeItem("sortedValueassign1");
+    localStorage.removeItem("prevAssign1");
+    localStorage.removeItem("accendassign1");
 
     getAssignmentData(1);
   };

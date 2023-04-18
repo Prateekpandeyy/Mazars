@@ -15,7 +15,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 const Generated = () => {
+  const classes = useStyles();
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("adminkey");
   const [records, setRecords] = useState([]);
@@ -56,8 +65,10 @@ const Generated = () => {
   };
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
-
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendgenerated") === column.dataField ||
+      localStorage.getItem("previnv1") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("previnv1", column.dataField);
@@ -65,19 +76,17 @@ const Generated = () => {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendgenerated") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -509,7 +518,9 @@ const Generated = () => {
     setFiledBy("");
     localStorage.removeItem("admininvt1");
     localStorage.removeItem("sortedValuevt1");
+    localStorage.removeItem("accendcreated");
     localStorage.removeItem("previnv1");
+    getProposalList(1);
   };
   const firstChunk = () => {
     setAtpage(1);

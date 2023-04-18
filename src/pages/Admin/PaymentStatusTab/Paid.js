@@ -30,7 +30,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function Paid() {
+  const classes = useStyles();
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
   const [paymentcount, setPaymentCount] = useState("");
@@ -79,8 +88,10 @@ function Paid() {
   }, []);
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
-
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendpay2") === column.dataField ||
+      localStorage.getItem("prevpay2") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevpay2", column.dataField);
@@ -88,19 +99,17 @@ function Paid() {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendpay2") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>

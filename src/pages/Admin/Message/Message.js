@@ -8,11 +8,20 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function Message(props) {
+  const classes = useStyles();
+
   const userId = window.localStorage.getItem("adminkey");
   const [query, setQuery] = useState([]);
   const [countNotification, setCountNotification] = useState("");
@@ -38,30 +47,60 @@ function Message(props) {
     setAccend(localStorage.getItem("accendMessage"));
     getMessage(localPage);
   }, []);
-  function headerLabelFormatter(column, colIndex) {
-    let isActive = true;
+  // function headerLabelFormatter(column, colIndex) {
+  //   let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+  //   if (accend === column.dataField || prev === column.dataField) {
+  //     isActive = true;
+  //     setPrev(column.dataField);
+  //     localStorage.setItem("adminMessage", column.dataField);
+  //   } else {
+  //     isActive = false;
+  //   }
+  //   return (
+  //     <div
+  //       className={
+  //         isActive === true
+  //           ? "d-flex filterActive text-white w-100 flex-wrap"
+  //           : "d-flex text-white w-100 flex-wrap"
+  //       }
+  //     >
+  //       <div style={{ display: "flex", color: "#fff" }}>
+  //         {column.text}
+  //         {accend === column.dataField ? (
+  //           <ArrowDropDownIcon />
+  //         ) : (
+  //           <ArrowDropUpIcon />
+  //         )}
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = null;
+
+    if (
+      localStorage.getItem("accendMessage") === column.dataField ||
+      localStorage.getItem("prevMessage") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("adminMessage", column.dataField);
+      localStorage.setItem("prevMessage", column.dataField);
     } else {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendMessage") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>

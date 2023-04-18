@@ -22,7 +22,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AdminPermission(props) {
+  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const userid = window.localStorage.getItem("adminkey");
 
@@ -101,6 +110,7 @@ function AdminPermission(props) {
       localPage = 1;
     }
     setAccend(localStorage.getItem("accendassign4"));
+    setPrev(localStorage.getItem("prevAssign4"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValueassign4"));
     if (!sortVal) {
       let sort = {
@@ -123,27 +133,28 @@ function AdminPermission(props) {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendassign4") === column.dataField ||
+      localStorage.getItem("prevAssign4") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevassign4", column.dataField);
+      localStorage.setItem("prevAssign4", column.dataField);
     } else {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendassign4") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -365,6 +376,8 @@ function AdminPermission(props) {
     setPage(1);
     localStorage.removeItem("searchDataadAssignment4");
     localStorage.removeItem("sortedValueassign4");
+    localStorage.removeItem("prevAssign4");
+    localStorage.removeItem("accendassign4");
 
     getAssignmentData(1);
   };
