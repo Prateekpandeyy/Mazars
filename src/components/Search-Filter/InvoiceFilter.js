@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { current_date } from "../../common/globalVeriable";
 const InvoiceFilter = (props) => {
   const { handleSubmit, register, errors, reset } = useForm();
+  const [perPage,setPerPage]= useState(5);
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -21,6 +22,15 @@ const InvoiceFilter = (props) => {
       setStatus(data.opt);
       setPaymentPlan(data.installment_no);
     }
+    if((props.invoice == "admincreate") || (props.invoice == "admingenerated")){
+      setPerPage(Number(localStorage.getItem("admin_record_per_page")))
+    }else if((props.invoice == "tpcreate") || (props.invoice == "tpgenerated")){
+      setPerPage(Number(localStorage.getItem("tp_record_per_page")))
+    }else if((props.invoice == "tlcreate") || (props.invoice == "generated")){
+      setPerPage(Number(localStorage.getItem("tl_record_per_page")))
+    }else{
+      setPerPage(5)
+    }
   }, []);
   const onSubmit = (data) => {
     let formData = new FormData();
@@ -34,9 +44,9 @@ const InvoiceFilter = (props) => {
         : formData.append("installment_no", "");
     }
 
-    formData.append("status", paymentPlan);
+    // formData.append("installment_no", paymentPlan);
+    formData.append("status", data.opt);
 
-    // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
     if (props.invoice == "generated") {
       const token = window.localStorage.getItem("tlToken");
@@ -162,7 +172,12 @@ const InvoiceFilter = (props) => {
     props.getData(1);
   };
   const updateResult = (res) => {
-    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    // let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let allEnd = perPage
+    if((props.invoice == "tpgenerated")|| (props.invoice == "tpgenerated")){
+      let allEnd = Number(localStorage.getItem("tp_record_per_page"))
+    }
+    console.log(allEnd,"All End");
     localStorage.setItem(props.localPage, 1);
     let returnData = JSON.parse(localStorage.getItem(`${props.invoice}`));
     let droppage = [];

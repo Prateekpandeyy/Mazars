@@ -138,7 +138,7 @@ function AssignmentTab() {
       runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
-
+  console.log("catData",categoryData);
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
     let arrow = localStorage.getItem("tpArrowAs2")
@@ -159,6 +159,7 @@ function AssignmentTab() {
         getAssignmentList(pageno);
       } else {
         getAssignmentList(1);
+        localStorage.setItem(`tpAssignment2`, JSON.stringify(1));
       }
     }
     // getAssignmentList();
@@ -225,7 +226,11 @@ function AssignmentTab() {
   }, []);
 
   useEffect(() => {
-    setTax2(JSON.parse(localStorage.getItem(selectedData)));
+    if(selectedData == 1){
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    }else if(selectedData == 2){
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    }else{}
   }, [selectedData]);
 
   //handleSubCategory
@@ -767,14 +772,20 @@ function AssignmentTab() {
     localStorage.setItem(`searchDatatpAssignment2`, JSON.stringify(obj));
     if (data.route) {
       if(pagetry){
-        remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+        remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${
+          data.store
+        }&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+          data.pcatId
         }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
       }else{
-        remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+        remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}&cat_id=${
+          data.store
+        }&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+          data.pcatId
         }&qno=${data.query_no}`
       }
       axios
@@ -810,10 +821,12 @@ function AssignmentTab() {
     } else {
       axios
         .get(
-          `${baseUrl}/tl/page=1&getAssignments?tp_id=${JSON.parse(
+          `${baseUrl}/tl/getAssignments?page=1&tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
           }`,
           myConfig
         )
@@ -882,6 +895,7 @@ function AssignmentTab() {
     return style;
   };
 
+  
   return (
     <>
       <Card>
@@ -898,7 +912,7 @@ function AssignmentTab() {
                     value={selectedData}
                   >
                     {categoryData?.map((p, index) => (
-                      <Option value={p.details} key={index}>
+                      <Option value={p.id} key={index}>
                         {p.details}
                       </Option>
                     ))}
@@ -980,11 +994,11 @@ function AssignmentTab() {
                     value={queryNo}
                   />
                 </div>
-                <div class="form-group mx-sm-1  mb-2">
+                {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
                 <button type="submit" class="customBtn mx-sm-1 mb-2">
                   Search
                 </button>

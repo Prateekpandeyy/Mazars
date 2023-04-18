@@ -603,6 +603,7 @@ function DeclinedProposal() {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem("tpPropsosal4");
     localStorage.removeItem(`freezetpProposal4`);
     localStorage.removeItem("tpArrowProposal4");

@@ -621,6 +621,7 @@ function InprogressProposal() {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem("tpPropsosal2");
     localStorage.removeItem(`freezetpProposal2`);
     localStorage.removeItem("tpArrowProposal2");

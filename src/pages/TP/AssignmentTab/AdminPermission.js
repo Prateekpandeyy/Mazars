@@ -143,6 +143,7 @@ function AdminPermission(props) {
         getAssignmentList(pageno);
       } else {
         getAssignmentList(1);
+        localStorage.setItem(`tpAssignment4`, JSON.stringify(1));
       }
     }
     // getAssignmentList();
@@ -209,7 +210,12 @@ function AdminPermission(props) {
   }, []);
 
   useEffect(() => {
-    setTax2(JSON.parse(localStorage.getItem(selectedData)));
+    // setTax2(JSON.parse(localStorage.getItem(selectedData)));
+    if(selectedData == 1){
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    }else if(selectedData == 2){
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    }else{}
   }, [selectedData]);
 
   //handleSubCategory
@@ -948,7 +954,7 @@ function AdminPermission(props) {
                     value={selectedData}
                   >
                     {categoryData?.map((p, index) => (
-                      <Option value={p.details} key={index}>
+                      <Option value={p.id} key={index}>
                         {p.details}
                       </Option>
                     ))}
@@ -1090,11 +1096,11 @@ function AdminPermission(props) {
                     className="form-control"
                   />
                 </div>
-                <div class="form-group mx-sm-1  mb-2">
+                {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
                 <button type="submit" class="customBtn mx-sm-1 mb-2">
                   Search
                 </button>

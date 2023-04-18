@@ -532,6 +532,7 @@ function InCompleteData({ CountIncomplete, data }) {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem("tpQuery3");
     localStorage.removeItem(`freezetpQuery3`);
     localStorage.removeItem("tpArrowQuery3");

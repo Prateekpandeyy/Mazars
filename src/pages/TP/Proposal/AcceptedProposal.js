@@ -565,6 +565,7 @@ function AcceptedProposal() {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem("tpPropsosal3");
     localStorage.removeItem(`freezetpProposal3`);
     localStorage.removeItem("tpArrowProposal3");

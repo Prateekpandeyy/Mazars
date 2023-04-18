@@ -632,6 +632,7 @@ function AllPayment() {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem("tpPayment2");
     localStorage.removeItem(`freezetpPayment2`);
     localStorage.removeItem("tpArrowPayment2");
@@ -651,6 +652,7 @@ function AllPayment() {
               index="tppayment3"
               records={records}
               resetTriggerFunc={resetTriggerFunc}
+              setCount={setCount}
             />
           </Row>
           <Row>

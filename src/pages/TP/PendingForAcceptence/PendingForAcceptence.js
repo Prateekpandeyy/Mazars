@@ -435,6 +435,7 @@ function PendingForAcceptence(props) {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem(`tpQuery2`);
     localStorage.removeItem(`freezetpQuery2`);
     localStorage.removeItem("tpArrowQuery2");

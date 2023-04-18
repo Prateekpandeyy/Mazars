@@ -468,6 +468,7 @@ const columns = [
 
 const resetTriggerFunc = () => {
   setresetTrigger(!resetTrigger);
+  setAccend("");
   localStorage.removeItem("tpQuery1");
   localStorage.removeItem(`freezetpQuery1`);
   localStorage.removeItem("tpArrowQuery1");

@@ -613,6 +613,7 @@ function AllProposal() {
 
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
+    setAccend("");
     localStorage.removeItem("tpPropsosal1");
     localStorage.removeItem(`freezetpProposal1`);
     localStorage.removeItem("tpArrowProposal1");
