@@ -288,7 +288,10 @@ function AllProposalComponent() {
   function priceFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendpro1") === column.dataField ||
+      localStorage.getItem("prevro1") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevro1", column.dataField);
@@ -299,7 +302,7 @@ function AllProposalComponent() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {localStorage.getItem("accendpro1") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />

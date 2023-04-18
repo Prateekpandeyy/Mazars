@@ -109,8 +109,7 @@ function PendingForProposals(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {(localStorage.getItem("accendq3") === column.dataField) ===
-          column.dataField ? (
+          {localStorage.getItem("accendq3") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -317,6 +316,7 @@ function PendingForProposals(props) {
           setAccend("");
           localStorage.removeItem("accendq3");
         }
+
         if (accend === field) {
           val = 0;
         } else {

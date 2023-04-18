@@ -22,7 +22,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function DraftReport() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("adminkey");
 
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
@@ -95,27 +104,28 @@ function DraftReport() {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendassign2") === column.dataField ||
+      localStorage.getItem("prevAssign2") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevassign2", column.dataField);
+      localStorage.setItem("prevAssign2", column.dataField);
     } else {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendassign2") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -302,6 +312,10 @@ function DraftReport() {
     setToDate("");
     setQueryNo("");
     localStorage.removeItem("searchDataadAssignment2");
+    localStorage.removeItem("sortedValueassign2");
+    localStorage.removeItem("prevAssign2");
+    localStorage.removeItem("accendassign2");
+
     getAssignmentData(1);
   };
 

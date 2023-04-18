@@ -24,6 +24,10 @@ function RecordingFilter(props) {
 
   //reset date
   const resetData = () => {
+    localStorage.removeItem("sortedrecording");
+    localStorage.removeItem("accendrecording");
+    localStorage.removeItem("adminRecording");
+    localStorage.removeItem("prevrecord");
     localStorage.removeItem("recordingData");
     setPage(1);
     reset();

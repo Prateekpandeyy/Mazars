@@ -59,7 +59,10 @@ function PendingForAcceptence() {
   function priceFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendpro2") === column.dataField ||
+      localStorage.getItem("prevro2") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevro2", column.dataField);
@@ -70,7 +73,7 @@ function PendingForAcceptence() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {localStorage.getItem("accendpro2") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />

@@ -278,7 +278,10 @@ function DeclinedProposal() {
   function priceFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendpro4") === column.dataField ||
+      localStorage.getItem("prevro4") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevro4", column.dataField);
@@ -289,7 +292,7 @@ function DeclinedProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {localStorage.getItem("accendpro4") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
