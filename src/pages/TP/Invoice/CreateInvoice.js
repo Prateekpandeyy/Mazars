@@ -9,6 +9,10 @@ import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import Paginator from "../../../components/Paginator/Paginator";
 
 const CreateInvoice = () => {
@@ -30,6 +34,15 @@ const CreateInvoice = () => {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [page, setPage] = useState(0);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
+  const [atPage, setAtpage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [countNotification, setCountNotification] = useState("");
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -81,37 +94,59 @@ const CreateInvoice = () => {
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     if (!sortVal) {
       let sort = {
-        val: 0,
-        field: 1,
+        orderBy: 0,
+        fieldBy: 0,
       };
       localStorage.setItem("freezetpInvoice2", JSON.stringify(sort));
     }
-    if (pageno) {
-      getProposalList(pageno);
-    } else {
-      getProposalList(1);
+    if (!pageno) {
+      pageno = 1;
     }
-    // getProposalList();
+    setPage(pageno);
+    setEnd(allEnd);
+    getProposalList(pageno);
   }, []);
 
   const getProposalList = (e) => {
-    let data = JSON.parse(localStorage.getItem("tpcreate"));
+    let searchData = JSON.parse(localStorage.getItem(`tpcreate`));
     let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
-    localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
-    let val = pagetry?.val;
-    let field = pagetry?.field;
+    let orderBy = 0;
+    let fieldBy = 0;
     let remainApiPath = "";
-    setOnPage(e);
-    setLoading(true);
-    if ((!data) && (!pagetry)) {
-      remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
-        userid
-      )}&invoice=0`
-    } else if ((!data) && (pagetry)) {
-      remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
-        userid
-      )}&invoice=0&orderby=${val}&orderbyfield=${field}`
-    } else { }
+    if (pagetry) {
+      orderBy = pagetry.orderBy;
+      fieldBy = pagetry.fieldBy;
+    }
+    
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.p_dateFrom ||
+      searchData?.p_dateTo ||
+      searchData?.query_no
+    ) {
+      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
+      &from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}`;
+    } else {
+      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+
+
+
+    // localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
+    // let val = pagetry?.val;
+    // let field = pagetry?.field;
+    // setOnPage(e);
+    // setLoading(true);
+    // if ((!data) && (!pagetry)) {
+    //   remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
+    //     userid
+    //   )}&invoice=0`
+    // } else if ((!data) && (pagetry)) {
+    //   remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
+    //     userid
+    //   )}&invoice=0&orderby=${val}&orderbyfield=${field}`
+    // } else { }
 
     axios
       .get(
@@ -119,9 +154,10 @@ const CreateInvoice = () => {
         myConfig
       )
       .then((res) => {
+        let droppage = [];
         if (res.data.code === 1) {
           let data = res.data.payment_detail;
-          // setRecords(res.data.result.length);
+          setRecords(res.data.total);
           let all = [];
           let customId = 1;
           if (e > 1) {
@@ -136,12 +172,31 @@ const CreateInvoice = () => {
             all.push(data);
           });
           setProposal(all);
-          setRecords(res.data.payment_detail.length);
-          setCount(res.data.total);
+
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
-
   };
+
   function headerLabelFormatter(column) {
     return (
       <div className="d-flex text-white w-100 flex-wrap">
@@ -155,15 +210,43 @@ const CreateInvoice = () => {
     );
   }
 
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getProposalList(1);
+    localStorage.setItem("tpInvoice2", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getProposalList(page - 1);
+    localStorage.setItem("tpInvoice2", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("tpInvoice2", Number(page) + 1);
+    getProposalList(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getProposalList(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("tpInvoice2", defaultPage.at(-1));
+  };
+
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
     let obj = {
-      // pageno: pageno,
-      val: val,
-      field: field,
-    }
+      orderBy: val,
+      fieldBy: field,
+    };
     localStorage.setItem(`tpInvoice2`, JSON.stringify(1))
     localStorage.setItem(`freezetpInvoice2`, JSON.stringify(obj));
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
@@ -175,7 +258,7 @@ const CreateInvoice = () => {
       searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `tl/getPaymentDetail?&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     }
     else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
@@ -189,8 +272,12 @@ const CreateInvoice = () => {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          setEnd(allEnd);
           let all = [];
           let sortId = 1;
+
           res.data.payment_detail.map((i) => {
             let data = {
               ...i,
@@ -199,8 +286,9 @@ const CreateInvoice = () => {
             sortId++;
             all.push(data);
           });
+
           setProposal(all);
-          setresetTrigger(!resetTrigger);
+          console.log("proposal", all);
         }
       });
   }
@@ -389,7 +477,11 @@ const CreateInvoice = () => {
   ];
 
   const resetPaging = () => {
-    setresetTrigger(!resetTrigger);
+    setPage(1);
+    setBig(1);
+    setOrderBy("");
+    setFiledBy("");
+    setAccend("");
     localStorage.removeItem("tpInvoice2");
     localStorage.removeItem(`freezetpInvoice2`);
     localStorage.removeItem("tpArrowInvoice2");
@@ -407,26 +499,78 @@ const CreateInvoice = () => {
               setRec={setRecords}
               records={records}
               userid={JSON.parse(userid)}
+              localPage="tpInvoice2"
+              setDefaultPage={setDefaultPage}
               resetPaging={resetPaging}
+              setCountNotification={setCountNotification}
+              page={page}
+              setPage={setPage}
+              setBig={setBig}
+              setEnd={setEnd}
             />
           </Row>
           <Row>
             <Col md="12" align="right">
-              <Paginator
-                setData={setProposal}
-                getData={getProposalList}
-                invoice="tpcreate"
-                index="tpInvoice2"
-                tpcreate="tpcreate"
-                setRec={setRecords}
-                records={records}
-                userid={JSON.parse(userid)}
-                count={count}
-                setOnPage={setOnPage}
-                resetTrigger={resetTrigger}
-                setresetTrigger={setresetTrigger}
-                resetPaging={resetPaging}
-              />
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span className="customPaginationSpan">
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div className="navButtonSelectDiv">
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getProposalList(Number(e.target.value));
+                          localStorage.setItem("admininvt2", e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
             </Col>
           </Row>
         </CardHeader>

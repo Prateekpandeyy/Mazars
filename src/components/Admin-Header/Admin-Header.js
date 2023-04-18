@@ -260,6 +260,8 @@ function AdminHeader({
       localStorage.removeItem("freezetpAssignment2");
       localStorage.removeItem("freezetpAssignment3");
       localStorage.removeItem("freezetpAssignment4");
+      localStorage.removeItem(`freezetpInvoice1`);
+      localStorage.removeItem(`freezetpInvoice2`);
       localStorage.removeItem("tpQuery1");
       localStorage.removeItem("tpQuery2");
       localStorage.removeItem("tpQuery3");
@@ -275,6 +277,8 @@ function AdminHeader({
       localStorage.removeItem("tpAssignment2");
       localStorage.removeItem("tpAssignment3");
       localStorage.removeItem("tpAssignment4");
+      localStorage.removeItem("tpInvoice1");
+      localStorage.removeItem("tpInvoice2");
       localStorage.removeItem("tpArrowQuery1");
       localStorage.removeItem("tpArrowQuery2");
       localStorage.removeItem("tpArrowQuery3");
@@ -290,6 +294,8 @@ function AdminHeader({
       localStorage.removeItem("tpArrowAs2");
       localStorage.removeItem("tpArrowAs3");
       localStorage.removeItem("tpArrowAs4");
+      localStorage.removeItem("tpArrowInvoice1");
+      localStorage.removeItem("tpArrowInvoice2");
 
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {

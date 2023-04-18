@@ -314,7 +314,7 @@ function AssignmentTab(props) {
     }
     localStorage.setItem(`tpAssignment1`, JSON.stringify(1))
     localStorage.setItem(`freezetpAssignment1`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatatp"));
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     if (data) {
       if (status.length > 0) {
         remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store

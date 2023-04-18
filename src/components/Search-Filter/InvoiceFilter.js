@@ -70,6 +70,8 @@ const InvoiceFilter = (props) => {
       });
     } else if (props.invoice == "tpcreate") {
       const token = window.localStorage.getItem("tptoken");
+
+      let customId = 1;
       axios({
         method: "POST",
         url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=0`,
@@ -78,14 +80,16 @@ const InvoiceFilter = (props) => {
         },
         data: formData,
       }).then((res) => {
-        if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
-        }
+        updateResult(res);
+        // if (res.data.code === 1) {
+        //   props.setData(res.data.payment_detail);
+        //   props.setRec(res.data.payment_detail.length);
+        // }
       });
     } else if (props.invoice == "tpgenerated") {
       const token = window.localStorage.getItem("tptoken");
 
+      let customId = 1;
       axios({
         method: "POST",
         url: `${baseUrl}/tl/getPaymentDetail?tp_id=${props.userid}&invoice=1`,
@@ -94,23 +98,11 @@ const InvoiceFilter = (props) => {
         },
         data: formData,
       }).then((res) => {
-        if (res.data.code === 1) {
-          let customId = 1;
-          let data = res.data.payment_detail;
-          let all = [];
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          localStorage.setItem(`tpInvoice1`, JSON.stringify(1));
-          props.setData(all);
-          props.setRec(res.data.payment_detail.length);
-          props.setCount(res.data.total);
-        }
+        updateResult(res);
+        // if (res.data.code === 1) {
+        //   props.setData(res.data.payment_detail);
+        //   props.setRec(res.data.payment_detail.length);
+        // }
       });
     } else if (props.invoice == "admingenerated") {
       const token = window.localStorage.getItem("adminToken");
@@ -165,10 +157,9 @@ const InvoiceFilter = (props) => {
     setFromDate("");
     setToDate("");
     setStatus("");
-    localStorage.removeItem(props.invoice);
     props.resetPaging();
+    localStorage.removeItem(props.invoice);
     props.getData(1);
-
   };
   const updateResult = (res) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
@@ -386,8 +377,8 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-            props.invoice === "tpcreate" ||
-            props.invoice === "admincreate" ? (
+          props.invoice === "tpcreate" ||
+          props.invoice === "admincreate" ? (
             ""
           ) : (
             <>

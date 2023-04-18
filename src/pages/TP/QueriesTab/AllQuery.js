@@ -177,15 +177,15 @@ const sortMessage = (val, field) => {
   let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
 
   if (data) {
-    remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${data.store
-      }&from=${data.fromDate
+    remainApiPath = `tl/getIncompleteQues?page=1&tp_id=${JSON.parse(
+      userid
+    )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      ?.split("-")
+      .reverse()
+      .join("-")}&to=${data.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&to=${data.toDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+        .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
   } else {
     remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
   }
@@ -213,7 +213,6 @@ const sortMessage = (val, field) => {
           all.push(data);
         });
         setInCompleteData(all);
-        // resetTriggerFunc();
         setresetTrigger(!resetTrigger);
       }
     });

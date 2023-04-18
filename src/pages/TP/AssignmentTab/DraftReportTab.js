@@ -196,7 +196,7 @@ function AssignmentTab() {
             if (e > 1) {
               customId = allEnd * (e - 1) + 1;
             }
-            data.map((i) => {
+            data?.map((i) => {
               let data = {
                 ...i,
                 cid: customId,
@@ -303,7 +303,7 @@ function AssignmentTab() {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
-          res.data.result.map((i) => {
+          res.data.result?.map((i) => {
             let data = {
               ...i,
               cid: sortId,
@@ -793,7 +793,7 @@ function AssignmentTab() {
               if (e > 1) {
                 customId = allEnd * (e - 1) + 1;
               }
-              data.map((i) => {
+              data?.map((i) => {
                 let data = {
                   ...i,
                   cid: customId,
@@ -827,7 +827,7 @@ function AssignmentTab() {
                 if (e > 1) {
                   customId = allEnd * (e - 1) + 1;
                 }
-                data.map((i) => {
+                data?.map((i) => {
                   let data = {
                     ...i,
                     cid: customId,
@@ -897,7 +897,7 @@ function AssignmentTab() {
                     onChange={handleCategory}
                     value={selectedData}
                   >
-                    {categoryData.map((p, index) => (
+                    {categoryData?.map((p, index) => (
                       <Option value={p.details} key={index}>
                         {p.details}
                       </Option>

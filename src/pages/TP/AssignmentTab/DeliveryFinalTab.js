@@ -595,7 +595,24 @@ function AssignmentTab() {
     {
       text: "Deliverable",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function (cell, row) {
         return (

@@ -568,9 +568,9 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = ``
-            } else if ((data) && (pagetry)) {
-                remainApiPath = ``
+                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}`
+            } else if ((data && Object.values(data).length > 0) && (pagetry)) {
+                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
@@ -582,16 +582,28 @@ function Paginator(props) {
             }
         }
         else if (tpcreate == "tpcreate") {
-            let data = JSON.parse(localStorage.getItem("tpcreate"));
+            let searchData = JSON.parse(localStorage.getItem("tpcreate"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpInvoice2`, JSON.stringify(e));
-            if ((data) && (!pagetry)) {
-                remainApiPath = ``
-            } else if ((data) && (pagetry)) {
-                remainApiPath = ``
-            } else if ((!data) && (pagetry)) {
+            if ((
+                searchData?.installment_no ||
+                searchData?.opt ||
+                searchData?.p_dateFrom ||
+                searchData?.p_dateTo ||
+                searchData?.query_no
+              ) && (!pagetry)) {
+                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}`
+            } else if ((
+                searchData?.installment_no ||
+                searchData?.opt ||
+                searchData?.p_dateFrom ||
+                searchData?.p_dateTo ||
+                searchData?.query_no
+              ) && (pagetry)) {
+                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`
+            } else if ((!searchData) && (pagetry)) {
                 remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&invoice=0&orderby=${val}&orderbyfield=${field}`

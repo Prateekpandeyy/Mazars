@@ -80,8 +80,8 @@ function InCompleteData({ CountIncomplete, data }) {
       <div>
       {column.dataField === "Exp_Delivery_Date" ?
         (
-          <div className="d-flex text-white w-100 flex-wrap flex-row-reverse">
-            {column.text}
+          <div className="d-flex text-white w-100 flex-wrap justify-content-between">
+            <span style={{"color":"#fff","width":"84%"}}>{column.text}</span>
             {accend === column.dataField ? (
               <ArrowDropDownIcon />
             ) : (
@@ -91,7 +91,7 @@ function InCompleteData({ CountIncomplete, data }) {
         )
         :
         (
-          <div className="d-flex text-white w-100 flex-wrap">
+          <div className="d-flex text-white w-100 flex-wrap justify-content-between">
             {column.text}
             {accend === column.dataField ? (
               <ArrowDropDownIcon />
