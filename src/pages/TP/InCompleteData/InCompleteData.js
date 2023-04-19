@@ -259,6 +259,7 @@ function InCompleteData({ CountIncomplete, data }) {
             all.push(data);
           });
           setInCompleteData(all);
+          setresetTrigger(!resetTrigger);
         }
       });
   };
