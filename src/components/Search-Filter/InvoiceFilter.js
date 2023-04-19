@@ -7,6 +7,7 @@ const InvoiceFilter = (props) => {
   const { handleSubmit, register, errors, reset } = useForm();
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
+  const [perPage, setPerPage] = useState(5);
   const [toDate, setToDate] = useState("");
   const [status, setStatus] = useState("");
   const [installmentno, setInstallmentNo] = useState("");
@@ -15,26 +16,46 @@ const InvoiceFilter = (props) => {
     let data = JSON.parse(localStorage.getItem(`${props.invoice}`));
     if (data) {
       setQueryNo(data.query_no);
+
       setInstallmentNo(data.payment_plan);
       setFromDate(data.p_dateFrom);
       setToDate(data.p_dateTo);
       setStatus(data.opt);
       setPaymentPlan(data.installment_no);
     }
+    if (props.invoice == "admincreate" || props.invoice == "admingenerated") {
+      setPerPage(Number(localStorage.getItem("admin_record_per_page")));
+    } else if (props.invoice == "tpcreate" || props.invoice == "tpgenerated") {
+      setPerPage(Number(localStorage.getItem("tp_record_per_page")));
+    } else if (props.invoice == "tlcreate" || props.invoice == "generated") {
+      setPerPage(Number(localStorage.getItem("tl_record_per_page")));
+    } else {
+      setPerPage(5);
+    }
   }, []);
   const onSubmit = (data) => {
     let formData = new FormData();
     formData.append("qno", data.query_no);
-    formData.append("from", data.p_dateFrom);
-    formData.append("to", data.p_dateTo);
+
     formData.append("payment_plan", data.payment_plan);
+    if (
+      props.invoice == "tlcreate" ||
+      props.invoice === "tpcreate" ||
+      props.invoice === "admincreate"
+    ) {
+      formData.append("from", "");
+      formData.append("to", "");
+      formData.append("status", "");
+    } else {
+      formData.append("from", data.p_dateFrom);
+      formData.append("to", data.p_dateTo);
+      formData.append("status", data.opt);
+    }
     {
       data.installment_no
         ? formData.append("installment_no", data.installment_no)
         : formData.append("installment_no", "");
     }
-
-    formData.append("status", paymentPlan);
 
     // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
@@ -157,7 +178,8 @@ const InvoiceFilter = (props) => {
     props.getData(1);
   };
   const updateResult = (res) => {
-    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let allEnd = perPage;
+    // let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     localStorage.setItem(props.localPage, 1);
     let returnData = JSON.parse(localStorage.getItem(`${props.invoice}`));
     let droppage = [];
@@ -237,7 +259,7 @@ const InvoiceFilter = (props) => {
               <option value="4">4</option>
             </select>
           </div>
-          {installmentno === "3A" || installmentno === "4" ? (
+          {installmentno === "3A" ? (
             <div className="col-md-2">
               <input
                 ref={register}

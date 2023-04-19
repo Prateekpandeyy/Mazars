@@ -53,10 +53,10 @@ function AllProposal({ setAllProposal }) {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [viewProposalModal]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
@@ -51,7 +51,6 @@ function DeclinedProposal() {
     }
   }, [ViewDiscussion]);
 
-
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.id);
@@ -59,10 +58,10 @@ function DeclinedProposal() {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [viewProposalModal]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
 
   useEffect(() => {
     getProposalList();
@@ -96,12 +95,14 @@ function DeclinedProposal() {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div
-        id={row.assign_no}
-        ref={(el) => (myRef.current[row.assign_no] = el)}
-      >
-        {rowIndex + 1}
-      </div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {rowIndex + 1}
+          </div>
+        );
       },
 
       headerStyle: () => {

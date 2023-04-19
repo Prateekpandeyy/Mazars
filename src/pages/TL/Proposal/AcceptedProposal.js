@@ -54,10 +54,10 @@ function AcceptedProposal() {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [viewProposalModal]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
 
   useEffect(() => {
     getProposalList();

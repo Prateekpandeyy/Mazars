@@ -49,8 +49,8 @@ function CompletedQuery({ updateTab }) {
   const toggle = (key) => {
     console.log("keyyyy", typeof key);
     setModal(!modal);
-    if(modal === false){
-      setScrolledTo(key)
+    if (modal === false) {
+      setScrolledTo(key);
     }
     if (typeof key === "string") {
       axios
@@ -67,12 +67,11 @@ function CompletedQuery({ updateTab }) {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [modal]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [modal]);
 
-  
   const getInCompleteAssingment = () => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery4"));
     if (!searchData) {
@@ -95,8 +94,11 @@ function CompletedQuery({ updateTab }) {
       text: "S.no",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id} 
-        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
