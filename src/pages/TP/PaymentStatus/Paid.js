@@ -120,8 +120,8 @@ function AllPayment() {
 
   useEffect(() => {
 
-    let pageno = JSON.parse(localStorage.getItem("tpPayment2"));
-    let arrow = localStorage.getItem("tpArrowPayment2")
+    let pageno = JSON.parse(localStorage.getItem("tpPayment3"));
+    let arrow = localStorage.getItem("tpArrowPayment3")
     if (arrow) {
       setAccend(arrow);
     }
@@ -154,8 +154,8 @@ function AllPayment() {
   }, [ViewDiscussion]);
 
   const getPaymentStatus = (e) => {
-    let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
-    let pagetry = JSON.parse(localStorage.getItem("freezetpPayment2"))
+    let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpPayment3"))
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
@@ -249,7 +249,7 @@ function AllPayment() {
           field: field,
         }
     localStorage.setItem(`tpPayment3`, JSON.stringify(1))
-    localStorage.setItem(`freezetpPayment2`, JSON.stringify(obj));
+    localStorage.setItem(`freezetpPayment3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
      if (data) {
           remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
@@ -312,10 +312,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -363,10 +363,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -385,10 +385,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -407,10 +407,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -441,10 +441,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -477,10 +477,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -514,10 +514,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -550,10 +550,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("tpArrowPayment2", field);
+          localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
+          localStorage.removeItem("tpArrowPayment3");
         }
         if (accend === field) {
           val = 0;
@@ -651,7 +651,7 @@ function AllPayment() {
               getData={getPaymentStatus}
               Paid="Paid"
               setRecords={setRecords}
-              index="tppayment2"
+              index="tppayment3"
               records={records}
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
@@ -664,7 +664,7 @@ function AllPayment() {
               getData={getPaymentStatus}
               Paid="Paid"
               setRecords={setRecords}
-              index="tppayment2"
+              index="tppayment3"
               records={records}
                 count={count}
                 setOnPage={setOnPage}

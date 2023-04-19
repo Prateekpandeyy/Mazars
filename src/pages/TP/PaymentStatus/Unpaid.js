@@ -649,7 +649,7 @@ function AllPayment() {
               getData={getPaymentStatus}
               Unpaid="Unpaid"
               setRecords={setRecords}
-              index="tppayment3"
+              index="tppayment2"
               records={records}
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
@@ -662,7 +662,7 @@ function AllPayment() {
                 getData={getPaymentStatus}
                 Unpaid="Unpaid"
                 setRecords={setRecords}
-                index="tppayment3"
+                index="tppayment2"
                 records={records}
                 count={count}
                 setOnPage={setOnPage}

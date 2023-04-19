@@ -110,10 +110,10 @@ function Paginator(props) {
             setPageno(JSON.parse(localStorage.getItem("tpPayment1")))
         }
         else if (index === "tppayment2") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpPayment2")))
         }
         else if (index === "tppayment3") {
-
+            setPageno(JSON.parse(localStorage.getItem("tpPayment3")))
         }
         else if (index === "tpInvoice1") {
             setPageno(JSON.parse(localStorage.getItem("tpInvoice1")))
@@ -462,7 +462,7 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpPayment1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
@@ -473,7 +473,7 @@ function Paginator(props) {
                         .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
                 )}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
@@ -484,9 +484,9 @@ function Paginator(props) {
                         .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`
+                remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(userid)}`
             }
         }
         else if (Unpaid == "Unpaid") {
@@ -534,23 +534,23 @@ function Paginator(props) {
             if ((data) && (!pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
-                )}&cat_id=${data.store}&from=${data.fromDate
+                  )}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                      ?.split("-")
+                      .reverse()
+                      .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
-                )}&cat_id=${data.store}&from=${data.fromDate
+                  )}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
-                        ?.split("-")
-                        .reverse()
-                        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+                      ?.split("-")
+                      .reverse()
+                      .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
@@ -888,23 +888,6 @@ function Paginator(props) {
             }
         }
     }, [count]);
-
-    // useEffect(() => {
-    //     console.log('in useEffect pageno', pageno);
-    //     if (pageno > 1) {
-    //         setPage(pageno);
-    //         setAtpage(pageno);
-    //         setting(pageno);
-    //         setOnPage(pageno);
-    //     } else {
-    //         setPage(1);
-    //         setAtpage(1);
-    //         setOnPage(1);
-    //         setting(1);
-    //     }
-    // }, [pageno]);
-
-
 
     return (
         <div className="customPagination">

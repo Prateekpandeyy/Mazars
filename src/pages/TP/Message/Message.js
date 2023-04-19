@@ -12,9 +12,9 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function Message(props) {
   const userId = window.localStorage.getItem("tpkey");
@@ -49,9 +49,9 @@ function Message(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
+          <ArrowDropDownIcon />
         ) : (
-          <ArrowUpwardIcon />
+          <ArrowDropUpIcon />
         )}
       </div>
     );

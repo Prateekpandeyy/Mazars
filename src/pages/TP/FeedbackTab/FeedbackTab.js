@@ -17,8 +17,8 @@ import Swal from 'sweetalert2';
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function FeedbackTab() {
 
   const history = useHistory();
@@ -49,9 +49,9 @@ function FeedbackTab() {
       <div className="d-flex text-white w-100 flex-wrap">
         {column.text}
         {accend === column.dataField ? (
-          <ArrowDownwardIcon />
+          <ArrowDropDownIcon />
         ) : (
-          <ArrowUpwardIcon />
+          <ArrowDropUpIcon />
         )}
       </div>
     );
