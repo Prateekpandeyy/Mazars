@@ -121,12 +121,10 @@ const CreateInvoice = () => {
     if (
       searchData?.installment_no ||
       searchData?.opt ||
-      searchData?.p_dateFrom ||
-      searchData?.p_dateTo ||
       searchData?.query_no
     ) {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
-      &from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}`;
+      &installment_no=${searchData?.installment_no}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -254,11 +252,9 @@ const CreateInvoice = () => {
     if (
       searchData?.installment_no ||
       searchData?.opt ||
-      searchData?.p_dateFrom ||
-      searchData?.p_dateTo ||
       searchData?.query_no
     ) {
-      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     }
     else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(

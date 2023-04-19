@@ -38,17 +38,18 @@ const InvoiceFilter = (props) => {
     formData.append("qno", data.query_no);
 
     formData.append("payment_plan", data.payment_plan);
-    if( props.invoice == "tlcreate" ||
-    props.invoice === "tpcreate" ||
-    props.invoice === "admincreate"){
+    if (
+      props.invoice == "tlcreate" ||
+      props.invoice === "tpcreate" ||
+      props.invoice === "admincreate"
+    ) {
       formData.append("from", "");
       formData.append("to", "");
-      formData.append("status","")
-    }
-    else{
+      formData.append("status", "");
+    } else {
       formData.append("from", data.p_dateFrom);
       formData.append("to", data.p_dateTo);
-      formData.append("status", paymentPlan)
+      formData.append("status", data.opt);
     }
     {
       data.installment_no

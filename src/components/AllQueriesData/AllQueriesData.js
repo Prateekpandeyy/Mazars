@@ -38,10 +38,9 @@ function AllQueriesData() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
-  const [orderby, setOrderBy] = useState("0");
-  const [fieldBy, setFiledBy] = useState("0");
   const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+
   const myRef = useRef([]);
 
   function headerLabelFormatter(column, colIndex) {
@@ -74,7 +73,7 @@ function AllQueriesData() {
       </div>
     );
   }
-  console.log("Previous", prev);
+
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminqp1"));
     if (!localPage) {
@@ -210,8 +209,7 @@ function AllQueriesData() {
     };
     localStorage.setItem("adminqp1", 1);
     localStorage.setItem("sortedValue1", JSON.stringify(sort));
-    setOrderBy(val);
-    setFiledBy(field);
+
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery1`));
     let remainApiPath = "";
     if (searchData) {
@@ -513,8 +511,7 @@ function AllQueriesData() {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-    setOrderBy("");
-    setFiledBy("");
+
     localStorage.removeItem("adminqp1");
     localStorage.removeItem("sortedValue1");
     localStorage.removeItem("accendq1");
