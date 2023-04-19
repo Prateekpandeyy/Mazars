@@ -382,8 +382,10 @@ function FinalReport() {
   const columns = [
     {
       text: "S.no",
-      dataField: "cid",
-
+      dataField: "",
+      formatter: (cellContent, row, rowIndex) => {
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+      },
       headerStyle: () => {
         return { width: "50px" };
       },

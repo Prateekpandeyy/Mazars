@@ -322,7 +322,7 @@ function AssignmentTab(props) {
     localStorage.setItem(`freezetpAssignment1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     if (data) {
-      if (status.length > 0) {
+      if (data?.stage_status?.length > 0) {
         remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
           }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
           }&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
@@ -888,7 +888,7 @@ function AssignmentTab(props) {
     localStorage.setItem(`searchDatatpAssignment1`, JSON.stringify(obj));
 
     if (data.route) {
-      if (status.length > 0) {
+      if (status?.length > 0) {
         if (pagetry) {
           remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status
@@ -944,34 +944,24 @@ function AssignmentTab(props) {
           }
         });
     } else {
-      if (status.length > 0) {
-        if (pagetry) {
+      if (status?.length > 0) {
           remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-        } else if (!pagetry) {
-          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`
-        } else { }
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=${status}&stages_status=${
+            data.p_status
+          }&pcat_id=${selectedData}&qno=${data.query_no}`
+        
       } else {
-        if (pagetry) {
           remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-        } else if (!pagetry) {
-          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&assignment_status=${status}&stages_status=${data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`
-        } else { }
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=${status}&stages_status=${
+            data.p_status
+          }&pcat_id=${selectedData}&qno=${data.query_no}`
+      }
         axios
           .get(
             `${baseUrl}/${remainApiPath}`,
@@ -1003,45 +993,13 @@ function AssignmentTab(props) {
                 localStorage.removeItem(`freezetpAssignment1`);
                 localStorage.removeItem("tpArrowAs1");
                 setAccend("");
-
               }
             }
           });
       }
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              let data = res.data.result;
-              setRecords(res.data.result.length);
-              let all = [];
-              let customId = 1;
-              if (e > 1) {
-                customId = allEnd * (e - 1) + 1;
-              }
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setAssignment(all);
-              setRecords(res.data.result.length);
-              setCount(res.data.total);
-              setresetTrigger(!resetTrigger);
-            }
-          }
-        });
-    }
-
   };
+
+  
 
   const Reset = () => {
     return (

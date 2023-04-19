@@ -274,7 +274,7 @@ function AdminPermission(props) {
     localStorage.setItem(`freezetpAssignment4`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
     if (data) {
-      if (data.stage_status.length > 0) {
+      if (data?.stage_status?.length > 0) {
         remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(
           userid
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate

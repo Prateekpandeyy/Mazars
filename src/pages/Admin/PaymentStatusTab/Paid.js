@@ -308,9 +308,11 @@ function Paid() {
 
   const columns = [
     {
-      dataField: "cid",
+      dataField: "",
       text: "S.no",
-
+      formatter: (cellContent, row, rowIndex) => {
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+      },
       headerStyle: () => {
         return { width: "50px" };
       },

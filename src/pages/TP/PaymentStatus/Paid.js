@@ -162,7 +162,7 @@ function AllPayment() {
     setOnPage(e);
 
     if ((data) && (!pagetry)){
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
@@ -173,7 +173,7 @@ function AllPayment() {
           .join("-")}&status=2&pcat_id=${
             data.pcatId}&qno=${data.query_no}`
     }else if ((data) && (pagetry)){
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
@@ -184,11 +184,11 @@ function AllPayment() {
           .join("-")}&status=2&pcat_id=${
             data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     }else if ((!data) && (pagetry)){
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&status=2&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&status=2`
     }
@@ -252,7 +252,7 @@ function AllPayment() {
     localStorage.setItem(`freezetpPayment3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
      if (data) {
-          remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+          remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
             userid
           )}&cat_id=${data.store}&from=${data.fromDate
             ?.split("-")
@@ -264,7 +264,7 @@ function AllPayment() {
                 data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
         }
         else{
-          remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+          remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
             userid
           )}&status=2&orderby=${val}&orderbyfield=${field}`
         }
