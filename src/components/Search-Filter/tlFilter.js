@@ -37,6 +37,17 @@ function TeamFilter(props) {
     Unpaid,
     Paid,
     index,
+    countNotification,
+    setCountNotification,
+    big,
+    end,
+    setBig,
+    setEnd,
+    pageValue,
+    page,
+    setPage,
+    defaultPage,
+    setDefaultPage,
   } = props;
   const userid = window.localStorage.getItem("tlkey");
 
@@ -51,15 +62,15 @@ function TeamFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const [showSubCat, setShowSubCat] = useState([]);
   const [catShowData, setCatShowData] = useState([]);
-  const [countNotification, setCountNotification] = useState("");
+
   const [totalPages, setTotalPages] = useState(1);
-  const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(50);
-  const [page, setPage] = useState(0);
+  // const [big, setBig] = useState(1);
+  // const [end, setEnd] = useState(50);
+  // const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
@@ -104,6 +115,7 @@ function TeamFilter(props) {
   //reset date
   const resetData = () => {
     localStorage.removeItem(`searchData${index}`);
+    localStorage.removeItem(pageValue);
     reset();
     setSelectedData([]);
     setStore2([]);
@@ -117,8 +129,8 @@ function TeamFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    getData();
-    dateValue.current.clearValue();
+    getData(1);
+    // dateValue.current.clearValue();
   };
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -211,6 +223,7 @@ function TeamFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCountNotification(res.data.total);
               }
             }
           });
@@ -903,7 +916,7 @@ function TeamFilter(props) {
     setAtpage(1);
     setPage(1);
     getData(1);
-    localStorage.setItem("tlqp1", 1);
+    localStorage.setItem(pageValue, 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -911,21 +924,21 @@ function TeamFilter(props) {
     }
     setPage(Number(page) - 1);
     getData(page - 1);
-    localStorage.setItem("tlqp1", Number(page) - 1);
+    localStorage.setItem(pageValue, Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("tlqp1", Number(page) + 1);
+    localStorage.setItem(pageValue, Number(page) + 1);
     getData(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getData(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("tlqp1", defaultPage.at(-1));
+    localStorage.setItem(pageValue, defaultPage.at(-1));
   };
   // console.log("selectedData", selectedData);
   return (
@@ -1185,7 +1198,7 @@ function TeamFilter(props) {
                     onChange={(e) => {
                       setPage(Number(e.target.value));
                       getData(Number(e.target.value));
-                      localStorage.setItem("tlqp1", e.target.value);
+                      localStorage.setItem(pageValue, e.target.value);
                     }}
                     className="form-control"
                   >
