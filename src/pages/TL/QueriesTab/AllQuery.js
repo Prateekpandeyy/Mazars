@@ -9,10 +9,7 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,47 +30,19 @@ function AllQuery({ setAllQuery }) {
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
-  const [open, setOpen] = useState(true);
+
   const [countNotification, setCountNotification] = useState("");
-  const [totalPages, setTotalPages] = useState(1);
+
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
-  const [atPage, setAtpage] = useState(1);
+
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
 
   const myRef = useRef([]);
-  const myRefs = useRef([]);
-  const firstChunk = () => {
-    setAtpage(1);
-    setPage(1);
-    getInCompleteAssingment(1);
-    localStorage.setItem("tlqp1", 1);
-  };
-  const prevChunk = () => {
-    if (atPage > 1) {
-      setAtpage((atPage) => atPage - 1);
-    }
-    setPage(Number(page) - 1);
-    getInCompleteAssingment(page - 1);
-    localStorage.setItem("tlqp1", Number(page) - 1);
-  };
-  const nextChunk = () => {
-    if (atPage < totalPages) {
-      setAtpage((atPage) => atPage + 1);
-    }
-    setPage(Number(page) + 1);
-    localStorage.setItem("tlqp1", Number(page) + 1);
-    getInCompleteAssingment(page + 1);
-  };
-  const lastChunk = () => {
-    setPage(defaultPage.at(-1));
-    getInCompleteAssingment(defaultPage.at(-1));
-    setAtpage(totalPages);
-    localStorage.setItem("tlqp1", defaultPage.at(-1));
-  };
+
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
@@ -146,11 +115,12 @@ function AllQuery({ setAllQuery }) {
       };
       localStorage.setItem("sortedValuetlq1", JSON.stringify(sort));
     }
-    setPage(localPage);
+
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
     getInCompleteAssingment(localPage);
   }, []);
   const getInCompleteAssingment = (e) => {
+    setPage(e);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
@@ -187,7 +157,7 @@ function AllQuery({ setAllQuery }) {
         if (res.data.code === 1) {
           let data = res.data.result;
           setAllQuery(res.data.total);
-          setOpen(false);
+
           setCountNotification(res.data.total);
           setRecords(res.data.total);
           let all = [];
@@ -555,74 +525,21 @@ function AllQuery({ setAllQuery }) {
             AllQuery="AllQuery"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlqp1"
             index="tlquery1"
           />
         </CardHeader>
         <CardBody>
-          {/* <Row>
-            <Col md="12" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span className="customPaginationSpan">
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => firstChunk()}
-                        >
-                          <KeyboardDoubleArrowLeftIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => prevChunk()}
-                        >
-                          <KeyboardArrowLeftIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div className="navButtonSelectDiv">
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(Number(e.target.value));
-                          getInCompleteAssingment(Number(e.target.value));
-                          localStorage.setItem("tlqp1", e.target.value);
-                        }}
-                        className="form-control"
-                      >
-                        {defaultPage?.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage?.length > page ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => nextChunk()}
-                        >
-                          <KeyboardArrowRightIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => lastChunk()}
-                        >
-                          <KeyboardDoubleArrowRightIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row> */}
           {incompleteData.length > 0 && columns ? (
             <DataTablepopulated
               bgColor="#55425f"

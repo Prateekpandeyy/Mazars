@@ -14,8 +14,18 @@ import MessageIcon, {
   EditQuery,
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function InprogressProposal() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
@@ -27,9 +37,65 @@ function InprogressProposal() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const [lastDown, setLastDown] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
   const myRefs = useRef([]);
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
 
+    if (
+      localStorage.getItem("accendtlpro4") === column.dataField ||
+      localStorage.getItem("prevtlpro4") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlpro4", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlpro4") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+  useEffect(() => {
+    let localPage = Number(localStorage.getItem("tlpro4"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlpro4"));
+    setPrev(localStorage.getItem("prevtlpro4"));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpro4"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlpro4", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getProposalList(localPage);
+  }, []);
   const chatHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setId(key.assign_no);
@@ -67,30 +133,89 @@ function InprogressProposal() {
     runTo?.scrollIntoView({ block: "center" });
   }, [viewProposalModal]);
 
-  useEffect(() => {
-    getProposalList();
-  }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  const getProposalList = () => {
+  const getProposalList = (e) => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlproposal2"));
-    if (!searchData) {
-      axios
-        .get(
-          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&status=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setProposal(res.data.result);
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
 
-            setRecords(res.data.result.length);
+    if (searchData) {
+      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          let droppage = [];
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setRecords(res.data.result.length);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
@@ -338,6 +463,17 @@ function InprogressProposal() {
             InprogressProposal="InprogressProposal"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlpro4"
             index="tlproposal2"
           />
         </CardHeader>

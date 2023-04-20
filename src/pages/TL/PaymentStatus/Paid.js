@@ -30,8 +30,18 @@ import MessageIcon, {
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
 import moment from "moment";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AllPayment() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const cust_id = window.localStorage.getItem("userid");
   const [records, setRecords] = useState([]);
@@ -46,7 +56,64 @@ function AllPayment() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendtlpay2") === column.dataField ||
+      localStorage.getItem("prevtlpay2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlpay2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlpay2") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+  useEffect(() => {
+    let localPage = Number(localStorage.getItem("tlpay2"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlpay2"));
+    setPrev(localStorage.getItem("prevtlpay2"));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpay2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlpay2", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getPaymentStatus(localPage);
+  }, []);
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -60,7 +127,7 @@ function AllPayment() {
     setAssignNo(key.assign_no);
     if (addPaymentModal === false) {
       setScrolledTo(key.assign_no);
-      }
+    }
   };
 
   useEffect(() => {
@@ -78,24 +145,84 @@ function AllPayment() {
       uit: token,
     },
   };
-  useEffect(() => {
-    getPaymentStatus();
-  }, []);
 
-  const getPaymentStatus = () => {
-    let data = JSON.parse(localStorage.getItem("searchDatatlpayment2"));
-    axios
-      .get(
-        `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}&status=2`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPayment(res.data.result);
-          setCount(res.data.result.length);
-          setRecords(res.data.result.length);
+  const getPaymentStatus = (e) => {
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlpayment2"));
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay2"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
+    if (searchData) {
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
+        userid
+      )}&page=${e}&status=2&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let droppage = [];
+        let data = res.data.result;
+
+        setCountNotification(res.data.total);
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setRecords(res.data.result.length);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   const ViewDiscussionToggel = (key) => {
@@ -364,6 +491,17 @@ function AllPayment() {
             Paid="Paid"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlpay2"
             index="tlpayment2"
           />
         </CardHeader>
