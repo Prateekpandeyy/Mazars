@@ -20,16 +20,27 @@ import MessageIcon, {
 import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AllProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
   const [assignNo, setAssignNo] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
@@ -86,6 +97,8 @@ function AllProposal() {
     let arrow = localStorage.getItem("tpArrowProposal1")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpProposal1"));
     if (!sortVal) {
@@ -108,16 +121,38 @@ function AllProposal() {
   }, []);
 
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   const getProposalList = (e) => {
@@ -129,29 +164,29 @@ function AllProposal() {
     let remainApiPath = "";
     setOnPage(e);
     if ((data) && (!pagetry)) {
-      remainApiPath =`tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-      }`
-    }else if ((data) && (pagetry)){
-      remainApiPath =`tl/getProposalTl?page=${e}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+        }`
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `tl/getProposalTl?page=${e}&cat_id=${data.store
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
-      remainApiPath =`tl/getProposalTl?page=${e}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath =`tl/getProposalTl?tp_id=${JSON.parse(userid)}&page=${e}`
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
+        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
+      remainApiPath = `tl/getProposalTl?page=${e}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&page=${e}`
     }
 
     axios
@@ -228,6 +263,7 @@ function AllProposal() {
             all.push(data);
           });
           setProposal(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -254,6 +290,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -304,6 +341,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -327,6 +365,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -349,6 +388,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -390,6 +430,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -420,6 +461,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -449,6 +491,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -490,6 +533,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -519,6 +563,7 @@ function AllProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal1", field);
         } else {
           setAccend("");
@@ -614,6 +659,7 @@ function AllProposal() {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpPropsosal1");
     localStorage.removeItem(`freezetpProposal1`);
     localStorage.removeItem("tpArrowProposal1");

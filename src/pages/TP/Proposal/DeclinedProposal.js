@@ -19,10 +19,19 @@ import MessageIcon, {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 
 function DeclinedProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
@@ -32,6 +41,8 @@ function DeclinedProposal() {
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
   const [scrolledTo, setScrolledTo] = useState("");
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
@@ -78,16 +89,38 @@ function DeclinedProposal() {
   };
 
   function headerLabelFormatter(column) {
+    // let reverse = "Exp_Delivery_Date"
     return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+      <div>
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
       </div>
-    );
+    )
   }
 
   useEffect(() => {
@@ -104,6 +137,8 @@ function DeclinedProposal() {
     let arrow = localStorage.getItem("tpArrowProposal4")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpProposal4"));
     if (!sortVal) {
@@ -130,55 +165,55 @@ function DeclinedProposal() {
     setOnPage(e);
     if ((data) && (!pagetry)) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
     } else if ((data) && (pagetry)) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3`
     }
 
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setProposal(all);
-            setCount(res.data?.total);
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
-    
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposal(all);
+          setCount(res.data?.total);
+        }
+      });
+
   };
 
   const sortMessage = (val, field) => {
@@ -224,6 +259,7 @@ function DeclinedProposal() {
             all.push(data);
           });
           setProposal(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -251,6 +287,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -302,6 +339,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -324,6 +362,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -346,6 +385,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -387,6 +427,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -417,6 +458,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -446,6 +488,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -480,6 +523,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -509,6 +553,7 @@ function DeclinedProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal4", field);
         } else {
           setAccend("");
@@ -604,6 +649,7 @@ function DeclinedProposal() {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpPropsosal4");
     localStorage.removeItem(`freezetpProposal4`);
     localStorage.removeItem("tpArrowProposal4");
@@ -624,6 +670,7 @@ function DeclinedProposal() {
               index="tpproposal4"
               records={records}
               setCount={setCount}
+              resetTriggerFunc={resetTriggerFunc}
             />
           </Row>
           <Row>

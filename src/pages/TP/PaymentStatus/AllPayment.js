@@ -35,12 +35,21 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AllPayment() {
   const { id } = useParams();
   const userid = window.localStorage.getItem("tpkey");
   const cust_id = window.localStorage.getItem("userid");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
 
   const [pay, setPay] = useState([]);
@@ -59,6 +68,8 @@ function AllPayment() {
   const [sortField, setSortField] = useState('');
   const [accend, setAccend] = useState(false);
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
 
   // End UseSatate
@@ -84,16 +95,38 @@ function AllPayment() {
   };
 
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   useEffect(() => {
@@ -110,6 +143,8 @@ function AllPayment() {
     let arrow = localStorage.getItem("tpArrowPayment1")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     if (pageno) {
       getPaymentStatus(pageno);
@@ -126,7 +161,7 @@ function AllPayment() {
     let field = pagetry?.field;
     let remainApiPath = "";
     setOnPage(e);
-    if ((data) && (!pagetry)){
+    if ((data) && (!pagetry)) {
       remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
@@ -136,8 +171,8 @@ function AllPayment() {
           ?.split("-")
           .reverse()
           .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-      }`
-    }else if ((data) && (pagetry)){
+        }`
+    } else if ((data) && (pagetry)) {
       remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
@@ -147,39 +182,39 @@ function AllPayment() {
           ?.split("-")
           .reverse()
           .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-      }&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+        }&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
-    }else{
+    } else {
       remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`
     }
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setPayment(all);
-            setCount(res.data.total);
-            setRecords(res.data.result.length);
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setCount(res.data.total);
+          setRecords(res.data.result.length);
+        }
+      });
   };
 
   const toggle = (key) => {
@@ -243,10 +278,9 @@ function AllPayment() {
           ?.split("-")
           .reverse()
           .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
-      }&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `tl/getUploadedProposals?tp_id=${
-        JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+        }&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
     }
     axios
       .get(
@@ -266,6 +300,7 @@ function AllPayment() {
             all.push(data);
           });
           setPayment(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -293,6 +328,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -343,6 +379,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -365,6 +402,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -387,6 +425,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -417,6 +456,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -451,6 +491,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -487,6 +528,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -523,6 +565,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -559,6 +602,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment1", field);
         } else {
           setAccend("");
@@ -628,6 +672,7 @@ function AllPayment() {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpPayment1");
     localStorage.removeItem(`freezetpPayment1`);
     localStorage.removeItem("tpArrowPayment1");

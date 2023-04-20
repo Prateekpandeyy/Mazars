@@ -20,12 +20,21 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
-
 import moment from "moment";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
 function AssignmentTab() {
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
 
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -40,6 +49,8 @@ function AssignmentTab() {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -123,6 +134,8 @@ function AssignmentTab() {
     let arrow = localStorage.getItem("tpArrowAs3")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment3"));
     if (!sortVal) {
@@ -208,11 +221,11 @@ function AssignmentTab() {
 
   useEffect(() => {
     // setTax2(JSON.parse(localStorage.getItem(selectedData)));
-    if(selectedData == 1){
+    if (selectedData == 1) {
       setTax2(JSON.parse(localStorage.getItem("Direct tax")));
-    }else if(selectedData == 2){
+    } else if (selectedData == 2) {
       setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
-    }else{}
+    } else { }
   }, [selectedData]);
 
   //handleSubCategory
@@ -240,6 +253,7 @@ function AssignmentTab() {
     getAssignmentList(1);
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpAssignment3");
     localStorage.removeItem(`freezetpAssignment3`);
     localStorage.removeItem("tpArrowAs3");
@@ -267,16 +281,38 @@ function AssignmentTab() {
   }, [reportModal]);
 
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   const sortMessage = (val, field) => {
@@ -321,7 +357,8 @@ function AssignmentTab() {
           });
           setAssignment(all);
           setRecords(res.data.result.length);
-          setCount(res.data.total)
+          setCount(res.data.total);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -355,6 +392,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -405,6 +443,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -427,6 +466,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -449,6 +489,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -547,6 +588,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -577,6 +619,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -607,6 +650,7 @@ function AssignmentTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs3", field);
         } else {
           setAccend("");
@@ -850,6 +894,7 @@ function AssignmentTab() {
               localStorage.removeItem(`freezetpAssignment3`);
               localStorage.removeItem("tpArrowAs3");
               setAccend("");
+              setTurnGreen(false);
             }
           }
         });

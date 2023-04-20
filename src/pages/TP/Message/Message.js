@@ -14,11 +14,20 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 
 
 function Message(props) {
   const userId = window.localStorage.getItem("tpkey");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
 
   const [query, setQuery] = useState([]);
   const [atPage, setAtpage] = useState(1);
@@ -32,7 +41,8 @@ function Message(props) {
   const [totalPages, setTotalPages] = useState(1);
   const [accend, setAccend] = useState(false);
   const [page, setPage] = useState(1);
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1"]);
   const myConfig = {
     headers: {
       uit: token,
@@ -45,14 +55,31 @@ function Message(props) {
 
 
   function headerLabelFormatter(column) {
+    let isActive = null;
+    if (
+      localStorage.getItem("tpArrowMsg") === column.dataField ||
+      localStorage.getItem("preMessage") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("preMessage", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
       <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowMsg") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
     );
   }

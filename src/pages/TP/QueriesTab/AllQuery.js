@@ -12,10 +12,19 @@ import MessageIcon, {
 import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 
 function AllQuery(props) {
   const userid = window.localStorage.getItem("tpkey");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   // let total = props.data;
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -30,6 +39,8 @@ function AllQuery(props) {
   const [sortField, setSortField] = useState('');
   const [accend, setAccend] = useState(false);
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [turnGreen,setTurnGreen]= useState(false);
+  const [isActive,setIsActive]=useState("");
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -59,19 +70,54 @@ function AllQuery(props) {
 
 
 
-function headerLabelFormatter(column) {
-  return (
-    <div className="d-flex text-white w-100 flex-wrap">
-      {column.text}
-      {accend === column.dataField ? (
-        <ArrowDropDownIcon />
-      ) : (
-        <ArrowDropUpIcon />
-      )}
-    </div>
-  );
-}
+// function headerLabelFormatter(column) {
+//   return (
+//     <div className="d-flex text-white w-100 flex-wrap">
+//       {column.text}
+//       {accend === column.dataField ? (
+//         <ArrowDropDownIcon />
+//       ) : (
+//         <ArrowDropUpIcon />
+//       )}
+//     </div>
+//   );
+// }
 
+
+function headerLabelFormatter(column) {
+  // let reverse = "Exp_Delivery_Date"
+  return(
+    <div>
+    {column.dataField === isActive ?
+      (
+        <div className="d-flex text-white w-100 flex-wrap">
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon 
+            className={turnGreen === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon 
+            className={turnGreen === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      )
+      :
+      (
+        <div className="d-flex text-white w-100 flex-wrap">
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
+      )
+    }
+    </div>
+  )
+}
 
 
 useEffect(() => {
@@ -79,6 +125,8 @@ useEffect(() => {
   let arrow = localStorage.getItem("tpArrowQuery1")
   if (arrow) {
     setAccend(arrow);
+    setIsActive(arrow);
+    setTurnGreen(true);
   }
   let sortVal = JSON.parse(localStorage.getItem("freezetpQuery1"));
     if (!sortVal) {
@@ -213,6 +261,7 @@ const sortMessage = (val, field) => {
           all.push(data);
         });
         setInCompleteData(all);
+        setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
     });
@@ -238,6 +287,7 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
+        setIsActive(field);
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
@@ -286,6 +336,7 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
+        setIsActive(field);
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
@@ -309,6 +360,7 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
+        setIsActive(field);
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
@@ -331,6 +383,7 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
+        setIsActive(field);
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
@@ -356,6 +409,7 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
+        setIsActive(field);
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
@@ -388,6 +442,7 @@ const columns = [
       let val = 0;
       if (accend !== field) {
         setAccend(field);
+        setIsActive(field);
         localStorage.setItem("tpArrowQuery1", field);
       } else {
         setAccend("");
@@ -472,6 +527,7 @@ const resetTriggerFunc = () => {
   localStorage.removeItem("tpQuery1");
   localStorage.removeItem(`freezetpQuery1`);
   localStorage.removeItem("tpArrowQuery1");
+  setTurnGreen(false);
 }
 
 return (

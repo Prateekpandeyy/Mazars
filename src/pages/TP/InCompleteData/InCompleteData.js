@@ -21,15 +21,21 @@ import MessageIcon, {
 import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 
 function InCompleteData({ CountIncomplete, data }) {
   const userid = window.localStorage.getItem("tpkey");
   let total = Number(data.recordcount);
   // console.log(total,"total at incomQ");
   let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-
-
-
+  const classes = useStyles();
 
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -38,6 +44,9 @@ function InCompleteData({ CountIncomplete, data }) {
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
 
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
@@ -76,34 +85,38 @@ function InCompleteData({ CountIncomplete, data }) {
 
   function headerLabelFormatter(column) {
     // let reverse = "Exp_Delivery_Date"
-    return(
+    return (
       <div>
-      {column.dataField === "Exp_Delivery_Date" ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap justify-content-between">
-            <span style={{"color":"#fff","width":"84%"}}>{column.text}</span>
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap justify-content-between">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
       </div>
     )
-}
+  }
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
@@ -120,6 +133,8 @@ function InCompleteData({ CountIncomplete, data }) {
     let arrow = localStorage.getItem("tpArrowQuery3")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
     if (!sortVal) {
@@ -259,6 +274,7 @@ function InCompleteData({ CountIncomplete, data }) {
             all.push(data);
           });
           setInCompleteData(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -284,11 +300,10 @@ function InCompleteData({ CountIncomplete, data }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          console.log("This is sorting 1");
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery3", field);
         } else {
           setAccend("");
-          console.log("This is sorting 2");
           localStorage.removeItem("tpArrowQuery3");
         }
 
@@ -349,6 +364,7 @@ function InCompleteData({ CountIncomplete, data }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           console.log("This is sorting 1");
           localStorage.setItem("tpArrowQuery3", field);
         } else {
@@ -375,6 +391,7 @@ function InCompleteData({ CountIncomplete, data }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           console.log("This is sorting 1");
           localStorage.setItem("tpArrowQuery3", field);
         } else {
@@ -400,6 +417,7 @@ function InCompleteData({ CountIncomplete, data }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           console.log("This is sorting 1");
           localStorage.setItem("tpArrowQuery3", field);
         } else {
@@ -424,6 +442,7 @@ function InCompleteData({ CountIncomplete, data }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery1", field);
         } else {
           setAccend("");
@@ -455,6 +474,7 @@ function InCompleteData({ CountIncomplete, data }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery1", field);
         } else {
           setAccend("");
@@ -534,6 +554,7 @@ function InCompleteData({ CountIncomplete, data }) {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpQuery3");
     localStorage.removeItem(`freezetpQuery3`);
     localStorage.removeItem("tpArrowQuery3");

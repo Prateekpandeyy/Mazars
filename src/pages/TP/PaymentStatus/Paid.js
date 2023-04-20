@@ -36,12 +36,21 @@ import moment from "moment";
 import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AllPayment() {
   const { id } = useParams();
   const userid = window.localStorage.getItem("tpkey");
   const cust_id = window.localStorage.getItem("userid");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
 
   const [pay, setPay] = useState([]);
@@ -57,6 +66,8 @@ function AllPayment() {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [assignNo, setAssignNo] = useState("");
 
@@ -91,14 +102,18 @@ function AllPayment() {
     // let reverse = "Exp_Delivery_Date"
     return(
       <div>
-      {column.dataField === "Exp_Delivery_Date" ?
+      {column.dataField === isActive ?
         (
           <div className="d-flex text-white w-100 flex-wrap">
             {column.text}
             {accend === column.dataField ? (
-              <ArrowDropDownIcon />
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
             ) : (
-              <ArrowDropUpIcon />
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
             )}
           </div>
         )
@@ -116,7 +131,7 @@ function AllPayment() {
       }
       </div>
     )
-}
+  }
 
   useEffect(() => {
 
@@ -124,6 +139,8 @@ function AllPayment() {
     let arrow = localStorage.getItem("tpArrowPayment3")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     if (pageno) {
       getPaymentStatus(pageno);
@@ -161,7 +178,7 @@ function AllPayment() {
     let remainApiPath = "";
     setOnPage(e);
 
-    if ((data) && (!pagetry)){
+    if ((data) && (!pagetry)) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
@@ -170,9 +187,8 @@ function AllPayment() {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=2&pcat_id=${
-            data.pcatId}&qno=${data.query_no}`
-    }else if ((data) && (pagetry)){
+          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    } else if ((data) && (pagetry)) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
@@ -181,46 +197,45 @@ function AllPayment() {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=2&pcat_id=${
-            data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&status=2&orderby=${val}&orderbyfield=${field}`
-    }else{
+    } else {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&status=2`
     }
 
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setPayment(all);
-            setCount(res.data.total);
-            setRecords(res.data.result.length);
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
-    
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setCount(res.data.total);
+          setRecords(res.data.result.length);
+        }
+      });
+
   };
 
   const toggle = (key) => {
@@ -241,34 +256,33 @@ function AllPayment() {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-        setSortVal(val);
-        setSortField(field);
+    setSortVal(val);
+    setSortField(field);
     let obj = {
-          // pageno: pageno,
-          val: val,
-          field: field,
-        }
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
     localStorage.setItem(`tpPayment3`, JSON.stringify(1))
     localStorage.setItem(`freezetpPayment3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
-     if (data) {
-          remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${data.store}&from=${data.fromDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${
-                data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-        }
-        else{
-          remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
-            userid
-          )}&status=2&orderby=${val}&orderbyfield=${field}`
-        }
-        axios
+    if (data) {
+      remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
+        userid
+      )}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    }
+    else {
+      remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
+        userid
+      )}&status=2&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
       .get(
         `${baseUrl}/${remainApiPath}`,
         myConfig
@@ -286,10 +300,11 @@ function AllPayment() {
             all.push(data);
           });
           setPayment(all);
+          setTurnGreen(true)
           setresetTrigger(!resetTrigger);
         }
       });
-    }
+  }
 
   const columns = [
     {
@@ -312,6 +327,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -336,7 +352,7 @@ function AllPayment() {
     {
       dataField: "assign_no",
       text: "Query no",
-      
+
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -363,6 +379,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -385,6 +402,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -407,6 +425,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -441,6 +460,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -477,6 +497,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -514,6 +535,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -550,6 +572,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment3", field);
         } else {
           setAccend("");
@@ -636,6 +659,7 @@ function AllPayment() {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpPayment3");
     localStorage.removeItem(`freezetpPayment3`);
     localStorage.removeItem("tpArrowPayment3");
@@ -660,12 +684,12 @@ function AllPayment() {
           <Row>
             <Col md="12" align="right">
               <Paginator
-              setData={setPayment}
-              getData={getPaymentStatus}
-              Paid="Paid"
-              setRecords={setRecords}
-              index="tppayment3"
-              records={records}
+                setData={setPayment}
+                getData={getPaymentStatus}
+                Paid="Paid"
+                setRecords={setRecords}
+                index="tppayment3"
+                records={records}
                 count={count}
                 setOnPage={setOnPage}
                 // resetPaging={resetPaging}

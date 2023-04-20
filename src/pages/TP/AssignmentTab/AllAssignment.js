@@ -26,12 +26,21 @@ import { Spinner } from "reactstrap";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
+  const classes = useStyles();
 
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -47,6 +56,8 @@ function AssignmentTab(props) {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -92,22 +103,42 @@ function AssignmentTab(props) {
     },
   };
 
-  function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
-      </div>
-    );
-  }
+  
+function headerLabelFormatter(column) {
+  // let reverse = "Exp_Delivery_Date"
+  return(
+    <div>
+    {column.dataField === isActive ?
+      (
+        <div className="d-flex text-white w-100 flex-wrap">
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon 
+            className={turnGreen === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon 
+            className={turnGreen === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      )
+      :
+      (
+        <div className="d-flex text-white w-100 flex-wrap">
+          {column.text}
+          {accend === column.dataField ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )}
+        </div>
+      )
+    }
+    </div>
+  )
+}
 
-  useEffect(() => {
-  console.log(accend,"accend ");
-  }, [accend]);
 
   const ViewReport = (key) => {
     setReportModal(!reportModal);
@@ -149,6 +180,8 @@ function AssignmentTab(props) {
     let arrow = localStorage.getItem("tpArrowAs1")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment1"));
     if (!sortVal) {
@@ -261,11 +294,11 @@ function AssignmentTab(props) {
 
   useEffect(() => {
     // setTax2(JSON.parse(localStorage.getItem(selectedData)));
-    if(selectedData == 1){
+    if (selectedData == 1) {
       setTax2(JSON.parse(localStorage.getItem("Direct tax")));
-    }else if(selectedData == 2){
+    } else if (selectedData == 2) {
       setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
-    }else{}
+    } else { }
   }, [selectedData]);
 
   //reset category
@@ -298,6 +331,7 @@ function AssignmentTab(props) {
     getAssignmentList();
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpAssignment1");
     localStorage.removeItem(`freezetpAssignment1`);
     localStorage.removeItem("tpArrowAs1");
@@ -356,7 +390,8 @@ function AssignmentTab(props) {
           });
           setAssignment(all);
           setRecords(res.data.result.length);
-          setCount(res.data.total)
+          setCount(res.data.total);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -390,6 +425,7 @@ function AssignmentTab(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
@@ -440,6 +476,7 @@ function AssignmentTab(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
@@ -463,6 +500,7 @@ function AssignmentTab(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
@@ -485,6 +523,7 @@ function AssignmentTab(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
@@ -583,6 +622,7 @@ function AssignmentTab(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
@@ -613,6 +653,7 @@ function AssignmentTab(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
@@ -637,24 +678,7 @@ function AssignmentTab(props) {
     {
       text: "Deliverable",
       dataField: "",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("tpArrowAs1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowAs1");
-        }
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 7);
-      },
+      
 
       formatter: function (cell, row) {
         return (
@@ -945,61 +969,58 @@ function AssignmentTab(props) {
         });
     } else {
       if (status?.length > 0) {
-          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
+        remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=${status}&stages_status=${data.p_status
           }&pcat_id=${selectedData}&qno=${data.query_no}`
-        
+
       } else {
-          remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
-            userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=${status}&stages_status=${
-            data.p_status
+        remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=${status}&stages_status=${data.p_status
           }&pcat_id=${selectedData}&qno=${data.query_no}`
       }
-        axios
-          .get(
-            `${baseUrl}/${remainApiPath}`,
-            myConfig
-          )
-          .then((res) => {
-            localStorage.setItem(`tpAssignment1`, JSON.stringify(1))
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                let data = res.data.result;
-                setRecords(res.data.result.length);
-                let all = [];
-                let customId = 1;
-                if (e > 1) {
-                  customId = allEnd * (e - 1) + 1;
-                }
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setAssignment(all);
-                setRecords(res.data.result.length);
-                setCount(res.data.total);
-                setresetTrigger(!resetTrigger);
-                localStorage.removeItem(`freezetpAssignment1`);
-                localStorage.removeItem("tpArrowAs1");
-                setAccend("");
+      axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          localStorage.setItem(`tpAssignment1`, JSON.stringify(1))
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              let data = res.data.result;
+              setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
               }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
+              setresetTrigger(!resetTrigger);
+              localStorage.removeItem(`freezetpAssignment1`);
+              localStorage.removeItem("tpArrowAs1");
+              setAccend("");
+              setTurnGreen(false);
             }
-          });
-      }
+          }
+        });
+    }
   };
 
-  
+
 
   const Reset = () => {
     return (

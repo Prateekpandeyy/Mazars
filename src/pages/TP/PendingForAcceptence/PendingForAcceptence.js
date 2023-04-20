@@ -19,10 +19,20 @@ import MessageIcon, {
 import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
+
 
 function PendingForAcceptence(props) {
   let history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
+  const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
   const [onPage, setOnPage] = useState(1);
@@ -31,6 +41,8 @@ function PendingForAcceptence(props) {
   const [sortVal, setSortVal] = useState('');
   const [sortField, setSortField] = useState('');
   const [accend, setAccend] = useState(false);
+  const [turnGreen,setTurnGreen]= useState(false);
+  const [isActive,setIsActive]=useState("");
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -57,17 +69,52 @@ function PendingForAcceptence(props) {
     });
   };
 
+  // function headerLabelFormatter(column) {
+  //   return (
+  //     <div className="d-flex text-white w-100 flex-wrap">
+  //       {column.text}
+  //       {accend === column.dataField ? (
+  //         <ArrowDropUpIcon />
+  //       ) : (
+  //         <ArrowDropDownIcon />
+  //       )}
+  //     </div>
+  //   );
+  // }
+
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropUpIcon />
-        ) : (
-          <ArrowDropDownIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   useEffect(() => {
@@ -75,6 +122,8 @@ function PendingForAcceptence(props) {
   let arrow = localStorage.getItem("tpArrowQuery2")
   if (arrow) {
     setAccend(arrow);
+    setIsActive(arrow);
+    setTurnGreen(true);
   }
   let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
     if (!sortVal) {
@@ -215,6 +264,7 @@ function PendingForAcceptence(props) {
             all.push(data);
           });
           setPendingData(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -241,6 +291,7 @@ function PendingForAcceptence(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery2", field);
         } else {
           setAccend("");
@@ -290,6 +341,7 @@ function PendingForAcceptence(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery2", field);
         } else {
           setAccend("");
@@ -313,6 +365,7 @@ function PendingForAcceptence(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery2", field);
         } else {
           setAccend("");
@@ -335,6 +388,7 @@ function PendingForAcceptence(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery2", field);
         } else {
           setAccend("");
@@ -357,6 +411,7 @@ function PendingForAcceptence(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowQuery2", field);
         } else {
           setAccend("");
@@ -436,6 +491,7 @@ function PendingForAcceptence(props) {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem(`tpQuery2`);
     localStorage.removeItem(`freezetpQuery2`);
     localStorage.removeItem("tpArrowQuery2");

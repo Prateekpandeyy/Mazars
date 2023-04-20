@@ -36,12 +36,21 @@ import MessageIcon, {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AllPayment() {
   const { id } = useParams();
   const userid = window.localStorage.getItem("tpkey");
   const cust_id = window.localStorage.getItem("userid");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
@@ -52,6 +61,8 @@ function AllPayment() {
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
   const [accend, setAccend] = useState(false);
 
   const [pay, setPay] = useState([]);
@@ -77,6 +88,8 @@ function AllPayment() {
     let arrow = localStorage.getItem("tpArrowPayment2")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     if (pageno) {
       getPaymentStatus(pageno);
@@ -95,7 +108,7 @@ function AllPayment() {
     let remainApiPath = "";
     setOnPage(e);
 
-    if ((data) && (!pagetry)){
+    if ((data) && (!pagetry)) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
@@ -104,9 +117,8 @@ function AllPayment() {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${
-            data.pcatId}&qno=${data.query_no}`
-    }else if ((data) && (pagetry)){
+          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`
+    } else if ((data) && (pagetry)) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
@@ -115,45 +127,44 @@ function AllPayment() {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${
-            data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&status=1&orderby=${val}&orderbyfield=${field}`
-    }else{
+    } else {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&status=1`
     }
 
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setPayment(all);
-            setCount(res.data.total);
-            setRecords(res.data.result.length);
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setCount(res.data.total);
+          setRecords(res.data.result.length);
+        }
+      });
   };
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
@@ -164,17 +175,39 @@ function AllPayment() {
     }
   };
 
-  function headerLabelFormatter(column,row) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+  function headerLabelFormatter(column) {
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   useEffect(() => {
@@ -245,10 +278,9 @@ function AllPayment() {
         .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${
-            data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     }
-    else{
+    else {
       remainApiPath = `tl/getUploadedProposals?page=1tp_id=${JSON.parse(
         userid
       )}&status=1&orderby=${val}&orderbyfield=${field}`
@@ -271,6 +303,7 @@ function AllPayment() {
             all.push(data);
           });
           setPayment(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -297,6 +330,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -347,6 +381,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -369,6 +404,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -391,6 +427,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -421,6 +458,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -455,6 +493,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -491,6 +530,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -528,6 +568,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -564,6 +605,7 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowPayment2", field);
         } else {
           setAccend("");
@@ -633,6 +675,7 @@ function AllPayment() {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpPayment2");
     localStorage.removeItem(`freezetpPayment2`);
     localStorage.removeItem("tpArrowPayment2");

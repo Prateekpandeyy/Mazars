@@ -18,11 +18,20 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 const Generated = () => {
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
 
@@ -33,6 +42,8 @@ const Generated = () => {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [page, setPage] = useState(0);
   const [defaultPage, setDefaultPage] = useState(["1"]);
@@ -92,6 +103,8 @@ const Generated = () => {
     let arrow = localStorage.getItem("tpArrowInvoice1")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     if (!pageno) {
       pageno = 1;
@@ -225,16 +238,38 @@ const Generated = () => {
   };
 
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   const sortMessage = (val, field) => {
@@ -277,8 +312,8 @@ const Generated = () => {
             sortId++;
             all.push(data);
           });
-
           setProposal(all);
+          setTurnGreen(true);
         }
       });
   }
@@ -311,6 +346,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -351,6 +387,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -377,6 +414,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -405,6 +443,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -436,6 +475,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -465,6 +505,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -502,6 +543,7 @@ const Generated = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice1", field);
         } else {
           setAccend("");
@@ -654,6 +696,7 @@ const Generated = () => {
     setOrderBy("");
     setFiledBy("");
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpInvoice1");
     localStorage.removeItem(`freezetpInvoice1`);
     localStorage.removeItem("tpArrowInvoice1");

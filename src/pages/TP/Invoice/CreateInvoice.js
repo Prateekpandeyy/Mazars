@@ -14,12 +14,21 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import Paginator from "../../../components/Paginator/Paginator";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 const CreateInvoice = () => {
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
+  const classes = useStyles();
   // const [count, setCount] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
@@ -43,6 +52,8 @@ const CreateInvoice = () => {
   const [atPage, setAtpage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [countNotification, setCountNotification] = useState("");
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -90,6 +101,8 @@ const CreateInvoice = () => {
     let arrow = localStorage.getItem("tpArrowInvoice2")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     if (!sortVal) {
@@ -117,7 +130,7 @@ const CreateInvoice = () => {
       orderBy = pagetry.orderBy;
       fieldBy = pagetry.fieldBy;
     }
-    
+
     if (
       searchData?.installment_no ||
       searchData?.opt ||
@@ -196,16 +209,38 @@ const CreateInvoice = () => {
   };
 
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   const firstChunk = () => {
@@ -282,7 +317,7 @@ const CreateInvoice = () => {
             sortId++;
             all.push(data);
           });
-
+          setTurnGreen(true);
           setProposal(all);
           console.log("proposal", all);
         }
@@ -313,6 +348,7 @@ const CreateInvoice = () => {
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
+          setIsActive(field);
           setAccend(field);
           localStorage.setItem("tpArrowInvoice2", field);
         } else {
@@ -357,6 +393,7 @@ const CreateInvoice = () => {
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
+          setIsActive(field);
           setAccend(field);
           localStorage.setItem("tpArrowInvoice2", field);
         } else {
@@ -387,6 +424,7 @@ const CreateInvoice = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice2", field);
         } else {
           setAccend("");
@@ -420,6 +458,7 @@ const CreateInvoice = () => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowInvoice2", field);
         } else {
           setAccend("");
@@ -478,6 +517,7 @@ const CreateInvoice = () => {
     setOrderBy("");
     setFiledBy("");
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpInvoice2");
     localStorage.removeItem(`freezetpInvoice2`);
     localStorage.removeItem("tpArrowInvoice2");

@@ -19,11 +19,20 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import CustomHeading from "../../../components/Common/CustomHeading";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-function FeedbackTab() {
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 
+function FeedbackTab() {
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [feedbackData, setFeedBackData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [countFeedBack, setCountFeedBack] = useState("");
@@ -32,9 +41,12 @@ function FeedbackTab() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
+  const [turnGreen,setTurnGreen]= useState(false);
+  const [isActive,setIsActive]=useState("");
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState('');
   const [sortField, setSortField] = useState('');
+  const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const token = window.localStorage.getItem("tptoken");
 
@@ -44,18 +56,59 @@ function FeedbackTab() {
     }
   }
 
+  // function headerLabelFormatter(column) {
+   
+  //   return (
+  //     <div className="d-flex text-white w-100 flex-wrap">
+  //       {column.text}
+  //       {accend === column.dataField ? (
+  //         <ArrowDropDownIcon 
+  //         className={isActive === true ? classes.isActive : ""}
+  //         />
+  //       ) : (
+  //         <ArrowDropUpIcon 
+  //         // className={isActive === true ? classes.isActive : ""}
+  //         />
+  //       )}
+  //     </div>
+  //   );
+  // }
+
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
-  }
+    )
+}
+
 
   // useEffect(() => {
   //   getFeedback();
@@ -66,6 +119,8 @@ function FeedbackTab() {
     let arrow = localStorage.getItem("tpArrowFeed")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let pageno = JSON.parse(localStorage.getItem("tpFeedback"));
     if (pageno) {
@@ -155,6 +210,7 @@ function FeedbackTab() {
           setPage(1);
           setBig(1);
           setEnd(allEnd);
+          setTurnGreen(true);
         }
       });
 
@@ -244,6 +300,7 @@ function FeedbackTab() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           console.log("This is sorting 1");
           localStorage.setItem("tpArrowFeed", field);
         } else {
@@ -270,6 +327,7 @@ function FeedbackTab() {
 
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowFeed", field);
         } else {
           setAccend("");

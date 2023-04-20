@@ -20,10 +20,19 @@ import MessageIcon, {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function InprogressProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
@@ -37,6 +46,8 @@ function InprogressProposal() {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -63,16 +74,38 @@ function InprogressProposal() {
   };
 
   function headerLabelFormatter(column) {
-    return (
-      <div className="d-flex text-white w-100 flex-wrap">
-        {column.text}
-        {accend === column.dataField ? (
-          <ArrowDropDownIcon />
-        ) : (
-          <ArrowDropUpIcon />
-        )}
+    // let reverse = "Exp_Delivery_Date"
+    return(
+      <div>
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
-    );
+    )
   }
 
   useEffect(() => {
@@ -105,6 +138,8 @@ function InprogressProposal() {
     let arrow = localStorage.getItem("tpArrowProposal2")
     if (arrow) {
       setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpProposal2"));
     if (!sortVal) {
@@ -133,29 +168,29 @@ function InprogressProposal() {
     let remainApiPath = "";
     setOnPage(e);
 
-    if ((data) && (!pagetry)){
+    if ((data) && (!pagetry)) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
-      }`
-    }else if ((data) && (pagetry)){
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+        }`
+    } else if ((data) && (pagetry)) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
-      }&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+        }&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1&orderby=${val}&orderbyfield=${field}`
-    }else{
+    } else {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1`
     }
 
@@ -175,14 +210,14 @@ function InprogressProposal() {
     // }
 
     // if (!data) {
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
           setRecords(res.data.result.length);
           let all = [];
           let customId = 1;
@@ -197,12 +232,12 @@ function InprogressProposal() {
             customId++;
             all.push(data);
           });
-            setProposal(all);
-            setCount(res.data?.total);
-            // setRecords(res.data.result.length);
-          }
-        });
-    
+          setProposal(all);
+          setCount(res.data?.total);
+          // setRecords(res.data.result.length);
+        }
+      });
+
   };
 
   const sortMessage = (val, field) => {
@@ -221,14 +256,14 @@ function InprogressProposal() {
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
     if (data) {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
-      }&from=${data.fromDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&to=${data.toDate
+        }&from=${data.fromDate
           ?.split("-")
           .reverse()
-          .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
-      }&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&to=${data.toDate
+            ?.split("-")
+            .reverse()
+            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+        }&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&status=1&orderby=${val}&orderbyfield=${field}`
     }
@@ -250,6 +285,7 @@ function InprogressProposal() {
             all.push(data);
           });
           setProposal(all);
+          setTurnGreen(true);
           setresetTrigger(!resetTrigger);
         }
       });
@@ -280,6 +316,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -330,6 +367,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -353,6 +391,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -398,6 +437,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -428,6 +468,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -457,6 +498,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -496,6 +538,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -525,6 +568,7 @@ function InprogressProposal() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
+          setIsActive(field);
           localStorage.setItem("tpArrowProposal2", field);
         } else {
           setAccend("");
@@ -622,6 +666,7 @@ function InprogressProposal() {
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
+    setTurnGreen(false);
     localStorage.removeItem("tpPropsosal2");
     localStorage.removeItem(`freezetpProposal2`);
     localStorage.removeItem("tpArrowProposal2");
