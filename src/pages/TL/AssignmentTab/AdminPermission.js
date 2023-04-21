@@ -120,9 +120,22 @@ function AdminPermission(props) {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    if(value == 1){
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    }else{
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    }
     setStore2([]);
   };
+
+  useEffect(() => {
+    console.log(selectedData,"selected data");
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    } else { }
+  }, [selectedData]);
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
@@ -914,7 +927,7 @@ function AdminPermission(props) {
                   value={selectedData}
                 >
                   {categoryData.map((p, index) => (
-                    <Option value={p.details} key={index}>
+                    <Option value={p.id} key={index}>
                       {p.details}
                     </Option>
                   ))}
