@@ -19,7 +19,7 @@ function Message(props) {
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
