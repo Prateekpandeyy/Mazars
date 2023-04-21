@@ -220,14 +220,14 @@ function AcceptedProposal() {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -240,7 +240,25 @@ function AcceptedProposal() {
       dataField: "query_date",
       text: "Query date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_date;
         if (oldDate == null) {
@@ -273,16 +291,72 @@ function AcceptedProposal() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
         if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
@@ -306,7 +380,25 @@ function AcceptedProposal() {
       text: "Date of proposal",
       dataField: "DateofProposal",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
@@ -319,7 +411,25 @@ function AcceptedProposal() {
       text: "Date of acceptance / decline of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
@@ -330,7 +440,25 @@ function AcceptedProposal() {
     },
     {
       text: "Status",
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -347,7 +475,25 @@ function AcceptedProposal() {
       dataField: "ProposedAmount",
       text: "Proposed amount",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
           return b - a;
@@ -365,7 +511,25 @@ function AcceptedProposal() {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
+      },
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
           return b - a;
@@ -427,7 +591,64 @@ function AcceptedProposal() {
       },
     },
   ];
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
 
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlprot1", 1);
+    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
+    if (searchData) {
+      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&status=2&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+        if (
+          Number(
+            res.data.total > Number(localStorage.getItem("tl_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setProposal(all);
+      }
+    });
+  };
   return (
     <>
       <Card>
@@ -448,6 +669,9 @@ function AcceptedProposal() {
             page={page}
             defaultPage={defaultPage}
             setDefaultPage={setDefaultPage}
+            localAccend="accendtlpro3"
+            localPrev="prevtlpro3"
+            localSorted="sortedValuetlpro3"
             pageValue="tlpro3"
             index="tlproposal3"
           />

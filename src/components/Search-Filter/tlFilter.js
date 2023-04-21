@@ -48,6 +48,9 @@ function TeamFilter(props) {
     setPage,
     defaultPage,
     setDefaultPage,
+    localAccend,
+    localPrev,
+    localSorted,
   } = props;
   const userid = window.localStorage.getItem("tlkey");
 
@@ -116,6 +119,9 @@ function TeamFilter(props) {
   const resetData = () => {
     localStorage.removeItem(`searchData${index}`);
     localStorage.removeItem(pageValue);
+    localStorage.removeItem(localAccend);
+    localStorage.removeItem(localSorted);
+    localStorage.removeItem(localPrev);
     reset();
     setSelectedData([]);
     setStore2([]);

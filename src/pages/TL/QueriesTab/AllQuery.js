@@ -537,6 +537,9 @@ function AllQuery({ setAllQuery }) {
             setDefaultPage={setDefaultPage}
             pageValue="tlqp1"
             index="tlquery1"
+            localAccend="accendtlq1"
+            localPrev="prevtlq1"
+            localSorted="sortedValuetlq1"
           />
         </CardHeader>
         <CardBody>
