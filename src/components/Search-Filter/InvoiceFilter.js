@@ -224,7 +224,7 @@ const InvoiceFilter = (props) => {
       if (returnData === null) {
         props.resetPaging();
       }
-      props.resetPaging();
+      // props.resetPaging();
     }
   };
   return (
