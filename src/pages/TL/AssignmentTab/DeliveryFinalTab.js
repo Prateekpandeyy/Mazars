@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
@@ -17,6 +17,18 @@ import MessageIcon, {
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
 import { current_date } from "../../../common/globalVeriable";
+import PaginatorTL from "../../../components/Paginator/PaginatorTL";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
 function AssignmentTab() {
   const userid = window.localStorage.getItem("tlkey");
   const { handleSubmit, register, errors, reset } = useForm();
@@ -34,6 +46,17 @@ function AssignmentTab() {
   const [fianlModal, setFianlModal] = useState(false);
   const [dataItem, setDataItem] = useState({});
 
+  const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  const classes = useStyles();
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
   const [report, setReport] = useState("");
   const [reportModal, setReportModal] = useState(false);
   const [qid, setQid] = useState("");
@@ -45,7 +68,7 @@ function AssignmentTab() {
   const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
   const myRefs = useRef([]);
-  
+
   var rowStyle2 = {};
 
   let des = false;
@@ -59,9 +82,9 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo];
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: "center" });
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
 
 
@@ -72,31 +95,90 @@ function AssignmentTab() {
     },
   };
 
-  const getAssignmentList = () => {
+  useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment3"));
+    let arrow = localStorage.getItem("tlArrowAs3")
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment3"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetlAssignment3", JSON.stringify(sort));
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
     if (!data) {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
-            userid
-          )}&assignment_status=Delivery_of_report&stages_status=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAssignment(res.data.result);
-
-            setRecords(res.data.result.length);
-          }
-        });
+      if (pageno) {
+        getAssignmentList(pageno);
+      } else {
+        getAssignmentList(1);
+        localStorage.setItem(`tlAssignment3`, JSON.stringify(1));
+      }
     }
+  }, []);
+
+
+  const getAssignmentList = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment3"));
+    localStorage.setItem(`tlAssignment3`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if (pagetry) {
+      remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
+        userid
+      )}&assignment_status=Delivery_of_report&stages_status=1&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
+        userid
+      )}&assignment_status=Delivery_of_report&stages_status=1`;
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.count);
+        }
+      });
+
   };
 
   useEffect(() => {
-    getAssignmentList();
+    // getAssignmentList();
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
     let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment3"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -104,9 +186,12 @@ function AssignmentTab() {
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
         setSelectedData(dk.pcatId);
-
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
       }
     }
   }, []);
@@ -114,9 +199,22 @@ function AssignmentTab() {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    if (value == 1) {
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    } else {
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    }
+    // setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
   };
+
+  useEffect(() => {
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    } else { }
+  }, [selectedData]);
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -133,7 +231,6 @@ function AssignmentTab() {
   //reset date
   const resetData = () => {
     reset();
-
     setSelectedData([]);
     setStore2([]);
     setToDate("");
@@ -141,6 +238,12 @@ function AssignmentTab() {
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment3");
     getAssignmentList();
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("tlAssignment3");
+    localStorage.removeItem(`freezetlAssignment3`);
+    localStorage.removeItem("tlArrowAs3");
   };
 
   //assingmentStatus
@@ -157,7 +260,7 @@ function AssignmentTab() {
       console.log("else");
       setScrolledTo(id.assign_no);
     }
-    
+
   };
 
   useEffect(() => {
@@ -165,7 +268,7 @@ function AssignmentTab() {
     console.log("ref");
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [fianlModal]);
+  }, [fianlModal]);
 
   // view report
   const ViewReport = (key) => {
@@ -184,6 +287,89 @@ function AssignmentTab() {
     runTo?.scrollIntoView({ block: "center" });
   }, [reportModal]);
 
+  function headerLabelFormatter(column) {
+    return (
+      <div>
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
+      </div>
+    )
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tlAssignment1`, JSON.stringify(1))
+    localStorage.setItem(`freezetlAssignment1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    if (data) {
+      remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate}&to=${data.toDate
+        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+    }
+    else {
+      remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
+        userid
+      )}&assignment_status=Delivery_of_report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  }
+
   //columns
   const columns = [
     {
@@ -195,7 +381,7 @@ function AssignmentTab() {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -207,7 +393,25 @@ function AssignmentTab() {
     {
       text: "Query date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -240,16 +444,71 @@ function AssignmentTab() {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
 
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
@@ -330,7 +589,25 @@ function AssignmentTab() {
     {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -343,7 +620,25 @@ function AssignmentTab() {
     {
       text: "Actual date of delivery",
       dataField: "final_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -429,9 +724,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                    row.draft_report == "completed" &&
+                    row.final_discussion == "completed" &&
+                    row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -474,7 +769,19 @@ function AssignmentTab() {
     return style;
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
+
+    let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment3"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment3"));
+    if (pageno) {
+      let e = pageno;
+    } else {
+      let e = 1;
+    }
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+
     let obj = {};
     if (data.route) {
       obj = {
@@ -500,35 +807,51 @@ function AssignmentTab() {
     localStorage.setItem(`searchDatatlAssignment3`, JSON.stringify(obj));
 
     if (data.route) {
+      if (pagetry) {
+        remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
+          }&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
+          }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+      } else {
+        remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
+          }&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
+          }&qno=${data.query_no}`;
+      }
       axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&cat_id=${
-            data.store
-          }&from=${data.fromDate}&to=${
-            data.toDate
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${
-            data.pcatId
-          }&qno=${data.query_no}`,
-          myConfig
-        )
-
+        .get(`${baseUrl}/${remainApiPath}`)
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              setAssignment(res.data.result);
+              let data = res.data.result;
               setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
             }
           }
         });
-    } else {
+    }
+    else {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(
+          `${baseUrl}/tl/getAssignments?page=1&tl_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${
-            data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
           }`,
           myConfig
         )
@@ -536,8 +859,29 @@ function AssignmentTab() {
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              setAssignment(res.data.result);
+              let data = res.data.result;
               setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
+              setresetTrigger(!resetTrigger);
+              localStorage.removeItem(`freezetlAssignment3`);
+              localStorage.removeItem("tlArrowAs3");
+              setAccend("");
+              setTurnGreen(false);
             }
           }
         });
@@ -562,111 +906,127 @@ function AssignmentTab() {
     <>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.details} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+          <Row>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div class="form-inline">
+                <div class="form-group mb-2">
+                  <Select
+                    style={{ width: 130 }}
+                    placeholder="Select Category"
+                    defaultValue={[]}
+                    onChange={handleCategory}
+                    value={selectedData}
+                  >
+                    {categoryData.map((p, index) => (
+                      <Option value={p.id} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.length > 0 ? (
-                    <>
-                      {tax2.map((p, index) => (
-                        <Option value={p.id} key={index}>
-                          {p.details}
-                        </Option>
-                      ))}
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  class="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
+                <div class="form-group mx-sm-1  mb-2">
+                  <Select
+                    mode="multiple"
+                    style={{ width: 250 }}
+                    placeholder="Select Sub Category"
+                    defaultValue={[]}
+                    onChange={handleSubCategory}
+                    value={store2}
+                    allowClear
+                  >
+                    {tax2.length > 0 ? (
+                      <>
+                        {tax2.map((p, index) => (
+                          <Option value={p.id} key={index}>
+                            {p.details}
+                          </Option>
+                        ))}
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </Select>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    class="btnSearch mb-2 ml-3"
+                    onClick={resetCategory}
+                  >
+                    X
+                  </button>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">From</label>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <input
+                    type="date"
+                    name="p_dateFrom"
+                    className="form-select form-control"
+                    ref={register}
+                    max={current_date}
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">To</label>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <input
+                    type="date"
+                    name="p_dateTo"
+                    className="form-select form-control"
+                    ref={register}
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                    max={current_date}
+                  />
+                </div>
+                <div className="form-group mx-sm-1  mb-2">
+                  <input
+                    type="text"
+                    name="query_no"
+                    ref={register}
+                    placeholder="Enter Query Number"
+                    className="form-control"
+                    value={queryNo}
+                    onChange={(e) => setQueryNo(e.target.value)}
+                  />
+                </div>
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">
+                    Total Records : {records}
+                  </label>
+                </div>
+                <button type="submit" class="customBtn mx-sm-1 mb-2">
+                  Search
                 </button>
-              </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
+                <Reset />
               </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  max={current_date}
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                />
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
-                  max={current_date}
-                />
-              </div>
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                  value={queryNo}
-                  onChange={(e) => setQueryNo(e.target.value)}
-                />
-              </div>
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">
-                  Total Records : {records}
-                </label>
-              </div>
-              <button type="submit" class="customBtn mx-sm-1 mb-2">
-                Search
-              </button>
-
-              <Reset />
-            </div>
-          </form>
+            </form>
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <PaginatorTL
+                count={count}
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+                tlDeliveryTab = "tlDeliveryTab"
+                index="tlAssignment3"
+                setData={setAssignment}
+                getData={getAssignmentList}
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>

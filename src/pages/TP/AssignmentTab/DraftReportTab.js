@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
     color: "#fff",
-    margin: "0px 10px",
+    margin: "0px 2px",
   },
 }));
 
@@ -230,8 +230,15 @@ function AssignmentTab() {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
+    if(value == 1){
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    }else{
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    }
     setStore2([]);
   };
+
+  
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tpcategoryData"));

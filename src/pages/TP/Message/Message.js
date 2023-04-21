@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
     color: "#fff",
-    margin: "0px 10px",
+    margin: "0px 2px",
   },
 }));
 

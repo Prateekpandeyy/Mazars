@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import DraftReportModal from "./DraftReportUpload";
 import FinalReportUpload from "./FinalReportUpload";
 import { Link } from "react-router-dom";
@@ -12,16 +12,29 @@ import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import PaginatorTL from "../../../components/Paginator/PaginatorTL";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import MessageIcon, {
   ViewDiscussionIcon,
   DraftReportUploadIcon,
   FinalReportUploadIcon,
 } from "../../../components/Common/MessageIcon";
 import { current_date } from "../../../common/globalVeriable";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 function AssignmentTab(props) {
   const [loading, setLoading] = useState(false);
 
   const userid = window.localStorage.getItem("tlkey");
+  const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  const classes = useStyles();
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option } = Select;
 
@@ -44,6 +57,15 @@ function AssignmentTab(props) {
   const [error, setError] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
 
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -52,8 +74,8 @@ function AssignmentTab(props) {
   const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
   const myRefs = useRef([]);
-  
- 
+
+
 
   let des = false;
   var rowStyle2 = {};
@@ -90,7 +112,31 @@ function AssignmentTab(props) {
   }, [ViewDiscussion]);
 
   useEffect(() => {
-    getAssignmentList();
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment1"));
+    let arrow = localStorage.getItem("tlArrowAs1")
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment1"));
+    if (!sortVal) {
+      let sort = {
+        val: 0,
+        field: 1,
+      };
+      localStorage.setItem("freezetlAssignment1", JSON.stringify(sort));
+    }
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    if (!data) {
+      if (pageno) {
+        getAssignmentList(pageno);
+      } else {
+        getAssignmentList(1);
+        localStorage.setItem(`tlAssignment1`, JSON.stringify(1));
+      }
+    }
+    // getAssignmentList();
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -98,22 +144,49 @@ function AssignmentTab(props) {
       uit: token,
     },
   };
-  const getAssignmentList = () => {
+  const getAssignmentList = (e) => {
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
-    if (!data) {
-      axios
-        .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setAssignment(res.data.result);
-            props.setAllAssignmentCount(res.data.result.length);
-            setRecords(res.data.result.length);
-          }
-        });
+    let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment1"));
+    localStorage.setItem(`tlAssignment1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if (pagetry) {
+      remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}`
     }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          props.setAllAssignmentCount(res.data.result.length);
+          setRecords(res.data.result.length);
+          setCount(res.data.total);
+        }
+      });
+
   };
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
@@ -123,25 +196,36 @@ function AssignmentTab(props) {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    if(value == 1){
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    }else{
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    }
+    // setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
     setError(false);
   };
 
   //get category
   useEffect(() => {
-    const getSubCategory = () => {
-      if (selectedData.length > 0) {
-        axios
-          .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setTax2(res.data.result);
-            }
-          });
-      }
-    };
-    getSubCategory();
+    console.log(selectedData,"selected data");
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    } else { }
+    // const getSubCategory = () => {
+    //   if (selectedData.length > 0) {
+    //     axios
+    //       .get(`${baseUrl}/customers/getCategory?pid=${selectedData}`, myConfig)
+    //       .then((res) => {
+    //         if (res.data.code === 1) {
+    //           setTax2(res.data.result);
+    //         }
+    //       });
+    //   }
+    // };
+    // getSubCategory();
   }, [selectedData]);
 
   //handleSubCategory
@@ -172,7 +256,13 @@ function AssignmentTab(props) {
     setQueryNo("");
     setStore2([]);
     localStorage.removeItem("searchDatatlAssignment1");
-    getAssignmentList();
+    getAssignmentList(1);
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("tlAssignment1");
+    localStorage.removeItem(`freezetlAssignment1`);
+    localStorage.removeItem("tlArrowAs1");
   };
 
   //assingmentStatus
@@ -180,6 +270,91 @@ function AssignmentTab(props) {
     setError(false);
     setStatus(value);
   };
+
+  function headerLabelFormatter(column) {
+    // let reverse = "Exp_Delivery_Date"
+    return (
+      <div>
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
+      </div>
+    )
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tlAssignment1`, JSON.stringify(1))
+    localStorage.setItem(`freezetlAssignment1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    if (data) {
+      if (data?.stage_status?.length > 0) {
+        remainApiPath = `tl/getAssignments?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      } else {
+        remainApiPath = `tl/getAssignments?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      }
+    }
+    else {
+      remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignment(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  }
+
+
 
   //columns
   const columns = [
@@ -192,7 +367,7 @@ function AssignmentTab(props) {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -204,7 +379,25 @@ function AssignmentTab(props) {
     {
       text: "Query date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -237,16 +430,71 @@ function AssignmentTab(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "status",
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
 
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
@@ -327,7 +575,25 @@ function AssignmentTab(props) {
     {
       text: "Expected date of delivery",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate1 = row.final_date;
@@ -349,6 +615,25 @@ function AssignmentTab(props) {
     {
       text: "TP name",
       dataField: "tp_name",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
     },
 
     {
@@ -433,9 +718,9 @@ function AssignmentTab(props) {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -450,9 +735,9 @@ function AssignmentTab(props) {
                     </p>
                   ) : null}
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                    row.draft_report == "completed" &&
+                    row.final_discussion == "completed" &&
+                    row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -515,7 +800,7 @@ function AssignmentTab(props) {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [draftModal]);
+  }, [draftModal]);
 
   // final modal
 
@@ -529,7 +814,18 @@ function AssignmentTab(props) {
       setQid(id.q_id);
     }
   };
-  const onSubmit = (data) => {
+  const onSubmit = (data,e) => {
+    let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment1"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment1"));
+    if (pageno) {
+      let e = pageno;
+    } else {
+      let e = 1;
+    }
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+
     let obj = {};
 
     if (data.route) {
@@ -559,68 +855,98 @@ function AssignmentTab(props) {
     localStorage.setItem(`searchDatatlAssignment1`, JSON.stringify(obj));
     if (data.route) {
       if (status?.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res?.data?.result?.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res?.data?.result?.length);
-              }
-            }
-          });
+        if (pagetry) {
+          remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        }else{
+          remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+        }
+      }else{
+        if (pagetry) {
+          remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        }else{
+          remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+        }
       }
-    } else {
+      axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setLoading(false);
+          if (res.data.result) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignment(all);
+            setRecords(res.data.result.length);
+            setCount(res.data.total);
+            setTurnGreen(true);
+          }
+        }
+      });
+    }
+    else {
       if (status?.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res?.data?.result?.length);
-              }
-            }
-          });
+        remainApiPath = `tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`
       } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignment(res.data.result);
-                setRecords(res?.data?.result?.length);
-              }
-            }
-          });
+        remainApiPath = `tl/getAssignments?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`
       }
+       axios
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+          myConfig
+        )
+        .then((res) => {
+          localStorage.setItem(`tlAssignment1`, JSON.stringify(1))
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              let data = res.data.result;
+              setRecords(res.data.result.length);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setAssignment(all);
+              setRecords(res.data.result.length);
+              setCount(res.data.total);
+              setresetTrigger(!resetTrigger);
+              localStorage.removeItem(`freezetlAssignment1`);
+              localStorage.removeItem("tlArrowAs1");
+              setAccend("");
+              setTurnGreen(false);
+            }
+          }
+        });
     }
   };
+
+
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment1"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -631,7 +957,11 @@ function AssignmentTab(props) {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
-        onSubmit(dk);
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
       }
     }
   }, []);
@@ -660,164 +990,180 @@ function AssignmentTab(props) {
     <>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.details} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  class="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
-                </button>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  max={current_date}
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                />
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
-                  max={current_date}
-                />
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <select
-                  className="form-select form-control"
-                  name="p_status"
-                  ref={register}
-                  style={{ height: "33px" }}
-                  value={hide}
-                  onChange={(e) => disabledHandler(e)}
-                >
-                  <option value="">--select--</option>
-                  <option value="1">Inprogress</option>
-                  <option value="2">Completed</option>
-                  <option value="3">Payment Declined</option>
-                </select>
-              </div>
-
-              {hide !== "3" ? (
-                <div className="form-group mx-sm-1  mb-2">
+          <Row>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div class="form-inline">
+                <div class="form-group mb-2">
                   <Select
-                    mode="single"
-                    style={{ width: 210 }}
-                    placeholder="Select stages"
+                    style={{ width: 130 }}
+                    placeholder="Select Category"
                     defaultValue={[]}
-                    onChange={assingmentStatus}
-                    value={status}
-                    allowClear
-                    className={error ? "customError" : ""}
+                    onChange={handleCategory}
+                    value={selectedData}
                   >
-                    <Option value="Client_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Client Discussion
-                      </div>
-                    </Option>
-                    <Option value="Draft_Report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Draft reports
-                      </div>
-                    </Option>
-                    <Option value="Final_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Final Discussion
-                      </div>
-                    </Option>
-                    <Option value="Delivery_of_report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Delivery of Final Reports
-                      </div>
-                    </Option>
-                    <Option value="Completed" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Awaiting Completion
-                      </div>
-                    </Option>
+                    {categoryData.map((p, index) => (
+                      <Option value={p.id} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
                   </Select>
                 </div>
-              ) : (
-                " "
-              )}
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                  value={queryNo}
-                  onChange={(e) => setQueryNo(e.target.value)}
-                />
-              </div>
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">
-                  Total Records : {records}
-                </label>
-              </div>
-              <button type="submit" class="customBtn mx-sm-1 mb-2">
-                Search
-              </button>
 
-              <Reset />
-            </div>
-          </form>
+                <div class="form-group mx-sm-1  mb-2">
+                  <Select
+                    mode="multiple"
+                    style={{ width: 250 }}
+                    placeholder="Select Sub Category"
+                    defaultValue={[]}
+                    onChange={handleSubCategory}
+                    value={store2}
+                    allowClear
+                  >
+                    {tax2.map((p, index) => (
+                      <Option value={p.id} key={index}>
+                        {p.details}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    class="btnSearch mb-2 ml-3"
+                    onClick={resetCategory}
+                  >
+                    X
+                  </button>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">From</label>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <input
+                    type="date"
+                    name="p_dateFrom"
+                    className="form-select form-control"
+                    ref={register}
+                    max={current_date}
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">To</label>
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <input
+                    type="date"
+                    name="p_dateTo"
+                    className="form-select form-control"
+                    ref={register}
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                    max={current_date}
+                  />
+                </div>
+
+                <div class="form-group mx-sm-1  mb-2">
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    style={{ height: "33px" }}
+                    value={hide}
+                    onChange={(e) => disabledHandler(e)}
+                  >
+                    <option value="">--select--</option>
+                    <option value="1">Inprogress</option>
+                    <option value="2">Completed</option>
+                    <option value="3">Payment Declined</option>
+                  </select>
+                </div>
+
+                {hide !== "3" ? (
+                  <div className="form-group mx-sm-1  mb-2">
+                    <Select
+                      mode="single"
+                      style={{ width: 210 }}
+                      placeholder="Select stages"
+                      defaultValue={[]}
+                      onChange={assingmentStatus}
+                      value={status}
+                      allowClear
+                      className={error ? "customError" : ""}
+                    >
+                      <Option value="Client_Discussion" label="Compilance">
+                        <div className="demo-option-label-item">
+                          Client Discussion
+                        </div>
+                      </Option>
+                      <Option value="Draft_Report" label="Compilance">
+                        <div className="demo-option-label-item">
+                          Draft reports
+                        </div>
+                      </Option>
+                      <Option value="Final_Discussion" label="Compilance">
+                        <div className="demo-option-label-item">
+                          Final Discussion
+                        </div>
+                      </Option>
+                      <Option value="Delivery_of_report" label="Compilance">
+                        <div className="demo-option-label-item">
+                          Delivery of Final Reports
+                        </div>
+                      </Option>
+                      <Option value="Completed" label="Compilance">
+                        <div className="demo-option-label-item">
+                          Awaiting Completion
+                        </div>
+                      </Option>
+                    </Select>
+                  </div>
+                ) : (
+                  " "
+                )}
+                <div className="form-group mx-sm-1  mb-2">
+                  <input
+                    type="text"
+                    name="query_no"
+                    ref={register}
+                    placeholder="Enter Query Number"
+                    className="form-control"
+                    value={queryNo}
+                    onChange={(e) => setQueryNo(e.target.value)}
+                  />
+                </div>
+                <div class="form-group mx-sm-1  mb-2">
+                  <label className="form-select form-control">
+                    Total Records : {records}
+                  </label>
+                </div>
+                <button type="submit" class="customBtn mx-sm-1 mb-2">
+                  Search
+                </button>
+
+                <Reset />
+              </div>
+            </form>
+          </Row>
+          <Row>
+            <Col md="12" align="right">
+              <PaginatorTL
+                count={count}
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+                index="tlAssignment1"
+                AllAssignment="AllAssignment"
+                setData={setAssignment}
+                getData={getAssignmentList}
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>
