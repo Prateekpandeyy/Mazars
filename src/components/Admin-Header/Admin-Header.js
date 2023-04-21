@@ -193,6 +193,14 @@ function AdminHeader({
       localStorage.removeItem("searchDatatlAssignment2");
       localStorage.removeItem("searchDatatlAssignment3");
       localStorage.removeItem("searchDatatlAssignment4");
+      localStorage.removeItem("tlAssignment1");
+      localStorage.removeItem("tlAssignment2");
+      localStorage.removeItem("tlAssignment3");
+      localStorage.removeItem("tlAssignment4");
+      localStorage.removeItem("freezetlAssignment1");
+      localStorage.removeItem("freezetlAssignment2");
+      localStorage.removeItem("freezetlAssignment3");
+      localStorage.removeItem("freezetlAssignment4");
       localStorage.removeItem("tlcreate");
       localStorage.removeItem("tlgenerated");
       localStorage.removeItem("tl_record_per_page");
