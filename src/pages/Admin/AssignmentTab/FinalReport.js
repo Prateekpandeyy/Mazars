@@ -33,7 +33,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function FinalReport() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("adminkey");
 
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
@@ -228,27 +237,28 @@ function FinalReport() {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendassign3") === column.dataField ||
+      localStorage.getItem("prevAssign3") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevassign3", column.dataField);
+      localStorage.setItem("prevAssign3", column.dataField);
     } else {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendassign3") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -265,6 +275,11 @@ function FinalReport() {
     setQueryNo("");
     setFromDate("");
     setToDate("");
+    localStorage.removeItem("searchDataadAssignment3");
+    localStorage.removeItem("sortedValueassign3");
+    localStorage.removeItem("prevAssign3");
+    localStorage.removeItem("accendassign3");
+
     getAssignmentData(1);
   };
   const sortMessage = (val, field) => {

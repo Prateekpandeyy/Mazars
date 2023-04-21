@@ -11,10 +11,18 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 const CreateInvoice = () => {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("adminkey");
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState();
@@ -59,8 +67,10 @@ const CreateInvoice = () => {
   };
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
-
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendcreated") === column.dataField ||
+      localStorage.getItem("previnv2") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("previnv2", column.dataField);
@@ -68,19 +78,17 @@ const CreateInvoice = () => {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendcreated") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
@@ -121,15 +129,9 @@ const CreateInvoice = () => {
 
     let searchData = JSON.parse(localStorage.getItem(`admincreate`));
 
-    if (
-      searchData?.installment_no ||
-      searchData?.opt ||
-      searchData?.p_dateFrom ||
-      searchData?.p_dateTo ||
-      searchData?.query_no
-    ) {
+    if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
-      &from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}`;
+      &installment_no=${searchData?.installment_no}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -386,8 +388,10 @@ const CreateInvoice = () => {
     setOrderBy("");
     setFiledBy("");
     localStorage.removeItem("admininvt2");
+    localStorage.removeItem("accendcreated");
     localStorage.removeItem("sortedValuevt2");
     localStorage.removeItem("previn2");
+    getProposalList(1);
   };
   const firstChunk = () => {
     setAtpage(1);

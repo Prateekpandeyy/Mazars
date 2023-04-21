@@ -47,7 +47,10 @@ function DeclinedQueries() {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+    if (
+      localStorage.getItem("accendq4") === column.dataField ||
+      localStorage.getItem("prevq4") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("prevq4", column.dataField);
@@ -58,7 +61,7 @@ function DeclinedQueries() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
+          {localStorage.getItem("accendq4") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -449,6 +452,7 @@ function DeclinedQueries() {
     localStorage.removeItem("adminqp4");
     localStorage.removeItem("accendq4");
     localStorage.removeItem("prevq4");
+    getPendingForPayment(1);
   };
 
   return (

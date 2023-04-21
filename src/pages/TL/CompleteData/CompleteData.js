@@ -18,20 +18,67 @@ import Swal from "sweetalert2";
 import { useParams, useHistory } from "react-router-dom";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import { ActionIcon } from "../../../components/Common/MessageIcon";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 
 function CompletedQuery({ updateTab }) {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const hist = useHistory();
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
-  const myRef = useRef([]);
-
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
+  const [countNotification, setCountNotification] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
 
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const myRef = useRef([]);
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendtlq4") === column.dataField ||
+      localStorage.getItem("prevtlq4") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlq4", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlq4") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -44,13 +91,30 @@ function CompletedQuery({ updateTab }) {
   };
 
   useEffect(() => {
-    getInCompleteAssingment();
+    let localPage = Number(localStorage.getItem("tlqp3"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlq3"));
+    setPrev(localStorage.getItem("prevtlq3"));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getInCompleteAssingment(localPage);
   }, []);
   const toggle = (key) => {
     console.log("keyyyy", typeof key);
     setModal(!modal);
-    if(modal === false){
-      setScrolledTo(key)
+    if (modal === false) {
+      setScrolledTo(key);
     }
     if (typeof key === "string") {
       axios
@@ -67,26 +131,89 @@ function CompletedQuery({ updateTab }) {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [modal]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [modal]);
 
-  
-  const getInCompleteAssingment = () => {
+  const getInCompleteAssingment = (e) => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery4"));
+
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
+    if (searchData) {
+      remainApiPath = `/tl/pendingAllocation?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/pendingAllocation?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
     if (!searchData) {
-      axios
-        .get(
-          `${baseUrl}/tl/pendingAllocation?uid=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setInCompleteData(res.data.result);
-            setRecords(res.data.result.length);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          let droppage = [];
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setInCompleteData(all);
+          setRecords(res.data.result.length);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
@@ -95,8 +222,11 @@ function CompletedQuery({ updateTab }) {
       text: "S.no",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id} 
-        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
+            {rowIndex + 1}
+          </div>
+        );
       },
       headerStyle: () => {
         return { width: "50px" };
@@ -267,7 +397,21 @@ function CompletedQuery({ updateTab }) {
             inCompleteQuery="inCompleteQuery"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlqp4"
             index="searchDatatlquery4"
+            localAccend="accendtlq4"
+            localPrev="prevtlq4"
+            localSorted="sortedValuetlq4"
           />
         </CardHeader>
         <CardBody>

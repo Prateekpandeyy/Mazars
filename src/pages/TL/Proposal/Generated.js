@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl, baseUrl3 } from "../../../config/config";
@@ -24,8 +24,22 @@ import MessageIcon, {
   EditQuery,
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
-
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 const Generated = ({ updateTab }) => {
+  const classes = useStyles();
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
@@ -42,13 +56,22 @@ const Generated = ({ updateTab }) => {
   const [gstNo, setGstinNo] = useState();
   const [copy, setCopy] = useState(0);
   const [scrolledTo, setScrolledTo] = useState("");
+  const [countNotification, setCountNotification] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
   const [swing, setSwing] = useState(false);
 
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
-    if(tdsForm === false){
-      setScrolledTo(key.id)
+    if (tdsForm === false) {
+      setScrolledTo(key.id);
     }
     if (key) {
       setGstinNo(key.gstin_no);
@@ -63,17 +86,61 @@ const Generated = ({ updateTab }) => {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [tdsForm]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [tdsForm]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
   };
-
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+    if (
+      localStorage.getItem("accendgeneratedtl") === column.dataField ||
+      localStorage.getItem("previnvtl1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("previnvtl1", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendgeneratedtl") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   useEffect(() => {
-    getProposalList();
+    let localPage = Number(localStorage.getItem("admininvt1"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuevttl1"));
+    setPrev(localStorage.getItem("previnvtl1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuevttl1", JSON.stringify(sort));
+    }
+    setAccend(localStorage.getItem("accendgeneratedtl"));
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getProposalList(localPage);
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -81,22 +148,112 @@ const Generated = ({ updateTab }) => {
       uit: token,
     },
   };
-  const getProposalList = () => {
-    let data = JSON.parse(localStorage.getItem("generated"));
-    if (!data) {
-      axios
-        .get(
-          `${baseUrl}/tl/getPaymentDetail?tl_id=${JSON.parse(
-            userid
-          )}&invoice=1`,
-          myConfig
-        )
-        .then((res) => {
+  const getProposalList = (e) => {
+    let searchData = JSON.parse(localStorage.getItem("generated"));
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuevttl1"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
+    if (searchData && Object.values(searchData).length > 0) {
+      remainApiPath = `/admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
+    } else {
+      remainApiPath = `admin/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let droppage = [];
+      if (res.data.code === 1) {
+        let data = res.data.payment_detail;
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
+        }
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposal(all);
+
+        let end = e * allEnd;
+        setCountNotification(res.data.total);
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
+
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+          let droppage = [];
           if (res.data.code === 1) {
-            setProposal(res.data.payment_detail);
-            setRecords(res.data.payment_detail.length);
+            let data = res.data.payment_detail;
+            setRecords(res.data.total);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setProposal(all);
+
+            let end = e * allEnd;
+            setCountNotification(res.data.total);
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+            let rem = (e - 1) * allEnd;
+
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+            for (let i = 1; i <= dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
           }
         });
+      });
     }
   };
 
@@ -128,13 +285,54 @@ const Generated = ({ updateTab }) => {
         }
       });
   };
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+
+    localStorage.removeItem("admininvt1");
+    localStorage.removeItem("sortedValuevttl1");
+    localStorage.removeItem("accendcreated");
+    localStorage.removeItem("previnvtl1");
+    getProposalList(1);
+  };
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getProposalList(1);
+    localStorage.setItem("admininvt1", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getProposalList(page - 1);
+    localStorage.setItem("admininvt1", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("admininvt1", Number(page) + 1);
+    getProposalList(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getProposalList(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("admininvt1", defaultPage.at(-1));
+  };
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id} 
-        ref={el => (myRef.current[row.id] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
+            {rowIndex + 1}
+          </div>
+        );
       },
       style: {
         fontSize: "11px",
@@ -311,19 +509,19 @@ const Generated = ({ updateTab }) => {
   const copyFun = (e, id) => {
     setCopy(id);
     navigator.clipboard.writeText(e);
-   setSwing(!swing)
+    setSwing(!swing);
     if (swing === false) {
-      setScrolledTo(id)
+      setScrolledTo(id);
       console.log("object");
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
     console.log("work");
-}, [swing]);
+  }, [swing]);
 
   rowStyle2 = (row, index) => {
     const style = {};
@@ -369,10 +567,82 @@ const Generated = ({ updateTab }) => {
             panel="teamleader"
             records={records}
             userid={JSON.parse(userid)}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
+            setPage={setPage}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
           />
         </CardHeader>
 
         <CardBody>
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span className="customPaginationSpan">
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div className="navButtonSelectDiv">
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getProposalList(Number(e.target.value));
+                          localStorage.setItem("admininvt1", e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
           <DataTablepopulated
             bgColor="#42566a"
             keyField="id"

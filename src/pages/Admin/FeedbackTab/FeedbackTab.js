@@ -11,7 +11,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function FeedbackTab() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("adminkey");
   const [feedbackData, setFeedBackData] = useState([]);
   const [feedbackNumber, setfeedbackNumber] = useState(0);
@@ -24,36 +33,65 @@ function FeedbackTab() {
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
-  function headerLabelFormatter(column, colIndex) {
-    let isActive = true;
+  // function headerLabelFormatter(column, colIndex) {
+  //   let isActive = true;
 
-    if (accend === column.dataField || prev === column.dataField) {
+  //   if (accend === column.dataField || prev === column.dataField) {
+  //     isActive = true;
+  //     setPrev(column.dataField);
+  //     localStorage.setItem("adminFeedback", column.dataField);
+  //   } else {
+  //     isActive = false;
+  //   }
+  //   return (
+  //     <div
+  //       className={
+  //         isActive === true
+  //           ? "d-flex filterActive text-white w-100 flex-wrap"
+  //           : "d-flex text-white w-100 flex-wrap"
+  //       }
+  //     >
+  //       <div style={{ display: "flex", color: "#fff" }}>
+  //         {column.text}
+  //         {accend === column.dataField ? (
+  //           <ArrowDropDownIcon />
+  //         ) : (
+  //           <ArrowDropUpIcon />
+  //         )}
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = null;
+
+    if (
+      localStorage.getItem("accendFeedback") === column.dataField ||
+      localStorage.getItem("prevFeedback") === column.dataField
+    ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("adminFeedback", column.dataField);
+      localStorage.setItem("prevFeedback", column.dataField);
     } else {
       isActive = false;
     }
     return (
-      <div
-        className={
-          isActive === true
-            ? "d-flex filterActive text-white w-100 flex-wrap"
-            : "d-flex text-white w-100 flex-wrap"
-        }
-      >
+      <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {accend === column.dataField ? (
-            <ArrowDropDownIcon />
+          {localStorage.getItem("accendFeedback") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           ) : (
-            <ArrowDropUpIcon />
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
           )}
         </div>
       </div>
     );
   }
-
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminFeedback"));
     if (!localPage) {
@@ -233,20 +271,22 @@ function FeedbackTab() {
 
     {
       text: "Query No",
+      sort: true,
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
       headerStyle: () => {
         return { width: "40px" };
       },
-      formatter: function nameFormatter(cell, row) {
-        return <>{row.assign_no}</>;
-      },
-      headerFormatter: headerLabelFormatter,
-      sort: true,
       onSort: (field, order) => {
         let val = 0;
-        setAccend(!accend);
-
-        if (accend === true) {
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendFeedback", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendFeedback");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

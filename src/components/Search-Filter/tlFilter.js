@@ -7,6 +7,11 @@ import "antd/dist/antd.css";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
 import { current_date } from "../../common/globalVeriable";
+import { Row, Col } from "reactstrap";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function TeamFilter(props) {
   const dateValue = useRef(null);
@@ -32,6 +37,20 @@ function TeamFilter(props) {
     Unpaid,
     Paid,
     index,
+    countNotification,
+    setCountNotification,
+    big,
+    end,
+    setBig,
+    setEnd,
+    pageValue,
+    page,
+    setPage,
+    defaultPage,
+    setDefaultPage,
+    localAccend,
+    localPrev,
+    localSorted,
   } = props;
   const userid = window.localStorage.getItem("tlkey");
 
@@ -46,6 +65,15 @@ function TeamFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const [showSubCat, setShowSubCat] = useState([]);
   const [catShowData, setCatShowData] = useState([]);
+
+  const [totalPages, setTotalPages] = useState(1);
+  // const [big, setBig] = useState(1);
+  // const [end, setEnd] = useState(50);
+  // const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
@@ -90,6 +118,10 @@ function TeamFilter(props) {
   //reset date
   const resetData = () => {
     localStorage.removeItem(`searchData${index}`);
+    localStorage.removeItem(pageValue);
+    localStorage.removeItem(localAccend);
+    localStorage.removeItem(localSorted);
+    localStorage.removeItem(localPrev);
     reset();
     setSelectedData([]);
     setStore2([]);
@@ -103,8 +135,8 @@ function TeamFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    getData();
-    dateValue.current.clearValue();
+    getData(1);
+    // dateValue.current.clearValue();
   };
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -197,6 +229,7 @@ function TeamFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCountNotification(res.data.total);
               }
             }
           });
@@ -885,244 +918,318 @@ function TeamFilter(props) {
   const fromDateFun = (e) => {
     setFromDate(e.format("YYYY-MM-DD"));
   };
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getData(1);
+    localStorage.setItem(pageValue, 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getData(page - 1);
+    localStorage.setItem(pageValue, Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem(pageValue, Number(page) + 1);
+    getData(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getData(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem(pageValue, defaultPage.at(-1));
+  };
   // console.log("selectedData", selectedData);
   return (
     <>
       <div className="row">
         <div className="col-sm-12 d-flex">
-          <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-inline">
-                <div className="form-group mb-2">
-                  <Select
-                    style={{ width: 130 }}
-                    placeholder="Select Category"
-                    defaultValue={[]}
-                    onChange={handleCategory}
-                    value={catShowData}
-                  >
-                    {categoryData?.map((p, index) => (
-                      <Option value={p.details} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-inline">
+              <div className="form-group mb-2">
+                <Select
+                  style={{ width: 130 }}
+                  placeholder="Select Category"
+                  defaultValue={[]}
+                  onChange={handleCategory}
+                  value={catShowData}
+                >
+                  {categoryData?.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
 
+              <div className="form-group mx-sm-1  mb-2">
+                <Select
+                  mode="multiple"
+                  style={{ width: 250 }}
+                  placeholder="Select Sub Category"
+                  defaultValue={[]}
+                  onChange={handleSubCategory}
+                  value={showSubCat}
+                  allowClear
+                >
+                  {tax2.map((p, index) => (
+                    <Option value={p.details} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="btnSearch mb-2 ml-3"
+                  onClick={resetCategory}
+                >
+                  X
+                </button>
+              </div>
+
+              <div className="form-group mx-sm-1  mb-2">
+                <label className="form-select form-control">From</label>
+              </div>
+
+              {fromDate.length > 0 ? (
                 <div className="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="multiple"
-                    style={{ width: 250 }}
-                    placeholder="Select Sub Category"
-                    defaultValue={[]}
-                    onChange={handleSubCategory}
-                    value={showSubCat}
-                    allowClear
-                  >
-                    {tax2.map((p, index) => (
-                      <Option value={p.details} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="btnSearch mb-2 ml-3"
-                    onClick={resetCategory}
-                  >
-                    X
-                  </button>
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">From</label>
-                </div>
-
-                {fromDate.length > 0 ? (
-                  <div className="form-group mx-sm-1  mb-2">
-                    <DatePicker
-                      ref={dateValue}
-                      onChange={(e) =>
-                        setFromDate(moment(e).format("DD-MM-YYYY"))
-                      }
-                      disabledDate={(d) => !d || d.isAfter(maxDate)}
-                      format={dateFormatList}
-                      defaultValue={moment(fromDate, dateFormatList)}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
-                {fromDate.length === 0 ? (
-                  <div className="form-group mx-sm-1  mb-2">
-                    <DatePicker
-                      ref={dateValue}
-                      onChange={(e) =>
-                        setFromDate(moment(e).format("DD-MM-YYYY"))
-                      }
-                      disabledDate={(d) => !d || d.isAfter(maxDate)}
-                      format={dateFormatList}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">To</label>
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  {toDate.length > 0 ? (
-                    <DatePicker
-                      ref={dateValue}
-                      onChange={(e) =>
-                        setToDate(moment(e).format("DD-MM-YYYY"))
-                      }
-                      disabledDate={(d) => !d || d.isAfter(maxDate)}
-                      format={dateFormatList}
-                      defaultValue={moment(toDate, dateFormatList)}
-                    />
-                  ) : (
-                    ""
-                  )}
-                  {toDate.length === 0 ? (
-                    <DatePicker
-                      onChange={(e) =>
-                        setToDate(moment(e).format("DD-MM-YYYY"))
-                      }
-                      disabledDate={(d) => !d || d.isAfter(maxDate)}
-                      defaultValue={moment(new Date(), "DD MM, YYYY")}
-                      format={dateFormatList}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
-
-                <div className="form-group mx-sm-1  mb-2">
-                  {AllQuery == "AllQuery" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      onChange={(e) => setStatus(e.target.value)}
-                      value={status}
-                      style={{ height: "33px" }}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Inprogress; Queries</option>
-                      <option value="2">Completed; Queries</option>
-                      <option value="3">Declined; Queries</option>
-                    </select>
-                  )}
-
-                  {InprogressQuery == "InprogressQuery" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                      onChange={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="">--select--</option>
-                      <option value="4">Inprogress Acceptance</option>
-                      <option value="5">Inprogress; Proposal</option>
-                      <option value="6">Inprogress; Assignment</option>
-                    </select>
-                  )}
-
-                  {DeclinedQuery == "DeclinedQuery" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                      onChange={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="">--select--</option>
-                      <option value="3">Client Declined; Proposals</option>
-                      <option value="4">Client Declined; Payment</option>
-                    </select>
-                  )}
-
-                  {AllProposal == "AllProposal" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                      onChange={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Inprogress; Proposals</option>
-                      <option value="2">Accepted; Proposals</option>
-                      <option value="3">Client Declined; Proposals</option>
-                    </select>
-                  )}
-
-                  {InprogressProposal == "InprogressProposal" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                      onChange={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="">--select--</option>
-                      <option value="4">Inprogress; Preparation</option>
-                      <option value="5">Inprogress; Acceptance</option>
-                    </select>
-                  )}
-
-                  {AllPayment == "AllPayment" && (
-                    <select
-                      className="form-select form-control"
-                      name="p_status"
-                      ref={register}
-                      style={{ height: "33px" }}
-                      onChange={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="">--select--</option>
-                      <option value="1">Unpaid</option>
-                      <option value="2">Paid</option>
-                      <option value="3">Declined</option>
-                    </select>
-                  )}
-                </div>
-                <div className="form-group mx-sm-1  mb-2">
-                  <input
-                    type="text"
-                    name="query_no"
-                    ref={register}
-                    placeholder="Enter Query Number"
-                    className="form-control"
-                    onChange={(e) => setQueryNo(e.target.value)}
-                    value={queryNo}
+                  <DatePicker
+                    ref={dateValue}
+                    onChange={(e) =>
+                      setFromDate(moment(e).format("DD-MM-YYYY"))
+                    }
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    format={dateFormatList}
+                    defaultValue={moment(fromDate, dateFormatList)}
                   />
                 </div>
-                <button type="submit" className="customBtn mx-sm-1 mb-2">
-                  Search
-                </button>
-                <Reset />
+              ) : (
+                ""
+              )}
+              {fromDate.length === 0 ? (
                 <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">
-                    Total Records : {records}
-                  </label>
+                  <DatePicker
+                    ref={dateValue}
+                    onChange={(e) =>
+                      setFromDate(moment(e).format("DD-MM-YYYY"))
+                    }
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    format={dateFormatList}
+                  />
                 </div>
+              ) : (
+                ""
+              )}
+
+              <div className="form-group mx-sm-1  mb-2">
+                <label className="form-select form-control">To</label>
               </div>
-            </form>
-          </div>
+
+              <div className="form-group mx-sm-1  mb-2">
+                {toDate.length > 0 ? (
+                  <DatePicker
+                    ref={dateValue}
+                    onChange={(e) => setToDate(moment(e).format("DD-MM-YYYY"))}
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    format={dateFormatList}
+                    defaultValue={moment(toDate, dateFormatList)}
+                  />
+                ) : (
+                  ""
+                )}
+                {toDate.length === 0 ? (
+                  <DatePicker
+                    onChange={(e) => setToDate(moment(e).format("DD-MM-YYYY"))}
+                    disabledDate={(d) => !d || d.isAfter(maxDate)}
+                    defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    format={dateFormatList}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+
+              <div className="form-group mx-sm-1  mb-2">
+                {AllQuery == "AllQuery" && (
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                    style={{ height: "33px" }}
+                  >
+                    <option value="">--select--</option>
+                    <option value="1">Inprogress; Queries</option>
+                    <option value="2">Completed; Queries</option>
+                    <option value="3">Declined; Queries</option>
+                  </select>
+                )}
+
+                {InprogressQuery == "InprogressQuery" && (
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    style={{ height: "33px" }}
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                  >
+                    <option value="">--select--</option>
+                    <option value="4">Inprogress Acceptance</option>
+                    <option value="5">Inprogress; Proposal</option>
+                    <option value="6">Inprogress; Assignment</option>
+                  </select>
+                )}
+
+                {DeclinedQuery == "DeclinedQuery" && (
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    style={{ height: "33px" }}
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                  >
+                    <option value="">--select--</option>
+                    <option value="3">Client Declined; Proposals</option>
+                    <option value="4">Client Declined; Payment</option>
+                  </select>
+                )}
+
+                {AllProposal == "AllProposal" && (
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    style={{ height: "33px" }}
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                  >
+                    <option value="">--select--</option>
+                    <option value="1">Inprogress; Proposals</option>
+                    <option value="2">Accepted; Proposals</option>
+                    <option value="3">Client Declined; Proposals</option>
+                  </select>
+                )}
+
+                {InprogressProposal == "InprogressProposal" && (
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    style={{ height: "33px" }}
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                  >
+                    <option value="">--select--</option>
+                    <option value="4">Inprogress; Preparation</option>
+                    <option value="5">Inprogress; Acceptance</option>
+                  </select>
+                )}
+
+                {AllPayment == "AllPayment" && (
+                  <select
+                    className="form-select form-control"
+                    name="p_status"
+                    ref={register}
+                    style={{ height: "33px" }}
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                  >
+                    <option value="">--select--</option>
+                    <option value="1">Unpaid</option>
+                    <option value="2">Paid</option>
+                    <option value="3">Declined</option>
+                  </select>
+                )}
+              </div>
+              <div className="form-group mx-sm-1  mb-2">
+                <input
+                  type="text"
+                  name="query_no"
+                  ref={register}
+                  placeholder="Enter Query Number"
+                  className="form-control"
+                  onChange={(e) => setQueryNo(e.target.value)}
+                  value={queryNo}
+                />
+              </div>
+              <button type="submit" className="customBtn mx-sm-1 mb-2">
+                Search
+              </button>
+              <Reset />
+              <div className="form-group mx-sm-1  mb-2">
+                <label className="form-select form-control">
+                  Total Records : {records}
+                </label>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
+      <Row>
+        <Col md="12" align="right">
+          <div className="customPagination">
+            <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+              <span className="customPaginationSpan">
+                {big}-{end} of {countNotification}
+              </span>
+              <span className="d-flex">
+                {page > 1 ? (
+                  <>
+                    <button className="navButton" onClick={(e) => firstChunk()}>
+                      <KeyboardDoubleArrowLeftIcon />
+                    </button>
+                    <button className="navButton" onClick={(e) => prevChunk()}>
+                      <KeyboardArrowLeftIcon />
+                    </button>
+                  </>
+                ) : (
+                  ""
+                )}
+                <div className="navButtonSelectDiv">
+                  <select
+                    value={page}
+                    onChange={(e) => {
+                      setPage(Number(e.target.value));
+                      getData(Number(e.target.value));
+                      localStorage.setItem(pageValue, e.target.value);
+                    }}
+                    className="form-control"
+                  >
+                    {defaultPage?.map((i) => (
+                      <option value={i}>{i}</option>
+                    ))}
+                  </select>
+                </div>
+                {defaultPage?.length > page ? (
+                  <>
+                    <button className="navButton" onClick={(e) => nextChunk()}>
+                      <KeyboardArrowRightIcon />
+                    </button>
+                    <button className="navButton" onClick={(e) => lastChunk()}>
+                      <KeyboardDoubleArrowRightIcon />
+                    </button>
+                  </>
+                ) : (
+                  ""
+                )}
+              </span>
+            </div>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 }

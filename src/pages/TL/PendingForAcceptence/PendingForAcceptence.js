@@ -23,10 +23,16 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   });
 
   const [addPaymentModal, setPaymentModal] = useState(false);
-  const [scrolledTo, setScrolledTo] = useState("");
-  const [lastDown, setLastDown] = useState("");
+
   const myRef = useRef([]);
-  const myRefs = useRef([]);
+  const [countNotification, setCountNotification] = useState("");
+
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
 
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -42,21 +48,108 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     });
   };
 
+  // useEffect(() => {
+  //   getPendingforAcceptance();
+  // }, []);
   useEffect(() => {
-    getPendingforAcceptance();
+    let localPage = Number(localStorage.getItem("tlqp2"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlq3"));
+    setPrev(localStorage.getItem("prevtlq3"));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq3"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getPendingforAcceptance(localPage);
   }, []);
 
-  const getPendingforAcceptance = () => {
+  const getPendingforAcceptance = (e) => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery3"));
-    if (!searchData) {
-      axios
-        .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setPendingData(res.data.result);
-            setRecords(res.data.result.length);
+
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue3"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
+    if (searchData) {
+      remainApiPath = `/tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          let droppage = [];
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPendingData(all);
+          setRecords(res.data.result.length);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
@@ -206,7 +299,21 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             pendingForAcceptence="pendingForAcceptence"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlqp3"
             index="tlquery3"
+            localAccend="accendtlq3"
+            localPrev="prevtlq3"
+            localSorted="sortedValuetlq3"
           />
         </CardHeader>
         <CardBody>
