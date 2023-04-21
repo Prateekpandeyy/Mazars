@@ -373,6 +373,9 @@ function InCompleteData() {
             setDefaultPage={setDefaultPage}
             pageValue="tlqp2"
             index="tlquery2"
+            localAccend="accendtlq2"
+            localPrev="prevtlq2"
+            localSorted="sortedValuetlq2"
           />
         </CardHeader>
         <CardBody>

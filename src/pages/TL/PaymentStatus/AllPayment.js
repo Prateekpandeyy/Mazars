@@ -238,6 +238,64 @@ function AllPayment({ setAllPayment }) {
         });
     }
   };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlprot1", 1);
+    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
+    if (searchData) {
+      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+        if (
+          Number(
+            res.data.total > Number(localStorage.getItem("tl_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setPayment(all);
+      }
+    });
+  };
 
   const toggle = (key) => {
     setModal(!modal);
@@ -301,7 +359,7 @@ function AllPayment({ setAllPayment }) {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -314,7 +372,25 @@ function AllPayment({ setAllPayment }) {
       dataField: "query_created_date",
       text: "Query date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created_date;
         if (oldDate == null) {
@@ -347,17 +423,73 @@ function AllPayment({ setAllPayment }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
@@ -369,7 +501,25 @@ function AllPayment({ setAllPayment }) {
     {
       text: "Status",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -387,11 +537,24 @@ function AllPayment({ setAllPayment }) {
       text: "Accepted amount ",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
         }
-        return a - b; // desc
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -406,13 +569,25 @@ function AllPayment({ setAllPayment }) {
       dataField: "paid_amount",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.paid_amount;
@@ -426,11 +601,24 @@ function AllPayment({ setAllPayment }) {
       dataField: "amount_outstanding",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
         }
-        return a - b; // desc
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -444,7 +632,25 @@ function AllPayment({ setAllPayment }) {
       text: "Date of payment",
       dataField: "cust_paid_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_paid_date;
         if (oldDate == null) {

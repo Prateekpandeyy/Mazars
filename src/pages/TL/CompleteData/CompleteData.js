@@ -409,6 +409,9 @@ function CompletedQuery({ updateTab }) {
             setDefaultPage={setDefaultPage}
             pageValue="tlqp4"
             index="searchDatatlquery4"
+            localAccend="accendtlq4"
+            localPrev="prevtlq4"
+            localSorted="sortedValuetlq4"
           />
         </CardHeader>
         <CardBody>

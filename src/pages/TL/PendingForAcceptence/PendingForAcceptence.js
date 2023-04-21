@@ -311,6 +311,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             setDefaultPage={setDefaultPage}
             pageValue="tlqp3"
             index="tlquery3"
+            localAccend="accendtlq3"
+            localPrev="prevtlq3"
+            localSorted="sortedValuetlq3"
           />
         </CardHeader>
         <CardBody>
