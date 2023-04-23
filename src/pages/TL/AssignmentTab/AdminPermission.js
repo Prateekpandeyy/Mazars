@@ -211,26 +211,26 @@ function AdminPermission(props) {
     });
 
   };
-  useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
-    let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
-    if (dk) {
-      if (dk.route === window.location.pathname) {
-        setStore2(dk.store);
-        setToDate(dk.toDate);
-        setFromDate(dk.fromDate);
-        setSelectedData(dk.pcatId);
-        setStatus(dk.stage_status);
-        setQueryNo(dk.query_no);
-        setHide(dk.p_status);
-        if (pageno) {
-          onSubmit(dk, pageno);
-        } else {
-          onSubmit(dk, 1);
-        }
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
+  //   let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
+  //   if (dk) {
+  //     if (dk.route === window.location.pathname) {
+  //       setStore2(dk.store);
+  //       setToDate(dk.toDate);
+  //       setFromDate(dk.fromDate);
+  //       setSelectedData(dk.pcatId);
+  //       setStatus(dk.stage_status);
+  //       setQueryNo(dk.query_no);
+  //       setHide(dk.p_status);
+  //       if (pageno) {
+  //         onSubmit(dk, pageno);
+  //       } else {
+  //         onSubmit(dk, 1);
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -269,13 +269,13 @@ function AdminPermission(props) {
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment4");
-    getAssignmentData(1);
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
     localStorage.removeItem("tlAssignment4");
     localStorage.removeItem(`freezetlAssignment4`);
     localStorage.removeItem("tlArrowAs4");
+    getAssignmentData(1);
   };
 
   //assingmentStatus
@@ -329,7 +329,7 @@ function AdminPermission(props) {
     }
     localStorage.setItem(`tl`, JSON.stringify(1))
     localStorage.setItem(`freezetl`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatatl"));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
     if (data) {
       if (data?.stage_status?.length > 0) {
         remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
@@ -877,7 +877,7 @@ function AdminPermission(props) {
                 customId++;
                 all.push(data);
               });
-              setAssignmentDisplay(res.data.result);
+              setAssignmentDisplay(all);
               setRecords(res.data.result.length);
               setCount(res.data.total);
               setresetTrigger(!resetTrigger);
@@ -1095,7 +1095,7 @@ function AdminPermission(props) {
         </CardHeader>
 
         <CardBody className="card-body">
-          <Records records={records} />
+          {/* <Records records={records} /> */}
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}

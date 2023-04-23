@@ -250,13 +250,13 @@ function AssignmentTab() {
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment2");
-    getAssignmentList(1);
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
     localStorage.removeItem("tlAssignment2");
     localStorage.removeItem(`freezetlAssignment2`);
     localStorage.removeItem("tlArrowAs2");
+    getAssignmentList(1);
   };
 
   //assingmentStatus
@@ -383,7 +383,7 @@ function AssignmentTab() {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -750,6 +750,27 @@ function AssignmentTab() {
     },
   ];
 
+  useEffect(() => {
+    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment2"));
+
+    if (dk) {
+      if (dk.route === window.location.pathname) {
+        setStore2(dk.store);
+        setToDate(dk.toDate);
+        setFromDate(dk.fromDate);
+        setSelectedData(dk.pcatId);
+        // setHide(dk.p_status);
+        setQueryNo(dk.query_no);
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
+      }
+    }
+  }, []);
+
   const onSubmit = (data,e) => {
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
     let pageno = JSON.parse(localStorage.getItem("tlAssignment2"));
@@ -786,16 +807,21 @@ function AssignmentTab() {
     }
     localStorage.setItem(`searchDatatlAssignment2`, JSON.stringify(obj));
 
+    
+
     if (data.route){
       if(pagetry){
         remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
         }&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatId
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
         }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
       }else{
-        remainApiPath =`tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatId
+        remainApiPath =`tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${
+          data.store
+        }&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${
+          data.pcatId
         }&qno=${data.query_no}`
       }
       axios
@@ -836,7 +862,7 @@ function AssignmentTab() {
           `${baseUrl}/tl/getAssignments?page=1&tl_id=${JSON.parse(
             userid
           )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
           }`,
           myConfig
         )
@@ -885,26 +911,7 @@ function AssignmentTab() {
       </>
     );
   };
-  useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
-    let pageno = JSON.parse(localStorage.getItem("tlAssignment2"));
-
-    if (dk) {
-      if (dk.route === window.location.pathname) {
-        setStore2(dk.store);
-        setToDate(dk.toDate);
-        setFromDate(dk.fromDate);
-        setSelectedData(dk.pcatId);
-        // setHide(dk.p_status);
-        setQueryNo(dk.query_no);
-        if (pageno) {
-          onSubmit(dk, pageno);
-        } else {
-          onSubmit(dk, 1);
-        }
-      }
-    }
-  }, []);
+  
   return (
     <>
       <Card>
@@ -1003,11 +1010,11 @@ function AssignmentTab() {
                     className="form-control"
                   />
                 </div>
-                <div class="form-group mx-sm-1  mb-2">
+                {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
                 <button type="submit" class="customBtn mx-sm-1 mb-2">
                   Search
                 </button>
@@ -1022,7 +1029,7 @@ function AssignmentTab() {
                 setOnPage={setOnPage}
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
-                tpDraftReport="tlDraftReport"
+                tlDraftReport="tlDraftReport"
                 index="tlAssignment2"
                 setData={setAssignment}
                 getData={getAssignmentList}

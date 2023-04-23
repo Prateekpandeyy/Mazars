@@ -48,7 +48,7 @@ function AssignmentTab() {
 
   const allEnd = Number(localStorage.getItem("tl_record_per_page"));
   const classes = useStyles();
-  const [count, setCount] = useState("0");
+  const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
@@ -167,7 +167,7 @@ function AssignmentTab() {
           });
           setAssignment(all);
           setRecords(res.data.result.length);
-          setCount(res.data.count);
+          setCount(res.data.total);
         }
       });
 
@@ -225,7 +225,7 @@ function AssignmentTab() {
   const resetCategory = () => {
     setSelectedData([]);
     setStore2([]);
-    getAssignmentList();
+    // getAssignmentList();
   };
 
   //reset date
@@ -237,13 +237,13 @@ function AssignmentTab() {
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment3");
-    getAssignmentList();
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
     localStorage.removeItem("tlAssignment3");
     localStorage.removeItem(`freezetlAssignment3`);
     localStorage.removeItem("tlArrowAs3");
+    getAssignmentList(1);
   };
 
   //assingmentStatus
@@ -330,14 +330,14 @@ function AssignmentTab() {
       val: val,
       field: field,
     }
-    localStorage.setItem(`tlAssignment1`, JSON.stringify(1))
-    localStorage.setItem(`freezetlAssignment1`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
+    localStorage.setItem(`tlAssignment3`, JSON.stringify(1))
+    localStorage.setItem(`freezetlAssignment3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
     if (data) {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
-        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      }&from=${data.fromDate}&to=${data.toDate
+      }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
+      }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
     }
     else {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
@@ -1000,11 +1000,11 @@ function AssignmentTab() {
                     onChange={(e) => setQueryNo(e.target.value)}
                   />
                 </div>
-                <div class="form-group mx-sm-1  mb-2">
+                {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
                 <button type="submit" class="customBtn mx-sm-1 mb-2">
                   Search
                 </button>

@@ -256,13 +256,13 @@ function AssignmentTab(props) {
     setQueryNo("");
     setStore2([]);
     localStorage.removeItem("searchDatatlAssignment1");
-    getAssignmentList(1);
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
     localStorage.removeItem("tlAssignment1");
     localStorage.removeItem(`freezetlAssignment1`);
     localStorage.removeItem("tlArrowAs1");
+    getAssignmentList(1);
   };
 
   //assingmentStatus
@@ -1137,11 +1137,11 @@ function AssignmentTab(props) {
                     onChange={(e) => setQueryNo(e.target.value)}
                   />
                 </div>
-                <div class="form-group mx-sm-1  mb-2">
+                {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
                 <button type="submit" class="customBtn mx-sm-1 mb-2">
                   Search
                 </button>

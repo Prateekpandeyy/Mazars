@@ -222,12 +222,12 @@ function PaginatorTL(props) {
             if ((data) && (pagetry)) {
                 remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate}&to=${data.toDate
-                    }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatId
+                    }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
                     }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((data) && (!pagetry)) {
                 remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate}&to=${data.toDate
-                    }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatId
+                    }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
                     }&qno=${data.query_no}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
@@ -270,7 +270,7 @@ function PaginatorTL(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tlAssignment`, JSON.stringify(e));
             if ((data) && (pagetry)) {
-                if (data?.stage_status?.length > 0) {
+                if (data?.assignment_status?.length > 0) {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 } else {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
