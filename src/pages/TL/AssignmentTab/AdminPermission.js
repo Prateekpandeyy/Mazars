@@ -820,7 +820,7 @@ function AdminPermission(props) {
         }
       }
       axios
-        .get(`${baseUrl}/${baseUrl}`,
+        .get(`${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
@@ -849,7 +849,7 @@ function AdminPermission(props) {
         });
     }
     else {
-      if (status.length > 0) {
+      if (status?.length > 0) {
         remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`;
       } else {
         remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`;

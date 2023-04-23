@@ -819,7 +819,7 @@ function AssignmentTab() {
           }&qno=${data.query_no}`;
       }
       axios
-        .get(`${baseUrl}/${remainApiPath}`)
+        .get(`${baseUrl}/${remainApiPath}`,myConfig)
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
