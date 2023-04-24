@@ -185,52 +185,50 @@ function AllPayment() {
       )}&page=${e}&status=1&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
-    if (searchData) {
-      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          let droppage = [];
-          let data = res.data.result;
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let droppage = [];
+        let data = res.data.result;
 
-          setCountNotification(res.data.total);
-          setRecords(res.data.total);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setRecords(res.data.result.length);
-          let end = e * allEnd;
-
-          if (end > res.data.total) {
-            end = res.data.total;
-          }
-          let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-          let rem = (e - 1) * allEnd;
-
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+        setCountNotification(res.data.total);
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
-    }
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setRecords(res.data.result.length);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   const toggle = (key) => {
@@ -292,10 +290,10 @@ function AllPayment() {
       fieldBy: field,
     };
     localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    localStorage.setItem("sortedValuepay3", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
     if (searchData) {
-      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}&cat_id=${
         searchData.store
@@ -309,7 +307,7 @@ function AllPayment() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
     }
@@ -373,10 +371,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -429,10 +427,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -454,10 +452,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -479,10 +477,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -510,10 +508,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -546,10 +544,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -584,10 +582,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -618,10 +616,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -649,10 +647,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay3");
         }
 
         if (accend === field) {
@@ -742,6 +740,9 @@ function AllPayment() {
             defaultPage={defaultPage}
             setDefaultPage={setDefaultPage}
             pageValue="tlpay3"
+            localAccend="accendtlpay3"
+            localPrev="prevtlpay3"
+            localSorted="sortedValuetlpay3"
             index="tlpayment3"
           />
         </CardHeader>

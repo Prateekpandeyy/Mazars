@@ -202,18 +202,67 @@ function InCompleteData() {
       });
     }
   };
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlqp2", 1);
+    localStorage.setItem("sortedValuetlq2", JSON.stringify(sort));
 
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery2`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/getIncompleteQues?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setInCompleteData(all);
+      }
+    });
+  };
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -225,7 +274,25 @@ function InCompleteData() {
     {
       text: "Query date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function (cell, row) {
         let dueDate = row.created.split("-").reverse().join("-");
@@ -256,22 +323,94 @@ function InCompleteData() {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date   / Acutal delivery date",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -283,6 +422,25 @@ function InCompleteData() {
     },
     {
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (

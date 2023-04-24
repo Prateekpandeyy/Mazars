@@ -9,8 +9,18 @@ import Alerts from "../../../common/Alerts";
 import { Spinner } from "reactstrap";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import { Accept, Reject } from "../../../components/Common/MessageIcon";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +61,36 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   // useEffect(() => {
   //   getPendingforAcceptance();
   // }, []);
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendtlq3") === column.dataField ||
+      localStorage.getItem("prevtlq3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlq3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlq3") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   useEffect(() => {
     let localPage = Number(localStorage.getItem("tlqp3"));
     if (!localPage) {
@@ -152,18 +192,67 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       });
     }
   };
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlqp3", 1);
+    localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
 
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery3`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setPendingData(all);
+      }
+    });
+  };
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -175,7 +264,25 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     {
       text: "Query date",
       dataField: "query_created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created;
         if (oldDate == null) {
@@ -206,22 +313,94 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date ",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -233,7 +412,25 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     },
     {
       text: "Accept / Reject",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       formatter: function (cell, row) {
         return (
           <>

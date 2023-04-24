@@ -251,12 +251,12 @@ function AllPayment() {
 
   const columns = [
     {
-      dataField: "ci",
+      dataField: "cid",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div id={row.cid} ref={(el) => (myRef.current[row.assign_no] = el)}>
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -269,17 +269,17 @@ function AllPayment() {
       dataField: "query_created_date",
       text: "Query date",
       sort: true,
-      sort: true,
+
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -328,10 +328,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -353,10 +353,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -378,10 +378,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -409,10 +409,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -435,10 +435,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -466,10 +466,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -499,10 +499,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -531,10 +531,10 @@ function AllPayment() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay2");
         }
 
         if (accend === field) {
@@ -641,10 +641,10 @@ function AllPayment() {
       fieldBy: field,
     };
     localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    localStorage.setItem("sortedValuepay2", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
     if (searchData) {
-      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}&cat_id=${
         searchData.store
@@ -658,7 +658,7 @@ function AllPayment() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
     }
@@ -713,6 +713,9 @@ function AllPayment() {
             defaultPage={defaultPage}
             setDefaultPage={setDefaultPage}
             pageValue="tlpay2"
+            localAccend="accendtlpay2"
+            localPrev="prevtlpay2"
+            localSorted="sortedValuetlpay2"
             index="tlpayment2"
           />
         </CardHeader>

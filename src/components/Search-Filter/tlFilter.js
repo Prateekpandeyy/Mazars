@@ -73,7 +73,7 @@ function TeamFilter(props) {
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
-
+  var allEnd = Number(localStorage.getItem("tl_record_per_page"));
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
@@ -173,7 +173,6 @@ function TeamFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
       }
     } else if (!dk?.toDate) {
       let date = moment().format("DD-MM-YYYY");
@@ -181,7 +180,58 @@ function TeamFilter(props) {
       setToDate(fullDate);
     }
   }, []);
+  const updateResult = (res) => {
+    console.log("allData", res);
+    // localStorage.removeItem(`searchData${index}`);
+    localStorage.removeItem(pageValue);
+    localStorage.removeItem(localAccend);
+    localStorage.removeItem(localSorted);
+    localStorage.removeItem(localPrev);
+    let droppage = [];
+    let customId = 1;
+    if (res.data.code == 1) {
+      setBig(1);
+      setPage(1);
+      let all = [];
+      let data = res.data.result;
+      data.map((i) => {
+        let data = {
+          ...i,
+          cid: customId,
+        };
+        customId++;
+        all.push(data);
+      });
 
+      let end = allEnd;
+
+      if (allEnd > res.data.total) {
+        end = res.data.total;
+      }
+
+      setEnd(end);
+      let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+      let rem = (page - 1) * allEnd;
+
+      for (let i = 1; i <= dynamicPage; i++) {
+        droppage.push(i);
+      }
+      setDefaultPage(droppage);
+      setData(all);
+      setCountNotification(res.data.total);
+      setRecords(res.data.total);
+
+      setDefaultPage(droppage);
+      // resetPaging();
+      // if (
+      //   Object.keys(returnData).length === 0 &&
+      //   returnData.constructor === Object
+      // ) {
+
+      // }
+    }
+  };
   const onSubmit = (data) => {
     let obj = {};
     if (data.route) {
@@ -226,11 +276,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-                setCountNotification(res.data.total);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -249,10 +295,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -275,10 +318,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -297,10 +337,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -323,10 +360,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -345,10 +379,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -370,10 +401,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -392,10 +420,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -418,10 +443,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -440,10 +462,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -466,10 +485,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -488,10 +504,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -516,10 +529,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -546,10 +556,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -659,10 +666,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -683,10 +687,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -709,10 +710,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -733,10 +731,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -761,10 +756,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -785,10 +777,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -811,10 +800,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -835,10 +821,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }
@@ -867,10 +850,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -891,10 +871,7 @@ function TeamFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       }

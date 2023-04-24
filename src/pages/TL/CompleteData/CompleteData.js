@@ -95,7 +95,7 @@ function CompletedQuery({ updateTab }) {
     if (!localPage) {
       localPage = 1;
     }
-    setAccend(localStorage.getItem("accendtlq3"));
+    setAccend(localStorage.getItem("accendtlq4"));
     setPrev(localStorage.getItem("prevtlq3"));
 
     let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq2"));
@@ -216,15 +216,64 @@ function CompletedQuery({ updateTab }) {
       });
     }
   };
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlqp3", 1);
+    localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
 
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery3`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/tl/pendingAllocation?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/pendingAllocation?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setInCompleteData(all);
+      }
+    });
+  };
   const columns = [
     {
       text: "S.no",
-
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -236,7 +285,25 @@ function CompletedQuery({ updateTab }) {
       text: "Query date",
       dataField: "created",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq4");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function (cell, row) {
         let dueDate = row?.created?.split("-").reverse().join("-");
 
@@ -266,22 +333,94 @@ function CompletedQuery({ updateTab }) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq4");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq4");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq4");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date ",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq4");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -293,7 +432,26 @@ function CompletedQuery({ updateTab }) {
     },
     {
       text: "Status",
+      dataField: "status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq4");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
