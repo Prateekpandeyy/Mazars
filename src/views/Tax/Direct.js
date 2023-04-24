@@ -13,6 +13,10 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core";
+import {
+  Row,
+  Col,
+} from "reactstrap";
 import classesCustom from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import CommonServices from "../../common/common";
@@ -24,11 +28,41 @@ import Swal from "sweetalert2";
 import SearchBtn from "../../components/Common/SearchBtn";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
+
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  // const allEnd = Number(localStorage.getItem("client_record_per_page"));
+  const allEnd = 5;
+
+  const classes = useStyles();
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(allEnd);
+  const [atPage, setAtpage] = useState(1);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
 
   const [filterValue, setFilterValue] = useState("");
   const loadpage = Number(localStorage.getItem("prevPage"));
@@ -58,7 +92,9 @@ const Direct = () => {
           };
           dataList.push(dataObj);
         });
+        console.log(res);
         setData(dataList);
+        setCount(res?.data?.total);
       });
   };
   const onChangeRowsPerPage = (e) => {
@@ -69,6 +105,27 @@ const Direct = () => {
     localStorage.removeItem("prevPage");
   };
   const getData = () => {
+    let pagetry = JSON.parse(localStorage.getItem("freezeArticle"));
+    let data = JSON.parse(localStorage.getItem("searchArticle"));
+    // let searchData = JSON.parse(localStorage.getItem("generated"));
+    // localStorage.setItem(`Article`, JSON.stringify(e))
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    console.log(allEnd);
+    // setAtpage(e);
+    
+    // if ((data) && (!pagetry)){
+    //   remainApiPath = `customers/getarticles?page=${e}&content=${data.content}&article_type=${data.article_type}`
+    // }else if ((data) && (pagetry)){
+    //   remainApiPath = `customers/getarticles?page=${e}&&content=${data.content}&article_type=${data.article_type}&orderby=${val}&orderbyfield=${field}`
+    // }else if ((!data) && (pagetry)){
+    //   remainApiPath = `customers/getarticles?page=${e}&orderby=${val}&orderbyfield=${field}`
+    // }else{
+    //   remainApiPath = `customers/getarticles?page=${e}`
+    // }
+
+
     axios.get(`${baseUrl}/customers/getarticles`).then((res) => {
       let dataObj = {};
       let dataList = [];
@@ -86,18 +143,164 @@ const Direct = () => {
         };
         dataList.push(dataObj);
       });
+      // let all = [];
+      //     let customId = 1;
+      //     if (e > 1) {
+      //       customId = allEnd * (e - 1) + 1;
+      //     }
+      // data.map((i) => {
+      //   let data = {
+      //     ...i,
+      //     cid: customId,
+      //   };
+      //   customId++;
+      //   all.push(dataObj);
+      // });
+      // setData(all);
       setData(dataList);
+      console.log(res);
+      setCount(res?.data?.total);
     });
   };
+
   useEffect(() => {
+    // let pageno = JSON.parse(localStorage.getItem("article"));
+    // if (pageno) {
+    //   setPage(pageno);
+    //   getData(pageno);
+    // } else {
+    //   setPage(1);
+    //   getData(1);
+    // }
+
     getData();
     getPage();
   }, []);
 
+
+  //page counter
+  const firstChunk = () => {
+    if (atPage > 1) {
+      setAtpage(1);
+      setPage(1);
+      getData(1);
+    } else { }
+  };
+  const prevChunk = () => {
+    if (atPage < (defaultPage.at(-1))) {
+      setAtpage((atPage) => atPage - 1);
+      setPage(Number(page) - 1);
+      getData(Number(page) - 1);
+    }
+
+  };
+  const nextChunk = () => {
+    if ((atPage > 0) && (atPage < (defaultPage.at(-1)))) {
+      setAtpage((atPage) => atPage + 1);
+      setPage(Number(page) + 1);
+      getData(Number(page) + 1);
+    }
+
+  };
+  const lastChunk = () => {
+    if (atPage < (defaultPage.at(-1))) {
+      setPage(defaultPage.at(-1));
+      getData(defaultPage.at(-1));
+      setAtpage(totalPages);
+    }
+  };
+
+  function headerLabelFormatter(column) {
+    return (
+      <div>
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
+      </div>
+    )
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`article`, JSON.stringify(1))
+    localStorage.setItem(`freezeArticle`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchArticle"));
+    if (data) {
+      remainApiPath = `customers/getarticles?page=1&content=${data.content}&article_type=${data.article_type}&orderby=${val}&orderbyfield=${field}`
+    }
+    else {
+      remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          if (page > 1) {
+            sortId = big;
+          }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setData(all);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          // setting(1);
+          setAtpage(1);
+          setPage(1);
+        }
+      });
+  }
+
   const searchArticle = () => {
     let formData = new FormData();
+    console.log(formData,"formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
+    let obj ={
+      content : searchText,
+      article_type : filterValue
+    }
+    localStorage.setItem(`searchArticle`, JSON.stringify(obj));
     axios({
       method: "POST",
       url: `${baseUrl}/customers/getarticles`,
@@ -122,6 +325,7 @@ const Direct = () => {
             dataList.push(dataObj);
           });
           setData(dataList);
+          setCount(res.data.total);
         } else {
           setData([]);
           Swal.fire({
@@ -436,7 +640,7 @@ const Direct = () => {
                             </TableRow>
                           ))}
                     </TableBody>
-                    {data.length > 10 ? (
+                    {/* {data.length > 10 ? (
                       <TablePagination
                         rowsPerPageOptions={[5, 10, 15, 20, 25]}
                         count={data.length}
@@ -447,7 +651,32 @@ const Direct = () => {
                       />
                     ) : (
                       ""
-                    )}
+                    )} */}
+                    <Row>
+                      <Col md="12" align="right">
+                        <div className="customPagination">
+                          <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                            <span>
+                              {big}-{end} of {count}
+                            </span>
+                            <span className="d-flex">
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                &gt;
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
                   </Table>
                 </TableContainer>
               </div>
