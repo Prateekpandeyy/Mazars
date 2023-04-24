@@ -5,6 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Footer from "../../components/Footer/Footer";
 import {
+  Box,
   Table,
   TableContainer,
   TableHead,
@@ -13,10 +14,6 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core";
-import {
-  Row,
-  Col,
-} from "reactstrap";
 import classesCustom from "./design.module.css";
 import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
 import CommonServices from "../../common/common";
@@ -52,17 +49,17 @@ const Direct = () => {
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [isSorted, setisSorted] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
-  const [isActive, setIsActive] = useState("");
-  const [totalPages, setTotalPages] = useState(1);
+  const [isActive, setIsActive] = useState(false);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(allEnd);
   const [atPage, setAtpage] = useState(1);
-  const [defaultPage, setDefaultPage] = useState(["1"]);
+  const [totalPage, setTotalPage] = useState(1);
 
   const [filterValue, setFilterValue] = useState("");
   const loadpage = Number(localStorage.getItem("prevPage"));
@@ -104,31 +101,36 @@ const Direct = () => {
     setPage(loadpage);
     localStorage.removeItem("prevPage");
   };
-  const getData = () => {
+  const getData = (p) => {
     let pagetry = JSON.parse(localStorage.getItem("freezeArticle"));
     let data = JSON.parse(localStorage.getItem("searchArticle"));
     // let searchData = JSON.parse(localStorage.getItem("generated"));
-    // localStorage.setItem(`Article`, JSON.stringify(e))
+    localStorage.setItem(`Article`, JSON.stringify(p))
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
-    console.log(allEnd);
-    // setAtpage(e);
-    
-    // if ((data) && (!pagetry)){
-    //   remainApiPath = `customers/getarticles?page=${e}&content=${data.content}&article_type=${data.article_type}`
-    // }else if ((data) && (pagetry)){
-    //   remainApiPath = `customers/getarticles?page=${e}&&content=${data.content}&article_type=${data.article_type}&orderby=${val}&orderbyfield=${field}`
-    // }else if ((!data) && (pagetry)){
-    //   remainApiPath = `customers/getarticles?page=${e}&orderby=${val}&orderbyfield=${field}`
-    // }else{
-    //   remainApiPath = `customers/getarticles?page=${e}`
-    // }
+    // console.log(allEnd);
+    console.log("pageNo.", p);
+    setAtpage(p);
+
+    if ((data) && (!pagetry)) {
+      remainApiPath = `customers/getarticles?page=${p}&content=${data.content}&article_type=${data.article_type}`
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `customers/getarticles?page=${p}&&content=${data.content}&article_type=${data.article_type}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
+      remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getarticles?page=${p}`
+    }
 
 
-    axios.get(`${baseUrl}/customers/getarticles`).then((res) => {
+    axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
       let dataObj = {};
       let dataList = [];
+      let customId = 1;
+      if (p > 1) {
+        customId = allEnd * (p - 1) + 1;
+      }
       res.data.result.map((i, e) => {
         dataObj = {
           sn: ++e,
@@ -140,84 +142,99 @@ const Direct = () => {
           status: i.status,
           type: i.type,
           writer: i.writer,
+          cid: customId++,
         };
         dataList.push(dataObj);
       });
-      // let all = [];
-      //     let customId = 1;
-      //     if (e > 1) {
-      //       customId = allEnd * (e - 1) + 1;
-      //     }
-      // data.map((i) => {
-      //   let data = {
-      //     ...i,
-      //     cid: customId,
-      //   };
-      //   customId++;
-      //   all.push(dataObj);
-      // });
-      // setData(all);
       setData(dataList);
-      console.log(res);
+      console.log(dataList);
       setCount(res?.data?.total);
+      // getLimit();
+      let end = p * allEnd;
+
+      if (end > res.data.total) {
+        end = res.data.total;
+      }
+      // let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+      let rem = (p - 1) * allEnd;
+      if (p === 1) {
+        setBig(rem + p);
+        setEnd(end);
+      } else {
+        setBig(rem + 1);
+        setEnd(end);
+      }
+
     });
   };
 
-  useEffect(() => {
-    // let pageno = JSON.parse(localStorage.getItem("article"));
-    // if (pageno) {
-    //   setPage(pageno);
-    //   getData(pageno);
-    // } else {
-    //   setPage(1);
-    //   getData(1);
-    // }
+  // const getLimit = () => {
+  //   console.log('Count', count);
+  //   const dynamicPage = Math.ceil(count / allEnd);
+  //   setTotalPage(dynamicPage)
+  //   console.log(totalPage, "Total Pages");
+  // }
 
-    getData();
+  useEffect(() => {
+    const dynamicPage = Math.ceil(count / allEnd);
+    setTotalPage(dynamicPage)
+  }, [count]);
+
+  useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem(`Article`));
+    let data = JSON.parse(localStorage.getItem(`searchArticle`));
+    if (data) {
+      setFilterValue(data.article_type)
+      setSearchText(data.content)
+    }
+    if (pageno) {
+      setAtpage(pageno);
+      setPage(pageno);
+      getData(pageno);
+    } else {
+      setAtpage(1);
+      setPage(1);
+      getData(1);
+    }
+    // setAtpage(1);
+    // setPage(1)
+    // getData(1);
     getPage();
   }, []);
 
 
   //page counter
-  const firstChunk = () => {
-    if (atPage > 1) {
-      setAtpage(1);
-      setPage(1);
-      getData(1);
-    } else { }
-  };
   const prevChunk = () => {
-    if (atPage < (defaultPage.at(-1))) {
+    if (((atPage < (totalPage)) && (atPage > 1))) {
       setAtpage((atPage) => atPage - 1);
-      setPage(Number(page) - 1);
-      getData(Number(page) - 1);
+      setPage(atPage - 1);
+      getData(atPage - 1);
     }
 
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (defaultPage.at(-1)))) {
+    if ((atPage > 0) && (atPage < (totalPage))) {
       setAtpage((atPage) => atPage + 1);
-      setPage(Number(page) + 1);
-      getData(Number(page) + 1);
+      setPage(atPage + 1);
+      getData(atPage + 1);
     }
 
   };
-  const lastChunk = () => {
-    if (atPage < (defaultPage.at(-1))) {
-      setPage(defaultPage.at(-1));
-      getData(defaultPage.at(-1));
-      setAtpage(totalPages);
-    }
-  };
 
-  function headerLabelFormatter(column) {
+  function sortButton() {
+    // return(
+    //  <div>
+    //     <p>Date of publishingB</p>
+    //     </div>
+    // )
     return (
       <div>
-        {column.dataField === isActive ?
+        {isSorted === true ?
           (
             <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
+              "Date of publishing"
+              {accend === true ? (
                 <ArrowDropDownIcon
                   className={turnGreen === true ? classes.isActive : ""}
                 />
@@ -231,8 +248,8 @@ const Direct = () => {
           :
           (
             <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
+              "Date of publishing"
+              {accend === true ? (
                 <ArrowDropDownIcon />
               ) : (
                 <ArrowDropUpIcon />
@@ -253,7 +270,8 @@ const Direct = () => {
       val: val,
       field: field,
     }
-    localStorage.setItem(`article`, JSON.stringify(1))
+    setAccend(!accend);
+    localStorage.setItem(`Article`, JSON.stringify(1))
     localStorage.setItem(`freezeArticle`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchArticle"));
     if (data) {
@@ -269,22 +287,33 @@ const Direct = () => {
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+              cid: customId++,
             };
-            sortId++;
-            all.push(data);
+            dataList.push(dataObj);
           });
-          setData(all);
+          let end = 1 * allEnd;
+          // let dynamicPage = Math.ceil(res.data.total / allEnd);
+          setData(dataList);
           setCount(res.data.total);
           setTurnGreen(true);
-          // setting(1);
+          let rem = 0 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
           setAtpage(1);
           setPage(1);
         }
@@ -293,12 +322,12 @@ const Direct = () => {
 
   const searchArticle = () => {
     let formData = new FormData();
-    console.log(formData,"formData");
+    console.log(formData, "formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
-    let obj ={
-      content : searchText,
-      article_type : filterValue
+    let obj = {
+      content: searchText,
+      article_type: filterValue
     }
     localStorage.setItem(`searchArticle`, JSON.stringify(obj));
     axios({
@@ -309,6 +338,7 @@ const Direct = () => {
       if (res.data.code === 1) {
         let dataObj = {};
         let dataList = [];
+        let customId = 1;
         if (res.data.result.length > 0) {
           res.data.result.map((i, e) => {
             dataObj = {
@@ -321,11 +351,32 @@ const Direct = () => {
               status: i.status,
               type: i.type,
               writer: i.writer,
+              cid: customId++,
             };
             dataList.push(dataObj);
           });
           setData(dataList);
-          setCount(res.data.total);
+          setCount(res?.data?.total);
+          setAtpage(1);
+          setPage(1);
+          // getLimit();
+          const p = 1
+          let end = p * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          // let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (p - 1) * allEnd;
+          if (p === 1) {
+            setBig(rem + p);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+
         } else {
           setData([]);
           Swal.fire({
@@ -392,7 +443,10 @@ const Direct = () => {
                             <SubHeading>S.No</SubHeading>
                           </TableCell>
                           <TableCell style={{ width: "200px" }}>
-                            <SubHeading>Date of publishing</SubHeading>
+                            <SubHeading>
+                              {/* <sortButton/> */}
+                              Date of publishing
+                            </SubHeading>
                           </TableCell>
                           <TableCell style={{ width: "150px" }}>
                             <SubHeading>Subject</SubHeading>
@@ -412,17 +466,18 @@ const Direct = () => {
                       <TableBody>
                         {data &&
                           data
-                            .slice(
-                              page * rowsPerPage,
-                              page * rowsPerPage + rowsPerPage
-                            )
+                            // .slice(
+                            //   page * rowsPerPage,
+                            //   page * rowsPerPage + rowsPerPage
+                            // )
                             .map((i, e) => (
                               <TableRow>
                                 <TableCell
                                   style={{ padding: "8px 16px" }}
                                   className="tableCellStyle"
                                 >
-                                  {page * 10 + ++e}
+                                  {/* {page * 10 + ++e} */}
+                                  {i.cid}
                                 </TableCell>
                                 <TableCell style={{ width: "150px" }}>
                                   <CustomTypography>
@@ -483,6 +538,27 @@ const Direct = () => {
                         ""
                       )}
                     </Table>
+                    <div className="customPagination">
+                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                        <span>
+                          {big}-{end} of {count}
+                        </span>
+                        <span className="d-flex">
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            &lt;
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => nextChunk()}
+                          >
+                            &gt;
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </TableContainer>
                 </div>
               </div>
@@ -546,7 +622,16 @@ const Direct = () => {
                           <SubHeading>S.No</SubHeading>
                         </TableCell>
                         <TableCell style={{ width: "200px" }}>
-                          <SubHeading>Date of publishing</SubHeading>
+                          {accend == true ? (
+                            <SubHeading onClick={() => sortMessage(1, 1)}>
+                              Date of publishing  <ArrowDropDownIcon />
+                            </SubHeading>
+                          ) : (
+                            <SubHeading onClick={() => sortMessage(0, 1)}>
+                              Date of publishing <ArrowDropUpIcon />
+                            </SubHeading>
+                          )
+                          }
                         </TableCell>
                         <TableCell style={{ width: "150px" }}>
                           <SubHeading>Subject</SubHeading>
@@ -563,17 +648,18 @@ const Direct = () => {
                     <TableBody>
                       {data &&
                         data
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
+                          // .slice(
+                          //   page * rowsPerPage,
+                          //   page * rowsPerPage + rowsPerPage
+                          // )
                           .map((i, e) => (
                             <TableRow>
                               <TableCell
                                 style={{ padding: "8px 16px" }}
                                 className="tableCellStyle"
                               >
-                                {page * 10 + ++e}
+                                {/* {page * 10 + ++e} */}
+                                {i.cid}
                               </TableCell>
                               <TableCell style={{ width: "150px" }}>
                                 <CustomTypography>
@@ -640,7 +726,7 @@ const Direct = () => {
                             </TableRow>
                           ))}
                     </TableBody>
-                    {/* {data.length > 10 ? (
+                    {data.length > 10 ? (
                       <TablePagination
                         rowsPerPageOptions={[5, 10, 15, 20, 25]}
                         count={data.length}
@@ -651,33 +737,30 @@ const Direct = () => {
                       />
                     ) : (
                       ""
-                    )} */}
-                    <Row>
-                      <Col md="12" align="right">
-                        <div className="customPagination">
-                          <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                            <span>
-                              {big}-{end} of {count}
-                            </span>
-                            <span className="d-flex">
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => nextChunk()}
-                              >
-                                &gt;
-                              </button>
-                            </span>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
+                    )}
                   </Table>
+                  <div className="customPagination">
+                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                      <span>
+                        {big}-{end} of {count}
+                      </span>
+                      <span className="d-flex">
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => prevChunk()}
+                        >
+                          &lt;
+                        </button>
+                        <button
+                          className="navButton mx-1"
+                          onClick={(e) => nextChunk()}
+                        >
+                          &gt;
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+
                 </TableContainer>
               </div>
             </div>
