@@ -233,6 +233,7 @@ const CreateInvoice = () => {
       headerStyle: () => {
         return { width: "50px" };
       },
+      
     },
 
     // {

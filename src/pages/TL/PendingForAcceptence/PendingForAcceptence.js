@@ -92,7 +92,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     );
   }
   useEffect(() => {
-    let localPage = Number(localStorage.getItem("tlqp2"));
+    let localPage = Number(localStorage.getItem("tlqp3"));
     if (!localPage) {
       localPage = 1;
     }
@@ -127,7 +127,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     let remainApiPath = "";
 
     if (searchData) {
-      remainApiPath = `/tl/pendingQues?id=${JSON.parse(
+      remainApiPath = `tl/pendingQues?id=${JSON.parse(
         userid
       )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store

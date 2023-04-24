@@ -140,16 +140,16 @@ function ProposalTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllProposal />
+          <AllProposal count={allProposal} />
         </TabPanel>
         <TabPanel>
-          <InprogressProposal />
+          <InprogressProposal count={inprogressProposal} />
         </TabPanel>
         <TabPanel>
-          <AcceptedProposal />
+          <AcceptedProposal count={acceptedProposal} />
         </TabPanel>
         <TabPanel>
-          <DeclinedProposal />
+          <DeclinedProposal count={declinedProposal} />
         </TabPanel>
       </Tabs>
     </Layout>

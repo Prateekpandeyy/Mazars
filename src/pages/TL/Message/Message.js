@@ -8,8 +8,20 @@ import PaymentModal from "./PaymentModal";
 import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import CustomHeading from "../../../components/Common/CustomHeading";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
 function Message(props) {
   const history = useHistory();
+  const allEnd = Number(localStorage.getItem("tl_record_per_page"));
   const userId = window.localStorage.getItem("tlkey");
   const [query, setQuery] = useState([]);
   const [addPaymentModal, setPaymentModal] = useState(false);
@@ -19,14 +31,30 @@ function Message(props) {
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [defaultPage, setDefaultPage] = useState(["1"]);
+  const classes = useStyles();
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
   useEffect(() => {
-    setPage(1);
+    let pageno = Number(JSON.parse(localStorage.getItem("tlMsg")));
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
-    getMessage(1);
+    if (pageno) {
+      setPage(pageno);
+      getMessage(pageno);
+    } else {
+      setPage(1);
+      getMessage(1);
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -34,14 +62,59 @@ function Message(props) {
       uit: token,
     },
   };
+  function headerLabelFormatter(column) {
+    return (
+      <div>
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
+      </div>
+    )
+  }
 
   const getMessage = (e) => {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetlMsg"));
+    localStorage.setItem(`tlMsg`, JSON.stringify(e))
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
     console.log(allEnd);
+    setAtpage(e);
+
     if (e) {
+      if (pagetry) {
+        remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}&orderby=${val}&orderbyfield=${field}`
+      } else {
+        remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}`
+      }
       axios
         .get(
-          `${baseUrl}/tl/getNotification?id=${JSON.parse(userId)}&page=${e}`,
+          `${baseUrl}/${remainApiPath}`,
           myConfig
         )
         .then((res) => {
@@ -64,17 +137,21 @@ function Message(props) {
             setQuery(all);
 
             setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / 50);
+            let dynamicPage = Math.round(res.data.total / allEnd);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
             if (e === 1) {
               setBig(rem + e);
               setEnd(end);
+            } else if ((e == (dynamicPage))) {
+              setBig(rem + 1);
+              setEnd(res.data.total);
+              // console.log("e at last page");
             } else {
               setBig(rem + 1);
               setEnd(end);
             }
-            for (let i = 1; i < dynamicPage; i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -82,10 +159,22 @@ function Message(props) {
         });
     }
   };
+
   const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`tlMsg`, JSON.stringify(1))
+    localStorage.setItem(`freezetlMsg`, JSON.stringify(obj));
+
     axios
       .get(
-        `${baseUrl}/tl/getNotification?orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/tl/getNotification?page=1&orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -103,36 +192,77 @@ function Message(props) {
             sortId++;
             all.push(data);
           });
-
           setQuery(all);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          // setting(1);
+          setAtpage(1);
+          setPage(1);
         }
       });
   };
 
+  const setting = (e) => {
+    let droppage = [];
+    // setAtpage(e);
+    // setPage(e);
+    const dynamicPage = Math.ceil(count / allEnd);
+    console.log(dynamicPage, "to check dynamic page");
+    setTotalPages(dynamicPage)
+    let rem = (e - 1) * allEnd;
+    let end = e * allEnd;
+    if (dynamicPage > 1) {
+      if (e == 1) {
+        setBig(rem + e);
+        setEnd(allEnd);
+      }
+      else if ((e == (dynamicPage))) {
+        setBig(rem + 1);
+        setEnd(count);
+      }
+      else {
+        setBig(rem + 1);
+        setEnd(end);
+      }
+    } else {
+      setBig(rem + 1);
+      setEnd(count);
+    }
+    for (let i = 1; i <= dynamicPage; i++) {
+      droppage.push(i);
+    }
+    setDefaultPage(droppage);
+  }
+
   //page counter
   const firstChunk = () => {
-    setAtpage(1);
-    setPage(1);
-    getMessage(1);
+    if (atPage > 1) {
+      setAtpage(1);
+      setPage(1);
+      getMessage(1);
+    }
   };
   const prevChunk = () => {
-    if (atPage > 1) {
+    if (atPage < (defaultPage.at(-1))) {
       setAtpage((atPage) => atPage - 1);
+      setPage(Number(page) - 1);
+      getMessage(Number(page) - 1);
     }
-    setPage(page - 1);
-    getMessage(page - 1);
+
   };
   const nextChunk = () => {
-    if (atPage < totalPages) {
+    if ((atPage > 0) && (atPage < (defaultPage.at(-1)))) {
       setAtpage((atPage) => atPage + 1);
+      setPage(Number(page) + 1);
+      getMessage(Number(page) + 1);
     }
-    setPage(page + 1);
-    getMessage(page + 1);
   };
   const lastChunk = () => {
-    setPage(defaultPage.at(-1));
-    getMessage(defaultPage.at(-1));
-    setAtpage(totalPages);
+    if (atPage < (defaultPage.at(-1))) {
+      setPage(defaultPage.at(-1));
+      getMessage(defaultPage.at(-1));
+      setAtpage((defaultPage.at(-1)));
+    }
   };
 
   const columns = [
@@ -150,19 +280,28 @@ function Message(props) {
     {
       text: "Date",
       dataField: "setdate",
-
-      headerStyle: () => {
-        return { fontSize: "12px", width: "60px" };
-      },
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowMsg", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowMsg");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
         sortMessage(val, 1);
+      },
+
+      headerStyle: () => {
+        return { fontSize: "12px", width: "60px" };
       },
     },
 
@@ -181,10 +320,19 @@ function Message(props) {
           </>
         );
       },
+      headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
         let val = 0;
-        if (order === "asc") {
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowMsg", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowMsg");
+        }
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -198,16 +346,7 @@ function Message(props) {
       headerStyle: () => {
         return { fontSize: "12px", width: "180px" };
       },
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -251,8 +390,8 @@ function Message(props) {
   const readNotification = (id) => {
     axios
       .get(`${baseUrl}/tl/markReadNotification?id=${id}`, myConfig)
-      .then(function (response) {})
-      .catch((error) => {});
+      .then(function (response) { })
+      .catch((error) => { });
   };
 
   return (

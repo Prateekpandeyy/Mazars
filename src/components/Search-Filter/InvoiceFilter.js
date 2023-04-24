@@ -99,10 +99,11 @@ const InvoiceFilter = (props) => {
         },
         data: formData,
       }).then((res) => {
-        if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
-        }
+        updateResult(res);
+        // if (res.data.code === 1) {
+        //   props.setData(res.data.payment_detail);
+        //   props.setRec(res.data.payment_detail.length);
+        // }
       });
     } else if (props.invoice == "tpgenerated") {
       const token = window.localStorage.getItem("tptoken");
@@ -115,10 +116,11 @@ const InvoiceFilter = (props) => {
         },
         data: formData,
       }).then((res) => {
-        if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
-        }
+        updateResult(res);
+        // if (res.data.code === 1) {
+        //   props.setData(res.data.payment_detail);
+        //   props.setRec(res.data.payment_detail.length);
+        // }
       });
     } else if (props.invoice == "admingenerated" && formData) {
       const token = window.localStorage.getItem("adminToken");
@@ -223,6 +225,7 @@ const InvoiceFilter = (props) => {
       if (returnData === null) {
         props.resetPaging();
       }
+      // props.resetPaging();
     }
   };
   return (
