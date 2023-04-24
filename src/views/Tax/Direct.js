@@ -330,6 +330,7 @@ const Direct = () => {
       article_type: filterValue
     }
     localStorage.setItem(`searchArticle`, JSON.stringify(obj));
+    localStorage.setItem(`Article`, JSON.stringify(1))
     axios({
       method: "POST",
       url: `${baseUrl}/customers/getarticles`,
@@ -375,7 +376,9 @@ const Direct = () => {
           } else {
             setBig(rem + 1);
             setEnd(end);
-          }
+          } 
+          localStorage.removeItem(`freezeArticle`);
+          setAccend(false);
 
         } else {
           setData([]);
