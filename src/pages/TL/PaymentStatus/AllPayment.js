@@ -196,7 +196,7 @@ function AllPayment({ setAllPayment }) {
           if (res.data.code === 1) {
             let droppage = [];
             let data = res.data.result;
-
+            setAllPayment(res.data.total);
             setCountNotification(res.data.total);
             setRecords(res.data.total);
             let all = [];
@@ -246,10 +246,10 @@ function AllPayment({ setAllPayment }) {
       fieldBy: field,
     };
     localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    localStorage.setItem("sortedValuepay1", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
     if (searchData) {
-      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}&cat_id=${
         searchData.store
@@ -259,11 +259,11 @@ function AllPayment({ setAllPayment }) {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
     }
@@ -351,7 +351,7 @@ function AllPayment({ setAllPayment }) {
 
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return (
@@ -378,10 +378,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -429,10 +429,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -453,10 +453,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -477,10 +477,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -507,10 +507,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -543,10 +543,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -575,10 +575,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -607,10 +607,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -638,10 +638,10 @@ function AllPayment({ setAllPayment }) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpro1", field);
+          localStorage.setItem("accendtlpay1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpro1");
+          localStorage.removeItem("accendtlpay1");
         }
 
         if (accend === field) {
@@ -731,6 +731,9 @@ function AllPayment({ setAllPayment }) {
             defaultPage={defaultPage}
             setDefaultPage={setDefaultPage}
             pageValue="tlpay1"
+            localAccend="accendtlpay1"
+            localPrev="prevtlpay1"
+            localSorted="sortedValuetlpay1"
             index="tlpayment1"
           />
         </CardHeader>

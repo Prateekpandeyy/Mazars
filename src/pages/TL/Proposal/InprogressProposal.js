@@ -50,12 +50,12 @@ function InprogressProposal() {
     let isActive = true;
 
     if (
-      localStorage.getItem("accendtlpro4") === column.dataField ||
-      localStorage.getItem("prevtlpro4") === column.dataField
+      localStorage.getItem("accendtlpro2") === column.dataField ||
+      localStorage.getItem("prevtlpro2") === column.dataField
     ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevtlpro4", column.dataField);
+      localStorage.setItem("prevtlpro2", column.dataField);
     } else {
       isActive = false;
     }
@@ -63,7 +63,7 @@ function InprogressProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("accendtlpro4") === column.dataField ? (
+          {localStorage.getItem("accendtlpro2") === column.dataField ? (
             <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -167,7 +167,7 @@ function InprogressProposal() {
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
-      remainApiPath = `tl/getProposalTl?id=${JSON.parse(
+      remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
         userid
       )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }

@@ -120,7 +120,7 @@ const InvoiceFilter = (props) => {
           props.setRec(res.data.payment_detail.length);
         }
       });
-    } else if (props.invoice == "admingenerated") {
+    } else if (props.invoice == "admingenerated" && formData) {
       const token = window.localStorage.getItem("adminToken");
 
       let customId = 1;
@@ -167,7 +167,8 @@ const InvoiceFilter = (props) => {
     }
   };
   const resetData = () => {
-    reset();
+    console.log("Props", props);
+    // reset();
     setQueryNo("");
     setInstallmentNo("");
     setFromDate("");
