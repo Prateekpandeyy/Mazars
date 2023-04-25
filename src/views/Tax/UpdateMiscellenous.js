@@ -87,23 +87,23 @@ const UpdateMiscellenous = () => {
   const getData = (p) => {
     let pagetry = JSON.parse(localStorage.getItem("freezeMis"));
     localStorage.setItem(`misUpdate`, JSON.stringify(p))
-    let remainApiPath = "";
-    let val = pagetry?.val;
-    let field = pagetry?.field;
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
     // console.log(allEnd);
     console.log("pageNo.", p);
     setAtpage(p);
+    let dataObj = {};
+    let dataList = [];
     let customId = 1;
     if (p > 1) {
       customId = allEnd * (p - 1) + 1;
     }
-    if (pagetry) {
+    if (isActive == true) {
       remainApiPath = `customers/getupdated?page=${p}&type=miscellaneous&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/getupdated?page=${p}&type=miscellaneous`
     }
-    let dataObj = {};
-    let dataList = [];
     axios
       .get(`${baseUrl}/${remainApiPath}`)
       .then((res) => {
@@ -139,17 +139,28 @@ const UpdateMiscellenous = () => {
       });
   };
   const searchArticle = (p) => {
+    setAtpage(p);
+    setPage(p);
     let dataObj = {};
     let dataList = [];
     let customId = 1;
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
     if (p > 1) {
       customId = allEnd * (p - 1) + 1;
     }
     let formData = new FormData();
     formData.append("content", searchText);
+    if (isActive == true) {
+      remainApiPath = `customers/getarticles?type=miscellaneous&page=${p}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getupdated?type=miscellaneous&page=${p}`
+    }
+
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=miscellaneous&page=${p}`,
+      url: `${baseUrl}/${remainApiPath}`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
@@ -211,60 +222,96 @@ const UpdateMiscellenous = () => {
 
   };
 
-  // const sortMessage = (val, field) => {
-  //   let remainApiPath = "";
-  //   setSortVal(val);
-  //   setSortField(field);
-  //   let obj = {
-  //     // pageno: pageno,
-  //     val: val,
-  //     field: field,
-  //   }
-  //   setAccend(!accend);
-  //   localStorage.setItem(`misUpdate`, JSON.stringify(1))
-  //   localStorage.setItem(`freezeMis`, JSON.stringify(obj));
+  const sortMessage = (val, field) => {
+    setIsActive(true);
+    setAtpage(1);
+    setPage(1);
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    setAccend(!accend);
+    if (((searchText?.length) != 0)) {
+      let formData = new FormData();
+      formData.append("content", searchText);
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/getupdated?type=miscellaneous&page=1`,
+        data: formData,
+      }).then((res) => {
+        if (res.data.code === 1) {
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          if (res.data.result.length > 0) {
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            setData(dataList);
+            setCount(res?.data?.total);
+            let end = 1 * allEnd;
 
-  //   remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}`
-
-  //   axios
-  //     .get(
-  //       `${baseUrl}/${remainApiPath}`,
-  //     )
-  //     .then((res) => {
-  //       if (res.data.code === 1) {
-  //         let all = [];
-  //         let dataObj = {};
-  //         let dataList = [];
-  //         let customId = 1;
-  //         let sortId = 1;
-  //         res.data.result.map((i, e) => {
-  //           dataObj = {
-  //             sn: ++e,
-  //             content: i.content,
-  //             file: i.file,
-  //             heading: i.heading,
-  //             id: i.id,
-  //             publish_date: i.publish_date,
-  //             status: i.status,
-  //             type: i.type,
-  //             writer: i.writer,
-  //             cid: customId++,
-  //           };
-  //           dataList.push(dataObj);
-  //         });
-  //         let end = 1 * allEnd;
-  //         // let dynamicPage = Math.ceil(res.data.total / allEnd);
-  //         setData(dataList);
-  //         setCount(res.data.total);
-  //         setTurnGreen(true);
-  //         let rem = 0 * allEnd;
-  //         setBig(rem + 1);
-  //         setEnd(end);
-  //         setAtpage(1);
-  //         setPage(1);
-  //       }
-  //     });
-  // }
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let rem = (1 - 1) * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+          }
+        }
+      });
+    } else {
+      remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}&page=1`
+      axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          let sortId = 1;
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+              cid: customId++,
+            };
+            dataList.push(dataObj);
+          });
+          let end = 1 * allEnd;
+          // let dynamicPage = Math.ceil(res.data.total / allEnd);
+          setData(dataList);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          let rem = 0 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
+          setAtpage(1);
+          setPage(1);
+        }
+      });
+    } 
+  }
 
   return (
     <>

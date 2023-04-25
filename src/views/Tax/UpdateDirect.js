@@ -54,7 +54,7 @@ const UpdateDirect = () => {
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
-  const [isActive, setIsActive] = useState("");
+  const [isActive, setIsActive] = useState(false);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(allEnd);
   const [atPage, setAtpage] = useState(1);
@@ -70,6 +70,7 @@ const UpdateDirect = () => {
     setAtpage(1);
     setPage(1);
     getData(1);
+    setIsActive(false);
     // }
     // getData(1);
   }, []);
@@ -84,12 +85,9 @@ const UpdateDirect = () => {
     setRowsPerPage(e.target.value);
   };
   const getData = (p) => {
-
-    let pagetry = JSON.parse(localStorage.getItem("freezeDirect"));
-    localStorage.setItem(`directUpdate`, JSON.stringify(p))
     let remainApiPath = "";
-    let val = pagetry?.val;
-    let field = pagetry?.field;
+    let val = sortVal;
+    let field = sortField;
     // console.log(allEnd);
     console.log("pageNo.", p);
     setAtpage(p);
@@ -99,7 +97,7 @@ const UpdateDirect = () => {
     if (p > 1) {
       customId = allEnd * (p - 1) + 1;
     }
-    if (pagetry) {
+    if (isActive == true) {
       remainApiPath = `customers/getupdated?page=${p}&type=direct&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/getupdated?page=${p}&type=direct`
@@ -135,18 +133,26 @@ const UpdateDirect = () => {
         setBig(rem + 1);
         setEnd(end);
       }
-
     });
   };
 
   const searchArticle = (p) => {
     setAtpage(p);
     setPage(p);
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
     let formData = new FormData();
     formData.append("content", searchText);
+    if (isActive == true) {
+      remainApiPath = `customers/getarticles?type=direct&page=${p}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getupdated?type=direct&page=${p}`
+    }
+
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=direct&page=${p}`,
+      url: `${baseUrl}/${remainApiPath}`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
@@ -220,21 +226,56 @@ const UpdateDirect = () => {
   };
 
   const sortMessage = (val, field) => {
+    setIsActive(true);
+    setAtpage(1);
+    setPage(1);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    let obj = {
-      // pageno: pageno,
-      val: val,
-      field: field,
-    }
     setAccend(!accend);
-    localStorage.setItem(`directUpdate`, JSON.stringify(1))
-    localStorage.setItem(`freezedirectUpdate`, JSON.stringify(obj));
+    if (((searchText?.length) != 0)) {
+      let formData = new FormData();
+      formData.append("content", searchText);
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/getupdated?type=direct&page=1`,
+        data: formData,
+      }).then((res) => {
+        if (res.data.code === 1) {
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          if (res.data.result.length > 0) {
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            setData(dataList);
+            setCount(res?.data?.total);
+            let end = 1 * allEnd;
 
-    remainApiPath = `customers/getupdated?type=direct&page=1&orderby=${val}&orderbyfield=${field}`
-
-    axios
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let rem = (1 - 1) * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+          }
+        }
+      });
+    } else {
+      remainApiPath = `customers/getupdated?type=direct&page=1&orderby=${val}&orderbyfield=${field}&page=1`
+      axios
       .get(
         `${baseUrl}/${remainApiPath}`,
       )
@@ -272,6 +313,7 @@ const UpdateDirect = () => {
           setPage(1);
         }
       });
+    } 
   }
 
   return (
@@ -332,17 +374,17 @@ const UpdateDirect = () => {
                                 </TableCell>
                                 <TableCell style={{ width: "200px" }}>
                                   {accend == true ? (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(1, 1)}
                                     >
-                                      Date of publishing 
+                                      Date of publishing
                                       {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(0, 1)}
                                     >
-                                      Date of publishing 
+                                      Date of publishing
                                       {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
                                   )
@@ -510,16 +552,16 @@ const UpdateDirect = () => {
                                 {accend == true ? (
                                   <SubHeading
                                   //  onClick={() => sortMessage(1, 1)}
-                                   >
-                                    Date of publishing  
+                                  >
+                                    Date of publishing
                                     {/* <ArrowDropDownIcon /> */}
                                   </SubHeading>
                                 ) : (
-                                  <SubHeading 
+                                  <SubHeading
                                   // onClick={() => sortMessage(0, 1)}
                                   >
                                     Date of publishing
-                                     {/* <ArrowDropUpIcon /> */}
+                                    {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
                                 )
                                 }

@@ -87,11 +87,9 @@ const UpdateIndirect = () => {
   const getData = (p) => {
     let dataObj = {};
     let dataList = [];
-    let pagetry = JSON.parse(localStorage.getItem("freezeIndirectUpdate"));
-    localStorage.setItem(`indirectUpdate`, JSON.stringify(p))
-    let remainApiPath = "";
-    let val = pagetry?.val;
-    let field = pagetry?.field;
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
     // console.log(allEnd);
     console.log("pageNo.", p);
     setAtpage(p);
@@ -99,7 +97,7 @@ const UpdateIndirect = () => {
     if (p > 1) {
       customId = allEnd * (p - 1) + 1;
     }
-    if (pagetry) {
+    if (isActive == true) {
       remainApiPath = `customers/getupdated?page=${p}&type=indirect&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/getupdated?page=${p}&type=indirect`
@@ -144,6 +142,9 @@ const UpdateIndirect = () => {
     let dataObj = {};
     let dataList = [];
     let customId = 1;
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
     if (p > 1) {
       customId = allEnd * (p - 1) + 1;
     }
@@ -151,9 +152,15 @@ const UpdateIndirect = () => {
       setPage(p);
     let formData = new FormData();
     formData.append("content", searchText);
+    if (isActive == true) {
+      remainApiPath = `customers/getarticles?type=direct&page=${p}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getupdated?type=direct&page=${p}`
+    }
+
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=indirect&page=${p}`,
+      url: `${baseUrl}/${remainApiPath}`,
       data: formData,
     }).then((res) => {
       res.data.result.map((i, e) => {
@@ -215,26 +222,63 @@ const UpdateIndirect = () => {
   };
 
   const sortMessage = (val, field) => {
+    setIsActive(true);
+    setAtpage(1);
+    setPage(1);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    let obj = {
-      // pageno: pageno,
-      val: val,
-      field: field,
-    }
     setAccend(!accend);
-    localStorage.setItem(`indirectUpdate`, JSON.stringify(1))
-    localStorage.setItem(`freezeIndirectUpdate`, JSON.stringify(obj));
+    if (((searchText?.length) != 0)) {
+      let formData = new FormData();
+      formData.append("content", searchText);
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/getupdated?type=indirect&page=1`,
+        data: formData,
+      }).then((res) => {
+        if (res.data.code === 1) {
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          if (res.data.result.length > 0) {
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            setData(dataList);
+            setCount(res?.data?.total);
+            let end = 1 * allEnd;
 
-    remainApiPath = `customers/getupdated?type=indirect&page=1&orderby=${val}&orderbyfield=${field}`
-
-    axios
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let rem = (1 - 1) * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+          }
+        }
+      });
+    } else {
+      remainApiPath = `customers/getupdated?type=indirect&page=1&orderby=${val}&orderbyfield=${field}&page=1`
+      axios
       .get(
         `${baseUrl}/${remainApiPath}`,
       )
-      .then((res) => {
-        if (res.data.code === 1) {
+      .then((res) => 
+      {
+        if (res.data.code === 1) 
+        {
           let all = [];
           let dataObj = {};
           let dataList = [];
@@ -256,7 +300,6 @@ const UpdateIndirect = () => {
             dataList.push(dataObj);
           });
           let end = 1 * allEnd;
-          // let dynamicPage = Math.ceil(res.data.total / allEnd);
           setData(dataList);
           setCount(res.data.total);
           setTurnGreen(true);
@@ -267,6 +310,7 @@ const UpdateIndirect = () => {
           setPage(1);
         }
       });
+    } 
   }
 
   return (
