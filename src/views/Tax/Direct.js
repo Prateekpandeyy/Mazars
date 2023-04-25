@@ -269,8 +269,8 @@ const Direct = () => {
               end = res.data.total;
             }
             let rem = (1 - 1) * allEnd;
-              setBig(rem + 1);
-              setEnd(end);
+            setBig(rem + 1);
+            setEnd(end);
           }
         }
       });
@@ -278,41 +278,41 @@ const Direct = () => {
     else {
       remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`
       axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let dataObj = {};
-          let dataList = [];
-          let customId = 1;
-          let sortId = 1;
-          res.data.result.map((i, e) => {
-            dataObj = {
-              sn: ++e,
-              content: i.content,
-              file: i.file,
-              heading: i.heading,
-              id: i.id,
-              publish_date: i.publish_date,
-              status: i.status,
-              type: i.type,
-              writer: i.writer,
-              cid: customId++,
-            };
-            dataList.push(dataObj);
-          });
-          let end = 1 * allEnd;
-          // let dynamicPage = Math.ceil(res.data.total / allEnd);
-          setData(dataList);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          let rem = 0 * allEnd;
-          setBig(rem + 1);
-          setEnd(end);
-        }
-      });
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            let all = [];
+            let dataObj = {};
+            let dataList = [];
+            let customId = 1;
+            let sortId = 1;
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                writer: i.writer,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            let end = 1 * allEnd;
+            // let dynamicPage = Math.ceil(res.data.total / allEnd);
+            setData(dataList);
+            setCount(res.data.total);
+            setTurnGreen(true);
+            let rem = 0 * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+          }
+        });
     }
   }
 
@@ -558,18 +558,30 @@ const Direct = () => {
                           {big}-{end} of {count}
                         </span>
                         <span className="d-flex">
-                          <button
-                            className="navButton mx-1"
-                            onClick={(e) => prevChunk()}
-                          >
-                            &lt;
-                          </button>
-                          <button
-                            className="navButton mx-1"
-                            onClick={(e) => nextChunk()}
-                          >
-                            &gt;
-                          </button>
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage  ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                  &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </span>
                       </div>
                     </div>
@@ -760,19 +772,31 @@ const Direct = () => {
                         {big}-{end} of {count}
                       </span>
                       <span className="d-flex">
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => prevChunk()}
-                        >
-                          &lt;
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => nextChunk()}
-                        >
-                          &gt;
-                        </button>
-                      </span>
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage  ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                  &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
                     </div>
                   </div>
 

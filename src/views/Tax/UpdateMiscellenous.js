@@ -471,19 +471,31 @@ const UpdateMiscellenous = () => {
                     {big}-{end} of {count}
                   </span>
                   <span className="d-flex">
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => prevChunk()}
-                    >
-                      &lt;
-                    </button>
-                    <button
-                      className="navButton mx-1"
-                      onClick={(e) => nextChunk()}
-                    >
-                      &gt;
-                    </button>
-                  </span>
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage  ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                  &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
                 </div>
               </div>
             </MyContainer>
@@ -649,19 +661,31 @@ const UpdateMiscellenous = () => {
                         {big}-{end} of {count}
                       </span>
                       <span className="d-flex">
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => prevChunk()}
-                        >
-                          &lt;
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => nextChunk()}
-                        >
-                          &gt;
-                        </button>
-                      </span>
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage  ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                  &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
                     </div>
                   </div>
                 </TableContainer>
