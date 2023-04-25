@@ -153,9 +153,9 @@ const UpdateIndirect = () => {
     let formData = new FormData();
     formData.append("content", searchText);
     if (isActive == true) {
-      remainApiPath = `customers/getarticles?type=direct&page=${p}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getarticles?type=indirect&page=${p}&orderby=${val}&orderbyfield=${field}`
     } else {
-      remainApiPath = `customers/getupdated?type=direct&page=${p}`
+      remainApiPath = `customers/getupdated?type=indirect&page=${p}`
     }
 
     axios({
