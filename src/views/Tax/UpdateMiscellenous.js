@@ -462,10 +462,7 @@ const UpdateMiscellenous = () => {
                         </div>
                       </div>
                     </>
-                  </TableContainer>
-                </div>
-              </div>
-              <div className="customPagination">
+                    <div className="customPagination">
                 <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
                   <span>
                     {big}-{end} of {count}
@@ -498,6 +495,10 @@ const UpdateMiscellenous = () => {
                         </span>
                 </div>
               </div>
+                  </TableContainer>
+                </div>
+              </div>
+              
             </MyContainer>
           </OuterloginContainer>
         </Layout>
