@@ -138,14 +138,18 @@ const UpdateMiscellenous = () => {
         }
       });
   };
-  const searchArticle = (e) => {
+  const searchArticle = (p) => {
     let dataObj = {};
     let dataList = [];
+    let customId = 1;
+    if (p > 1) {
+      customId = allEnd * (p - 1) + 1;
+    }
     let formData = new FormData();
     formData.append("content", searchText);
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=miscellaneous`,
+      url: `${baseUrl}/customers/getupdated?type=miscellaneous&page=${p}`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
@@ -159,10 +163,25 @@ const UpdateMiscellenous = () => {
             publish_date: i.publish_date,
             status: i.status,
             type: i.type,
+            cid: customId++,
           };
           dataList.push(dataObj);
         });
         setData(dataList);
+        setCount(res?.data?.total);
+        let end = p * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let rem = (p - 1) * allEnd;
+        if (p === 1) {
+          setBig(rem + p);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
       }
     });
   };
@@ -171,7 +190,11 @@ const UpdateMiscellenous = () => {
     if (((atPage < (totalPage)) && (atPage > 1))) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
-      getData(atPage - 1);
+      if (searchText.length != 0) {
+        searchArticle(atPage - 1)
+      } else {
+        getData(atPage - 1);
+      }
     }
 
   };
@@ -179,65 +202,69 @@ const UpdateMiscellenous = () => {
     if ((atPage > 0) && (atPage < (totalPage))) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
-      getData(atPage + 1);
+      if (searchText.length != 0) {
+        searchArticle(atPage + 1)
+      } else {
+        getData(atPage + 1);
+      }
     }
 
   };
 
-  const sortMessage = (val, field) => {
-    let remainApiPath = "";
-    setSortVal(val);
-    setSortField(field);
-    let obj = {
-      // pageno: pageno,
-      val: val,
-      field: field,
-    }
-    setAccend(!accend);
-    localStorage.setItem(`misUpdate`, JSON.stringify(1))
-    localStorage.setItem(`freezeindirectUpdate`, JSON.stringify(obj));
+  // const sortMessage = (val, field) => {
+  //   let remainApiPath = "";
+  //   setSortVal(val);
+  //   setSortField(field);
+  //   let obj = {
+  //     // pageno: pageno,
+  //     val: val,
+  //     field: field,
+  //   }
+  //   setAccend(!accend);
+  //   localStorage.setItem(`misUpdate`, JSON.stringify(1))
+  //   localStorage.setItem(`freezeMis`, JSON.stringify(obj));
 
-    remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}`
+  //   remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}`
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let dataObj = {};
-          let dataList = [];
-          let customId = 1;
-          let sortId = 1;
-          res.data.result.map((i, e) => {
-            dataObj = {
-              sn: ++e,
-              content: i.content,
-              file: i.file,
-              heading: i.heading,
-              id: i.id,
-              publish_date: i.publish_date,
-              status: i.status,
-              type: i.type,
-              writer: i.writer,
-              cid: customId++,
-            };
-            dataList.push(dataObj);
-          });
-          let end = 1 * allEnd;
-          // let dynamicPage = Math.ceil(res.data.total / allEnd);
-          setData(dataList);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          let rem = 0 * allEnd;
-          setBig(rem + 1);
-          setEnd(end);
-          setAtpage(1);
-          setPage(1);
-        }
-      });
-  }
+  //   axios
+  //     .get(
+  //       `${baseUrl}/${remainApiPath}`,
+  //     )
+  //     .then((res) => {
+  //       if (res.data.code === 1) {
+  //         let all = [];
+  //         let dataObj = {};
+  //         let dataList = [];
+  //         let customId = 1;
+  //         let sortId = 1;
+  //         res.data.result.map((i, e) => {
+  //           dataObj = {
+  //             sn: ++e,
+  //             content: i.content,
+  //             file: i.file,
+  //             heading: i.heading,
+  //             id: i.id,
+  //             publish_date: i.publish_date,
+  //             status: i.status,
+  //             type: i.type,
+  //             writer: i.writer,
+  //             cid: customId++,
+  //           };
+  //           dataList.push(dataObj);
+  //         });
+  //         let end = 1 * allEnd;
+  //         // let dynamicPage = Math.ceil(res.data.total / allEnd);
+  //         setData(dataList);
+  //         setCount(res.data.total);
+  //         setTurnGreen(true);
+  //         let rem = 0 * allEnd;
+  //         setBig(rem + 1);
+  //         setEnd(end);
+  //         setAtpage(1);
+  //         setPage(1);
+  //       }
+  //     });
+  // }
 
   return (
     <>
@@ -277,9 +304,10 @@ const UpdateMiscellenous = () => {
                             className="form-control"
                             type="Please enter text"
                             onChange={(e) => setSearchText(e.target.value)}
+                            value={searchText}
                           />
                           <button
-                            onClick={(e) => searchArticle()}
+                            onClick={(e) => searchArticle(1)}
                             className="customBtn mx-2"
                           >
                             Search
@@ -296,12 +324,18 @@ const UpdateMiscellenous = () => {
                                 </TableCell>
                                 <TableCell style={{ width: "200px" }}>
                                   {accend == true ? (
-                                    <SubHeading onClick={() => sortMessage(1, 1)}>
-                                      Date of publishing  <ArrowDropDownIcon />
+                                    <SubHeading
+                                    //  onClick={() => sortMessage(1, 1)}
+                                     >
+                                      Date of publishing  
+                                      {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading onClick={() => sortMessage(0, 1)}>
-                                      Date of publishing <ArrowDropUpIcon />
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(0, 1)}
+                                    >
+                                      Date of publishing 
+                                      {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
                                   )
                                   }
@@ -445,9 +479,10 @@ const UpdateMiscellenous = () => {
                           className="form-control"
                           type="Please enter text"
                           onChange={(e) => setSearchText(e.target.value)}
+                          value={searchText}
                         />
                         <button
-                          onClick={(e) => searchArticle()}
+                          onClick={(e) => searchArticle(1)}
                           className="customBtn mx-2"
                         >
                           Search
@@ -464,12 +499,18 @@ const UpdateMiscellenous = () => {
                               </TableCell>
                               <TableCell style={{ width: "200px" }}>
                                 {accend == true ? (
-                                  <SubHeading onClick={() => sortMessage(1, 1)}>
-                                    Date of publishing  <ArrowDropDownIcon />
+                                  <SubHeading 
+                                  // onClick={() => sortMessage(1, 1)}
+                                  >
+                                    Date of publishing  
+                                    {/* <ArrowDropDownIcon /> */}
                                   </SubHeading>
                                 ) : (
-                                  <SubHeading onClick={() => sortMessage(0, 1)}>
-                                    Date of publishing <ArrowDropUpIcon />
+                                  <SubHeading 
+                                  // onClick={() => sortMessage(0, 1)}
+                                  >
+                                    Date of publishing 
+                                    {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
                                 )
                                 }

@@ -51,7 +51,7 @@ const Direct = () => {
   const [loading, setLoading] = useState(false);
   const [isSorted, setisSorted] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState(1);
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -65,6 +65,11 @@ const Direct = () => {
   const loadpage = Number(localStorage.getItem("prevPage"));
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
+
+  console.log(searchText.length, "searchText");
+  console.log(filterValue.length, "searchText");
+
+
 
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
@@ -107,22 +112,17 @@ const Direct = () => {
     // let searchData = JSON.parse(localStorage.getItem("generated"));
     localStorage.setItem(`Article`, JSON.stringify(p))
     let remainApiPath = "";
-    let val = pagetry?.val;
-    let field = pagetry?.field;
+    let val = sortVal;
+    let field = sortField;
     // console.log(allEnd);
     console.log("pageNo.", p);
     setAtpage(p);
 
-    if ((data) && (!pagetry)) {
-      remainApiPath = `customers/getarticles?page=${p}&content=${data.content}&article_type=${data.article_type}`
-    } else if ((data) && (pagetry)) {
-      remainApiPath = `customers/getarticles?page=${p}&&content=${data.content}&article_type=${data.article_type}&orderby=${val}&orderbyfield=${field}`
-    } else if ((!data) && (pagetry)) {
+    if (isActive == true) {
       remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/getarticles?page=${p}`
     }
-
 
     axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
       let dataObj = {};
@@ -182,34 +182,24 @@ const Direct = () => {
   }, [count]);
 
   useEffect(() => {
-    let pageno = JSON.parse(localStorage.getItem(`Article`));
-    let data = JSON.parse(localStorage.getItem(`searchArticle`));
-    if (data) {
-      setFilterValue(data.article_type)
-      setSearchText(data.content)
-    }
-    if (pageno) {
-      setAtpage(pageno);
-      setPage(pageno);
-      getData(pageno);
-    } else {
-      setAtpage(1);
-      setPage(1);
-      getData(1);
-    }
-    // setAtpage(1);
-    // setPage(1)
-    // getData(1);
+    setAtpage(1);
+    setPage(1);
+    getData(1);
     getPage();
+    setIsActive(false);
   }, []);
 
 
   //page counter
   const prevChunk = () => {
-    if (((atPage < (totalPage)) && (atPage > 1))) {
+    if (((atPage <= (totalPage)) && (atPage > 1))) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
-      getData(atPage - 1);
+      if (((searchText?.length) != 0) || ((filterValue?.length) != 0)) {
+        searchArticle(atPage - 1)
+      } else {
+        getData(atPage - 1);
+      }
     }
 
   };
@@ -217,70 +207,77 @@ const Direct = () => {
     if ((atPage > 0) && (atPage < (totalPage))) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
-      getData(atPage + 1);
+      if (((searchText?.length) != 0) || ((filterValue?.length) != 0)) {
+        searchArticle(atPage + 1)
+      } else {
+        getData(atPage + 1);
+      }
     }
 
   };
 
-  function sortButton() {
-    // return(
-    //  <div>
-    //     <p>Date of publishingB</p>
-    //     </div>
-    // )
-    return (
-      <div>
-        {isSorted === true ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              "Date of publishing"
-              {accend === true ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              "Date of publishing"
-              {accend === true ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
-      </div>
-    )
-  }
+
 
   const sortMessage = (val, field) => {
+    let formData = new FormData();
+    setAtpage(1);
+    setPage(1);
+    setIsActive(true);
+    console.log(formData, "formData");
+    formData.append("content", searchText);
+    formData.append("article_type", filterValue);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
     let obj = {
-      // pageno: pageno,
       val: val,
       field: field,
     }
     setAccend(!accend);
-    localStorage.setItem(`Article`, JSON.stringify(1))
-    localStorage.setItem(`freezeArticle`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchArticle"));
-    if (data) {
-      remainApiPath = `customers/getarticles?page=1&content=${data.content}&article_type=${data.article_type}&orderby=${val}&orderbyfield=${field}`
+    if (((searchText?.length) != 0) || ((filterValue?.length) != 0)) {
+      remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`
+      axios({
+        method: "POST",
+        url: `${baseUrl}/${remainApiPath}`,
+        data: formData,
+      }).then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result.length > 0) {
+            let dataObj = {};
+            let dataList = [];
+            let customId = 1;
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                writer: i.writer,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            setData(dataList);
+            console.log(dataList);
+            setCount(res?.data?.total);
+            let end = 1 * allEnd;
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let rem = (1 - 1) * allEnd;
+              setBig(rem + 1);
+              setEnd(end);
+          }
+        }
+      });
     }
     else {
       remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`
-    }
-    axios
+      axios
       .get(
         `${baseUrl}/${remainApiPath}`,
       )
@@ -314,14 +311,16 @@ const Direct = () => {
           let rem = 0 * allEnd;
           setBig(rem + 1);
           setEnd(end);
-          setAtpage(1);
-          setPage(1);
         }
       });
+    }
   }
 
-  const searchArticle = () => {
+
+  const searchArticle = (p) => {
     let formData = new FormData();
+    setAtpage(p);
+    setPage(p);
     console.log(formData, "formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
@@ -329,18 +328,34 @@ const Direct = () => {
       content: searchText,
       article_type: filterValue
     }
-    localStorage.setItem(`searchArticle`, JSON.stringify(obj));
-    localStorage.setItem(`Article`, JSON.stringify(1))
+    let val = sortVal;
+    let field = sortField;
+
+    let remainApiPath = ``;
+    // let pagetry = JSON.parse(localStorage.getItem("freezeArticle"));
+    // let val = pagetry?.val;
+    // let field = pagetry?.field;
+
+    if (isActive == true) {
+      remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getarticles?page=${p}`
+    }
+
+    // localStorage.setItem(`searchArticle`, JSON.stringify(obj));
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getarticles`,
+      url: `${baseUrl}/${remainApiPath}`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
-        let dataObj = {};
-        let dataList = [];
-        let customId = 1;
         if (res.data.result.length > 0) {
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          if (p > 1) {
+            customId = allEnd * (p - 1) + 1;
+          }
           res.data.result.map((i, e) => {
             dataObj = {
               sn: ++e,
@@ -357,11 +372,9 @@ const Direct = () => {
             dataList.push(dataObj);
           });
           setData(dataList);
+          console.log(dataList);
           setCount(res?.data?.total);
-          setAtpage(1);
-          setPage(1);
           // getLimit();
-          const p = 1
           let end = p * allEnd;
 
           if (end > res.data.total) {
@@ -376,10 +389,7 @@ const Direct = () => {
           } else {
             setBig(rem + 1);
             setEnd(end);
-          } 
-          localStorage.removeItem(`freezeArticle`);
-          setAccend(false);
-
+          }
         } else {
           setData([]);
           Swal.fire({
@@ -427,9 +437,10 @@ const Direct = () => {
                 className="form-control"
                 type="Please enter text"
                 onChange={(e) => setSearchText(e.target.value)}
+                value={searchText}
               />
               <button
-                onClick={(e) => searchArticle()}
+                onClick={(e) => searchArticle(1)}
                 className="customBtn mx-2"
               >
                 Search
@@ -608,10 +619,11 @@ const Direct = () => {
                       className="form-control"
                       type="Please enter text"
                       onChange={(e) => setSearchText(e.target.value)}
+                      value={searchText}
                     />
                     <button
                       className="customBtn mx-2"
-                      onClick={(e) => searchArticle()}
+                      onClick={(e) => searchArticle(1)}
                     >
                       Search
                     </button>

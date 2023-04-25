@@ -61,16 +61,16 @@ const UpdateDirect = () => {
   const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
-    let pageno = JSON.parse(localStorage.getItem(`directUpdate`));
-    if (pageno) {
-      setAtpage(pageno);
-      setPage(pageno);
-      getData(pageno);
-    } else {
-      setAtpage(1);
-      setPage(1);
-      getData(1);
-    }
+    // let pageno = JSON.parse(localStorage.getItem(`directUpdate`));
+    // if (pageno) {
+    //   setAtpage(pageno);
+    //   setPage(pageno);
+    //   getData(pageno);
+    // } else {
+    setAtpage(1);
+    setPage(1);
+    getData(1);
+    // }
     // getData(1);
   }, []);
   useEffect(() => {
@@ -138,17 +138,21 @@ const UpdateDirect = () => {
 
     });
   };
-  const searchArticle = (e) => {
+
+  const searchArticle = (p) => {
+    setAtpage(p);
+    setPage(p);
     let formData = new FormData();
     formData.append("content", searchText);
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=direct`,
+      url: `${baseUrl}/customers/getupdated?type=direct&page=${p}`,
       data: formData,
     }).then((res) => {
       if (res.data.code === 1) {
         let dataObj = {};
         let dataList = [];
+        let customId = 1;
         if (res.data.result.length > 0) {
           res.data.result.map((i, e) => {
             dataObj = {
@@ -160,10 +164,25 @@ const UpdateDirect = () => {
               publish_date: i.publish_date,
               status: i.status,
               type: i.type,
+              cid: customId++,
             };
             dataList.push(dataObj);
           });
           setData(dataList);
+          setCount(res?.data?.total);
+          let end = p * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let rem = (p - 1) * allEnd;
+          if (p === 1) {
+            setBig(rem + p);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
         } else {
           setData([]);
           Swal.fire({
@@ -179,7 +198,11 @@ const UpdateDirect = () => {
     if (((atPage < (totalPage)) && (atPage > 1)) || (atPage == totalPage)) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
-      getData(atPage - 1);
+      if (searchText.length != 0) {
+        searchArticle(atPage - 1)
+      } else {
+        getData(atPage - 1);
+      }
     }
 
   };
@@ -187,7 +210,11 @@ const UpdateDirect = () => {
     if ((atPage > 0) && (atPage < (totalPage))) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
-      getData(atPage + 1);
+      if (searchText.length != 0) {
+        searchArticle(atPage + 1)
+      } else {
+        getData(atPage + 1);
+      }
     }
 
   };
@@ -285,9 +312,10 @@ const UpdateDirect = () => {
                             className="form-control"
                             type="Please enter text"
                             onChange={(e) => setSearchText(e.target.value)}
+                            value={searchText}
                           />
                           <button
-                            onClick={(e) => searchArticle()}
+                            onClick={(e) => searchArticle(1)}
                             className="customBtn mx-2"
                           >
                             Search
@@ -304,12 +332,18 @@ const UpdateDirect = () => {
                                 </TableCell>
                                 <TableCell style={{ width: "200px" }}>
                                   {accend == true ? (
-                                    <SubHeading onClick={() => sortMessage(1, 1)}>
-                                      Date of publishing  <ArrowDropDownIcon />
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(1, 1)}
+                                    >
+                                      Date of publishing 
+                                      {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading onClick={() => sortMessage(0, 1)}>
-                                      Date of publishing <ArrowDropUpIcon />
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(0, 1)}
+                                    >
+                                      Date of publishing 
+                                      {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
                                   )
                                   }
@@ -454,9 +488,10 @@ const UpdateDirect = () => {
                           className="form-control"
                           type="Please enter text"
                           onChange={(e) => setSearchText(e.target.value)}
+                          value={searchText}
                         />
                         <button
-                          onClick={(e) => searchArticle()}
+                          onClick={(e) => searchArticle(1)}
                           className="customBtn mx-2"
                         >
                           Search
@@ -473,12 +508,18 @@ const UpdateDirect = () => {
                               </TableCell>
                               <TableCell style={{ width: "200px" }}>
                                 {accend == true ? (
-                                  <SubHeading onClick={() => sortMessage(1, 1)}>
-                                    Date of publishing  <ArrowDropDownIcon />
+                                  <SubHeading
+                                  //  onClick={() => sortMessage(1, 1)}
+                                   >
+                                    Date of publishing  
+                                    {/* <ArrowDropDownIcon /> */}
                                   </SubHeading>
                                 ) : (
-                                  <SubHeading onClick={() => sortMessage(0, 1)}>
-                                    Date of publishing <ArrowDropUpIcon />
+                                  <SubHeading 
+                                  // onClick={() => sortMessage(0, 1)}
+                                  >
+                                    Date of publishing
+                                     {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
                                 )
                                 }
