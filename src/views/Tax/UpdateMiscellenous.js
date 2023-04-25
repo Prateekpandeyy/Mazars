@@ -87,7 +87,7 @@ const UpdateMiscellenous = () => {
   const getData = (p) => {
     let pagetry = JSON.parse(localStorage.getItem("freezeMis"));
     localStorage.setItem(`misUpdate`, JSON.stringify(p))
-    let remainApiPath =``;
+    let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
     // console.log(allEnd);
@@ -144,7 +144,7 @@ const UpdateMiscellenous = () => {
     let dataObj = {};
     let dataList = [];
     let customId = 1;
-    let remainApiPath =``;
+    let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
     if (p > 1) {
@@ -273,44 +273,44 @@ const UpdateMiscellenous = () => {
     } else {
       remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}&page=1`
       axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let dataObj = {};
-          let dataList = [];
-          let customId = 1;
-          let sortId = 1;
-          res.data.result.map((i, e) => {
-            dataObj = {
-              sn: ++e,
-              content: i.content,
-              file: i.file,
-              heading: i.heading,
-              id: i.id,
-              publish_date: i.publish_date,
-              status: i.status,
-              type: i.type,
-              writer: i.writer,
-              cid: customId++,
-            };
-            dataList.push(dataObj);
-          });
-          let end = 1 * allEnd;
-          // let dynamicPage = Math.ceil(res.data.total / allEnd);
-          setData(dataList);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          let rem = 0 * allEnd;
-          setBig(rem + 1);
-          setEnd(end);
-          setAtpage(1);
-          setPage(1);
-        }
-      });
-    } 
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            let all = [];
+            let dataObj = {};
+            let dataList = [];
+            let customId = 1;
+            let sortId = 1;
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                writer: i.writer,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            let end = 1 * allEnd;
+            // let dynamicPage = Math.ceil(res.data.total / allEnd);
+            setData(dataList);
+            setCount(res.data.total);
+            setTurnGreen(true);
+            let rem = 0 * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+            setAtpage(1);
+            setPage(1);
+          }
+        });
+    }
   }
 
   return (
@@ -373,15 +373,15 @@ const UpdateMiscellenous = () => {
                                   {accend == true ? (
                                     <SubHeading
                                     //  onClick={() => sortMessage(1, 1)}
-                                     >
-                                      Date of publishing  
+                                    >
+                                      Date of publishing
                                       {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(0, 1)}
                                     >
-                                      Date of publishing 
+                                      Date of publishing
                                       {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
                                   )
@@ -463,11 +463,11 @@ const UpdateMiscellenous = () => {
                       </div>
                     </>
                     <div className="customPagination">
-                <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                  <span>
-                    {big}-{end} of {count}
-                  </span>
-                  <span className="d-flex">
+                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                        <span>
+                          {big}-{end} of {count}
+                        </span>
+                        <span className="d-flex">
                           {atPage > 1 ? (
                             <>
                               <button
@@ -480,25 +480,25 @@ const UpdateMiscellenous = () => {
                           ) : (
                             ""
                           )}
-                          {atPage < totalPage  ? (
+                          {atPage < totalPage ? (
                             <>
                               <button
                                 className="navButton mx-1"
                                 onClick={(e) => nextChunk()}
                               >
-                                  &gt;
+                                &gt;
                               </button>
                             </>
                           ) : (
                             ""
                           )}
                         </span>
-                </div>
-              </div>
+                      </div>
+                    </div>
                   </TableContainer>
                 </div>
               </div>
-              
+
             </MyContainer>
           </OuterloginContainer>
         </Layout>
@@ -559,17 +559,17 @@ const UpdateMiscellenous = () => {
                               </TableCell>
                               <TableCell style={{ width: "200px" }}>
                                 {accend == true ? (
-                                  <SubHeading 
+                                  <SubHeading
                                   // onClick={() => sortMessage(1, 1)}
                                   >
-                                    Date of publishing  
+                                    Date of publishing
                                     {/* <ArrowDropDownIcon /> */}
                                   </SubHeading>
                                 ) : (
-                                  <SubHeading 
+                                  <SubHeading
                                   // onClick={() => sortMessage(0, 1)}
                                   >
-                                    Date of publishing 
+                                    Date of publishing
                                     {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
                                 )
@@ -662,31 +662,31 @@ const UpdateMiscellenous = () => {
                         {big}-{end} of {count}
                       </span>
                       <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage  ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => nextChunk()}
-                              >
-                                  &gt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
+                        {atPage > 1 ? (
+                          <>
+                            <button
+                              className="navButton mx-1"
+                              onClick={(e) => prevChunk()}
+                            >
+                              &lt;
+                            </button>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        {atPage < totalPage ? (
+                          <>
+                            <button
+                              className="navButton mx-1"
+                              onClick={(e) => nextChunk()}
+                            >
+                              &gt;
+                            </button>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </span>
                     </div>
                   </div>
                 </TableContainer>

@@ -446,7 +446,7 @@ const UpdateIndirect = () => {
                                     </>
                                   ))}
                             </TableBody>
-                            {data.length > 10 ? (
+                            {/* {data.length > 10 ? (
                               <TablePagination
                                 rowsPerPageOptions={[5, 10, 15, 20, 25]}
                                 count={data.length}
@@ -457,7 +457,7 @@ const UpdateIndirect = () => {
                               />
                             ) : (
                               ""
-                            )}
+                            )} */}
                           </Table>
                         </div>
                       </div>
@@ -639,7 +639,7 @@ const UpdateIndirect = () => {
                                   </>
                                 ))}
                           </TableBody>
-                          {data.length > 10 ? (
+                          {/* {data.length > 10 ? (
                             <TablePagination
                               rowsPerPageOptions={[5, 10, 15, 20, 25]}
                               count={data.length}
@@ -650,7 +650,7 @@ const UpdateIndirect = () => {
                             />
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </Table>
                       </div>
                     </div>
