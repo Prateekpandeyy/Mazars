@@ -78,12 +78,12 @@ const UpdateMiscellenous = () => {
     setTotalPage(dynamicPage)
   }, [count]);
 
-  const onChangePage = (event, nextPage) => {
-    setPage(nextPage);
-  };
-  const onChangeRowsPerPage = (e) => {
-    setRowsPerPage(e.target.value);
-  };
+  // const onChangePage = (event, nextPage) => {
+  //   setPage(nextPage);
+  // };
+  // const onChangeRowsPerPage = (e) => {
+  //   setRowsPerPage(e.target.value);
+  // };
   const getData = (p) => {
     let pagetry = JSON.parse(localStorage.getItem("freezeMis"));
     localStorage.setItem(`misUpdate`, JSON.stringify(p))

@@ -78,18 +78,18 @@ const UpdateDirect = () => {
     const dynamicPage = Math.ceil(count / allEnd);
     setTotalPage(dynamicPage)
   }, [count]);
-  const onChangePage = (event, nextPage) => {
-    setPage(nextPage);
-  };
-  const onChangeRowsPerPage = (e) => {
-    setRowsPerPage(e.target.value);
-  };
+  // const onChangePage = (event, nextPage) => {
+  //   setPage(nextPage);
+  // };
+  // const onChangeRowsPerPage = (e) => {
+  //   setRowsPerPage(e.target.value);
+  // };
   const getData = (p) => {
     let remainApiPath = "";
     let val = sortVal;
     let field = sortField;
     // console.log(allEnd);
-    console.log("pageNo.", p);
+    // console.log("pageNo.", p);
     setAtpage(p);
     let dataObj = {};
     let dataList = [];

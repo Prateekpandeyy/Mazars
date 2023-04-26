@@ -66,8 +66,8 @@ const Direct = () => {
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
 
-  console.log(searchText.length, "searchText");
-  console.log(filterValue.length, "searchText");
+  // console.log(searchText.length, "searchText");
+  // console.log(filterValue.length, "searchText");
 
 
 
@@ -303,6 +303,7 @@ const Direct = () => {
               };
               dataList.push(dataObj);
             });
+            console.log(dataList);
             let end = 1 * allEnd;
             // let dynamicPage = Math.ceil(res.data.total / allEnd);
             setData(dataList);

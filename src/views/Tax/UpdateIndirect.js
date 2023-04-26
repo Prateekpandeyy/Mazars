@@ -78,12 +78,12 @@ const UpdateIndirect = () => {
     setTotalPage(dynamicPage)
   }, [count]);
 
-  const onChangePage = (event, nextPage) => {
-    setPage(nextPage);
-  };
-  const onChangeRowsPerPage = (e) => {
-    setRowsPerPage(e.target.value);
-  };
+  // const onChangePage = (event, nextPage) => {
+  //   setPage(nextPage);
+  // };
+  // const onChangeRowsPerPage = (e) => {
+  //   setRowsPerPage(e.target.value);
+  // };
   const getData = (p) => {
     let dataObj = {};
     let dataList = [];
