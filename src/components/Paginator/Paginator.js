@@ -43,6 +43,7 @@ function Paginator(props) {
         sortField,
         setOnPage,
         setresetTrigger,
+        Decproposal,
         pendingForAcceptence,
         InprogressQuery,
         DeclinedQuery,
@@ -423,6 +424,36 @@ function Paginator(props) {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
             } else {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2`
+            }
+        }
+        else if (Decproposal == "Decproposal"){
+            let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal4"));
+            let val = pagetry?.val;
+            let field = pagetry?.field;
+            localStorage.setItem(`tpProposal4`, JSON.stringify(e));
+            if ((data) && (!pagetry)) {
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`
+            } else if ((data) && (pagetry)) {
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                    }&from=${data.fromDate
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&to=${data.toDate
+                            ?.split("-")
+                            .reverse()
+                            .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+            } else if ((!data) && (pagetry)) {
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3&orderby=${val}&orderbyfield=${field}`
+            } else {
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=3`
             }
         }
         else if (DeclinedQuery == "DeclinedQuery") {
