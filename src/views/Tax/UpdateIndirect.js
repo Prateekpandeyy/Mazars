@@ -26,6 +26,8 @@ import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   isActive: {
@@ -371,23 +373,23 @@ const UpdateIndirect = () => {
                           {atPage > 1 ? (
                             <>
                               <button
-                                className="navButton mx-1"
+                                className="navButton"
                                 onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </button>
                             </>
                           ) : (
                             ""
                           )}
                           {atPage < totalPage  ? (
                             <>
-                              <button
-                                className="navButton mx-1"
+                               <button
+                                className="navButton"
                                 onClick={(e) => nextChunk()}
-                              >
-                                  &gt;
-                              </button>
+                            >
+                                <KeyboardArrowRightIcon />
+                            </button>
                             </>
                           ) : (
                             ""
@@ -561,23 +563,23 @@ const UpdateIndirect = () => {
                           {atPage > 1 ? (
                             <>
                               <button
-                                className="navButton mx-1"
+                                className="navButton"
                                 onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </button>
                             </>
                           ) : (
                             ""
                           )}
                           {atPage < totalPage  ? (
                             <>
-                              <button
-                                className="navButton mx-1"
+                               <button
+                                className="navButton"
                                 onClick={(e) => nextChunk()}
-                              >
-                                  &gt;
-                              </button>
+                            >
+                                <KeyboardArrowRightIcon />
+                            </button>
                             </>
                           ) : (
                             ""

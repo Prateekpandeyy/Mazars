@@ -426,7 +426,7 @@ function Paginator(props) {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2`
             }
         }
-        else if (Decproposal == "Decproposal"){
+        else if (Decproposal == "Decproposal") {
             let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpproposal4"));
             let val = pagetry?.val;
@@ -565,23 +565,23 @@ function Paginator(props) {
             if ((data) && (!pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
-                  )}&cat_id=${data.store}&from=${data.fromDate
+                )}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
-                      ?.split("-")
-                      .reverse()
-                      .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
-                  )}&cat_id=${data.store}&from=${data.fromDate
+                )}&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
-                      ?.split("-")
-                      .reverse()
-                      .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+                        ?.split("-")
+                        .reverse()
+                        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
                     userid
@@ -624,7 +624,7 @@ function Paginator(props) {
                 searchData?.p_dateFrom ||
                 searchData?.p_dateTo ||
                 searchData?.query_no
-              ) && (!pagetry)) {
+            ) && (!pagetry)) {
                 remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}`
             } else if ((
                 searchData?.installment_no ||
@@ -632,7 +632,7 @@ function Paginator(props) {
                 searchData?.p_dateFrom ||
                 searchData?.p_dateTo ||
                 searchData?.query_no
-              ) && (pagetry)) {
+            ) && (pagetry)) {
                 remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=0&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`
             } else if ((!searchData) && (pagetry)) {
                 remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
@@ -791,7 +791,7 @@ function Paginator(props) {
                         if (e > 1) {
                             customId = allEnd * (e - 1) + 1;
                         }
-                        if ((tpgenerated == "tpgenerated") || (tpcreate == "tpcreate")){
+                        if ((tpgenerated == "tpgenerated") || (tpcreate == "tpcreate")) {
                             setResult(res.data.payment_detail)
                             let data = res.data.payment_detail;
                             data.map((i) => {
@@ -928,13 +928,16 @@ function Paginator(props) {
                         {big}-{end} of {count}
                     </span>
                     <span className="d-flex">
-                        <button
-                            className="navButton"
-                            onClick={(e) => firstChunk()}
-                        >
-                            <KeyboardDoubleArrowLeftIcon />
-                        </button>
-
+                        {page > 1 ? (
+                            <button
+                                className="navButton"
+                                onClick={(e) => firstChunk()}
+                            >
+                                <KeyboardDoubleArrowLeftIcon />
+                            </button>
+                        ) : (
+                            ""
+                        )}
                         {page > 1 ? (
                             <button
                                 className="navButton"
@@ -968,12 +971,16 @@ function Paginator(props) {
                         ) : (
                             ""
                         )}
+                        {defaultPage.length > page ? (
                         <button
                             className="navButton"
                             onClick={(e) => lastChunk()}
                         >
                             <KeyboardDoubleArrowRightIcon />
                         </button>
+                        ) : (
+                            ""
+                        )}
                     </span>
                 </div>
             </div>

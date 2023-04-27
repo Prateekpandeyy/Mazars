@@ -26,6 +26,8 @@ import SearchBtn from "../../components/Common/SearchBtn";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   isActive: {
@@ -373,24 +375,24 @@ const UpdateDirect = () => {
                             <span className="d-flex">
                               {atPage > 1 ? (
                                 <>
-                                  <button
-                                    className="navButton mx-1"
-                                    onClick={(e) => prevChunk()}
-                                  >
-                                    &lt;
-                                  </button>
+                                <button
+                                className="navButton"
+                                onClick={(e) => prevChunk()}
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </button>
                                 </>
                               ) : (
                                 ""
                               )}
                               {atPage < totalPage ? (
                                 <>
-                                  <button
-                                    className="navButton mx-1"
-                                    onClick={(e) => nextChunk()}
-                                  >
-                                    &gt;
-                                  </button>
+                                   <button
+                                className="navButton"
+                                onClick={(e) => nextChunk()}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </button>
                                 </>
                               ) : (
                                 ""
@@ -563,12 +565,12 @@ const UpdateDirect = () => {
                             <span className="d-flex">
                               {atPage > 1 ? (
                                 <>
-                                  <button
-                                    className="navButton mx-1"
-                                    onClick={(e) => prevChunk()}
-                                  >
-                                    &lt;
-                                  </button>
+                               <button
+                                className="navButton"
+                                onClick={(e) => prevChunk()}
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </button>
                                 </>
                               ) : (
                                 ""
@@ -576,11 +578,11 @@ const UpdateDirect = () => {
                               {atPage < totalPage ? (
                                 <>
                                   <button
-                                    className="navButton mx-1"
-                                    onClick={(e) => nextChunk()}
-                                  >
-                                    &gt;
-                                  </button>
+                                className="navButton"
+                                onClick={(e) => nextChunk()}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </button>
                                 </>
                               ) : (
                                 ""

@@ -1023,10 +1023,10 @@ footer a:hover{
   transform: all 0.3s;
   vertical-align: middle;
 }
-.navButton:active{
+/* .navButton:active{
 border-color: #0071CE;
 border: 1px;
-}
+} */
 .customPagination{
   display: flex;
   width: 100%;
