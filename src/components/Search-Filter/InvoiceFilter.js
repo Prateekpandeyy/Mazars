@@ -78,7 +78,7 @@ const InvoiceFilter = (props) => {
       const token = window.localStorage.getItem("tlToken");
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&ststus=${data.opt}`,
+        url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&status=${data.opt}`,
         headers: {
           uit: token,
         },
@@ -240,6 +240,7 @@ const InvoiceFilter = (props) => {
               placeholder="Enter Query Number"
               className="form-control"
               defaultValue={queryNo}
+              value={queryNo}
               onChange={(e) => setQueryNo(e.target.value)}
             />
           </div>
@@ -398,8 +399,8 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-          props.invoice === "tpcreate" ||
-          props.invoice === "admincreate" ? (
+            props.invoice === "tpcreate" ||
+            props.invoice === "admincreate" ? (
             ""
           ) : (
             <>

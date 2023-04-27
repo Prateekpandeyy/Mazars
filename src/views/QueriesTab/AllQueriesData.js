@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
@@ -20,6 +20,7 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 
 function AllQueriesData({
   allQueriesCount,
@@ -39,6 +40,21 @@ function AllQueriesData({
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
   const tableId = React.createRef("");
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 5;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
@@ -62,7 +78,7 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [additionalQuery]);
+  }, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
     // console.log(tableId);
@@ -81,7 +97,7 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const needHelp = () => {
     setManual(!openManual);
@@ -92,8 +108,8 @@ function AllQueriesData({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {
@@ -220,8 +236,8 @@ function AllQueriesData({
             ) : (
               <>
                 {row.status_code == "0" ||
-                row.status_code == "1" ||
-                row.status_code == "3" ? (
+                  row.status_code == "1" ||
+                  row.status_code == "3" ? (
                   <>
                     <span className="ml-1">
                       <Link to={`/customer_edit-query/${row.id}`}>
@@ -259,8 +275,8 @@ function AllQueriesData({
                 ) : null}
 
                 {row.status_code == "4" ||
-                8 < parseInt(row.status_code) ||
-                row.status_code == "2" ? (
+                  8 < parseInt(row.status_code) ||
+                  row.status_code == "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-1">
@@ -343,21 +359,39 @@ function AllQueriesData({
     showRejectedBox(!rejectedBox);
   };
 
+
+
   return (
     <Card ref={tableId}>
       <CardHeader>
-        <span onClick={(e) => needHelp()}>
-          {" "}
-          <HelpIcon />
-        </span>
-        <CustomerFilter
-          setData={setAllQueriesCount}
-          getData={CountAllQuery}
-          id={userId}
-          query="query"
-          records={allQueriesCount.length}
-          setRecords={setRecords}
-        />
+        <Row>
+          <span onClick={(e) => needHelp()}>
+            {" "}
+            <HelpIcon />
+          </span>
+          <CustomerFilter
+            setData={setAllQueriesCount}
+            getData={CountAllQuery}
+            id={userId}
+            query="query"
+            records={allQueriesCount.length}
+            setRecords={setRecords}
+            index="custQuery1"
+          // resetTriggerFunc={resetTriggerFunc}
+          // setCount={setCount}
+          />
+        </Row>
+        <Row>
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              setOnPage={setOnPage}
+              // resetPaging={resetPaging}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
       </CardHeader>
       <CardBody>
         <Row>
