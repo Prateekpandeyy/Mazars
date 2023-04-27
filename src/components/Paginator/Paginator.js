@@ -972,12 +972,12 @@ function Paginator(props) {
                             ""
                         )}
                         {defaultPage.length > page ? (
-                        <button
-                            className="navButton"
-                            onClick={(e) => lastChunk()}
-                        >
-                            <KeyboardDoubleArrowRightIcon />
-                        </button>
+                            <button
+                                className="navButton"
+                                onClick={(e) => lastChunk()}
+                            >
+                                <KeyboardDoubleArrowRightIcon />
+                            </button>
                         ) : (
                             ""
                         )}

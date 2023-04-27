@@ -576,7 +576,9 @@ function InCompleteData({ CountIncomplete, data }) {
               setCount={setCount}
             />
           </Row>
-          <Row>
+        </CardHeader>
+        <CardBody>
+        <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 count={count}
@@ -591,8 +593,6 @@ function InCompleteData({ CountIncomplete, data }) {
               />
             </Col>
           </Row>
-        </CardHeader>
-        <CardBody>
           <DataTablepopulated
             bgColor="#55425f"
             keyField={"assign_no"}
