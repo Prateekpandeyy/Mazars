@@ -177,7 +177,42 @@ const Invoice = (updateTab) => {
       });
     }
   };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
 
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlint2", 1);
+    localStorage.setItem("sortedValuetl2", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`tlcreate`));
+    if (searchData && Object.values(searchData).length > 0) {
+      remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `/tl/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.payment_detail.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setProposal(all);
+      }
+    });
+  };
   const columns = [
     {
       text: "S.no",
@@ -201,7 +236,24 @@ const Invoice = (updateTab) => {
     {
       text: "Query no",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreatedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreatedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
 
+        sortMessage(val, 1);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -222,11 +274,46 @@ const Invoice = (updateTab) => {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreatedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreatedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Due date",
       dataField: "due_date",
-      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreatedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreatedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 3);
+      },
 
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
@@ -237,13 +324,23 @@ const Invoice = (updateTab) => {
     {
       text: "Amount",
       dataField: "paid_amount",
-      sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreatedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreatedtl");
         }
-        return a - b; // desc
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 4);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
@@ -306,6 +403,35 @@ const Invoice = (updateTab) => {
     setAtpage(totalPages);
     localStorage.setItem("tlint2", defaultPage.at(-1));
   };
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+    if (
+      localStorage.getItem("accendcreatedtl") === column.dataField ||
+      localStorage.getItem("tlprevint2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("tlprevint2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendcreatedtl") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <Card>

@@ -124,22 +124,22 @@ const Generated = ({ updateTab }) => {
     );
   }
   useEffect(() => {
-    let localPage = Number(localStorage.getItem("admininvt1"));
+    let localPage = Number(localStorage.getItem("tlint1"));
     if (!localPage) {
       localPage = 1;
     }
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuevttl1"));
-    setPrev(localStorage.getItem("previnvtl1"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetl1"));
+    setPrev(localStorage.getItem("tlprevint1"));
     if (!sortVal) {
       let sort = {
         orderBy: 0,
         fieldBy: 0,
       };
-      localStorage.setItem("sortedValuevttl1", JSON.stringify(sort));
+      localStorage.setItem("sortedValuetl1", JSON.stringify(sort));
     }
-    setAccend(localStorage.getItem("accendgeneratedtl"));
+    setAccend(localStorage.getItem("accendtlgenerate"));
     setPage(localPage);
-    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
     getProposalList(localPage);
   }, []);
   const token = window.localStorage.getItem("tlToken");
@@ -209,115 +209,43 @@ const Generated = ({ updateTab }) => {
       }
     });
   };
-  // const getProposalList = (e) => {
-  //   let searchData = JSON.parse(localStorage.getItem("generated"));
-  //   let allEnd = Number(localStorage.getItem("admin_record_per_page"));
-  //   let sortVal = JSON.parse(localStorage.getItem("sortedValuevttl1"));
-  //   let orderBy = 0;
-  //   let fieldBy = 0;
 
-  //   if (sortVal) {
-  //     orderBy = sortVal.orderBy;
-  //     fieldBy = sortVal.fieldBy;
-  //   }
-  //   let remainApiPath = "";
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
 
-  //   if (searchData && Object.values(searchData).length > 0) {
-  //     // remainApiPath = `/tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
-  //   } else {
-  //     remainApiPath = `/tl/getPaymentDetail?invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
-  //   }
-  //   axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-  //     let droppage = [];
-  //     if (res.data.code === 1) {
-  //       let data = res.data.payment_detail;
-  //       setRecords(res.data.total);
-  //       let all = [];
-  //       let customId = 1;
-  //       if (e > 1) {
-  //         customId = allEnd * (e - 1) + 1;
-  //       }
-  //       data.map((i) => {
-  //         let data = {
-  //           ...i,
-  //           cid: customId,
-  //         };
-  //         customId++;
-  //         all.push(data);
-  //       });
-  //       setProposal(all);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("admininvt1", 1);
+    localStorage.setItem("sortedValuevt1", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
+    if (searchData && Object.values(searchData).length > 0) {
+      remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `/tl/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
 
-  //       let end = e * allEnd;
-  //       setCountNotification(res.data.total);
-  //       if (end > res.data.total) {
-  //         end = res.data.total;
-  //       }
-  //       let dynamicPage = Math.ceil(res.data.total / allEnd);
+        res.data.payment_detail.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
 
-  //       let rem = (e - 1) * allEnd;
-
-  //       if (e === 1) {
-  //         setBig(rem + e);
-  //         setEnd(end);
-  //       } else {
-  //         setBig(rem + 1);
-  //         setEnd(end);
-  //       }
-  //       for (let i = 1; i <= dynamicPage; i++) {
-  //         droppage.push(i);
-  //       }
-  //       setDefaultPage(droppage);
-  //     }
-  //   });
-
-  //   if (e) {
-  //     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-  //       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-  //         let droppage = [];
-  //         if (res.data.code === 1) {
-  //           let data = res.data.payment_detail;
-  //           setRecords(res.data.total);
-  //           let all = [];
-  //           let customId = 1;
-  //           if (e > 1) {
-  //             customId = allEnd * (e - 1) + 1;
-  //           }
-  //           data.map((i) => {
-  //             let data = {
-  //               ...i,
-  //               cid: customId,
-  //             };
-  //             customId++;
-  //             all.push(data);
-  //           });
-  //           setProposal(all);
-
-  //           let end = e * allEnd;
-  //           setCountNotification(res.data.total);
-  //           if (end > res.data.total) {
-  //             end = res.data.total;
-  //           }
-  //           let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-  //           let rem = (e - 1) * allEnd;
-
-  //           if (e === 1) {
-  //             setBig(rem + e);
-  //             setEnd(end);
-  //           } else {
-  //             setBig(rem + 1);
-  //             setEnd(end);
-  //           }
-  //           for (let i = 1; i <= dynamicPage; i++) {
-  //             droppage.push(i);
-  //           }
-  //           setDefaultPage(droppage);
-  //         }
-  //       });
-  //     });
-  //   }
-  // };
-
+        setProposal(all);
+      }
+    });
+  };
   const downloadpdf = (qno, id, installmentNumber) => {
     setCopy(0);
     const myConfig2 = {
