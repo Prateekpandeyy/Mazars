@@ -24,6 +24,17 @@ import Swal from "sweetalert2";
 import SearchBtn from "../../components/Common/SearchBtn";
 import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
 const UpdateIndirect = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -31,22 +42,69 @@ const UpdateIndirect = () => {
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
-  useEffect(() => {
-    getData();
-  }, []);
 
-  const onChangePage = (event, nextPage) => {
-    setPage(nextPage);
-  };
-  const onChangeRowsPerPage = (e) => {
-    setRowsPerPage(e.target.value);
-  };
-  const getData = (e) => {
+  const allEnd = 5;
+  // const classes = useStyles();
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [isSorted, setisSorted] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(allEnd);
+  const [atPage, setAtpage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+
+  useEffect(() => {
+    // let pageno = JSON.parse(localStorage.getItem(`indirectUpdate`));
+    // if (pageno) {
+    //   setAtpage(pageno);
+    //   setPage(pageno);
+    //   getData(pageno);
+    // } else {
+      setAtpage(1);
+      setPage(1);
+      getData(1);
+    // }
+    // getData(1);
+  }, []);
+  useEffect(() => {
+    const dynamicPage = Math.ceil(count / allEnd);
+    setTotalPage(dynamicPage)
+  }, [count]);
+
+  // const onChangePage = (event, nextPage) => {
+  //   setPage(nextPage);
+  // };
+  // const onChangeRowsPerPage = (e) => {
+  //   setRowsPerPage(e.target.value);
+  // };
+  const getData = (p) => {
     let dataObj = {};
     let dataList = [];
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
+    // console.log(allEnd);
+    console.log("pageNo.", p);
+    setAtpage(p);
+    let customId = 1;
+    if (p > 1) {
+      customId = allEnd * (p - 1) + 1;
+    }
+    if (isActive == true) {
+      remainApiPath = `customers/getupdated?page=${p}&type=indirect&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getupdated?page=${p}&type=indirect`
+    }
 
     axios
-      .get(`${baseUrl}/customers/getupdated?type=indirect`)
+      .get(`${baseUrl}/${remainApiPath}`)
 
       .then((res) => {
         res.data.result.map((i, e) => {
@@ -59,20 +117,50 @@ const UpdateIndirect = () => {
             publish_date: i.publish_date,
             status: i.status,
             type: i.type,
+            cid: customId++,
           };
           dataList.push(dataObj);
         });
         setData(dataList);
+        setCount(res?.data?.total);
+        let end = p * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let rem = (p - 1) * allEnd;
+        if (p === 1) {
+          setBig(rem + p);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
       });
   };
-  const searchArticle = (e) => {
+  const searchArticle = (p) => {
     let dataObj = {};
     let dataList = [];
+    let customId = 1;
+    let remainApiPath =``;
+    let val = sortVal;
+    let field = sortField;
+    if (p > 1) {
+      customId = allEnd * (p - 1) + 1;
+    }
+    setAtpage(p);
+      setPage(p);
     let formData = new FormData();
     formData.append("content", searchText);
+    if (isActive == true) {
+      remainApiPath = `customers/getarticles?type=indirect&page=${p}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getupdated?type=indirect&page=${p}`
+    }
+
     axios({
       method: "POST",
-      url: `${baseUrl}/customers/getupdated?type=indirect`,
+      url: `${baseUrl}/${remainApiPath}`,
       data: formData,
     }).then((res) => {
       res.data.result.map((i, e) => {
@@ -85,12 +173,145 @@ const UpdateIndirect = () => {
           publish_date: i.publish_date,
           status: i.status,
           type: i.type,
+          cid: customId++,
         };
         dataList.push(dataObj);
       });
       setData(dataList);
+      setCount(res?.data?.total);
+      let end = p * allEnd;
+
+      if (end > res.data.total) {
+        end = res.data.total;
+      }
+      let rem = (p - 1) * allEnd;
+      if (p === 1) {
+        setBig(rem + p);
+        setEnd(end);
+      } else {
+        setBig(rem + 1);
+        setEnd(end);
+      }
     });
   };
+
+  //page counter
+  const prevChunk = () => {
+    if (((atPage < (totalPage)) && (atPage > 1)) || (atPage == totalPage)) {
+      setAtpage((atPage) => atPage - 1);
+      setPage(atPage - 1);
+      if (searchText.length != 0) {
+        searchArticle(atPage - 1)
+      } else {
+        getData(atPage - 1);
+      }
+    }
+
+  };
+  const nextChunk = () => {
+    if ((atPage > 0) && (atPage < (totalPage))) {
+      setAtpage((atPage) => atPage + 1);
+      setPage(atPage + 1);
+      if (searchText.length != 0) {
+        searchArticle(atPage + 1)
+      } else {
+        getData(atPage + 1);
+      }
+    }
+
+  };
+
+  const sortMessage = (val, field) => {
+    setIsActive(true);
+    setAtpage(1);
+    setPage(1);
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    setAccend(!accend);
+    if (((searchText?.length) != 0)) {
+      let formData = new FormData();
+      formData.append("content", searchText);
+      axios({
+        method: "POST",
+        url: `${baseUrl}/customers/getupdated?type=indirect&page=1`,
+        data: formData,
+      }).then((res) => {
+        if (res.data.code === 1) {
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          if (res.data.result.length > 0) {
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            setData(dataList);
+            setCount(res?.data?.total);
+            let end = 1 * allEnd;
+
+            if (end > res.data.total) {
+              end = res.data.total;
+            }
+            let rem = (1 - 1) * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+          }
+        }
+      });
+    } else {
+      remainApiPath = `customers/getupdated?type=indirect&page=1&orderby=${val}&orderbyfield=${field}&page=1`
+      axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+      )
+      .then((res) => 
+      {
+        if (res.data.code === 1) 
+        {
+          let all = [];
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          let sortId = 1;
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+              cid: customId++,
+            };
+            dataList.push(dataObj);
+          });
+          let end = 1 * allEnd;
+          setData(dataList);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          let rem = 0 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
+          setAtpage(1);
+          setPage(1);
+        }
+      });
+    } 
+  }
 
   return (
     <>
@@ -130,9 +351,10 @@ const UpdateIndirect = () => {
                             className="form-control"
                             type="Please enter text"
                             onChange={(e) => setSearchText(e.target.value)}
+                            value={searchText}
                           />
                           <button
-                            onClick={(e) => searchArticle()}
+                            onClick={(e) => searchArticle(1)}
                             className="customBtn mx-2"
                           >
                             Search
@@ -148,7 +370,22 @@ const UpdateIndirect = () => {
                                   <SubHeading>S.No</SubHeading>
                                 </TableCell>
                                 <TableCell style={{ width: "200px" }}>
-                                  <SubHeading>Date of publishing</SubHeading>
+                                  {accend == true ? (
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(1, 1)}
+                                    >
+                                      Date of publishing  
+                                      {/* <ArrowDropDownIcon /> */}
+                                    </SubHeading>
+                                  ) : (
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(0, 1)}
+                                    >
+                                      Date of publishing 
+                                      {/* <ArrowDropUpIcon /> */}
+                                    </SubHeading>
+                                  )
+                                  }
                                 </TableCell>
                                 <TableCell>
                                   <SubHeading>Heading</SubHeading>
@@ -158,10 +395,10 @@ const UpdateIndirect = () => {
                             <TableBody>
                               {data &&
                                 data
-                                  .slice(
-                                    page * rowsPerPage,
-                                    page * rowsPerPage + rowsPerPage
-                                  )
+                                  // .slice(
+                                  //   page * rowsPerPage,
+                                  //   page * rowsPerPage + rowsPerPage
+                                  // )
                                   .map((i, e) => (
                                     <>
                                       <TableRow>
@@ -170,7 +407,7 @@ const UpdateIndirect = () => {
                                           className="tableCellStyle"
                                         >
                                           <CustomTypography>
-                                            {i.sn}
+                                            {i.cid}
                                           </CustomTypography>
                                         </TableCell>
                                         <TableCell>
@@ -209,7 +446,7 @@ const UpdateIndirect = () => {
                                     </>
                                   ))}
                             </TableBody>
-                            {data.length > 10 ? (
+                            {/* {data.length > 10 ? (
                               <TablePagination
                                 rowsPerPageOptions={[5, 10, 15, 20, 25]}
                                 count={data.length}
@@ -220,11 +457,44 @@ const UpdateIndirect = () => {
                               />
                             ) : (
                               ""
-                            )}
+                            )} */}
                           </Table>
                         </div>
                       </div>
                     </>
+                    <div className="customPagination">
+                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                        <span>
+                          {big}-{end} of {count}
+                        </span>
+                        <span className="d-flex">
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage  ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                  &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
+                    </div>
                   </TableContainer>
                 </div>
               </div>
@@ -268,9 +538,10 @@ const UpdateIndirect = () => {
                           className="form-control"
                           type="Please enter text"
                           onChange={(e) => setSearchText(e.target.value)}
+                          value={searchText}
                         />
                         <button
-                          onClick={(e) => searchArticle()}
+                          onClick={(e) => searchArticle(1)}
                           className="customBtn mx-2"
                         >
                           Search
@@ -286,7 +557,22 @@ const UpdateIndirect = () => {
                                 <SubHeading>S.No</SubHeading>
                               </TableCell>
                               <TableCell style={{ width: "200px" }}>
-                                <SubHeading>Date of publishing</SubHeading>
+                                {accend == true ? (
+                                  <SubHeading 
+                                  // onClick={() => sortMessage(1, 1)}
+                                  >
+                                    Date of publishing  
+                                    {/* <ArrowDropDownIcon /> */}
+                                  </SubHeading>
+                                ) : (
+                                  <SubHeading 
+                                  // onClick={() => sortMessage(0, 1)}
+                                  >
+                                    Date of publishing
+                                     {/* <ArrowDropUpIcon /> */}
+                                  </SubHeading>
+                                )
+                                }
                               </TableCell>
                               <TableCell>
                                 <SubHeading>Heading</SubHeading>
@@ -296,10 +582,10 @@ const UpdateIndirect = () => {
                           <TableBody>
                             {data &&
                               data
-                                .slice(
-                                  page * rowsPerPage,
-                                  page * rowsPerPage + rowsPerPage
-                                )
+                                // .slice(
+                                //   page * rowsPerPage,
+                                //   page * rowsPerPage + rowsPerPage
+                                // )
                                 .map((i, e) => (
                                   <>
                                     <TableRow>
@@ -308,7 +594,7 @@ const UpdateIndirect = () => {
                                         className="tableCellStyle"
                                       >
                                         <CustomTypography>
-                                          {i.sn}
+                                          {i.cid}
                                         </CustomTypography>
                                       </TableCell>
                                       <TableCell>
@@ -353,7 +639,7 @@ const UpdateIndirect = () => {
                                   </>
                                 ))}
                           </TableBody>
-                          {data.length > 10 ? (
+                          {/* {data.length > 10 ? (
                             <TablePagination
                               rowsPerPageOptions={[5, 10, 15, 20, 25]}
                               count={data.length}
@@ -364,11 +650,44 @@ const UpdateIndirect = () => {
                             />
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </Table>
                       </div>
                     </div>
                   </>
+                  <div className="customPagination">
+                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                      <span>
+                        {big}-{end} of {count}
+                      </span>
+                      <span className="d-flex">
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage  ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                  &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                    </div>
+                  </div>
                 </TableContainer>
               </div>
             </div>

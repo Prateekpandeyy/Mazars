@@ -477,9 +477,9 @@ function PendingForAcceptence(props) {
         if (response.data.code === 1) {
           setLoading(false);
           Alerts.SuccessNormal("Query accepted successfully.");
-
           getPendingforAcceptance();
           // updateTab(1);
+          localStorage.setItem(`tpQuery2`, JSON.stringify(1));
           history.push("/taxprofessional/proposal");
         } else if (response.data.code === 0) {
           setLoading(false);
