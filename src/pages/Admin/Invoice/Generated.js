@@ -374,19 +374,14 @@ const Generated = () => {
       },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
-        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+        if (row.payment_plan === "3" && row.sub_payment_plane === "2") {
           subplan = "B";
-        } else if (
-          row.paymnet_plan_code === "3" &&
-          row.sub_payment_plane === "1"
-        ) {
+        } else if (row.payment_plan === "3" && row.sub_payment_plane === "1") {
           subplan = "A";
         }
         return (
           <>
-            {row.paymnet_plan_code === null
-              ? ""
-              : `${row.paymnet_plan_code} ${subplan}`}
+            {row.payment_plan === null ? "" : `${row.payment_plan} ${subplan}`}
           </>
         );
       },
