@@ -233,7 +233,6 @@ const CreateInvoice = () => {
       headerStyle: () => {
         return { width: "50px" };
       },
-      
     },
 
     // {
@@ -306,6 +305,47 @@ const CreateInvoice = () => {
       },
     },
     {
+      text: "Payment  plan",
+      dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreated");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (
+          row.paymnet_plan_code === "3" &&
+          row.sub_payment_plane === "1"
+        ) {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.paymnet_plan_code === null
+              ? ""
+              : `${row.paymnet_plan_code} ${subplan}`}
+          </>
+        );
+      },
+    },
+    {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
@@ -324,7 +364,7 @@ const CreateInvoice = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -346,7 +386,7 @@ const CreateInvoice = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
@@ -373,7 +413,7 @@ const CreateInvoice = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");

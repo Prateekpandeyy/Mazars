@@ -70,8 +70,7 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
+          updateResult(res);
         }
       });
     } else if (props.invoice == "tlcreate") {
@@ -85,8 +84,7 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         if (res.data.code === 1) {
-          props.setData(res.data.payment_detail);
-          props.setRec(res.data.payment_detail.length);
+          updateResult(res);
         }
       });
     } else if (props.invoice == "tpcreate") {
@@ -399,8 +397,8 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-            props.invoice === "tpcreate" ||
-            props.invoice === "admincreate" ? (
+          props.invoice === "tpcreate" ||
+          props.invoice === "admincreate" ? (
             ""
           ) : (
             <>

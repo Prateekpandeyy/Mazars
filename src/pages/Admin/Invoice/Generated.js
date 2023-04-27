@@ -257,7 +257,14 @@ const Generated = () => {
         return { width: "50px" };
       },
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
     },
 
@@ -344,6 +351,47 @@ const Generated = () => {
       },
     },
     {
+      text: "Payment  plan",
+      dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgenerated", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgenerated");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (
+          row.paymnet_plan_code === "3" &&
+          row.sub_payment_plane === "1"
+        ) {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.paymnet_plan_code === null
+              ? ""
+              : `${row.paymnet_plan_code} ${subplan}`}
+          </>
+        );
+      },
+    },
+    {
       text: "Due date",
       dataField: "due_date",
       headerFormatter: headerLabelFormatter,
@@ -362,7 +410,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
@@ -389,7 +437,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -417,7 +465,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -445,7 +493,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function (cell, row) {
