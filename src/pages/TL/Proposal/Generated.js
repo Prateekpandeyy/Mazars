@@ -217,9 +217,9 @@ const Generated = ({ updateTab }) => {
       orderBy: val,
       fieldBy: field,
     };
-    localStorage.setItem("admininvt1", 1);
-    localStorage.setItem("sortedValuevt1", JSON.stringify(sort));
-    let searchData = JSON.parse(localStorage.getItem(`admingenerated`));
+    localStorage.setItem("tlint1", 1);
+    localStorage.setItem("sortedValuetl1", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`tlgenerated`));
     if (searchData && Object.values(searchData).length > 0) {
       remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
@@ -229,7 +229,7 @@ const Generated = ({ updateTab }) => {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        setEnd(Number(localStorage.getItem("tl_record_per_page")));
         let all = [];
         let sortId = 1;
 
@@ -278,9 +278,9 @@ const Generated = ({ updateTab }) => {
     setPage(1);
     setBig(1);
 
-    localStorage.removeItem("admininvt1");
+    localStorage.removeItem("tlinvt1");
     localStorage.removeItem("sortedValuevttl1");
-    localStorage.removeItem("accendcreated");
+    localStorage.removeItem("accendgeneratedtl");
     localStorage.removeItem("previnvtl1");
     getProposalList(1);
   };
@@ -288,7 +288,7 @@ const Generated = ({ updateTab }) => {
     setAtpage(1);
     setPage(1);
     getProposalList(1);
-    localStorage.setItem("admininvt1", 1);
+    localStorage.setItem("tlint1", 1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
@@ -296,30 +296,30 @@ const Generated = ({ updateTab }) => {
     }
     setPage(Number(page) - 1);
     getProposalList(page - 1);
-    localStorage.setItem("admininvt1", Number(page) - 1);
+    localStorage.setItem("tlint1", Number(page) - 1);
   };
   const nextChunk = () => {
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
     setPage(Number(page) + 1);
-    localStorage.setItem("admininvt1", Number(page) + 1);
+    localStorage.setItem("tlint1", Number(page) + 1);
     getProposalList(page + 1);
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getProposalList(defaultPage.at(-1));
     setAtpage(totalPages);
-    localStorage.setItem("admininvt1", defaultPage.at(-1));
+    localStorage.setItem("tlint1", defaultPage.at(-1));
   };
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -334,7 +334,25 @@ const Generated = ({ updateTab }) => {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
 
+        sortMessage(val, 1);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -355,17 +373,73 @@ const Generated = ({ updateTab }) => {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 2);
+      },
     },
     {
       text: "Invoice no",
       dataField: "billno",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Due date",
       dataField: "due_date",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
 
+        sortMessage(val, 4);
+      },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
 
@@ -377,11 +451,24 @@ const Generated = ({ updateTab }) => {
       dataField: "invoice_amount",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
         }
-        return a - b; // desc
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 5);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
@@ -395,11 +482,24 @@ const Generated = ({ updateTab }) => {
       dataField: "tds_amount",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
         }
-        return a - b; // desc
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+
+        sortMessage(val, 7);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
@@ -421,7 +521,25 @@ const Generated = ({ updateTab }) => {
       text: "Status",
       dataField: "is_paid",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
 
+        sortMessage(val, 8);
+      },
       formatter: function (cell, row) {
         return (
           <>
@@ -600,7 +718,7 @@ const Generated = ({ updateTab }) => {
                         onChange={(e) => {
                           setPage(Number(e.target.value));
                           getProposalList(Number(e.target.value));
-                          localStorage.setItem("admininvt1", e.target.value);
+                          localStorage.setItem("tlint1", e.target.value);
                         }}
                         className="form-control"
                       >
