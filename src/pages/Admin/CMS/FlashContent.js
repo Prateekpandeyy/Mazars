@@ -140,6 +140,8 @@ const FlashContent = () => {
       setShowEditor(true);
     }
   };
+
+  console.log("setContentType", contentType);
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
@@ -216,6 +218,23 @@ const FlashContent = () => {
                   ) : (
                     ""
                   )}
+                  {window.location.pathname === "/cms/flashcontent" &&
+                  contentType === "Editor" ? (
+                    <div className="row">
+                      <div className="col-md-12">
+                        <label className="form-label">Content</label>{" "}
+                      </div>
+
+                      <div
+                        className="col-md-12"
+                        style={{ display: "flex", flexDirection: "column" }}
+                      >
+                        <AddEditor />
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   {contentType === "Editor" ? (
                     <div className="row">
                       <div className="col-md-12">
@@ -249,22 +268,6 @@ const FlashContent = () => {
                         />
                       </div>
                     </form>
-                  ) : (
-                    ""
-                  )}
-                  {contentType === "Editor" ? (
-                    <div className="row">
-                      <div className="col-md-12">
-                        <label className="form-label">Content</label>{" "}
-                      </div>
-
-                      <div
-                        className="col-md-12"
-                        style={{ display: "flex", flexDirection: "column" }}
-                      >
-                        <AddEditor />
-                      </div>
-                    </div>
                   ) : (
                     ""
                   )}
