@@ -56,7 +56,7 @@ function CustomerFilter(props) {
     let data = JSON.parse(localStorage.getItem("categoryData"));
     setCategory(data);
   }, []);
-
+  
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
 
@@ -86,10 +86,12 @@ function CustomerFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus1(dk.p_status);
         setQueryNo(dk.query_no);
-        // onSubmit(dk);
+        onSubmit(dk);
       }
     }
   }, []);
+
+
 
   //handleCategory
   const handleCategory = (value) => {
@@ -125,6 +127,7 @@ function CustomerFilter(props) {
     setShowSubCat([]);
     setCatShowData([]);
   };
+
 
   //reset date
   const resetData = () => {
@@ -169,8 +172,29 @@ function CustomerFilter(props) {
       };
     }
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
+    let remainApiPath = ` `;
 
     if (query == "query") {
+      if (data.route) {
+        axios
+          .get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+          myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else{
       axios
         .get(
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -191,9 +215,53 @@ function CustomerFilter(props) {
         .catch((error) => {
           ShowError.LoadingError(setLoading);
         });
+      }
     }
 
     if (InprogressAllocation == "InprogressAllocation") {
+      if (data.route) {
+        if (data.p_status.length > 0){
+          let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+          axios
+          .get(`${baseUrl}/${remainApiPath}`,
+          myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+        }else{
+          let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=1&pcat_id=${data.pcatId}`;
+          axios
+          .get(`${baseUrl}/${remainApiPath}`,
+          myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+        }
+      } else{
       if (data.p_status.length > 0) {
         axios
           .get(
@@ -238,8 +306,29 @@ function CustomerFilter(props) {
           });
       }
     }
+    }
 
     if (InprogressQueryProposal == "InprogressQueryProposal") {
+      if (data.route) {
+        axios
+          .get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+            id
+          )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&pcat_id=${data.pcatId}`,
+          myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else{
       axios
         .get(
           `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -260,9 +349,30 @@ function CustomerFilter(props) {
         .catch((error) => {
           ShowError.LoadingError(setLoading);
         });
+      }
     }
 
     if (DeclinedQuery == "DeclinedQuery") {
+      if (data.route) {
+        axios
+          .get(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
+            id
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&pcat_id=${data.pcatId}&status=${data.p_status}`,
+          myConfig)
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else{
       axios
         .get(
           `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
@@ -283,6 +393,7 @@ function CustomerFilter(props) {
         .catch((error) => {
           ShowError.LoadingError(setLoading);
         });
+      }
     }
 
     if (proposal == "proposal") {
