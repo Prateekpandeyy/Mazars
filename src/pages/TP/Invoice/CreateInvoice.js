@@ -46,7 +46,7 @@ const CreateInvoice = () => {
   const [page, setPage] = useState(0);
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const [big, setBig] = useState(1);
-  const [end, setEnd] = useState(50);
+  const [end, setEnd] = useState(allEnd);
   const [orderby, setOrderBy] = useState("");
   const [fieldBy, setFiledBy] = useState("");
   const [atPage, setAtpage] = useState(1);
@@ -577,7 +577,7 @@ const CreateInvoice = () => {
                         onChange={(e) => {
                           setPage(Number(e.target.value));
                           getProposalList(Number(e.target.value));
-                          localStorage.setItem("admininvt2", e.target.value);
+                          localStorage.setItem("tpInvoice2", e.target.value);
                         }}
                         className="form-control"
                       >
