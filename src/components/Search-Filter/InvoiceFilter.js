@@ -78,7 +78,7 @@ const InvoiceFilter = (props) => {
       const token = window.localStorage.getItem("tlToken");
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&ststus=${data.opt}`,
+        url: `${baseUrl}/tl/getPaymentDetail?tl_id=${props.userid}&invoice=0&status=${data.opt}`,
         headers: {
           uit: token,
         },

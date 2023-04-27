@@ -20,6 +20,7 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 
 function AllQueriesData({
   allQueriesCount,
@@ -39,6 +40,21 @@ function AllQueriesData({
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
   const tableId = React.createRef("");
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 5;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
@@ -343,26 +359,39 @@ function AllQueriesData({
     showRejectedBox(!rejectedBox);
   };
 
-  
+
 
   return (
     <Card ref={tableId}>
       <CardHeader>
-        <span onClick={(e) => needHelp()}>
-          {" "}
-          <HelpIcon />
-        </span>
-        <CustomerFilter
-          setData={setAllQueriesCount}
-          getData={CountAllQuery}
-          id={userId}
-          query="query"
-          records={allQueriesCount.length}
-          setRecords={setRecords}
-          index="custQuery1"
+        <Row>
+          <span onClick={(e) => needHelp()}>
+            {" "}
+            <HelpIcon />
+          </span>
+          <CustomerFilter
+            setData={setAllQueriesCount}
+            getData={CountAllQuery}
+            id={userId}
+            query="query"
+            records={allQueriesCount.length}
+            setRecords={setRecords}
+            index="custQuery1"
           // resetTriggerFunc={resetTriggerFunc}
           // setCount={setCount}
-        />
+          />
+        </Row>
+        <Row>
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              setOnPage={setOnPage}
+              // resetPaging={resetPaging}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
       </CardHeader>
       <CardBody>
         <Row>

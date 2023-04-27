@@ -139,7 +139,7 @@ const UpdateDirect = () => {
   const searchArticle = (p) => {
     setAtpage(p);
     setPage(p);
-    let remainApiPath =``;
+    let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
     let formData = new FormData();
@@ -276,44 +276,44 @@ const UpdateDirect = () => {
     } else {
       remainApiPath = `customers/getupdated?type=direct&page=1&orderby=${val}&orderbyfield=${field}&page=1`
       axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let dataObj = {};
-          let dataList = [];
-          let customId = 1;
-          let sortId = 1;
-          res.data.result.map((i, e) => {
-            dataObj = {
-              sn: ++e,
-              content: i.content,
-              file: i.file,
-              heading: i.heading,
-              id: i.id,
-              publish_date: i.publish_date,
-              status: i.status,
-              type: i.type,
-              writer: i.writer,
-              cid: customId++,
-            };
-            dataList.push(dataObj);
-          });
-          let end = 1 * allEnd;
-          // let dynamicPage = Math.ceil(res.data.total / allEnd);
-          setData(dataList);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          let rem = 0 * allEnd;
-          setBig(rem + 1);
-          setEnd(end);
-          setAtpage(1);
-          setPage(1);
-        }
-      });
-    } 
+        .get(
+          `${baseUrl}/${remainApiPath}`,
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            let all = [];
+            let dataObj = {};
+            let dataList = [];
+            let customId = 1;
+            let sortId = 1;
+            res.data.result.map((i, e) => {
+              dataObj = {
+                sn: ++e,
+                content: i.content,
+                file: i.file,
+                heading: i.heading,
+                id: i.id,
+                publish_date: i.publish_date,
+                status: i.status,
+                type: i.type,
+                writer: i.writer,
+                cid: customId++,
+              };
+              dataList.push(dataObj);
+            });
+            let end = 1 * allEnd;
+            // let dynamicPage = Math.ceil(res.data.total / allEnd);
+            setData(dataList);
+            setCount(res.data.total);
+            setTurnGreen(true);
+            let rem = 0 * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+            setAtpage(1);
+            setPage(1);
+          }
+        });
+    }
   }
 
   return (
@@ -364,6 +364,41 @@ const UpdateDirect = () => {
                           </button>
                         </SearchBtn>
                       </div>
+                      <SearchBtn outer="outer">
+                        <div className="customPagination">
+                          <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                            <span>
+                              {big}-{end} of {count}
+                            </span>
+                            <span className="d-flex">
+                              {atPage > 1 ? (
+                                <>
+                                  <button
+                                    className="navButton mx-1"
+                                    onClick={(e) => prevChunk()}
+                                  >
+                                    &lt;
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {atPage < totalPage ? (
+                                <>
+                                  <button
+                                    className="navButton mx-1"
+                                    onClick={(e) => nextChunk()}
+                                  >
+                                    &gt;
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </SearchBtn>
                       <div className={classes.articleContent}>
                         <div className={classes.articlesDetails}>
                           <Table>
@@ -466,39 +501,6 @@ const UpdateDirect = () => {
                         </div>
                       </div>
                     </>
-                    <div className="customPagination">
-                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                        <span>
-                          {big}-{end} of {count}
-                        </span>
-                        <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage  ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => nextChunk()}
-                              >
-                                  &gt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                    </div>
                   </TableContainer>
                 </div>
               </div>
@@ -552,6 +554,41 @@ const UpdateDirect = () => {
                         </button>
                       </SearchBtn>
                     </div>
+                    <SearchBtn outer="outer">
+                        <div className="customPagination">
+                          <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                            <span>
+                              {big}-{end} of {count}
+                            </span>
+                            <span className="d-flex">
+                              {atPage > 1 ? (
+                                <>
+                                  <button
+                                    className="navButton mx-1"
+                                    onClick={(e) => prevChunk()}
+                                  >
+                                    &lt;
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {atPage < totalPage ? (
+                                <>
+                                  <button
+                                    className="navButton mx-1"
+                                    onClick={(e) => nextChunk()}
+                                  >
+                                    &gt;
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </SearchBtn>
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>
@@ -659,39 +696,6 @@ const UpdateDirect = () => {
                       </div>
                     </div>
                   </>
-                  <div className="customPagination">
-                    <div className="ml-auto mt-0 d-flex w-100 align-items-center justify-content-end">
-                      <span>
-                        {big}-{end} of {count}
-                      </span>
-                      <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage  ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => nextChunk()}
-                              >
-                                  &gt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                    </div>
-                  </div>
                 </TableContainer>
 
               </div>
