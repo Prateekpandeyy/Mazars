@@ -88,10 +88,6 @@ function CustomerFilter(props) {
         setQueryNo(dk.query_no);
         // onSubmit(dk);
       }
-    } else if (!dk?.toDate) {
-      // let date = moment().format("DD-MM-YYYY");
-      // let fullDate = date;
-      // setToDate(fullDate);
     }
   }, []);
 
@@ -138,6 +134,11 @@ function CustomerFilter(props) {
     setTax2([]);
     setShowSubCat([]);
     setCatShowData([]);
+    setFromDate("");
+    setToDate("");
+    setStatus1("");
+    setQueryNo("");
+    localStorage.removeItem(`searchData${index}`);
     getData();
   };
 
@@ -647,6 +648,8 @@ function CustomerFilter(props) {
                   className="form-select form-control"
                   ref={register}
                   max={current_date}
+                  defaultValue={fromDate}
+                  onChange={(e) => setFromDate(e.target.defaultValue)}
                 />
               </div>
               <div className="form-group mx-sm-1  mb-2">
@@ -660,6 +663,7 @@ function CustomerFilter(props) {
                   ref={register}
                   defaultValue={current_date}
                   max={current_date}
+                  onChange={(e) => setToDate(e.target.value)}
                 />
               </div>
               <div className="form-group mx-sm-1  mb-2">
