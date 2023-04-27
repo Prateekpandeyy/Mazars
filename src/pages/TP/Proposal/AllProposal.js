@@ -122,35 +122,35 @@ function AllProposal() {
 
   function headerLabelFormatter(column) {
     // let reverse = "Exp_Delivery_Date"
-    return(
+    return (
       <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -669,19 +669,20 @@ function AllProposal() {
     <>
       <Card>
         <CardHeader>
-          <Row>
-            <TaxProfessionalFilter
-              setData={setProposal}
-              getData={getProposalList}
-              AllProposal="AllProposal"
-              setRecords={setRecords}
-              resetTriggerFunc={resetTriggerFunc}
-              setCount={setCount}
-              records={records}
-              index="tpproposal1"
-            />
-          </Row>
-          <Row>
+          <TaxProfessionalFilter
+            setData={setProposal}
+            getData={getProposalList}
+            AllProposal="AllProposal"
+            setRecords={setRecords}
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
+            records={records}
+            index="tpproposal1"
+          />
+
+        </CardHeader>
+        <CardBody>
+          <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 count={count}
@@ -696,8 +697,6 @@ function AllProposal() {
               />
             </Col>
           </Row>
-        </CardHeader>
-        <CardBody>
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}

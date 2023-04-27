@@ -401,6 +401,7 @@ html body a {
   position: relative;
   text-decoration: none;
   transform: all 0.3s;
+  outline: none;
   vertical-align: middle;
 }
 .navButton:hover{
@@ -408,8 +409,10 @@ html body a {
 }
 .navButton:focus{
   background-color: #dbdbdb;
-  border: 1px solid #dbdbdb;
+  border: 2px solid #0071ce;
+  outline: none !important;
 }
+
 .btnWhite{
   border-bottom-left-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.01);

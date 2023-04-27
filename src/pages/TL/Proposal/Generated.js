@@ -373,7 +373,6 @@ const Generated = ({ updateTab }) => {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
-      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
