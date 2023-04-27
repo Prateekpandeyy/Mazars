@@ -266,6 +266,9 @@ function InprogressProposal({
             id={userId}
             InprogressQueryProposal="InprogressQueryProposal"
             records={allQueriesCount.length}
+            index="custQuery3"
+          // resetTriggerFunc={resetTriggerFunc}
+          // setCount={setCount}
           />
         </CardHeader>
         <CardBody>

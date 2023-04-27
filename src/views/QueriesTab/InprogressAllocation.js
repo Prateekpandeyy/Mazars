@@ -359,6 +359,9 @@ function InprogressAllocation({
           id={userId}
           InprogressAllocation="InprogressAllocation"
           records={allQueriesCount.length}
+          index="custQuery2"
+          // resetTriggerFunc={resetTriggerFunc}
+          // setCount={setCount}
         />
       </CardHeader>
       <CardBody>

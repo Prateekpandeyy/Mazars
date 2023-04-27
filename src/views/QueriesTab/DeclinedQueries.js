@@ -282,6 +282,9 @@ function DeclinedQueries({
             id={userId}
             DeclinedQuery="DeclinedQuery"
             records={allQueriesCount.length}
+            index="custQuery4"
+          // resetTriggerFunc={resetTriggerFunc}
+          // setCount={setCount}
           />
         </CardHeader>
         <CardBody>

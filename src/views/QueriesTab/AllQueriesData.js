@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
@@ -62,7 +62,7 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [additionalQuery]);
+  }, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
     // console.log(tableId);
@@ -81,7 +81,7 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const needHelp = () => {
     setManual(!openManual);
@@ -92,8 +92,8 @@ function AllQueriesData({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
         return {
@@ -220,8 +220,8 @@ function AllQueriesData({
             ) : (
               <>
                 {row.status_code == "0" ||
-                row.status_code == "1" ||
-                row.status_code == "3" ? (
+                  row.status_code == "1" ||
+                  row.status_code == "3" ? (
                   <>
                     <span className="ml-1">
                       <Link to={`/customer_edit-query/${row.id}`}>
@@ -259,8 +259,8 @@ function AllQueriesData({
                 ) : null}
 
                 {row.status_code == "4" ||
-                8 < parseInt(row.status_code) ||
-                row.status_code == "2" ? (
+                  8 < parseInt(row.status_code) ||
+                  row.status_code == "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-1">
@@ -343,6 +343,8 @@ function AllQueriesData({
     showRejectedBox(!rejectedBox);
   };
 
+  
+
   return (
     <Card ref={tableId}>
       <CardHeader>
@@ -357,6 +359,9 @@ function AllQueriesData({
           query="query"
           records={allQueriesCount.length}
           setRecords={setRecords}
+          index="custQuery1"
+          // resetTriggerFunc={resetTriggerFunc}
+          // setCount={setCount}
         />
       </CardHeader>
       <CardBody>
