@@ -547,10 +547,7 @@ return (
             setCount={setCount}
           />
         </Row>
-      </CardHeader>
-
-      <CardBody>
-      <Row className="mb-2">
+        <Row>
           <Col md="12" align="right">
             <Paginator
               count={count}
@@ -567,6 +564,9 @@ return (
             />
           </Col>
         </Row>
+      </CardHeader>
+
+      <CardBody>
         <DataTablepopulated
           bgColor="#55425f"
           keyField={"assign_no"}

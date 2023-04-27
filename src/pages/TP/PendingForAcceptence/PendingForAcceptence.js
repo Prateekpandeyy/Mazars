@@ -41,13 +41,13 @@ function PendingForAcceptence(props) {
   const [sortVal, setSortVal] = useState('');
   const [sortField, setSortField] = useState('');
   const [accend, setAccend] = useState(false);
-  const [turnGreen, setTurnGreen] = useState(false);
-  const [isActive, setIsActive] = useState("");
+  const [turnGreen,setTurnGreen]= useState(false);
+  const [isActive,setIsActive]=useState("");
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
-
+  
   const myRef = useRef([]);
 
   const [pay, setPay] = useState({
@@ -84,48 +84,48 @@ function PendingForAcceptence(props) {
 
   function headerLabelFormatter(column) {
     // let reverse = "Exp_Delivery_Date"
-    return (
+    return(
       <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      {column.dataField === isActive ?
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon 
+              className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        )
+        :
+        (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )
+      }
       </div>
     )
   }
 
   useEffect(() => {
 
-    let arrow = localStorage.getItem("tpArrowQuery2")
-    if (arrow) {
-      setAccend(arrow);
-      setIsActive(arrow);
-      setTurnGreen(true);
-    }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
+  let arrow = localStorage.getItem("tpArrowQuery2")
+  if (arrow) {
+    setAccend(arrow);
+    setIsActive(arrow);
+    setTurnGreen(true);
+  }
+  let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
     if (!sortVal) {
       let sort = {
         val: 0,
@@ -172,16 +172,16 @@ function PendingForAcceptence(props) {
             .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`
     } else if ((data) && (pagetry)) {
       remainApiPath = `/tl/pendingQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
+          .join("-")}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else if ((!data) && (pagetry)) {
-      remainApiPath = `tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath =`tl/pendingQues?page=${e}&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `tl/pendingQues?page=${e}&tp_id=${JSON.parse(userid)}`
     }
@@ -229,18 +229,18 @@ function PendingForAcceptence(props) {
     localStorage.setItem(`tpQuery2`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
 
-    if (data) {
-      remainApiPath = `tl/pendingQues?page=1&cat_id=${data.store
-        }&from=${data.fromDate
+    if(data){
+      remainApiPath =`tl/pendingQues?page=1&cat_id=${data.store
+      }&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
           ?.split("-")
           .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
-    } else {
-      remainApiPath = `tl/pendingQues?page=1&orderby=${val}&orderbyfield=${field}`
+          .join("-")}&pcat_id=${data.pcatId
+      }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath =`tl/pendingQues?page=1&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -347,7 +347,7 @@ function PendingForAcceptence(props) {
           setAccend("");
           localStorage.removeItem("tpArrowQuery2");
         }
-
+  
         if (accend === true) {
           val = 0;
         } else {
@@ -417,7 +417,7 @@ function PendingForAcceptence(props) {
           setAccend("");
           localStorage.removeItem("tpArrowQuery2");
         }
-
+  
         if (accend === true) {
           val = 0;
         } else {
@@ -513,9 +513,7 @@ function PendingForAcceptence(props) {
               setCount={setCount}
             />
           </Row>
-        </CardHeader>
-        <CardBody>
-          <Row className="mb-2">
+          <Row>
             <Col md="12" align="right">
               <Paginator
                 count={count}
@@ -532,6 +530,8 @@ function PendingForAcceptence(props) {
               />
             </Col>
           </Row>
+        </CardHeader>
+        <CardBody>
           {loading ? (
             <Spinner color="primary" />
           ) : (
