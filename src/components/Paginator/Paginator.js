@@ -921,7 +921,6 @@ function Paginator(props) {
     }, [count]);
 
     return (
-        <div className="customPagination">
             <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                     <span className="customPaginationSpan">
@@ -984,7 +983,6 @@ function Paginator(props) {
                     </span>
                 </div>
             </div>
-        </div>
     )
 }
 
