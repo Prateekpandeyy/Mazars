@@ -755,7 +755,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
@@ -799,7 +799,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=1&pcat_id=${selectedData}&qno=${
@@ -827,12 +827,6 @@ function TeamFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -849,7 +843,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=2&pcat_id=${selectedData}&qno=${

@@ -51,6 +51,7 @@ function FeedbackTab() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1"]);
+  const [searchResult, setSearchResult] = useState(true);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -100,6 +101,14 @@ function FeedbackTab() {
     }
     // getFeedback();
   }, []);
+
+  useEffect(() => {
+    if (count == 0) {
+      setSearchResult(false);
+    } else {
+      setSearchResult(true);
+    }
+  }, [count]);
 
   const getFeedback = (e) => {
     localStorage.setItem(`tlFeedback`, JSON.stringify(e));
@@ -387,7 +396,7 @@ function FeedbackTab() {
           getFeedback();
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   return (
@@ -404,74 +413,82 @@ function FeedbackTab() {
             <Row>
               <Col md="12" align="right">
                 <div className="customPagination">
-                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span>
-                      {big}-{end} of {count}
-                    </span>
-                    <span className="d-flex">
-                      {page > 1 ? (
-                        <button
-                          className="navButton"
-                          onClick={(e) => firstChunk()}
-                        >
-                          <KeyboardDoubleArrowLeftIcon />
-                        </button>
-                      ) : (
-                        ""
-                      )}
+                  {searchResult === true ? (
+                    <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                      <span>
+                        {big}-{end} of {count}
+                      </span>
+                      <span className="d-flex">
+                        {page > 1 ? (
+                          <button
+                            className="navButton"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                        ) : (
+                          ""
+                        )}
 
-                      {page > 1 ? (
-                        <button
-                          className="navButton"
-                          onClick={(e) => prevChunk()}
-                        >
-                          <KeyboardArrowLeftIcon />
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
-                        <select
-                          value={page}
-                          onChange={(e) => {
-                            setPage(e.target.value);
-                            getFeedback(e.target.value);
+                        {page > 1 ? (
+                          <button
+                            className="navButton"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        <div
+                          style={{
+                            display: "flex",
+                            maxWidth: "70px",
+                            width: "100%",
                           }}
-                          className="form-control"
                         >
-                          {defaultPage.map((i) => (
-                            <option value={i}>{i}</option>
-                          ))}
-                        </select>
-                      </div>
-                      {defaultPage.length > page ? (
-                        <button
-                          className="navButton"
-                          onClick={(e) => nextChunk()}
-                        >
-                          <KeyboardArrowRightIcon />
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                      {defaultPage.length > page ? (
-                        <button
-                          className="navButton"
-                          onClick={(e) => lastChunk()}
-                        >
-                          <KeyboardDoubleArrowRightIcon />
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </div>
+                          <select
+                            value={page}
+                            onChange={(e) => {
+                              setPage(e.target.value);
+                              getFeedback(e.target.value);
+                            }}
+                            className="form-control"
+                          >
+                            {defaultPage.map((i) => (
+                              <option value={i}>{i}</option>
+                            ))}
+                          </select>
+                        </div>
+                        {defaultPage.length > page ? (
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {defaultPage.length > page ? (
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                      <span className="customPaginationSpan nullClass">
+                        0 - 0 of 0
+                      </span>
+                    </div>
+                  )}
                 </div>
               </Col>
             </Row>
