@@ -501,26 +501,26 @@ function AllPayment() {
     {
       text: "Status",
       dataField: "",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // headerFormatter: headerLabelFormatter,
 
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendtlpay3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendtlpay3");
-        }
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     localStorage.setItem("accendtlpay3", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("accendtlpay3");
+      //   }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
       formatter: function (cell, row) {
         return (
           <>

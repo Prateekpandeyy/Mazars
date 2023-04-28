@@ -402,26 +402,26 @@ function AllPayment() {
     {
       text: "Status",
       dataField: "status",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // headerFormatter: headerLabelFormatter,
 
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendtlpay2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendtlpay2");
-        }
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     localStorage.setItem("accendtlpay2", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("accendtlpay2");
+      //   }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 6);
-      },
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 6);
+      // },
     },
     {
       dataField: "accepted_amount",
