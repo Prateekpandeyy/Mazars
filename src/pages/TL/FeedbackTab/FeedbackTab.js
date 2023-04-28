@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FeedbackTab() {
-
   const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
   const allEnd = Number(localStorage.getItem("tl_record_per_page"));
@@ -41,7 +40,7 @@ function FeedbackTab() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -52,12 +51,12 @@ function FeedbackTab() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1"]);
-  const token = window.localStorage.getItem("tlToken")
+  const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
-      "uit": token
-    }
-  }
+      uit: token,
+    },
+  };
 
   //page counter
   const firstChunk = () => {
@@ -65,26 +64,25 @@ function FeedbackTab() {
       setAtpage(1);
       setPage(1);
       getFeedback(1);
-    } else { }
+    } else {
+    }
   };
   const prevChunk = () => {
-    if (atPage < (defaultPage.at(-1))) {
+    if (atPage < defaultPage.at(-1)) {
       setAtpage((atPage) => atPage - 1);
       setPage(Number(page) - 1);
       getFeedback(Number(page) - 1);
     }
-
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (defaultPage.at(-1)))) {
+    if (atPage > 0 && atPage < defaultPage.at(-1)) {
       setAtpage((atPage) => atPage + 1);
       setPage(Number(page) + 1);
       getFeedback(Number(page) + 1);
     }
-
   };
   const lastChunk = () => {
-    if (atPage < (defaultPage.at(-1))) {
+    if (atPage < defaultPage.at(-1)) {
       setPage(defaultPage.at(-1));
       getFeedback(defaultPage.at(-1));
       setAtpage(totalPages);
@@ -104,7 +102,7 @@ function FeedbackTab() {
   }, []);
 
   const getFeedback = (e) => {
-    localStorage.setItem(`tlFeedback`, JSON.stringify(e))
+    localStorage.setItem(`tlFeedback`, JSON.stringify(e));
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlFeedback"));
     let remainApiPath = "";
@@ -113,87 +111,82 @@ function FeedbackTab() {
     console.log(allEnd);
 
     if (pagetry) {
-      remainApiPath = `tl/getFeedback?tl_id=${JSON.parse(userid)}&page=${e}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getFeedback?tl_id=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getFeedback?tl_id=${JSON.parse(userid)}&page=${e}`
+      remainApiPath = `tl/getFeedback?tl_id=${JSON.parse(userid)}&page=${e}`;
     }
 
-    axios
-      .get(`${baseUrl}/${remainApiPath}`, myConfig)
-      .then((res) => {
-        let droppage = [];
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setFeedBackData(all);
-          setCount(res.data.total);
-          let dynamicPage = Math.round(res.data.total / allEnd);
-          let rem = (e - 1) * allEnd;
-          let end = e * allEnd;
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else if ((e == (dynamicPage))) {
-            setBig(rem + 1);
-            setEnd(res.data.total);
-            // console.log("e at last page");
-          }
-          else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let droppage = [];
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setFeedBackData(all);
+        setCount(res.data.total);
+        let dynamicPage = Math.round(res.data.total / allEnd);
+        let rem = (e - 1) * allEnd;
+        let end = e * allEnd;
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else if (e == dynamicPage) {
+          setBig(rem + 1);
+          setEnd(res.data.total);
+          // console.log("e at last page");
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   function headerLabelFormatter(column) {
     return (
       <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropUpIcon />
-              ) : (
-                <ArrowDropDownIcon />
-              )}
-            </div>
-          )
-        }
+        {column.dataField === isActive ? (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropDownIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 
   const sortMessage = (val, field) => {
@@ -204,13 +197,15 @@ function FeedbackTab() {
       // pageno: pageno,
       val: val,
       field: field,
-    }
-    localStorage.setItem(`tlFeedback`, JSON.stringify(1))
+    };
+    localStorage.setItem(`tlFeedback`, JSON.stringify(1));
     localStorage.setItem(`freezetlFeedback`, JSON.stringify(obj));
 
     axios
       .get(
-        `${baseUrl}/tl/getFeedback?page=1&tl_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/tl/getFeedback?page=1&tl_id=${JSON.parse(
+          userid
+        )}&orderby=${val}&orderbyfield=${field}`,
         myConfig
       )
       .then((res) => {
@@ -237,7 +232,6 @@ function FeedbackTab() {
       });
   };
 
-
   const columns = [
     {
       text: "S.No",
@@ -246,7 +240,13 @@ function FeedbackTab() {
       //   return row.cid;
       // },
       headerStyle: () => {
-        return { fontSize: "12px", width: "10px", border: "1px solid #081f8f", color: "#fff", backgroundColor: "#081f8f" };
+        return {
+          fontSize: "12px",
+          width: "10px",
+          border: "1px solid #081f8f",
+          color: "#fff",
+          backgroundColor: "#081f8f",
+        };
       },
     },
     {
@@ -272,15 +272,26 @@ function FeedbackTab() {
         sortMessage(val, 1);
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "60px", border: "1px solid #081f8f", color: "#fff", backgroundColor: "#081f8f" };
+        return {
+          fontSize: "12px",
+          width: "60px",
+          border: "1px solid #081f8f",
+          color: "#fff",
+          backgroundColor: "#081f8f",
+        };
       },
-
     },
     {
       text: "Query No",
       dataField: "assign_no",
       headerStyle: () => {
-        return { fontSize: "12px", width: "40px", border: "1px solid #081f8f", color: "#fff", backgroundColor: "#081f8f" };
+        return {
+          fontSize: "12px",
+          width: "40px",
+          border: "1px solid #081f8f",
+          color: "#fff",
+          backgroundColor: "#081f8f",
+        };
       },
       headerFormatter: headerLabelFormatter,
       sort: true,
@@ -305,36 +316,50 @@ function FeedbackTab() {
     {
       text: "Feedback",
       headerStyle: () => {
-        return { fontSize: "12px", width: "150px", border: "1px solid #081f8f", color: "#fff", backgroundColor: "#081f8f" };
+        return {
+          fontSize: "12px",
+          width: "150px",
+          border: "1px solid #081f8f",
+          color: "#fff",
+          backgroundColor: "#081f8f",
+        };
       },
       formatter: function nameFormatter(cell, row) {
-
         return (
           <>
             <div>
-              {
-                row.tl_read == "0" ?
-                  <div
-                    style={{
-                      cursor: "pointer", wordBreak: "break-word",
-                      display: "flex", justifyContent: "space-between"
-                    }}
-                    onClick={() => readNotification(row.id)}
-                    title="unread"
-                  >
-                    <p>{row.feedback}  - By {row.name}</p>
-                    <i class="fa fa-bullseye" style={{ color: "red" }}></i>
-                  </div>
-
-                  :
-                  <div
-                    style={{ cursor: "pointer", wordBreak: "break-word", display: "flex", justifyContent: "space-between" }}
-                    title="read"
-                  >
-                    <p>{row.feedback}  - By {row.name}</p>
-                    <i class="fa fa-bullseye" style={{ color: "green" }}></i>
-                  </div>
-              }
+              {row.tl_read == "0" ? (
+                <div
+                  style={{
+                    cursor: "pointer",
+                    wordBreak: "break-word",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                  onClick={() => readNotification(row.id)}
+                  title="unread"
+                >
+                  <p>
+                    {row.feedback} - By {row.name}
+                  </p>
+                  <i class="fa fa-bullseye" style={{ color: "red" }}></i>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    cursor: "pointer",
+                    wordBreak: "break-word",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                  title="read"
+                >
+                  <p>
+                    {row.feedback} - By {row.name}
+                  </p>
+                  <i class="fa fa-bullseye" style={{ color: "green" }}></i>
+                </div>
+              )}
             </div>
           </>
         );
@@ -342,11 +367,8 @@ function FeedbackTab() {
     },
   ];
 
-
   // readnotification
   const readNotification = (id) => {
-
-
     let formData = new FormData();
     formData.append("id", id);
     formData.append("type", "tl");
@@ -355,23 +377,18 @@ function FeedbackTab() {
       method: "POST",
       url: `${baseUrl}/tl/markReadFeedback`,
       headers: {
-        uit: token
+        uit: token,
       },
       data: formData,
     })
       .then(function (response) {
-
         if (response.data.code === 1) {
           // alert.success("successfully read!");
-          getFeedback()
-
+          getFeedback();
         }
       })
-      .catch((error) => {
-
-      });
+      .catch((error) => {});
   };
-
 
   return (
     <>
@@ -434,25 +451,25 @@ function FeedbackTab() {
                         </select>
                       </div>
                       {defaultPage.length > page ? (
-                            <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                        ) : (
-                            ""
-                        )}
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
                       {defaultPage.length > page ? (
-                            <button
-                                className="navButton"
-                                onClick={(e) => lastChunk()}
-                            >
-                                <KeyboardDoubleArrowRightIcon />
-                            </button>
-                        ) : (
-                            ""
-                        )}
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>
@@ -464,8 +481,8 @@ function FeedbackTab() {
               bgColor="#42566a"
               keyField={"assign_no"}
               data={feedbackData}
-              columns={columns}>
-            </DataTablepopulated>
+              columns={columns}
+            ></DataTablepopulated>
           </CardBody>
         </Card>
       </Layout>

@@ -197,6 +197,8 @@ function AdminHeader({
       localStorage.removeItem("tlAssignment2");
       localStorage.removeItem("tlAssignment3");
       localStorage.removeItem("tlAssignment4");
+      localStorage.removeItem("tlint1");
+      localStorage.removeItem("tlint2");
       localStorage.removeItem("freezetlAssignment1");
       localStorage.removeItem("freezetlAssignment2");
       localStorage.removeItem("freezetlAssignment3");

@@ -111,11 +111,11 @@ const Generated = ({ updateTab }) => {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("accendgeneratedtl") === column.dataField ? (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -159,7 +159,7 @@ const Generated = ({ updateTab }) => {
       fieldBy = sortVal.fieldBy;
     }
     let remainApiPath = "";
-    let searchData = JSON.parse(localStorage.getItem(`tlgenerated`));
+    let searchData = JSON.parse(localStorage.getItem(`generated`));
 
     if (searchData && Object.values(searchData).length > 0) {
       remainApiPath = `/tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
@@ -219,7 +219,7 @@ const Generated = ({ updateTab }) => {
     };
     localStorage.setItem("tlint1", 1);
     localStorage.setItem("sortedValuetl1", JSON.stringify(sort));
-    let searchData = JSON.parse(localStorage.getItem(`tlgenerated`));
+    let searchData = JSON.parse(localStorage.getItem(`generated`));
     if (searchData && Object.values(searchData).length > 0) {
       remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {

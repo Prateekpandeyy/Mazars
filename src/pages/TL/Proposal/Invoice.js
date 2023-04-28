@@ -456,11 +456,11 @@ const Invoice = (updateTab) => {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("accendcreatedtl") === column.dataField ? (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}

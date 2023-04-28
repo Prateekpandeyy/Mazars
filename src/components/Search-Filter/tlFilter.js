@@ -546,13 +546,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
@@ -884,6 +878,7 @@ function TeamFilter(props) {
     }
   };
 
+
   const Reset = () => {
     return (
       <>
@@ -929,6 +924,15 @@ function TeamFilter(props) {
     setAtpage(totalPages);
     localStorage.setItem(pageValue, defaultPage.at(-1));
   };
+
+  useEffect(() => {
+    if (countNotification == 0){
+      setSearchResult(false);
+  }else{
+      setSearchResult(true);
+  }
+  }, [countNotification]);
+
   // console.log("selectedData", selectedData);
   return (
     <>

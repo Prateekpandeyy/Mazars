@@ -68,11 +68,11 @@ function InCompleteData() {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("accendtlq2") === column.dataField ? (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}

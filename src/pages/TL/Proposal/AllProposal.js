@@ -74,11 +74,11 @@ function AllProposal({ setAllProposal }) {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("accendtlpro1") === column.dataField ? (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -254,7 +254,7 @@ function AllProposal({ setAllProposal }) {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {
