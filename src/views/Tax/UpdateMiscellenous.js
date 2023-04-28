@@ -26,8 +26,6 @@ import { goToLogin } from "../../components/Common/commonFunction/GoToLogin";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   isActive: {
@@ -363,41 +361,6 @@ const UpdateMiscellenous = () => {
                           </button>
                         </SearchBtn>
                       </div>
-                      <SearchBtn outer="outer">
-                    <div className="customPagination">
-                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                        <span>
-                          {big}-{end} of {count}
-                        </span>
-                        <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                             <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage ? (
-                            <>
-                               <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    </SearchBtn>
                       <div className={classes.articleContent}>
                         <div className={classes.articlesDetails}>
                           <Table>
@@ -499,7 +462,39 @@ const UpdateMiscellenous = () => {
                         </div>
                       </div>
                     </>
-
+                    <div className="customPagination">
+                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                        <span>
+                          {big}-{end} of {count}
+                        </span>
+                        <span className="d-flex">
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
+                    </div>
                   </TableContainer>
                 </div>
               </div>
@@ -554,41 +549,6 @@ const UpdateMiscellenous = () => {
                         </button>
                       </SearchBtn>
                     </div>
-                    <SearchBtn outer="outer">
-                    <div className="customPagination">
-                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                        <span>
-                          {big}-{end} of {count}
-                        </span>
-                        <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage ? (
-                            <>
-                               <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    </SearchBtn>
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>
@@ -696,6 +656,39 @@ const UpdateMiscellenous = () => {
                       </div>
                     </div>
                   </>
+                  <div className="customPagination">
+                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                      <span>
+                        {big}-{end} of {count}
+                      </span>
+                      <span className="d-flex">
+                        {atPage > 1 ? (
+                          <>
+                            <button
+                              className="navButton mx-1"
+                              onClick={(e) => prevChunk()}
+                            >
+                              &lt;
+                            </button>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        {atPage < totalPage ? (
+                          <>
+                            <button
+                              className="navButton mx-1"
+                              onClick={(e) => nextChunk()}
+                            >
+                              &gt;
+                            </button>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </span>
+                    </div>
+                  </div>
                 </TableContainer>
               </div>
             </div>
