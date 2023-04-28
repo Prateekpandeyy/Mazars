@@ -151,7 +151,10 @@ function InprogressProposal() {
       fieldBy = sortVal.fieldBy;
     }
     let remainApiPath = "";
-
+    let status = 1;
+    if (searchData.status) {
+      status = searchData.p_status;
+    }
     if (searchData) {
       remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
         userid
@@ -163,9 +166,9 @@ function InprogressProposal() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status=${status}&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
     } else {
       remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
         userid
@@ -399,6 +402,7 @@ function InprogressProposal() {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {
