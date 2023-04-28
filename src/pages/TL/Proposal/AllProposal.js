@@ -254,7 +254,7 @@ function AllProposal({ setAllProposal }) {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
         searchData.pcatId
       }&qno=${searchData?.query_no}`;
     } else {

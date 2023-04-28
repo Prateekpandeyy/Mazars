@@ -546,9 +546,6 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
               .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
@@ -588,10 +585,7 @@ function TeamFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                updateResult(res);
               }
             });
         } else {
@@ -610,10 +604,7 @@ function TeamFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                updateResult(res);
               }
             });
         }
@@ -630,10 +621,7 @@ function TeamFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                updateResult(res);
               }
             });
         } else {
@@ -646,10 +634,7 @@ function TeamFilter(props) {
             )
             .then((res) => {
               if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
+                updateResult(res);
               }
             });
         }
