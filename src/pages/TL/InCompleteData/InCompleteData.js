@@ -129,7 +129,7 @@ function InCompleteData() {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq2"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;

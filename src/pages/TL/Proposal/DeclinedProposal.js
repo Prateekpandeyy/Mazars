@@ -88,7 +88,7 @@ function DeclinedProposal() {
         orderBy: 0,
         fieldBy: 0,
       };
-      localStorage.setItem("sortedValuetlpro1", JSON.stringify(sort));
+      localStorage.setItem("sortedValuetlpro4", JSON.stringify(sort));
     }
 
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
@@ -134,7 +134,7 @@ function DeclinedProposal() {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpro4"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
@@ -214,8 +214,8 @@ function DeclinedProposal() {
       orderBy: val,
       fieldBy: field,
     };
-    localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    localStorage.setItem("tlprot4", 1);
+    localStorage.setItem("sortedValuetlpro4", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal4`));
     if (searchData) {
       remainApiPath = `/tl/getProposalTl?id=${JSON.parse(

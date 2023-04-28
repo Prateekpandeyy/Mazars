@@ -160,13 +160,13 @@ function AllPayment({ setAllPayment }) {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay1"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpay1"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
     }
     let remainApiPath = "";
-
+    console.log("searchData", searchData);
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
@@ -187,55 +187,50 @@ function AllPayment({ setAllPayment }) {
       )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
     if (e) {
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let droppage = [];
-            let data = res.data.result;
-            setAllPayment(res.data.total);
-            setCountNotification(res.data.total);
-            setRecords(res.data.total);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setPayment(all);
-            setRecords(res.data.result.length);
-            let end = e * allEnd;
-
-            if (end > res.data.total) {
-              end = res.data.total;
-            }
-            let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-            let rem = (e - 1) * allEnd;
-
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          let droppage = [];
+          let data = res.data.result;
+          setAllPayment(res.data.total);
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setRecords(res.data.result.length);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
   const sortMessage = (val, field) => {
@@ -246,7 +241,7 @@ function AllPayment({ setAllPayment }) {
       fieldBy: field,
     };
     localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepay1", JSON.stringify(sort));
+    localStorage.setItem("sortedValuetlpay1", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(

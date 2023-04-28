@@ -370,6 +370,42 @@ const Generated = ({ updateTab }) => {
       },
     },
     {
+      text: "Payment  plan",
+      dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendgeneratedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendgeneratedtl");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.payment_plan === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (row.payment_plan === "3" && row.sub_payment_plane === "1") {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.payment_plan === null ? "" : `${row.payment_plan} ${subplan}`}
+          </>
+        );
+      },
+    },
+    {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
@@ -685,71 +721,75 @@ const Generated = ({ updateTab }) => {
         </CardHeader>
 
         <CardBody>
-          <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span className="customPaginationSpan">
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => firstChunk()}
+          {proposal.length > 0 ? (
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(Number(e.target.value));
+                            getProposalList(Number(e.target.value));
+                            localStorage.setItem("tlint1", e.target.value);
+                          }}
+                          className="form-control"
                         >
-                          <KeyboardDoubleArrowLeftIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => prevChunk()}
-                        >
-                          <KeyboardArrowLeftIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div className="navButtonSelectDiv">
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(Number(e.target.value));
-                          getProposalList(Number(e.target.value));
-                          localStorage.setItem("tlint1", e.target.value);
-                        }}
-                        className="form-control"
-                      >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => nextChunk()}
-                        >
-                          <KeyboardArrowRightIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => lastChunk()}
-                        >
-                          <KeyboardDoubleArrowRightIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
           <DataTablepopulated
             bgColor="#42566a"
             keyField="id"

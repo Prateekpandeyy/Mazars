@@ -152,7 +152,7 @@ function AllPayment() {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay2"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpay2"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
@@ -174,7 +174,7 @@ function AllPayment() {
         searchData?.query_no
       }`;
     } else {
-      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
       )}&page=${e}&status=2&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -641,8 +641,8 @@ function AllPayment() {
       fieldBy: field,
     };
     localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepay2", JSON.stringify(sort));
-    let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
+    localStorage.setItem("sortedValuetlpay2", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlpayment2`));
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid

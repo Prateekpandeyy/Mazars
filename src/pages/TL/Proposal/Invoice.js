@@ -216,14 +216,14 @@ const Invoice = (updateTab) => {
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -271,6 +271,42 @@ const Invoice = (updateTab) => {
       },
     },
     {
+      text: "Payment  plan",
+      dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendcreatedtl", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendcreatedtl");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.payment_plan === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (row.payment_plan === "3" && row.sub_payment_plane === "1") {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.payment_plan === null ? "" : `${row.payment_plan} ${subplan}`}
+          </>
+        );
+      },
+    },
+    {
       text: "Installment no",
       dataField: "installment_no",
       sort: true,
@@ -290,7 +326,7 @@ const Invoice = (updateTab) => {
           val = 1;
         }
 
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -312,7 +348,7 @@ const Invoice = (updateTab) => {
           val = 1;
         }
 
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
 
       formatter: function (cell, row) {
@@ -340,7 +376,7 @@ const Invoice = (updateTab) => {
           val = 1;
         }
 
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
@@ -452,71 +488,75 @@ const Invoice = (updateTab) => {
             setBig={setBig}
             setEnd={setEnd}
           />
-          <Row>
-            <Col md="6"></Col>
-            <Col md="6" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span className="customPaginationSpan">
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => firstChunk()}
+          {proposal.length > 0 ? (
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(Number(e.target.value));
+                            getProposalList(Number(e.target.value));
+                            localStorage.setItem("tlint2", e.target.value);
+                          }}
+                          className="form-control"
                         >
-                          <KeyboardDoubleArrowLeftIcon />
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => prevChunk()}
-                        >
-                          <KeyboardArrowLeftIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div className="navButtonSelectDiv">
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(Number(e.target.value));
-                          getProposalList(Number(e.target.value));
-                          localStorage.setItem("tlint2", e.target.value);
-                        }}
-                        className="form-control"
-                      >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => nextChunk()}
-                        >
-                          <KeyboardArrowRightIcon />
-                        </button>
-                        <button
-                          className="navButton mx-1"
-                          onClick={(e) => lastChunk()}
-                        >
-                          <KeyboardDoubleArrowRightIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
         </CardHeader>
 
         <CardBody>
