@@ -990,7 +990,6 @@ function AssignmentTab(props) {
     <>
       <Card>
         <CardHeader>
-          <Row>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div class="form-inline">
                 <div class="form-group mb-2">
@@ -1149,8 +1148,10 @@ function AssignmentTab(props) {
                 <Reset />
               </div>
             </form>
-          </Row>
-          <Row>
+        </CardHeader>
+
+        <CardBody>
+        <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorTL
                 count={count}
@@ -1164,9 +1165,6 @@ function AssignmentTab(props) {
               />
             </Col>
           </Row>
-        </CardHeader>
-
-        <CardBody>
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}

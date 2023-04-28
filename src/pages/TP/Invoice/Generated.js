@@ -239,35 +239,35 @@ const Generated = () => {
 
   function headerLabelFormatter(column) {
     // let reverse = "Exp_Delivery_Date"
-    return(
+    return (
       <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -776,24 +776,24 @@ const Generated = () => {
     <>
       <Card>
         <CardHeader>
-            <InvoiceFilter
-              setData={setProposal}
-              getData={getProposalList}
-              invoice="tpgenerated"
-              panel="taxprofessional"
-              localPage="tpinvoice1"
-              setRec={setRecords}
-              records={records}
-              userid={JSON.parse(userid)}
-              setDefaultPage={setDefaultPage}
-              resetPaging={resetPaging}
-              setCount={setCount}
-              setCountNotification={setCountNotification}
-              setPage={setPage}
-              page={page}
-              setBig={setBig}
-              setEnd={setEnd}
-            />
+          <InvoiceFilter
+            setData={setProposal}
+            getData={getProposalList}
+            invoice="tpgenerated"
+            panel="taxprofessional"
+            localPage="tpinvoice1"
+            setRec={setRecords}
+            records={records}
+            userid={JSON.parse(userid)}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
+            setCount={setCount}
+            setCountNotification={setCountNotification}
+            setPage={setPage}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
+          />
         </CardHeader>
 
         <CardBody>
@@ -809,7 +809,7 @@ const Generated = () => {
                     />
                     </div> */}
 
-<Row className="mb-2">
+          <Row className="mb-2">
             <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
