@@ -439,13 +439,16 @@ function PaginatorTL(props) {
                         {big}-{end} of {count}
                     </span>
                     <span className="d-flex">
-                        <button
-                            className="navButton"
-                            onClick={(e) => firstChunk()}
-                        >
-                            <KeyboardDoubleArrowLeftIcon />
-                        </button>
-
+                    {page > 1 ? (
+                            <button
+                                className="navButton"
+                                onClick={(e) => firstChunk()}
+                            >
+                                <KeyboardDoubleArrowLeftIcon />
+                            </button>
+                        ) : (
+                            ""
+                        )}
                         {page > 1 ? (
                             <button
                                 className="navButton"
@@ -479,12 +482,16 @@ function PaginatorTL(props) {
                         ) : (
                             ""
                         )}
-                        <button
-                            className="navButton"
-                            onClick={(e) => lastChunk()}
-                        >
-                            <KeyboardDoubleArrowRightIcon />
-                        </button>
+                        {defaultPage.length > page ? (
+                            <button
+                                className="navButton"
+                                onClick={(e) => lastChunk()}
+                            >
+                                <KeyboardDoubleArrowRightIcon />
+                            </button>
+                        ) : (
+                            ""
+                        )}
                     </span>
                 </div>
             </div>

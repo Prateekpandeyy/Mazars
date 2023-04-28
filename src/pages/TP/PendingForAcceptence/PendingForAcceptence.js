@@ -501,7 +501,6 @@ function PendingForAcceptence(props) {
     <>
       <Card>
         <CardHeader>
-          <Row>
             <TaxProfessionalFilter
               setData={setPendingData}
               getData={getPendingforAcceptance}
@@ -512,8 +511,9 @@ function PendingForAcceptence(props) {
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
-          </Row>
-          <Row>
+
+        </CardHeader>
+        <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 count={count}
@@ -530,7 +530,6 @@ function PendingForAcceptence(props) {
               />
             </Col>
           </Row>
-        </CardHeader>
         <CardBody>
           {loading ? (
             <Spinner color="primary" />

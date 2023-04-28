@@ -564,19 +564,20 @@ function InCompleteData({ CountIncomplete, data }) {
     <>
       <Card>
         <CardHeader>
-          <Row>
-            <TaxProfessionalFilter
-              setData={setInCompleteData}
-              getData={getInCompleteAssingment}
-              InprogressQuery="InprogressQuery"
-              setRecords={setRecords}
-              records={records}
-              index="tpquery3"
-              resetTriggerFunc={resetTriggerFunc}
-              setCount={setCount}
-            />
-          </Row>
-          <Row>
+          <TaxProfessionalFilter
+            setData={setInCompleteData}
+            getData={getInCompleteAssingment}
+            InprogressQuery="InprogressQuery"
+            setRecords={setRecords}
+            records={records}
+            index="tpquery3"
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
+          />
+
+        </CardHeader>
+        <CardBody>
+          <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 count={count}
@@ -591,8 +592,6 @@ function InCompleteData({ CountIncomplete, data }) {
               />
             </Col>
           </Row>
-        </CardHeader>
-        <CardBody>
           <DataTablepopulated
             bgColor="#55425f"
             keyField={"assign_no"}

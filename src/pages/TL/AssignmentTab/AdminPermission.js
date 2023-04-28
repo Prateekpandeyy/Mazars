@@ -915,7 +915,6 @@ function AdminPermission(props) {
     <div>
       <Card>
         <CardHeader>
-          <Row>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-inline">
               <div className="form-group mb-2">
@@ -1076,8 +1075,10 @@ function AdminPermission(props) {
               <Reset />
             </div>
           </form>
-          </Row>
-          <Row>
+        </CardHeader>
+
+        <CardBody className="card-body">
+        <Row className="mb-2">
           <Col md="12" align="right">
           <PaginatorTL
                 count={count}
@@ -1092,10 +1093,6 @@ function AdminPermission(props) {
               />
             </Col>
           </Row>
-        </CardHeader>
-
-        <CardBody className="card-body">
-          {/* <Records records={records} /> */}
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}

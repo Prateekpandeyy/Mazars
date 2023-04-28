@@ -660,7 +660,6 @@ function DeclinedProposal() {
     <>
       <Card>
         <CardHeader>
-          <Row>
             <TaxProfessionalFilter
               setData={setProposal}
               getData={getProposalList}
@@ -672,8 +671,9 @@ function DeclinedProposal() {
               setCount={setCount}
               resetTriggerFunc={resetTriggerFunc}
             />
-          </Row>
-          <Row>
+        </CardHeader>
+        <CardBody>
+        <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 setData={setProposal}
@@ -691,8 +691,6 @@ function DeclinedProposal() {
               />
             </Col>
           </Row>
-        </CardHeader>
-        <CardBody>
           <DataTablepopulated
             bgColor="#5f7b97"
             keyField={"assign_no"}

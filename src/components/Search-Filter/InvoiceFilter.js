@@ -51,11 +51,7 @@ const InvoiceFilter = (props) => {
       formData.append("to", data.p_dateTo);
       formData.append("status", data.opt);
     }
-    {
-      data.installment_no
-        ? formData.append("installment_no", data.installment_no)
-        : formData.append("installment_no", "");
-    }
+    {data.installment_no? formData.append("installment_no", data.installment_no): formData.append("installment_no", "");}
 
     // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
@@ -397,7 +393,7 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-          props.invoice === "tpcreate" ||
+          props.invoice == "tpcreate" ||
           props.invoice === "admincreate" ? (
             ""
           ) : (
@@ -446,7 +442,7 @@ const InvoiceFilter = (props) => {
             </>
           )}
 
-          <div className="col-md-6">
+          <div className="col-md-5">
             <button
               className="customBtn"
               type="submit"

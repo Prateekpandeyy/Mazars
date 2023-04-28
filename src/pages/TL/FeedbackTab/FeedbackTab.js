@@ -17,6 +17,10 @@ import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   isActive: {
@@ -57,7 +61,7 @@ function FeedbackTab() {
 
   //page counter
   const firstChunk = () => {
-    if (atPage > 1) {
+    if (atPage > 0) {
       setAtpage(1);
       setPage(1);
       getFeedback(1);
@@ -388,19 +392,27 @@ function FeedbackTab() {
                       {big}-{end} of {count}
                     </span>
                     <span className="d-flex">
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => firstChunk()}
-                      >
-                        &lt; &lt;
-                      </button>
+                      {page > 1 ? (
+                        <button
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
 
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => prevChunk()}
-                      >
-                        &lt;
-                      </button>
+                      {page > 1 ? (
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
                       <div
                         style={{
                           display: "flex",
@@ -421,18 +433,26 @@ function FeedbackTab() {
                           ))}
                         </select>
                       </div>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => nextChunk()}
-                      >
-                        &gt;
-                      </button>
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => lastChunk()}
-                      >
-                        &gt; &gt;
-                      </button>
+                      {defaultPage.length > page ? (
+                            <button
+                                className="navButton"
+                                onClick={(e) => nextChunk()}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </button>
+                        ) : (
+                            ""
+                        )}
+                      {defaultPage.length > page ? (
+                            <button
+                                className="navButton"
+                                onClick={(e) => lastChunk()}
+                            >
+                                <KeyboardDoubleArrowRightIcon />
+                            </button>
+                        ) : (
+                            ""
+                        )}
                     </span>
                   </div>
                 </div>

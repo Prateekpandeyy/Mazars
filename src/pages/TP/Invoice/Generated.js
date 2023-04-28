@@ -239,35 +239,35 @@ const Generated = () => {
 
   function headerLabelFormatter(column) {
     // let reverse = "Exp_Delivery_Date"
-    return(
+    return (
       <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+        {column.dataField === isActive ?
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  className={turnGreen === true ? classes.isActive : ""}
+                />
+              )}
+            </div>
+          )
+          :
+          (
+            <div className="d-flex text-white w-100 flex-wrap">
+              {column.text}
+              {accend === column.dataField ? (
+                <ArrowDropDownIcon />
+              ) : (
+                <ArrowDropUpIcon />
+              )}
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -379,6 +379,47 @@ const Generated = () => {
       },
     },
     {
+      text: "Payment  plan",
+      dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("tpArrowInvoice1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowInvoice1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (
+          row.paymnet_plan_code === "3" &&
+          row.sub_payment_plane === "1"
+        ) {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.paymnet_plan_code === null
+              ? ""
+              : `${row.paymnet_plan_code} ${subplan}`}
+          </>
+        );
+      },
+    },
+    {
       text: "Installment no",
       dataField: "installment_no",
       headerFormatter: headerLabelFormatter,
@@ -398,7 +439,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
 
       headerStyle: () => {
@@ -425,7 +466,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
       style: {
         fontSize: "11px",
@@ -454,7 +495,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       style: {
         fontSize: "11px",
@@ -486,7 +527,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -516,7 +557,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -554,7 +595,7 @@ const Generated = () => {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function (cell, row) {
@@ -735,27 +776,40 @@ const Generated = () => {
     <>
       <Card>
         <CardHeader>
-          <Row>
-            <InvoiceFilter
-              setData={setProposal}
-              getData={getProposalList}
-              invoice="tpgenerated"
-              panel="taxprofessional"
-              localPage="tpinvoice1"
-              setRec={setRecords}
-              records={records}
-              userid={JSON.parse(userid)}
-              setDefaultPage={setDefaultPage}
-              resetPaging={resetPaging}
-              setCount={setCount}
-              setCountNotification={setCountNotification}
-              setPage={setPage}
-              page={page}
-              setBig={setBig}
-              setEnd={setEnd}
-            />
-          </Row>
-          <Row>
+          <InvoiceFilter
+            setData={setProposal}
+            getData={getProposalList}
+            invoice="tpgenerated"
+            panel="taxprofessional"
+            localPage="tpinvoice1"
+            setRec={setRecords}
+            records={records}
+            userid={JSON.parse(userid)}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
+            setCount={setCount}
+            setCountNotification={setCountNotification}
+            setPage={setPage}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
+          />
+        </CardHeader>
+
+        <CardBody>
+          {/* <div className="tableFixHead">
+                    <BootstrapTable
+                        bootstrap4
+                        keyField="id"
+                        data={proposal}
+                        columns={columns}
+                        rowIndex
+                        rowStyle={ rowStyle2 }
+                        classes="table-responsive"
+                    />
+                    </div> */}
+
+          <Row className="mb-2">
             <Col md="12" align="right">
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
@@ -819,20 +873,6 @@ const Generated = () => {
               </div>
             </Col>
           </Row>
-        </CardHeader>
-
-        <CardBody>
-          {/* <div className="tableFixHead">
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={proposal}
-                        columns={columns}
-                        rowIndex
-                        rowStyle={ rowStyle2 }
-                        classes="table-responsive"
-                    />
-                    </div> */}
           <DataTablepopulated
             bgColor="#42566a"
             keyField="id"

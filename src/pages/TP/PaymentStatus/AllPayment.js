@@ -682,7 +682,6 @@ function AllPayment() {
     <>
       <Card>
         <CardHeader>
-          <Row>
             <TaxProfessionalFilter
               setData={setPayment}
               getData={getPaymentStatus}
@@ -693,8 +692,11 @@ function AllPayment() {
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
-          </Row>
-          <Row>
+
+        </CardHeader>
+
+        <CardBody>
+        <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 setData={setPayment}
@@ -710,9 +712,6 @@ function AllPayment() {
               />
             </Col>
           </Row>
-        </CardHeader>
-
-        <CardBody>
           <DataTablepopulated
             bgColor="#2b5f55"
             keyField={"assign_no"}
