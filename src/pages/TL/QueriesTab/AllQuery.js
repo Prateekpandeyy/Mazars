@@ -124,7 +124,7 @@ function AllQuery({ setAllQuery }) {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValue1"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq1"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
@@ -216,7 +216,7 @@ function AllQuery({ setAllQuery }) {
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery1`));
     let remainApiPath = "";
     if (searchData) {
-      remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(userid)}?cat_id=${
+      remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(userid)}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -230,7 +230,7 @@ function AllQuery({ setAllQuery }) {
     } else {
       remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(
         userid
-      )}?orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
@@ -342,7 +342,7 @@ function AllQuery({ setAllQuery }) {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -365,7 +365,7 @@ function AllQuery({ setAllQuery }) {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -388,7 +388,7 @@ function AllQuery({ setAllQuery }) {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
     },
     {
@@ -411,7 +411,7 @@ function AllQuery({ setAllQuery }) {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -443,7 +443,7 @@ function AllQuery({ setAllQuery }) {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
       formatter: function nameFormatter(cell, row) {
         return (

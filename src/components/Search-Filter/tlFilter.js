@@ -65,7 +65,7 @@ function TeamFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const [showSubCat, setShowSubCat] = useState([]);
   const [catShowData, setCatShowData] = useState([]);
-
+  const [searchResult, setSearchResult] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
   // const [big, setBig] = useState(1);
   // const [end, setEnd] = useState(50);
@@ -123,6 +123,7 @@ function TeamFilter(props) {
     localStorage.removeItem(localSorted);
     localStorage.removeItem(localPrev);
     reset();
+    setSearchResult(true);
     setSelectedData([]);
     setStore2([]);
     setStatus(1);
@@ -160,7 +161,7 @@ function TeamFilter(props) {
         });
         let subCat = JSON.parse(localStorage.getItem(`tl${parentId}`));
         setTax2(subCat);
-        subCat.map((i) => {
+        subCat?.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];
@@ -194,6 +195,11 @@ function TeamFilter(props) {
       setPage(1);
       let all = [];
       let data = res.data.result;
+      if (data.length > 0) {
+        setSearchResult(true);
+      } else {
+        setSearchResult(false);
+      }
       data.map((i) => {
         let data = {
           ...i,
@@ -956,7 +962,7 @@ function TeamFilter(props) {
                   value={showSubCat}
                   allowClear
                 >
-                  {tax2.map((p, index) => (
+                  {tax2?.map((p, index) => (
                     <Option value={p.details} key={index}>
                       {p.details}
                     </Option>
@@ -1146,67 +1152,82 @@ function TeamFilter(props) {
                 Search
               </button>
               <Reset />
-              <div className="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">
-                  Total Records : {records}
-                </label>
-              </div>
             </div>
           </form>
         </div>
       </div>
-      <Row>
-        <Col md="12" align="right">
-          <div className="customPagination">
-            <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-              <span className="customPaginationSpan">
-                {big}-{end} of {countNotification}
-              </span>
-              <span className="d-flex">
-                {page > 1 ? (
-                  <>
-                    <button className="navButton" onClick={(e) => firstChunk()}>
-                      <KeyboardDoubleArrowLeftIcon />
-                    </button>
-                    <button className="navButton" onClick={(e) => prevChunk()}>
-                      <KeyboardArrowLeftIcon />
-                    </button>
-                  </>
-                ) : (
-                  ""
-                )}
-                <div className="navButtonSelectDiv">
-                  <select
-                    value={page}
-                    onChange={(e) => {
-                      setPage(Number(e.target.value));
-                      getData(Number(e.target.value));
-                      localStorage.setItem(pageValue, e.target.value);
-                    }}
-                    className="form-control"
-                  >
-                    {defaultPage?.map((i) => (
-                      <option value={i}>{i}</option>
-                    ))}
-                  </select>
-                </div>
-                {defaultPage?.length > page ? (
-                  <>
-                    <button className="navButton" onClick={(e) => nextChunk()}>
-                      <KeyboardArrowRightIcon />
-                    </button>
-                    <button className="navButton" onClick={(e) => lastChunk()}>
-                      <KeyboardDoubleArrowRightIcon />
-                    </button>
-                  </>
-                ) : (
-                  ""
-                )}
-              </span>
+      {searchResult === true ? (
+        <Row>
+          <Col md="12" align="right">
+            <div className="customPagination">
+              <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <span className="customPaginationSpan">
+                  {big}-{end} of {countNotification}
+                </span>
+                <span className="d-flex">
+                  {page > 1 ? (
+                    <>
+                      <button
+                        className="navButton"
+                        onClick={(e) => firstChunk()}
+                      >
+                        <KeyboardDoubleArrowLeftIcon />
+                      </button>
+                      <button
+                        className="navButton"
+                        onClick={(e) => prevChunk()}
+                      >
+                        <KeyboardArrowLeftIcon />
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div className="navButtonSelectDiv">
+                    <select
+                      value={page}
+                      onChange={(e) => {
+                        setPage(Number(e.target.value));
+                        getData(Number(e.target.value));
+                        localStorage.setItem(pageValue, e.target.value);
+                      }}
+                      className="form-control"
+                    >
+                      {defaultPage?.map((i) => (
+                        <option value={i}>{i}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {defaultPage?.length > page ? (
+                    <>
+                      <button
+                        className="navButton"
+                        onClick={(e) => nextChunk()}
+                      >
+                        <KeyboardArrowRightIcon />
+                      </button>
+                      <button
+                        className="navButton"
+                        onClick={(e) => lastChunk()}
+                      >
+                        <KeyboardDoubleArrowRightIcon />
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </span>
+              </div>
             </div>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      ) : (
+        <Row>
+          <Col md="12" align="right">
+            <span className="customPaginationSpan">0 - 0 of 0</span>
+          </Col>
+        </Row>
+      )}
     </>
   );
 }

@@ -77,20 +77,20 @@ function InprogressProposal() {
     );
   }
   useEffect(() => {
-    let localPage = Number(localStorage.getItem("tlpro4"));
+    let localPage = Number(localStorage.getItem("tlpro2"));
     if (!localPage) {
       localPage = 1;
     }
-    setAccend(localStorage.getItem("accendtlpro4"));
-    setPrev(localStorage.getItem("prevtlpro4"));
+    setAccend(localStorage.getItem("accendtlpro2"));
+    setPrev(localStorage.getItem("prevtlpro2"));
 
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpro4"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpro2"));
     if (!sortVal) {
       let sort = {
         orderBy: 0,
         fieldBy: 0,
       };
-      localStorage.setItem("sortedValuetlpro4", JSON.stringify(sort));
+      localStorage.setItem("sortedValuetlpro2", JSON.stringify(sort));
     }
 
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
@@ -145,7 +145,7 @@ function InprogressProposal() {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro4"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro2"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
@@ -560,12 +560,7 @@ function InprogressProposal() {
         }
         sortMessage(val, 9);
       },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
+
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.ProposedAmount;

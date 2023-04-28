@@ -96,7 +96,7 @@ function CompletedQuery({ updateTab }) {
       localPage = 1;
     }
     setAccend(localStorage.getItem("accendtlq4"));
-    setPrev(localStorage.getItem("prevtlq3"));
+    setPrev(localStorage.getItem("prevtlq4"));
 
     let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq2"));
     if (!sortVal) {
@@ -104,7 +104,7 @@ function CompletedQuery({ updateTab }) {
         orderBy: 0,
         fieldBy: 0,
       };
-      localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
+      localStorage.setItem("sortedValuetlq4", JSON.stringify(sort));
     }
 
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
@@ -143,7 +143,7 @@ function CompletedQuery({ updateTab }) {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValue4"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq4"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
@@ -221,10 +221,10 @@ function CompletedQuery({ updateTab }) {
       orderBy: val,
       fieldBy: field,
     };
-    localStorage.setItem("tlqp3", 1);
-    localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
+    localStorage.setItem("tlqp4", 1);
+    localStorage.setItem("sortedValuetlq4", JSON.stringify(sort));
 
-    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery3`));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery4`));
     let remainApiPath = "";
     if (searchData) {
       remainApiPath = `/tl/pendingAllocation?id=${JSON.parse(

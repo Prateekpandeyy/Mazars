@@ -142,7 +142,7 @@ function AcceptedProposal() {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpro3"));
     if (sortVal) {
       orderBy = sortVal.orderBy;
       fieldBy = sortVal.fieldBy;
@@ -169,52 +169,50 @@ function AcceptedProposal() {
       )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
 
-    if (!searchData) {
-      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          let droppage = [];
-          let data = res.data.result;
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let droppage = [];
+        let data = res.data.result;
 
-          setCountNotification(res.data.total);
-          setRecords(res.data.total);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposal(all);
-          setRecords(res.data.result.length);
-          let end = e * allEnd;
-
-          if (end > res.data.total) {
-            end = res.data.total;
-          }
-          let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-          let rem = (e - 1) * allEnd;
-
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+        setCountNotification(res.data.total);
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
-    }
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposal(all);
+        setRecords(res.data.result.length);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   const columns = [
@@ -598,8 +596,8 @@ function AcceptedProposal() {
       orderBy: val,
       fieldBy: field,
     };
-    localStorage.setItem("tlprot1", 1);
-    localStorage.setItem("sortedValuepro1", JSON.stringify(sort));
+    localStorage.setItem("tlprot3", 1);
+    localStorage.setItem("sortedValuetlpro3", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
     if (searchData) {
       remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
