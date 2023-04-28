@@ -21,6 +21,7 @@ function PaginatorTL(props) {
     const [pageno, setPageno] = useState(1);
     const [defaultPage, setDefaultPage] = useState(["1"]);
     const [result, setResult] = useState([]);
+    const [searchResult, setSearchResult] = useState(true);
 
 
     const token = window.localStorage.getItem("tlToken");
@@ -263,7 +264,7 @@ function PaginatorTL(props) {
                     userid
                 )}&assignment_status=Delivery_of_report&stages_status=1`
             }
-        } else if (tlAsAdminPermission =="tlAsAdminPermission") {
+        } else if (tlAsAdminPermission == "tlAsAdminPermission") {
             let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
             let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment4"));
             let val = pagetry?.val;
@@ -347,6 +348,11 @@ function PaginatorTL(props) {
                             for (let i = 1; i <= dynamicPage; i++) {
                                 droppage.push(i);
                             }
+                            if (data.length > 0) {
+                                setSearchResult(true);
+                            } else {
+                                setSearchResult(false);
+                            }
                             setDefaultPage(droppage);
                         } else {
                             setResult(res.data.result)
@@ -369,6 +375,11 @@ function PaginatorTL(props) {
                             setTotalPages(dynamicPage)
                             let rem = (e - 1) * allEnd;
                             let end = e * allEnd;
+                            if (data.length > 0) {
+                                setSearchResult(true);
+                            } else {
+                                setSearchResult(false);
+                            }
                             if (dynamicPage > 1) {
                                 if (e == 1) {
                                     setBig(rem + e);
@@ -429,17 +440,22 @@ function PaginatorTL(props) {
                 setting(1);
             }
         }
+        if (count == 0) {
+            setSearchResult(false);
+        } else {
+            setSearchResult(true);
+        }
     }, [count]);
 
     return (
         <div className="customPagination">
-            <div className="customPagination">
+            {searchResult === true ? (
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                     <span className="customPaginationSpan">
                         {big}-{end} of {count}
                     </span>
                     <span className="d-flex">
-                    {page > 1 ? (
+                        {page > 1 ? (
                             <button
                                 className="navButton"
                                 onClick={(e) => firstChunk()}
@@ -494,12 +510,17 @@ function PaginatorTL(props) {
                         )}
                     </span>
                 </div>
-            </div>
+            ) : (
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan nullClass">
+                        0 - 0 of 0
+                    </span>
+                </div>
+            )}
         </div>
+
+
     )
-
-
-
 }
 
 

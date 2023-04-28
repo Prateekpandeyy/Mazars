@@ -21,6 +21,7 @@ function Paginator(props) {
     const [pageno, setPageno] = useState(1);
     const [defaultPage, setDefaultPage] = useState(["1"]);
     const [result, setResult] = useState([]);
+    const [searchResult, setSearchResult] = useState(true);
 
     const userid = window.localStorage.getItem("tpkey");
     const token = window.localStorage.getItem("tptoken");
@@ -804,6 +805,11 @@ function Paginator(props) {
                             });
                             setData(all);
                             console.log(all);
+                            if (data.length > 0) {
+                                setSearchResult(true);
+                            } else {
+                                setSearchResult(false);
+                            }
                             setOnPage(e);
                             setAtpage(e);
                             // setRecords(res.data.result.length);
@@ -848,6 +854,11 @@ function Paginator(props) {
                                 all.push(data);
                             });
                             setData(all);
+                            if (data.length > 0) {
+                                setSearchResult(true);
+                            } else {
+                                setSearchResult(false);
+                            }
                             console.log(all);
                             setOnPage(e);
                             setAtpage(e);
@@ -898,9 +909,10 @@ function Paginator(props) {
         if (resetTrigger == true) {
             setPage(1);
             setAtpage(1);
-            setting(1)
+            setting(1);
             setresetTrigger(!resetTrigger);
         }
+        // setSearchResult(true);
     }, [resetTrigger]);
 
     useEffect(() => {
@@ -918,10 +930,16 @@ function Paginator(props) {
                 setting(1);
             }
         }
+        if (count == 0){
+            setSearchResult(false);
+        }else{
+            setSearchResult(true);
+        }
     }, [count]);
 
     return (
-            <div className="customPagination">
+        <div className="customPagination">
+            {searchResult === true ? (
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                     <span className="customPaginationSpan">
                         {big}-{end} of {count}
@@ -982,7 +1000,14 @@ function Paginator(props) {
                         )}
                     </span>
                 </div>
-            </div>
+            ) : (
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan nullClass">
+                    0 - 0 of 0
+                    </span>
+                </div>
+            )}
+        </div>
     )
 }
 
