@@ -247,7 +247,7 @@ function Message(props) {
     }
   };
   const prevChunk = () => {
-    if (atPage < (defaultPage.at(-1))) {
+    if (atPage <= (defaultPage.at(-1))) {
       setAtpage((atPage) => atPage - 1);
       setPage(Number(page) - 1);
       getMessage(Number(page) - 1);
