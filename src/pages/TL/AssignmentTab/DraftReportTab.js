@@ -46,7 +46,7 @@ function AssignmentTab() {
   const classes = useStyles();
   const [onPage, setOnPage] = useState(1);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -122,7 +122,8 @@ function AssignmentTab() {
       setTax2(JSON.parse(localStorage.getItem("Direct tax")));
     } else if (selectedData == 2) {
       setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
-    } else { }
+    } else {
+    }
   }, [selectedData]);
 
   const uploadDraftReport = (id) => {
@@ -138,9 +139,9 @@ function AssignmentTab() {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
   }, [draftModal]);
 
   const ViewDiscussionToggel = (key) => {
@@ -152,7 +153,7 @@ function AssignmentTab() {
   };
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tlAssignment2"));
-    let arrow = localStorage.getItem("tlArrowAs2")
+    let arrow = localStorage.getItem("tlArrowAs2");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
@@ -191,41 +192,34 @@ function AssignmentTab() {
       remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
         userid
       )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`;
-    }
-    else {
+    } else {
       remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
         userid
       )}&assignment_status=Draft_Report&stages_status=1`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          setRecords(res.data.result.length);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data?.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setAssignment(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setRecords(res.data.result.length);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
-
+        data?.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setAssignment(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      }
+    });
   };
 
   //handleSubCategory
@@ -295,35 +289,31 @@ function AssignmentTab() {
   function headerLabelFormatter(column) {
     return (
       <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+        {column.dataField === isActive ? (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropDownIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon />
+            ) : (
+              <ArrowDropDownIcon />
+            )}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 
   const sortMessage = (val, field) => {
@@ -334,43 +324,37 @@ function AssignmentTab() {
       // pageno: pageno,
       val: val,
       field: field,
-    }
-    localStorage.setItem(`tl`, JSON.stringify(1))
+    };
+    localStorage.setItem(`tl`, JSON.stringify(1));
     localStorage.setItem(`freezetl`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatl"));
     if (data) {
-      remainApiPath = ` `
-    }
-    else {
+      remainApiPath = ` `;
+    } else {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
         userid
-      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result?.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setAssignment(all);
-          setRecords(res.data.result.length);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
-  }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result?.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setAssignment(all);
+        setRecords(res.data.result.length);
+        setCount(res.data.total);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
+  };
 
   //columns
   const columns = [
@@ -725,9 +709,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                    row.draft_report == "inprogress" &&
-                    row.final_discussion == "inprogress" &&
-                    row.paid_status != 2 ? (
+                  row.draft_report == "inprogress" &&
+                  row.final_discussion == "inprogress" &&
+                  row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -807,59 +791,59 @@ function AssignmentTab() {
     }
     localStorage.setItem(`searchDatatlAssignment2`, JSON.stringify(obj));
 
-
-
     if (data.route) {
       if (pagetry) {
-        remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
-          }&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
+          userid
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+          data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
-          }&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}`
+        remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
+          userid
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${
+          data.pcatId
+        }&qno=${data.query_no}`;
       }
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              let data = res.data.result;
-              setRecords(res.data.result.length);
-              let all = [];
-              let customId = 1;
-              if (e > 1) {
-                customId = allEnd * (e - 1) + 1;
-              }
-              data?.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setAssignment(all);
-              setRecords(res.data.result.length);
-              setTurnGreen(true);
-              setCount(res.data.total);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setLoading(false);
+          if (res.data.result) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
             }
+            data?.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignment(all);
+            setRecords(res.data.result.length);
+            setTurnGreen(true);
+            setCount(res.data.total);
           }
-        });
-    }
-    else {
+        }
+      });
+    } else {
       axios
         .get(
           `${baseUrl}/tl/getAssignments?page=1&tl_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
           }`,
           myConfig
         )

@@ -44,7 +44,7 @@ function Message(props) {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
@@ -69,41 +69,37 @@ function Message(props) {
   function headerLabelFormatter(column) {
     return (
       <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+        {column.dataField === isActive ? (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropDownIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon />
+            ) : (
+              <ArrowDropDownIcon />
+            )}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 
   const getMessage = (e) => {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlMsg"));
-    localStorage.setItem(`tlMsg`, JSON.stringify(e))
+    localStorage.setItem(`tlMsg`, JSON.stringify(e));
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -112,55 +108,52 @@ function Message(props) {
 
     if (e) {
       if (pagetry) {
-        remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}&orderby=${val}&orderbyfield=${field}`
+        remainApiPath = `tl/getNotification?id=${JSON.parse(
+          userId
+        )}&page=${e}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}`
+        remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}`;
       }
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          let droppage = [];
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setQuery(all);
-
-            setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / allEnd);
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else if ((e == (dynamicPage))) {
-              setBig(rem + 1);
-              setEnd(res.data.total);
-              // console.log("e at last page");
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
-            }
-            setDefaultPage(droppage);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setQuery(all);
+
+          setCountNotification(res.data.total);
+          let dynamicPage = Math.round(res.data.total / allEnd);
+          let rem = (e - 1) * allEnd;
+          let end = e * allEnd;
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else if (e == dynamicPage) {
+            setBig(rem + 1);
+            setEnd(res.data.total);
+            // console.log("e at last page");
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
     }
   };
 
@@ -172,8 +165,8 @@ function Message(props) {
       // pageno: pageno,
       val: val,
       field: field,
-    }
-    localStorage.setItem(`tlMsg`, JSON.stringify(1))
+    };
+    localStorage.setItem(`tlMsg`, JSON.stringify(1));
     localStorage.setItem(`freezetlMsg`, JSON.stringify(obj));
 
     axios
@@ -212,19 +205,17 @@ function Message(props) {
     // setPage(e);
     const dynamicPage = Math.ceil(count / allEnd);
     console.log(dynamicPage, "to check dynamic page");
-    setTotalPages(dynamicPage)
+    setTotalPages(dynamicPage);
     let rem = (e - 1) * allEnd;
     let end = e * allEnd;
     if (dynamicPage > 1) {
       if (e == 1) {
         setBig(rem + e);
         setEnd(allEnd);
-      }
-      else if ((e == (dynamicPage))) {
+      } else if (e == dynamicPage) {
         setBig(rem + 1);
         setEnd(count);
-      }
-      else {
+      } else {
         setBig(rem + 1);
         setEnd(end);
       }
@@ -236,7 +227,7 @@ function Message(props) {
       droppage.push(i);
     }
     setDefaultPage(droppage);
-  }
+  };
 
   //page counter
   const firstChunk = () => {
@@ -247,25 +238,24 @@ function Message(props) {
     }
   };
   const prevChunk = () => {
-    if (atPage <= (defaultPage.at(-1))) {
+    if (atPage <= defaultPage.at(-1)) {
       setAtpage((atPage) => atPage - 1);
       setPage(Number(page) - 1);
       getMessage(Number(page) - 1);
     }
-
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (defaultPage.at(-1)))) {
+    if (atPage > 0 && atPage < defaultPage.at(-1)) {
       setAtpage((atPage) => atPage + 1);
       setPage(Number(page) + 1);
       getMessage(Number(page) + 1);
     }
   };
   const lastChunk = () => {
-    if (atPage < (defaultPage.at(-1))) {
+    if (atPage < defaultPage.at(-1)) {
       setPage(defaultPage.at(-1));
       getMessage(defaultPage.at(-1));
-      setAtpage((defaultPage.at(-1)));
+      setAtpage(defaultPage.at(-1));
     }
   };
 
@@ -394,8 +384,8 @@ function Message(props) {
   const readNotification = (id) => {
     axios
       .get(`${baseUrl}/tl/markReadNotification?id=${id}`, myConfig)
-      .then(function (response) { })
-      .catch((error) => { });
+      .then(function (response) {})
+      .catch((error) => {});
   };
 
   return (
@@ -463,25 +453,25 @@ function Message(props) {
                       </select>
                     </div>
                     {defaultPage.length > page ? (
-                            <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                        ) : (
-                            ""
-                        )}
+                      <button
+                        className="navButton"
+                        onClick={(e) => nextChunk()}
+                      >
+                        <KeyboardArrowRightIcon />
+                      </button>
+                    ) : (
+                      ""
+                    )}
                     {defaultPage.length > page ? (
-                            <button
-                                className="navButton"
-                                onClick={(e) => lastChunk()}
-                            >
-                                <KeyboardDoubleArrowRightIcon />
-                            </button>
-                        ) : (
-                            ""
-                        )}
+                      <button
+                        className="navButton"
+                        onClick={(e) => lastChunk()}
+                      >
+                        <KeyboardDoubleArrowRightIcon />
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>

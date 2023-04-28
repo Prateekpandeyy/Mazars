@@ -61,11 +61,11 @@ function AllQuery({ setAllQuery }) {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("accendtlq1") === column.dataField ? (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -426,6 +426,7 @@ function AllQuery({ setAllQuery }) {
     },
     {
       text: "Status",
+      dataField: "status",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
