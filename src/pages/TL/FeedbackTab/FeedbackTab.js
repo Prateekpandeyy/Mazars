@@ -170,11 +170,11 @@ function FeedbackTab() {
             <div className="d-flex text-white w-100 flex-wrap">
               {column.text}
               {accend === column.dataField ? (
-                <ArrowDropDownIcon
+                <ArrowDropUpIcon
                   className={turnGreen === true ? classes.isActive : ""}
                 />
               ) : (
-                <ArrowDropUpIcon
+                <ArrowDropDownIcon
                   className={turnGreen === true ? classes.isActive : ""}
                 />
               )}
@@ -185,9 +185,9 @@ function FeedbackTab() {
             <div className="d-flex text-white w-100 flex-wrap">
               {column.text}
               {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
                 <ArrowDropUpIcon />
+              ) : (
+                <ArrowDropDownIcon />
               )}
             </div>
           )
