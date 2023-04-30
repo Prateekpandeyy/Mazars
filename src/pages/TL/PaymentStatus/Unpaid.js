@@ -309,7 +309,7 @@ function AllPayment() {
     } else {
       remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
-      )}&orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}&status=1`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {

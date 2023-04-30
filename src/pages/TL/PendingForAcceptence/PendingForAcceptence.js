@@ -477,7 +477,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         if (response.data.code === 1) {
           setLoading(false);
           Alerts.SuccessNormal("Query accepted successfully.");
-          getPendingforAcceptance();
+          getPendingforAcceptance(1);
           updateTab(2);
         } else if (response.data.code === 0) {
           setLoading(false);

@@ -495,7 +495,8 @@ function AllPayment({ setAllPayment }) {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "paid_status",
+      sort: true,
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {
@@ -595,7 +596,9 @@ function AllPayment({ setAllPayment }) {
       text: "Outstanding amount",
       dataField: "amount_outstanding",
       sort: true,
-
+      headerStyle: () => {
+        return { width: "135px" };
+      },
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {

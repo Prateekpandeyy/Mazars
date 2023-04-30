@@ -161,13 +161,15 @@ function TeamFilter(props) {
         });
         let subCat = JSON.parse(localStorage.getItem(`tl${parentId}`));
         setTax2(subCat);
-        subCat?.map((i) => {
-          if (dk.store.includes(i.id)) {
-            setShowSubCat((payload) => {
-              return [...payload, i.details];
-            });
-          }
-        });
+        if (subCat && subCat.length > 0) {
+          subCat?.map((i) => {
+            if (dk.store.includes(i.id)) {
+              setShowSubCat((payload) => {
+                return [...payload, i.details];
+              });
+            }
+          });
+        }
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -758,12 +760,9 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -802,7 +801,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=1&pcat_id=${selectedData}&qno=${
@@ -852,7 +851,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&status=2&pcat_id=${selectedData}&qno=${
