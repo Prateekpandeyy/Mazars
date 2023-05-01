@@ -506,7 +506,7 @@ function InprogressProposal() {
     {
       text: "Status",
       headerFormatter: headerLabelFormatter,
-
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {

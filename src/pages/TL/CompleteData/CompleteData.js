@@ -153,7 +153,7 @@ function CompletedQuery({ updateTab }) {
     if (searchData) {
       remainApiPath = `/tl/pendingAllocation?id=${JSON.parse(
         userid
-      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -167,54 +167,53 @@ function CompletedQuery({ updateTab }) {
     } else {
       remainApiPath = `tl/pendingAllocation?id=${JSON.parse(
         userid
-      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
-    if (!searchData) {
-      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          let droppage = [];
-          let data = res.data.result;
 
-          setCountNotification(res.data.total);
-          setRecords(res.data.total);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setInCompleteData(all);
-          setRecords(res.data.result.length);
-          let end = e * allEnd;
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let droppage = [];
+        let data = res.data.result;
 
-          if (end > res.data.total) {
-            end = res.data.total;
-          }
-          let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-          let rem = (e - 1) * allEnd;
-
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+        setCountNotification(res.data.total);
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
-    }
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setInCompleteData(all);
+        setRecords(res.data.result.length);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
   const sortMessage = (val, field) => {
     let sort = {
@@ -225,11 +224,12 @@ function CompletedQuery({ updateTab }) {
     localStorage.setItem("sortedValuetlq4", JSON.stringify(sort));
 
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery4`));
+    console.log("searchData", searchData);
     let remainApiPath = "";
     if (searchData) {
       remainApiPath = `/tl/pendingAllocation?id=${JSON.parse(
         userid
-      )}&status=1&orderby=${val}&orderbyfield=${field}&cat_id=${
+      )}&orderby=${val}&orderbyfield=${field}&cat_id=${
         searchData.store
       }&from=${searchData.fromDate
         ?.split("-")
@@ -237,13 +237,11 @@ function CompletedQuery({ updateTab }) {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
     } else {
       remainApiPath = `tl/pendingAllocation?id=${JSON.parse(
         userid
-      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
@@ -566,7 +564,7 @@ function CompletedQuery({ updateTab }) {
             defaultPage={defaultPage}
             setDefaultPage={setDefaultPage}
             pageValue="tlqp4"
-            index="searchDatatlquery4"
+            index="tlquery4"
             localAccend="accendtlq4"
             localPrev="prevtlq4"
             localSorted="sortedValuetlq4"
