@@ -757,18 +757,9 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-<<<<<<< HEAD
-              .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
-=======
               .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
               data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
->>>>>>> d7c0320373e268176b5a86255d27a7d46ca58e59
             myConfig
           )
           .then((res) => {
