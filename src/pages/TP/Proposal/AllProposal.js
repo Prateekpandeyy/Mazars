@@ -353,7 +353,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -376,7 +376,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -399,7 +399,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
 
       formatter: function paymentPlan(cell, row) {
@@ -441,7 +441,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -472,7 +472,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -502,7 +502,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -544,7 +544,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -574,7 +574,7 @@ function AllProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
 
       formatter: function nameFormatter(cell, row) {

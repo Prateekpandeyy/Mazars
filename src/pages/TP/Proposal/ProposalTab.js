@@ -46,7 +46,6 @@ function ProposalTab(props) {
   };
   const myStyle2 = {
     margin: "10px auto",
-
     color: "#42566a",
     fontSize: "18px",
     cursor: "pointer",

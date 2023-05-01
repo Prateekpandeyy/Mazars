@@ -374,12 +374,12 @@ function InprogressProposal() {
           localStorage.removeItem("tpArrowProposal2");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -397,17 +397,37 @@ function InprogressProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tpArrowProposal2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tpArrowProposal2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
@@ -443,12 +463,12 @@ function InprogressProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -474,12 +494,12 @@ function InprogressProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -504,12 +524,12 @@ function InprogressProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -544,12 +564,12 @@ function InprogressProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -574,12 +594,12 @@ function InprogressProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 10);
       },
 
       formatter: function nameFormatter(cell, row) {

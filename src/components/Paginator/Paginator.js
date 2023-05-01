@@ -82,19 +82,13 @@ function Paginator(props) {
     const renderCheck = () => {
         console.log("render being");
         if (index === "tpquery1") {
-            console.log(JSON.parse(localStorage.getItem("tpQuery1")), "from storage one");
             setPageno(JSON.parse(localStorage.getItem("tpQuery1")))
-            console.log(pageno, "in all Q render check");
         }
         else if (index === "tpquery2") {
-            console.log(JSON.parse(localStorage.getItem("tpQuery2")), "from storage two");
             setPageno(JSON.parse(localStorage.getItem("tpQuery2")))
-            console.log(pageno, "in PendingForAccept render check");
         }
         else if (index === "tpquery3") {
-            console.log(JSON.parse(localStorage.getItem("tpQuery3")), "from storage three");
             setPageno(JSON.parse(localStorage.getItem("tpQuery3")))
-            console.log(pageno, "in inCompQ render check");
         }
         else if (index === "tpproposal1") {
             setPageno(JSON.parse(localStorage.getItem("tpProposal1")))
@@ -124,7 +118,6 @@ function Paginator(props) {
             setPageno(JSON.parse(localStorage.getItem("tpInvoice2")))
         }
         else if (index === "tpAssignment1") {
-            // tpAssignment1
             setPageno(JSON.parse(localStorage.getItem("tpAssignment1")))
         }
         else if (index === "tpAssignment2") {

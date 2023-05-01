@@ -373,7 +373,7 @@ function InCompleteData({ CountIncomplete, data }) {
           localStorage.removeItem("tpArrowQuery3");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -400,7 +400,7 @@ function InCompleteData({ CountIncomplete, data }) {
           localStorage.removeItem("tpArrowQuery3");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -425,7 +425,7 @@ function InCompleteData({ CountIncomplete, data }) {
           console.log("This is sorting 2");
           localStorage.removeItem("tpArrowQuery3");
         }
-        if (order === "asc") {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -449,7 +449,7 @@ function InCompleteData({ CountIncomplete, data }) {
           localStorage.removeItem("tpArrowQuery1");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -481,7 +481,7 @@ function InCompleteData({ CountIncomplete, data }) {
           localStorage.removeItem("tpArrowQuery1");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

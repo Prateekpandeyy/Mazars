@@ -390,7 +390,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -413,7 +413,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -436,7 +436,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -467,7 +467,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function (cell, row) {
@@ -502,7 +502,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       sortFunc: (a, b, order, dataField) => {
@@ -539,7 +539,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       sortFunc: (a, b, order, dataField) => {
@@ -576,7 +576,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
 
       sortFunc: (a, b, order, dataField) => {
@@ -613,7 +613,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
 
       formatter: function dateFormat(cell, row) {
