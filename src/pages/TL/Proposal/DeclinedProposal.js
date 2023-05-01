@@ -386,6 +386,7 @@ function DeclinedProposal() {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {
@@ -460,7 +461,9 @@ function DeclinedProposal() {
       dataField: "cust_accept_date",
       sort: true,
       headerFormatter: headerLabelFormatter,
-
+      headerStyle: () => {
+        return { width: "130px" };
+      },
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
@@ -488,25 +491,7 @@ function DeclinedProposal() {
     },
     {
       text: "Status",
-      headerFormatter: headerLabelFormatter,
 
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendtlpro4", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendtlpro4");
-        }
-
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 8);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>

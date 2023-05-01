@@ -337,7 +337,7 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -379,7 +379,7 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -420,7 +420,7 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -462,7 +462,7 @@ function TeamFilter(props) {
             }&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${data.toDate
+              .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
               .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
@@ -548,12 +548,9 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
-              data.query_no
-            }`,
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -859,7 +856,6 @@ function TeamFilter(props) {
     }
   };
 
-
   const Reset = () => {
     return (
       <>
@@ -907,11 +903,11 @@ function TeamFilter(props) {
   };
 
   useEffect(() => {
-    if (countNotification == 0){
+    if (countNotification == 0) {
       setSearchResult(false);
-  }else{
+    } else {
       setSearchResult(true);
-  }
+    }
   }, [countNotification]);
 
   // console.log("selectedData", selectedData);
