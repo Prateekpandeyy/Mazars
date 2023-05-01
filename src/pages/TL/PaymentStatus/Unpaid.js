@@ -303,9 +303,9 @@ function AllPayment() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&&status=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
     } else {
       remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
