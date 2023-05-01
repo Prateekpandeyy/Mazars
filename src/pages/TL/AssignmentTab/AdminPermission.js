@@ -327,8 +327,8 @@ function AdminPermission(props) {
       val: val,
       field: field,
     };
-    localStorage.setItem(`tl`, JSON.stringify(1));
-    localStorage.setItem(`freezetl`, JSON.stringify(obj));
+    localStorage.setItem(`tlAssignment4`, JSON.stringify(1));
+    localStorage.setItem(`freezetlAssignment4`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
     if (data) {
       if (data?.stage_status?.length > 0) {

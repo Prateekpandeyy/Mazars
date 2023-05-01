@@ -343,12 +343,12 @@ const columns = [
         localStorage.removeItem("tpArrowQuery1");
       }
 
-      if (accend === true) {
+      if (accend === field) {
         val = 0;
       } else {
         val = 1;
       }
-      sortMessage(val, 3);
+      sortMessage(val, 2);
     },
   },
   {
@@ -366,12 +366,12 @@ const columns = [
         setAccend("");
         localStorage.removeItem("tpArrowQuery1");
       }
-      if (accend === true) {
+      if (accend === field) {
         val = 0;
       } else {
         val = 1;
       }
-      sortMessage(val, 4);
+      sortMessage(val, 3);
     },
   },
   {
@@ -389,12 +389,12 @@ const columns = [
         setAccend("");
         localStorage.removeItem("tpArrowQuery1");
       }
-      if (order === "asc") {
+      if (accend === field) {
         val = 0;
       } else {
         val = 1;
       }
-      sortMessage(val, 5);
+      sortMessage(val, 4);
     },
   },
   {
@@ -416,12 +416,12 @@ const columns = [
         localStorage.removeItem("tpArrowQuery1");
       }
 
-      if (accend === true) {
+      if (accend === field) {
         val = 0;
       } else {
         val = 1;
       }
-      sortMessage(val, 6);
+      sortMessage(val, 5);
     },
     formatter: function dateFormat(cell, row) {
       var oldDate = row.Exp_Delivery_Date;
@@ -449,12 +449,12 @@ const columns = [
         localStorage.removeItem("tpArrowQuery1");
       }
 
-      if (accend === true) {
+      if (accend === field) {
         val = 0;
       } else {
         val = 1;
       }
-      sortMessage(val, 7);
+      sortMessage(val, 6);
     },
 
     formatter: function nameFormatter(cell, row) {
