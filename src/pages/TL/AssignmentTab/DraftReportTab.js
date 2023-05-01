@@ -447,7 +447,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -470,7 +470,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -493,7 +493,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 5);
       },
 
       headerStyle: () => {
@@ -592,7 +592,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -623,7 +623,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {

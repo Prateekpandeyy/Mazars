@@ -313,7 +313,7 @@ function AssignmentTab(props) {
       if (data?.stage_status?.length > 0) {
         remainApiPath = `tl/getAssignments?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        remainApiPath = `tl/getAssignments?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+        remainApiPath = `tl/getAssignments?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       }
     } else {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
@@ -432,7 +432,7 @@ function AssignmentTab(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -455,7 +455,7 @@ function AssignmentTab(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -478,7 +478,7 @@ function AssignmentTab(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
 
       headerStyle: () => {
@@ -577,7 +577,7 @@ function AssignmentTab(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -617,7 +617,7 @@ function AssignmentTab(props) {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
     },
 

@@ -201,13 +201,13 @@ function PaginatorTL(props) {
                 if (data?.stage_status?.length > 0) {
                     remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 } else {
-                    remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+                    remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 }
             } else if ((data) && (!pagetry)) {
                 if (data?.stage_status?.length > 0) {
                     remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
                 } else {
-                    remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                    remainApiPath = `tl/getAssignments?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
                 }
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
@@ -274,13 +274,13 @@ function PaginatorTL(props) {
                 if (data?.assignment_status?.length > 0) {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 } else {
-                    remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+                    remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
                 }
             } else if ((data) && (!pagetry)) {
                 if (data?.stage_status?.length > 0) {
                     remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
                 } else {
-                    remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
+                    remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`
                 }
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
