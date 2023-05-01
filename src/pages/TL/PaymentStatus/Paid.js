@@ -160,7 +160,7 @@ function AllPayment() {
     let remainApiPath = "";
 
     if (searchData) {
-      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
+      remainApiPath = `/tl/getUploadedProposals?uid=${JSON.parse(
         userid
       )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
         searchData.store
@@ -174,7 +174,7 @@ function AllPayment() {
         searchData?.query_no
       }`;
     } else {
-      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
+      remainApiPath = `/tl/getUploadedProposals?uid=${JSON.parse(
         userid
       )}&page=${e}&status=2&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -643,6 +643,7 @@ function AllPayment() {
     localStorage.setItem("tlprot1", 1);
     localStorage.setItem("sortedValuetlpay2", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlpayment2`));
+
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
@@ -654,13 +655,13 @@ function AllPayment() {
         .join("-")}&to=${searchData.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status1=${searchData?.p_status}&pcat_id=${
-        searchData.pcatId
-      }&qno=${searchData?.query_no}`;
+        .join("-")}&status=2&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
     } else {
       remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
-      )}&orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}&status=1`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {

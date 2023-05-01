@@ -49,7 +49,7 @@ function RejectedModal({
         if (response.data.code === 1) {
           setLoading(false);
           Alerts.SuccessNormal("Query rejected successfully.");
-          getPendingforAcceptance();
+          getPendingforAcceptance(1);
           rejectHandler();
         } else if (response.data.code === 0) {
           setLoading(false);

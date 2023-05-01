@@ -284,14 +284,14 @@ function AllPayment() {
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-
+    console.log("searchData", val);
     let sort = {
       orderBy: val,
       fieldBy: field,
     };
     localStorage.setItem("tlprot1", 1);
     localStorage.setItem("sortedValuepay3", JSON.stringify(sort));
-    let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlpayment3`));
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
@@ -309,7 +309,7 @@ function AllPayment() {
     } else {
       remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
         userid
-      )}&orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}&status=1`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {

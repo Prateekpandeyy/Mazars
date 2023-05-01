@@ -19,7 +19,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
-    color: "#fff",
+    color: "#fff;",
     margin: "0px 10px",
   },
 }));
@@ -337,7 +337,7 @@ function AcceptedProposal() {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
       headerFormatter: headerLabelFormatter,
-
+      sort: true,
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
@@ -410,7 +410,9 @@ function AcceptedProposal() {
       dataField: "cust_accept_date",
       sort: true,
       headerFormatter: headerLabelFormatter,
-
+      headerStyle: () => {
+        return { width: "100px" };
+      },
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {
@@ -438,25 +440,7 @@ function AcceptedProposal() {
     },
     {
       text: "Status",
-      headerFormatter: headerLabelFormatter,
 
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendtlpro3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendtlpro3");
-        }
-
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 8);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>

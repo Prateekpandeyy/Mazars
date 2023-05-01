@@ -166,7 +166,7 @@ function AllPayment({ setAllPayment }) {
       fieldBy = sortVal.fieldBy;
     }
     let remainApiPath = "";
-    console.log("searchData", searchData);
+
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
@@ -242,7 +242,8 @@ function AllPayment({ setAllPayment }) {
     };
     localStorage.setItem("tlprot1", 1);
     localStorage.setItem("sortedValuetlpay1", JSON.stringify(sort));
-    let searchData = JSON.parse(localStorage.getItem(`searchDatatlproposal1`));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlpayment1`));
+    console.log("searchData", searchData);
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid
@@ -495,7 +496,8 @@ function AllPayment({ setAllPayment }) {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "paid_status",
+      sort: true,
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {
@@ -595,7 +597,9 @@ function AllPayment({ setAllPayment }) {
       text: "Outstanding amount",
       dataField: "amount_outstanding",
       sort: true,
-
+      headerStyle: () => {
+        return { width: "135px" };
+      },
       headerFormatter: headerLabelFormatter,
 
       onSort: (field, order) => {

@@ -152,7 +152,7 @@ function InprogressProposal() {
     }
     let remainApiPath = "";
     let status = 1;
-    if (searchData.status) {
+    if (searchData?.status) {
       status = searchData.p_status;
     }
     if (searchData) {
