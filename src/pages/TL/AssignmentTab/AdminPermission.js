@@ -781,7 +781,7 @@ function AdminPermission(props) {
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
-        stage_status: data?.assignment_status,
+        stage_status: data?.stage_status,
         route: window.location.pathname,
       };
     } else {

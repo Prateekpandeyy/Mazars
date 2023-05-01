@@ -364,7 +364,6 @@ function AllQueriesData({
   return (
     <Card ref={tableId}>
       <CardHeader>
-        <Row>
           <span onClick={(e) => needHelp()}>
             {" "}
             <HelpIcon />
@@ -380,8 +379,15 @@ function AllQueriesData({
           // resetTriggerFunc={resetTriggerFunc}
           // setCount={setCount}
           />
-        </Row>
+      </CardHeader>
+      <CardBody>
         <Row>
+          <Col md="3"></Col>
+          <Col md="9">
+            <Records records={allQueriesCount.length} />
+          </Col>
+        </Row>
+        {/* <Row className="mb-2">
           <Col md="12" align="right">
             <PaginatorCust
               count={count}
@@ -391,15 +397,7 @@ function AllQueriesData({
               setresetTrigger={setresetTrigger}
             />
           </Col>
-        </Row>
-      </CardHeader>
-      <CardBody>
-        <Row>
-          <Col md="3"></Col>
-          <Col md="9">
-            <Records records={allQueriesCount.length} />
-          </Col>
-        </Row>
+        </Row> */}
         <DataTablepopulated
           bgColor="#55425f"
           keyField={"assign_no"}
