@@ -516,6 +516,7 @@ function AllProposal({ setAllProposal }) {
     },
     {
       text: "Status",
+      dataField: "status",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -575,7 +576,7 @@ function AllProposal({ setAllProposal }) {
         } else {
           val = 1;
         }
-        sortMessage(val, 1);
+        sortMessage(val, 9);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -587,14 +588,26 @@ function AllProposal({ setAllProposal }) {
     {
       dataField: "accepted_amount",
       text: "Accepted amount ",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpro1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpro1");
         }
-        return a - b; // desc
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
       },
+
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;

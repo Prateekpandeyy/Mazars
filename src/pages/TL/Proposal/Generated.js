@@ -389,7 +389,7 @@ const Generated = ({ updateTab }) => {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 2);
       },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
@@ -425,7 +425,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -449,7 +449,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -473,7 +473,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
@@ -503,7 +503,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
