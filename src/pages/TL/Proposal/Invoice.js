@@ -274,6 +274,7 @@ const Invoice = (updateTab) => {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -333,6 +334,7 @@ const Invoice = (updateTab) => {
     {
       text: "Due date",
       dataField: "due_date",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
@@ -361,6 +363,7 @@ const Invoice = (updateTab) => {
     {
       text: "Amount",
       dataField: "paid_amount",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
@@ -556,7 +559,12 @@ const Invoice = (updateTab) => {
               </Col>
             </Row>
           ) : (
-            ""
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <span className="customPaginationSpan">0 - 0 of 0</span>
+              </Col>
+            </Row>
           )}
         </CardHeader>
 

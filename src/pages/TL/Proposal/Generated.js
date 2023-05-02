@@ -514,7 +514,7 @@ const Generated = ({ updateTab }) => {
     },
     {
       text: "Tds deducted",
-      dataField: "tds_amount",
+      dataField: "tds_amount1",
       sort: true,
 
       sort: true,
@@ -787,7 +787,12 @@ const Generated = ({ updateTab }) => {
               </Col>
             </Row>
           ) : (
-            ""
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <span className="customPaginationSpan">0 - 0 of 0</span>
+              </Col>
+            </Row>
           )}
           <DataTablepopulated
             bgColor="#42566a"

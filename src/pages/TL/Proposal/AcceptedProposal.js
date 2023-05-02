@@ -166,7 +166,7 @@ function AcceptedProposal() {
     } else {
       remainApiPath = `tl/getProposalTl?id=${JSON.parse(
         userid
-      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&status=2`;
     }
 
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
