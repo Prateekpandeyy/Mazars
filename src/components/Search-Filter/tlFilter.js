@@ -242,6 +242,7 @@ function TeamFilter(props) {
     }
   };
   const dateFormat = (e, b) => {
+    console.log(e, b);
     let k = "";
     if (e) {
       let date = e.split("-").reverse().join("-");
@@ -300,6 +301,7 @@ function TeamFilter(props) {
             }
           });
       } else {
+        console.log("hidding");
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
@@ -421,8 +423,9 @@ function TeamFilter(props) {
             `${baseUrl}/tl/pendingAllocation?id=${JSON.parse(
               userid
             )}&status=${status}&cat_id=${store2}&from=${dateFormat(
-              fromDate
-            )}&to=${dateFormat(toDate)}&pcat_id=${selectedData}&qno=${
+              fromDate,
+              "fromDate"
+            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
