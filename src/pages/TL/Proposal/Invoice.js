@@ -188,9 +188,9 @@ const Invoice = (updateTab) => {
     localStorage.setItem("sortedValuetl2", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`tlcreate`));
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=0&orderby=${val}&orderbyfield=${field}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
