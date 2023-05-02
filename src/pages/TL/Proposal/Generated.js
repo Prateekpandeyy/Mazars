@@ -150,7 +150,7 @@ const Generated = ({ updateTab }) => {
   };
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuevttl1"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetl1"));
     let orderBy = 0;
     let fieldBy = 0;
 
