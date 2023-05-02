@@ -538,7 +538,7 @@ const Generated = ({ updateTab }) => {
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
-        var x = row.tds_amount;
+        var x = row.tds_amount1;
 
         return (
           <>
