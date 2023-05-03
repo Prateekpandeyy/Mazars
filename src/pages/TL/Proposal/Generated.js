@@ -150,7 +150,7 @@ const Generated = ({ updateTab }) => {
   };
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
-    let sortVal = JSON.parse(localStorage.getItem("sortedValuevttl1"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetl1"));
     let orderBy = 0;
     let fieldBy = 0;
 
@@ -389,7 +389,7 @@ const Generated = ({ updateTab }) => {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 2);
       },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
@@ -425,7 +425,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -449,7 +449,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -473,7 +473,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       formatter: function (cell, row) {
         let dueDate = row.due_date.split("-").reverse().join("-");
@@ -503,7 +503,7 @@ const Generated = ({ updateTab }) => {
           val = 1;
         }
 
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
@@ -514,7 +514,7 @@ const Generated = ({ updateTab }) => {
     },
     {
       text: "Tds deducted",
-      dataField: "tds_amount",
+      dataField: "tds_amount1",
       sort: true,
 
       sort: true,
@@ -538,7 +538,7 @@ const Generated = ({ updateTab }) => {
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-IN");
-        var x = row.tds_amount;
+        var x = row.tds_amount1;
 
         return (
           <>
@@ -787,7 +787,12 @@ const Generated = ({ updateTab }) => {
               </Col>
             </Row>
           ) : (
-            ""
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <span className="customPaginationSpan">0 - 0 of 0</span>
+              </Col>
+            </Row>
           )}
           <DataTablepopulated
             bgColor="#42566a"

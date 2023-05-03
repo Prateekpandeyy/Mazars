@@ -225,7 +225,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(Number(localStorage.getItem("tl_record_per_page")));
+
         let all = [];
         let sortId = 1;
 
@@ -237,7 +237,14 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           sortId++;
           all.push(data);
         });
-
+        if (
+          Number(all.length) <
+          Number(localStorage.getItem("tl_record_per_page"))
+        ) {
+          setEnd(all.length);
+        } else {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        }
         setPendingData(all);
       }
     });

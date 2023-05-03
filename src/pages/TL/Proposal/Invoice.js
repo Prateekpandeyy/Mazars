@@ -128,7 +128,7 @@ const Invoice = (updateTab) => {
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       remainApiPath = `/tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
-      &installment_no=${searchData?.installment_no}`;
+      &installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -188,9 +188,9 @@ const Invoice = (updateTab) => {
     localStorage.setItem("sortedValuetl2", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`tlcreate`));
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=0&orderby=${val}&orderbyfield=${field}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
@@ -236,6 +236,7 @@ const Invoice = (updateTab) => {
     {
       text: "Query no",
       dataField: "assign_no",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
@@ -273,6 +274,7 @@ const Invoice = (updateTab) => {
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -332,6 +334,7 @@ const Invoice = (updateTab) => {
     {
       text: "Due date",
       dataField: "due_date",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
@@ -360,6 +363,7 @@ const Invoice = (updateTab) => {
     {
       text: "Amount",
       dataField: "paid_amount",
+      sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
         let val = 0;
@@ -555,7 +559,12 @@ const Invoice = (updateTab) => {
               </Col>
             </Row>
           ) : (
-            ""
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <span className="customPaginationSpan">0 - 0 of 0</span>
+              </Col>
+            </Row>
           )}
         </CardHeader>
 
