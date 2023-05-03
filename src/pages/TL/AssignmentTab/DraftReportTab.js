@@ -159,14 +159,14 @@ function AssignmentTab() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment2"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetlAssignment2", JSON.stringify(sort));
-    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment2"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetlAssignment2", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
     if (!data) {
       if (pageno) {

@@ -183,14 +183,14 @@ function AssignmentTab(props) {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment1"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpAssignment1", JSON.stringify(sort));
-    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment1"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpAssignment1", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     if (!data) {
       if (pageno) {
@@ -429,6 +429,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (accend === field) {
@@ -480,6 +481,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
 
@@ -504,6 +506,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (accend === true) {
@@ -527,6 +530,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (order === "asc") {
@@ -657,6 +661,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (order === "asc") {

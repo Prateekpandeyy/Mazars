@@ -117,14 +117,14 @@ function AssignmentTab(props) {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment1"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetlAssignment1", JSON.stringify(sort));
-    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment1"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetlAssignment1", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
     if (!data) {
       if (pageno) {

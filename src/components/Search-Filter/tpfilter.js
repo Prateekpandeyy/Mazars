@@ -115,10 +115,10 @@ function TaxProfessionalFilter(props) {
     console.log('reset is triggred in tpfilter');
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
-    setToDate(fullDate);
+    setToDate("");
     resetTriggerFunc();
     getData(1);
-    
+
     // dateValue.current.clearValue();
   };
   useEffect(() => {
@@ -158,6 +158,14 @@ function TaxProfessionalFilter(props) {
       setToDate(fullDate);
     }
   }, []);
+
+  useEffect(() => {
+    if (toDate.length == 0) {
+      let date = moment().format("DD-MM-YYYY");
+      let fullDate = date;
+      setToDate(fullDate);
+    }
+  }, [toDate]);
 
   const onSubmit = (data) => {
     let obj = {};

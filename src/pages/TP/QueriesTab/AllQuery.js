@@ -128,14 +128,14 @@ useEffect(() => {
     setIsActive(arrow);
     setTurnGreen(true);
   }
-  let sortVal = JSON.parse(localStorage.getItem("freezetpQuery1"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpQuery1", JSON.stringify(sort));
-    }
+  // let sortVal = JSON.parse(localStorage.getItem("freezetpQuery1"));
+  //   if (!sortVal) {
+  //     let sort = {
+  //       val: 0,
+  //       field: 0,
+  //     };
+  //     localStorage.setItem("freezetpQuery1", JSON.stringify(sort));
+  //   }
   if (pageno) {
     getInCompleteAssingment(pageno);
   } else {

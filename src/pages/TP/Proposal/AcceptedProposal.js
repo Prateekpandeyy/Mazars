@@ -137,8 +137,8 @@ function AcceptedProposal() {
     let sortVal = JSON.parse(localStorage.getItem("freezetpProposal3"));
     if (!sortVal) {
       let sort = {
-        val: 0,
-        field: 1,
+        orderBy: 0,
+        fieldBy: 0,
       };
       localStorage.setItem("freezetpProposal3", JSON.stringify(sort));
     }

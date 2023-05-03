@@ -128,8 +128,8 @@ function PendingForAcceptence(props) {
   let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
     if (!sortVal) {
       let sort = {
-        val: 0,
-        field: 1,
+        orderBy: 0,
+        fieldBy: 0,
       };
       localStorage.setItem("freezetpQuery2", JSON.stringify(sort));
     }

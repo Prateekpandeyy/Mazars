@@ -145,14 +145,14 @@ function AdminPermission(props) {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment4"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetlAssignment4", JSON.stringify(sort));
-    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment4"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetlAssignment4", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
     if (!data) {
       if (pageno) {

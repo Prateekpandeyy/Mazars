@@ -137,14 +137,14 @@ function AssignmentTab() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment3"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpAssignment3", JSON.stringify(sort));
-    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment3"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpAssignment3", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
     if (!data) {
       if (pageno) {
@@ -454,7 +454,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -477,7 +477,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -500,7 +500,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
 
       headerStyle: () => {
@@ -599,7 +599,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -630,7 +630,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -661,7 +661,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function (cell, row) {

@@ -139,8 +139,8 @@ function InCompleteData({ CountIncomplete, data }) {
     let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
     if (!sortVal) {
       let sort = {
-        val: 0,
-        field: 1,
+        orderBy: 0,
+        fieldBy: 0,
       };
       localStorage.setItem("freezetpQuery3", JSON.stringify(sort));
     }

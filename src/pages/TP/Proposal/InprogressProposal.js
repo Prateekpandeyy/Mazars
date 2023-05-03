@@ -144,8 +144,8 @@ function InprogressProposal() {
     let sortVal = JSON.parse(localStorage.getItem("freezetpProposal2"));
     if (!sortVal) {
       let sort = {
-        val: 0,
-        field: 1,
+        orderBy: 0,
+        fieldBy: 0,
       };
       localStorage.setItem("freezetpProposal2", JSON.stringify(sort));
     }
