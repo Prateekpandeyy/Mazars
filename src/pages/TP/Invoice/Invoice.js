@@ -33,7 +33,9 @@ const InvoiceTab = () => {
     margin: "10px auto",
     color: "#42566a",
     fontSize: "18px",
-    cursor: "pointer"
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
   const updateTab = (key) => {
     setTabIndex(key)

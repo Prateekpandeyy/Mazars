@@ -328,7 +328,7 @@ function Paginator(props) {
         }
         else if (AllProposal == "AllProposal") {
             let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal1"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpProposal1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal1`, JSON.stringify(e));
@@ -360,7 +360,7 @@ function Paginator(props) {
         }
         else if (InprogressProposal == "InprogressProposal") {
             let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpProposal2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal2`, JSON.stringify(e));
@@ -392,7 +392,7 @@ function Paginator(props) {
         }
         else if (proposal == "proposal") {
             let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpProposal3"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal3`, JSON.stringify(e));
@@ -422,7 +422,7 @@ function Paginator(props) {
         }
         else if (Decproposal == "Decproposal") {
             let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal4"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpProposal4"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal4`, JSON.stringify(e));

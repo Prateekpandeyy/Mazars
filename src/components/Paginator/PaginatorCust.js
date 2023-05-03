@@ -104,9 +104,9 @@ function PaginatorCust(props) {
             setPageno(JSON.parse(localStorage.getItem("custQuery3")))
             console.log(pageno, "in inCompQ render check");
         }
-        // else if (index === "tpproposal1") {
-        //     setPageno(JSON.parse(localStorage.getItem("tpProposal1")))
-        // }
+        else if (index === "custProposal1") {
+            setPageno(JSON.parse(localStorage.getItem("custProposal1")))
+        }
         // else if (index === "tpproposal2") {
         //     setPageno(JSON.parse(localStorage.getItem("tpProposal2")))
         // }
@@ -293,21 +293,21 @@ function PaginatorCust(props) {
         }
         else if (proposal == "proposal") {
             let data = JSON.parse(localStorage.getItem(""));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustProposal1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custPropsosal1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
             }
             else {
                 console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
             }
         }
         else if (inprogressProposal == "inprogressProposal") {

@@ -74,53 +74,88 @@ function FeedbackTab() {
   //   );
   // }
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
-      </div>
-    )
-}
+//   function headerLabelFormatter(column) {
+//     // let reverse = "Exp_Delivery_Date"
+//     return(
+//       <div>
+//       {column.dataField === isActive ?
+//         (
+//           <div className="d-flex text-white w-100 flex-wrap">
+//             {column.text}
+//             {accend === column.dataField ? (
+//               <ArrowDropDownIcon 
+//               className={turnGreen === true ? classes.isActive : ""}
+//               />
+//             ) : (
+//               <ArrowDropUpIcon 
+//               className={turnGreen === true ? classes.isActive : ""}
+//               />
+//             )}
+//           </div>
+//         )
+//         :
+//         (
+//           <div className="d-flex text-white w-100 flex-wrap">
+//             {column.text}
+//             {accend === column.dataField ? (
+//               <ArrowDropDownIcon />
+//             ) : (
+//               <ArrowDropUpIcon />
+//             )}
+//           </div>
+//         )
+//       }
+//       </div>
+//     )
+// }
 
+
+function headerLabelFormatter(column, colIndex) {
+  let isActive = true;
+
+  if (
+    localStorage.getItem("tpArrowFeed") === column.dataField ||
+    localStorage.getItem("prevtpmsg") === column.dataField
+  ) {
+    isActive = true;
+    setPrev(column.dataField);
+    localStorage.setItem("prevtpmsg", column.dataField);
+  } else {
+    isActive = false;
+  }
+  return (
+    <div className="d-flex text-white w-100 flex-wrap">
+      <div style={{ display: "flex", color: "#fff" }}>
+        {column.text}
+        {localStorage.getItem("tpArrowFeed") === column.dataField ? (
+          <ArrowDropUpIcon
+            className={isActive === true ? classes.isActive : ""}
+          />
+        ) : (
+          <ArrowDropDownIcon
+            className={isActive === true ? classes.isActive : ""}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
 
   // useEffect(() => {
   //   getFeedback();
   // }, []);
 
   useEffect(() => {
-
-    let arrow = localStorage.getItem("tpArrowFeed")
+   
+    let pre = localStorage.getItem(" prevtpmsg");
+    let arrow = localStorage.getItem("tpArrowFeed");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
       setTurnGreen(true);
+    }
+    if(pre){
+      setPrev(pre);
     }
     let pageno = JSON.parse(localStorage.getItem("tpFeedback"));
     if (pageno) {

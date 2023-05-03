@@ -43,6 +43,7 @@ function PendingForAcceptence(props) {
   const [accend, setAccend] = useState(false);
   const [turnGreen,setTurnGreen]= useState(false);
   const [isActive,setIsActive]=useState("");
+  const [prev, setPrev] = useState("");
 
   const [pendingData, setPendingData] = useState([]);
   const [records, setRecords] = useState([]);
@@ -69,61 +70,84 @@ function PendingForAcceptence(props) {
     });
   };
 
+
   // function headerLabelFormatter(column) {
-  //   return (
-  //     <div className="d-flex text-white w-100 flex-wrap">
-  //       {column.text}
-  //       {accend === column.dataField ? (
-  //         <ArrowDropUpIcon />
-  //       ) : (
-  //         <ArrowDropDownIcon />
-  //       )}
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropUpIcon />
+  //           ) : (
+  //             <ArrowDropDownIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
   //     </div>
-  //   );
+  //   )
   // }
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowQuery2") === column.dataField ||
+      localStorage.getItem("prevtpq2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpq2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowQuery2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
 
-  let arrow = localStorage.getItem("tpArrowQuery2")
+  let arrow = localStorage.getItem("tpArrowQuery2");
+  let pre = localStorage.getItem("prevtpq2")
   if (arrow) {
     setAccend(arrow);
     setIsActive(arrow);
     setTurnGreen(true);
+  }
+  if(pre){
+    setPrev(pre);
   }
   let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
     if (!sortVal) {
@@ -495,6 +519,8 @@ function PendingForAcceptence(props) {
     localStorage.removeItem(`tpQuery2`);
     localStorage.removeItem(`freezetpQuery2`);
     localStorage.removeItem("tpArrowQuery2");
+    localStorage.removeItem("prevtpq2");
+    setPrev("");
   }
 
   return (

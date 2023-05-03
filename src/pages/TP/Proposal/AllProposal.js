@@ -49,6 +49,7 @@ function AllProposal() {
   const [sortField, setSortField] = useState('');
   const [accend, setAccend] = useState(false);
   const [resetTrigger, setresetTrigger] = useState(false);
+  const [prev, setPrev] = useState("");
 
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [addPaymentModal, setPaymentModal] = useState(false);
@@ -100,15 +101,18 @@ function AllProposal() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal1"));
-    if (!sortVal) {
-      let sort = {
-        orderBy: 0,
-        fieldBy: 0,
-      };
-      localStorage.setItem("freezetpProposal1", JSON.stringify(sort));
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpProposal1"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpProposal1", JSON.stringify(sort));
+    // }
+    let sort = localStorage.getItem("prevtppro1");
+    if(sort){
+      setPrev(sort);
     }
-
     if (pageno) {
       getProposalList(pageno);
     } else {
@@ -120,39 +124,70 @@ function AllProposal() {
     // }
   }, []);
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowProposal1") === column.dataField ||
+      localStorage.getItem("prevtppro1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtppro1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowProposal1") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   const getProposalList = (e) => {
@@ -663,6 +698,8 @@ function AllProposal() {
     localStorage.removeItem("tpPropsosal1");
     localStorage.removeItem(`freezetpProposal1`);
     localStorage.removeItem("tpArrowProposal1");
+    localStorage.removeItem("prevtppro1");
+    setPrev("");
   }
 
   return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -20,6 +20,7 @@ import MessageIcon, {
   HelpIcon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import CommonServices from "../../common/common";
 function ProposalTab() {
   let history = useHistory();
@@ -30,6 +31,17 @@ function ProposalTab() {
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
+  const [resetTrigger, setresetTrigger] = useState(false);
+
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -38,6 +50,7 @@ function ProposalTab() {
   const [openManual, setManual] = useState(false);
   const [proposalId, setProposalId] = useState();
   const token = window.localStorage.getItem("clientToken");
+
   const myConfig = {
     headers: {
       uit: token,
@@ -108,6 +121,7 @@ function ProposalTab() {
           setProposalDisplay(res.data.result);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
+          setCount(res.data.total)
         } else if (res.data.code === 0) {
           CommonServices.clientLogout(history);
         }
@@ -389,6 +403,15 @@ function ProposalTab() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPropsosal1");
+    localStorage.removeItem(`freezecustProposal1`);
+    localStorage.removeItem("custArrowProposal1");
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -407,7 +430,21 @@ function ProposalTab() {
       </CardHeader>
       <CardBody>
         <Records records={records} />
-
+        <Row className="mb-2">
+            <Col md="12" align="right">
+              <PaginatorCust
+                count={count}
+                setData={setProposalDisplay}
+                getData={getProposalData}
+                proposal="proposal"
+                index="custProposal1"
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
         <DataTablepopulated
           bgColor="#42566a"
           keyField="id"

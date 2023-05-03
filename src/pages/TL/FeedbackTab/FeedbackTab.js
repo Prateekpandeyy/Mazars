@@ -41,6 +41,7 @@ function FeedbackTab() {
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [sortField, setSortField] = useState("");
+  const [prev, setPrev] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -92,6 +93,8 @@ function FeedbackTab() {
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tlFeedback"));
+    setPrev(localStorage.getItem("prevtlfeedback"));
+    setAccend(localStorage.getItem("tlArrowFeedback"));
     if (pageno) {
       setPage(pageno);
       getFeedback(pageno);
@@ -168,32 +171,63 @@ function FeedbackTab() {
     });
   };
 
-  function headerLabelFormatter(column) {
+  // function headerLabelFormatter(column) {
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ? (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropUpIcon
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropDownIcon
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       ) : (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropUpIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tlArrowFeedback") === column.dataField ||
+      localStorage.getItem("prevtlfeedback") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlfeedback", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ? (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropUpIcon
-                className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropDownIcon
-                className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        ) : (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropUpIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )}
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tlArrowFeedback") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
     );
   }
@@ -220,6 +254,7 @@ function FeedbackTab() {
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
+          let droppage = [];
           let sortId = 1;
           if (page > 1) {
             sortId = big;
@@ -237,6 +272,15 @@ function FeedbackTab() {
           setTurnGreen(true);
           setAtpage(1);
           setPage(1);
+          let dynamicPage = Math.round(res.data.total / allEnd);
+        let rem = (1 - 1) * allEnd;
+        let end = 1 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
         }
       });
   };

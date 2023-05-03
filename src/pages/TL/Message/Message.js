@@ -31,6 +31,7 @@ function Message(props) {
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [countNotification, setCountNotification] = useState("");
   const [totalPages, setTotalPages] = useState(1);
+  const [prev, setPrev] = useState("");
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
@@ -52,6 +53,8 @@ function Message(props) {
   useEffect(() => {
     let pageno = Number(JSON.parse(localStorage.getItem("tlMsg")));
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    setAccend(localStorage.getItem("accendtlmsg"));
+    setPrev(localStorage.getItem("prevtlmsg"));
     if (pageno) {
       setPage(pageno);
       getMessage(pageno);
@@ -66,32 +69,63 @@ function Message(props) {
       uit: token,
     },
   };
-  function headerLabelFormatter(column) {
+  // function headerLabelFormatter(column) {
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ? (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropUpIcon
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropDownIcon
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       ) : (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropUpIcon />
+  //           ) : (
+  //             <ArrowDropDownIcon />
+  //           )}
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tlArrowMsg") === column.dataField ||
+      localStorage.getItem("prevtlmsg") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlmsg", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ? (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropUpIcon
-                className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropDownIcon
-                className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        ) : (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropUpIcon />
-            ) : (
-              <ArrowDropDownIcon />
-            )}
-          </div>
-        )}
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tlArrowMsg") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
     );
   }
@@ -177,10 +211,8 @@ function Message(props) {
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];
+          let droppage = [];
           let sortId = 1;
-          if (page > 1) {
-            sortId = big;
-          }
           res.data.result.map((i) => {
             let data = {
               ...i,
@@ -195,6 +227,14 @@ function Message(props) {
           // setting(1);
           setAtpage(1);
           setPage(1);
+          let dynamicPage = Math.round(res.data.total / allEnd);
+          let rem = (1 - 1) * allEnd;
+          let end = 1 * allEnd;
+            setBig(rem + 1);
+            setEnd(end);
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
         }
       });
   };

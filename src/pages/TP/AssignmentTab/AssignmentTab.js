@@ -47,6 +47,8 @@ function QueriesTab(props) {
     fontSize: "18px",
     cursor: "pointer",
     color: "#5a625a",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {

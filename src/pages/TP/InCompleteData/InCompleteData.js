@@ -46,6 +46,7 @@ function InCompleteData({ CountIncomplete, data }) {
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
 
   const [count, setCount] = useState("0");
@@ -70,52 +71,72 @@ function InCompleteData({ CountIncomplete, data }) {
     },
   };
 
+
+
   // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
   //   return (
-  //     <div className="d-flex text-white w-100 flex-wrap">
-  //       {column.text}
-  //       {accend === column.dataField ? (
-  //         <ArrowUpwardIcon />
-  //       ) : (
-  //         <ArrowDownwardIcon />
-  //       )}
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropUpIcon
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //             ) : (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropUpIcon />
+  //             ) : (
+  //               <ArrowDropDownIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
   //     </div>
-  //   );
+  //   )
   // }
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowQuery3") === column.dataField ||
+      localStorage.getItem("prevtpq3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpq3", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowQuery3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
@@ -135,6 +156,10 @@ function InCompleteData({ CountIncomplete, data }) {
       setAccend(arrow);
       setIsActive(arrow);
       setTurnGreen(true);
+    }
+    let pre =localStorage.getItem("prevtpq3")
+    if(pre){
+      setPrev(pre);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
     if (!sortVal) {
@@ -558,6 +583,8 @@ function InCompleteData({ CountIncomplete, data }) {
     localStorage.removeItem("tpQuery3");
     localStorage.removeItem(`freezetpQuery3`);
     localStorage.removeItem("tpArrowQuery3");
+    localStorage.removeItem("prevtpq3");
+    setPrev("");
   }
 
   return (
