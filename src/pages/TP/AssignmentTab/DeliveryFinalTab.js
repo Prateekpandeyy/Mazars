@@ -51,6 +51,7 @@ function AssignmentTab() {
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -137,6 +138,10 @@ function AssignmentTab() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
+    let pre =localStorage.getItem("prevtpAs3")
+    if(pre){
+      setPrev(pre);
+    }
     // let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment3"));
     // if (!sortVal) {
     //   let sort = {
@@ -145,6 +150,7 @@ function AssignmentTab() {
     //   };
     //   localStorage.setItem("freezetpAssignment3", JSON.stringify(sort));
     // }
+
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
     if (!data) {
       if (pageno) {
@@ -257,6 +263,8 @@ function AssignmentTab() {
     localStorage.removeItem("tpAssignment3");
     localStorage.removeItem(`freezetpAssignment3`);
     localStorage.removeItem("tpArrowAs3");
+    localStorage.removeItem("prevtpAs3");
+    setPrev("")
   };
 
   //assingmentStatus
@@ -280,39 +288,70 @@ function AssignmentTab() {
     console.log("work report");
   }, [reportModal]);
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowAs3") === column.dataField ||
+      localStorage.getItem("prevtpAs3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpAs3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowAs3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   const sortMessage = (val, field) => {
@@ -324,9 +363,9 @@ function AssignmentTab() {
       val: val,
       field: field,
     }
-    localStorage.setItem(`tpAssignment1`, JSON.stringify(1))
-    localStorage.setItem(`freezetpAssignment1`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
+    localStorage.setItem(`tpAssignment3`, JSON.stringify(1))
+    localStorage.setItem(`freezetpAssignment3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
     if (data) {
       remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
         }&from=${data.fromDate}&to=${data.toDate

@@ -63,6 +63,8 @@ const CreateInvoice = () => {
   const [billNo, setBillNo] = useState();
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
+  const [prev, setPrev] = useState("");
+  
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -103,6 +105,10 @@ const CreateInvoice = () => {
       setAccend(arrow);
       setIsActive(arrow);
       setTurnGreen(true);
+    }
+    let pre =localStorage.getItem("prevtpInvoice2")
+    if(pre){
+      setPrev(pre);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     if (!sortVal) {
@@ -208,39 +214,70 @@ const CreateInvoice = () => {
       });
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowInvoice2") === column.dataField ||
+      localStorage.getItem("prevtpInvoice2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpInvoice2", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowInvoice2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   const firstChunk = () => {
@@ -409,19 +446,14 @@ const CreateInvoice = () => {
       },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
-        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+        if (row.payment_plan === "3" && row.sub_payment_plane === "2") {
           subplan = "B";
-        } else if (
-          row.paymnet_plan_code === "3" &&
-          row.sub_payment_plane === "1"
-        ) {
+        } else if (row.payment_plan === "3" && row.sub_payment_plane === "1") {
           subplan = "A";
         }
         return (
           <>
-            {row.paymnet_plan_code === null
-              ? ""
-              : `${row.paymnet_plan_code} ${subplan}`}
+            {row.payment_plan === null ? "" : `${row.payment_plan} ${subplan}`}
           </>
         );
       },
@@ -562,6 +594,8 @@ const CreateInvoice = () => {
     localStorage.removeItem("tpInvoice2");
     localStorage.removeItem(`freezetpInvoice2`);
     localStorage.removeItem("tpArrowInvoice2");
+    localStorage.removeItem("prevtpInvoice2");
+    setPrev("")
   }
 
   return (

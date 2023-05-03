@@ -107,9 +107,9 @@ function PaginatorCust(props) {
         else if (index === "custProposal1") {
             setPageno(JSON.parse(localStorage.getItem("custProposal1")))
         }
-        // else if (index === "tpproposal2") {
-        //     setPageno(JSON.parse(localStorage.getItem("tpProposal2")))
-        // }
+        else if (index === "tpproposal2") {
+            setPageno(JSON.parse(localStorage.getItem("custProposal2")))
+        }
         // else if (index === "tpproposal3") {
         //     setPageno(JSON.parse(localStorage.getItem("tpProposal3")))
         // }
@@ -312,21 +312,21 @@ function PaginatorCust(props) {
         }
         else if (inprogressProposal == "inprogressProposal") {
             let data = JSON.parse(localStorage.getItem(""));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustProposal2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custPropsosal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
             }
             else {
                 console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
             }
         }
         else if (acceptedProposal == "acceptedProposal") {

@@ -87,9 +87,9 @@ function Message(props) {
   useEffect(() => {
 
     let arrow = localStorage.getItem("tpArrowMsg")
-  if (arrow) {
-    setAccend(arrow);
-  }
+    if (arrow) {
+      setAccend(arrow);
+    }
 
     let pageno = JSON.parse(localStorage.getItem("tpMessage"));
     if (pageno) {
@@ -114,10 +114,10 @@ function Message(props) {
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
-    if(pagetry){
+    if (pagetry) {
       remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}&orderby=${val
-      }&orderbyfield=${field}`
-    }else{
+        }&orderbyfield=${field}`
+    } else {
       remainApiPath = `tl/getNotification?id=${JSON.parse(userId)}&page=${e}`
     }
 
@@ -150,17 +150,22 @@ function Message(props) {
             let dynamicPage = Math.round(res.data.total / allEnd);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
-            if (e === 1) {
+            if (dynamicPage > 1) {
+              if (e === 1) {
+                setBig(rem + e);
+                setEnd(end);
+              } else if ((e == (dynamicPage))) {
+                setBig(rem + 1);
+                setEnd(res.data.total);
+                // console.log("e at last page");
+              }
+              else {
+                setBig(rem + 1);
+                setEnd(end);
+              }
+            } else {
               setBig(rem + e);
-              setEnd(end);
-            } else if ((e == (dynamicPage))) {
-              setBig(rem + 1);
               setEnd(res.data.total);
-              // console.log("e at last page");
-            }
-            else {
-              setBig(rem + 1);
-              setEnd(end);
             }
             for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);

@@ -118,10 +118,6 @@ function AllProposal() {
     } else {
       getProposalList(1);
     }
-    // let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
-    // if (!data) {
-    //   console.log("getting all TP proposal");
-    // }
   }, []);
 
   // function headerLabelFormatter(column) {

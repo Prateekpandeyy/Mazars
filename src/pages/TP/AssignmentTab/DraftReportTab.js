@@ -83,6 +83,8 @@ function AssignmentTab() {
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
+  const [prev, setPrev] = useState("");
+
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -149,7 +151,8 @@ function AssignmentTab() {
       runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
-  console.log("catData", categoryData);
+  // console.log("catData", categoryData);
+
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
     let arrow = localStorage.getItem("tpArrowAs2")
@@ -282,43 +285,78 @@ function AssignmentTab() {
     localStorage.removeItem("tpAssignment2");
     localStorage.removeItem(`freezetpAssignment2`);
     localStorage.removeItem("tpArrowAs2");
+    localStorage.removeItem("prevtpAs2");
+    setPrev("")
   };
 
   //assingmentStatus
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowAs2") === column.dataField ||
+      localStorage.getItem("prevtpAs2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpAs2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowAs2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
+
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);

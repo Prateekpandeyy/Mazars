@@ -452,7 +452,7 @@ function Paginator(props) {
         }
         else if (DeclinedQuery == "DeclinedQuery") {
             let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetpproposal4"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpProposal4"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal4`, JSON.stringify(e));

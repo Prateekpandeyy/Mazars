@@ -44,6 +44,7 @@ const Generated = () => {
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
   const [page, setPage] = useState(0);
   const [defaultPage, setDefaultPage] = useState(["1"]);
@@ -108,6 +109,10 @@ const Generated = () => {
     }
     if (!pageno) {
       pageno = 1;
+    }
+    let pre = localStorage.getItem("prevtpInvoice1")
+    if (pre) {
+      setPrev(pre);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice1"));
     if (!sortVal) {
@@ -237,39 +242,70 @@ const Generated = () => {
       });
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowInvoice1") === column.dataField ||
+      localStorage.getItem("prevtpInvoice1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpInvoice1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowInvoice1") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   const sortMessage = (val, field) => {
@@ -402,19 +438,14 @@ const Generated = () => {
       },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
-        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+        if (row.payment_plan === "3" && row.sub_payment_plane === "2") {
           subplan = "B";
-        } else if (
-          row.paymnet_plan_code === "3" &&
-          row.sub_payment_plane === "1"
-        ) {
+        } else if (row.payment_plan === "3" && row.sub_payment_plane === "1") {
           subplan = "A";
         }
         return (
           <>
-            {row.paymnet_plan_code === null
-              ? ""
-              : `${row.paymnet_plan_code} ${subplan}`}
+            {row.payment_plan === null ? "" : `${row.payment_plan} ${subplan}`}
           </>
         );
       },
@@ -741,6 +772,8 @@ const Generated = () => {
     localStorage.removeItem("tpInvoice1");
     localStorage.removeItem(`freezetpInvoice1`);
     localStorage.removeItem("tpArrowInvoice1");
+    localStorage.removeItem("prevtpInvoice1");
+    setPrev("")
   }
 
   const firstChunk = () => {
@@ -808,71 +841,79 @@ const Generated = () => {
                         classes="table-responsive"
                     />
                     </div> */}
-
-          <Row className="mb-2">
-            <Col md="12" align="right">
-              <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                  <span className="customPaginationSpan">
-                    {big}-{end} of {countNotification}
-                  </span>
-                  <span className="d-flex">
-                    {page > 1 ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => firstChunk()}
+          {proposal.length > 0 ? (
+            <Row className="mb-2">
+              <Col md="12" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(Number(e.target.value));
+                            getProposalList(Number(e.target.value));
+                            localStorage.setItem("tpInvoice1", e.target.value);
+                          }}
+                          className="form-control"
                         >
-                          <KeyboardDoubleArrowLeftIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => prevChunk()}
-                        >
-                          <KeyboardArrowLeftIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <div className="navButtonSelectDiv">
-                      <select
-                        value={page}
-                        onChange={(e) => {
-                          setPage(Number(e.target.value));
-                          getProposalList(Number(e.target.value));
-                          localStorage.setItem("tpInvoice1", e.target.value);
-                        }}
-                        className="form-control"
-                      >
-                        {defaultPage.map((i) => (
-                          <option value={i}>{i}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {defaultPage.length > page ? (
-                      <>
-                        <button
-                          className="navButton"
-                          onClick={(e) => nextChunk()}
-                        >
-                          <KeyboardArrowRightIcon />
-                        </button>
-                        <button
-                          className="navButton"
-                          onClick={(e) => lastChunk()}
-                        >
-                          <KeyboardDoubleArrowRightIcon />
-                        </button>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </span>
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col md="6"></Col>
+              <Col md="6" align="right">
+                <span className="customPaginationSpan">0 - 0 of 0</span>
+              </Col>
+            </Row>
+          )}
           <DataTablepopulated
             bgColor="#42566a"
             keyField="id"
