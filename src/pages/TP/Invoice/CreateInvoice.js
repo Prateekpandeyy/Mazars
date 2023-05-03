@@ -132,6 +132,9 @@ const CreateInvoice = () => {
     let orderBy = 0;
     let fieldBy = 0;
     let remainApiPath = "";
+    if (e.length == 0){
+      let e =1;
+    }
     if (pagetry) {
       orderBy = pagetry.orderBy;
       fieldBy = pagetry.fieldBy;
@@ -326,7 +329,11 @@ const CreateInvoice = () => {
       searchData?.opt ||
       searchData?.query_no
     ) {
+      if(searchData?.installment_no.length == 0){
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}s&orderby=${val}&orderbyfield=${field}`;
+      }else{
       remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      }
     }
     else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
@@ -342,7 +349,11 @@ const CreateInvoice = () => {
         if (res.data.code === 1) {
           setPage(1);
           setBig(1);
+          if((res.data.total)<allEnd){
+            setBig(res.data.total);
+          }else{
           setEnd(allEnd);
+          }
           let all = [];
           let sortId = 1;
 
@@ -356,6 +367,7 @@ const CreateInvoice = () => {
           });
           setTurnGreen(true);
           setProposal(all);
+          setCountNotification(res.data.total);
           console.log("proposal", all);
         }
       });
@@ -598,6 +610,17 @@ const CreateInvoice = () => {
     setPrev("")
   }
 
+  const gettingAftertds = () => {
+    let dif = (countNotification)-(allEnd*page)
+    if(page > 1){
+    if(dif == 1){
+      getProposalList(Number(page-1))
+    }else{
+    getProposalList(page)
+    }
+  }else{getProposalList(1)}
+  }
+
   return (
     <>
       <Card>
@@ -702,7 +725,7 @@ const CreateInvoice = () => {
               installmentNo={installmentNo}
               billNo={billNo}
               gstNo={gstNo}
-              getProposalList={getProposalList}
+              getProposalList={gettingAftertds}
             />
           ) : (
             ""
