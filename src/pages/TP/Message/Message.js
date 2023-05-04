@@ -305,7 +305,7 @@ function Message(props) {
           localStorage.removeItem("tpArrowMsg");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
