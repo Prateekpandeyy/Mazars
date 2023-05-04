@@ -784,6 +784,13 @@ const Generated = () => {
     setPrev("")
   }
 
+  useEffect(() => {
+    if(countNotification < allEnd){
+      setEnd(countNotification);
+    }
+  }, [setCountNotification])
+  
+
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
