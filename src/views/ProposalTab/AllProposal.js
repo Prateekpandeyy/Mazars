@@ -430,7 +430,7 @@ function ProposalTab() {
       </CardHeader>
       <CardBody>
         <Records records={records} />
-        <Row className="mb-2">
+        {/* <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorCust
                 count={count}
@@ -444,7 +444,7 @@ function ProposalTab() {
                 setresetTrigger={setresetTrigger}
               />
             </Col>
-          </Row>
+          </Row> */}
         <DataTablepopulated
           bgColor="#42566a"
           keyField="id"

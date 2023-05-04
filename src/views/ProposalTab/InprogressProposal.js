@@ -396,7 +396,7 @@ function InprogressProposal() {
       </CardHeader>
       <CardBody>
         <Records records={records} />
-        <Row className="mb-2">
+        {/* <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorCust
                 count={count}
@@ -410,7 +410,7 @@ function InprogressProposal() {
                 setresetTrigger={setresetTrigger}
               />
             </Col>
-          </Row>
+          </Row> */}
         <DataTablepopulated
           bgColor="#5f7b97"
           keyField={"assign_no"}
