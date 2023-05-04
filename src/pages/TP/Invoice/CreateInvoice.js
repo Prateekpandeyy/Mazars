@@ -40,7 +40,7 @@ const CreateInvoice = () => {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [page, setPage] = useState(0);
@@ -72,7 +72,7 @@ const CreateInvoice = () => {
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
     if (tdsForm === false) {
-      setScrolledTo(key.id)
+      setScrolledTo(key.id);
     }
     if (key) {
       setGstinNo(key.gstin_no);
@@ -87,9 +87,9 @@ const CreateInvoice = () => {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
   }, [tdsForm]);
 
   const ViewDiscussionToggel = (key) => {
@@ -98,7 +98,7 @@ const CreateInvoice = () => {
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpInvoice2"));
-    let arrow = localStorage.getItem("tpArrowInvoice2")
+    let arrow = localStorage.getItem("tpArrowInvoice2");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
@@ -131,18 +131,12 @@ const CreateInvoice = () => {
       fieldBy = pagetry.fieldBy;
     }
 
-    if (
-      searchData?.installment_no ||
-      searchData?.opt ||
-      searchData?.query_no
-    ) {
+    if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
       &installment_no=${searchData?.installment_no}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
-
-
 
     // localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
     // let val = pagetry?.val;
@@ -159,88 +153,79 @@ const CreateInvoice = () => {
     //   )}&invoice=0&orderby=${val}&orderbyfield=${field}`
     // } else { }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        let droppage = [];
-        if (res.data.code === 1) {
-          let data = res.data.payment_detail;
-          setRecords(res.data.total);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposal(all);
-
-          let end = e * allEnd;
-          setCountNotification(res.data.total);
-          if (end > res.data.total) {
-            end = res.data.total;
-          }
-          let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-          let rem = (e - 1) * allEnd;
-
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let droppage = [];
+      if (res.data.code === 1) {
+        let data = res.data.payment_detail;
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposal(all);
+
+        let end = e * allEnd;
+        setCountNotification(res.data.total);
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   function headerLabelFormatter(column) {
     // let reverse = "Exp_Delivery_Date"
     return (
       <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+        {column.dataField === isActive ? (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropUpIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowDropUpIcon />
+            )}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 
   const firstChunk = () => {
@@ -280,57 +265,50 @@ const CreateInvoice = () => {
       orderBy: val,
       fieldBy: field,
     };
-    localStorage.setItem(`tpInvoice2`, JSON.stringify(1))
+    localStorage.setItem(`tpInvoice2`, JSON.stringify(1));
     localStorage.setItem(`freezetpInvoice2`, JSON.stringify(obj));
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
 
-    if (
-      searchData?.installment_no ||
-      searchData?.opt ||
-      searchData?.query_no
-    ) {
+    if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
-    }
-    else {
+    } else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
         userid
-      )}&invoice=0&orderby=${val}&orderbyfield=${field} `
+      )}&invoice=0&orderby=${val}&orderbyfield=${field} `;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          setEnd(allEnd);
-          let all = [];
-          let sortId = 1;
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        setEnd(allEnd);
+        let all = [];
+        let sortId = 1;
 
-          res.data.payment_detail.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setTurnGreen(true);
-          setProposal(all);
-          console.log("proposal", all);
-        }
-      });
-  }
+        res.data.payment_detail.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setTurnGreen(true);
+        setProposal(all);
+        console.log("proposal", all);
+      }
+    });
+  };
 
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id}
-          ref={el => (myRef.current[row.id] = el)}>{row.cid}</div>;
+        return (
+          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
+            {row.cid}
+          </div>
+        );
       },
       style: {
         fontSize: "11px",
@@ -562,7 +540,7 @@ const CreateInvoice = () => {
     localStorage.removeItem("tpInvoice2");
     localStorage.removeItem(`freezetpInvoice2`);
     localStorage.removeItem("tpArrowInvoice2");
-  }
+  };
 
   return (
     <>

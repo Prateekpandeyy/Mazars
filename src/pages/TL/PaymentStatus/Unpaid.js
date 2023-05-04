@@ -438,7 +438,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -463,7 +463,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -488,7 +488,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -555,7 +555,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
@@ -593,7 +593,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -627,7 +627,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -658,7 +658,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_paid_date;

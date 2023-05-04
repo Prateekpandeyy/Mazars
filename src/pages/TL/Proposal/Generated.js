@@ -542,12 +542,15 @@ const Generated = ({ updateTab }) => {
 
         return (
           <>
-            {row.is_paid == "0" ? (
-              <p className="rightAli"></p>
-            ) : (
-              <p className="rightAli">{nfObject.format(x)}</p>
-            )}
+            <p className="rightAli">{nfObject.format(x)}</p>
           </>
+          // <>
+          //   {row.is_paid == "0" ? (
+          //     <p className="rightAli"></p>
+          //   ) : (
+          //     <p className="rightAli">{nfObject.format(x)}</p>
+          //   )}
+          // </>
         );
       },
     },
