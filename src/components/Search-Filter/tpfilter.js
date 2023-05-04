@@ -341,7 +341,7 @@ function TaxProfessionalFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
               userid
-            )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+            )}&status=1&cat_id=${data.store}&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -374,7 +374,7 @@ function TaxProfessionalFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${store2}&from=${fromDate
+            )}&status=1&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate

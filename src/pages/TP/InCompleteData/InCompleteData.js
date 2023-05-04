@@ -161,14 +161,14 @@ function InCompleteData({ CountIncomplete, data }) {
     if(pre){
       setPrev(pre);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
-    if (!sortVal) {
-      let sort = {
-        orderBy: 0,
-        fieldBy: 0,
-      };
-      localStorage.setItem("freezetpQuery3", JSON.stringify(sort));
-    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpQuery3", JSON.stringify(sort));
+    // }
     if (!pageno) {
       pageno = 1;
     }
@@ -188,7 +188,7 @@ function InCompleteData({ CountIncomplete, data }) {
     if ((data) && (!pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
@@ -199,7 +199,7 @@ function InCompleteData({ CountIncomplete, data }) {
     else if ((data) && (pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
@@ -269,7 +269,7 @@ function InCompleteData({ CountIncomplete, data }) {
           .join("-")}&to=${data.toDate
             ?.split("-")
             .reverse()
-            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId
+            .join("-")}&status=1&pcat_id=${data.pcatId
         }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
