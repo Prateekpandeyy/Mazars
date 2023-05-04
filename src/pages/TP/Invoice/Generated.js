@@ -320,7 +320,7 @@ const Generated = () => {
     localStorage.setItem(`freezetpInvoice1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("tpgenerated"));
     if (data && Object.values(data).length > 0) {
-      if (data?.installment_no.length == 0) {
+      if (data?.installment_no) {
         remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
       } else {
         remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&orderby=${val}&orderbyfield=${field}`
