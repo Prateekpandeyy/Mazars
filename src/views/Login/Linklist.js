@@ -180,8 +180,13 @@ function Linklist() {
           setLinkData(dataList);
           setCount(res.data.total);
           let rem = 0 * allEnd;
+          if((res.data.total)< allEnd){
+            setBig(res.data.total);
+            setEnd(end);
+          }else{
           setBig(rem + 1);
           setEnd(end);
+          }
         }
       });
 
