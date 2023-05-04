@@ -145,8 +145,12 @@ const CreateInvoice = () => {
       searchData?.opt ||
       searchData?.query_no
     ) {
+      if((searchData?.installment_no) && (searchData?.payment_plan)){
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      }else{
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
-      &installment_no=${searchData?.installment_no}`;
+      &installment_no=${searchData?.installment_no}&payment_plan=${searchData?.payment_plan}`;
+      }
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }

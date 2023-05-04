@@ -138,7 +138,11 @@ const Generated = () => {
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`tpgenerated`));
     if (searchData && Object.values(searchData).length > 0) {
+      if (searchData?.installment_no) {
+        remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&payment_plan=${searchData.payment_plan}`;
+      }else{
       remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
+      }
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
