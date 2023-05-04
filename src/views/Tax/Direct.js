@@ -109,8 +109,6 @@ const Direct = () => {
     localStorage.removeItem("prevPage");
   };
   const getData = (p) => {
-    let pagetry = JSON.parse(localStorage.getItem("freezeArticle"));
-    let data = JSON.parse(localStorage.getItem("searchArticle"));
     // let searchData = JSON.parse(localStorage.getItem("generated"));
     localStorage.setItem(`Article`, JSON.stringify(p))
     let remainApiPath = "";
@@ -148,7 +146,7 @@ const Direct = () => {
         };
         dataList.push(dataObj);
       });
-      setData(res.data.result);
+      setData(dataList);
       console.log(dataList);
       setCount(res?.data?.total);
       // getLimit();
