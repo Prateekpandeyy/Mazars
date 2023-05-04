@@ -148,7 +148,7 @@ const Direct = () => {
         };
         dataList.push(dataObj);
       });
-      setData(dataList);
+      setData(res.data.result);
       console.log(dataList);
       setCount(res?.data?.total);
       // getLimit();
