@@ -329,10 +329,10 @@ const CreateInvoice = () => {
       searchData?.opt ||
       searchData?.query_no
     ) {
-      if(searchData?.installment_no.length == 0){
-        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}s&orderby=${val}&orderbyfield=${field}`;
+      if((searchData?.installment_no) && (searchData?.payment_plan)){
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
       }else{
-      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
       }
     }
     else {
