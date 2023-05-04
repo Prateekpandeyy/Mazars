@@ -149,14 +149,14 @@ function PendingForAcceptence(props) {
   if(pre){
     setPrev(pre);
   }
-  let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
-    if (!sortVal) {
-      let sort = {
-        orderBy: 0,
-        fieldBy: 0,
-      };
-      localStorage.setItem("freezetpQuery2", JSON.stringify(sort));
-    }
+  // let sortVal = JSON.parse(localStorage.getItem("freezetpQuery2"));
+  //   if (!sortVal) {
+  //     let sort = {
+  //       orderBy: 0,
+  //       fieldBy: 0,
+  //     };
+  //     localStorage.setItem("freezetpQuery2", JSON.stringify(sort));
+  //   }
 
     let pageno = JSON.parse(localStorage.getItem("tpQuery2"));
     if (!pageno) {
