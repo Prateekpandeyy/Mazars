@@ -339,6 +339,13 @@ function InCompleteData({ CountIncomplete, data }) {
         }
         sortMessage(val, 1);
       },
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.created;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.toString().split("-").reverse().join("-");
+      },
     },
     {
       text: "Query no",
