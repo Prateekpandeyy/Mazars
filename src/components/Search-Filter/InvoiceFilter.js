@@ -94,6 +94,7 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         updateResult(res);
+        props.resetPaging();
         // if (res.data.code === 1) {
         //   props.setData(res.data.payment_detail);
         //   props.setRec(res.data.payment_detail.length);
@@ -111,6 +112,7 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         updateResult(res);
+        props.resetPaging();
         // if (res.data.code === 1) {
         //   props.setData(res.data.payment_detail);
         //   props.setRec(res.data.payment_detail.length);

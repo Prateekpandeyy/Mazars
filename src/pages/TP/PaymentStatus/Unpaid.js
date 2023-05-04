@@ -487,7 +487,7 @@ function AllPayment() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "Status",
       // headerFormatter: headerLabelFormatter,
       // sort: true,
       // onSort: (field, order) => {
