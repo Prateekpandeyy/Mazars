@@ -48,6 +48,7 @@ function AcceptedProposal() {
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
   const [resetTrigger, setresetTrigger] = useState(false);
 
@@ -82,39 +83,70 @@ function AcceptedProposal() {
     }
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowProposal3") === column.dataField ||
+      localStorage.getItem("prevtppro3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtppro3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowProposal3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
@@ -134,14 +166,18 @@ function AcceptedProposal() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal3"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpProposal3", JSON.stringify(sort));
+    let sort = localStorage.getItem("prevtppro3");
+    if(sort){
+      setPrev(sort);
     }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpProposal3"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpProposal3", JSON.stringify(sort));
+    // }
     if (pageno) {
       getProposalList(pageno);
     } else {
@@ -611,6 +647,8 @@ function AcceptedProposal() {
     localStorage.removeItem("tpPropsosal3");
     localStorage.removeItem(`freezetpProposal3`);
     localStorage.removeItem("tpArrowProposal3");
+    localStorage.removeItem("prevtppro3");
+    setPrev("");
   }
 
   return (

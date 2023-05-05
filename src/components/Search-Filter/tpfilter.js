@@ -115,10 +115,10 @@ function TaxProfessionalFilter(props) {
     console.log('reset is triggred in tpfilter');
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
-    setToDate(fullDate);
+    setToDate("");
     resetTriggerFunc();
     getData(1);
-    
+
     // dateValue.current.clearValue();
   };
   useEffect(() => {
@@ -158,6 +158,14 @@ function TaxProfessionalFilter(props) {
       setToDate(fullDate);
     }
   }, []);
+
+  useEffect(() => {
+    if (toDate.length == 0) {
+      let date = moment().format("DD-MM-YYYY");
+      let fullDate = date;
+      setToDate(fullDate);
+    }
+  }, [toDate]);
 
   const onSubmit = (data) => {
     let obj = {};
@@ -333,7 +341,7 @@ function TaxProfessionalFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
               userid
-            )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+            )}&status=1&cat_id=${data.store}&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
@@ -366,7 +374,7 @@ function TaxProfessionalFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${store2}&from=${fromDate
+            )}&status=1&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate

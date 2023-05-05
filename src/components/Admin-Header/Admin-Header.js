@@ -306,6 +306,21 @@ function AdminHeader({
       localStorage.removeItem("tpArrowAs4");
       localStorage.removeItem("tpArrowInvoice1");
       localStorage.removeItem("tpArrowInvoice2");
+      localStorage.removeItem("prevtpq1");
+      localStorage.removeItem("prevtpq2");
+      localStorage.removeItem("prevtpq3");
+      localStorage.removeItem("prevtpq4");
+      localStorage.removeItem("prevtppro1");
+      localStorage.removeItem("prevtppro2");
+      localStorage.removeItem("prevtppro3");
+      localStorage.removeItem("prevtppro4");
+      localStorage.removeItem("prevtppay1");
+      localStorage.removeItem("prevtppay2");
+      localStorage.removeItem("prevtppay3");
+      localStorage.removeItem("prevtpAs1");
+      localStorage.removeItem("prevtpAs2");
+      localStorage.removeItem("prevtpAs3");
+      localStorage.removeItem("prevtpAs4");
 
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {

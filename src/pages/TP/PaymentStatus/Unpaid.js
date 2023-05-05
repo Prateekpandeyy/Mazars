@@ -54,6 +54,7 @@ function AllPayment() {
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+  const [prev, setPrev] = useState("");
 
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
@@ -95,6 +96,10 @@ function AllPayment() {
       getPaymentStatus(pageno);
     } else {
       getPaymentStatus(1);
+    }
+    let pre =localStorage.getItem("prevtppay2")
+    if(pre){
+      setPrev(pre);
     }
     // getPaymentStatus();
   }, []);
@@ -175,39 +180,70 @@ function AllPayment() {
     }
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowPayment2") === column.dataField ||
+      localStorage.getItem("prevtppay2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtppay2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowPayment2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
@@ -392,7 +428,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -415,7 +451,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -438,7 +474,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -452,25 +488,25 @@ function AllPayment() {
     {
       text: "Status",
       dataField: "",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowPayment2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowPayment2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("tpArrowPayment2", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("tpArrowPayment2");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 6);
+      // },
 
       formatter: function (cell, row) {
         return (
@@ -504,7 +540,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       sortFunc: (a, b, order, dataField) => {
@@ -541,7 +577,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       sortFunc: (a, b, order, dataField) => {
@@ -579,7 +615,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 9);
       },
 
       sortFunc: (a, b, order, dataField) => {
@@ -616,7 +652,7 @@ function AllPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -679,6 +715,8 @@ function AllPayment() {
     localStorage.removeItem("tpPayment2");
     localStorage.removeItem(`freezetpPayment2`);
     localStorage.removeItem("tpArrowPayment2");
+    localStorage.removeItem("prevtppay2");
+    setPrev("")
   }
 
 

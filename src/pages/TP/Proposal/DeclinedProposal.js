@@ -51,6 +51,7 @@ function DeclinedProposal() {
   const [sortField, setSortField] = useState('');
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
 
 
   const myRef = useRef([]);
@@ -88,40 +89,73 @@ function DeclinedProposal() {
     }
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowProposal4") === column.dataField ||
+      localStorage.getItem("prevtppro4") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtppro4", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowProposal4") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
+
+  
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
@@ -140,14 +174,18 @@ function DeclinedProposal() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal4"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpProposal4", JSON.stringify(sort));
+    let pre =localStorage.getItem("prevtppro4");
+    if(pre){
+      setPrev(pre);
     }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpProposal4"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpProposal4", JSON.stringify(sort));
+    // }
     if (pageno) {
       getProposalList(pageno);
     } else {
@@ -653,6 +691,8 @@ function DeclinedProposal() {
     localStorage.removeItem("tpPropsosal4");
     localStorage.removeItem(`freezetpProposal4`);
     localStorage.removeItem("tpArrowProposal4");
+    localStorage.removeItem("prevtppro4");
+    setPrev("");
   }
 
 

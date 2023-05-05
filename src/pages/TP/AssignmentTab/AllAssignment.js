@@ -88,6 +88,7 @@ function AssignmentTab(props) {
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
   const [error, setError] = useState(false);
+  const [prev, setPrev] = useState("");
   let des = false;
   var rowStyle2 = {};
   var clcomp = {
@@ -104,39 +105,70 @@ function AssignmentTab(props) {
   };
 
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowAs1") === column.dataField ||
+      localStorage.getItem("prevtpAs1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpAs1", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowAs1") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
 
@@ -183,14 +215,18 @@ function AssignmentTab(props) {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment1"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpAssignment1", JSON.stringify(sort));
+    let pre =localStorage.getItem("prevtpAs1")
+    if(pre){
+      setPrev(pre);
     }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment1"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpAssignment1", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     if (!data) {
       if (pageno) {
@@ -335,6 +371,8 @@ function AssignmentTab(props) {
     localStorage.removeItem("tpAssignment1");
     localStorage.removeItem(`freezetpAssignment1`);
     localStorage.removeItem("tpArrowAs1");
+    localStorage.removeItem("prevtpAs1");
+    setPrev("")
   };
 
   //assingmentStatus
@@ -429,6 +467,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (accend === field) {
@@ -480,6 +519,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
 
@@ -504,6 +544,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (accend === true) {
@@ -527,6 +568,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (order === "asc") {
@@ -657,6 +699,7 @@ function AssignmentTab(props) {
           localStorage.setItem("tpArrowAs1", field);
         } else {
           setAccend("");
+          setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
         if (order === "asc") {

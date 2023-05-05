@@ -2,7 +2,7 @@ import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -10,6 +10,7 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import ModalManual from "../ModalManual/AllComponentManual";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import MessageIcon, {
@@ -30,6 +31,16 @@ function InprogressProposal() {
 
   const [id, setId] = useState(null);
   const [reject, setRejected] = useState(true);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
+  const [resetTrigger, setresetTrigger] = useState(false);
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -87,6 +98,7 @@ function InprogressProposal() {
           setProposalDisplay(res.data.result);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
+          setCount(res.data.total);
         }
       });
   };
@@ -357,6 +369,15 @@ function InprogressProposal() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPropsosal2");
+    localStorage.removeItem(`freezecustProposal2`);
+    localStorage.removeItem("custArrowProposal2");
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -375,6 +396,21 @@ function InprogressProposal() {
       </CardHeader>
       <CardBody>
         <Records records={records} />
+        {/* <Row className="mb-2">
+            <Col md="12" align="right">
+              <PaginatorCust
+                count={count}
+                setData={setProposalDisplay}
+                getData={getProposalData}
+                inprogressProposal="inprogressProposal"
+                index="custProposal2"
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row> */}
         <DataTablepopulated
           bgColor="#5f7b97"
           keyField={"assign_no"}

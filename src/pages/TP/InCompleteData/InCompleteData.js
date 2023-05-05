@@ -46,6 +46,7 @@ function InCompleteData({ CountIncomplete, data }) {
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
 
   const [count, setCount] = useState("0");
@@ -70,52 +71,72 @@ function InCompleteData({ CountIncomplete, data }) {
     },
   };
 
+
+
   // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
   //   return (
-  //     <div className="d-flex text-white w-100 flex-wrap">
-  //       {column.text}
-  //       {accend === column.dataField ? (
-  //         <ArrowUpwardIcon />
-  //       ) : (
-  //         <ArrowDownwardIcon />
-  //       )}
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropUpIcon
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //             ) : (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropUpIcon />
+  //             ) : (
+  //               <ArrowDropDownIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
   //     </div>
-  //   );
+  //   )
   // }
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowQuery3") === column.dataField ||
+      localStorage.getItem("prevtpq3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpq3", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
-      <div>
-        {column.dataField === isActive ?
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  className={turnGreen === true ? classes.isActive : ""}
-                />
-              )}
-            </div>
-          )
-          :
-          (
-            <div className="d-flex text-white w-100 flex-wrap">
-              {column.text}
-              {accend === column.dataField ? (
-                <ArrowDropDownIcon />
-              ) : (
-                <ArrowDropUpIcon />
-              )}
-            </div>
-          )
-        }
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowQuery3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
@@ -136,14 +157,18 @@ function InCompleteData({ CountIncomplete, data }) {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpQuery3", JSON.stringify(sort));
+    let pre =localStorage.getItem("prevtpq3")
+    if(pre){
+      setPrev(pre);
     }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpQuery3"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpQuery3", JSON.stringify(sort));
+    // }
     if (!pageno) {
       pageno = 1;
     }
@@ -163,7 +188,7 @@ function InCompleteData({ CountIncomplete, data }) {
     if ((data) && (!pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
@@ -174,7 +199,7 @@ function InCompleteData({ CountIncomplete, data }) {
     else if ((data) && (pagetry)) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+      )}&status=1&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
@@ -244,7 +269,7 @@ function InCompleteData({ CountIncomplete, data }) {
           .join("-")}&to=${data.toDate
             ?.split("-")
             .reverse()
-            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId
+            .join("-")}&status=1&pcat_id=${data.pcatId
         }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
@@ -558,6 +583,8 @@ function InCompleteData({ CountIncomplete, data }) {
     localStorage.removeItem("tpQuery3");
     localStorage.removeItem(`freezetpQuery3`);
     localStorage.removeItem("tpArrowQuery3");
+    localStorage.removeItem("prevtpq3");
+    setPrev("");
   }
 
   return (

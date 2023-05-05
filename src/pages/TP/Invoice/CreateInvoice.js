@@ -63,6 +63,8 @@ const CreateInvoice = () => {
   const [billNo, setBillNo] = useState();
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
+  const [prev, setPrev] = useState("");
+  
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -104,6 +106,10 @@ const CreateInvoice = () => {
       setIsActive(arrow);
       setTurnGreen(true);
     }
+    let pre =localStorage.getItem("prevtpInvoice2")
+    if(pre){
+      setPrev(pre);
+    }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     if (!sortVal) {
       let sort = {
@@ -126,14 +132,29 @@ const CreateInvoice = () => {
     let orderBy = 0;
     let fieldBy = 0;
     let remainApiPath = "";
+    if (e.length == 0){
+      let e =1;
+    }
     if (pagetry) {
       orderBy = pagetry.orderBy;
       fieldBy = pagetry.fieldBy;
     }
 
+<<<<<<< HEAD
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
+=======
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.query_no
+    ) {
+      if((searchData?.installment_no) && (searchData?.payment_plan)){
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      }else{
+>>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
-      &installment_no=${searchData?.installment_no}`;
+      &installment_no=${searchData?.installment_no}&payment_plan=${searchData?.payment_plan}`;
+      }
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -197,9 +218,56 @@ const CreateInvoice = () => {
     });
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return (
+  //     <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon
+  //                 className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowInvoice2") === column.dataField ||
+      localStorage.getItem("prevtpInvoice2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpInvoice2", column.dataField);
+    } else {
+      isActive = false;
+    }
     return (
+<<<<<<< HEAD
       <div>
         {column.dataField === isActive ? (
           <div className="d-flex text-white w-100 flex-wrap">
@@ -224,6 +292,21 @@ const CreateInvoice = () => {
             )}
           </div>
         )}
+=======
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowInvoice2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+>>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
       </div>
     );
   }
@@ -269,13 +352,29 @@ const CreateInvoice = () => {
     localStorage.setItem(`freezetpInvoice2`, JSON.stringify(obj));
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
 
+<<<<<<< HEAD
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
+=======
+    if (
+      searchData?.installment_no ||
+      searchData?.opt ||
+      searchData?.query_no
+    ) {
+      if((searchData?.installment_no) && (searchData?.payment_plan)){
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
+      }else{
+      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      }
+    }
+    else {
+>>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
         userid
       )}&invoice=0&orderby=${val}&orderbyfield=${field} `;
     }
+<<<<<<< HEAD
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
         setPage(1);
@@ -298,6 +397,40 @@ const CreateInvoice = () => {
       }
     });
   };
+=======
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setPage(1);
+          setBig(1);
+          if((res.data.total)<allEnd){
+            setBig(res.data.total);
+          }else{
+          setEnd(allEnd);
+          }
+          let all = [];
+          let sortId = 1;
+
+          res.data.payment_detail.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setTurnGreen(true);
+          setProposal(all);
+          setCountNotification(res.data.total);
+          console.log("proposal", all);
+        }
+      });
+  }
+>>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
 
   const columns = [
     {
@@ -387,19 +520,14 @@ const CreateInvoice = () => {
       },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
-        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+        if (row.payment_plan === "3" && row.sub_payment_plane === "2") {
           subplan = "B";
-        } else if (
-          row.paymnet_plan_code === "3" &&
-          row.sub_payment_plane === "1"
-        ) {
+        } else if (row.payment_plan === "3" && row.sub_payment_plane === "1") {
           subplan = "A";
         }
         return (
           <>
-            {row.paymnet_plan_code === null
-              ? ""
-              : `${row.paymnet_plan_code} ${subplan}`}
+            {row.payment_plan === null ? "" : `${row.payment_plan} ${subplan}`}
           </>
         );
       },
@@ -540,7 +668,24 @@ const CreateInvoice = () => {
     localStorage.removeItem("tpInvoice2");
     localStorage.removeItem(`freezetpInvoice2`);
     localStorage.removeItem("tpArrowInvoice2");
+<<<<<<< HEAD
   };
+=======
+    localStorage.removeItem("prevtpInvoice2");
+    setPrev("")
+  }
+
+  const gettingAftertds = () => {
+    let dif = (countNotification)-(allEnd*page)
+    if(page > 1){
+    if(dif == 1){
+      getProposalList(Number(page-1))
+    }else{
+    getProposalList(page)
+    }
+  }else{getProposalList(1)}
+  }
+>>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
 
   return (
     <>
@@ -646,7 +791,7 @@ const CreateInvoice = () => {
               installmentNo={installmentNo}
               billNo={billNo}
               gstNo={gstNo}
-              getProposalList={getProposalList}
+              getProposalList={gettingAftertds}
             />
           ) : (
             ""

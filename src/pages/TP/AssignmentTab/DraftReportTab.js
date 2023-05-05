@@ -83,6 +83,8 @@ function AssignmentTab() {
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
+  const [prev, setPrev] = useState("");
+
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -149,7 +151,8 @@ function AssignmentTab() {
       runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
-  console.log("catData", categoryData);
+  // console.log("catData", categoryData);
+
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
     let arrow = localStorage.getItem("tpArrowAs2")
@@ -159,13 +162,13 @@ function AssignmentTab() {
       setTurnGreen(true);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpAssignment2"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpAssignment2", JSON.stringify(sort));
-    }
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpAssignment2", JSON.stringify(sort));
+    // }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
     if (!data) {
       if (pageno) {
@@ -282,43 +285,78 @@ function AssignmentTab() {
     localStorage.removeItem("tpAssignment2");
     localStorage.removeItem(`freezetpAssignment2`);
     localStorage.removeItem("tpArrowAs2");
+    localStorage.removeItem("prevtpAs2");
+    setPrev("")
   };
 
   //assingmentStatus
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowAs2") === column.dataField ||
+      localStorage.getItem("prevtpAs2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpAs2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowAs2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
+
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
@@ -458,7 +496,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 2);
+        sortMessage(val, 3);
       },
     },
     {
@@ -481,7 +519,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 3);
+        sortMessage(val, 4);
       },
     },
     {
@@ -504,7 +542,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 5);
       },
 
       headerStyle: () => {
@@ -603,7 +641,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -634,7 +672,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -665,7 +703,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 8);
       },
 
       formatter: function (cell, row) {

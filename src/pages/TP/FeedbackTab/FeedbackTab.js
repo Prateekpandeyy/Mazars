@@ -20,6 +20,10 @@ import CustomHeading from "../../../components/Common/CustomHeading";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -41,8 +45,8 @@ function FeedbackTab() {
   const [page, setPage] = useState(0);
   const [atPage, setAtpage] = useState(1);
   const [accend, setAccend] = useState(false);
-  const [turnGreen,setTurnGreen]= useState(false);
-  const [isActive,setIsActive]=useState("");
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState('');
   const [sortField, setSortField] = useState('');
@@ -57,7 +61,7 @@ function FeedbackTab() {
   }
 
   // function headerLabelFormatter(column) {
-   
+
   //   return (
   //     <div className="d-flex text-white w-100 flex-wrap">
   //       {column.text}
@@ -74,41 +78,72 @@ function FeedbackTab() {
   //   );
   // }
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
-      </div>
-    )
-}
+  //   function headerLabelFormatter(column) {
+  //     // let reverse = "Exp_Delivery_Date"
+  //     return(
+  //       <div>
+  //       {column.dataField === isActive ?
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon 
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             ) : (
+  //               <ArrowDropUpIcon 
+  //               className={turnGreen === true ? classes.isActive : ""}
+  //               />
+  //             )}
+  //           </div>
+  //         )
+  //         :
+  //         (
+  //           <div className="d-flex text-white w-100 flex-wrap">
+  //             {column.text}
+  //             {accend === column.dataField ? (
+  //               <ArrowDropDownIcon />
+  //             ) : (
+  //               <ArrowDropUpIcon />
+  //             )}
+  //           </div>
+  //         )
+  //       }
+  //       </div>
+  //     )
+  // }
 
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowFeed") === column.dataField ||
+      localStorage.getItem("prevtpmsg") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtpmsg", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowFeed") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   // useEffect(() => {
   //   getFeedback();
@@ -116,11 +151,15 @@ function FeedbackTab() {
 
   useEffect(() => {
 
-    let arrow = localStorage.getItem("tpArrowFeed")
+    let pre = localStorage.getItem(" prevtpmsg");
+    let arrow = localStorage.getItem("tpArrowFeed");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
       setTurnGreen(true);
+    }
+    if (pre) {
+      setPrev(pre);
     }
     let pageno = JSON.parse(localStorage.getItem("tpFeedback"));
     if (pageno) {
@@ -259,17 +298,22 @@ function FeedbackTab() {
             setTotalPages(dynamicPage + 1)
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else if (e === (dynamicPage + 1)) {
-              setBig(rem + 1);
-              setEnd(res.data.total);
+            if (dynamicPage > 1) {
+              if (e === 1) {
+                setBig(rem + e);
+                setEnd(end);
+              } else if (e === (dynamicPage)) {
+                setBig(rem + 1);
+                setEnd(res.data.total);
+              } else {
+                setBig(rem + 1);
+                setEnd(end);
+              }
             } else {
-              setBig(rem + 1);
-              setEnd(end);
+              setBig(rem + e);
+              setEnd(res.data.total);
             }
-            for (let i = 1; i < (dynamicPage + 1); i++) {
+            for (let i = 1; i < (dynamicPage); i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -448,59 +492,59 @@ function FeedbackTab() {
                       {big}-{end} of {countFeedBack}
                     </span>
                     <span className="d-flex">
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => firstChunk()}
-                      >
-                        &lt; &lt;
-                      </button>
-
                       {page > 1 ? (
                         <button
-                          className="navButton mx-1"
-                          onClick={(e) => prevChunk()}
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
                         >
-                          &lt;
+                          <KeyboardDoubleArrowLeftIcon />
                         </button>
                       ) : (
                         ""
                       )}
-                      <div
-                        style={{
-                          display: "flex",
-                          maxWidth: "70px",
-                          width: "100%",
-                        }}
-                      >
+                      {page > 1 ? (
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
                         <select
                           value={page}
                           onChange={(e) => {
-                            setPage(e.target.value);
-                            getFeedback(e.target.value);
+                            setPage(Number(e.target.value));
+                            getFeedback(Number(e.target.value));
                           }}
-                          className="form-control"
-                        >
+                          className="form-control">
                           {defaultPage.map((i) => (
-                            <option value={i}>{i}</option>
+                            <option value={i} >{i}</option>
                           ))}
                         </select>
                       </div>
                       {defaultPage.length > page ? (
                         <button
-                          className="navButton mx-1"
+                          className="navButton"
                           onClick={(e) => nextChunk()}
                         >
-                          &gt;
+                          <KeyboardArrowRightIcon />
                         </button>
                       ) : (
                         ""
                       )}
-                      <button
-                        className="navButton mx-1"
-                        onClick={(e) => lastChunk()}
-                      >
-                        &gt; &gt;
-                      </button>
+                      {defaultPage.length > page ? (
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>

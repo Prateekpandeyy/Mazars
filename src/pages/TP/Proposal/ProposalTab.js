@@ -49,6 +49,8 @@ function ProposalTab(props) {
     color: "#42566a",
     fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {

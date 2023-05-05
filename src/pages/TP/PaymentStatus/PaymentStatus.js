@@ -95,6 +95,8 @@ function QueriesTab(props) {
     margin: "10px auto",
     fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (

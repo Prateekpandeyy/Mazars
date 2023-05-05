@@ -48,6 +48,8 @@ function InprogressProposal() {
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -73,39 +75,70 @@ function InprogressProposal() {
     }
   };
 
-  function headerLabelFormatter(column) {
-    // let reverse = "Exp_Delivery_Date"
-    return(
-      <div>
-      {column.dataField === isActive ?
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon 
-              className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        )
-        :
-        (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )
-      }
+  // function headerLabelFormatter(column) {
+  //   // let reverse = "Exp_Delivery_Date"
+  //   return(
+  //     <div>
+  //     {column.dataField === isActive ?
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           ) : (
+  //             <ArrowDropUpIcon 
+  //             className={turnGreen === true ? classes.isActive : ""}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //       :
+  //       (
+  //         <div className="d-flex text-white w-100 flex-wrap">
+  //           {column.text}
+  //           {accend === column.dataField ? (
+  //             <ArrowDropDownIcon />
+  //           ) : (
+  //             <ArrowDropUpIcon />
+  //           )}
+  //         </div>
+  //       )
+  //     }
+  //     </div>
+  //   )
+  // }
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("tpArrowProposal2") === column.dataField ||
+      localStorage.getItem("prevtppro2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtppro2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("tpArrowProposal2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
@@ -141,15 +174,18 @@ function InprogressProposal() {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let sortVal = JSON.parse(localStorage.getItem("freezetpProposal2"));
-    if (!sortVal) {
-      let sort = {
-        val: 0,
-        field: 1,
-      };
-      localStorage.setItem("freezetpProposal2", JSON.stringify(sort));
+    let pre = localStorage.getItem("prevtppro2");
+    if(pre){
+      setPrev(pre);
     }
-
+    // let sortVal = JSON.parse(localStorage.getItem("freezetpProposal2"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetpProposal2", JSON.stringify(sort));
+    // }
     if (pageno) {
       getProposalList(pageno);
     } else {
@@ -690,6 +726,8 @@ function InprogressProposal() {
     localStorage.removeItem("tpPropsosal2");
     localStorage.removeItem(`freezetpProposal2`);
     localStorage.removeItem("tpArrowProposal2");
+    localStorage.removeItem("prevtppro2");
+    setPrev("");
   }
 
   return (
