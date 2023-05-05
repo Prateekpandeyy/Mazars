@@ -520,6 +520,7 @@ function DeclinedProposal() {
     },
     {
       text: "Status",
+      dataField: "Status",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {

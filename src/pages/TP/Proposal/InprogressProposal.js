@@ -548,6 +548,7 @@ function InprogressProposal() {
     },
     {
       text: "Status",
+      dataField: "Status",
       sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {

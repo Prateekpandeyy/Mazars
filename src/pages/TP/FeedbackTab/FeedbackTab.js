@@ -378,7 +378,7 @@ function FeedbackTab() {
           localStorage.removeItem("tpArrowFeed");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

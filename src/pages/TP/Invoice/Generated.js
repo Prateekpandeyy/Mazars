@@ -482,7 +482,7 @@ const Generated = () => {
       },
 
       headerStyle: () => {
-        return { width: "80px" };
+        return { width: "120px" };
       },
     },
     {
@@ -511,7 +511,7 @@ const Generated = () => {
         fontSize: "11px",
       },
       headerStyle: () => {
-        return { fwidth: "150px" };
+        return { width: "150px" };
       },
     },
     {
@@ -783,6 +783,13 @@ const Generated = () => {
     localStorage.removeItem("prevtpInvoice1");
     setPrev("")
   }
+
+  useEffect(() => {
+    if(countNotification < allEnd){
+      setEnd(countNotification);
+    }
+  }, [setCountNotification])
+  
 
   const firstChunk = () => {
     setAtpage(1);

@@ -499,6 +499,7 @@ function AcceptedProposal() {
     },
     {
       text: "Status",
+      dataField: "Status",
       sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
@@ -511,7 +512,7 @@ function AcceptedProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProp2");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

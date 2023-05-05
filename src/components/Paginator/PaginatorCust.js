@@ -22,13 +22,13 @@ function PaginatorCust(props) {
     const [defaultPage, setDefaultPage] = useState(["1"]);
     const [result, setResult] = useState([]);
 
-    const userid = window.localStorage.getItem("userid");
+    const userId = window.localStorage.getItem("userId");
     const token = window.localStorage.getItem("clientToken");
     const myConfig = {
         headers: {
-          uit: token,
+            uit: token,
         },
-      };
+    };
 
 
     const {
@@ -220,75 +220,115 @@ function PaginatorCust(props) {
 
         if (query == "query") {
             let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustQuery1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custQuery1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                console.log('if data inpagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    id
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    id
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}`;
             }
         }
         else if (InprogressAllocation == "InprogressAllocation") {
             let data = JSON.parse(localStorage.getItem("searchDatacustQuery2"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustQuery2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custQuery2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                console.log('if data inpagination');
-                remainApiPath = ``;
+                if (data.p_status.length > 0) {
+                    remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                        id
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                } else {
+                    remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                        id
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=1&pcat_id=${data.pcatId}`;
+                }
             } else if ((data) && (pagetry)) {
-                remainApiPath = ``;
+                if (data.p_status.length > 0) {
+                    remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                        id
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+                } else {
+                    remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                        id
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+                }
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=1&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=1`;
             }
         }
         else if (InprogressQueryProposal == "InprogressQueryProposal") {
-            let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustQuery3"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custQuery3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                console.log('if data inpagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    id
+                  )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                  }&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    id
+                  )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                  }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                  )}&status=2&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                  )}&status=2`;
             }
         }
         else if (DeclinedQuery == "DeclinedQuery") {
-            let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let data = JSON.parse(localStorage.getItem("searchDatacustQuery4"));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustQuery4"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custQuery4`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-
+                remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
+                    id
+                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                  }&pcat_id=${data.pcatId}&status=${data.p_status}`;
             } else if ((data) && (pagetry)) {
-
+                remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
+                    id
+                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                  }&pcat_id=${data.pcatId}&status=${data.p_status}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-
+                remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`;
             } else {
-
+                remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(userId)}`;
             }
         }
         else if (proposal == "proposal") {
@@ -299,15 +339,15 @@ function PaginatorCust(props) {
             localStorage.setItem(`custPropsosal1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`;
             }
             else {
                 console.log('else in pagination');
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`;
             }
         }
         else if (inprogressProposal == "inprogressProposal") {
@@ -318,15 +358,15 @@ function PaginatorCust(props) {
             localStorage.setItem(`custPropsosal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`;
             }
             else {
                 console.log('else in pagination');
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userid)}&status=1`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`;
             }
         }
         else if (acceptedProposal == "acceptedProposal") {
@@ -536,51 +576,51 @@ function PaginatorCust(props) {
                         if (e > 1) {
                             customId = allEnd * (e - 1) + 1;
                         }
-                            setResult(res.data.result)
-                            let data = res.data.result;
-                            data.map((i) => {
-                                let data = {
-                                    ...i,
-                                    cid: customId,
-                                };
-                                customId++;
-                                all.push(data);
-                            });
-                            setData(all);
-                            console.log(all);
-                            setOnPage(e);
-                            setAtpage(e);
-                            // setRecords(res.data.result.length);
-                            const dynamicPage = Math.ceil(count / allEnd);
-                            console.log(dynamicPage, "to check dynamic page");
-                            setTotalPages(dynamicPage)
-                            let rem = (e - 1) * allEnd;
-                            let end = e * allEnd;
-                            if (dynamicPage > 1) {
-                                if (e == 1) {
-                                    setBig(rem + e);
-                                    setEnd(allEnd);
-                                    // console.log("e at 1", big, end);
-                                }
-                                else if ((e == (dynamicPage))) {
-                                    setBig(rem + 1);
-                                    setEnd(res.data.total);
-                                    // console.log("e at last page");
-                                }
-                                else {
-                                    setBig(rem + 1);
-                                    setEnd(end);
-                                    // console.log(`e at between page ${e}`, big, end);
-                                }
-                            } else {
+                        setResult(res.data.result)
+                        let data = res.data.result;
+                        data.map((i) => {
+                            let data = {
+                                ...i,
+                                cid: customId,
+                            };
+                            customId++;
+                            all.push(data);
+                        });
+                        setData(all);
+                        console.log(all);
+                        setOnPage(e);
+                        setAtpage(e);
+                        // setRecords(res.data.result.length);
+                        const dynamicPage = Math.ceil(count / allEnd);
+                        console.log(dynamicPage, "to check dynamic page");
+                        setTotalPages(dynamicPage)
+                        let rem = (e - 1) * allEnd;
+                        let end = e * allEnd;
+                        if (dynamicPage > 1) {
+                            if (e == 1) {
                                 setBig(rem + e);
+                                setEnd(allEnd);
+                                // console.log("e at 1", big, end);
+                            }
+                            else if ((e == (dynamicPage))) {
+                                setBig(rem + 1);
                                 setEnd(res.data.total);
+                                // console.log("e at last page");
                             }
-                            for (let i = 1; i <= dynamicPage; i++) {
-                                droppage.push(i);
+                            else {
+                                setBig(rem + 1);
+                                setEnd(end);
+                                // console.log(`e at between page ${e}`, big, end);
                             }
-                            setDefaultPage(droppage);
-                        
+                        } else {
+                            setBig(rem + e);
+                            setEnd(res.data.total);
+                        }
+                        for (let i = 1; i <= dynamicPage; i++) {
+                            droppage.push(i);
+                        }
+                        setDefaultPage(droppage);
+
 
                         // console.log(defaultPage, "in submit of defaultPage");
                     }

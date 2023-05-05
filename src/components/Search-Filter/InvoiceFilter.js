@@ -94,6 +94,7 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         updateResult(res);
+        props.resetPaging();
         // if (res.data.code === 1) {
         //   props.setData(res.data.payment_detail);
         //   props.setRec(res.data.payment_detail.length);
@@ -111,6 +112,7 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         updateResult(res);
+        props.resetPaging();
         // if (res.data.code === 1) {
         //   props.setData(res.data.payment_detail);
         //   props.setRec(res.data.payment_detail.length);
@@ -168,7 +170,7 @@ const InvoiceFilter = (props) => {
     setQueryNo("");
     setInstallmentNo("");
     setFromDate("");
-    setToDate("");
+    setToDate(current_date);
     setStatus("");
     props.resetPaging();
     localStorage.removeItem(props.invoice);
@@ -407,8 +409,9 @@ const InvoiceFilter = (props) => {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={fromDate}
-                  onChange={(e) => setFromDate(e.target.defaultValue)}
+                  // defaultValue={fromDate}
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
                 />
               </div>
               <div className="col-md-1">
@@ -421,6 +424,7 @@ const InvoiceFilter = (props) => {
                   className="form-select form-control"
                   ref={register}
                   defaultValue={current_date}
+                  value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
                 />
               </div>
