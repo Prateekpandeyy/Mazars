@@ -64,7 +64,7 @@ const CreateInvoice = () => {
   const [id2, setId2] = useState();
   const [gstNo, setGstinNo] = useState();
   const [prev, setPrev] = useState("");
-  
+
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -106,8 +106,8 @@ const CreateInvoice = () => {
       setIsActive(arrow);
       setTurnGreen(true);
     }
-    let pre =localStorage.getItem("prevtpInvoice2")
-    if(pre){
+    let pre = localStorage.getItem("prevtpInvoice2");
+    if (pre) {
       setPrev(pre);
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice2"));
@@ -132,27 +132,19 @@ const CreateInvoice = () => {
     let orderBy = 0;
     let fieldBy = 0;
     let remainApiPath = "";
-    if (e.length == 0){
-      let e =1;
+    if (e.length == 0) {
+      let e = 1;
     }
     if (pagetry) {
       orderBy = pagetry.orderBy;
       fieldBy = pagetry.fieldBy;
     }
 
-<<<<<<< HEAD
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-=======
-    if (
-      searchData?.installment_no ||
-      searchData?.opt ||
-      searchData?.query_no
-    ) {
-      if((searchData?.installment_no) && (searchData?.payment_plan)){
+      if (searchData?.installment_no && searchData?.payment_plan) {
         remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
-      }else{
->>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
-      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
+      } else {
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
       &installment_no=${searchData?.installment_no}&payment_plan=${searchData?.payment_plan}`;
       }
     } else {
@@ -267,32 +259,6 @@ const CreateInvoice = () => {
       isActive = false;
     }
     return (
-<<<<<<< HEAD
-      <div>
-        {column.dataField === isActive ? (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon
-                className={turnGreen === true ? classes.isActive : ""}
-              />
-            ) : (
-              <ArrowDropUpIcon
-                className={turnGreen === true ? classes.isActive : ""}
-              />
-            )}
-          </div>
-        ) : (
-          <div className="d-flex text-white w-100 flex-wrap">
-            {column.text}
-            {accend === column.dataField ? (
-              <ArrowDropDownIcon />
-            ) : (
-              <ArrowDropUpIcon />
-            )}
-          </div>
-        )}
-=======
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
@@ -306,7 +272,6 @@ const CreateInvoice = () => {
             />
           )}
         </div>
->>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
       </div>
     );
   }
@@ -352,34 +317,26 @@ const CreateInvoice = () => {
     localStorage.setItem(`freezetpInvoice2`, JSON.stringify(obj));
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
 
-<<<<<<< HEAD
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
-    } else {
-=======
-    if (
-      searchData?.installment_no ||
-      searchData?.opt ||
-      searchData?.query_no
-    ) {
-      if((searchData?.installment_no) && (searchData?.payment_plan)){
+      if (searchData?.installment_no && searchData?.payment_plan) {
         remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
-      }else{
-      remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      } else {
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
       }
-    }
-    else {
->>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
+    } else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
         userid
       )}&invoice=0&orderby=${val}&orderbyfield=${field} `;
     }
-<<<<<<< HEAD
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
         setPage(1);
         setBig(1);
-        setEnd(allEnd);
+        if (res.data.total < allEnd) {
+          setBig(res.data.total);
+        } else {
+          setEnd(allEnd);
+        }
         let all = [];
         let sortId = 1;
 
@@ -393,44 +350,11 @@ const CreateInvoice = () => {
         });
         setTurnGreen(true);
         setProposal(all);
+        setCountNotification(res.data.total);
         console.log("proposal", all);
       }
     });
   };
-=======
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          if((res.data.total)<allEnd){
-            setBig(res.data.total);
-          }else{
-          setEnd(allEnd);
-          }
-          let all = [];
-          let sortId = 1;
-
-          res.data.payment_detail.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setTurnGreen(true);
-          setProposal(all);
-          setCountNotification(res.data.total);
-          console.log("proposal", all);
-        }
-      });
-  }
->>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
 
   const columns = [
     {
@@ -668,24 +592,22 @@ const CreateInvoice = () => {
     localStorage.removeItem("tpInvoice2");
     localStorage.removeItem(`freezetpInvoice2`);
     localStorage.removeItem("tpArrowInvoice2");
-<<<<<<< HEAD
-  };
-=======
     localStorage.removeItem("prevtpInvoice2");
-    setPrev("")
-  }
+    setPrev("");
+  };
 
   const gettingAftertds = () => {
-    let dif = (countNotification)-(allEnd*page)
-    if(page > 1){
-    if(dif == 1){
-      getProposalList(Number(page-1))
-    }else{
-    getProposalList(page)
+    let dif = countNotification - allEnd * page;
+    if (page > 1) {
+      if (dif == 1) {
+        getProposalList(Number(page - 1));
+      } else {
+        getProposalList(page);
+      }
+    } else {
+      getProposalList(1);
     }
-  }else{getProposalList(1)}
-  }
->>>>>>> 5e0d7c5690116a2de31219f3b9eb8ef648354607
+  };
 
   return (
     <>
