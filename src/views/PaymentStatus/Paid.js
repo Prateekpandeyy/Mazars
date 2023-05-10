@@ -147,20 +147,28 @@ function Unpaid() {
     setOnPage(e);
     setLoading(true);
     if ((data) && (!pagetry)){
-      remainApiPath = ``
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
     }else if ((data) && (pagetry)){
-      remainApiPath = ``
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}`
     }else if ((!data) && (pagetry)){
-      remainApiPath = ``
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&status=2&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath = ``
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&status=2`
     }
 
     axios
       .get(
-        `${baseUrl}/customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-          userId
-        )}&status=2`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {

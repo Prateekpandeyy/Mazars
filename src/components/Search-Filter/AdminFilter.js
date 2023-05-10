@@ -236,7 +236,6 @@ function AdminFilter(props) {
           });
       }
     }
-
     if (pendingAlloation == "pendingAlloation") {
       if (data.route) {
         axios
@@ -348,7 +347,6 @@ function AdminFilter(props) {
           });
       }
     }
-
     if (allProposal == "allProposal") {
       if (data.route) {
         axios
@@ -512,7 +510,6 @@ function AdminFilter(props) {
           });
       }
     }
-
     if (declinedProposal == "declinedProposal") {
       if (data.route) {
         axios
@@ -548,7 +545,6 @@ function AdminFilter(props) {
           });
       }
     }
-
     if (AllPayment == "AllPayment") {
       if (data.route) {
         axios
@@ -585,7 +581,6 @@ function AdminFilter(props) {
           });
       }
     }
-
     if (unpaid == "unpaid") {
       if (data.route) {
         axios
@@ -623,7 +618,6 @@ function AdminFilter(props) {
           });
       }
     }
-
     if (paid == "paid") {
       if (data.route) {
         axios

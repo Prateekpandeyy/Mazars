@@ -153,12 +153,12 @@ function Paid() {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         id
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=2&pcat_id=${data.pcatId}`
+      }&status=1&pcat_id=${data.pcatId}`
     }else if ((data) && (pagetry)){
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         id
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
     }else if ((!data) && (pagetry)){
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId

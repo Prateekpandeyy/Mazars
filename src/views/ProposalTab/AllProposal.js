@@ -111,15 +111,53 @@ function ProposalTab() {
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal1`));
-    if (!local) {
-    getProposalData(1);
+    let pageno = JSON.parse(localStorage.getItem("custProposal1"));
+    let arrow = localStorage.getItem("custArrowProposal1")
+    let pre =localStorage.getItem("prevcustp1")
+    if(pre){
+      setPrev(pre);
     }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+      if (pageno) {
+        getProposalData(pageno);
+      }else{
+    getProposalData(1);
+      }
+    // }
   }, []);
 
   const getProposalData = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustProposal1"));
+    localStorage.setItem(`custProposal1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`
+    }
     axios
       .get(
-        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {

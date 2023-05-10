@@ -119,9 +119,25 @@ function Paid() {
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustPay1`));
-    if (!local) {
-      getPaymentStatus(1);
+    let pageno = JSON.parse(localStorage.getItem("custPay1"));
+    let arrow = localStorage.getItem("custArrowPay1")
+    let pre =localStorage.getItem("prevcustpay1")
+    if(pre){
+      setPrev(pre);
     }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+
+    // if (!local) {
+      if (pageno) {
+      getPaymentStatus(pageno);
+      }else{
+      getPaymentStatus(1);
+      }
+    // }
   }, []);
 
   const toggle = (key) => {
@@ -141,9 +157,34 @@ function Paid() {
   };
 
   const getPaymentStatus = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustPay1"));
+    localStorage.setItem(`custPay1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {

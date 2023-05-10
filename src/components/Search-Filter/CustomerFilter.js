@@ -84,7 +84,7 @@ function CustomerFilter(props) {
             }
           });
         }
-        
+
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -92,7 +92,7 @@ function CustomerFilter(props) {
         setStatus1(dk.p_status);
         setQueryNo(dk.query_no);
         // onSubmit(dk);
-        console.log(showSubCat,"subshowCat");
+        console.log(showSubCat, "subshowCat");
       }
     }
   }, []);
@@ -181,7 +181,7 @@ function CustomerFilter(props) {
       };
     }
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
-    console.log("Obj",obj);
+    console.log("Obj", obj);
     let customId = 1;
     let remainApiPath = ` `;
 
@@ -346,7 +346,7 @@ function CustomerFilter(props) {
                   // setRecords(res.data.result.length);
                   setCount(res.data.total);
                   resetTriggerFunc();
-                localStorage.setItem(`custQuery2`, JSON.stringify(1));
+                  localStorage.setItem(`custQuery2`, JSON.stringify(1));
                 }
               }
             })
@@ -798,6 +798,8 @@ function CustomerFilter(props) {
                 setCount(res.data.total);
                 // setData(res.data.result);
                 // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custPropsosal3`, JSON.stringify(1));
               }
             }
           })
@@ -866,6 +868,8 @@ function CustomerFilter(props) {
                 setData(all);
                 setCount(res.data.total);
                 // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custPropsosal4`, JSON.stringify(1));
               }
             }
           })
@@ -1114,8 +1118,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 // setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1137,6 +1152,8 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custPay1`, JSON.stringify(1));
               }
             }
           })
@@ -1180,8 +1197,20 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                // setRecords(res.data.result.length);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custPay2`, JSON.stringify(1));
               }
             }
           })
@@ -1225,8 +1254,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 // setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custPay3`, JSON.stringify(1));
               }
             }
           })
