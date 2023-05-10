@@ -45,7 +45,7 @@ const Direct = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   // const allEnd = Number(localStorage.getItem("client_record_per_page"));
-  const allEnd = 5;
+  const allEnd = 50;
 
   const classes = useStyles();
   const [count, setCount] = useState(0);
@@ -575,7 +575,7 @@ const Direct = () => {
                               </TableRow>
                             ))}
                       </TableBody>
-                      {data.length > 10 ? (
+                      {/* {data.length > 10 ? (
                         <TablePagination
                           rowsPerPageOptions={[5, 10, 15, 20, 25]}
                           count={data.length}
@@ -586,7 +586,7 @@ const Direct = () => {
                         />
                       ) : (
                         ""
-                      )}
+                      )} */}
                     </Table>
                   </TableContainer>
                 </div>
@@ -791,7 +791,7 @@ const Direct = () => {
                             </TableRow>
                           ))}
                     </TableBody>
-                    {data.length > 10 ? (
+                    {/* {data.length > 10 ? (
                       <TablePagination
                         rowsPerPageOptions={[5, 10, 15, 20, 25]}
                         count={data.length}
@@ -802,7 +802,7 @@ const Direct = () => {
                       />
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </Table>
                 </TableContainer>
               </div>
