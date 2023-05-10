@@ -390,7 +390,7 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custProposal3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
@@ -414,7 +414,7 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custProposal4`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
