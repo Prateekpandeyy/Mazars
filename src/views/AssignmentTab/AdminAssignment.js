@@ -1,7 +1,7 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -14,6 +14,8 @@ import ModalManual from "../ModalManual/AllComponentManual";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CommonServices from "../../common/common";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
+
 import { useHistory } from "react-router-dom";
 import MessageIcon, {
   ViewDiscussionIcon,
@@ -31,6 +33,21 @@ function AdminAssignment() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
   const [openManual, setManual] = useState(false);
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
@@ -63,7 +80,7 @@ function AdminAssignment() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [reportModal]);
+  }, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -82,23 +99,82 @@ function AdminAssignment() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   useEffect(() => {
-    getAssignmentData();
+    let local = JSON.parse(localStorage.getItem(`searchDatacustAs5`));
+    let pageno = JSON.parse(localStorage.getItem("custAs5"));
+    let arrow = localStorage.getItem("custArrowAs5")
+    let pre = localStorage.getItem("prevcustAs5")
+    if (pre) {
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    if (pageno) {
+      getAssignmentData(pageno);
+    } else {
+      getAssignmentData(1);
+    }
   }, []);
 
-  const getAssignmentData = () => {
+  const getAssignmentData = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatacustAs5"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustAs5"));
+    localStorage.setItem(`custAs5`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if ((data) && (!pagetry)) {
+      remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
+      remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
+        userId
+      )}`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
-          userId
-        )}`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setAssignmentDisplay(res.data.result);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAssignmentDisplay(all);
+          setCount(res.data.total);
           setRecords(res.data.result.length);
         } else if (res.data.code === 2) {
           CommonServices.clientLogout(history);
@@ -111,8 +187,8 @@ function AdminAssignment() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
@@ -287,7 +363,7 @@ function AdminAssignment() {
         return (
           <>
             {row.status === "Payment decliend" ||
-            row.paid_status === "2" ? null : (
+              row.paid_status === "2" ? null : (
               <div>
                 {row.assignment_draft_report || row.final_report ? (
                   <div
@@ -365,6 +441,17 @@ function AdminAssignment() {
     return null;
   }
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custAs5");
+    localStorage.removeItem(`freezecustAs5`);
+    localStorage.removeItem("custArrowAs5");
+    localStorage.removeItem("prevcustAs5");
+    setPrev("");
+  }
+
   return (
     <>
       <Card>
@@ -380,11 +467,30 @@ function AdminAssignment() {
             assignment="assignmentpermission"
             records={records}
             setRecords={setRecords}
+            index="custAs5"
+            setOnPage={setOnPage}
+            resetTrigger={resetTrigger}
+            setresetTrigger={setresetTrigger}
           />
         </CardHeader>
 
         <CardBody>
-          <Records records={records} />
+          {/* <Records records={records} /> */}
+          <Row className="mb-2">
+            <Col md="12" align="right">
+              <PaginatorCust
+                count={count}
+                id={userId}
+                setData={setAssignmentDisplay}
+                getData={getAssignmentData}
+                assignment="assignmentpermission"
+                index="custAs5"
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
           <Modal isOpen={openManual} toggle={needHelp} size="lg">
             <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
             <ModalBody>

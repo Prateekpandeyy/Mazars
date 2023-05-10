@@ -47,7 +47,7 @@ function AssignmentTab(props) {
         myConfig
       )
       .then((res) => {
-        setAllAssignment(res.data.result.length);
+        setAllAssignment(res.data.total);
       });
   };
 
@@ -61,7 +61,7 @@ function AssignmentTab(props) {
       )
       .then((response) => {
         if (response.data.code === 1) {
-          setInprogressAssignmentCount(response.data.result.length);
+          setInprogressAssignmentCount(response.data.total);
         }
       });
   };
@@ -76,7 +76,7 @@ function AssignmentTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setCompleteAssignment(res.data.result.length);
+          setCompleteAssignment(res.data.total);
         }
       });
   };
@@ -91,10 +91,11 @@ function AssignmentTab(props) {
       )
       .then((response) => {
         if (response.data.code === 1) {
-          setDeclinedAssignment(response.data.result.length);
+          setDeclinedAssignment(response.data.total);
         }
       });
   };
+  
   const getADminDeclinedPayment = () => {
     axios
       .get(
@@ -105,7 +106,7 @@ function AssignmentTab(props) {
       )
       .then((response) => {
         if (response.data.code === 1) {
-          setAdminDecliend(response.data.result.length);
+          setAdminDecliend(response.data.total);
         }
       });
   };

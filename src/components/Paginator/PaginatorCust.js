@@ -353,27 +353,27 @@ function PaginatorCust(props) {
             localStorage.setItem(`custPropsosal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 if (data.p_status) {
-                    remainApiPath =`customers/getProposals?page=${e}&uid=${JSON.parse(
+                    remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                         id
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-                }else{
-                    remainApiPath =`customers/getProposals?page=${e}&uid=${JSON.parse(
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+                } else {
+                    remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                         id
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
                 }
             } else if ((data) && (pagetry)) {
                 if (data.p_status) {
-                    remainApiPath =`customers/getProposals?page=${e}&uid=${JSON.parse(
+                    remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                         id
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                      }&status=${data.p_status}&pcat_id=${data.pcatId}`
-                }else{
-                    remainApiPath =`customers/getProposals?page=${e}&uid=${JSON.parse(
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+                } else {
+                    remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                         id
-                      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                      }&status=1&pcat_id=${data.pcatId}`
+                    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                        }&status=1&pcat_id=${data.pcatId}`
                 }
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`;
@@ -417,13 +417,13 @@ function PaginatorCust(props) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=3&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=3&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=3&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=3&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`;
             }
@@ -436,24 +436,24 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custAs1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(userId)}`;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`;
             }
             else {
                 console.log('else in pagination');
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(userId)}`;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(userId)}`;
             }
         }
         else if (assignment == "assignmentInprogress") {
@@ -461,24 +461,27 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custAs2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/completeAssignments?user=${JSON.parse(
-                    id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=1&pcat_id=${data.pcatId}`;
+                    userId
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=1&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignments?user=${JSON.parse(
-                    id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=1&pcat_id=${data.pcatId}`;
+                    userId
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=1&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=1`;
             }
         }
         else if (assignment == "completeAssignment") {
@@ -486,24 +489,27 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custAs3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=2&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=2&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=2&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=2&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=2&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=1`;
             }
         }
         else if (assignment == "declinedAssignment") {
@@ -511,24 +517,27 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custAs4`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=3&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=3&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=3&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=3&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=3&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+                    userId
+                )}&status=3`;
             }
         }
         else if (assignment == "assignmentpermission") {
@@ -536,24 +545,27 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(``, JSON.stringify(e));
+            localStorage.setItem(`custAs5`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
-                remainApiPath = `customers/completeAssignmentspermission?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/completeAssignmentspermission?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
+                    userId
+                )}&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
-                remainApiPath = ``;
+                remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
+                    userId
+                )}`;
             }
         }
         else if (allPayment == "allPayment") {
@@ -566,13 +578,13 @@ function PaginatorCust(props) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}`;
             }
@@ -590,13 +602,13 @@ function PaginatorCust(props) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=2&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=2&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customecustomers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=2&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=2&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=2`;
             }
@@ -614,13 +626,13 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=1&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=1&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     id
-                  )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                  }&status=1&pcat_id=${data.pcatId}`;
+                )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+                    }&status=1&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=1`;
             }
@@ -734,13 +746,13 @@ function PaginatorCust(props) {
                         {big}-{end} of {count}
                     </span>
                     <span className="d-flex">
-                    {page > 1 ? (
-                        <button
-                            className="navButton"
-                            onClick={(e) => firstChunk()}
-                        >
-                            <KeyboardDoubleArrowLeftIcon />
-                        </button>
+                        {page > 1 ? (
+                            <button
+                                className="navButton"
+                                onClick={(e) => firstChunk()}
+                            >
+                                <KeyboardDoubleArrowLeftIcon />
+                            </button>
                         ) : (
                             ""
                         )}
@@ -779,12 +791,12 @@ function PaginatorCust(props) {
                             ""
                         )}
                         {defaultPage.length > page ? (
-                        <button
-                            className="navButton"
-                            onClick={(e) => lastChunk()}
-                        >
-                            <KeyboardDoubleArrowRightIcon />
-                        </button>
+                            <button
+                                className="navButton"
+                                onClick={(e) => lastChunk()}
+                            >
+                                <KeyboardDoubleArrowRightIcon />
+                            </button>
                         ) : (
                             ""
                         )}

@@ -893,8 +893,18 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
               }
             }
           })
@@ -914,8 +924,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs1`, JSON.stringify(1));
               }
             }
           })
@@ -938,8 +961,18 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
               }
             }
           })
@@ -959,8 +992,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs2`, JSON.stringify(1));
               }
             }
           })
@@ -983,8 +1029,18 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
               }
             }
           })
@@ -1004,8 +1060,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs3`, JSON.stringify(1));
               }
             }
           })
@@ -1028,8 +1097,18 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
               }
             }
           })
@@ -1049,8 +1128,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs4`, JSON.stringify(1));
               }
             }
           })
@@ -1073,8 +1165,18 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
               }
             }
           })
@@ -1094,8 +1196,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs5`, JSON.stringify(1));
               }
             }
           })
