@@ -1,0 +1,17 @@
+.modal-dialog:has(.modalShowHtml){
+    max-width: 585px!important;
+}
+
+.modalShowHtml td  a  span  img{
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
+.modalShowHtml tbody tr td ul li{
+    margin-left: 2%;
+}
+.modalShowHtml tbody tr td:has(p){
+    min-height: 59px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

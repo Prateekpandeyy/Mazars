@@ -30,6 +30,12 @@ function AdminFilter(props) {
     paid,
     unpaid,
     index,
+    resetPaging,
+    setCountNotification,
+    setDefaultPage,
+    page,
+    setBig,
+    setEnd,
   } = props;
 
   const [selectedData, setSelectedData] = useState([]);
@@ -44,7 +50,7 @@ function AdminFilter(props) {
   const [catShowData, setCatShowData] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef();
-
+  var allEnd = Number(localStorage.getItem("admin_record_per_page"));
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
     headers: {
@@ -73,6 +79,7 @@ function AdminFilter(props) {
   //handleSubCategory
   const handleSubCategory = (value) => {
     setShowSubCat(value);
+
     tax2.map((i) => {
       if (i.details == value.at(-1)) {
         setStore2((payload) => {
@@ -95,23 +102,74 @@ function AdminFilter(props) {
   //reset date
   const resetData = () => {
     localStorage.removeItem(`searchData${index}`);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
     reset();
     setSelectedData([]);
     setShowSubCat([]);
     setCatShowData([]);
     setStore2([]);
     setTax2([]);
-    getData();
+
     setFromDate("");
     setStatus("");
     setQueryNo("");
+    resetPaging();
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     setToDate(fullDate);
-    dateValue.current.clearValue();
+    getData(1);
+    // dateValue.current.clearValue();
   };
+  const updateResult = (res) => {
+    let droppage = [];
+    let customId = 1;
+    if (res.data.code === 1) {
+      let all = [];
+      let data = res.data.result;
+      data.map((i) => {
+        let data = {
+          ...i,
+          cid: customId,
+        };
+        customId++;
+        all.push(data);
+      });
+      let end = allEnd;
 
+      if (allEnd > res.data.total) {
+        end = res.data.total;
+      }
+
+      setEnd(end);
+      let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+      let rem = (page - 1) * allEnd;
+
+      if (page === 1) {
+        setBig(rem + page);
+      } else {
+        setBig(rem + 1);
+      }
+      for (let i = 1; i <= dynamicPage; i++) {
+        droppage.push(i);
+      }
+      setDefaultPage(droppage);
+      setData(all);
+      setCountNotification(res.data.total);
+      setRecords(res.data.total);
+
+      setDefaultPage(droppage);
+      resetPaging();
+      // if (
+      //   Object.keys(returnData).length === 0 &&
+      //   returnData.constructor === Object
+      // ) {
+
+      // }
+    }
+  };
   const onSubmit = (data) => {
+    console.log("data", data);
     let obj = {};
     if (data.route) {
       obj = {
@@ -138,323 +196,6 @@ function AdminFilter(props) {
     }
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
-
-    if (allProposal == "allProposal") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status1=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status1=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (acceptedProposal == "acceptedProposal") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?status1=2&cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (pendingAcceptedProposal == "pendingAcceptedProposal") {
-      if (data.route) {
-        if (data.p_status.length > 0) {
-          axios
-            .get(
-              `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${
-                data.store
-              }&from=${data.fromDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&to=${data.toDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-              myConfig
-            )
-            .then((res) => {
-              if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
-              }
-            });
-        } else {
-          axios
-            .get(
-              `${baseUrl}/admin/getProposals?status1=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-              myConfig
-            )
-            .then((res) => {
-              if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
-              }
-            });
-        }
-      } else {
-        if (data.p_status.length > 0) {
-          axios
-            .get(
-              `${baseUrl}/admin/getProposals?status1=${
-                data.p_status
-              }&cat_id=${store2}&from=${fromDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&to=${toDate
-                ?.split("-")
-                .reverse()
-                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
-              myConfig
-            )
-            .then((res) => {
-              if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
-              }
-            });
-        } else {
-          axios
-            .get(
-              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate}&to=${toDate}&pcat_id=${selectedData}`,
-              myConfig
-            )
-            .then((res) => {
-              if (res.data.code === 1) {
-                if (res.data.result) {
-                  setData(res.data.result);
-                  setRecords(res.data.result.length);
-                }
-              }
-            });
-        }
-      }
-    }
-
-    if (declinedProposal == "declinedProposal") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?&status=6&cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (declinedQueries == "declinedQueries") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/declinedQueries?cat_id=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
-    if (pendingForProposal == "pendingForProposal") {
-      if (data.route) {
-        axios
-          .get(
-            `${baseUrl}/admin/pendingProposal?category=${
-              data.store
-            }&from=${data.fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
-            }`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      } else {
-        axios
-          .get(
-            `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
-      }
-    }
-
     if (allQueries == "allQueries") {
       if (data.route) {
         axios
@@ -474,8 +215,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+              updateResult(res);
             }
           });
       } else {
@@ -491,8 +231,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+              updateResult(res);
             }
           });
       }
@@ -515,10 +254,7 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
           });
       } else {
@@ -535,11 +271,280 @@ function AdminFilter(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              updateResult(res);
             }
+          });
+      }
+    }
+    if (pendingForProposal == "pendingForProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/pendingProposal?category=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/pendingProposal?category=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      }
+    }
+    if (declinedQueries == "declinedQueries") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/declinedQueries?cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/declinedQueries?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      }
+    }
+
+    if (allProposal == "allProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status1=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&status1=${
+              data.p_status
+            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      }
+    }
+    if (pendingAcceptedProposal == "pendingAcceptedProposal") {
+      if (data.route) {
+        if (data.p_status.length > 0) {
+          axios
+            .get(
+              `${baseUrl}/admin/getProposals?status1=${data.p_status}&cat_id=${
+                data.store
+              }&from=${data.fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+              myConfig
+            )
+            .then((res) => {
+              updateResult(res);
+            });
+        } else {
+          axios
+            .get(
+              `${baseUrl}/admin/getProposals?status1=1&cat_id=${
+                data.store
+              }&from=${data.fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                let customId = 1;
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                resetPaging();
+              }
+            });
+        }
+      } else {
+        if (data.p_status.length > 0) {
+          axios
+            .get(
+              `${baseUrl}/admin/getProposals?status1=${
+                data.p_status
+              }&cat_id=${store2}&from=${fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+              myConfig
+            )
+            .then((res) => {
+              updateResult(res);
+            });
+        } else {
+          axios
+            .get(
+              `${baseUrl}/admin/getProposals?status1=1&cat_id=${store2}&from=${fromDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+              myConfig
+            )
+            .then((res) => {
+              updateResult(res);
+            });
+        }
+      }
+    }
+    if (acceptedProposal == "acceptedProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?status1=2&cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?status1=2&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      }
+    }
+
+    if (declinedProposal == "declinedProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?&status=6&cat_id=${
+              data.store
+            }&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/admin/getProposals?&status=6&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+            myConfig
+          )
+          .then((res) => {
+            updateResult(res);
           });
       }
     }
@@ -562,12 +567,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -581,12 +581,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -607,12 +602,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -629,12 +619,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -655,12 +640,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
+            updateResult(res);
           });
       } else {
         axios
@@ -677,12 +657,7 @@ function AdminFilter(props) {
             myConfig
           )
           .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
+            updateResult(res);
           });
       }
     }
@@ -707,17 +682,17 @@ function AdminFilter(props) {
     if (dk) {
       if (dk.route === window.location.pathname && dk.index === index) {
         let parentId = "";
-        let catData = JSON.parse(localStorage.getItem("tlcategoryData"));
+        let catData = JSON.parse(localStorage.getItem("admincategoryData"));
         catData.forEach((element) => {
           if (element.id === dk.pcatId) {
-            console.log("eleent", element.details);
             setCatShowData(element.details);
             parentId = element.details;
           }
         });
         let subCat = JSON.parse(localStorage.getItem(`admin${parentId}`));
         setTax2(subCat);
-        subCat.map((i) => {
+
+        subCat?.map((i) => {
           if (dk.store.includes(i.id)) {
             setShowSubCat((payload) => {
               return [...payload, i.details];
@@ -730,7 +705,7 @@ function AdminFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     } else if (!dk?.toDate) {
       let date = moment().format("DD-MM-YYYY");
@@ -771,8 +746,8 @@ function AdminFilter(props) {
                     value={showSubCat}
                     allowClear
                   >
-                    {tax2.map((p, index) => (
-                      <Option value={p.id} key={index}>
+                    {tax2?.map((p, index) => (
+                      <Option value={p.details} key={index}>
                         {p.details}
                       </Option>
                     ))}
@@ -965,12 +940,6 @@ function AdminFilter(props) {
                   Search
                 </button>
                 <Reset />
-
-                <div className="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">
-                    Total records : {records}
-                  </label>
-                </div>
               </div>
             </form>
           </div>

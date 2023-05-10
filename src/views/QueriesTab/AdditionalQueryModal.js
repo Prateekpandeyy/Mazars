@@ -14,7 +14,6 @@ function AdditionalQueryModal({
   getQueriesData,
   setLoading2,
   loading2,
-
   des,
 }) {
   const { handleSubmit, register, errors } = useForm();

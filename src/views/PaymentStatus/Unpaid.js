@@ -11,6 +11,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Row,
+  Col,
 } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../common/common";
@@ -26,6 +28,8 @@ import MessageIcon, {
   Payment,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
+
 import { useHistory } from "react-router-dom";
 function Paid() {
   const { id } = useParams();
@@ -35,9 +39,22 @@ function Paid() {
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
-  const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
   const [pay, setPay] = useState({
     pay: "",
@@ -103,20 +120,76 @@ function Paid() {
 }, [ViewDiscussion]);
 
   useEffect(() => {
-    getPaymentStatus();
+    let local = JSON.parse(localStorage.getItem(`searchDatacustPay2`));
+    let pageno = JSON.parse(localStorage.getItem("custPay2"));
+    let arrow = localStorage.getItem("custArrowPay2")
+    let pre =localStorage.getItem("prevcustpay2")
+    if(pre){
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    if (pageno) {
+      getPaymentStatus(pageno);
+      }else{
+      getPaymentStatus(1);
+      }
   }, []);
 
-  const getPaymentStatus = () => {
+  const getPaymentStatus = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatacustPay2"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustPay2"));
+    localStorage.setItem(`custPay2`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&status=1&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&status=1`
+    }
     axios
       .get(
-        `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
-          userId
-        )}&status=1`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setPayment(res.data.result);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
           setCount(res.data.result.length);
           setRecords(res.data.result.length);
         } else if (res.data.code === 0) {
@@ -147,7 +220,7 @@ function Paid() {
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
         return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {

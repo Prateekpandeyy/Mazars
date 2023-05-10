@@ -991,12 +991,79 @@ color: #ffffff;
 footer a:hover{
   color: #0071CE !important;
 }
-/* css-1xmq6wq-MuiModal-root-MuiDialog-root{
-  position: fixed;
-    z-index: 1300;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.9) !important;
+.twitterLink{
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.nexIconCss{
+  display: flex;
+  background: whitesmoke;
+  padding: 5px;
+}
+#messageBody table thead {
+  background-color: #b0bec5;
+}
+.navButton{
+  background-color: #f7f7f7;
+  border: 1px solid #f7f7f7;
+  color: #0071ce;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1;
+  width: 50px;
+  border-radius: 32px;
+  min-height: 2rem;
+  overflow: hidden;
+  padding: 0.2rem 0.2rem;
+  position: relative;
+  text-decoration: none;
+  transform: all 0.3s;
+  vertical-align: middle;
+}
+/* .navButton:focus{
+border-color: #0071CE;
+border: 0.5px;
 } */
+.customPagination{
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.customPagination{
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.customPaginationSpan{
+  width: 40%;
+}
+
+.navButtonSelectDiv{
+  display: flex;
+  max-width: 75px;
+  width: 100%;
+  margin: 0px 10px;
+}
+.navButtonSelectDiv select{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.navButtonSelectDiv option{
+  text-align: center;
+}
+th.sortable::after {
+  font-family: FontAwesome;
+  content: "\f0dc";
+  position: absolute;
+  right: 8px;
+  color: #fff;
+  display: none;
+}
+.filterActive{
+  font-weight: 1000;
+  font-size: 600;
+  font-size: 18px;
+}

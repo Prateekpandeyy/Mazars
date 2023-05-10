@@ -59,6 +59,31 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
     }
   };
 
+  function getCategory() {
+    axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        console.log(res.data.result,"in getCategory");
+        data.map((i) => {
+          getSubCategory(i);
+        });
+        localStorage.setItem("categoryData", JSON.stringify(data));
+      }
+    });
+  }
+
+  // const getSubCategory = (e) => {
+  //   axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
+  //     if (res.data.code === 1) {
+  //       console.log(`${e.details}`,"in getSubCategory");
+  //       console.log(res.data.result,"get subCategory second");
+  //       let obj=res.data.result
+  //       localStorage.setItem(`${e.details}`, JSON.stringify(obj));
+  //     }
+  //   });
+  // };
+
+
   const onSubmit = (value) => {
     setLoading(true);
     let formData = new FormData();
@@ -71,7 +96,9 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
       data: formData,
     })
       .then(function (response) {
-        if (response.data.code == 1) {
+        if (response.data.code ===  1) {
+          let categoryData = getCategory();
+          getCategory()
           setLoading(false);
           Cookies.set("tpName", response.data.displayname);
           Alerts.SuccessLogin("Logged in successfully.");
@@ -80,6 +107,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "tpEmail",
             JSON.stringify(response.data.displayname)
           );
+          localStorage.setItem("tp_record_per_page", response.data.record_per_page);
           localStorage.setItem("tptoken", response.data.token);
           var timeStampInMs = Date.now();
           localStorage.setItem("tploginTime", timeStampInMs);

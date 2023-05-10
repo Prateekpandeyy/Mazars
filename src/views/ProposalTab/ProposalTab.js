@@ -46,7 +46,7 @@ function Proposal(props) {
       .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
 
-        setAllProposalCount(res.data.result.length);
+        setAllProposalCount(res.data.total);
       });
   };
 
@@ -56,7 +56,7 @@ function Proposal(props) {
       .then((response) => {
       
         if (response.data.code === 1) {
-          setInprogressProposalCount(response.data.result.length);
+          setInprogressProposalCount(response.data.total);
         }
       })
   };
@@ -67,7 +67,7 @@ function Proposal(props) {
       .then((res) => {
        
         if (res.data.code === 1) {
-          setAcceptedProposalCount(res.data.result.length);
+          setAcceptedProposalCount(res.data.total);
         }
       });
   };

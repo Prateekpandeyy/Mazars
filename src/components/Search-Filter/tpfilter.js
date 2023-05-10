@@ -21,13 +21,16 @@ function TaxProfessionalFilter(props) {
     pendingForAcceptence,
     InprogressQuery,
     DeclinedQuery,
-
+    // resetPaging,
+    resetTriggerFunc,
     completeAssignment,
     proposal,
     AllProposal,
     InprogressProposal,
     assignment,
+    Decproposal,
     AllPayment,
+    setCount,
     Unpaid,
     Paid,
     index,
@@ -45,6 +48,8 @@ function TaxProfessionalFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
   const dateValue = useRef(null);
+
+
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -71,6 +76,15 @@ function TaxProfessionalFilter(props) {
     setStore2([]);
     setShowSubCat([]);
   };
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("categoryData"));
+    setCategory(data);
+  }, []);
+
+  // useEffect(() => {
+  //   setTax2(JSON.parse(localStorage.getItem(selectedData)));
+  // }, [selectedData]);
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -106,12 +120,15 @@ function TaxProfessionalFilter(props) {
     setFromDate("");
     setStatus1("");
     setQueryNo("");
+    // resetPaging();
+    console.log('reset is triggred in tpfilter');
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
-    setToDate(fullDate);
-    getData();
+    setToDate("");
+    resetTriggerFunc();
+    getData(1);
 
-    dateValue.current.clearValue();
+    // dateValue.current.clearValue();
   };
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
@@ -142,7 +159,7 @@ function TaxProfessionalFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus1(dk.p_status);
         setQueryNo(dk.query_no);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     } else if (!dk?.toDate) {
       let date = moment().format("DD-MM-YYYY");
@@ -150,6 +167,14 @@ function TaxProfessionalFilter(props) {
       setToDate(fullDate);
     }
   }, []);
+
+  useEffect(() => {
+    if (toDate.length == 0) {
+      let date = moment().format("DD-MM-YYYY");
+      let fullDate = date;
+      setToDate(fullDate);
+    }
+  }, [toDate]);
 
   const onSubmit = (data) => {
     let obj = {};
@@ -179,6 +204,7 @@ function TaxProfessionalFilter(props) {
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     if (AllQuery == "AllQuery") {
+      let customId = 1;
       if (data.route) {
         axios
           .get(
@@ -188,17 +214,28 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              // setCount(res.data.total);
+              // console.log(res.data.total, "count updated");
+              setRecords(res.data.result.length);
+
             }
           });
       } else {
@@ -210,16 +247,34 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                // console.log(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                // console.log(res.data.total, "count updated");
+                // resetPaging();
+                resetTriggerFunc();
+                localStorage.setItem(`tpQuery1`, JSON.stringify(1));
+
               }
             }
           });
@@ -230,15 +285,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -246,6 +300,7 @@ function TaxProfessionalFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                // localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
           });
@@ -258,16 +313,30 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
           });
@@ -275,26 +344,38 @@ function TaxProfessionalFilter(props) {
     }
 
     if (InprogressQuery == "InprogressQuery") {
+      let customId = 1;
       if (data.route) {
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
               userid
-            )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+            )}&status=1&cat_id=${data.store}&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
+              let all = [];
+              let data = res.data.result;
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              // setCount(res.data.total);
+              // console.log(res.data.total, "count updated");
+              setRecords(res.data.result.length);
+              localStorage.setItem(`tpQuery3`, JSON.stringify(1));
             }
           });
       } else {
@@ -302,20 +383,36 @@ function TaxProfessionalFilter(props) {
           .get(
             `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
               userid
-            )}&status=${status1}&cat_id=${store2}&from=${fromDate
+            )}&status=1&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                // console.log(res.data.total, "count updated");
+                // resetPaging();
+                resetTriggerFunc();
+                localStorage.setItem(`tpQuery3`, JSON.stringify(1));
               }
             }
           });
@@ -326,15 +423,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
-              data.p_status
+            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status
             }&cat_id=${data.store}&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -348,22 +444,34 @@ function TaxProfessionalFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${
-              data.p_status
+            `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}&status=${data.p_status
             }&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`tpQuery4`, JSON.stringify(1));
               }
             }
           });
@@ -374,15 +482,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getCompleteQues?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -402,9 +509,9 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -422,16 +529,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -451,16 +556,29 @@ function TaxProfessionalFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal1`, JSON.stringify(1));
               }
             }
           });
@@ -471,16 +589,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
             }`,
             myConfig
           )
@@ -500,16 +616,28 @@ function TaxProfessionalFilter(props) {
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
-            }&pcat_id=${selectedData}&qno=${data.query_no}`,
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=1&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal2`, JSON.stringify(1));
               }
             }
           });
@@ -520,15 +648,14 @@ function TaxProfessionalFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-              data.store
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
             }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -548,38 +675,49 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal3`, JSON.stringify(1));
               }
             }
           });
       }
     }
-    if (AllPayment == "AllPayment") {
+
+    if (Decproposal == "Decproposal") {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
-              userid
-            )}&cat_id=${data.store}&from=${data.fromDate
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+            }&from=${data.fromDate
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-              data.query_no
-            }`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=3&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -593,21 +731,109 @@ function TaxProfessionalFilter(props) {
       } else {
         axios
           .get(
+            `${baseUrl}/tl/getProposalTl?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${store2}&from=${fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=3&pcat_id=${selectedData}&qno=${data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpProposal4`, JSON.stringify(1));
+              }
+            }
+          });
+      }
+    }
+
+    if (AllPayment == "AllPayment") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+              userid
+            )}&cat_id=${data.store}&from=${data.fromDate
+              ?.split("-")
+              .reverse()
+              .join("-")}&to=${data.toDate
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              if (res.data.result) {
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setRecords(res.data.result.length);
+              }
+            }
+          });
+      } else {
+        axios
+          .get(
             `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
               userid
             )}&cat_id=${store2}&from=${fromDate
               ?.split("-")
               .reverse()
-              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${
-              data.p_status
+              .join("-")}&to=${toDate?.split("-").reverse().join("-")}&status=${data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpPayment1`, JSON.stringify(1));
               }
             }
           });
@@ -624,15 +850,26 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
               }
             }
@@ -646,18 +883,31 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=1&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=1&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpPayment2`, JSON.stringify(1));
               }
             }
           });
@@ -674,16 +924,28 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${data.toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           });
@@ -696,30 +958,44 @@ function TaxProfessionalFilter(props) {
               ?.split("-")
               .reverse()
               .join("-")}&to=${toDate
-              ?.split("-")
-              .reverse()
-              .join("-")}&status=2&pcat_id=${selectedData}&qno=${
-              data.query_no
+                ?.split("-")
+                .reverse()
+                .join("-")}&status=2&pcat_id=${selectedData}&qno=${data.query_no
             }`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setData(res.data.result);
+                let customId = 1;
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`tpPayment3`, JSON.stringify(1));
               }
             }
           });
       }
     }
+
   };
 
   const Reset = () => {
     return (
       <>
         <button
-          type="submit"
+          type="reset"
           className="customBtn mx-sm-1 mb-2"
           onClick={() => resetData()}
         >
@@ -849,7 +1125,7 @@ function TaxProfessionalFilter(props) {
                 </div>
 
                 <div className="form-group mx-sm-1  mb-2">
-                  {AllQuery == "AllQuery" && (
+                  {AllQuery === "AllQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -865,7 +1141,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {InprogressQuery == "InprogressQuery" && (
+                  {InprogressQuery === "InprogressQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -881,7 +1157,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {DeclinedQuery == "DeclinedQuery" && (
+                  {DeclinedQuery === "DeclinedQuery" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -896,7 +1172,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {AllProposal == "AllProposal" && (
+                  {AllProposal === "AllProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -912,7 +1188,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {InprogressProposal == "InprogressProposal" && (
+                  {InprogressProposal === "InprogressProposal" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -927,7 +1203,7 @@ function TaxProfessionalFilter(props) {
                     </select>
                   )}
 
-                  {AllPayment == "AllPayment" && (
+                  {AllPayment === "AllPayment" && (
                     <select
                       className="form-select form-control"
                       name="p_status"
@@ -958,11 +1234,11 @@ function TaxProfessionalFilter(props) {
                   Search
                 </button>
                 <Reset />
-                <div className="form-group mx-sm-1  mb-2">
+                {/* <div className="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
-                </div>
+                </div> */}
               </div>
             </form>
           </div>

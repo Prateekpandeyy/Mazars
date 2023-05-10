@@ -29,6 +29,7 @@ const EditFaq = () => {
   const [det, addDet] = useState();
   const [question, setQuestion] = useState(" ");
   const [stats, setStats] = useState(false);
+  const [showEditor, setShowEditor] = useState(true);
   let history = useHistory();
   let getId = useParams();
   const userId = localStorage.getItem("adminkey");
@@ -131,7 +132,7 @@ const EditFaq = () => {
             </div>
 
             <div className="col-md-12">
-              <CustomQuillEditor content={det} />
+              <CustomQuillEditor content={det} showEditor={showEditor} />
             </div>
           </div>
           <div className="row">

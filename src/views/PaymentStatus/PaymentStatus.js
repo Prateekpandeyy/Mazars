@@ -44,7 +44,7 @@ function PaymentStatus(props) {
       .then((res) => {
       
         if(res.data.code === 1){
-          setAllPayment(res.data.result.length);
+          setAllPayment(res.data.total);
         }
       });
   };
@@ -55,7 +55,7 @@ function PaymentStatus(props) {
       .then((res) => {
       
         if(res.data.code === 1){
-          setPaid(res.data.result.length);
+          setPaid(res.data.total);
         }
       });
   };
@@ -66,7 +66,7 @@ function PaymentStatus(props) {
       .then((res) => {
       
       if(res.data.code === 1){
-        setUnpaid(res.data.result.length);
+        setUnpaid(res.data.total);
       }
       });
   };

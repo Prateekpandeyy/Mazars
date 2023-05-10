@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import {
@@ -10,6 +10,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Row,
+  Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import CommonServices from "../../common/common";
@@ -17,6 +19,7 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import PaymentComponent from "./PaymentComponent";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import "./index.css";
 import ModalManual from "../ModalManual/AllComponentManual";
 import MessageIcon, {
@@ -37,6 +40,19 @@ function Unpaid() {
   const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
   const [pay, setPay] = useState({
     pay: "",
@@ -99,24 +115,72 @@ function Unpaid() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   useEffect(() => {
-    getPaymentStatus();
+    let local = JSON.parse(localStorage.getItem(`searchDatacustPay2`));
+    let pageno = JSON.parse(localStorage.getItem("custPay2"));
+    let arrow = localStorage.getItem("custArrowPay2")
+    let pre =localStorage.getItem("prevcustpay2")
+    if(pre){
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    if (pageno) {
+      getPaymentStatus(pageno);
+      }else{
+      getPaymentStatus(1);
+      }
   }, []);
 
-  const getPaymentStatus = () => {
+  const getPaymentStatus = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatacustPay3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustPay3"));
+    localStorage.setItem(`custPay3`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)){
+      remainApiPath = ``
+    }else if ((data) && (pagetry)){
+      remainApiPath = ``
+    }else if ((!data) && (pagetry)){
+      remainApiPath = ``
+    }else{
+      remainApiPath = ``
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+        `${baseUrl}/customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
         )}&status=2`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setPayment(res.data.result);
-          setCount(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setCount(res.data.total);
           setRecords(res.data.result.length);
         } else if (res.data.code === 0) {
           CommonServices.clientLogout(history);
@@ -145,8 +209,8 @@ function Unpaid() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
@@ -475,6 +539,17 @@ function Unpaid() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPay3");
+    localStorage.removeItem(`freezecustPay3`);
+    localStorage.removeItem("custArrowPay3");
+    localStorage.removeItem("prevcustPay3");
+    setPrev("");
+  }
+
   return (
     <>
       <>
@@ -491,6 +566,9 @@ function Unpaid() {
               setRecords={setRecords}
               records={records}
               id={userId}
+              index="custPay2"
+              resetTriggerFunc={resetTriggerFunc}
+              setCount={setCount}
             />
           </CardHeader>
           <CardBody>
@@ -500,7 +578,22 @@ function Unpaid() {
                 <ModalManual tar={"paymentProcess"} />
               </ModalBody>
             </Modal>
-            <Records records={records} />
+            {/* <Records records={records} /> */}
+            <Row className="mb-2">
+              <Col md="12" align="right">
+                <PaginatorCust
+                  count={count}
+                  id={userId}
+                  setData={setPayment}
+                  getData={getPaymentStatus}
+                  unpaid="unpaid"
+                  index="custPay3"
+                  setOnPage={setOnPage}
+                  resetTrigger={resetTrigger}
+                  setresetTrigger={setresetTrigger}
+                />
+              </Col>
+            </Row>
             <DataTablepopulated
               bgColor="#3e8678"
               keyField={"assign_no"}
@@ -536,14 +629,14 @@ function Unpaid() {
                   </thead>
                   {pay.length > 0
                     ? pay.map((p, i) => (
-                        <tbody>
-                          <tr>
-                            <td>{i + 1}</td>
-                            <td>{CommonServices.removeTime(p.payment_date)}</td>
-                            <td>{p.paid_amount}</td>
-                          </tr>
-                        </tbody>
-                      ))
+                      <tbody>
+                        <tr>
+                          <td>{i + 1}</td>
+                          <td>{CommonServices.removeTime(p.payment_date)}</td>
+                          <td>{p.paid_amount}</td>
+                        </tr>
+                      </tbody>
+                    ))
                     : null}
                 </table>
               </ModalBody>

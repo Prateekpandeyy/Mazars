@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect} from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -138,19 +138,19 @@ function Proposal(props) {
           </TabList>
 
           <TabPanel>
-            <AllProposalComponent />
+            <AllProposalComponent count={allProposalCount} />
           </TabPanel>
 
           <TabPanel>
-            <PendingForAcceptence />
+            <PendingForAcceptence count={pendingProposalCount} />
           </TabPanel>
 
           <TabPanel>
-            <AcceptedProposal />
+            <AcceptedProposal count={acceptedProposalCount} />
           </TabPanel>
 
           <TabPanel>
-            <DeclinedPropoal />
+            <DeclinedPropoal count={declinedProposalCount} />
           </TabPanel>
         </Tabs>
       </div>

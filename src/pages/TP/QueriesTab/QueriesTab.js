@@ -47,6 +47,8 @@ function QueriesTab(props) {
     fontSize: "18px",
     color: "#55425f",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {
@@ -147,19 +149,19 @@ function QueriesTab(props) {
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
-          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
+          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
             All queries ({allQuery})
           </Tab>
-          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
             Pending for acceptance ({pendindForAccepttence})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; queries ({incomplete})
           </Tab>
         </TabList>
 
         <TabPanel>
-          <AllQuery />
+          <AllQuery data={allQuery} />
         </TabPanel>
         <TabPanel>
           <PendingForAcceptence data={pendingData} updateTab={updateTab} />

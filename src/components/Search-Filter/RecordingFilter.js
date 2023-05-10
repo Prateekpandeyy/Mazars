@@ -6,17 +6,85 @@ import { useForm } from "react-hook-form";
 function RecordingFilter(props) {
   const { handleSubmit, register, reset } = useForm();
 
-  const { records, setRecords, setData, getRecording, SearchQuery, userid } =
-    props;
+  const {
+    records,
+    setRecords,
+    setData,
+    getRecording,
+    SearchQuery,
+    userid,
+    setDefaultPage,
+    setCountNotification,
+    resetPaging,
+    setPage,
+    page,
+    setBig,
+    setEnd,
+  } = props;
 
   //reset date
   const resetData = () => {
+    localStorage.removeItem("sortedrecording");
+    localStorage.removeItem("accendrecording");
+    localStorage.removeItem("adminRecording");
+    localStorage.removeItem("prevrecord");
+    localStorage.removeItem("recordingData");
+    setPage(1);
     reset();
-    getRecording();
+    getRecording(1);
   };
+  const updateResult = (res) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let droppage = [];
+    let customId = 1;
+    if (res.data.code === 1) {
+      let all = [];
+      let data = res.data.result;
+      data.map((i) => {
+        let data = {
+          ...i,
+          cid: customId,
+        };
+        customId++;
+        all.push(data);
+      });
+      let end = allEnd;
 
+      if (allEnd > res.data.total) {
+        end = res.data.total;
+      }
+
+      setEnd(end);
+      let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+      let rem = (page - 1) * allEnd;
+
+      if (page === 1) {
+        setBig(rem + page);
+      } else {
+        setBig(rem + 1);
+      }
+      for (let i = 1; i <= dynamicPage; i++) {
+        droppage.push(i);
+      }
+      setDefaultPage(droppage);
+      setData(all);
+      setCountNotification(res.data.total);
+      setRecords(res.data.total);
+
+      setDefaultPage(droppage);
+      resetPaging();
+      // if (
+      //   Object.keys(returnData).length === 0 &&
+      //   returnData.constructor === Object
+      // ) {
+
+      // }
+    }
+  };
   const onSubmit = (data) => {
-    if (SearchQuery == "adminQuery") {
+    localStorage.setItem("recordingData", JSON.stringify(data));
+    if (data.queryNo) {
       const token = window.localStorage.getItem("adminToken");
       const myConfig = {
         headers: {
@@ -35,6 +103,7 @@ function RecordingFilter(props) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
+              updateResult(res);
             }
           }
         });
@@ -90,7 +159,7 @@ function RecordingFilter(props) {
       <>
         <button
           type="submit"
-          className="customBtn mx-sm-1 mb-2"
+          className="customBtn mx-sm-1"
           onClick={() => resetData()}
         >
           Reset
@@ -112,11 +181,11 @@ function RecordingFilter(props) {
                   ref={register}
                   className="form-select form-control"
                 />
-                <button type="submit" className="customBtn mx-sm-1 mb-2">
+                <button type="submit" className="customBtn mx-sm-1">
                   Search
                 </button>
                 <Reset />
-                <div className="form-group mx-sm-1  mb-2">
+                <div className="form-group mx-sm-1">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>

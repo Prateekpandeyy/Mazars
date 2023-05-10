@@ -38,6 +38,28 @@ function CustomerNotification({ tokenKey, name, panel }) {
       },
     };
     axios.get(`${baseUrl}/admin/logout`, myConfig).then((res) => {
+      localStorage.removeItem("adminMessage");
+      localStorage.removeItem("adminFeedback");
+      localStorage.removeItem("cutomFilter");
+      localStorage.removeItem("recordingData");
+      localStorage.removeItem("prevassign1");
+      localStorage.removeItem("prevassign2");
+      localStorage.removeItem("prevassign3");
+      localStorage.removeItem("prevassign4");
+      localStorage.removeItem("prevpay1");
+      localStorage.removeItem("prevpay2");
+      localStorage.removeItem("prevpay3");
+      localStorage.removeItem("previnv2");
+      localStorage.removeItem("previnv1");
+      localStorage.removeItem("prevro3");
+      localStorage.removeItem("prevro4");
+      localStorage.removeItem("prevro2");
+      localStorage.removeItem("prevro3");
+      localStorage.removeItem("prevro1");
+      localStorage.removeItem("prevq4");
+      localStorage.removeItem("prevq3");
+      localStorage.removeItem("prevq2");
+      localStorage.removeItem("prevq1");
       localStorage.removeItem("adminkey");
       localStorage.removeItem("adminEmail");
       localStorage.removeItem("category");
@@ -59,6 +81,64 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDataadAssignment4");
       localStorage.removeItem("admincreate");
       localStorage.removeItem("admingenerated");
+      localStorage.removeItem("admin_record_per_page");
+      localStorage.removeItem("adminqp1");
+      localStorage.removeItem("adminqp2");
+      localStorage.removeItem("adminqp3");
+      localStorage.removeItem("adminqp4");
+      localStorage.removeItem("adminprot1");
+      localStorage.removeItem("adminprot2");
+      localStorage.removeItem("adminprot3");
+      localStorage.removeItem("adminprot4");
+      localStorage.removeItem("adminpayt1");
+      localStorage.removeItem("adminpayt2");
+      localStorage.removeItem("adminpayt3");
+      localStorage.removeItem("sortedValue1");
+      localStorage.removeItem("sortedValue2");
+      localStorage.removeItem("sortedValue3");
+      localStorage.removeItem("sortedValue4");
+      localStorage.removeItem("sortedValuepro1");
+      localStorage.removeItem("sortedValuepro2");
+      localStorage.removeItem("sortedValuepro3");
+      localStorage.removeItem("sortedValuepro4");
+      localStorage.removeItem("admininvt2");
+      localStorage.removeItem("admininvt1");
+      localStorage.removeItem("sortedValuevt1");
+      localStorage.removeItem("sortedValuevt2");
+      localStorage.removeItem("sortedValuepay1");
+      localStorage.removeItem("sortedValuepay2");
+      localStorage.removeItem("sortedValuepay3");
+      localStorage.removeItem("sortedValueassign1");
+      localStorage.removeItem("sortedValueassign2");
+      localStorage.removeItem("sortedValueassign3");
+      localStorage.removeItem("sortedValueassign4");
+      localStorage.removeItem("accendq1");
+      localStorage.removeItem("accendq2");
+      localStorage.removeItem("accendq3");
+      localStorage.removeItem("accendq4");
+      localStorage.removeItem("accendpro1");
+      localStorage.removeItem("accendpro2");
+      localStorage.removeItem("accendpro3");
+      localStorage.removeItem("accendpro4");
+      localStorage.removeItem("accendcreated");
+      localStorage.removeItem("accendgenerated");
+      localStorage.removeItem("accendpay1");
+      localStorage.removeItem("accendpay2");
+      localStorage.removeItem("accendpay3");
+      localStorage.removeItem("accendassign1");
+      localStorage.removeItem("accendassign2");
+      localStorage.removeItem("accendassign3");
+      localStorage.removeItem("accendassign4");
+      localStorage.removeItem("adminClient");
+      localStorage.removeItem("accendClient");
+      localStorage.removeItem("sortedValueclient");
+      localStorage.removeItem("adminMessage");
+      localStorage.removeItem("accendMessage");
+      localStorage.removeItem("sortedMessage");
+      localStorage.removeItem("sortedfeedback");
+      localStorage.removeItem("adminFeedback");
+      localStorage.removeItem("accendFeedback");
+
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("admincategoryData");
@@ -101,6 +181,7 @@ function CustomerNotification({ tokenKey, name, panel }) {
       localStorage.removeItem("searchDatatlAssignment4");
       localStorage.removeItem("tlcreate");
       localStorage.removeItem("tlgenerated");
+      localStorage.removeItem("tl_record_per_page");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tlcategoryData");

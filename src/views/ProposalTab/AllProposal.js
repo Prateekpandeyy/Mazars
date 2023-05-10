@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -12,6 +12,7 @@ import ViewComponent from "./ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
 import ModalManual from "../ModalManual/AllComponentManual";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import MessageIcon, {
   EyeIcon,
@@ -43,6 +44,21 @@ function ProposalTab() {
       uit: token,
     },
   };
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
   const ViewHandler = (key) => {
     setViewModal(!viewModal);
     setViewData(key);
@@ -52,16 +68,16 @@ function ProposalTab() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
       console.log(key);
     }
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     // setViewProposalModal(!viewProposalModal);
@@ -86,7 +102,7 @@ function ProposalTab() {
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
-          a.setAttribute("download", "download");
+          a.setAttribute("download", "Proposal.pdf");
           a.setAttribute("target", "_blank");
           a.click();
         }
@@ -94,18 +110,36 @@ function ProposalTab() {
   };
 
   useEffect(() => {
-    getProposalData();
+    let local = JSON.parse(localStorage.getItem(`searchDatacustProposal1`));
+    if (!local) {
+    getProposalData(1);
+    }
   }, []);
 
-  const getProposalData = () => {
+  const getProposalData = (e) => {
     axios
       .get(
-        `${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`,
+        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setProposalDisplay(res.data.result);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+          setCount(res.data.total);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
         } else if (res.data.code === 0) {
@@ -128,8 +162,14 @@ function ProposalTab() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -383,6 +423,17 @@ function ProposalTab() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPropsal1");
+    localStorage.removeItem(`freezecustPropsal1`);
+    localStorage.removeItem("custArrowPropsal1");
+    localStorage.removeItem("prevcustPropsal1");
+    setPrev("");
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -395,12 +446,30 @@ function ProposalTab() {
           getData={getProposalData}
           id={userId}
           proposal="proposal"
+          index="custProposal1"
           records={records}
           setRecords={setRecords}
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
         />
       </CardHeader>
       <CardBody>
-        <Records records={records} />
+        {/* <Records records={records} /> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              setData={setProposalDisplay}
+              getData={getProposalData}
+              index="custProposal1"
+              proposal="proposal"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
 
         <DataTablepopulated
           bgColor="#42566a"

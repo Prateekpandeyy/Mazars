@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -27,15 +27,40 @@ import MessageIcon, {
   DiscussProposal,
   HelpIcon,
 } from "../../../components/Common/MessageIcon";
-function AcceptedProposal({ acceptedProposal }) {
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
+function AcceptedProposal() {
+  const classes = useStyles();
   const [proposalDisplay, setProposalDisplay] = useState([]);
   const [records, setRecords] = useState([]);
-
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState();
   const [scrolledTo, setScrolledTo] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
   const token = window.localStorage.getItem("adminToken");
   const myConfig = {
@@ -43,19 +68,50 @@ function AcceptedProposal({ acceptedProposal }) {
       uit: token,
     },
   };
+  function priceFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendpro3") === column.dataField ||
+      localStorage.getItem("prevro3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevro3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendpro3") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
@@ -64,45 +120,220 @@ function AcceptedProposal({ acceptedProposal }) {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [viewProposalModal]);
-
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
   useEffect(() => {
-    getAcceptedProposal();
-  }, []);
-  const getAcceptedProposal = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadproposal3"));
-    if (!data) {
-      axios
-        .get(`${baseUrl}/admin/getProposals?status1=2`, myConfig)
-        .then((res) => {
-          if (res.data.code === 1) {
-            setProposalDisplay(res.data.result);
-            setRecords(res.data.result.length);
-          }
-        });
+    let localPage = Number(localStorage.getItem("adminprot3"));
+    if (!localPage) {
+      localPage = 1;
     }
+    setPrev(localStorage.getItem("prevro3"));
+    setAccend(localStorage.getItem("accendpro3"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuepro3", JSON.stringify(sort));
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getAcceptedProposal(localPage);
+  }, []);
+
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    localStorage.setItem("adminprot3", 1);
+    getAcceptedProposal(1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getAcceptedProposal(page - 1);
+    localStorage.setItem("adminprot3", Number(page - 1));
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    getAcceptedProposal(page + 1);
+    localStorage.setItem("adminprot3", Number(page + 1));
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getAcceptedProposal(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("adminprot3", defaultPage.at(-1));
+  };
+
+  const getAcceptedProposal = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepro3"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal3`));
+    if (searchData) {
+      remainApiPath = `admin/getProposals?status1=2&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `/admin/getProposals?status1=2&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+
+          let end = e * allEnd;
+          setCountNotification(res.data.total);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
+    }
+  };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminprot3", 1);
+    localStorage.setItem("sortedValuepro3", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadproposal3`));
+    if (searchData) {
+      remainApiPath = `/admin/getProposals?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status1=2&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `/admin/getProposals?status1=2&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setProposalDisplay(all);
+      }
+    });
   };
 
   const columns = [
     {
       dataField: "",
       text: "S.no",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
-
       headerStyle: () => {
         return { width: "50px" };
+      },
+      formatter: (cellContent, row, rowIndex) => {
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
     },
     {
       dataField: "created",
       text: "Date",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -136,16 +367,70 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
+      headerFormatter: priceFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      headerFormatter: priceFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
         if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
@@ -168,8 +453,25 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       text: "Date of proposal",
       dataField: "DateofProposal",
+      headerFormatter: priceFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
         if (oldDate == null) {
@@ -181,7 +483,25 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
+      headerFormatter: priceFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -209,13 +529,24 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       dataField: "ProposedAmount",
       text: "Proposed amount",
+      headerFormatter: priceFormatter,
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
         }
-        return a - b; // desc
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
       },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -228,13 +559,25 @@ function AcceptedProposal({ acceptedProposal }) {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      headerFormatter: priceFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
         }
-        return a - b; // desc
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
       },
+
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
@@ -245,7 +588,25 @@ function AcceptedProposal({ acceptedProposal }) {
     {
       dataField: "tl_name",
       text: "TL name",
+      headerFormatter: priceFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendpro3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendpro3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 11);
+      },
     },
     {
       text: "Action",
@@ -277,10 +638,7 @@ function AcceptedProposal({ acceptedProposal }) {
                 <ViewDiscussionIcon />
               </div>
               {row.statuscode > "3" || row.statuscode == "10" ? (
-                <div
-                  onClick={(e) => showProposalModal2(row)}
-                  className="ml-1"
-                >
+                <div onClick={(e) => showProposalModal2(row)} className="ml-1">
                   <EyeIcon />
                 </div>
               ) : null}
@@ -291,6 +649,16 @@ function AcceptedProposal({ acceptedProposal }) {
     },
   ];
 
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminprot3");
+    localStorage.removeItem("sortedValuepro3");
+    localStorage.removeItem("accendpro3");
+    localStorage.removeItem("prevro3");
+  };
   return (
     <>
       <Card>
@@ -301,11 +669,84 @@ function AcceptedProposal({ acceptedProposal }) {
             acceptedProposal="acceptedProposal"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
             index="adproposal3"
           />
         </CardHeader>
         <CardBody>
-          {/* <Records records={records} /> */}
+          <Row>
+            <Col md="12" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span className="customPaginationSpan">
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div className="navButtonSelectDiv">
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(e.target.value);
+                          getAcceptedProposal(e.target.value);
+                          localStorage.setItem(
+                            "adminprot3",
+                            Number(e.target.value)
+                          );
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
+
           <DataTablepopulated
             bgColor="#42566a"
             keyField={"assign_no"}

@@ -46,6 +46,8 @@ function QueriesTab(props) {
     fontSize: "18px",
     cursor: "pointer",
     color: "#5a625a",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {
@@ -53,6 +55,19 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
   useEffect(() => {
+    const getAllAssigments = () => {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAllAssignmentCount(res?.data?.total);
+          }
+        });
+    };
+
     const getDraftReports = () => {
       axios
         .get(
@@ -91,7 +106,7 @@ function QueriesTab(props) {
           }
         });
     };
-
+    getAllAssigments();
     getDraftReports();
     getFinalReports();
     getAdminPermissionCount();

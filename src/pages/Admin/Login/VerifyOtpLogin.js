@@ -91,6 +91,10 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "adminEmail",
             JSON.stringify(response.data.name)
           );
+          localStorage.setItem(
+            "admin_record_per_page",
+            response.data.record_per_page
+          );
 
           localStorage.setItem("adminToken", response.data.token);
 

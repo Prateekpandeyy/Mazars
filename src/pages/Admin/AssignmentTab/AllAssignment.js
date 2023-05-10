@@ -1,15 +1,11 @@
-import React, { useState, useEffect,useRef } from "react";
-import Layout from "../../../components/Layout/Layout";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { getErrorMessage } from "../../../constants";
-import Loader from "../../../components/Loader/Loader";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
-import Records from "../../../components/Records/Records";
 import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -18,8 +14,25 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
-
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { current_date } from "../../../common/globalVeriable";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AssignmentComponent(props) {
+  const classes = useStyles();
   const [assignmentDisplay, setAssignmentDisplay] = useState([]);
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
@@ -29,14 +42,23 @@ function AssignmentComponent(props) {
   const [hide, setHide] = useState();
   const [report, setReport] = useState();
   const [error, setError] = useState(false);
-  const [item] = useState(current_date);
+
   const [reportModal, setReportModal] = useState(false);
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const [scrolledTo, setScrolledTo] = useState("");
+  const [prev, setPrev] = useState("");
   const myRef = useRef([]);
 
   const token = window.localStorage.getItem("adminToken");
@@ -46,59 +68,247 @@ function AssignmentComponent(props) {
       uit: token,
     },
   };
-  var current_date =
-    new Date().getFullYear() +
-    "-" +
-    ("0" + (new Date().getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + new Date().getDate()).slice(-2);
+
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option } = Select;
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
-    if(ViewDiscussion === false){
-      setScrolledTo(key)
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
     }
   };
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
 
+    if (
+      localStorage.getItem("accendassign1") === column.dataField ||
+      localStorage.getItem("prevAssign1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevAssign1", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendassign1") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const ViewReport = (key) => {
     setReportModal(!reportModal);
     setReport(key);
-    if(reportModal === false){
-      setScrolledTo(key)
+    if (reportModal === false) {
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });   
-}, [reportModal]);
-
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
   useEffect(() => {
-    getAssignmentData();
+    let localPage = Number(localStorage.getItem("adminassign1"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setPrev(localStorage.getItem("prevassign1"));
+    setAccend(localStorage.getItem("accendassign1"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueassign1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValueassign1", JSON.stringify(sort));
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getAssignmentData(localPage);
   }, []);
+  const getAssignmentData = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValueassign1"));
+    let orderBy = 0;
+    let fieldBy = 0;
 
-  const getAssignmentData = () => {
-    let data = JSON.parse(localStorage.getItem("searchDataadAssignment1"));
-    if (!data) {
-      axios.get(`${baseUrl}/admin/getAssignments`, myConfig).then((res) => {
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let remainApiPath = "";
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment1`)
+    );
+    if (searchData) {
+      remainApiPath = `/admin/getAssignments?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&assignment_status=${
+        searchData.stage_status
+      }&stages_status=${searchData.p_status}&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `admin/getAssignments?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
         if (res.data.code === 1) {
-          setAssignmentDisplay(res.data.result);
+          let data = res.data.result;
 
-          setRecords(res?.data?.result?.length);
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAssignmentDisplay(all);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
     }
   };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
 
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminassign1", 1);
+    localStorage.setItem("sortedValueassign1", JSON.stringify(sort));
+    let searchData = JSON.parse(
+      localStorage.getItem(`searchDataadAssignment1`)
+    );
+    if (searchData) {
+      remainApiPath = `/admin/getAssignments?orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&assignment_status=${
+        searchData.stage_status
+      }&stages_status=${searchData.p_status}&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `admin/getAssignments?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        setPage(1);
+        setBig(1);
+        if (
+          Number(
+            res.data.total >
+              Number(localStorage.getItem("admin_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setAssignmentDisplay(all);
+      }
+    });
+  };
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getAssignmentData(1);
+    localStorage.setItem("adminassign1", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getAssignmentData(page - 1);
+    localStorage.setItem("adminassign1", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem("adminassign1", Number(page) + 1);
+    getAssignmentData(page + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getAssignmentData(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("adminassign1", defaultPage.at(-1));
+  };
   //get category
   useEffect(() => {
     const getSubCategory = () => {
@@ -140,6 +350,7 @@ function AssignmentComponent(props) {
   //reset date
   const resetData = () => {
     reset();
+    resetPaging();
     setTax2([]);
     setError(false);
     setHide("");
@@ -149,8 +360,13 @@ function AssignmentComponent(props) {
     setFromDate("");
     setToDate("");
     setQueryNo("");
+    setPage(1);
     localStorage.removeItem("searchDataadAssignment1");
-    getAssignmentData();
+    localStorage.removeItem("sortedValueassign1");
+    localStorage.removeItem("prevAssign1");
+    localStorage.removeItem("accendassign1");
+
+    getAssignmentData(1);
   };
 
   //assingmentStatus
@@ -164,19 +380,36 @@ function AssignmentComponent(props) {
     {
       text: "S.no",
       dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
-      },
+
       headerStyle: () => {
         return { width: "50px" };
+      },
+      formatter: (cellContent, row, rowIndex) => {
+        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
     },
     {
       text: "Date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
         if (oldDate == null) {
@@ -208,12 +441,48 @@ function AssignmentComponent(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "status",
@@ -298,7 +567,25 @@ function AssignmentComponent(props) {
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -311,8 +598,25 @@ function AssignmentComponent(props) {
     {
       dataField: "final_date",
       text: "Actual date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
 
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
         if (oldDate == null || oldDate == "0000-00-00 00:00:00") {
@@ -348,7 +652,25 @@ function AssignmentComponent(props) {
     {
       text: "TL name",
       dataField: "tl_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendassign1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendassign1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
     },
     {
       text: "Action",
@@ -419,8 +741,8 @@ function AssignmentComponent(props) {
     } else {
       obj = {
         store: store2,
-        fromDate: fromDate,
-        toDate: toDate,
+        fromDate: fromDate?.split("-").reverse().join("-"),
+        toDate: toDate?.split("-").reverse().join("-"),
         pcatId: selectedData,
         query_no: data?.query_no,
         p_status: hide,
@@ -428,6 +750,7 @@ function AssignmentComponent(props) {
         route: window.location.pathname,
       };
     }
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     localStorage.setItem(`searchDataadAssignment1`, JSON.stringify(obj));
     if (data.route) {
       if (status?.length > 0) {
@@ -439,8 +762,44 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res?.data?.result?.length);
+                localStorage.setItem("adminassign1", 1);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -452,9 +811,45 @@ function AssignmentComponent(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
+              localStorage.setItem("adminassign1", 1);
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res?.data?.result?.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -468,9 +863,45 @@ function AssignmentComponent(props) {
           )
           .then((res) => {
             if (res.data.code === 1) {
+              localStorage.setItem("adminassign1", 1);
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res?.data?.result?.length);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setBig(1);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+                setBig(1);
+                setPage(1);
               }
             }
           });
@@ -483,8 +914,43 @@ function AssignmentComponent(props) {
           .then((res) => {
             if (res.data.code === 1) {
               if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res?.data?.result?.length);
+                localStorage.setItem("adminassign1", 1);
+                setBig(1);
+                let droppage = [];
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let all = [];
+                let customId = 1;
+                let data = res.data.result;
+
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setAssignmentDisplay(all);
+                setCountNotification(res.data.total);
+                setRecords(res.data.total);
+                let end = allEnd;
+
+                if (allEnd > res.data.total) {
+                  end = res.data.total;
+                }
+                let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+                setEnd(end);
+
+                for (let i = 1; i <= dynamicPage; i++) {
+                  droppage.push(i);
+                }
+
+                setDefaultPage(droppage);
+                droppage = [];
+
+                setPage(1);
               }
             }
           });
@@ -503,7 +969,7 @@ function AssignmentComponent(props) {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
-        onSubmit(dk);
+        // onSubmit(dk);
       }
     }
   }, []);
@@ -525,6 +991,14 @@ function AssignmentComponent(props) {
     setStatus([]);
     setHide(e.target.value);
     setError(false);
+  };
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    localStorage.removeItem("adminassign1");
+    localStorage.removeItem("sortedValueassign1");
+    localStorage.removeItem("accendassign1");
   };
 
   return (
@@ -587,7 +1061,7 @@ function AssignmentComponent(props) {
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                  max={item}
+                  max={current_date}
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
                 />
@@ -605,7 +1079,7 @@ function AssignmentComponent(props) {
                   ref={register}
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
-                  max={item}
+                  max={current_date}
                 />
               </div>
 
@@ -688,7 +1162,74 @@ function AssignmentComponent(props) {
         </CardHeader>
 
         <CardBody>
-          <Records records={records} />
+          <Row>
+            <Col md="6"></Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div className="navButtonSelectDiv">
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getAssignmentData(Number(e.target.value));
+                          localStorage.setItem(
+                            "adminassign1",
+                            Number(e.target.value)
+                          );
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage.length > page ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}

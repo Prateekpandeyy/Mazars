@@ -50,11 +50,11 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setAllQueriesCount(res.data.result);
+          // setAllQueriesCount(res.data.result);
           setAllResult((preValue) => {
             return {
               ...preValue,
-              allQuery: res.data.result.length,
+              allQuery: res.data.total,
             };
           });
         }
@@ -71,11 +71,11 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setInprogressAllocation(res.data.result);
+          // setInprogressAllocation(res.data.result);
           setAllResult((preValue) => {
             return {
               ...preValue,
-              inprogressQuery: res.data.result.length,
+              inprogressQuery: res.data.total,
             };
           });
         }
@@ -96,7 +96,7 @@ function QueriesTab(props) {
           setAllResult((preValue) => {
             return {
               ...preValue,
-              completeQuery: res.data.result.length,
+              completeQuery: res.data.total,
             };
           });
         }
@@ -111,11 +111,11 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setDeclined(res.data.result);
+          // setDeclined(res.data.result);
           setAllResult((preValue) => {
             return {
               ...preValue,
-              declinedQuery: res.data.result.length,
+              declinedQuery: res.data.total,
             };
           });
 

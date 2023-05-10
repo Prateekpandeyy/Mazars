@@ -42,13 +42,17 @@ function QueriesTab(props) {
   const myStyle1 = {
     margin: "10px auto",
     fontSize: "18px",
+
     cursor: "pointer",
   };
   const myStyle2 = {
     margin: "10px auto",
     fontSize: "18px",
     color: "#55425f",
+
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {

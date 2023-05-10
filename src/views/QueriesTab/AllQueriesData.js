@@ -1,8 +1,10 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../../config/config";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
@@ -20,13 +22,20 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 
 function AllQueriesData({
   allQueriesCount,
   setAllQueriesCount,
-  CountAllQuery,
+  // CountAllQuery,
 }) {
   const userId = window.localStorage.getItem("userid");
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
 
   const [assignNo2, setAssignNo2] = useState();
   const [records, setRecords] = useState([]);
@@ -39,6 +48,22 @@ function AllQueriesData({
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
   const tableId = React.createRef("");
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
+
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
@@ -62,7 +87,7 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [additionalQuery]);
+  }, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
     // console.log(tableId);
@@ -81,10 +106,84 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const needHelp = () => {
     setManual(!openManual);
+  };
+
+  useEffect(() => {
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery1`));
+    let pageno = JSON.parse(localStorage.getItem("custQuery1"));
+    let arrow = localStorage.getItem("custArrowQuery1")
+    let pre =localStorage.getItem("prevcustq1")
+    if(pre){
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+      if (pageno) {
+        CountAllQuery(pageno);
+      } else {
+        CountAllQuery(1);
+      }
+    // }
+  }, []);
+
+  const CountAllQuery = (e) => {
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustQuery1"));
+    localStorage.setItem(`custQuery1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAllQueriesCount(all);
+          setCount(res.data.total);
+        }
+      });
   };
 
   const columns = [
@@ -92,8 +191,8 @@ function AllQueriesData({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
@@ -220,8 +319,8 @@ function AllQueriesData({
             ) : (
               <>
                 {row.status_code == "0" ||
-                row.status_code == "1" ||
-                row.status_code == "3" ? (
+                  row.status_code == "1" ||
+                  row.status_code == "3" ? (
                   <>
                     <span className="ml-1">
                       <Link to={`/customer_edit-query/${row.id}`}>
@@ -259,8 +358,8 @@ function AllQueriesData({
                 ) : null}
 
                 {row.status_code == "4" ||
-                8 < parseInt(row.status_code) ||
-                row.status_code == "2" ? (
+                  8 < parseInt(row.status_code) ||
+                  row.status_code == "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-1">
@@ -343,6 +442,18 @@ function AllQueriesData({
     showRejectedBox(!rejectedBox);
   };
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custQuery1");
+    localStorage.removeItem(`freezecustQuery1`);
+    localStorage.removeItem("custArrowQuery1");
+    localStorage.removeItem("prevcustQuery1");
+    setPrev("");
+  }
+
+
   return (
     <Card ref={tableId}>
       <CardHeader>
@@ -357,13 +468,31 @@ function AllQueriesData({
           query="query"
           records={allQueriesCount.length}
           setRecords={setRecords}
+          index="custQuery1"
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
         />
       </CardHeader>
       <CardBody>
-        <Row>
+        {/* <Row>
           <Col md="3"></Col>
           <Col md="9">
             <Records records={allQueriesCount.length} />
+          </Col>
+        </Row> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              setData={setAllQueriesCount}
+              getData={CountAllQuery}
+              index="custQuery1"
+              query="query"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
           </Col>
         </Row>
         <DataTablepopulated

@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 // import ChatComponent from "./ChatComponent";
 import "./index.css";
@@ -12,6 +12,7 @@ import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import ModalManual from "../ModalManual/AllComponentManual";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import MessageIcon, {
   EyeIcon,
   ViewDiscussionIcon,
@@ -39,23 +40,56 @@ function DeclinedProposal() {
       uit: token,
     },
   };
+
+   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
   const needHelp = () => {
     setManual(!openManual);
   };
 
   useEffect(() => {
-    getProposalData();
+    let local = JSON.parse(localStorage.getItem(`searchDatacustProposal4`));
+    if (!local) {
+    getProposalData(1);
+    }
   }, []);
 
-  const getProposalData = () => {
+  const getProposalData = (e) => {
     axios
       .get(
-        `${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=3`,
+        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setProposalDisplay(res.data.result);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+          setCount(res.data.total);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
         } else if (res.data.code === 0) {
@@ -85,7 +119,7 @@ function DeclinedProposal() {
 
       formatter: (cellContent, row, rowIndex) => {
         return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
@@ -269,6 +303,17 @@ function DeclinedProposal() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPropsal4");
+    localStorage.removeItem(`freezecustPropsal4`);
+    localStorage.removeItem("custArrowPropsal4");
+    localStorage.removeItem("prevcustPropsal4");
+    setPrev("");
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -283,10 +328,28 @@ function DeclinedProposal() {
           declinedProposal="declinedProposal"
           records={records}
           setRecords={setRecords}
+          index="custProposal4"
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
         />
       </CardHeader>
       <CardBody>
-        <Records records={records} />
+        {/* <Records records={records} /> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              setData={setProposalDisplay}
+              getData={getProposalData}
+              index="custProposal4"
+              declinedProposal="declinedProposal"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
         <DataTablepopulated
           bgColor="#5f7b97"
           keyField={"assign_no"}

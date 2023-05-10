@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -17,6 +17,7 @@ import MessageIcon, {
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import CommonServices from "../../common/common";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 
 function AcceptedProposal() {
   let history = useHistory();
@@ -29,6 +30,20 @@ function AcceptedProposal() {
   const [reject, setRejected] = useState(true);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -58,7 +73,10 @@ function AcceptedProposal() {
 }, [ViewDiscussion]);
 
   useEffect(() => {
-    getProposalData();
+    let local = JSON.parse(localStorage.getItem(`searchDatacustProposal3`));
+    if (!local) {
+    getProposalData(1);
+    }
   }, []);
   const showProposalModal2 = (e) => {
     console.log(e.assign_no,"eeee");
@@ -73,15 +91,30 @@ function AcceptedProposal() {
 }, [viewProposalModal]);
 
 
-  const getProposalData = () => {
+  const getProposalData = (e) => {
     axios
       .get(
-        `${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}&status=2`,
+        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setProposalDisplay(res.data.result);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+          setCount(res.data.total);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
         } else if (res.data.code === 0) {
@@ -97,7 +130,7 @@ function AcceptedProposal() {
 
       formatter: (cellContent, row, rowIndex) => {
         return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
@@ -322,6 +355,17 @@ function AcceptedProposal() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPropsal3");
+    localStorage.removeItem(`freezecustPropsal3`);
+    localStorage.removeItem("custArrowPropsal3");
+    localStorage.removeItem("prevcustPropsal3");
+    setPrev("");
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -336,10 +380,28 @@ function AcceptedProposal() {
           acceptedProposal="acceptedProposal"
           records={records}
           setRecords={setRecords}
+          index="custProposal3"
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
         />
       </CardHeader>
       <CardBody>
-        <Records records={records} />
+        {/* <Records records={records} /> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              setData={setProposalDisplay}
+              getData={getProposalData}
+              index="custProposal3"
+              acceptedProposal="acceptedProposal"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
         <DataTablepopulated
           bgColor="#5f7b97"
           keyField={"assign_no"}
