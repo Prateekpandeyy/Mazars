@@ -122,19 +122,21 @@ function PaginatorCust(props) {
         else if (index === "custPay3") {
             setPageno(JSON.parse(localStorage.getItem("custPay3")))
         }
-        // else if (index === "tpAssignment1") {
-        //     // tpAssignment1
-        //     setPageno(JSON.parse(localStorage.getItem("tpAssignment1")))
-        // }
-        // else if (index === "tpAssignment2") {
-        //     setPageno(JSON.parse(localStorage.getItem("tpAssignment2")))
-        // }
-        // else if (index === "tpAssignment3") {
-        //     setPageno(JSON.parse(localStorage.getItem("tpAssignment3")))
-        // }
-        // else if (index === "tpAssignment4") {
-        //     setPageno(JSON.parse(localStorage.getItem("tpAssignment4")))
-        // }
+        else if (index === "custAs1") {
+            setPageno(JSON.parse(localStorage.getItem("custAs1")))
+        }
+        else if (index === "custAs2") {
+            setPageno(JSON.parse(localStorage.getItem("custAs2")))
+        }
+        else if (index === "custAs3") {
+            setPageno(JSON.parse(localStorage.getItem("tcustAs3")))
+        }
+        else if (index === "custAs4") {
+            setPageno(JSON.parse(localStorage.getItem("custAs4")))
+        }
+        else if (index === "custAs5") {
+            setPageno(JSON.parse(localStorage.getItem("custAs5")))
+        }
         else {
             console.log('in setPageno Void');
         }
