@@ -82,52 +82,132 @@ function Paginator(props) {
     const renderCheck = () => {
         console.log("render being");
         if (index === "tpquery1") {
-            setPageno(JSON.parse(localStorage.getItem("tpQuery1")))
+            let page =JSON.parse(localStorage.getItem("tpQuery1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpQuery1", JSON.stringify(1))
+            }
         }
         else if (index === "tpquery2") {
-            setPageno(JSON.parse(localStorage.getItem("tpQuery2")))
+            let page =JSON.parse(localStorage.getItem("tpQuery2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpQuery2", JSON.stringify(1))
+            }
         }
         else if (index === "tpquery3") {
-            setPageno(JSON.parse(localStorage.getItem("tpQuery3")))
+            let page =JSON.parse(localStorage.getItem("tpQuery3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpQuery3", JSON.stringify(1))
+            }
         }
         else if (index === "tpproposal1") {
-            setPageno(JSON.parse(localStorage.getItem("tpProposal1")))
+            let page =JSON.parse(localStorage.getItem("tpProposal1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpProposal1", JSON.stringify(1))
+            }
         }
         else if (index === "tpproposal2") {
-            setPageno(JSON.parse(localStorage.getItem("tpProposal2")))
+            let page =JSON.parse(localStorage.getItem("tpProposal2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpProposal2", JSON.stringify(1))
+            }
         }
         else if (index === "tpproposal3") {
-            setPageno(JSON.parse(localStorage.getItem("tpProposal3")))
+            let page =JSON.parse(localStorage.getItem("tpProposal3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpProposal3", JSON.stringify(1))
+            }
         }
         else if (index === "tpproposal4") {
-            setPageno(JSON.parse(localStorage.getItem("tpProposal4")))
+            let page =JSON.parse(localStorage.getItem("tpProposal4"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpProposal4", JSON.stringify(1))
+            }
         }
         else if (index === "tppayment1") {
-            setPageno(JSON.parse(localStorage.getItem("tpPayment1")))
+            let page =JSON.parse(localStorage.getItem("tpPayment1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpPayment1", JSON.stringify(1))
+            }
         }
         else if (index === "tppayment2") {
-            setPageno(JSON.parse(localStorage.getItem("tpPayment2")))
+            let page =JSON.parse(localStorage.getItem("tpPayment2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpPayment2", JSON.stringify(1))
+            }
         }
         else if (index === "tppayment3") {
-            setPageno(JSON.parse(localStorage.getItem("tpPayment3")))
+            let page =JSON.parse(localStorage.getItem("tpPayment3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpPayment3", JSON.stringify(1))
+            }
         }
         else if (index === "tpInvoice1") {
-            setPageno(JSON.parse(localStorage.getItem("tpInvoice1")))
+            let page =JSON.parse(localStorage.getItem("tpInvoice1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpInvoice1", JSON.stringify(1))
+            }
         }
         else if (index === "tpInvoice2") {
-            setPageno(JSON.parse(localStorage.getItem("tpInvoice2")))
+            let page =JSON.parse(localStorage.getItem("tpInvoice2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpInvoice2", JSON.stringify(1))
+            }
         }
         else if (index === "tpAssignment1") {
-            setPageno(JSON.parse(localStorage.getItem("tpAssignment1")))
+            let page =JSON.parse(localStorage.getItem("tpAssignment1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpAssignment1", JSON.stringify(1))
+            }
         }
         else if (index === "tpAssignment2") {
-            setPageno(JSON.parse(localStorage.getItem("tpAssignment2")))
+            let page =JSON.parse(localStorage.getItem("tpAssignment2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpAssignment2", JSON.stringify(1))
+            }
         }
         else if (index === "tpAssignment3") {
-            setPageno(JSON.parse(localStorage.getItem("tpAssignment3")))
+            let page =JSON.parse(localStorage.getItem("tpAssignment3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpAssignment3", JSON.stringify(1))
+            }
         }
         else if (index === "tpAssignment4") {
-            setPageno(JSON.parse(localStorage.getItem("tpAssignment4")))
+            let page =JSON.parse(localStorage.getItem("tpAssignment4"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tpAssignment4", JSON.stringify(1))
+            }
         }
         else {
         }

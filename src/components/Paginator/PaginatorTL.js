@@ -68,53 +68,132 @@ function PaginatorTL(props) {
     const renderCheck = () => {
         console.log("render being");
         if (index === "tlquery1") {
-            setPageno(JSON.parse(localStorage.getItem("tlQuery1")))
+            let page =JSON.parse(localStorage.getItem("tlQuery1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlQuery1", JSON.stringify(1))
+            }
         }
         else if (index === "tlquery2") {
-            setPageno(JSON.parse(localStorage.getItem("tlQuery2")))
+            let page =JSON.parse(localStorage.getItem("tlQuery2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlQuery2", JSON.stringify(1))
+            }
         }
         else if (index === "tlquery3") {
-            setPageno(JSON.parse(localStorage.getItem("tlQuery3")))
+            let page =JSON.parse(localStorage.getItem("tlQuery3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlQuery3", JSON.stringify(1))
+            }
         }
         else if (index === "tlproposal1") {
-            setPageno(JSON.parse(localStorage.getItem("tlProposal1")))
+            let page =JSON.parse(localStorage.getItem("tlProposal1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlProposal1", JSON.stringify(1))
+            }
         }
         else if (index === "tlproposal2") {
-            setPageno(JSON.parse(localStorage.getItem("tlProposal2")))
+            let page =JSON.parse(localStorage.getItem("tlProposal2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlProposal2", JSON.stringify(1))
+            }
         }
         else if (index === "tlproposal3") {
-            setPageno(JSON.parse(localStorage.getItem("tlProposal3")))
+            let page =JSON.parse(localStorage.getItem("tlProposal3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlProposal3", JSON.stringify(1))
+            }
         }
         else if (index === "tlproposal4") {
-            setPageno(JSON.parse(localStorage.getItem("tlProposal4")))
+            let page =JSON.parse(localStorage.getItem("tlProposal4"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlProposal4", JSON.stringify(1))
+            }
         }
         else if (index === "tlpayment1") {
-            setPageno(JSON.parse(localStorage.getItem("tlPayment1")))
+            let page =JSON.parse(localStorage.getItem("tlPayment1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlPayment1", JSON.stringify(1))
+            }
         }
         else if (index === "tlpayment2") {
-            setPageno(JSON.parse(localStorage.getItem("tlPayment2")))
+            let page =JSON.parse(localStorage.getItem("tlPayment2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlPayment2", JSON.stringify(1))
+            }
         }
         else if (index === "tlpayment3") {
-            setPageno(JSON.parse(localStorage.getItem("tlPayment3")))
+            let page =JSON.parse(localStorage.getItem("tlPayment3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlPayment3", JSON.stringify(1))
+            }
         }
         else if (index === "tlInvoice1") {
-            setPageno(JSON.parse(localStorage.getItem("tlInvoice1")))
+            let page =JSON.parse(localStorage.getItem("tlInvoice1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlInvoice1", JSON.stringify(1))
+            }
         }
         else if (index === "tlInvoice2") {
-            setPageno(JSON.parse(localStorage.getItem("tlInvoice2")))
+            let page =JSON.parse(localStorage.getItem("tlInvoice2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlInvoice2", JSON.stringify(1))
+            }
         }
         else if (index === "tlAssignment1") {
-            // tpAssignment1
-            setPageno(JSON.parse(localStorage.getItem("tlAssignment1")))
+            let page =JSON.parse(localStorage.getItem("tlAssignment1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlAssignment1", JSON.stringify(1))
+            }
         }
         else if (index === "tlAssignment2") {
-            setPageno(JSON.parse(localStorage.getItem("tlAssignment2")))
+            let page =JSON.parse(localStorage.getItem("tlAssignment2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlAssignment2", JSON.stringify(1))
+            }
         }
         else if (index === "tlAssignment3") {
-            setPageno(JSON.parse(localStorage.getItem("tlAssignment3")))
+            let page =JSON.parse(localStorage.getItem("tlAssignment3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlAssignment3", JSON.stringify(1))
+            }
         }
         else if (index === "tlAssignment4") {
-            setPageno(JSON.parse(localStorage.getItem("tlAssignment4")))
+            let page =JSON.parse(localStorage.getItem("tlAssignment4"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("tlAssignment4", JSON.stringify(1))
+            }
         }
         else {
         }

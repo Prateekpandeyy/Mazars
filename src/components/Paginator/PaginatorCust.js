@@ -90,52 +90,124 @@ function PaginatorCust(props) {
     const renderCheck = () => {
         console.log("render being");
         if (index === "custQuery1") {
-            console.log(JSON.parse(localStorage.getItem("custQuery1")), "from storage one");
-            setPageno(JSON.parse(localStorage.getItem("custQuery1")))
+            let page =JSON.parse(localStorage.getItem("custQuery1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custQuery1", JSON.stringify(1))
+            }
         }
         else if (index === "custQuery2") {
-            console.log(JSON.parse(localStorage.getItem("custQuery2")), "from storage two");
-            setPageno(JSON.parse(localStorage.getItem("custQuery2")))
+            let page =JSON.parse(localStorage.getItem("custQuery2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custQuery2", JSON.stringify(1))
+            }
         }
         else if (index === "custQuery3") {
-            console.log(JSON.parse(localStorage.getItem("custQuery3")), "from storage three");
-            setPageno(JSON.parse(localStorage.getItem("custQuery3")))
+            let page =JSON.parse(localStorage.getItem("custQuery3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custQuery3", JSON.stringify(1))
+            }
         }
         else if (index === "custProposal1") {
-            setPageno(JSON.parse(localStorage.getItem("custProposal1")))
+            let page =JSON.parse(localStorage.getItem("custProposal1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custProposal1", JSON.stringify(1))
+            }
         }
         else if (index === "custProposal2") {
-            setPageno(JSON.parse(localStorage.getItem("custProposal2")))
+            let page =JSON.parse(localStorage.getItem("custProposal2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custProposal2", JSON.stringify(1))
+            }
         }
         else if (index === "custProposal3") {
-            setPageno(JSON.parse(localStorage.getItem("custProposal3")))
+            let page =JSON.parse(localStorage.getItem("custProposal3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custProposal3", JSON.stringify(1))
+            }
         }
         else if (index === "custProposal4") {
-            setPageno(JSON.parse(localStorage.getItem("custProposal4")))
+            let page =JSON.parse(localStorage.getItem("custProposal4"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custProposal4", JSON.stringify(1))
+            }
         }
         else if (index === "custPay1") {
-            setPageno(JSON.parse(localStorage.getItem("custPay1")))
+            let page =JSON.parse(localStorage.getItem("custPay1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custPay1", JSON.stringify(1))
+            }
         }
         else if (index === "custPay2") {
-            setPageno(JSON.parse(localStorage.getItem("custPay2")))
+            let page =JSON.parse(localStorage.getItem("custPay2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custPay2", JSON.stringify(1))
+            }
         }
         else if (index === "custPay3") {
-            setPageno(JSON.parse(localStorage.getItem("custPay3")))
+            let page =JSON.parse(localStorage.getItem("custPay3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custPay3", JSON.stringify(1))
+            }
         }
         else if (index === "custAs1") {
-            setPageno(JSON.parse(localStorage.getItem("custAs1")))
+            let page =JSON.parse(localStorage.getItem("custAs1"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custAs1", JSON.stringify(1))
+            }
         }
         else if (index === "custAs2") {
-            setPageno(JSON.parse(localStorage.getItem("custAs2")))
+            let page =JSON.parse(localStorage.getItem("custAs2"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custAs2", JSON.stringify(1))
+            }
         }
         else if (index === "custAs3") {
-            setPageno(JSON.parse(localStorage.getItem("tcustAs3")))
+            let page =JSON.parse(localStorage.getItem("custAs3"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custAs3", JSON.stringify(1))
+            }
         }
         else if (index === "custAs4") {
-            setPageno(JSON.parse(localStorage.getItem("custAs4")))
+            let page =JSON.parse(localStorage.getItem("custAs4"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custAs4", JSON.stringify(1))
+            }
         }
         else if (index === "custAs5") {
-            setPageno(JSON.parse(localStorage.getItem("custAs5")))
+            let page =JSON.parse(localStorage.getItem("custAs5"));
+            if (page){
+            setPageno(page)
+            }else{
+                localStorage.setItem("custAs5", JSON.stringify(1))
+            }
         }
         else {
             console.log('in setPageno Void');
