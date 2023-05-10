@@ -1,0 +1,4 @@
+ export const AGORA_APP_ID = '8e55f5bd5498478086468e8029221ec0'
+// de3b3dfacbd44aa8b0b59527213cb39c
+// 8c02d085430140d69e0517695c7b6777
+ // export const AGORA_APP_ID = '8c3d6e6fb9bf46e1939e4e467b47564f'

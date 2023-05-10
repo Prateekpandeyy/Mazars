@@ -1,0 +1,37 @@
+.adminForm {
+  display: flex;
+  margin: 20px;
+  flex-direction: column;
+}
+.basicFeild {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.basicFeild span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 100px;
+  margin: 8px 8px;
+  background-color: rgba(0, 0, 0, 0);
+}
+.basicFeild span label {
+  margin-bottom: 0px;
+  margin: 0 5px;
+}
+.inputBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-legend {
+  display: flex;
+  margin: 20px;
+  max-width: 200px;
+  width: 100%;
+}
+
+.my-fieldset {
+  border: 1px solid;
+}

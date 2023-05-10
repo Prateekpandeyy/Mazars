@@ -1,0 +1,60 @@
+.table_head_Proposal th {
+  font-size: 11px;
+  padding: 3.5px;
+}
+
+.table_bdy_proposal td {
+  font-size: 10px;
+  padding: 2px;
+}
+
+.table-responsive {
+  display: block;
+  height: 65vh;
+  overflow-x: hidden;
+}
+
+.tableFixHead {
+  overflow: auto;
+}
+.tableFixHead thead th {
+  position: sticky;
+
+  top: 0;
+  z-index: 1;
+  border: 0px;
+  background-color: rgb(61, 71, 117) !important;
+  color: #ffffff !important;
+}
+h5.modal-title {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.tabHover {
+  transition: all 0.9s;
+}
+.tabHoverflash {
+  white-space: nowrap;
+  text-transform: none;
+  display: flex;
+  flex-direction: row;
+  color: rgb(61, 71, 117) !important;
+  cursor: pointer;
+ 
+}
+.tabHover:hover {
+  text-decoration: underline;
+  color: #0071ce;
+
+  cursor: pointer;
+}
+/* 
+  
+  .tableFixHead          { overflow-y: auto; height: 100px; }
+  .tableFixHead thead th { position: sticky; top: 0; }
+  
+  
+  table  { border-collapse: collapse; width: 100%; }
+  th, td { padding: 8px 16px; }
+  th     { background:#eee; } */

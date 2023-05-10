@@ -1,0 +1,12 @@
+.nav-pills .nav-item{
+  width: 20%;
+  text-align: center;
+  background: #8c8c8c !important;
+  border-radius: 25px;
+  height: fit-content;
+}
+.main_table thead th, .main_table td, .main_table th{
+	border-bottom: 0px;
+	border-top: 0px;
+  padding: 7px 0px 7px 7px !important;
+}

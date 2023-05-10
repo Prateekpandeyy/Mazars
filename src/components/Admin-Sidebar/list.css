@@ -1,0 +1,322 @@
+.listStyle{
+    line-height: 40px;
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 12%;
+    background: #fff;
+    -webkit-box-shadow: 0 0 10px rgb(0 0 0 / 12%);
+    box-shadow: 0 0 10px rgb(0 0 0 / 12%);
+   padding: 8px 9px;
+}
+.nav-item a{
+    color:#464646;
+}
+.nav-item a:hover{
+ 
+    color:#0071CE!important;
+}
+.mazarsLogo{
+    display: flex;
+   
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboardMenu{
+    background-image: url("./images/againImg/das_gary.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  box-sizing: border-box;
+  padding: 16px 15px;
+  margin: 3px 5px 5px 5px;
+}
+.nav-item a:hover .dashboardMenu{
+    background-image: url("./images/againImg/das_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.queryMenu{
+    background-image: url("./images/againImg/quer_gray.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .queryMenu{
+    background-image: url("./images/againImg/quer_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px; 
+}
+.proposalMenu{
+    background-image: url("./images/againImg/propsa_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .proposalMenu{
+    background-image: url("./images/againImg/propsa_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.paymentMenu{
+    background-image: url("./images/againImg/pay_gray.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .paymentMenu{
+    background-image: url("./images/againImg/pay_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.assignmentMenu{
+    background-image: url("./images/againImg/assign_gray.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .assignmentMenu{
+    background-image: url("./images/againImg/assign_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.scheduleMenu{
+    background-image: url("./images/againImg/sche_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    display: flex;
+    width: 40px;
+}
+.nav-item:hover .scheduleMenu{
+    background-image: url("./images/againImg/sche_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.reportMenu{
+    background-image: url("./images/againImg/sche_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    display: flex;
+    width: 40px;
+}
+.nav-item:hover .reportMenu{
+    background-image: url("./images/againImg/sche_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.feedbackMenu{
+    background-image: url("./images/againImg/feed_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+  
+}
+.nav-item a:hover .feedbackMenu{
+    background-image: url("./images/againImg/feed_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.contactMenu{
+    background-image: url("./images/againImg/contact_gray.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .contactMenu{
+    background-image: url("./images/againImg/contact_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px; 
+}
+.clientMenu{
+    background-image: url("./images/againImg/clinet.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .clientMenu{
+    background-image: url("./images/againImg/client_hover.png") !important;
+   
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px; 
+}
+.taxprofessionalMenu{
+    background-image: url("./images/againImg/taxprofessional.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .taxprofessionalMenu{
+    background-image: url("./images/againImg/taxprofessional_hover.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px; 
+}
+.aboutMenu{
+    background-image: url("./images/againImg/about_gray.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
+}
+.nav-item a:hover .aboutMenu{
+    background-image: url("./images/againImg/about_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.helpMenu{
+    background-image: url("./images/againImg/help_gary.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
+}
+.nav-item a:hover .helpMenu{
+    background-image: url("./images/againImg/help_higl.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
+.nav-item a:hover .reportMenu{
+    background-image: url("./images/againImg/report_hover.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
+}
+.reportMenu{
+    background-image: url("./images/againImg/reports.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    box-sizing: border-box;
+    padding: 16px 15px;
+    margin-top: 3px;
+}
