@@ -563,7 +563,22 @@ function Paid() {
           </CardHeader>
 
           <CardBody>
-            <Records records={records} />
+            {/* <Records records={records} /> */}
+            <Row className="mb-2">
+              <Col md="12" align="right">
+                <PaginatorCust
+                  count={count}
+                  id={userId}
+                  setData={setPayment}
+                  getData={getPaymentStatus}
+                  paid="paid"
+                  index="custPay2"
+                  setOnPage={setOnPage}
+                  resetTrigger={resetTrigger}
+                  setresetTrigger={setresetTrigger}
+                />
+              </Col>
+            </Row>
             <DataTablepopulated
               bgColor="#3e8678"
               keyField={"assign_no"}
