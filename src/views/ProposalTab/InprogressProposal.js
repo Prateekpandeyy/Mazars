@@ -1,8 +1,8 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody,Col,Row} from "reactstrap";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -69,10 +69,10 @@ function InprogressProposal() {
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     console.log("eeee");
@@ -85,19 +85,60 @@ function InprogressProposal() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-}, [viewProposalModal]);
+  }, [viewProposalModal]);
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal2`));
-    if (!local) {
-    getProposalData(1);
+    let pageno = JSON.parse(localStorage.getItem("custProposal2"));
+    let arrow = localStorage.getItem("custArrowProposal2")
+    let pre = localStorage.getItem("prevcustp2")
+    if (pre) {
+      setPrev(pre);
     }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+    if (pageno) {
+      getProposalData(pageno);
+    } else {
+      getProposalData(1);
+    }
+    // }
   }, []);
 
   const getProposalData = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal2"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustProposal2"));
+    localStorage.setItem(`custProposal2`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
@@ -130,8 +171,8 @@ function InprogressProposal() {
       dataField: "",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
