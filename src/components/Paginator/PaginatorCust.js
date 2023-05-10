@@ -104,23 +104,23 @@ function PaginatorCust(props) {
         else if (index === "custProposal1") {
             setPageno(JSON.parse(localStorage.getItem("custProposal1")))
         }
-        else if (index === "tpproposal2") {
+        else if (index === "custProposal2") {
             setPageno(JSON.parse(localStorage.getItem("custProposal2")))
         }
-        else if (index === "tpproposal3") {
+        else if (index === "custProposal3") {
             setPageno(JSON.parse(localStorage.getItem("custProposal3")))
         }
-        else if (index === "tpproposal4") {
+        else if (index === "custProposal4") {
             setPageno(JSON.parse(localStorage.getItem("custProposal4")))
         }
-        else if (index === "tppayment1") {
-            setPageno(JSON.parse(localStorage.getItem("custPayment1")))
+        else if (index === "custPay1") {
+            setPageno(JSON.parse(localStorage.getItem("custPay1")))
         }
-        else if (index === "tppayment2") {
-            setPageno(JSON.parse(localStorage.getItem("custPayment2")))
+        else if (index === "custPay2") {
+            setPageno(JSON.parse(localStorage.getItem("custPay2")))
         }
-        else if (index === "tppayment3") {
-            setPageno(JSON.parse(localStorage.getItem("custPayment3")))
+        else if (index === "custPay3") {
+            setPageno(JSON.parse(localStorage.getItem("custPay3")))
         }
         // else if (index === "tpAssignment1") {
         //     // tpAssignment1
