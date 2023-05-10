@@ -120,19 +120,33 @@ function InprogressProposal() {
     setOnPage(e);
     setLoading(true);
 
-    if ((data) && (!pagetry)){
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-        userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-        userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+    if ((data) && (!pagetry)) {
+      if (data.p_status) {
+        remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+          userId
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+      } else {
+        remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+          userId
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=1&pcat_id=${data.pcatId}`
+      }
+    } else if ((data) && (pagetry)) {
+      if (data.p_status) {
+        remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+          userId
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      } else {
+        remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+          userId
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      }
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`
-    }else{
+    } else {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`
     }
 

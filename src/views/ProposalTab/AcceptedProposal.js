@@ -1,7 +1,7 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -67,19 +67,34 @@ function AcceptedProposal() {
     }
   };
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });  
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal3`));
-    if (!local) {
-    getProposalData(1);
+    let pageno = JSON.parse(localStorage.getItem("custProposal3"));
+    let arrow = localStorage.getItem("custArrowProposal3")
+    let pre = localStorage.getItem("prevcustp3")
+    if (pre) {
+      setPrev(pre);
     }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+    if (pageno) {
+      getProposalData(pageno);
+    } else {
+      getProposalData(1);
+    }
+    // }
   }, []);
   const showProposalModal2 = (e) => {
-    console.log(e.assign_no,"eeee");
+    console.log(e.assign_no, "eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.q_id);
     setScrolledTo(e.assign_no)
@@ -87,14 +102,40 @@ function AcceptedProposal() {
   useEffect(() => {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });  
-}, [viewProposalModal]);
+    runTo?.scrollIntoView({ block: 'center' });
+  }, [viewProposalModal]);
 
 
   const getProposalData = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustProposal3"));
+    localStorage.setItem(`custProposal3`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getProposals?uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getProposals?uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
@@ -129,8 +170,8 @@ function AcceptedProposal() {
       dataField: "",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
         return {
