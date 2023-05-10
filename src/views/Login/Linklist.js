@@ -35,7 +35,7 @@ function Linklist() {
   const [linkData, setLinkData] = useState([]);
   const [linkData22, showLinkData22] = useState(false);
 
-  const allEnd = 5;
+  const allEnd = 50;
   const classes = useStyles();
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
