@@ -45,7 +45,7 @@ const UpdateDirect = () => {
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
   // const allEnd = Number(localStorage.getItem("client_record_per_page"));
-  const allEnd = 5;
+  const allEnd = 50;
   // const classes = useStyles();
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
