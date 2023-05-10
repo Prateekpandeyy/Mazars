@@ -329,7 +329,7 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem("freezecustProposal1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(`custPropsosal1`, JSON.stringify(e));
+            localStorage.setItem(`custProposal1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     userId
@@ -352,7 +352,7 @@ function PaginatorCust(props) {
             let pagetry = JSON.parse(localStorage.getItem("freezecustProposal2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(`custPropsosal2`, JSON.stringify(e));
+            localStorage.setItem(`custProposal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 if (data.p_status) {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(

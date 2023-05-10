@@ -74,8 +74,8 @@ function InprogressProposal({
     let local = JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
     let pageno = JSON.parse(localStorage.getItem("custQuery3"));
     let arrow = localStorage.getItem("custArrowQuery3")
-    let pre =localStorage.getItem("prevcustq3")
-    if(pre){
+    let pre = localStorage.getItem("prevcustq3")
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -84,11 +84,11 @@ function InprogressProposal({
       setTurnGreen(true);
     }
     // if (!local) {
-      if (pageno) {
+    if (pageno) {
       CountInprogressProposal(pageno);
-      }else {
-        CountInprogressProposal(1);
-      }
+    } else {
+      CountInprogressProposal(1);
+    }
     // }
   }, []);
 
@@ -102,21 +102,21 @@ function InprogressProposal({
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((data) && (!pagetry)){
-      remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
+    if ((data) && (!pagetry)) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
       )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
         }&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
-      remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
       )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
         }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+    } else if ((!data) && (pagetry)) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
       )}&status=2&orderby=${val}&orderbyfield=${field}`
-    }else{
+    } else {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
       )}&status=2`
@@ -145,6 +145,8 @@ function InprogressProposal({
           });
           setInprogressProposal(all);
           setCount(res.data.total);
+          console.log('all',all);
+          console.log('all.cid',all.cid);
         }
       });
   };
@@ -382,6 +384,8 @@ function InprogressProposal({
             InprogressQueryProposal="InprogressQueryProposal"
             records={allQueriesCount.length}
             index="custQuery3"
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
           />
         </CardHeader>
         <CardBody>

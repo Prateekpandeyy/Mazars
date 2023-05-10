@@ -587,7 +587,7 @@ function CustomerFilter(props) {
                 // setRecords(res.data.result.length);
                 setCount(res.data.total);
                 resetTriggerFunc();
-                localStorage.setItem(`custProp1`, JSON.stringify(1));
+                localStorage.setItem(`custProposal1`, JSON.stringify(1));
               }
             }
           })
@@ -692,7 +692,7 @@ function CustomerFilter(props) {
                   // setRecords(res.data.result.length);
                   setCount(res.data.total);
                   resetTriggerFunc();
-                  localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
+                  localStorage.setItem(`custProposal2`, JSON.stringify(1));
                 }
               }
             })
@@ -726,7 +726,7 @@ function CustomerFilter(props) {
                   // setRecords(res.data.result.length);
                   setCount(res.data.total);
                   resetTriggerFunc();
-                  localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
+                  localStorage.setItem(`custProposal2`, JSON.stringify(1));
                 }
               }
             })
@@ -799,7 +799,7 @@ function CustomerFilter(props) {
                 // setData(res.data.result);
                 // setRecords(res.data.result.length);
                 resetTriggerFunc();
-                localStorage.setItem(`custPropsosal3`, JSON.stringify(1));
+                localStorage.setItem(`custProposal3`, JSON.stringify(1));
               }
             }
           })
@@ -869,7 +869,7 @@ function CustomerFilter(props) {
                 setCount(res.data.total);
                 // setRecords(res.data.result.length);
                 resetTriggerFunc();
-                localStorage.setItem(`custPropsosal4`, JSON.stringify(1));
+                localStorage.setItem(`custProposal4`, JSON.stringify(1));
               }
             }
           })

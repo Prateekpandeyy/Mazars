@@ -61,15 +61,56 @@ function DeclinedProposal() {
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal4`));
-    if (!local) {
-    getProposalData(1);
+    let pageno = JSON.parse(localStorage.getItem("custProposal4"));
+    let arrow = localStorage.getItem("custArrowProposal4")
+    let pre =localStorage.getItem("prevcustp4")
+    if(pre){
+      setPrev(pre);
     }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+      if (pageno) {
+        getProposalData(pageno);
+      }else{
+    getProposalData(1);
+      }
+    // }
   }, []);
 
   const getProposalData = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustProposal4"));
+    localStorage.setItem(`custProposal4`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=3&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {

@@ -74,9 +74,24 @@ function AcceptedProposal() {
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal3`));
-    if (!local) {
-    getProposalData(1);
+    let pageno = JSON.parse(localStorage.getItem("custProposal3"));
+    let arrow = localStorage.getItem("custArrowProposal3")
+    let pre =localStorage.getItem("prevcustp3")
+    if(pre){
+      setPrev(pre);
     }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+      if (pageno) {
+        getProposalData(pageno);
+      }else{
+    getProposalData(1);
+      }
+    // }
   }, []);
   const showProposalModal2 = (e) => {
     console.log(e.assign_no,"eeee");
@@ -92,9 +107,35 @@ function AcceptedProposal() {
 
 
   const getProposalData = (e) => {
+
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustProposal3"));
+    localStorage.setItem(`custProposal3`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
