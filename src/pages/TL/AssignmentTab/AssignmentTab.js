@@ -58,7 +58,7 @@ function QueriesTab(props) {
     const getAllAssigments = () => {
       axios
         .get(
-          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}`,
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&count=1`,
           myConfig
         )
         .then((res) => {

@@ -30,6 +30,8 @@ function CustomerFilter(props) {
     paid,
     unpaid,
     assignment,
+    resetTriggerFunc,
+    setCount,
   } = props;
 
   const [selectedData, setSelectedData] = useState("Please select category");
@@ -56,7 +58,7 @@ function CustomerFilter(props) {
     let data = JSON.parse(localStorage.getItem("categoryData"));
     setCategory(data);
   }, []);
-  
+
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem(`searchData${index}`));
 
@@ -71,15 +73,17 @@ function CustomerFilter(props) {
             parentId = element.details;
           }
         });
-        let subCat = JSON.parse(localStorage.getItem(`tp${parentId}`));
+        let subCat = JSON.parse(localStorage.getItem(`${parentId}`));
         setTax2(subCat);
-        subCat?.map((i) => {
-          if (dk.store.includes(i.id)) {
-            setShowSubCat((payload) => {
-              return [...payload, i.details];
-            });
-          }
-        });
+        if (subCat && subCat.length > 0) {
+          subCat?.map((i) => {
+            if (dk.store.includes(i.id)) {
+              setShowSubCat((payload) => {
+                return [...payload, i.details];
+              });
+            }
+          });
+        }
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -90,8 +94,6 @@ function CustomerFilter(props) {
       }
     }
   }, []);
-
-
 
   //handleCategory
   const handleCategory = (value) => {
@@ -128,7 +130,6 @@ function CustomerFilter(props) {
     setCatShowData([]);
   };
 
-
   //reset date
   const resetData = () => {
     reset();
@@ -143,9 +144,12 @@ function CustomerFilter(props) {
     setQueryNo("");
     localStorage.removeItem(`searchData${index}`);
     getData();
+    props.resetTriggerFunc();
   };
 
   const onSubmit = (data) => {
+    console.log("data on submit", data);
+    console.log("data to submit in form");
     setLoading(true);
     let obj = {};
     if (data.route) {
@@ -172,102 +176,50 @@ function CustomerFilter(props) {
       };
     }
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
+    let customId = 1;
     let remainApiPath = ` `;
 
     if (query == "query") {
       if (data.route) {
         axios
-          .get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=${data.p_status}&pcat_id=${data.pcatId}`,
-          myConfig)
+          .get(
+            `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+            myConfig
+          )
           .then((res) => {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
           .catch((error) => {
             ShowError.LoadingError(setLoading);
           });
-      } else{
-      axios
-        .get(
-          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
-      }
-    }
-
-    if (InprogressAllocation == "InprogressAllocation") {
-      if (data.route) {
-        if (data.p_status.length > 0){
-          let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
-          axios
-          .get(`${baseUrl}/${remainApiPath}`,
-          myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          })
-          .catch((error) => {
-            ShowError.LoadingError(setLoading);
-          });
-        }else{
-          let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=1&pcat_id=${data.pcatId}`;
-          axios
-          .get(`${baseUrl}/${remainApiPath}`,
-          myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          })
-          .catch((error) => {
-            ShowError.LoadingError(setLoading);
-          });
-        }
-      } else{
-      if (data.p_status.length > 0) {
+      } else {
         axios
           .get(
             `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -275,7 +227,199 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custQuery1`, JSON.stringify(1));
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
+    }
+
+    if (InprogressAllocation == "InprogressAllocation") {
+      if (data.route) {
+        if (data.p_status.length > 0) {
+          let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+            data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+          axios
+            .get(`${baseUrl}/${remainApiPath}`, myConfig)
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                  setRecords(res.data.result.length);
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        } else {
+          let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
+            id
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+            data.toDate
+          }&status=1&pcat_id=${data.pcatId}`;
+          axios
+            .get(`${baseUrl}/${remainApiPath}`, myConfig)
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                  setRecords(res.data.result.length);
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        }
+      } else {
+        if (data.p_status.length > 0) {
+          axios
+            .get(
+              `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+                id
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
+              }&status=${data.p_status}&pcat_id=${selectedData}`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                  resetTriggerFunc();
+                  localStorage.setItem(`custQuery2`, JSON.stringify(1));
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        } else {
+          axios
+            .get(
+              `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+                id
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
+              }&status=1&pcat_id=${selectedData}`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                  resetTriggerFunc();
+                  localStorage.setItem(`custQuery2`, JSON.stringify(1));
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        }
+      }
+    }
+
+    if (InprogressQueryProposal == "InprogressQueryProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+              id
+            )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
                 setRecords(res.data.result.length);
               }
             }
@@ -288,83 +432,66 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&status=1&pcat_id=${selectedData}`,
+            )}&status=2&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
                 setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custQuery3`, JSON.stringify(1));
               }
             }
           })
           .catch((error) => {
             ShowError.LoadingError(setLoading);
           });
-      }
-    }
-    }
-
-    if (InprogressQueryProposal == "InprogressQueryProposal") {
-      if (data.route) {
-        axios
-          .get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&pcat_id=${data.pcatId}`,
-          myConfig)
-          .then((res) => {
-            if (res.data.code === 1) {
-              setLoading(false);
-              if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          })
-          .catch((error) => {
-            ShowError.LoadingError(setLoading);
-          });
-      } else{
-      axios
-        .get(
-          `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&status=2&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
       }
     }
 
     if (DeclinedQuery == "DeclinedQuery") {
       if (data.route) {
         axios
-          .get(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
-            id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&pcat_id=${data.pcatId}&status=${data.p_status}`,
-          myConfig)
+          .get(
+            `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&pcat_id=${data.pcatId}&status=${data.p_status}`,
+            myConfig
+          )
           .then((res) => {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
                 setRecords(res.data.result.length);
               }
             }
@@ -372,61 +499,411 @@ function CustomerFilter(props) {
           .catch((error) => {
             ShowError.LoadingError(setLoading);
           });
-      } else{
-      axios
-        .get(
-          `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&pcat_id=${selectedData}&status=${data.p_status}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&pcat_id=${selectedData}&status=${data.p_status}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custQuery4`, JSON.stringify(1));
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
       }
     }
 
     if (proposal == "proposal") {
-      axios
-        .get(
-          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=${
+              data.p_status
+            }&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setRecords(res.data.result.length);
+                setCount(res.data.total);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
-    }
-
-    if (inprogressProposal == "inprogressProposal") {
-      if (data.p_status) {
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
         axios
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custProp1`, JSON.stringify(1));
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
+    }
+
+    if (inprogressProposal == "inprogressProposal") {
+      if (data.route) {
+        if (data.p_status) {
+          axios
+            .get(
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+                data.store
+              }&from=${data.fromDate}&to=${data.toDate}&status=${
+                data.p_status
+              }&pcat_id=${data.pcatId}`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        } else {
+          axios
+            .get(
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+                data.store
+              }&from=${data.fromDate}&to=${data.toDate}&status=1&pcat_id=${
+                data.pcatId
+              }`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        }
+      } else {
+        if (data.p_status) {
+          axios
+            .get(
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+                id
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
+              }&status=${data.p_status}&pcat_id=${selectedData}`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                  resetTriggerFunc();
+                  localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        } else {
+          axios
+            .get(
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+                id
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
+              }&status=1&pcat_id=${selectedData}`,
+              myConfig
+            )
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                if (res.data.result) {
+                  let data = res.data.result;
+                  let all = [];
+                  data.map((i) => {
+                    let data = {
+                      ...i,
+                      cid: customId,
+                    };
+                    customId++;
+                    all.push(data);
+                  });
+                  setData(all);
+                  setRecords(res.data.result.length);
+                  setCount(res.data.total);
+                  resetTriggerFunc();
+                  localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
+                }
+              }
+            })
+            .catch((error) => {
+              ShowError.LoadingError(setLoading);
+            });
+        }
+      }
+    }
+
+    if (acceptedProposal == "acceptedProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${
+              data.pcatId
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=2&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                // setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
+    }
+
+    if (declinedProposal == "declinedProposal") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=3&pcat_id=${
+              data.pcatId
+            }`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let all = [];
+                let data = res.data.result;
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=3&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
+    }
+
+    if (assignment == "assignment") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
           .then((res) => {
@@ -444,9 +921,57 @@ function CustomerFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
+    }
+    if (assignment == "assignmentInprogress") {
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=1&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=1&pcat_id=${selectedData}`,
             myConfig
           )
@@ -464,228 +989,287 @@ function CustomerFilter(props) {
           });
       }
     }
-
-    if (acceptedProposal == "acceptedProposal") {
-      axios
-        .get(
-          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=2&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
-    }
-
-    if (declinedProposal == "declinedProposal") {
-      axios
-        .get(
-          `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=3&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
-    }
-
-    if (assignment == "assignment") {
-      axios
-        .get(
-          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
-    }
-    if (assignment == "assignmentInprogress") {
-      axios
-        .get(
-          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=1&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
-            }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
-    }
     if (assignment == "completeAssignment") {
-      axios
-        .get(
-          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=2&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=2&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=2&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
     }
     if (assignment == "declinedAssignment") {
-      axios
-        .get(
-          `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=3&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=3&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=3&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
     }
     if (assignment == "assignmentpermission") {
-      axios
-        .get(
-          `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
     }
     if (allPayment == "allPayment") {
-      axios
-        .get(
-          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=${data.p_status}&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
     }
     if (unpaid == "unpaid") {
-      axios
-        .get(
-          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=2&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=2&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=2&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
     }
     if (paid == "paid") {
-      axios
-        .get(
-          `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
-            id
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&status=1&pcat_id=${selectedData}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+      if (data.route) {
+        axios
+          .get(
+            `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
+            }&status=1&pcat_id=${data.pcatId}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          ShowError.LoadingError(setLoading);
-        });
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      } else {
+        axios
+          .get(
+            `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
+              id
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=1&pcat_id=${selectedData}`,
+            myConfig
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              setLoading(false);
+              if (res.data.result) {
+                setData(res.data.result);
+                setRecords(res.data.result.length);
+              }
+            }
+          })
+          .catch((error) => {
+            ShowError.LoadingError(setLoading);
+          });
+      }
     }
   };
 
@@ -786,7 +1370,6 @@ function CustomerFilter(props) {
                     style={{ height: "33px" }}
                     value={status1}
                     onChange={(e) => setStatus1(e.target.value)}
-
                   >
                     <option value="">--select--</option>
                     <option value="1">Inprogress Queries</option>

@@ -774,6 +774,7 @@ function AssignmentTab(props) {
       setId(id.id);
       setDraftModal(!draftModal);
       setScrolledTo(id.assign_no);
+      setLoading(false);
     } else {
       setDraftModal(!draftModal);
       setLoading(false);
@@ -788,7 +789,7 @@ function AssignmentTab(props) {
   }, [draftModal]);
 
   // final modal
-
+  console.log("done");
   const uploadFinalReport = (id) => {
     if (id && id.id === undefined) {
       setLoading(false);
@@ -797,6 +798,7 @@ function AssignmentTab(props) {
       setFianlModal(!fianlModal);
       setFinalId(id);
       setQid(id.q_id);
+      setLoading(false);
     }
   };
   const onSubmit = (data, e) => {

@@ -35,7 +35,7 @@ function Linklist() {
   const [linkData, setLinkData] = useState([]);
   const [linkData22, showLinkData22] = useState(false);
 
-  const allEnd = 5;
+  const allEnd = 50;
   const classes = useStyles();
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -106,7 +106,7 @@ function Linklist() {
         let rem = (p - 1) * allEnd;
         if (p === 1) {
           if((res.data.total)< allEnd){
-            setBig(res.data.total);
+            setBig(rem + 1);
             setEnd(end);
           }else{
           setBig(rem + p);
@@ -189,7 +189,6 @@ function Linklist() {
           }
         }
       });
-
   }
 
   return (
@@ -263,12 +262,18 @@ function Linklist() {
                                 </TableCell>
                                 <TableCell style={{ width: "400px" }}>
                                   {accend == true ? (
-                                    <SubHeading onClick={() => sortMessage(1, 1)}>
-                                      Website  <ArrowDropDownIcon />
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(1, 1)}
+                                    >
+                                      Website  
+                                      {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading onClick={() => sortMessage(0, 1)}>
-                                      Website <ArrowDropUpIcon />
+                                    <SubHeading 
+                                    // onClick={() => sortMessage(0, 1)}
+                                    >
+                                      Website 
+                                      {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
                                   )
                                   }

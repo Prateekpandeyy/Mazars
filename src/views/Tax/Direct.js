@@ -45,7 +45,7 @@ const Direct = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   // const allEnd = Number(localStorage.getItem("client_record_per_page"));
-  const allEnd = 5;
+  const allEnd = 50;
 
   const classes = useStyles();
   const [count, setCount] = useState(0);
@@ -493,10 +493,22 @@ const Direct = () => {
                             <SubHeading>S.No</SubHeading>
                           </TableCell>
                           <TableCell style={{ width: "200px" }}>
-                            <SubHeading>
-                              {/* <sortButton/> */}
-                              Date of publishing
+                          {accend == true ? (
+                            <SubHeading 
+                            // onClick={() => sortMessage(1, 1)}
+                            >
+                              Date of publishing  
+                              {/* <ArrowDropDownIcon /> */}
                             </SubHeading>
+                          ) : (
+                            <SubHeading
+                            //  onClick={() => sortMessage(0, 1)}
+                             >
+                              Date of publishing 
+                              {/* <ArrowDropUpIcon /> */}
+                            </SubHeading>
+                          )
+                          }
                           </TableCell>
                           <TableCell style={{ width: "150px" }}>
                             <SubHeading>Subject</SubHeading>
@@ -508,8 +520,8 @@ const Direct = () => {
                           </TableCell>
 
                           <TableCell>
-                            <SubHeading>Name of writer</SubHeading>
-                          </TableCell>
+                            <SubHeading>Name of Writer</SubHeading>
+                          </TableCell >
                         </TableRow>
                       </TableHead>
 
@@ -575,7 +587,7 @@ const Direct = () => {
                               </TableRow>
                             ))}
                       </TableBody>
-                      {data.length > 10 ? (
+                      {/* {data.length > 10 ? (
                         <TablePagination
                           rowsPerPageOptions={[5, 10, 15, 20, 25]}
                           count={data.length}
@@ -586,7 +598,7 @@ const Direct = () => {
                         />
                       ) : (
                         ""
-                      )}
+                      )} */}
                     </Table>
                   </TableContainer>
                 </div>
@@ -688,12 +700,18 @@ const Direct = () => {
                         </TableCell>
                         <TableCell style={{ width: "200px" }}>
                           {accend == true ? (
-                            <SubHeading onClick={() => sortMessage(1, 1)}>
-                              Date of publishing  <ArrowDropDownIcon />
+                            <SubHeading 
+                            // onClick={() => sortMessage(1, 1)}
+                            >
+                              Date of publishing  
+                              {/* <ArrowDropDownIcon /> */}
                             </SubHeading>
                           ) : (
-                            <SubHeading onClick={() => sortMessage(0, 1)}>
-                              Date of publishing <ArrowDropUpIcon />
+                            <SubHeading 
+                            // onClick={() => sortMessage(0, 1)}
+                            >
+                              Date of publishing 
+                              {/* <ArrowDropUpIcon /> */}
                             </SubHeading>
                           )
                           }
@@ -791,7 +809,7 @@ const Direct = () => {
                             </TableRow>
                           ))}
                     </TableBody>
-                    {data.length > 10 ? (
+                    {/* {data.length > 10 ? (
                       <TablePagination
                         rowsPerPageOptions={[5, 10, 15, 20, 25]}
                         count={data.length}
@@ -802,7 +820,7 @@ const Direct = () => {
                       />
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </Table>
                 </TableContainer>
               </div>
