@@ -122,7 +122,10 @@ function AdminAssignment() {
   }, []);
 
   const getAssignmentData = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustAs5"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustAs5"));
     localStorage.setItem(`custAs5`, JSON.stringify(e));

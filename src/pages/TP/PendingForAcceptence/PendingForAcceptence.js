@@ -171,7 +171,10 @@ function PendingForAcceptence(props) {
   }, []);
 
   const getPendingforAcceptance = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
     localStorage.setItem(`tpQuery2`, JSON.stringify(e));

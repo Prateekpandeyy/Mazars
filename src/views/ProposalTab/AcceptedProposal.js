@@ -107,7 +107,10 @@ function AcceptedProposal() {
 
 
   const getProposalData = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal3"));
     localStorage.setItem(`custProposal3`, JSON.stringify(e));

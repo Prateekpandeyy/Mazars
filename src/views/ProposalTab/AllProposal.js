@@ -132,6 +132,10 @@ function ProposalTab() {
   }, []);
 
   const getProposalData = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal1"));
     localStorage.setItem(`custProposal1`, JSON.stringify(e));

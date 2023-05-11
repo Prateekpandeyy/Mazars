@@ -127,6 +127,10 @@ const CreateInvoice = () => {
   }, []);
 
   const getProposalList = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let searchData = JSON.parse(localStorage.getItem(`tpcreate`));
     let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
     let orderBy = 0;

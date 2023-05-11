@@ -180,6 +180,10 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
     localStorage.setItem(`tlAssignment2`, JSON.stringify(e));

@@ -138,6 +138,10 @@ function Unpaid() {
   }, []);
 
   const getPaymentStatus = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustPay3"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustPay3"));
     localStorage.setItem(`custPay3`, JSON.stringify(e));

@@ -82,7 +82,10 @@ function DeclinedProposal() {
   }, []);
 
   const getProposalData = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal4"));
     localStorage.setItem(`custProposal4`, JSON.stringify(e));

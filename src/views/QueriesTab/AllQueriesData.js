@@ -135,6 +135,10 @@ function AllQueriesData({
   }, []);
 
   const CountAllQuery = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustQuery1"));
     localStorage.setItem(`custQuery1`, JSON.stringify(e));

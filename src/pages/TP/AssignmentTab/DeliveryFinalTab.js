@@ -164,6 +164,10 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment3"));
     localStorage.setItem(`tpAssignment3`, JSON.stringify(e));

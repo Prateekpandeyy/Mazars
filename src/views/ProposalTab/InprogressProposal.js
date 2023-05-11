@@ -110,7 +110,10 @@ function InprogressProposal() {
   }, []);
 
   const getProposalData = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal2"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal2"));
     localStorage.setItem(`custProposal2`, JSON.stringify(e));

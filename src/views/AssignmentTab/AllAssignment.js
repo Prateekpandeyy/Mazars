@@ -122,6 +122,10 @@ function AllAssignment() {
   }, []);
 
   const getAssignmentData = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustAs1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustAs1"));
     localStorage.setItem(`custAs1`, JSON.stringify(e));

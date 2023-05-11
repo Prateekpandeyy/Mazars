@@ -128,6 +128,10 @@ const Generated = () => {
   }, []);
 
   const getProposalList = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice1"));
     let orderBy = 0;
     let fieldBy = 0;

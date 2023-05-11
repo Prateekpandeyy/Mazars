@@ -94,6 +94,10 @@ function InprogressProposal({
 
 
   const CountInprogressProposal = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustQuery3"));
     localStorage.setItem(`custQuery3`, JSON.stringify(e));

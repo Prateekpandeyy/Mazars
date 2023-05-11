@@ -157,7 +157,10 @@ function Paid() {
   };
 
   const getPaymentStatus = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustPay1"));
     localStorage.setItem(`custPay1`, JSON.stringify(e));

@@ -78,7 +78,7 @@ function QueriesTab(props) {
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setDraft(res?.data?.result?.recordcount);
+            setDraft(res?.data?.total);
           }
         });
     };
@@ -93,7 +93,7 @@ function QueriesTab(props) {
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setFinal(res?.data?.result?.recordcount);
+            setFinal(res?.data?.total);
           }
         });
     };
@@ -102,7 +102,7 @@ function QueriesTab(props) {
         .get(`${baseUrl}/tl/getadminpermissiona?count=1`, myConfig)
         .then((res) => {
           if (res.data.code === 1) {
-            setPermission(res?.data?.result?.recordcount);
+            setPermission(res?.data?.total);
           }
         });
     };

@@ -196,6 +196,10 @@ function InprogressProposal() {
   }, []);
 
   const getProposalList = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpProposal2"))
     localStorage.setItem(`tpQuery1`, JSON.stringify(e));

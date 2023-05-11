@@ -198,6 +198,10 @@ function AllQuery(props) {
   }, []);
 
   const getInCompleteAssingment = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
     localStorage.setItem(`tpQuery1`, JSON.stringify(e));

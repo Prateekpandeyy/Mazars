@@ -198,6 +198,10 @@ function AllProposal() {
   }
 
   const getProposalList = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpProposal1"))
     localStorage.setItem(`tpProposal1`, JSON.stringify(e));

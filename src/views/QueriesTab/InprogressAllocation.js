@@ -118,6 +118,10 @@ function InprogressAllocation({
   }, []);
 
   const CountInprogressAllocation = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery2"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustQuery2"));
     localStorage.setItem(`custQuery2`, JSON.stringify(e));

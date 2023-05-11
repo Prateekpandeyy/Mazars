@@ -120,7 +120,10 @@ function InprogressAssignment() {
   }, []);
 
   const getAssignmentData = (e) => {
-
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatacustAs2"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustAs2"));
     localStorage.setItem(`custAs2`, JSON.stringify(e));

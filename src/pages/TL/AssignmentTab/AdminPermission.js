@@ -172,6 +172,10 @@ function AdminPermission(props) {
     },
   };
   const getAssignmentData = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment4"));
     localStorage.setItem(`tlAssignment4`, JSON.stringify(e));

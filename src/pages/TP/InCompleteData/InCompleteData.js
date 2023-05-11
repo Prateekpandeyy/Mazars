@@ -177,6 +177,10 @@ function InCompleteData({ CountIncomplete, data }) {
 
 
   const getInCompleteAssingment = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpQuery3"));
     localStorage.setItem(`tpQuery3`, JSON.stringify(e));
