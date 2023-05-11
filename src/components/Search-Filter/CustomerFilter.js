@@ -157,7 +157,7 @@ function CustomerFilter(props) {
     console.log('data to submit in form',);
     setLoading(true);
     let obj = {};
-    if (assignment == "assignment") {
+    if ((assignment == "assignment")|| (proposal == "proposal") ||(InprogressAllocation == "InprogressAllocation") ) {
       if (data.route) {
         obj = {
           store: data.store,
@@ -352,7 +352,7 @@ function CustomerFilter(props) {
               `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
-              }&status=${data.p_status}&pcat_id=${selectedData}`,
+              }&status=${data.p_status}&pcat_id=${status1}`,
               myConfig
             )
             .then((res) => {
@@ -386,7 +386,7 @@ function CustomerFilter(props) {
               `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
-              }&status=1&pcat_id=${selectedData}`,
+              }&status=1&pcat_id=${status1}`,
               myConfig
             )
             .then((res) => {
@@ -592,7 +592,7 @@ function CustomerFilter(props) {
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${selectedData}`,
+            }&status=${data.p_status}&pcat_id=${status1}`,
             myConfig
           )
           .then((res) => {
@@ -1138,6 +1138,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1159,6 +1160,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1183,6 +1185,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1204,6 +1207,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1228,6 +1232,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1249,6 +1254,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
