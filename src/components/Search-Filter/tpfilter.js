@@ -57,10 +57,10 @@ function TaxProfessionalFilter(props) {
       uit: token,
     },
   };
-  useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("tpcategoryData"));
-    setCategory(data);
-  }, []);
+  // useEffect(() => {
+  //   let data = JSON.parse(localStorage.getItem("tpcategoryData"));
+  //   setCategory(data);
+  // }, []);
 
   //handleCategory
   const handleCategory = (value) => {
@@ -78,7 +78,7 @@ function TaxProfessionalFilter(props) {
   };
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("categoryData"));
+    let data = JSON.parse(localStorage.getItem("tpcategoryData"));
     setCategory(data);
   }, []);
 

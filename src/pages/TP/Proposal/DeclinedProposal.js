@@ -558,7 +558,7 @@ function DeclinedProposal() {
       },
     },
     {
-      dataField: "",
+      dataField: "propAmount",
       text: "Proposed amount",
       headerFormatter: headerLabelFormatter,
       sort: true,

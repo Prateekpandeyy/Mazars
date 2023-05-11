@@ -34,6 +34,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
     getCategory();
     LoadingTime.timer2(setTime, setDisabled);
   }, []);
+  
   function getCategory() {
     axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
       if (res.data.code === 1) {
@@ -59,18 +60,18 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
     }
   };
 
-  function getCategory() {
-    axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-      if (res.data.code === 1) {
-        let data = res.data.result;
-        console.log(res.data.result,"in getCategory");
-        data.map((i) => {
-          getSubCategory(i);
-        });
-        localStorage.setItem("categoryData", JSON.stringify(data));
-      }
-    });
-  }
+  // function getCategory() {
+  //   axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+  //     if (res.data.code === 1) {
+  //       let data = res.data.result;
+  //       console.log(res.data.result,"in getCategory");
+  //       data.map((i) => {
+  //         getSubCategory(i);
+  //       });
+  //       localStorage.setItem("categoryData", JSON.stringify(data));
+  //     }
+  //   });
+  // }
 
   // const getSubCategory = (e) => {
   //   axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {

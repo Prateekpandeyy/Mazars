@@ -966,8 +966,6 @@ function Paginator(props) {
                             }
                             setDefaultPage(droppage);
                         }
-
-                        // console.log(defaultPage, "in submit of defaultPage");
                     }
                 });
         }

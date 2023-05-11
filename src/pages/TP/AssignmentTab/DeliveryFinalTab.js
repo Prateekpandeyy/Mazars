@@ -229,12 +229,17 @@ function AssignmentTab() {
     setCategory(data);
   }, []);
 
+  // useEffect(() => {
+  //   let data = JSON.parse(localStorage.getItem("categoryData"));
+  //   setCategory(data);
+  // }, []);
+
   useEffect(() => {
     // setTax2(JSON.parse(localStorage.getItem(selectedData)));
     if (selectedData == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+      setTax2(JSON.parse(localStorage.getItem("tpDirect tax")));
     } else if (selectedData == 2) {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+      setTax2(JSON.parse(localStorage.getItem("tpIndirect tax")));
     } else { }
   }, [selectedData]);
 

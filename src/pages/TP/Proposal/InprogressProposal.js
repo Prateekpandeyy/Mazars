@@ -591,7 +591,7 @@ function InprogressProposal() {
       },
     },
     {
-      dataField: "",
+      dataField: "propAmount",
       text: "Proposed amount",
       sort: true,
       headerFormatter: headerLabelFormatter,
