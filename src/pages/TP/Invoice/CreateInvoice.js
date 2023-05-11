@@ -358,6 +358,7 @@ const CreateInvoice = () => {
         setTurnGreen(true);
         setProposal(all);
         setCountNotification(res.data.total);
+        setCount(res.data.total);
         console.log("proposal", all);
       }
     });

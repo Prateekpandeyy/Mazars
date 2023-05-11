@@ -366,6 +366,7 @@ const Generated = () => {
           });
           setProposal(all);
           setTurnGreen(true);
+          setCount(res.data.total);
         }
       });
   }
