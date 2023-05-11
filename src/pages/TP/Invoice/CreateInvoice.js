@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateInvoice = () => {
   const userid = window.localStorage.getItem("tpkey");
-  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  const allEnd = 5;
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const classes = useStyles();
-  // const [count, setCount] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
