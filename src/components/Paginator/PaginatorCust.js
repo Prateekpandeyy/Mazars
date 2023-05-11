@@ -382,12 +382,12 @@ function PaginatorCust(props) {
             localStorage.setItem(`custQuery4`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&pcat_id=${data.pcatId}&status=${data.p_status}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&pcat_id=${data.pcatId}&status=${data.p_status}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
@@ -583,7 +583,7 @@ function PaginatorCust(props) {
             else {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     userId
-                )}&status=1`;
+                )}&status=2`;
             }
         }
         else if (assignment == "declinedAssignment") {
@@ -699,12 +699,12 @@ function PaginatorCust(props) {
             localStorage.setItem(`custPay3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=1&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=1&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
