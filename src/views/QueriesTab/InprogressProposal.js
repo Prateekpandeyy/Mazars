@@ -412,7 +412,7 @@ function InprogressProposal({
           <DataTablepopulated
             bgColor="#6e557b"
             keyField={"assign_no"}
-            data={allQueriesCount}
+            data={inprogressProposal}
             columns={columns}
           ></DataTablepopulated>
           <DiscardReport
