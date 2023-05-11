@@ -248,7 +248,11 @@ function FeedbackTab() {
           setAtpage(1);
           setPage(1);
           setBig(1);
+          if((res.data.total) < allEnd){
+            setEnd(res.data.total);
+          }else{
           setEnd(allEnd);
+          }
           setTurnGreen(true);
         }
       });

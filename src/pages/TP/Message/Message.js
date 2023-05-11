@@ -98,7 +98,11 @@ function Message(props) {
     } else {
       setPage(1);
       getMessage(1);
+      if((count) < allEnd){
+        setEnd(count);
+      }else{
       setEnd(allEnd);
+      }
     }
 
     // setPage(1);
@@ -213,7 +217,11 @@ function Message(props) {
           setAtpage(1);
           setPage(1);
           setBig(1);
+          if((count) < allEnd){
+            setEnd(count);
+          }else{
           setEnd(allEnd);
+          }
         }
       });
   };

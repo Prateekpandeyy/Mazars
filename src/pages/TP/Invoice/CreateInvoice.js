@@ -122,7 +122,11 @@ const CreateInvoice = () => {
       pageno = 1;
     }
     setPage(pageno);
+    if((count) < allEnd){
+      setEnd(count);
+    }else{
     setEnd(allEnd);
+    }
     getProposalList(pageno);
   }, []);
 
