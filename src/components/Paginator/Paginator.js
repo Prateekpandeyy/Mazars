@@ -782,7 +782,7 @@ function Paginator(props) {
                 )}&assignment_status=Draft_Report&stages_status=1`
             }
         }
-        else if (tpDeliveryTab = "tpDeliveryTab") {
+        else if (tpDeliveryTab == "tpDeliveryTab") {
             let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment3"));
             let val = pagetry?.val;
@@ -808,7 +808,7 @@ function Paginator(props) {
                 )}&assignment_status=Delivery_of_report&stages_status=1`
             }
         }
-        else if (tpAsAdminPermission = "tpAsAdminPermission") {
+        else if (tpAsAdminPermission == "tpAsAdminPermission") {
             let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment4"));
             let val = pagetry?.val;
