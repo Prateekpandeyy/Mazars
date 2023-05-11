@@ -25,8 +25,7 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
-
-
+import InviteModal from "./InviteModal";
 
 function Demo() {
   const userId = window.localStorage.getItem("tpkey");
@@ -41,7 +40,15 @@ function Demo() {
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const [invite, setInvite] = useState(false);
+  const [inviteData, setInviteData] = useState();
+  const token = window.localStorage.getItem("tptoken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   var date = new Date();
 
   function convert(str) {
@@ -60,9 +67,8 @@ function Demo() {
 
   const getData = () => {
     axios
-      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/videoScheduler?tl_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log("res -", res);
         var a = res.data.result.items;
         if (a) {
           setData(a.map(mapAppointmentData));
@@ -79,16 +85,15 @@ function Demo() {
     question_id: appointment.question_id,
     vstart: appointment.vstart,
     vend: appointment.vend,
-    user: appointment.user.split(','),
+    user: appointment.user.split(","),
     owner: appointment.owner,
     username: appointment.username,
   });
 
   const getAssignmentNo = () => {
     axios
-      .get(`${baseUrl}/admin/getAllQuery?tp_id=${JSON.parse(userId)}`)
+      .get(`${baseUrl}/tl/getAllQuery?tp_id=${JSON.parse(userId)}`, myConfig)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           var data = res.data.result;
 
@@ -96,25 +101,26 @@ function Demo() {
             text,
             ...rest,
           }));
-          console.log("dt--", newArrayOfObj);
+
           setAssignmentData(newArrayOfObj);
         }
       });
   };
 
   const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-      console.log(res);
-      if (res.data.code === 1) {
-        var data = res.data.result;
-        const newOwners = data.map(({ name: text, ...rest }) => ({
-          text,
-          ...rest,
-        }));
-        console.log("dt--", newOwners);
-        setOwner(newOwners);
-      }
-    });
+    axios
+      .get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          var data = res.data.result;
+          const newOwners = data.map(({ name: text, ...rest }) => ({
+            text,
+            ...rest,
+          }));
+
+          setOwner(newOwners);
+        }
+      });
   };
 
   const resources = [
@@ -143,11 +149,17 @@ function Demo() {
       whiteSpace: "nowrap",
     },
   });
-
+  const showInvite = (data) => {
+    console.log("data", data);
+    if (data) {
+      setInviteData(data);
+    }
+    setInvite(!invite);
+  };
 
   const B = (key) => {
-    setRead(!key)
-  }
+    setRead(!key);
+  };
 
   const AppointmentBase = ({
     children,
@@ -160,20 +172,25 @@ function Demo() {
     <div onDoubleClick={() => B(data.owner)}>
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
-        <i
-         onClick={() => handleJoin(data)}
+          <i
+            onClick={() => handleJoin(data)}
             class="fa fa-video-camera"
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+            style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
           ></i>
-          <div>{children}</div>
-          
-         
+
+          <div style={{ display: "flex", width: "100px", overflow: "hidden" }}>
+            {children}
+          </div>
+          <span onClick={() => showInvite(data)}>
+            <i
+              class="fa fa-user-plus"
+              style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
+            ></i>
+          </span>
         </div>
       </Appointments.Appointment>
     </div>
   );
-
-  
 
   const Appointment = withStyles(styles, { name: "Appointment" })(
     AppointmentBase
@@ -183,15 +200,70 @@ function Demo() {
     return (
       <Appointment
         {...props}
-      // onAppointmentMetaChange={onAppointmentMetaChange}
+        // onAppointmentMetaChange={onAppointmentMetaChange}
       />
     );
   };
 
-
   //handleJoin
   const handleJoin = (data) => {
-    // console.log("data", data);
+    //     // console.log("data", data);
+    // //  console.log("data", data)
+    // // console.log(data.startDate)
+    // var dt = new Date(data.startDate)
+    // var dt2 = new Date()
+    // let ck = dt.getMonth();
+
+    // let pp = dt2.getMonth();
+    // let rr = dt2.getHours();
+    // let ss = dt.getHours()
+    // let mm = dt2.getMinutes() + 20
+    // let dd = dt.getMinutes()
+    // let ee = dt.getDate();
+    // let eee = dt2.getDate()
+    // //   console.log("dt", dt)
+    // //   console.log(dt2.getDate())
+    // //  console.log(dt.getMinutes())
+    // //  console.log(dt2.getMinutes() + 20)
+    // //  console.log("ck", ck)
+    // //   console.log("dt2", dt2)
+    // //   console.log("pp", pp)
+    // //   console.log("mm", mm)
+    // //   console.log("dd", dd)
+    // //   console.log("ss", ss)
+    // //   console.log("rr", rr)
+    // //   console.log(ck == pp)
+    // //   console.log(ee === eee)
+    // //   console.log(ss == rr)
+    // //   console.log(mm > dd)
+
+    // if(ck == pp && ss == rr && ee == eee){
+
+    // if(mm > dd){
+    //   console.log("passed")
+
+    //   Cookies.set("channel_2", data.question_id);
+    //   Cookies.set("baseMode_2", baseMode);
+    //   Cookies.set("transcode_2", transcode);
+    //   Cookies.set("attendeeMode_2", attendeeMode);
+    //   Cookies.set("videoProfile_2", videoProfile);
+    //   // history.push("/teamleader/meeting/");
+    //   history.push(`/taxprofessional/meeting/${data.id}`);
+
+    // }
+    // else{
+    // // return false
+
+    // Cookies.set("channel_2", data.question_id);
+    // Cookies.set("baseMode_2", baseMode);
+    // Cookies.set("transcode_2", transcode);
+    // Cookies.set("attendeeMode_2", attendeeMode);
+    // Cookies.set("videoProfile_2", videoProfile);
+    // // history.push("/teamleader/meeting/");
+    // history.push(`/taxprofessional/meeting/${data.id}`);
+
+    // }
+    // }
 
     Cookies.set("channel_2", data.question_id);
     Cookies.set("baseMode_2", baseMode);
@@ -199,15 +271,11 @@ function Demo() {
     Cookies.set("attendeeMode_2", attendeeMode);
     Cookies.set("videoProfile_2", videoProfile);
     // history.push("/teamleader/meeting/");
-    history.push(`/taxprofessional/meeting/${data.id}`);
-
+    history.push(`/taxprofessional_meeting/${data.id}`);
   };
 
   const changeFormat = (d) => {
-    console.log("d ---", d);
-
-    if (typeof d === 'object') {
-      console.log("GMT");
+    if (typeof d === "object") {
       return (
         d.getFullYear() +
         "-" +
@@ -218,16 +286,13 @@ function Demo() {
         d.toString().split(" ")[4]
       );
     } else {
-      console.log("d");
       return d;
     }
   };
 
   const commitChanges = ({ added, changed, deleted }) => {
-
     if (added) {
-      setLoading(true)
-      console.log("added - ", added);
+      setLoading(true);
 
       var startDate = added.startDate;
       var endDate = added.endDate;
@@ -244,38 +309,36 @@ function Demo() {
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers: {
+          uit: token,
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
           if (response.data.code === 1) {
-            setLoading(false)
-            Alerts.SuccessNormal("New call scheduled successfully.")
+            setLoading(false);
+            Alerts.SuccessNormal("New call scheduled successfully.");
           } else if (response.data.code === 0) {
-            setLoading(false)
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
 
           getData();
         })
-        .catch((error) => {
-          console.log("erroror - ", error);
-        });
+        .catch((error) => {});
     }
     if (changed) {
-      console.log("changed", changed);
-      setLoading(true)
+      setLoading(true);
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-      console.log("data2 - ", data2);
 
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-      console.log("id -", id);
+
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -283,15 +346,13 @@ function Demo() {
           dataIttem = data2[i];
         }
       }
-      console.log("owner", dataIttem.owner);
 
-      var a = dataIttem.startDate
-      var b = dataIttem.endDate
-
+      var a = dataIttem.startDate;
+      var b = dataIttem.endDate;
 
       if (!dataIttem.owner) {
-        var variable = "Error"
-        Alerts.ErrorEdit(variable)
+        var variable = "Error";
+        Alerts.ErrorEdit(variable);
         return false;
       }
       let formData = new FormData();
@@ -307,50 +368,45 @@ function Demo() {
       axios({
         method: "POST",
         url: `${baseUrl}/tl/PostCallSchedule`,
+        headers: {
+          uit: token,
+        },
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
-
           if (response.data.code === 1) {
-            setLoading(false)
-            var msg = "Call details updated successfully."
-            Alerts.SuccessNormal(msg)
-          }
-          else if (response.data.code === 0) {
-            setLoading(false)
-            console.log("call 0 code")
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = "Call details updated successfully.";
+            Alerts.SuccessNormal(msg);
+          } else if (response.data.code === 0) {
+            setLoading(false);
+
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
           getData();
         })
-        .catch((error) => {
-          console.log("erroror - ", error);
-        });
+        .catch((error) => {});
     }
 
     if (deleted !== undefined) {
-      console.log("deleted f", deleted);
-      setLoading(true)
+      setLoading(true);
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-          console.log("owner", data.owner);
-          value = data.owner
+          value = data.owner;
         }
       });
 
-      // console.log("value", value);
       if (!value) {
-        var variable = "Error"
-        Alerts.ErrorDelete(variable)
+        var variable = "Error";
+        Alerts.ErrorDelete(variable);
         return false;
       }
 
       Swal.fire({
         title: "Are you sure?",
-        text: "It will be permanently deleted !",
+        text: "It will be permanently deleted",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -358,22 +414,26 @@ function Demo() {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
-            console.log("res -", res);
-            if (res.data.code === 1) {
-              setLoading(false)
-              Swal.fire("Deleted!", "Scheduled call has been deleted.", "success");
-              getData();
-            } else {
-              setLoading(false)
-              Swal.fire("Oops...", "Errorr ", "error");
-            }
-          });
+          axios
+            .get(`${baseUrl}/tl/freeslot?id=${deleted}`, myConfig)
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                Swal.fire(
+                  "Deleted!",
+                  "Scheduled call has been deleted.",
+                  "success"
+                );
+                getData();
+              } else {
+                setLoading(false);
+                Swal.fire("Oops...", "Errorr ", "error");
+              }
+            });
         }
       });
     }
   };
-
 
   const BooleanEditor = (props) => {
     if (props.label === "All Day" || props.label === "Repeat") {
@@ -388,34 +448,27 @@ function Demo() {
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    console.log("appointmentData", appointmentData);
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
         onFieldChange={onFieldChange}
         {...restProps}
       >
-
-        <AppointmentForm.Label text="All Participants" type="title" />
-        <AppointmentForm.TextEditor
-          value={appointmentData.username}
-          readOnly
-        />
-
+        <AppointmentForm.Label text="All participants" type="title" />
+        <AppointmentForm.TextEditor value={appointmentData.username} readOnly />
       </AppointmentForm.BasicLayout>
     );
   };
 
-
   return (
     <>
-      {
-        loading ?
-          <Loader />
-          :
-          <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div style={{ display: "flex", height: "700px" }}>
             <Paper>
-              <Scheduler data={data} height={570}>
+              <Scheduler data={data}>
                 <ViewState
                   defaultCurrentDate={currentDate}
                   defaultCurrentViewName="Week"
@@ -424,8 +477,8 @@ function Demo() {
                 <EditRecurrenceMenu />
 
                 <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
-                <WeekView cellDuration={60} startDayHour={0} endDayHour={24}  />
-                
+                <WeekView cellDuration={60} startDayHour={0} endDayHour={24} />
+
                 <Appointments appointmentComponent={myAppointment} />
 
                 <Toolbar />
@@ -435,29 +488,36 @@ function Demo() {
 
                 <AppointmentTooltip showOpenButton />
 
-                {
-                  read ?
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                      readOnly
-                    />
-                    :
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                    />
-                }
+                {read ? (
+                  <AppointmentForm
+                    booleanEditorComponent={BooleanEditor}
+                    basicLayoutComponent={BasicLayout}
+                    textEditorComponent={TextEditor}
+                    readOnly
+                  />
+                ) : (
+                  <AppointmentForm
+                    booleanEditorComponent={BooleanEditor}
+                    basicLayoutComponent={BasicLayout}
+                    textEditorComponent={TextEditor}
+                  />
+                )}
 
-                <Resources
-                  data={resources}
-                />
+                <Resources data={resources} />
               </Scheduler>
             </Paper>
-          </>
-      }
+          </div>
+        </>
+      )}
+      {invite === true ? (
+        <InviteModal
+          inviteData={inviteData}
+          showInvite={showInvite}
+          invite={invite}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }

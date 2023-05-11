@@ -1,208 +1,222 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import "./index.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import Swal from "sweetalert2";
-import { TurnedIn } from "@material-ui/icons";
-import History from './History.js';
-import { InputAdornment } from "@material-ui/core";
+import History from "./History.js";
+import { EditQuery } from "../../../components/Common/MessageIcon";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import CustomHeading from "../../../components/Common/CustomHeading";
 function TeamLeaderTab() {
-  const alert = useAlert();
   const [data, setData] = useState([]);
   const [tlCount, setTlCount] = useState("");
-  const [subCat, setsubCat] = useState([])
+  const [subCat, setsubCat] = useState([]);
   const [history, setHistory] = useState([]);
   const userid = window.localStorage.getItem("adminkey");
-  var kk = []
-  var pp = []
-  
+  var kk = [];
+  var pp = [];
 
   const [modal, setModal] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const [jumpTo, setJumpTo] = useState("");
+  const myRefs = useRef([]);
 
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   const toggle = (key) => {
-    console.log("key", key);
     setModal(!modal);
-console.log("key", typeof(key))
-   if(typeof(key) == "object") {
-     console.log("cancle")
-   }
-   else{
-    {
-      fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
-        method: "GET",
-        headers: new Headers({
-          Accept: "application/vnd.github.cloak-preview",
-        }),
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          console.log(response);
-          setHistory(response.result);
+    
+
+    if (typeof key == "object") {
+    } else {
+        setJumpTo(key);
+
+        fetch(`${baseUrl}/admin/userhistory?id=${key}`, {
+          method: "GET",
+          headers: new Headers({
+            Accept: "application/vnd.github.cloak-preview",
+            uit: token,
+          }),
         })
-        .catch((error) => console.log(error));
-    };
-   }
-   
-   
-  }
+          .then((res) => res.json())
+          .then((response) => {
+            setHistory(response.result);
+          })
+          .catch((error) => console.log(error));
+          
+    }
+  };
+
+  useEffect(() => {
+    let runTo = myRefs.current[jumpTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });   
+}, [modal]);
+
   const columns = [
     {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.id}
+          ref={el => (myRefs.current[row.id] = el)}>{rowIndex + 1}</div>;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
       dataField: "post_name",
       text: "TL post name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
 
     {
       dataField: "email",
       text: "TL post email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       dataField: "name",
       text: "Name of TL",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       dataField: "personal_email",
       text: "Email",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       dataField: "phone",
       text: "Mobile No",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       dataField: "parent_id",
       text: "Category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
         var digit2 = [];
-        digit2 = row.allpcat_id.split(",")
-        console.log("digit2", digit2)
-        console.log(digit2.includes("Indirect"))
+        var digit3 = [];
+        digit2 = row.allpcat_id.split(",");
+        if (row.allpcat_id.split(",")[0] === "Indirect tax") {
+          digit3 = row.allpcat_id.split(",");
+        } else {
+          digit3 = row.allpcat_id.split(",").reverse();
+        }
+
         return (
           <>
-
-            {
-              digit2.map((e) => {
-                return (
-                  <>
-                    <p className={e.includes("Indirect") === true ? "dirCla" : "indirCla"}> {e + ","}</p>
-                  </>
-                )
-              })
-            }
+            {digit3.map((e) => {
+              return (
+                <>
+                  <div style={{ display: "flex", height: "80px" }}>
+                    <p
+                      className={
+                        e.includes("Indirect") === true
+                          ? "completed"
+                          : "inprogress"
+                      }
+                    >
+                      {" "}
+                      {e}
+                    </p>
+                  </div>
+                </>
+              );
+            })}
           </>
-        )
-      }
+        );
+      },
     },
     {
       dataField: "allcat_id",
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
         var digit = [];
-        //  console.log(JSON.parse(row.allcat_id))
-         digit = JSON.parse(row.allcat_id);
 
-// digit = row.allcat_id;
+        digit = JSON.parse(row.allcat_id);
+
+        let k, pp;
+
+        if (digit.direct && digit.direct.length - 1 == "1") {
+          k = ", ";
+        } else {
+          k = "";
+        }
+        if (digit.indirect && digit.indirect.length - 1 == "1") {
+          pp = ", ";
+        } else {
+          pp = "";
+        }
         return (
           <>
-            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + ","} </p>
-            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + ","}</p>
-          </>
+            {digit.direct.length > 0 && digit.indirect.length > 0 ? (
+              <>
+                <div style={{ display: "block" }}>
+                  <p className="completed">{digit.indirect + pp}</p>
+                </div>
+                <div style={{ display: "block" }}>
+                  <p className="inprogress">{digit.direct + k} </p>
+                </div>
+              </>
+            ) : (
+              <>
+                {digit.direct.length > 0 ? (
+                  <p className="inprogress">{digit.direct + k} </p>
+                ) : (
+                  <p className="completed">{digit.indirect + pp}</p>
+                )}
+              </>
+            )}
 
-        )
-      }
+            {/* {digit.direct === null ? null :
+            <p style={{ "color": "green", "display": "block" }}>{digit.indirect + pp}</p>}
+         {digit.indirect === null ? null : 
+            <p style={{ "color": "blue", "diplay": "block" }}>{digit.direct + k} </p> } */}
+          </>
+        );
+      },
     },
 
     {
       dataField: "",
       text: "Action",
       headerStyle: () => {
-        return { fontSize: "12px" };
+        return { width: "70px" };
       },
       formatter: function (cell, row) {
         return (
           <>
-            <Link to={`/admin/edittl/${row.id}`}>
-              <i
-                className="fa fa-edit"
-                style={{
-                  fontSize: 18,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                }}
-              ></i>
+            <Link to={`/admin_edittl/${row.id}`}>
+              <EditQuery />
             </Link>
-            <i
-              className="fa fa-trash"
-              style={{ fontSize: 20, cursor: "pointer", marginLeft: "8px" }}
-              onClick={() => del(row.id)}
-            ></i>
           </>
         );
-
       },
-
     },
     {
       text: "History",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function (cell, row) {
         return (
           <>
             <button
               type="button"
-              class="btn btn-info btn-sm"
+              className="autoWidthBtn"
               onClick={() => toggle(row.id)}
             >
               History
@@ -215,26 +229,21 @@ console.log("key", typeof(key))
 
   useEffect(() => {
     getTeamLeader();
-
   }, []);
 
   const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-      console.log("Log", res.data.result)
-      var dd = []
+    axios.get(`${baseUrl}/admin/getTeamLeader`, myConfig).then((res) => {
+      var dd = [];
       if (res.data.code === 1) {
-        pp.push(res.data.result)
-        setData((res.data.result));
+        pp.push(res.data.result);
+        setData(res.data.result);
         setTlCount(res.data.result.length);
       }
     });
   };
 
-
   //check
   const del = (id) => {
-    console.log("del", id);
-
     Swal.fire({
       title: "Are you sure?",
       text: "It will permanently deleted !",
@@ -255,53 +264,48 @@ console.log("key", typeof(key))
     axios
       .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
       .then(function (response) {
-        console.log("delete-", response);
         if (response.data.code === 1) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           getTeamLeader();
         } else {
           Swal.fire("Oops...", "Errorr ", "error");
         }
-
       })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
+      .catch((error) => { });
   };
 
-
-
   return (
-
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      {console.log("Layout")}
       <Card>
         <CardHeader>
           <Row>
             <Col md="10">
-              <CardTitle tag="h4">Team Leaders ({tlCount})</CardTitle>
+              <CustomHeading>Team Leaders ({tlCount})</CustomHeading>
             </Col>
             <Col md="2">
-              <Link to={"/admin/addnewtl"} className="btn btn-primary">
+              <Link to={"/admin/addnewtl"} className="customBtn">
                 Add New
               </Link>
             </Col>
           </Row>
         </CardHeader>
         <CardBody>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
+          <DataTablepopulated
+            bgColor="#42566a"
+            keyField={"assign_no"}
             data={data}
-
             columns={columns}
-            rowIndex
-          />
+          ></DataTablepopulated>
         </CardBody>
       </Card>
-      <History history={history} toggle={toggle} modal={modal} />
+      <History
+        history={history}
+        bgColor="#42566"
+        toggle={toggle}
+        modal={modal}
+      />
     </Layout>
   );
 }
 
-export default TeamLeaderTab
+export default TeamLeaderTab;

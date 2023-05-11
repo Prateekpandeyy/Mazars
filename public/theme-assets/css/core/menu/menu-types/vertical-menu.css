@@ -40,7 +40,7 @@ body.vertical-layout.vertical-menu.menu-expanded .navbar.navbar-brand-center .na
 
 body.vertical-layout.vertical-menu.menu-expanded .navbar .navbar-container
 {
-    margin-left: 260px;
+    margin-left: 230px;
 }
 
 body.vertical-layout.vertical-menu.menu-expanded .navbar .navbar-brand .brand-text
@@ -175,7 +175,7 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigatio
 body.vertical-layout.vertical-menu.menu-expanded .content,
 body.vertical-layout.vertical-menu.menu-expanded .footer
 {
-    margin-left: 260px;
+    margin-left: 230px;
 }
 
 body.vertical-layout.vertical-menu.menu-expanded .navbar-brand-center .content,

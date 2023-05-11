@@ -4,7 +4,7 @@ import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -17,7 +17,7 @@ import { Spinner } from "reactstrap";
 
 
 function NewPassword(props) {
-  const alert = useAlert();
+ 
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const { id } = useParams();
 
@@ -62,7 +62,7 @@ function NewPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+
     setLoading(true)
 
     let formData = new FormData();
@@ -77,20 +77,29 @@ function NewPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
-          var variable = "Password changed successfully."
-          Alerts.SuccessNormal(variable)
+          Swal.fire({
+            title : 'success',
+            html : "Password changed successfully.",
+            icon : "success"
+          })
+          
           reset();
           props.history.push("/teamleader/login");
         } else if (response.data.code === 0) {
           setLoading(false)
-          Alerts.ErrorNormal("Please enter correct details")
+          Swal.fire({
+            title : 'error',
+            html : "Please enter correct details",
+            icon : "error"
+          })
+         
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        
       });
   };
 
@@ -242,7 +251,7 @@ function NewPassword(props) {
                       ""
                       :
                       <div>
-                        <button type="submit" className="btn btn-primary" >
+                        <button type="submit" className="customBtn">
                           Submit
                         </button>
                         <Cancel />
@@ -264,7 +273,7 @@ function NewPassword(props) {
 
         </div>
       </div>
-      <Footer />
+  
     </>
   )
 }
@@ -278,7 +287,7 @@ const Cancel = () => {
   return (
     <>
       <Link to="/teamleader/forget-password" style={{ "margin": "10px" }}>
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" className="customBtn">
           Cancel
         </button>
       </Link>

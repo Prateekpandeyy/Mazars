@@ -4,7 +4,6 @@ import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -13,11 +12,12 @@ import { useParams, Link } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
+import LoadingTime from "../../../components/LoadingTime/LoadingTime";
 
 
 
 function NewPassword(props) {
-  const alert = useAlert();
+ 
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const { id } = useParams();
 
@@ -38,31 +38,13 @@ function NewPassword(props) {
 
 
   useEffect(() => {
-    getTime()
+    LoadingTime.timer2(setTime, setDisabled)
   }, []);
 
 
-  const getTime = () => {
-    var timerOn = true;
-    function timer(remaining) {
-      var s = remaining % 60;
-      s = s < 10 ? '0' + s : s;
-      setTime(remaining)
-      remaining -= 1;
-      if (remaining >= 0 && timerOn) {
-        setTimeout(function () {
-          timer(remaining);
-        }, 1000);
-        return;
-      }
-      setDisabled(true)
-    }
-    timer(180);
-  }
-
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
@@ -77,7 +59,7 @@ function NewPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Password changed successfully."
@@ -90,7 +72,7 @@ function NewPassword(props) {
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -150,7 +132,7 @@ function NewPassword(props) {
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                         message:
-                          "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
+                          "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
                       },
                     })}
                     onPaste={((e) => {
@@ -223,16 +205,17 @@ function NewPassword(props) {
                       {errors.p_code.message}
                     </div>
                   )}
-                  <small class="text-center">
-                    Note: OTP is valid for {time} seconds.
-                  </small>
+                  {disabled === false ? 
+                  <small className="text-center">
+                  Note: OTP is valid for {time} seconds.
+                </small> : ""}
                 </div>
               </div>
             </div>
 
             {
               loading ?
-                <div class="col-md-12">
+                <div className="col-md-12">
                   <Spinner color="primary" />
                 </div>
                 :
@@ -242,7 +225,7 @@ function NewPassword(props) {
                       ""
                       :
                       <div>
-                        <button type="submit" className="btn btn-primary" >
+                        <button type="submit" className="customBtn" >
                           Submit
                         </button>
                         <Cancel />
@@ -255,7 +238,7 @@ function NewPassword(props) {
           {
             disabled ?
               <ResendOtp id={id} setDisabled={setDisabled}
-                getTime={getTime} setLoading={setLoading} />
+              setTime={setTime}  loading = {loading} getTime={LoadingTime.timer2} setLoading={setLoading} />
               :
               null
           }
@@ -275,7 +258,7 @@ const Cancel = () => {
   return (
     <>
       <Link to="/admin/forget-password" style={{ "margin": "10px" }}>
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" className="customBtn">
           Cancel
         </button>
       </Link>

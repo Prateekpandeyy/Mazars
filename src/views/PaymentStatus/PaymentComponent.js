@@ -3,9 +3,9 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+
 import { useHistory } from "react-router-dom";
-import Alerts from "../../common/Alerts";
+
 import CommonServices from "../../common/common";
 import Loader from "../../components/Loader/Loader";
 
@@ -15,9 +15,10 @@ function PaymentModal({
   paymentHandler,
   pay,
   getPaymentStatus,
+  pay3
 }) {
   const { handleSubmit, register } = useForm();
-  const alert = useAlert();
+
   const history = useHistory();
 
   const { assign_id, amount, accepted_amount, paid_amount,
@@ -29,24 +30,18 @@ function PaymentModal({
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-
+  
     setLoading(true)
     let formData = new FormData();
     formData.append("id", assign_id);
     formData.append("status", 8);
     formData.append("amount", value.p_amount);
 
-    // axios({
-    //   method: "POST",
-    //   url: `${baseUrl}/customers/PaymentPartialAccept`,
-    //   data: formData,
-    // })
+  
     axios.get(`${baseUrl}/admin/getPaymentDetail?id=${assign_id}`)
       .then(function (response) {
-        console.log("res-", response.data.paymnet_detail);
+      
         if (response.data.code === 1) {
-          // setLoading(false)
          
           window.location.href= (`${response.data.payment_detail[0].paymenturl}`)
          
@@ -55,13 +50,12 @@ function PaymentModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
 
   const installAmount = (data) => {
     var item = data.split(',')
-    console.log("item", item);
 
     const dataItem = item.map((p, i) =>
     (
@@ -71,10 +65,13 @@ function PaymentModal({
     ))
     return dataItem;
   }
+if(addPaymentModal === true){
+  var kk = pay.installment_amount.split(",")
+}
 
   return (
     <div>
-      <Modal isOpen={addPaymentModal} toggle={paymentHandler} size="md">
+      <Modal isOpen={addPaymentModal}  toggle={paymentHandler} size="md">
         <ModalHeader toggle={paymentHandler}>Payment</ModalHeader>
         {
           loading ?
@@ -86,71 +83,27 @@ function PaymentModal({
                   <tr>
                     <th>Paid Amount</th>
                     <th>Due Date</th>
-                    {/* <td>{accepted_amount}</td> */}
-                   
+                    <th>Pay</th>
                   </tr>
-                  <tr>
-                    <td>{accepted_amount - paid_amount}</td>
+                  {kk?.map((i, e) => (
+                    <tr>
+                    <td>{i == "0" ? pay.amount : i }</td>
                     <td> {CommonServices.removeTime(due_date)}</td>
-                  </tr>
-                  {/* <tr>
-                   
-                    <td>{paid_amount}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Payment Terms</th>
-                    {
-                      payment_terms == "lumpsum" ?
-                        <td>
-                          <tr>
-
-                            <th>Due Dates</th>
-                          </tr>
-                          <tr>
-                            <td>
-                              {CommonServices.removeTime(due_date)}
-                            </td>
-                          </tr>
-                        </td>
-                        :
-                        payment_terms == "installment" ?
-                          <td>
-                            <tr>
-                              <th>Installment Amount</th>
-                              <th>Due Dates</th>
-                            </tr>
-                            <tr>
-                              <td>{installAmount(installment_amount)}</td>
-                              <td>{installAmount(due_date)}</td>
-                            </tr>
-                          </td>
-                          :
-                          ""
-                    }
-                  </tr> */}
-
-                </table>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  {+accepted_amount == +paid_amount ? null : (
-                    <div>
-                      {/* <div className="mb-3">
-                        <input
-                          type="text"
-                          name="p_amount"
-                          ref={register}
-                          className="form-control"
-                          defaultValue={accepted_amount - paid_amount}
-                          placeholder="enter amount"
-                        />
-                      </div> */}
-                      <div class="modal-footer">
-                        <button type="submit" className="btn btn-primary">
-                          Pay
-                        </button>
-                      </div>
-                    </div>
+                    <td><form onSubmit={handleSubmit(onSubmit)}>
+                  {+accepted_amount == +paid_amount ? <p>paid</p> : (
+                   <button type="submit" className="btn btn-primary">
+                      Pay
+                   </button>
+                    
+                
                   )}
-                </form>
+                </form></td>
+                  </tr>
+                 ))}
+                 
+                
+                </table>
+                
               </ModalBody>
             </>
         }

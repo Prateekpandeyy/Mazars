@@ -1,54 +1,55 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import CustomerNotification from "./CustomerNotification";
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import './index.css'
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import { CgProfile } from "react-icons/cg";
 import CommonServices from "../../common/common";
-
+import CustomHeading from "../Common/CustomHeading";
+import { CmsCont } from "../Header/Header";
+import CustomTypography from "../Common/CustomTypography";
 function NavWrapper(props) {
-  const { color, logout, name, email, feedbackNumber} = props;
+  const { color, logout, name, email, feedbackNumber } = props;
+  const clName = JSON.parse(localStorage.getItem("clientLoginId"));
 
-  const history = useHistory();
   const userId = window.localStorage.getItem("userid");
   const adminkey = window.localStorage.getItem("adminkey");
   const tlkey = window.localStorage.getItem("tlkey");
-  const tpkey = window.localStorage.getItem("tpkey")
-
-  // const CustEmail = window.localStorage.getItem("email");
-console.log("porps", email, feedbackNumber)
+  const tpkey = window.localStorage.getItem("tpkey");
+  const cmsKey = JSON.stringify(window.localStorage.getItem("token"));
 
   return (
     <>
-      <div class="navbar-wrapper">
-        <div class="navbar-container" style={{ background: color }}>
-          <div class="collapse navbar-collapse show" id="navbar-mobile">
-            <ul class="nav navbar-nav mr-auto float-left">
-              <li class="nav-item d-block d-md-none">
+      <div className="navbar-wrapper">
+        <div
+          className="navbar-container"
+          style={{ background: color, borderBottom: "2px solid #787878" }}
+        >
+          <div className="collapse navbar-collapse show" id="navbar-mobile">
+            <ul className="nav navbar-nav mr-auto float-left">
+              <li className="nav-item d-block d-md-none">
                 <a
-                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active"
+                  className="nav-link nav-menu-main menu-toggle hidden-xs is-active"
                   href="#"
                 >
-                  <i class="fa fa-bars"></i>
+                  <i className="fa fa-bars"></i>
                 </a>
               </li>
 
-              <li class="nav-item dropdown navbar-search">
-                <ul class="dropdown-menu">
-                  <li class="arrow_box">
+              <li className="nav-item dropdown navbar-search">
+                <ul className="dropdown-menu">
+                  <li className="arrow_box">
                     <form>
-                      <div class="input-group search-box">
-                        <div class="position-relative has-icon-right full-width">
+                      <div className="input-group search-box">
+                        <div className="position-relative has-icon-right full-width">
                           <input
-                            class="form-control"
+                            className="form-control"
                             id="search"
                             type="text"
                             placeholder="Search here..."
                           />
-                          <div class="form-control-position navbar-search-close">
-                            <i class="fa fa-times"> </i>
+                          <div className="form-control-position navbar-search-close">
+                            <i className="fa fa-times"> </i>
                           </div>
                         </div>
                       </div>
@@ -57,38 +58,103 @@ console.log("porps", email, feedbackNumber)
                 </ul>
               </li>
 
-              <li>
-                <h4 class="brand-text text-white">{CommonServices.capitalizeFirstLetter(name)}: {JSON.parse(email)} </h4>
+              <li style={{ zIndex: 99, display: "flex" }}>
+                <span
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  {name == "customer" ? (
+                    <>
+                      <div className="d-flex">
+                        <CustomTypography
+                          font={18}
+                        >{`Client : `}</CustomTypography>
+                        <div>
+                          <CustomTypography>{clName}</CustomTypography>
+                          <CustomTypography margin="5px">
+                            {JSON.parse(email)}
+                          </CustomTypography>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <CustomHeading>
+                      {CommonServices.capitalizeFirstLetter(name)}:{" "}
+                      {JSON.parse(email)}
+                    </CustomHeading>
+                  )}
+                </span>
               </li>
-             
             </ul>
 
-            <ul class="nav navbar-nav float-right">
-
+            <ul
+              className="nav navbar-nav float-right"
+              style={{ display: "flex", flexDirection: "row" }}
+            >
               {name == "customer" && (
-                <CustomerNotification tokenKey={userId} name={name} />
+                <>
+                  <li style={{ zIndex: "400" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        maxWidth: "500px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <CmsCont position="Inner" />
+                    </div>
+                  </li>
+                  <CustomerNotification
+                    panel="client"
+                    tokenKey={userId}
+                    name={name}
+                  />
+                </>
               )}
 
               {name == "admin" && (
-                <CustomerNotification tokenKey={adminkey} name={name} />
+                <CustomerNotification
+                  panel="admin"
+                  tokenKey={adminkey}
+                  name={name}
+                />
+              )}
+              {name == "cms" && (
+                <CustomerNotification
+                  panel="Cms"
+                  tokenKey={cmsKey}
+                  name={name}
+                />
               )}
 
-              {name == "teamleader" && (
-                <CustomerNotification tokenKey={tlkey} name={name} />
+              {name == "Team Leader" && (
+                <CustomerNotification
+                  panel="teamleader"
+                  tokenKey={tlkey}
+                  name={name}
+                />
               )}
-               {name == "taxprofessional" && (
-                <CustomerNotification tokenKey={tpkey} name={name} />
+              {name == "Tax Professional" && (
+                <CustomerNotification
+                  panel="taxprofessional"
+                  tokenKey={tpkey}
+                  name={name}
+                />
               )}
 
-
-              <li class="dropdown dropdown-user nav-item">
+              <li className="dropdown dropdown-user nav-item">
                 <a
-                  class="dropdown-toggle nav-link dropdown-user-link"
+                  className="dropdown-toggle nav-link dropdown-user-link"
                   href="#"
                   data-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <span class="avatar avatar-online">
+                  <span className="avatar avatar-online">
                     <img
                       src="https://cdn1.vectorstock.com/i/1000x1000/40/30/user-glyph-icon-web-and-mobile-admin-sign-vector-18444030.jpg"
                       alt="avatar"
@@ -97,28 +163,42 @@ console.log("porps", email, feedbackNumber)
                   </span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="arrow_box_right">
-
+                <div className="dropdown-menu dropdown-menu-right changePassword">
+                  <div className="arrow_box_right">
                     {name == "customer" && (
-                      <Link to="/customer/change-password">
-                        <div class="dropdown-item"
-                          style={{ cursor: "pointer" }}>
-                          <VpnKeyIcon />
-                          <span style={{ marginLeft: "3px" }}>Change Password</span>
-                        </div>
-                      </Link>
+                      <>
+                        <Link to="/customer/change-password">
+                          <div
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <VpnKeyIcon style={{ fontSize: "20px" }} />
+                            <span style={{ marginLeft: "6px" }}>
+                              Change password
+                            </span>
+                          </div>
+                        </Link>
+                        <Link to="/customer/profile">
+                          <div
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <CgProfile style={{ fontSize: "20px" }} />
+
+                            <span style={{ marginLeft: "6px" }}>Profile</span>
+                          </div>
+                        </Link>
+                      </>
                     )}
 
                     <div
-                      class="dropdown-item"
+                      className="dropdown-item"
                       onClick={logout}
                       style={{ cursor: "pointer" }}
                     >
-                      <LockOpenIcon />
-                      <span style={{ marginLeft: "10px" }}>Logout</span>
+                      <LockOpenIcon style={{ fontSize: "20px" }} />
+                      <span style={{ marginLeft: "6px" }}>Logout</span>
                     </div>
-
                   </div>
                 </div>
               </li>
@@ -131,6 +211,3 @@ console.log("porps", email, feedbackNumber)
 }
 
 export default NavWrapper;
-
-
-

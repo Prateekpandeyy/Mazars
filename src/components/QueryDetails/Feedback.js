@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import CommonServices from "../../common/common";
-
+import MainText from "../Common/MainText";
 
 function Feedback({ feedback }) {
-    console.log("feedback", feedback);
+  
 
     return (
         <div>
-            <p
-                style={{
-                    textAlign: "center",
-                    color: "black",
-                    fontSize: "18px",
-                }}
-            >
+            
+             <MainText align="center">
                 Feedback
-            </p>
-            <table class="table table-bordered">
+            </MainText>
+            <table className="table table-bordered">
                 <thead>
                     <tr>
                         <th style={{ width: "80px" }}>S.No</th>
@@ -29,7 +24,7 @@ function Feedback({ feedback }) {
                         feedback.map((p, i) => (
                             <tr>
                                 <td>{i + 1}</td>
-                                <td style={{ display: "flex" }}>
+                                <td style={{ display: "flex" , border : "0px"}}>
                                     <p>{CommonServices.removeTime(p.created)}</p>
                                     <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(p.created)}</p>
                                 </td>

@@ -9,15 +9,16 @@ const PrivateRouteUser = ({ component: Component, ...rest }) => {
       {...rest}
       component={(props) => {
         const token = window.localStorage.getItem("userid");
-        console.log("userid -", token)
-
-        if (token) {
-          console.log("userid -", token)
+var previousLoginTime = window.localStorage.getItem("loginTime")
+var nextLogin = Number(previousLoginTime) + Number(600000)
+var currentTime = Date.now()
+   if (token) {
+  
           return <Component {...props} />;
         } else {
           return (
             <>
-              <Redirect to={"/"} />
+              <Component {...props} />
             </>
           )
         }

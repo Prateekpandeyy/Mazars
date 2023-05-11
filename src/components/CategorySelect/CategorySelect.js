@@ -13,12 +13,10 @@ import classNames from "classnames";
 import { useHistory } from "react-router-dom";
 import Mandatory from "../../components/Common/Mandatory";
 
-
 const Schema = yup.object().shape({
   p_tax: yup.string().required(""),
   p_tax2: yup.string().required(""),
 });
-
 
 function CategorySelect({ addfreshbtn, startbtn }, props) {
   const { handleSubmit, register, errors } = useForm({
@@ -36,11 +34,11 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
     }
   };
   const validation = () => {
-    toggle()
-  }
+    toggle();
+  };
   const validation2 = () => {
-    toggle2()
-  }
+    toggle2();
+  };
 
   const toggle2 = () => {
     if (store2 && store) {
@@ -52,77 +50,56 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
   const [tax, setTax] = useState([]);
   const [tax2, setTax2] = useState([]);
 
-
   const [store, setStore] = useState("");
   const [store2, setStore2] = useState(null);
-
   useEffect(() => {
-    const getCategory = () => {
-      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setTax(res.data.result);
-        }
-      });
-    };
-
-    getCategory();
+    let data = JSON.parse(localStorage.getItem("categoryData"));
+    setTax(data);
   }, []);
 
-
-  useEffect(() => {
-    const getSubCategory = () => {
-     if(store.length != -1){
-      axios.get(`${baseUrl}/customers/getCategory?pid=${store}`).then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setTax2(res.data.result);
-        }
-      });
-    };
-     }
-    getSubCategory();
-  }, [store]);
-
-
-  const onSubmit = (value) => {
-    console.log("value :", value);
+  const handleCategory = (value) => {
+    setStore(value);
+    setTax2(JSON.parse(localStorage.getItem(value)));
+    setStore2([]);
   };
+
+  const onSubmit = (value) => {};
 
   return (
     <>
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
       >
-        <div class="col-sm-3" style={{ marginTop: "38px" }}>
+        <div className="col-sm-3" style={{ marginTop: "38px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-group">
-              <label>Category <span className="declined">*</span></label>
+            <div className="form-group">
+              <label>
+                Category <span className="declined">*</span>
+              </label>
               <select
-                className="form-control"
                 name="p_tax"
                 className={classNames("form-control", {
                   "is-invalid": errors.p_tax,
                 })}
                 ref={register}
-                onChange={(e) => setStore(e.target.value)}
+                onChange={(e) => handleCategory(e.target.value)}
               >
-                <option value="">--Select Category--</option>
+                <option value="">--Select category--</option>
                 {tax.map((p, index) => (
-                  <option key={index} value={p.id}>
+                  <option key={index} value={p.details}>
                     {p.details}
                   </option>
                 ))}
               </select>
               {errors.p_tax && (
-                <div className="invalid-feedback">
-                  {errors.p_tax.message}
-                </div>
+                <div className="invalid-feedback">{errors.p_tax.message}</div>
               )}
             </div>
 
-            <div class="form-group">
-              <label>Sub Category <span className="declined">*</span></label>
+            <div className="form-group">
+              <label>
+                Sub category <span className="declined">*</span>
+              </label>
               <select
                 name="p_tax2"
                 className={classNames("form-control", {
@@ -131,7 +108,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
                 ref={register}
                 onChange={(e) => setStore2(e.target.value)}
               >
-                <option value="">--Select Sub-Category--</option>
+                <option value="">--Select sub-category--</option>
                 {tax2.map((p, index) => (
                   <option key={index} value={p.id}>
                     {p.details}
@@ -139,19 +116,16 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
                 ))}
               </select>
               {errors.p_tax2 && (
-                <div className="invalid-feedback">
-                  {errors.p_tax2.message}
-                </div>
+                <div className="invalid-feedback">{errors.p_tax2.message}</div>
               )}
             </div>
 
-            <div class="form-group">
-
+            <div className="form-group">
               {startbtn && (
                 <button
                   type="submit"
-                  class="btn btn-primary  btn-block"
-                  onClick={e => validation()} //
+                  className="customBtn"
+                  onClick={(e) => validation()} //
                 >
                   Submit
                 </button>
@@ -160,17 +134,14 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
               {addfreshbtn && (
                 <button
                   type="submit"
-                  class="btn btn-primary  btn-block"
-                  onClick={e => validation2()} //
+                  className="customBtn"
+                  onClick={(e) => validation2()} //
                 >
                   Submit
                 </button>
               )}
-
             </div>
-
           </form>
-
 
           <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>
@@ -182,23 +153,24 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
             </ModalHeader>
 
             <ModalBody>
-              <div class="modal-body">
+              <div className="modal-body">
                 <h4>Would you like to post a Query ?</h4>
               </div>
             </ModalBody>
 
-            <div class="modal-footer m-auto">
-              <Link to="/customer/register-yourself" class="btn btn-primary">
+            <div className="modal-footer m-auto">
+              <Link
+                to="/customer/register-yourself"
+                className="btn btn-primary"
+              >
                 Yes
               </Link>
-              <Link to="/customer/signin" class="btn btn-secondary">
+              <Link to="/customer/signin" className="btn btn-secondary">
                 No
               </Link>
             </div>
           </Modal>
-
         </div>
-
       </div>
       <Mandatory />
     </>
@@ -206,4 +178,3 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
 }
 
 export default CategorySelect;
-

@@ -1,6 +1,5 @@
 import React from "react";
 import * as Cookies from "js-cookie";
-
 import "./meeting.css";
 import AgoraVideoCall from "../AgoraVideoCall/index";
 import { AGORA_APP_ID } from "../../agora.config";
@@ -26,12 +25,13 @@ class Meeting extends React.Component {
   }
 
   render() {
+   
     return (
       
-      <div className="wrapper meeting">
+      <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
                  
          {this.state.showmeetingScreen === true ?
-       <div>
+             <div style={{ display : "flex", flexDirection: "column" ,  maxHeight : "100vh", height: "100%" }}>
           <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
@@ -64,7 +64,7 @@ class Meeting extends React.Component {
          playing={true}
          onEnded={() => this.setState({showmeetingScreen : true})}
          width='100%'
-         height='600px'
+         height='650px'
         />}
       </div>
     );

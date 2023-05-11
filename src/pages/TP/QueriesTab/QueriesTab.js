@@ -10,101 +10,125 @@ import CompleteData from "../CompleteData/CompleteData";
 import DeclinedQuery from "../DeclinedQuery/DeclinedQuery";
 import AllQuery from "./AllQuery";
 
-
-
 function QueriesTab(props) {
-  
   const userid = window.localStorage.getItem("tpkey");
   const [tabIndex, setTabIndex] = useState(0);
-
+  const [allQdata, setAllQdata] = useState([]);
   const [pendindForAccepttence, setPendingForAcceptence] = useState("");
   const [incomplete, setIncomplete] = useState("");
   const [complete, setcomplete] = useState("");
-
+  const [incompleteData, setIncompleteData] = useState([]);
   const [allQuery, setAllQuery] = useState("");
   const [declined, setDeclined] = useState("");
+  const [bgColor, setbgColor] = useState("#55425F");
+  const [pendingData, setPendingData] = useState([]);
 
+  const tableIndex = (index) => {
+    setTabIndex(index);
+    console.log(index);
+    if (index === 0) {
+      setbgColor("#55425F");
+    } else if (index === 1) {
+      setbgColor("#6e557b");
+    } else if (index === 2) {
+      setbgColor("#6e557b");
+    } else if (index === 3) {
+      setbgColor("#6e557b");
+    }
+  };
 
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
+    margin: "10px auto",
+    fontSize: "18px",
     cursor: "pointer",
   };
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
+    margin: "10px auto",
+    fontSize: "18px",
+    color: "#55425f",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
-
 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
+  const token = window.localStorage.getItem("tptoken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
 
-
+  const allQuery22 = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&count=1`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          setAllQuery(res?.data?.result?.recordcount);
+          setAllQdata(res.data.result);
+        }
+      });
+  };
   useEffect(() => {
-    const AllQuery = () => {
-      axios
-        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}`)
-        .then((res) => {
-          console.log(res);
-          if (res.data.code === 1) {
-            setAllQuery(res.data.result.length);
-          }
-        });
-    };
-
     const getPendindForAccepttence = () => {
       axios
-        .get(`${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}`)
+        .get(
+          `${baseUrl}/tl/pendingQues?tp_id=${JSON.parse(userid)}&count=1`,
+          myConfig
+        )
         .then((res) => {
-          console.log(res);
           if (res.data.code === 1) {
-            setPendingForAcceptence(res.data.result.length);
+            setPendingData(res.data.result);
+            setPendingForAcceptence(res?.data?.result?.recordcount);
           }
         });
     };
 
     const getIncomplete = () => {
       axios
-        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=1`)
+        .get(
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+            userid
+          )}&status=1&count=1`,
+          myConfig
+        )
         .then((res) => {
-          console.log(res);
           if (res.data.code === 1) {
-            setIncomplete(res.data.result.length);
+            setIncompleteData(res.data.result);
+            setIncomplete(res?.data?.result?.recordcount);
           }
         });
     };
 
     const getComplete = () => {
-      console.log("userId", userid)
       axios
-     
-        .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`)
+
+        .get(
+          `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(
+            userid
+          )}&status=2&count=1`,
+          myConfig
+        )
         .then((res) => {
-          console.log("res", res);
           if (res.data.code === 1) {
-            console.log("result", res.data.result)
-            setcomplete(res.data.result.length);
+            setcomplete(res?.data?.result?.recordcount);
           }
         });
     };
 
     const Declined = () => {
-   
       axios
-        .get(`${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}`)
+        .get(
+          `${baseUrl}/tl/declinedQueries?tp_id=${JSON.parse(userid)}`,
+          myConfig
+        )
         .then((res) => {
-          console.log(res);
           if (res.data.code === 1) {
             setDeclined(res.data.result.length);
           }
@@ -114,71 +138,40 @@ function QueriesTab(props) {
     getPendindForAccepttence();
     getIncomplete();
     getComplete();
-    AllQuery();
-    Declined()
+    allQuery22();
   }, []);
 
   const updateTab = (key) => {
-    setTabIndex(key)
-  }
+    setTabIndex(key);
+  };
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
-              All Query ({allQuery})
-            </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
-              Pending For Acceptence ({pendindForAccepttence})
-            </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
-              Inprogress; Queries ({incomplete})
-            </Tab>
-            {/* <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
-            Pending for assignment({complete})
-            </Tab> */}
-            {/* <Tab style={tabIndex == 4 ? myStyle2 : myStyle1}>
-              Declined; Queries ({declined})
-            </Tab> */}
-          </TabList>
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+        <TabList className="fixedTab">
+          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            All queries ({allQuery})
+          </Tab>
+          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            Pending for acceptance ({pendindForAccepttence})
+          </Tab>
+          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            Inprogress; queries ({incomplete})
+          </Tab>
+        </TabList>
 
-
-          <TabPanel>
-            <AllQuery
-            />
-          </TabPanel>
-          <TabPanel>
-            <PendingForAcceptence
-              updateTab={updateTab}
-            />
-          </TabPanel>
-          <TabPanel>
-            <InCompleteData
-            />
-          </TabPanel>
-          <TabPanel>
-            <CompleteData
-            />
-          </TabPanel>
-          <TabPanel>
-            <DeclinedQuery
-            />
-          </TabPanel>
-        </Tabs>
-      </div>
+        <TabPanel>
+          <AllQuery data={allQuery} />
+        </TabPanel>
+        <TabPanel>
+          <PendingForAcceptence data={pendingData} updateTab={updateTab} />
+        </TabPanel>
+        <TabPanel>
+          <InCompleteData data={incompleteData} />
+        </TabPanel>
+      </Tabs>
     </Layout>
   );
 }
 
 export default QueriesTab;
-
-
- 

@@ -1,39 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
 import {
   Card,
   CardHeader,
-  CardBody,
-  CardTitle,
+  Modal,
+  ModalBody,
+  ModalHeader,
   Row,
   Col,
-  Table,
 } from "reactstrap";
 import Demo from "./demo";
-
-
+import ModalManual from "../ModalManual/AllComponentManual";
+import { HelpIcon } from "../../components/Common/MessageIcon";
+import CustomHeading from "../../components/Common/CustomHeading";
 function Schedule() {
+  const [openManual, setManual] = useState(false);
   const userId = window.localStorage.getItem("userid");
+  const needHelp = () => {
+    setManual(!openManual);
+  };
 
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <Card>
         <CardHeader>
-        <Row>
+          <Row>
             <Col md="7">
-              <CardTitle tag="h4">Schedule </CardTitle>
+              <CustomHeading>Schedule</CustomHeading>
             </Col>
-            <Col md="5"></Col>
+            <Col md="5">
+              <span onClick={(e) => needHelp()}>
+                {" "}
+                <HelpIcon />
+              </span>
+            </Col>
           </Row>
-      
-         
         </CardHeader>
-    
-      <Demo />
-      
+
+        <Demo />
       </Card>
+      <Modal isOpen={openManual} toggle={needHelp} size="lg">
+        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+        <ModalBody>
+          <ModalManual tar={"schedule"} />
+        </ModalBody>
+      </Modal>
     </Layout>
   );
 }

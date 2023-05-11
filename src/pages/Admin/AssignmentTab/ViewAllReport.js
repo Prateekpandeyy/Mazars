@@ -1,39 +1,109 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { useForm } from "react-hook-form";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import axios from "axios";
 import { baseUrl, ReportUrl } from "../../../config/config";
 import * as yup from "yup";
 import CommonServices from "../../../common/common";
 import DiscardReport from "./DiscardReport";
-import './modalSty.css';
+import "./modalSty.css";
+import { makeStyles } from "@material-ui/core";
+import CustomTypography from "../../../components/Common/CustomTypography";
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_chat: yup.string().required(""),
 });
-
+const useStyle = makeStyles({
+  modalHeaderStyle: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+});
 
 function ViewReport({
   reportModal,
   ViewReport,
   report,
   getPendingforAcceptance,
+  deleiverAble,
 }) {
   const userId = window.localStorage.getItem("adminkey");
   const [data, setData] = useState([]);
-
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const token = window.localStorage.getItem("adminToken");
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-  }
-const viewStyle = {
-  display: "block",
+  };
+  const viewStyle = {
+    display: "block",
     width: "100%",
-    border: "1px solid black"
-}
+    border: "1px solid black",
+  };
   useEffect(() => {
     getData();
   }, [report]);
+  const downloadpdf = (qid, name) => {
+    let userId, token;
 
+    userId = window.localStorage.getItem("adminkey");
+    token = window.localStorage.getItem("adminToken");
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/admin/viewreportdocument?assign_no=${report}&id=${qid}`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+
+          a.download = name;
+          a.target = "_blank";
+          a.click();
+        }
+      });
+  };
+  const downloadpdfclient = (qid, name) => {
+    let userId, token;
+
+    userId = window.localStorage.getItem("adminkey");
+    token = window.localStorage.getItem("adminToken");
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/admin/viewreportdocument?assign_no=${report}&id=${qid}&document=2`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+
+          a.style = "display: none";
+          a.href = url;
+          a.download = name;
+          a.target = "_blank";
+          a.click();
+        }
+      });
+  };
   const getData = () => {
     let formData = new FormData();
     formData.append("assign_no", report);
@@ -42,131 +112,220 @@ const viewStyle = {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/getstagesinfo`,
+      url: `${baseUrl}/admin/getstagesinfo`,
+      headers: {
+        uit: token,
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
         if (response.data.code === 1) {
-          setData(response.data.result)
+          setData(response.data.result);
         }
       })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
-  }
-
+      .catch((error) => {});
+  };
+  const classes = useStyle();
   return (
-    <div>
+    <>
       <Modal isOpen={reportModal} toggle={ViewReport} size="lg" scrollable>
-        <ModalHeader toggle={ViewReport}>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "55vw" }}>
-            <span>View All Reports</span>
-            <span>
-              <button class="btn btn-success" onClick={() => ViewDiscussionToggel()}>
-                View Discussion
-              </button>
-            </span>
+        <ModalHeader toggle={ViewReport} className={classes.modalHeaderStyle}>
+          <CustomHeading>View all report</CustomHeading>
+          <div style={{ display: "flex", maxHeight: "2.5rem", height: "100%" }}>
+            <button
+              className="autoWidthBtn"
+              onClick={() => ViewDiscussionToggel()}
+            >
+              View discussion
+            </button>
           </div>
         </ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Document</th>
-               
-                <th scope="row">Report Type</th>
-                <th scope="row">Action</th>
+                <th
+                  style={{
+                    border: `1px solid ${deleiverAble}`,
+                    color: "#fff",
+                    backgroundColor: `${deleiverAble}`,
+                  }}
+                >
+                  S.No
+                </th>
+                <th
+                  style={{
+                    border: `1px solid ${deleiverAble}`,
+                    color: "#fff",
+                    backgroundColor: `${deleiverAble}`,
+                    width: "120px",
+                  }}
+                >
+                  Date
+                </th>
+                <th
+                  style={{
+                    border: `1px solid ${deleiverAble}`,
+                    color: "#fff",
+                    backgroundColor: `${deleiverAble}`,
+                  }}
+                >
+                  Document
+                </th>
+
+                <th
+                  style={{
+                    border: `1px solid ${deleiverAble}`,
+                    color: "#fff",
+                    backgroundColor: `${deleiverAble}`,
+                    width: "150px",
+                  }}
+                >
+                  Report type
+                </th>
+                <th
+                  style={{
+                    border: `1px solid ${deleiverAble}`,
+                    color: "#fff",
+                    backgroundColor: `${deleiverAble}`,
+                    width: "100px",
+                  }}
+                >
+                  Action
+                </th>
               </tr>
             </thead>
 
             {data.length > 0
               ? data.map((p, i) => (
-                <tbody>
-                  <tr class="modalTable">
-                    <td>{i + 1}</td>
-                    <td>{CommonServices.removeTime(p.created_date)}</td>
-                    <td>
-                    <td class="table2">
-                      <tr>
-                      {p.document && (
-                        <p style={{ display: "flex" }}>
-                          <a
-                            href={`${ReportUrl}/${report}/${p.document}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i>
-                          </a>
-                          <p style={{ marginLeft: "15px" }}>{p.document}</p>
-                        </p>
-                      )}
-                      </tr>
-                     {p.customer_files && 
-                      <tr>
-                    
-                      <a
-                            href={`${ReportUrl}/${report}/${p.customer_files}`}
-                            target="_blank"
-                          >
-                            <i class="fa fa-photo"></i> 
-                          </a> &nbsp; &nbsp; &nbsp;{p.customer_files}
-                    </tr> }
-                    </td>
-                  
-                    </td>
-                  
-                   
+                  <tbody>
+                    <tr className="modalTable">
+                      <td>
+                        <CustomTypography>{i + 1}</CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                          {CommonServices.removeTime(p.created_date)}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <tr>
+                          {p.document && (
+                            <p style={{ display: "flex" }}>
+                              <span
+                                onClick={() => downloadpdf(p.docid, p.document)}
+                                style={{ display: "flex", cursor: "pointer" }}
+                              >
+                                <i className="fa fa-photo"></i>
 
-                    <td>
-                  <p>    {p.stages_type == 2 && "Draft Report" || p.stages_type == 3 && "Final Report"}</p>
-                  
-                  <br>
-                  </br> 
-                  {p.customer_files === null ?  "" : <p>   Reviewed Report </p> }</td>
-                    <td>
-                      {
-                        p.stages_type == "2" ?
-                          <div>
-                            {
-                              p.status == "0" ?
-                              <p style={{ color: "red" }}>Pending</p>
-                                :
-                                p.status == "1" ?
-                                  <div style={{ cursor: "pointer" }} title="Customer Accepted">
-                                    <i
-                                      class="fa fa-check"
-                                      style={{
-                                        color: "blue",
-                                        fontSize: "16px",
-                                      }}
-                                    ></i>
-                                  </div> :
-                                  p.status == "2" ?
+                                <p style={{ marginLeft: "15px" }}>
+                                  <CustomTypography>
+                                    {p.document}
+                                  </CustomTypography>
+                                </p>
+                              </span>
+                            </p>
+                          )}
+                        </tr>
+                        {p.customer_files && (
+                          <tr>
+                            <span
+                              onClick={() =>
+                                downloadpdfclient(p.docid, p.customer_files)
+                              }
+                              style={{ display: "flex", cursor: "pointer" }}
+                            >
+                              <i className="fa fa-photo"></i>
+                              &nbsp; &nbsp; &nbsp;{" "}
+                              <CustomTypography>
+                                {p.customer_files}
+                              </CustomTypography>
+                            </span>
+                          </tr>
+                        )}
+                      </td>
+
+                      <td>
+                        <CustomTypography>
+                          {(p.stages_type == 2 && "Draft Report") ||
+                            (p.stages_type == 3 && "Final Report")}
+                        </CustomTypography>
+
+                        <br></br>
+                        {p.customer_files === null ? (
+                          ""
+                        ) : (
+                          <CustomTypography>Reviewed Report</CustomTypography>
+                        )}
+                      </td>
+                      <td>
+                        {p.stages_type === "2" ? (
+                          <>
+                            {p.status === "3" ? (
+                              <CustomTypography className="declined">
+                                Discarded
+                              </CustomTypography>
+                            ) : null}
+                            {p.status === "1" ? (
+                              <div
+                                style={{ cursor: "pointer" }}
+                                title="Client Accepted"
+                              >
+                                <i
+                                  className="fa fa-check"
+                                  style={{
+                                    color: "blue",
+                                    fontSize: "16px",
+                                    marginLeft: "10px",
+                                  }}
+                                ></i>
+                              </div>
+                            ) : null}
+                            {p.status === "0" || p.status === "2" ? (
+                              <>
+                                {p.tlstatus === "0" ? (
+                                  <CustomTypography className="declined">
+                                    Pending
+                                  </CustomTypography>
+                                ) : (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-around",
+                                    }}
+                                  >
                                     <div title="Discussion">
                                       <i
-                                        class="fa fa-comments-o"
+                                        className="fa fa-comments-o"
                                         style={{
                                           fontSize: 16,
                                           cursor: "pointer",
                                           marginLeft: "8px",
-                                          color: "blue"
+                                          color: "green",
                                         }}
                                       ></i>
-                                    </div> :
-                                    p.status == "3" ?
-                                      <p style={{ color: "red" }}>Discarded</p> :
-                                      null
-                            }
-                          </div>
-                          :
-                          null
-                      }
-                    </td>
-                  </tr>
-                </tbody>
-              ))
+                                    </div>
+                                    <div title="Discard">
+                                      <i
+                                        className="fa fa-times"
+                                        style={{
+                                          fontSize: 16,
+                                          cursor: "pointer",
+                                          marginLeft: "8px",
+                                          color: "red",
+                                        }}
+                                      ></i>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            ) : null}
+                          </>
+                        ) : null}
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
               : null}
           </table>
         </ModalBody>
@@ -177,8 +336,9 @@ const viewStyle = {
         ViewDiscussion={ViewDiscussion}
         report={report}
         getData={getData}
+        headColor="#5a625a"
       />
-    </div>
+    </>
   );
 }
 

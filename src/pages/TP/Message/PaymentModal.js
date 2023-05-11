@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { useHistory, useParams } from "react-router-dom";
 
 function PaymentModal({
@@ -13,7 +13,7 @@ function PaymentModal({
   // getProposalData,
 }) {
   const { handleSubmit, register, reset } = useForm();
-  const alert = useAlert();
+  
   const history = useHistory();
   const { id } = useParams();
 
@@ -21,7 +21,7 @@ function PaymentModal({
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
 
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -35,7 +35,7 @@ function PaymentModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           reset();
           alert.success(" message successfully send!");
@@ -43,7 +43,7 @@ function PaymentModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 

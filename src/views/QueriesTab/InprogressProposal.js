@@ -1,95 +1,197 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
+import React, { useState, useRef, useEffect } from "react";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
-import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import moment from "moment";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-function InprogressProposal() {
-  const alert = useAlert();
+import DiscardReport from "../AssignmentTab/DiscardReport";
+import ModalManual from "../ModalManual/AllComponentManual";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import MessageIcon, {
+  ViewDiscussionIcon,
+  HelpIcon,
+  FeedBackICon,
+} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+function InprogressProposal({
+  allQueriesCount,
+  // setAllQueriesCount,
+  // CountAllQuery,
+}) {
   const userId = window.localStorage.getItem("userid");
-  const [query, setQuery] = useState([]);
-  const [queriesCount, setCountQueries] = useState(null);
-  const [records, setRecords] = useState([]);
-  const [assignNo, setAssignNo] = useState('');
-
-  useEffect(() => {
-    getQueriesData();
-  }, []);
+  const [assignNo, setAssignNo] = useState("");
+  const [openManual, setManual] = useState(false);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [inprogressProposal, setInprogressProposal] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+      console.log(key, 'set');
+    }
+  };
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = 5;
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
 
-  const getQueriesData = () => {
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo]
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: 'center' });
+    console.log("object");
+  }, [ViewDiscussion]);
+
+  const needHelp = () => {
+    setManual(!openManual);
+  };
+
+  useEffect(() => {
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
+    let pageno = JSON.parse(localStorage.getItem("custQuery3"));
+    let arrow = localStorage.getItem("custArrowQuery3")
+    let pre = localStorage.getItem("prevcustq3")
+    if (pre) {
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+    if (pageno) {
+      CountInprogressProposal(pageno);
+    } else {
+      CountInprogressProposal(1);
+    }
+    // }
+  }, []);
+
+
+  const CountInprogressProposal = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustQuery3"));
+    localStorage.setItem(`custQuery3`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&pcat_id=${data.pcatId}`
+    } else if ((data) && (pagetry)) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else if ((!data) && (pagetry)) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&status=2&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&status=2`
+    }
+
     axios
       .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=2`
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
       )
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setCountQueries(res.data.result.length);
-          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setInprogressProposal(all);
+          setCount(res.data.total);
+          console.log('all',all);
+          console.log('all.cid',all.cid);
         }
       });
   };
 
-
   const columns = [
     {
       text: "S.No",
-      dataField: "",
+
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {
+          width: "50px",
+        };
       },
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
+
+      formatter: function dateFormatter(cell, row) {
+        return <>{CommonServices.changeFormateDate(row.created)}</>;
       },
     },
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
         return (
           <>
-            <Link to={`/customer/my-assingment/${row.q_id}`}>
+            <Link
+              to={{
+                pathname: `/customer_my-assingment/${row.id}`,
+                index: 2,
+                routes: "queries",
+              }}
+            >
               {row.assign_no}
             </Link>
           </>
@@ -100,161 +202,242 @@ function InprogressProposal() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       text: "Status",
-      dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
-            <div className="completed">
-              {row.status}
-              {/* {
-                row.status == "Inprogress" ?
-                  <p className="completed">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              } */}
-            </div>
+            <div className="completed">{row.status}</div>
           </>
         );
       },
     },
     {
-      text: "Expected Delivery Date",
-      dataField: "exp_delivery_date",
+      text: "Actual Delivery Date",
+      dataField: "final_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
 
+      formatter: function dateFormat(cell, row) {
         return (
           <>
-            {
-              row.status == "Declined Query"
-                ? null
-                :
-                row.status_code >= "1" ?
-                  CommonServices.removeTime(row.exp_delivery_date)
-                  :
-                  null
-            }
+            {row.status == "Declined Query"
+              ? null
+              : row.status_code >= "1"
+                ? CommonServices.removeTime(row.final_date)
+                : null}
           </>
-        )
+        );
       },
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
-      },
+
       formatter: function (cell, row) {
-        var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
-              
-               
-        var curDate = moment().format("YYYY-MM-DD")
-     
+        var dateMnsFive = moment(row.exp_delivery_date)
+          .add(15, "day")
+          .format("YYYY-MM-DD");
+
+        var curDate = moment().format("YYYY-MM-DD");
+
         return (
           <>
-            {
-              row.status == "Declined Query" ?
-                null
-                :
-                <div>
-                 
-
-                                {
-                                    row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
-                                      
-                                      <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                                            {dateMnsFive > curDate === true ?
-                                            <div title="Send Feedback"
-                                            style={{
-                                                cursor: "pointer",
-                                            }}>
-                                            <Link
-                                                to={{
-                                                    pathname: `/customer/feedback/${row.assign_no}`,
-                                                    obj: {
-                                                        routes: `/customer/queries`
-                                                    }
-                                                }}
-                                            >
-                                                <FeedbackIcon />
-                                            </Link>
-                                        </div> : ""}
-                                      
-                    
-                    
-                    {/* <div title="View Discussion Message">
-                      <i
-                        class="fa fa-comments-o"
-                        style={{
-                          fontSize: 16,
-                          cursor: "pointer",
-                          color: "orange"
+            {row.status == "Declined Query" ? (
+              <>
+                <>
+                  {dateMnsFive > curDate === true ? (
+                    <span className="ml-2">
+                      <Link
+                        to={{
+                          pathname: `/customer_feedback/${row.assign_no}`,
+                          index: 2,
+                          routes: "queries",
                         }}
-                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                      ></i>
-                    </div> */}
-                  </div>
-                  :
-                  null
-              }
-            </div>
+                      >
+                        <FeedBackICon />
+                      </Link>
+                    </span>
+                  ) : (
+                    ""
+                  )}
 
-        }
-      </>
-    );
-  },
-},
+                  <span
+                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                    className="ml-2"
+                  >
+                    <ViewDiscussionIcon />
+                  </span>
+                </>
+              </>
+            ) : (
+              <>
+                {row.status_code == "0" ||
+                  row.status_code == "1" ||
+                  row.status_code == "3" ? (
+                  <>
+                    <span className="ml-2">
+                      <Link
+                        to={{
+                          pathname: `/customer_chatting/${row.id}&type=4`,
+                          index: 2,
+                          routes: "queries",
+                          obj: {
+                            message_type: "4",
+                            query_No: row.assign_no,
+                            query_id: row.id,
+                            routes: `/customer/queries`,
+                          },
+                        }}
+                      >
+                        <MessageIcon />
+                      </Link>
+                    </span>
+                    <span
+                      onClick={() => ViewDiscussionToggel(row.assign_no)}
+                      className="ml-2"
+                    >
+                      <ViewDiscussionIcon />
+                    </span>
+                  </>
+                ) : null}
+
+                {row.status_code == "4" ||
+                  8 < parseInt(row.status_code) ||
+                  row.status_code == "2" ? (
+                  <>
+                    {dateMnsFive > curDate === true ? (
+                      <span className="ml-2">
+                        <Link
+                          to={{
+                            pathname: `/customer_feedback/${row.assign_no}`,
+                            index: 2,
+                            routes: "queries",
+                          }}
+                        >
+                          <FeedBackICon />
+                        </Link>
+                      </span>
+                    ) : (
+                      ""
+                    )}
+
+                    {row.status_code == "10" ? null : (
+                      <span className="ml-2">
+                        <Link
+                          to={{
+                            pathname: `/customer_chatting/${row.id}&type=4`,
+                            index: 2,
+                            routes: "queries",
+                            obj: {
+                              message_type: "4",
+                              query_No: row.assign_no,
+                              query_id: row.id,
+                              routes: `/customer/queries`,
+                            },
+                          }}
+                        >
+                          <MessageIcon />
+                        </Link>
+                      </span>
+                    )}
+                    <span
+                      onClick={() => ViewDiscussionToggel(row.assign_no)}
+                      className="ml-2"
+                    >
+                      <ViewDiscussionIcon />
+                    </span>
+                  </>
+                ) : null}
+              </>
+            )}
+          </>
+        );
+      },
+    },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custQuery3");
+    localStorage.removeItem(`freezecustQuery3`);
+    localStorage.removeItem("custArrowQuery3");
+    localStorage.removeItem("prevcustQuery3");
+    setPrev("");
+  }
+
   return (
-    <div>
+    <>
       <Card>
         <CardHeader>
+          <span onClick={(e) => needHelp()}>
+            {" "}
+            <HelpIcon />
+          </span>
           <CustomerFilter
-            setData={setQuery}
-            getData={getQueriesData}
+            setData={setInprogressProposal}
+            getData={CountInprogressProposal}
             id={userId}
             InprogressQueryProposal="InprogressQueryProposal"
-            records={records}
-            setRecords={setRecords}
+            records={allQueriesCount.length}
+            index="custQuery3"
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
           />
         </CardHeader>
         <CardBody>
-          <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={query}
+          {/* <Records records={allQueriesCount.length} /> */}
+          <Row className="mb-2">
+            <Col md="12" align="right">
+              <PaginatorCust
+                count={count}
+                id={userId}
+                index="custQuery3"
+                setData={setInprogressProposal}
+                getData={CountInprogressProposal}
+                InprogressQueryProposal="InprogressQueryProposal"
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
+          <DataTablepopulated
+            bgColor="#6e557b"
+            keyField={"assign_no"}
+            data={inprogressProposal}
             columns={columns}
-            rowIndex
+          ></DataTablepopulated>
+          <DiscardReport
+            ViewDiscussionToggel={ViewDiscussionToggel}
+            ViewDiscussion={ViewDiscussion}
+            report={assignNo}
+            getData={CountInprogressProposal}
+            headColor="#6e557b"
           />
+
+          <Modal
+            isOpen={openManual}
+            toggle={needHelp}
+            style={{ display: "block", position: "absolute", left: "280px" }}
+            size="lg"
+          >
+            <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+            <ModalBody>
+              <ModalManual tar={"freshQuery"} />
+            </ModalBody>
+          </Modal>
         </CardBody>
       </Card>
-    </div>
+    </>
   );
 }
 
-export default InprogressProposal;
+export default React.memo(InprogressProposal);

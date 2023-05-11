@@ -26,7 +26,6 @@ function InComplete() {
     axios
       .get(`${baseUrl}/tp/GetIncompleteQues?id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           //   CountIncomplete(res.data.result.length);
           setInCompleteData(res.data.result);
@@ -61,10 +60,9 @@ function InComplete() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
         return (
           <>
-            <Link to={`/taxprofessional/queries/${row.id}`}>
+            <Link to={`/taxprofessional_queries/${row.id}`}>
               {row.assign_no}
             </Link>
           </>
@@ -88,7 +86,7 @@ function InComplete() {
       },
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {

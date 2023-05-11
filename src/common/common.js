@@ -39,12 +39,21 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
+function clientLogout (history)  {
+  
+  localStorage.removeItem("userid");
+  localStorage.removeItem("custEmail");
+  localStorage.removeItem("category");
+  localStorage.removeItem("clientToken")
+  history.push("/");
+ 
+}
 export default {
   changeFormateDate,
   removeTime,
   removeDate,
-  capitalizeFirstLetter
+  capitalizeFirstLetter,
+  clientLogout
 };
 
 // var updatedate = oldDate.split(" ")[0];

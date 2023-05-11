@@ -1,399 +1,562 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Row,
-    Col,
-    Table,
-} from "reactstrap";
-import { Link } from "react-router-dom";
+
+import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
+import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import Records from "../../components/Records/Records";
-import Alerts from "../../common/Alerts";
 import Swal from "sweetalert2";
 import ViewComponent from "./ViewComponent";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
-
-
+import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
+import ModalManual from "../ModalManual/AllComponentManual";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import MessageIcon, {
+  EyeIcon,
+  ViewDiscussionIcon,
+  DiscussProposal,
+  HelpIcon,
+} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import CommonServices from "../../common/common";
 function ProposalTab() {
-    const alert = useAlert();
+  let history = useHistory();
+  const userId = window.localStorage.getItem("userid");
+  const [proposalDisplay, setProposalDisplay] = useState([]);
+  const [proposalCount, setCountProposal] = useState("");
+  const [records, setRecords] = useState([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
 
-    const userId = window.localStorage.getItem("userid");
-    const [proposalDisplay, setProposalDisplay] = useState([]);
-    const [proposalCount, setCountProposal] = useState("");
-    const [records, setRecords] = useState([]);
-    const [reject, setRejected] = useState(true);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
-    const [viewData, setViewData] = useState({});
-    const [viewModal, setViewModal] = useState(false);
-    const ViewHandler = (key) => {
-        console.log(key);
-        setViewModal(!viewModal);
-        setViewData(key);
-    };
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
+  const [resetTrigger, setresetTrigger] = useState(false);
 
-    const [assignNo, setAssignNo] = useState('');
-    const [ViewDiscussion, setViewDiscussion] = useState(false);
-    const ViewDiscussionToggel = (key) => {
-        setViewDiscussion(!ViewDiscussion);
-        setAssignNo(key)
+  const [viewData, setViewData] = useState({});
+  const [viewModal, setViewModal] = useState(false);
+  const [assignNo, setAssignNo] = useState("");
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [viewProposalModal, setViewProposalModal] = useState(false);
+  const [openManual, setManual] = useState(false);
+  const [proposalId, setProposalId] = useState();
+  const token = window.localStorage.getItem("clientToken");
+
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [prev, setPrev] = useState("");
+
+  const ViewHandler = (key) => {
+    setViewModal(!viewModal);
+    setViewData(key);
+  };
+
+  const ViewDiscussionToggel = (key) => {
+    setViewDiscussion(!ViewDiscussion);
+    setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
+      console.log(key);
     }
+  };
 
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
-    useEffect(() => {
-        getProposalData();
-    }, []);
-
-    const getProposalData = () => {
-        axios
-            .get(`${baseUrl}/customers/getProposals?uid=${JSON.parse(userId)}`)
-            .then((res) => {
-                console.log(res);
-                if (res.data.code === 1) {
-                    setProposalDisplay(res.data.result);
-                    setCountProposal(res.data.result.length);
-                    setRecords(res.data.result.length);
-                }
-            });
+  const showProposalModal2 = (e) => {
+    // setViewProposalModal(!viewProposalModal);
+    // setProposalId(e)
+    const token = window.localStorage.getItem("clientToken");
+    const myConfig = {
+      headers: {
+        uit: token,
+        "Content-Type": "application/octet-stream",
+      },
+      responseType: "blob",
     };
 
+    axios
+      .get(`${baseUrl}/customers/dounloadpdf?id=${e}&viewpdf=1`, myConfig)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(URL.createObjectURL(res.data));
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+          a.setAttribute("download", "Proposal.pdf");
+          a.setAttribute("target", "_blank");
+          a.click();
+        }
+      });
+  };
 
+  useEffect(() => {
+    let local = JSON.parse(localStorage.getItem(`searchDatacustProposal1`));
+    let pageno = JSON.parse(localStorage.getItem("custProposal1"));
+    let arrow = localStorage.getItem("custArrowProposal1")
+    let pre =localStorage.getItem("prevcustp1")
+    if(pre){
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+      if (pageno) {
+        getProposalData(pageno);
+      }else{
+    getProposalData(1);
+      }
+    // }
+  }, []);
 
+  const getProposalData = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustProposal1"));
+    localStorage.setItem(`custProposal1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}`
+    }
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+          setCount(res.data.total);
+          setCountProposal(res.data.result.length);
+          setRecords(res.data.result.length);
+          setCount(res.data.total)
+        } else if (res.data.code === 0) {
+          CommonServices.clientLogout(history);
+        }
+      });
+  };
 
-    const columns = [
-        {
-            text: "S.No",
-            dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            formatter: (cellContent, row, rowIndex) => {
-                return rowIndex + 1;
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", width: "50px" };
-            },
-        },
-        {
-            text: "Date",
-            dataField: "created",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function (cell, row) {
-                console.log("dt", row.created);
-                var oldDate = row.created;
-                if (oldDate == null) {
-                    return null;
-                }
-                return oldDate.toString().split("-").reverse().join("-");
-            },
-        },
-        {
-            text: "Query No",
-            dataField: "assign_no",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function nameFormatter(cell, row) {
-                console.log(row);
-                return (
-                    <>
-                        <Link to={`/customer/my-assingment/${row.q_id}`}>
-                            {row.assign_no}
-                        </Link>
-                    </>
-                );
-            },
-        },
-        {
-            text: "Category",
-            dataField: "parent_id",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-        },
-        {
-            text: "Sub Category",
-            dataField: "cat_name",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-        },
-        {
-            text: "Date of Proposal",
-            dataField: "DateofProposal",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function dateFormat(cell, row) {
-                console.log("dt", row.DateofProposal);
-                var oldDate = row.DateofProposal;
-                if (oldDate == null) {
-                    return null;
-                }
-                return oldDate.toString().split("-").reverse().join("-");
-            },
-        },
-        {
-            text: "Date of acceptance / decline of Proposal",
-            dataField: "cust_accept_date",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function dateFormat(cell, row) {
-                console.log("dt", row.cust_accept_date);
-                var oldDate = row.cust_accept_date;
-                if (oldDate == null) {
-                    return null;
-                }
-                return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
-            },
-        },
-        {
-            text: "Status",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function nameFormatter(cell, row) {
-                return (
-                    <>
-                        <div>
-                            {
-                                row.status == "Inprogress" ?
-                                    <div>
-                                        {row.status}/
-                                        <p className="inprogress">
-                                            {row.statusdescription}
-                                        </p>
-                                    </div>
-                                    :
-                                    row.status == "Declined; Proposal" ?
-                                        <div>
-                                            <p className="declined">
-                                                {row.status}
-                                            </p>
-                                        </div> :
-                                        row.status == "Accepted; Proposal" ?
-                                            <div>
-                                                <p className="completed">
-                                                    {row.status}
-                                                </p>
-                                            </div> :
-                                            null
-                            }
-                        </div>
-                    </>
-                );
-            },
-        },
-        {
-            text: "Proposed Amout",
-            dataField: "ProposedAmount",
-            sort: true,
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-        },
-        {
-            text: "Accepted Amount",
-            dataField: "accepted_amount",
-            sort: true,
-            style: {
-                fontSize: "11px",
-                color: "#21a3ce",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px", color: "#21a3ce" };
-            },
-        },
-        {
-            text: "Action",
-            dataField: "",
-            style: {
-                fontSize: "11px",
-            },
-            headerStyle: () => {
-                return { fontSize: "11px" };
-            },
-            formatter: function (cell, row) {
-                return (
-                    <>
-                        {row.statuscode === "6" ? null : (
-                            <div style={{ display: "flex", justifyContent: "space-between", width: "80px" }}>
-                                <div title="Send Message">
-                                    <Link
-                                        to={{
-                                            pathname: `/customer/chatting/${row.q_id}&type=2`,
-                                            obj: {
-                                                message_type: "3",
-                                                query_No: row.assign_no,
-                                                query_id: row.q_id,
-                                                routes: `/customer/proposal`
-                                            }
-                                        }}
-                                    >
-                                        <i
-                                            class="fa fa-comments-o"
-                                            style={{
-                                                fontSize: 16,
-                                                cursor: "pointer",
-                                                color: "blue"
-                                            }}
-                                        ></i>
-                                    </Link>
-                                </div>
+  const needHelp = () => {
+    setManual(!openManual);
+  };
+  const rightAli = {
+    display: "flex",
+    justifyContent: "flex-end",
+    Border: "0px",
+  };
 
-                                <div title="View Discussion Message">
-                                    <i
-                                        class="fa fa-comments-o"
-                                        style={{
-                                            fontSize: 16,
-                                            cursor: "pointer",
-                                            color: "orange"
-                                        }}
-                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                    ></i>
-                                </div>
+  const columns = [
+    {
+      dataField: "",
+      text: "S.No",
+      formatter: (cellContent, row, rowIndex) => {
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
+      },
+      headerStyle: () => {
+        return {
+          width: "50px",
+        };
+      },
+    },
+    {
+      text: "Date",
+      dataField: "created",
+      sort: true,
 
-                                <div>
-                                    {
-                                        row.statuscode > 6 ?
-                                            <div style={{ cursor: "pointer" }} title="View EL">
-                                                <a
-                                                    href={`${baseUrl}/customers/dounloadpdf?id=${row.q_id}&viewpdf=1`}
-                                                    target="_blank"
-                                                >
-                                                    <i
-                                                        class="fa fa-eye"
-                                                        style={{ color: "green", fontSize: "16px" }}
-                                                    />
-                                                </a>
-                                            </div>
-                                            :
-                                            null
-                                    }
+      formatter: function (cell, row) {
+        var oldDate = row.created;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.toString().split("-").reverse().join("-");
+      },
+    },
+    {
+      text: "Query No",
+      dataField: "assign_no",
 
-                                    {
-                                        row.statuscode == 4
-                                            ?
-                                            <div style={{ cursor: "pointer" }} title="Dicision on Proposal">
-                                                <Link to={`/customer/proposal_view/${row.q_id}`}>
-                                                    <i
-                                                        class="fa fa-share"
-                                                        style={{
-                                                            color: "blue",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    ></i>
-                                                </Link>
-                                            </div>
-                                            :
-                                            null
-                                    }
-                                </div>
+      formatter: function nameFormatter(cell, row) {
+        return (
+          <>
+            <Link
+              to={{
+                pathname: `/customer_my-assingment/${row.q_id}`,
+                index: 0,
+                routes: "proposal",
+              }}
+            >
+              {row.assign_no}
+            </Link>
+          </>
+        );
+      },
+    },
+    {
+      text: "Category",
+      dataField: "parent_id",
+      sort: true,
+    },
+    {
+      text: "Sub category",
+      dataField: "cat_name",
+      sort: true,
+    },
+    {
+      text: "Payment  plan",
+      dataField: "paymnet_plan_code",
 
-                            </div>
-                        )
-                        }
-                    </>
-                );
-            },
-        },
-    ];
+      formatter: function paymentPlan(cell, row) {
+        var subplan = "";
+        if (row.paymnet_plan_code === "3" && row.sub_payment_plane === "2") {
+          subplan = "B";
+        } else if (
+          row.paymnet_plan_code === "3" &&
+          row.sub_payment_plane === "1"
+        ) {
+          subplan = "A";
+        }
+        return (
+          <>
+            {row.paymnet_plan_code === null
+              ? ""
+              : `${row.paymnet_plan_code} ${subplan}`}
+          </>
+        );
+      },
+    },
+    {
+      text: "Date of proposal",
+      dataField: "DateofProposal",
+      sort: true,
 
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.DateofProposal;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.toString().split("-").reverse().join("-");
+      },
+    },
+    {
+      text: "Date of acceptance / decline of proposal",
+      dataField: "cust_accept_date",
+      sort: true,
 
+      formatter: function dateFormat(cell, row) {
+        var oldDate = row.cust_accept_date;
+        if (oldDate == null) {
+          return null;
+        }
+        return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
+      },
+    },
+    {
+      text: "Status",
 
-    return (
-        <div>
-            <Card>
-                <CardHeader>
-                    <CustomerFilter
-                        setData={setProposalDisplay}
-                        getData={getProposalData}
-                        id={userId}
-                        proposal="proposal"
-                        records={records}
-                        setRecords={setRecords}
-                    />
-                </CardHeader>
-                <CardBody>
-                    <Records records={records} />
-                    <BootstrapTable
-                        bootstrap4
-                        keyField="id"
-                        data={proposalDisplay}
-                        columns={columns}
-                        classes="table-responsive"
-                    />
+      formatter: function nameFormatter(cell, row) {
+        return (
+          <>
+            <div>
+              {row.status == "Inprogress" ? (
+                <div>
+                  {row.status}/
+                  <p className="inprogress">{row.statusdescription}</p>
+                </div>
+              ) : row.status == "Declined; Proposal" ? (
+                <div>
+                  <p className="declined">{row.status}</p>
+                </div>
+              ) : row.status == "Accepted; Proposal" ? (
+                <div>
+                  <p className="completed">{row.status}</p>
+                </div>
+              ) : null}
+            </div>
+          </>
+        );
+      },
+    },
+    {
+      text: "Proposed amount",
+      dataField: "ProposedAmount",
+      sort: true,
 
-                    <ViewComponent
-                        ViewHandler={ViewHandler}
-                        viewModal={viewModal}
-                        viewData={viewData}
-                        getProposalData={getProposalData}
-                    />
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.ProposedAmount;
 
-                    <DiscardReport
-                        ViewDiscussionToggel={ViewDiscussionToggel}
-                        ViewDiscussion={ViewDiscussion}
-                        report={assignNo}
-                        getData={getProposalData}
-                    />
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+    {
+      text: "Accepted amount",
+      dataField: "accepted_amount",
+      sort: true,
 
-                </CardBody>
-            </Card>
-        </div>
-    );
+      sortFunc: (a, b, order, dataField) => {
+        if (order === "asc") {
+          return b - a;
+        }
+        return a - b; // desc
+      },
+      formatter: function nameFormatter(cell, row) {
+        var nfObject = new Intl.NumberFormat("hi-IN");
+        var x = row.accepted_amount;
+
+        return <p className="rightAli">{nfObject.format(x)}</p>;
+      },
+    },
+
+    {
+      text: "Action",
+
+      formatter: function (cell, row) {
+        return (
+          <>
+            {row.statuscode === "6" ? (
+              <>
+                <span className="ml-1" title="Send Message">
+                  <Link
+                    to={{
+                      pathname: `/customer_chatting/${row.q_id}&type=2`,
+                      index: 0,
+                      routes: "proposal",
+                      obj: {
+                        message_type: "3",
+                        query_No: row.assign_no,
+                        query_id: row.q_id,
+                        routes: `/customer/proposal`,
+                      },
+                    }}
+                  >
+                    <MessageIcon />
+                  </Link>
+                </span>
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="ml-1" title="Send Message">
+                  <Link
+                    to={{
+                      pathname: `/customer_chatting/${row.q_id}&type=2`,
+                      index: 0,
+                      routes: "proposal",
+                      obj: {
+                        message_type: "3",
+                        query_No: row.assign_no,
+                        query_id: row.q_id,
+                        routes: `/customer/proposal`,
+                      },
+                    }}
+                  >
+                    <MessageIcon />
+                  </Link>
+                </span>
+
+                <span
+                  onClick={() => ViewDiscussionToggel(row.assign_no)}
+                  className="ml-1"
+                >
+                  <ViewDiscussionIcon />
+                </span>
+
+                {row.statuscode > 6 ? (
+                  <>
+                    <span
+                      onClick={(e) => showProposalModal2(row.q_id)}
+                      className="ml-1"
+                    >
+                      <EyeIcon />
+                    </span>
+                  </>
+                ) : null}
+
+                {row.statuscode == 4 ? (
+                  <span className="ml-1">
+                    <Link
+                      to={{
+                        pathname: `/customer_proposal_view/${row.q_id}`,
+                        index: 0,
+                        routes: "proposal",
+                      }}
+                    >
+                      <DiscussProposal titleName="Decision on Proposal" />
+                    </Link>
+                  </span>
+                ) : null}
+              </>
+            )}
+          </>
+        );
+      },
+    },
+  ];
+
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPropsal1");
+    localStorage.removeItem(`freezecustPropsal1`);
+    localStorage.removeItem("custArrowPropsal1");
+    localStorage.removeItem("prevcustPropsal1");
+    setPrev("");
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <span onClick={(e) => needHelp()}>
+          {" "}
+          <HelpIcon />
+        </span>
+        <CustomerFilter
+          setData={setProposalDisplay}
+          getData={getProposalData}
+          id={userId}
+          proposal="proposal"
+          index="custProposal1"
+          records={records}
+          setRecords={setRecords}
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
+        />
+      </CardHeader>
+      <CardBody>
+        {/* <Records records={records} /> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              setData={setProposalDisplay}
+              getData={getProposalData}
+              index="custProposal1"
+              proposal="proposal"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
+
+        <DataTablepopulated
+          bgColor="#42566a"
+          keyField="id"
+          data={proposalDisplay}
+          columns={columns}
+        ></DataTablepopulated>
+        <ViewComponent
+          ViewHandler={ViewHandler}
+          viewModal={viewModal}
+          viewData={viewData}
+          getProposalData={getProposalData}
+        />
+
+        <DiscardReport
+          ViewDiscussionToggel={ViewDiscussionToggel}
+          ViewDiscussion={ViewDiscussion}
+          report={assignNo}
+          getData={getProposalData}
+          headColor="#42566a"
+        />
+        {viewProposalModal === true ? (
+          <CommonShowProposal
+            setViewProposalModal={setViewProposalModal}
+            viewProposalModal={viewProposalModal}
+            showProposalModal2={showProposalModal2}
+            panel="client"
+            proposalId={proposalId}
+          />
+        ) : (
+          ""
+        )}
+        <Modal isOpen={openManual} toggle={needHelp} size="lg">
+          <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+          <ModalBody>
+            <ModalManual tar={"proposalProcessing"} />
+          </ModalBody>
+        </Modal>
+      </CardBody>
+    </Card>
+  );
 }
 
 export default ProposalTab;
-
-{/* <div style={{ cursor: "pointer" }} title="Rejected">
-                                            <i
-                                                class="fa fa-times"
-                                                style={{ color: "red", fontSize: "16px" }}
-                                                onClick={() => rejected(row.q_id)}
-                                            ></i>
-                                        </div> */}
-//   {row.negotiated_amount === "0" &&
-// row.accepted_amount === "0"

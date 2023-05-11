@@ -16,64 +16,57 @@ function Proposal(props) {
   const [pendingProposalCount, setPendingProposalCount] = useState("");
   const [acceptedProposalCount, setAcceptedProposalCount] = useState("");
   const [declinedProposalCount, setDeclinedProposalCount] = useState("");
+  const [bgColor, setbgColor] = useState("#42566a");
 
-
-
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
     const getAllProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals`)
+        .get(`${baseUrl}/admin/getProposals?count=1`, myConfig)
         .then((response) => {
-          console.log("code---", response);
           if (response.data.code === 1) {
-            setAllProposalCount(response.data.result.length);
+            setAllProposalCount(response?.data?.result?.recordcount);
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        .catch((error) => {});
     };
 
     const getAcceptedProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=2`)
+        .get(`${baseUrl}/admin/getProposals?status1=2&count=1`, myConfig)
         .then((response) => {
-          console.log("code---", response);
           if (response.data.code === 1) {
-            setAcceptedProposalCount(response.data.result.length);
+            setAcceptedProposalCount(response?.data?.result?.recordcount);
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        .catch((error) => {});
     };
 
     const getDeclinedProposal = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?&status=6`)
+        .get(`${baseUrl}/admin/getProposals?&status=6&count=1`, myConfig)
         .then((response) => {
-          console.log("code---", response);
           if (response.data.code === 1) {
-            setDeclinedProposalCount(response.data.result.length);
+            setDeclinedProposalCount(response?.data?.result?.recordcount);
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        .catch((error) => {});
     };
 
     const getPendingForAcceptence = () => {
       axios
-        .get(`${baseUrl}/admin/getProposals?status1=1`)
+        .get(`${baseUrl}/admin/getProposals?status1=1&count=1`, myConfig)
         .then((response) => {
-          console.log("code---", response);
           if (response.data.code === 1) {
-            setPendingProposalCount(response.data.result.length);
+            setPendingProposalCount(response?.data?.result?.recordcount);
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        .catch((error) => {});
     };
 
     getAllProposal();
@@ -87,67 +80,77 @@ function Proposal(props) {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
-  const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
-    cursor: "pointer",
-  };
+  const tableIndex = (index) => {
+    setTabIndex(index);
 
+    if (index === 0) {
+      setbgColor("#42566a");
+    } else if (index === 1) {
+      setbgColor("#5f7b97");
+    } else if (index === 2) {
+      setbgColor("#5f7b97");
+    } else if (index === 3) {
+      setbgColor("#5f7b97");
+    }
+  };
+  const myStyle1 = {
+    margin: "10px auto",
+    fontSize: "14px",
+  };
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
+    margin: "10px auto",
+
+    color: "#42566a",
+    fontWeight: 1000,
   };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
-              All Proposals ({allProposalCount})
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+          <TabList className="fixedTab">
+            <Tab
+              style={tabIndex == 0 ? myStyle2 : myStyle1}
+              className="tabHover"
+            >
+              All proposals ({allProposalCount})
             </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
+            <Tab
+              style={tabIndex == 1 ? myStyle2 : myStyle1}
+              className="tabHover"
+            >
               Inprogress; Proposals ({pendingProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
+            <Tab
+              style={tabIndex == 2 ? myStyle2 : myStyle1}
+              className="tabHover"
+            >
               Accepted; Proposals ({acceptedProposalCount})
             </Tab>
 
-            <Tab style={tabIndex == 3 ? myStyle2 : myStyle1}>
-              Customer Declined; Proposals ({declinedProposalCount})
+            <Tab
+              style={tabIndex == 3 ? myStyle2 : myStyle1}
+              className="tabHover"
+            >
+              Client Declined; Proposals ({declinedProposalCount})
             </Tab>
           </TabList>
 
           <TabPanel>
-            <AllProposalComponent />
+            <AllProposalComponent count={allProposalCount} />
           </TabPanel>
 
           <TabPanel>
-            <PendingForAcceptence />
+            <PendingForAcceptence count={pendingProposalCount} />
           </TabPanel>
 
           <TabPanel>
-            <AcceptedProposal />
+            <AcceptedProposal count={acceptedProposalCount} />
           </TabPanel>
 
           <TabPanel>
-            <DeclinedPropoal />
+            <DeclinedPropoal count={declinedProposalCount} />
           </TabPanel>
         </Tabs>
       </div>
@@ -156,20 +159,3 @@ function Proposal(props) {
 }
 
 export default Proposal;
-
-
-// const allProposal = (data) => {
-//   setAllProposalCount(data);
-// };
-
-// const pendingProposal = (data) => {
-//   setPendingProposalCount(data);
-// };
-
-// const acceptedProposal = (data) => {
-//   setAcceptedProposalCount(data);
-// };
-
-// const declinedProposal = (data) => {
-//   setDeclinedProposalCount(data);
-// };

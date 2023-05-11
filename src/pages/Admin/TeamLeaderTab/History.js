@@ -13,11 +13,12 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
-
-function History({ history, toggle,modal }) {
+import CustomTypography from "../../../components/Common/CustomTypography";
+import CustomHeading from "../../../components/Common/CustomHeading";
+function History({ history, toggle,modal, bgColor }) {
   //change date format
   function ChangeFormateDate(oldDate) {
-    // console.log("date", oldDate);
+   
     if (oldDate == null) {
       return null;
     }
@@ -25,18 +26,22 @@ function History({ history, toggle,modal }) {
   }
   return (
     <div>
-      <Modal isOpen={modal} fade={false} toggle={toggle}>
-        <ModalHeader toggle={toggle}>History</ModalHeader>
+      <Modal isOpen={modal} fade={false} toggle={toggle} size="lg">
+        <ModalHeader toggle={toggle}>
+          <CustomHeading>
+            History
+          </CustomHeading>
+        </ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">From</th>
-                <th scope="row">To</th>
-                <th scope="row">Name</th>
-                <th scope="row">Email</th>
-                <th scope="row">Phone</th>
+                <th  style={{backgroundColor: "#42566a", color: "#fff", border: "1px solid #42566a"}}>S.No</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>From</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>To</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>Name</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>Email</th>
+                <th   style={{backgroundColor: "#42566a", color: "#fff",  border: "1px solid #42566a"}}>Phone</th>
               </tr>
             </thead>
 
@@ -44,12 +49,36 @@ function History({ history, toggle,modal }) {
               ? history.map((p, i) => (
                   <tbody>
                     <tr>
-                      <td>{i + 1}</td>
-                      <td>{p.from_date}</td>
-                      <td>{p.to_date}</td>
-                      <td>{p.name}</td>
-                      <td>{p.personal_email}</td>
-                      <td>{p.phone}</td>
+                      <td>
+                        <CustomTypography>
+                        {i + 1}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.from_date}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.to_date}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.name}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.personal_email}
+                        </CustomTypography>
+                      </td>
+                      <td>
+                        <CustomTypography>
+                        {p.phone}
+                        </CustomTypography>
+                      </td>
                     </tr>
                   </tbody>
                 ))
@@ -57,9 +86,9 @@ function History({ history, toggle,modal }) {
           </table>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>
+          <button className="customBtn" onClick={toggle}>
             Cancel
-          </Button>
+          </button>
         </ModalFooter>
       </Modal>
     </div>

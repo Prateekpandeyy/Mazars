@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
 import Alerts from "../../../common/Alerts";
-import { Spinner } from 'reactstrap';
+import { Spinner } from "reactstrap";
 
 const Schema = yup.object().shape({
   p_chat: yup.string().required(""),
@@ -25,12 +25,10 @@ function RejectedModal({
   });
   const [loading, setLoading] = useState(false);
   const { id, allocation_id } = pay;
-
-  
+  const token = window.localStorage.getItem("tlToken");
 
   const onSubmit = (value) => {
-    console.log("value :", value);
-    setLoading(true)
+    setLoading(true);
 
     let formData = new FormData();
     formData.append("set", 0);
@@ -42,22 +40,22 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AcceptRejectQuery`,
+      headers: {
+        uit: token,
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
         if (response.data.code === 1) {
-          setLoading(false)
-          Alerts.SuccessNormal("Query rejected successfully.")
-          getPendingforAcceptance();
+          setLoading(false);
+          Alerts.SuccessNormal("Query rejected successfully.");
+          getPendingforAcceptance(1);
           rejectHandler();
         } else if (response.data.code === 0) {
-          setLoading(false)
+          setLoading(false);
         }
       })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -71,23 +69,21 @@ function RejectedModal({
                 className={classNames("form-control", {
                   "is-invalid": errors.p_chat,
                 })}
-                id="textarea"
                 rows="4"
                 name="p_chat"
                 ref={register}
-                placeholder="enter text here..."
+                placeholder="Enter text here..."
               ></textarea>
             </div>
 
             <div class="modal-footer">
-              {
-                loading ?
-                  <Spinner color="primary" />
-                  :
-                  <button type="submit" className="btn btn-primary">
-                    Submit
-                  </button>
-              }
+              {loading ? (
+                <Spinner color="primary" />
+              ) : (
+                <button type="submit" className="customBtn">
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </ModalBody>

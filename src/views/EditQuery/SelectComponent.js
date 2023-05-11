@@ -3,8 +3,7 @@ import { Select } from "antd";
 
 function SelectComponent({ assessmentYear, updateValue }) {
   const { Option } = Select;
-  //   const [selectedData, setSelectedData] = useState("");
-  console.log("sel-",assessmentYear);
+ 
   function handleChange(value) {
     updateValue(value);
   }

@@ -13,24 +13,29 @@ import {
   Col,
   Table,
 } from "reactstrap";
-import { useAlert } from "react-alert";
-import BootstrapTable from "react-bootstrap-table-next";
-
+import CustomHeading from "../../../components/Common/CustomHeading";
+import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
+import Swal from 'sweetalert2';
 function AddTeamProf() {
-  const alert = useAlert();
+
   const [data, setData] = useState([]);
   const [count, setCount] = useState("");
   const userid = window.localStorage.getItem("tlkey");
-
+  const token = window.localStorage.getItem("tlToken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
   useEffect(() => {
     getTaxProf();
   }, []);
 
   const getTaxProf = () => {
     axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userid)}`)
+      .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
-        console.log(res);
+      
         if (res.data.code === 1) {
           setData(res.data.result);
           setCount(res.data.result.length);
@@ -41,7 +46,7 @@ function AddTeamProf() {
   const columns = [
     {
       dataField: "",
-      text: "S.No",
+      text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return rowIndex + 1;
       },
@@ -85,7 +90,7 @@ function AddTeamProf() {
     },
     {
       dataField: "phone",
-      text: "Mobile No",
+      text: "Mobile no",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
@@ -123,7 +128,7 @@ function AddTeamProf() {
     {
       
      
-      text: "Sub Category",
+      text: "Sub category",
       sort: true,
       headerStyle: () => {
         return { fontSize: "12px" };
@@ -154,18 +159,22 @@ function AddTeamProf() {
   ]
   // delete data
   const del = (id) => {
-    console.log("del", id);
+    
 
     axios
       .get(`${baseUrl}/delete/TaxLead/${id}`)
       .then(function (response) {
-        console.log("delete-", response);
-        alert.success("successfully deleted ");
+        Swal.fire({
+          title : "success",
+          html : "Successfully deleted",
+          icon : "success"
+        })
+      
+               
         getTaxProf();
       })
       .catch((error) => {
-        console.log("erroror - ", error);
-      });
+              });
   };
 
   return (
@@ -174,40 +183,25 @@ function AddTeamProf() {
         <CardHeader>
           <Row>
             <Col md="10">
-              <CardTitle tag="h4">Tax Professionals ({count})</CardTitle>
+             
+<CustomHeading>
+Tax professionals ({count})
+</CustomHeading>
+          
             </Col>
             <Col md="2"></Col>
           </Row>
         </CardHeader>
         <CardBody>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={data}
-            columns={columns}
-            rowIndex
-          />
+        <DataTablepopulated 
+                   bgColor="#42566a"
+                   keyField= {"assign_no"}
+                   data={data}
+                   columns={columns}>
+                    </DataTablepopulated>
+        
 
-          {/* <Table responsive="sm" bordered>
-            <thead>
-              <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone No.</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((p, i) => (
-                <tr>
-                  <th scope="row">{i + 1}</th>
-                  <td>{p.name}</td>
-                  <td>{p.email}</td>
-                  <td>{p.phone}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table> */}
+      
         </CardBody>
       </Card>
     </Layout>

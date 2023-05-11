@@ -2,14 +2,14 @@
 
 export const professionName = [
     { city: "CA" },
-    { city: "NON-CA" },
+    { city: "Advocate" },
     { city: "CFO" },
     { city: "CEO" },
-    { city: "FINANCE HEAD" },
-    { city: "ACCOUNTS MANAGER" },
-    { city: "ACCOUNTANT" },
-    { city: "TAX PROFESSIONAL" },
-    { city: "OTHERS" },
+    { city: "Finance Head" },
+    { city: "Accounts Manager" },
+    { city: "Accountant" },
+    { city: "Tax Professional" },
+    { city: "Others" },
 ];
 
 export const country = [
@@ -6717,7 +6717,7 @@ export const states = [
     "country_id": "64"
 },
 {
-    "id": "1050",
+    "id": "",
     "name": "Kafr-ash-Shaykh",
     "country_id": "64"
 },

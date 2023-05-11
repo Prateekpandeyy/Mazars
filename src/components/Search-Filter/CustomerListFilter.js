@@ -1,278 +1,351 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import "antd/dist/antd.css";
-import { Select } from "antd";
 import { useForm } from "react-hook-form";
-import Excel from 'exceljs';
-import { saveAs } from 'file-saver';
-const workSheetName = 'Worksheet-1';
-const workBookName = 'MyWorkBook';
-const myInputId = 'myInput';
+import { current_date } from "../../common/globalVeriable";
+import { Grid } from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function CustomerListFilter(props) {
-  const workbook = new Excel.Workbook();
+  const { handleSubmit, register, reset } = useForm();
+  const {
+    setData,
 
-  const { handleSubmit, register, errors, reset } = useForm();
-  const { Option, OptGroup } = Select;
-
-  const [selectedData, setSelectedData] = useState([]);
-
-  const { setData, searchQuery, setRecords, records, getCustomer,listData  } = props;
-  var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-
-  const [item] = useState(current_date);
-  
-  const resetData = () => {
-    console.log("resetData ..");
-    reset();
-   getCustomer();
+    getCustomer,
+    setBig,
+    setEnd,
+    setCountNotification,
+    setPage,
+    setDefaultPage,
+    lastChunk,
+    nextChunk,
+    page,
+    big,
+    end,
+    defaultPage,
+    prevChunk,
+    countNotification,
+    firstChunk,
+  } = props;
+  const [searchedData, setSearchedData] = useState(null);
+  const [name, setName] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [email, setEmail] = useState("");
+  const [occupation, setOccuption] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
   };
-  const columns = [
-    { header: 'S.No', key: 'id' },
-    { header: 'Name', key: 'name' },
-    { header: 'Email', key: 'email' },
-    { header: 'Mobile No', key: 'phone' },
-    { header: 'Occupation', key: 'occupation' },
-    { header: 'Country', key: 'country' },
-    { header: 'State', key: 'state' },
-    { header: 'City', key: 'city' },
-    { header: 'Date', key: 'created' }
-  ];
- 
-
-  
-
-  
-  const onSubmit = (data) => {
-
-if(searchQuery == "SearchQuery")
-axios
-.get(
-  `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2
-  }&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
-)
-.then((res) => {
-  console.log("myResult", res.data.result);
-  var finalData = res.data.result
-  if (res.data.code === 1) {
-    if (res.data.result) {
-      setData(res.data.result);
-    setRecords(res.data.result.length)
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("searchDataadclient"));
+    if (data) {
+      setName(data.name);
+      setCountry(data.country);
+      setCity(data.city);
+      setState(data.state);
+      setEmail(data.email);
+      setOccuption(data.occupation);
+      setFromDate(data.p_dateFrom);
+      setToDate(data.p_dateTo);
     }
-  }
-});     
-};
-const exportToExcel = async () => {
-//setData( arr => [...arr, `${arr}`]);
+  }, []);
+  const resetData = () => {
+    localStorage.removeItem("searchDataadclient");
+    localStorage.removeItem("adminClient");
+    localStorage.removeItem("cutomFilter");
+    setName("");
+    setCountry("");
+    setCity("");
+    setState("");
+    setEmail("");
+    setOccuption("");
+    setFromDate("");
+    setToDate("");
+    reset();
+    getCustomer(1);
+  };
 
+  const onSubmit = (data) => {
+    localStorage.setItem("searchDataadclient", JSON.stringify(data));
+    if (Object.values(data).length > 0)
+      axios
+        .get(
+          `${baseUrl}/admin/getAllList?&name=${data.name}&country=${data.country}&state=${data.state}&city=${data.city2}&email=${data.email}&occupation=${data.occupation}&from=${data.p_dateFrom}&to=${data.p_dateTo}`,
+          myConfig
+        )
+        .then((res) => {
+          let all = [];
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              let customId = 1;
+              res.data.result.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              setData(all);
+              let droppage = [];
+              setPage(1);
+              let allEnd = Number(
+                localStorage.getItem("admin_record_per_page")
+              );
+              console.log(Number(allEnd) < Number(res.data.total));
+              if (allEnd > Number(res.data.total)) {
+                setEnd(Number(res.data.total));
+              } else {
+                setEnd(Number(allEnd));
+              }
 
-// console.log(setData.todo)
-  
-  try {
-    
-    
-   // const myInput = document.getElementById(myInputId);
-    const fileName = "Excel file";
+              setBig(1);
+              setCountNotification(res.data.total);
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+              setDefaultPage(droppage);
+            }
+          }
+        });
+  };
+  const exportToExcel = async () => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios.get(`${baseUrl}/admin/exportAllCustomer`, myConfig2).then((res2) => {
+      window.URL = window.URL || window.webkitURL;
+      var url = window.URL.createObjectURL(res2.data);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
 
-    // creating one worksheet in workbook
-    const worksheet = workbook.addWorksheet(workSheetName);
-
-    // add worksheet columns
-    // each columns contains header and its mapping key from data
-    worksheet.columns = columns;
-
-    // updated the font for first row.
-    worksheet.getRow(1).font = { bold: true };
-
-    // loop through all of the columns and set the alignment with width.
-    worksheet.columns.forEach(column => {
-      column.width = column.header.length + 5;
-      column.alignment = { horizontal: 'center' };
+      a.download = "report.xlsx";
+      a.target = "_blank";
+      a.click();
     });
-
-    // loop through data and add each one to worksheet
-    listData.map(singleData => {
-      worksheet.addRow(singleData);
-    });
-
-    // loop through all of the rows and set the outline style.
-    worksheet.eachRow({ includeEmpty: false }, row => {
-      // store each cell to currentCell
-      const currentCell = row._cells;
-
-      // loop through currentCell to apply border only for the non-empty cell of excel
-      currentCell.forEach(singleCell => {
-        // store the cell address i.e. A1, A2, A3, B1, B2, B3, ...
-        const cellAddress = singleCell._address;
-
-        // apply border
-        worksheet.getCell(cellAddress).border = {
-          top: { style: 'thin' },
-          left: { style: 'thin' },
-          bottom: { style: 'thin' },
-          right: { style: 'thin' }
-        };
-      });
-    });
-
-    // write the content using writeBuffer
-    const buf =  await workbook.xlsx.writeBuffer();
-
-    // download the processed file
-    saveAs(new Blob([buf]), `${fileName}.xlsx`);
-  
- 
-  } 
-   catch (error) {
-    console.error('<<<ERRROR>>>', error);
-    console.error('Something Went Wrong', error.message);
-  } finally {
-    // removing worksheet's instance to create new one
-    workbook.removeWorksheet(workSheetName);
-  }
-
- 
-};
+  };
 
   return (
     <>
-    <div className="row">
-      <div className="col-sm-12 d-flex">
-        <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row my-3">
-        <div class="col-sm-3">
-            
-          <input 
-          placeholder="Name"
-          type="text"
-          name="name"
-          className="form-control"
-          ref={register}
-          />
-      </div>
-      <div class="col-sm-3">
-            
-            <input 
-            placeholder="Country"
-            type="country"
-            name="country"
-            className="form-control"
-            ref={register}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container my={1} spacing={1}>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <input
+              placeholder="Name"
+              type="text"
+              name="name"
+              className="form-control"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              ref={register}
             />
-        </div>
-        <div class="col-sm-3">
-            
-            <input 
-            placeholder="City"
-            type="text"
-            name="city2"
-            className="form-control"
-            ref={register}
+          </Grid>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <input
+              placeholder="Country"
+              type="country"
+              name="country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="form-control"
+              ref={register}
             />
-        </div>
-              <div class="col-sm-3">
-                  
-                  <input 
-                  placeholder="State"
-                  type="text"
-                  name="state"
-                  className="form-control"
-                  ref={register}/>
-              </div>
-             
-              
-          
-          </div>
-          <div class="row my-3">
-          <div class="col-sm-3">
-                
-                <input 
-                placeholder="Email"
-                type="text"
-                name="email"
-                className="form-control"
-                ref={register}/>
-            </div>
-            <div class="col-sm-3">
-              
-              <input 
+          </Grid>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <input
+              placeholder="City"
+              type="text"
+              name="city2"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="form-control"
+              ref={register}
+            />
+          </Grid>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <input
+              placeholder="State"
+              type="text"
+              name="state"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              className="form-control"
+              ref={register}
+            />
+          </Grid>
+        </Grid>
+        <Grid container my={1} spacing={1}>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <input
+              placeholder="Email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              className="form-control"
+              ref={register}
+            />
+          </Grid>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <input
               placeholder="Occupation"
               type="text"
               name="occupation"
               className="form-control"
-              ref={register}/>
-          </div>
-          <div class="form-inline">
-             
+              value={occupation}
+              onChange={(e) => setOccuption(e.target.value)}
+              ref={register}
+            />
+          </Grid>
+          <Grid item sx={12} sm={6} md={4} lg={3}>
+            <Grid container columnSpacing={2}>
+              <Grid item lg={4}>
+                <label className="form-control">From</label>
+              </Grid>
+              <Grid item lg={8}>
+                <input
+                  type="date"
+                  name="p_dateFrom"
+                  className="form-select form-control"
+                  ref={register}
+                  max={current_date}
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item lg={3}>
+            <Grid container columnSpacing={2}>
+              <Grid item lg={3}>
+                <label className="form-select form-control">To</label>
+              </Grid>
+              <Grid item lg={9}>
+                <input
+                  type="date"
+                  name="p_dateTo"
+                  className="form-select form-control"
+                  ref={register}
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
+                  max={current_date}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid container my={1} spacing={1}>
+          <Grid item lg={7}>
+            <button type="submit" className="customBtn mx-sm-1 mb-2">
+              Search
+            </button>
+            <button
+              type="submit"
+              className="customBtn mx-sm-1 mb-2"
+              onClick={() => resetData()}
+            >
+              Reset
+            </button>
+            <button
+              type="button"
+              class="autoWidthBtn mb-2"
+              onClick={() => exportToExcel()}
+            >
+              Export to Excel
+            </button>
+            {/* <label className="form-control">Total Records : {records}</label> */}
+          </Grid>
 
-             <div class="form-group mx-sm-1  mb-2">
-               <label className="form-select form-control">From</label>
-             </div>
-
-             <div class="form-group mx-sm-1  mb-2">
-               <input
-                 type="date"
-                 name="p_dateFrom"
-                 className="form-select form-control"
-                 ref={register}
-                 max={item}
-               />
-             </div>
-
-             <div class="form-group mx-sm-1  mb-2">
-               <label className="form-select form-control">To</label>
-             </div>
-
-             <div class="form-group mx-sm-1  mb-2">
-               <input
-                 type="date"
-                 name="p_dateTo"
-                 className="form-select form-control"
-                 ref={register}
-                 defaultValue={item}
-                 max={item}
-               />
-             </div>
-</div>
-          </div>
-             
-              <div class="row my-3">
-             
-             <div class="col-sm-6">
-             <button type="submit" class="btn btn-primary mx-sm-1 mb-2">
-                Search
-              </button>
-              <button
-          type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
-          onClick={() => resetData()}
-        >
-          Reset
-        </button>
-        <div class="form-group d-inline-block">
-                  <label className="form-select form-control"
-                  >Total Records : {records}</label>
-                </div>
-                <button
-          type="submit"
-          class="btn btn-primary mx-sm-1 mb-2"
-          onClick={() => exportToExcel()}
-        >
-          Export to Excel
-        </button>
-             </div>
-              
+          <Grid item lg={5}>
+            <div className="customPagination">
+              <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <span>
+                  {big}-{end} of {countNotification}
+                </span>
+                <span className="d-flex">
+                  {page > 1 ? (
+                    <>
+                      <button
+                        type="button"
+                        className="navButton mx-1"
+                        onClick={(e) => firstChunk()}
+                      >
+                        &lt; &lt;
+                      </button>
+                      <button
+                        type="button"
+                        className="navButton mx-1"
+                        onClick={(e) => prevChunk()}
+                      >
+                        &lt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      maxWidth: "70px",
+                      width: "100%",
+                    }}
+                  >
+                    <select
+                      value={page}
+                      onChange={(e) => {
+                        setPage(Number(e.target.value));
+                        getCustomer(Number(e.target.value));
+                        localStorage.setItem(
+                          "adminClient",
+                          Number(e.target.value)
+                        );
+                      }}
+                      className="form-control"
+                    >
+                      {defaultPage.map((i) => (
+                        <option value={i}>{i}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {defaultPage.length > page ? (
+                    <>
+                      <button
+                        className="navButton mx-1"
+                        type="button"
+                        onClick={(e) => nextChunk()}
+                      >
+                        &gt;
+                      </button>
+                      <button
+                        type="button"
+                        className="navButton mx-1"
+                        onClick={(e) => lastChunk()}
+                      >
+                        &gt; &gt;
+                      </button>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </span>
               </div>
- 
-           
-
-           
-          </form>
-        </div>
-      </div>
-    </div>
-  </>
+            </div>
+          </Grid>
+        </Grid>
+      </form>
+    </>
   );
 }
 

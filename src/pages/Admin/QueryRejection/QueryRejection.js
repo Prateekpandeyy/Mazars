@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useParams, Link, Redirect } from "react-router-dom";
-import { useAlert } from "react-alert";
+
 import {
     Card,
     CardHeader,
@@ -36,10 +36,15 @@ function QueryRejection(props) {
 
     const userId = window.localStorage.getItem("adminkey");
     const [loading, setLoading] = useState(false);
-
+    const token = window.localStorage.getItem("adminToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
 
     const onSubmit = (value) => {
-        console.log("value :", value)
+      
         setLoading(true)
 
         let formData = new FormData();
@@ -49,10 +54,13 @@ function QueryRejection(props) {
         axios({
             method: "POST",
             url: `${baseUrl}/admin/setAdminreject`,
+            headers : {
+                uit : token
+            },
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+               
                 if (response.data.code === 1) {
                     setLoading(false)
                     Alerts.SuccessNormal("Query declined successfully.")
@@ -65,7 +73,7 @@ function QueryRejection(props) {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+                
             });
     };
 
@@ -81,8 +89,8 @@ function QueryRejection(props) {
                                     index: 1,
                                 }}
                             >
-                                <button class="btn btn-success ml-3">
-                                    <i class="fas fa-arrow-left mr-2"></i>
+                                <button className="autoWidthBtn ml-3">
+                                    <i className="fas fa-arrow-left mr-2"></i>
                                     Go Back
                                 </button>
                             </Link>
@@ -100,13 +108,13 @@ function QueryRejection(props) {
                         :
                         <>
                             <CardHeader>
-                                <div class="row mt-3">
-                                    <div class="col-lg-2 col-xl-2 col-md-12"></div>
-                                    <div class="col-lg-8 col-xl-8 col-md-12">
+                                <div className="row mt-3">
+                                    <div className="col-lg-2 col-xl-2 col-md-12"></div>
+                                    <div className="col-lg-8 col-xl-8 col-md-12">
                                         <form onSubmit={handleSubmit(onSubmit)}>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
                                                         <label>Notes<span className="declined">*</span></label>
                                                         <textarea
                                                             className={classNames("form-control", {
@@ -125,12 +133,12 @@ function QueryRejection(props) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" className="btn btn-primary">
+                                            <button type="submit" className="customBtn">
                                                 Submit
                                             </button>
                                         </form>
                                     </div>
-                                    <div class="col-lg-2 col-xl-2 col-md-12"></div>
+                                    <div className="col-lg-2 col-xl-2 col-md-12"></div>
                                 </div>
                                 <Mandatory />
                             </CardHeader>

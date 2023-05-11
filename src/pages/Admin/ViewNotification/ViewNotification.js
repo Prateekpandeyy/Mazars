@@ -3,7 +3,6 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
 import { useHistory, useParams } from "react-router-dom";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -20,7 +19,7 @@ function ViewNotification() {
   const userid = window.localStorage.getItem("adminkey");
   const history = useHistory();
   const { id } = useParams();
-
+  const token = window.localStorage.getItem("adminToken")
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -34,21 +33,23 @@ function ViewNotification() {
 
     axios({
       method: "POST",
-      url: `${baseUrl}/tl/viewNotification`,
+      url: `${baseUrl}/admin/viewNotification`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setData(response.data.result[0]);
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
-  console.log("data-", data);
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
@@ -57,20 +58,21 @@ function ViewNotification() {
           <Row>
             <Col md="4">
               <button
-                class="btn btn-success ml-3"
+                className="autoWidthBtn ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+              
                 Go Back
               </button>
             </Col>
-            <Col md="8">
+            <Col md="4" align="center">
               <h4>Message Details</h4>
             </Col>
+            <Col md="4"></Col>
           </Row>
         </CardHeader>
         <CardBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <tbody>
               <tr>
                 <th scope="row">Query No</th>

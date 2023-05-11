@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { useHistory } from "react-router-dom";
 import {
   Card,
@@ -31,7 +31,7 @@ function ProposalComponent(props) {
   const { id } = props;
   console.log(id);
 
-  const alert = useAlert();
+
   const history = useHistory();
   const { handleSubmit, register, reset } = useForm();
 
@@ -123,7 +123,12 @@ function ProposalComponent(props) {
         console.log("res-", response);
         if (response.data.code === 1) {
           reset();
-          alert.success(<Msg />);
+          Swal.fire({
+            title : "success",
+            html : "proposal successfully sent",
+            icon : "success"
+           })
+       
           history.push("/teamleader/proposal");
         }
       })
@@ -183,7 +188,7 @@ function ProposalComponent(props) {
                 class="btn btn-success ml-3"
                 onClick={() => history.goBack()}
               >
-                <i class="fas fa-arrow-left mr-2"></i>
+             
                 Go Back
               </button>
             </Col>
@@ -260,7 +265,7 @@ function ProposalComponent(props) {
               <div class="col-md-6">
 
                 <div class="form-group">
-                  <label>Customer Name</label>
+                  <label>Client Name</label>
                   <input
                     type="text"
                     name="p_name"

@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-} from "reactstrap";
-import BootstrapTable from "react-bootstrap-table-next";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import RejectedModal from "./RejectedModal";
 import Alerts from "../../../common/Alerts";
-import { Spinner } from 'reactstrap';
-
-
+import { Spinner } from "reactstrap";
+import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import { Accept, Reject } from "../../../components/Common/MessageIcon";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [loading, setLoading] = useState(false);
 
@@ -27,8 +33,24 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   });
 
   const [addPaymentModal, setPaymentModal] = useState(false);
-  const rejectHandler = (key) => {
 
+  const myRef = useRef([]);
+  const [countNotification, setCountNotification] = useState("");
+
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+
+  const token = window.localStorage.getItem("tlToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+  const rejectHandler = (key) => {
     setPaymentModal(!addPaymentModal);
     setPay({
       id: key.id,
@@ -36,43 +58,239 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     });
   };
 
+  // useEffect(() => {
+  //   getPendingforAcceptance();
+  // }, []);
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendtlq3") === column.dataField ||
+      localStorage.getItem("prevtlq3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlq3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlq3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   useEffect(() => {
-    getPendingforAcceptance();
+    let localPage = Number(localStorage.getItem("tlqp3"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlq3"));
+    setPrev(localStorage.getItem("prevtlq3"));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq3"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getPendingforAcceptance(localPage);
   }, []);
 
-  const getPendingforAcceptance = () => {
-    axios
-      .get(`${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}`)
-      .then((res) => {
-        
+  const getPendingforAcceptance = (e) => {
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlquery3"));
+
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq3"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
+    if (searchData) {
+      remainApiPath = `tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
         if (res.data.code === 1) {
-          setPendingData(res.data.result);
+          let droppage = [];
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPendingData(all);
           setRecords(res.data.result.length);
-         
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
+    }
   };
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlqp3", 1);
+    localStorage.setItem("sortedValuetlq3", JSON.stringify(sort));
 
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery3`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/pendingQues?id=${JSON.parse(
+        userid
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        if (
+          Number(all.length) <
+          Number(localStorage.getItem("tl_record_per_page"))
+        ) {
+          setEnd(all.length);
+        } else {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        }
+        setPendingData(all);
+      }
+    });
+  };
   const columns = [
     {
-      text: "S.No",
-      dataField: "",
+      text: "S.no",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
+
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
-      text: "Date",
+      text: "Query date",
       dataField: "query_created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
       },
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.query_created;
         if (oldDate == null) {
           return null;
@@ -81,19 +299,15 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
       formatter: function nameFormatter(cell, row) {
-       
         return (
           <>
             <Link
               to={{
-                pathname: `/teamleader/queries/${row.id}`,
-                index: 0,
+                pathname: `/teamleader_queries/${row.id}`,
+                index: 2,
                 routes: "queriestab",
               }}
             >
@@ -106,36 +320,96 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
       },
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
       },
     },
     {
-      text: "Customer Name",
+      text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
       },
     },
     {
-      text: "	Exp. Delivery Date / Actual Delivery Date",
+      text: "Delivery due date ",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
       },
+
       formatter: function dateFormat(cell, row) {
-      
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -145,9 +419,24 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     },
     {
       text: "Accept / Reject",
-      dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
       },
       formatter: function (cell, row) {
         return (
@@ -161,26 +450,11 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
               }}
               id="div1"
             >
-              <div
-                id="accept"
-                title="Accept Assignment"
-                onClick={() => acceptHandler(row)}
-              >
-                <i
-                  class="fa fa-check"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
+              <div onClick={() => acceptHandler(row)}>
+                <Accept titleName="Accept Assignment" />
               </div>
-              <div
-                id="reject"
-                title="Reject Assignment"
-                // onClick={() => rejectHandler(row)}
-                onClick={() => rejectHandler(row)}
-              >
-                <i
-                  class="fa fa-times"
-                  style={{ color: "red", fontSize: "16px" }}
-                ></i>
+              <div onClick={() => rejectHandler(row)}>
+                <Reject titleName="Reject Assignment" />
               </div>
             </div>
           </>
@@ -190,8 +464,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   ];
 
   const acceptHandler = (key) => {
-  
-    setLoading(true)
+    setLoading(true);
 
     let formData = new FormData();
     formData.append("set", 1);
@@ -202,25 +475,23 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AcceptRejectQuery`,
+      headers: {
+        uit: token,
+      },
       data: formData,
     })
       .then(function (response) {
-      
         if (response.data.code === 1) {
-          setLoading(false)
-          Alerts.SuccessNormal("Query accepted successfully.")
-          getPendingforAcceptance();
-          updateTab(3);
+          setLoading(false);
+          Alerts.SuccessNormal("Query accepted successfully.");
+          getPendingforAcceptance(1);
+          updateTab(2);
         } else if (response.data.code === 0) {
-          setLoading(false)
+          setLoading(false);
         }
       })
-      .catch((error) => {
-
-      });
+      .catch((error) => {});
   };
-
-
 
   return (
     <>
@@ -232,21 +503,34 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
             pendingForAcceptence="pendingForAcceptence"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlqp3"
+            index="tlquery3"
+            localAccend="accendtlq3"
+            localPrev="prevtlq3"
+            localSorted="sortedValuetlq3"
           />
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Spinner color="primary" />
-              :
-              <BootstrapTable
-                bootstrap4
-                keyField="id"
-                data={pendingData}
-                columns={columns}
-                rowIndex
-              />
-          }
+          {loading ? (
+            <Spinner color="primary" />
+          ) : (
+            <DataTablepopulated
+              bgColor="#6e557b"
+              keyField={"assign_no"}
+              data={pendingData}
+              columns={columns}
+            ></DataTablepopulated>
+          )}
           <RejectedModal
             rejectHandler={rejectHandler}
             addPaymentModal={addPaymentModal}
@@ -260,4 +544,3 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
 }
 
 export default PendingForAcceptence;
-

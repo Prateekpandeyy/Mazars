@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -29,7 +29,7 @@ function RejectedModal({
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+    
     setLoading(true)
 
     let formData = new FormData();
@@ -43,10 +43,10 @@ function RejectedModal({
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
-          Alerts.SuccessNormal("Marked as customer declined payment.")
+          Alerts.SuccessNormal("Marked as client declined payment.")
           getPaymentStatus();
           rejectHandler();
         } else if (response.data.code === 0) {
@@ -54,7 +54,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+      
       });
   };
 

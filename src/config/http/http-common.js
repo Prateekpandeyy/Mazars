@@ -1,17 +1,17 @@
 import axios from "axios";
-// export default axios.create({
-//   baseURL: "http://13.232.121.233/mazarsapi/v1",
-//   headers: {
-//     "Content-type": "application/json",
-//   },
-// });
 
-
-// for server 
+// //for development
 
 export default axios.create({
-  baseURL: "https://mazarsapi.multitvsolution.com/mazarapi/v1",
+  baseURL: "https://stagingapi-advisorysolutions.mazars.co.in/v1",
   headers: {
     "Content-type": "application/json",
   },
 });
+// // // //for server
+// export default axios.create({
+//   baseURL: "https://api-advisorysolutions.mazars.co.in/v1",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// });

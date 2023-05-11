@@ -5,13 +5,13 @@ import CommonServices from "../../../common/common";
 
 function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
 
-  console.log("viewData", viewData)
+
   return (
     <div>
       <Modal isOpen={viewModal} toggle={ViewHandler} size="md">
         <ModalHeader toggle={ViewHandler}>View Proposal</ModalHeader>
         <ModalBody>
-          <table class="table table-bordered">
+          <table className="table table-bordered">
             <tbody>
               <tr>
                 <th scope="row">Query No</th>
@@ -51,7 +51,7 @@ function ViewComponent({ viewModal, ViewHandler, getProposalData, viewData }) {
                         viewData.status == "Accepted; Proposal" ?
                           <div>
                             {viewData.status}
-                            <p className=".completed{">
+                            <p className="completed">
                               {viewData.statusdescription}
                             </p>
                           </div> :

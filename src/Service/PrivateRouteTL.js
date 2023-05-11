@@ -7,6 +7,9 @@ const PrivateRouteTL = ({ component: Component, ...rest }) => {
       {...rest}
       component={(props) => {
         const token = window.localStorage.getItem("tlkey");
+        var previousLoginTime = window.localStorage.getItem("tlloginTime")
+        var nextLogin = Number(previousLoginTime) + Number(600000)
+        var currentTime = Date.now()
         if (token) {
           return <Component {...props} />;
         } else {

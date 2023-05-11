@@ -8,22 +8,24 @@ import AllPayment from "./AllPayment";
 import Unpaid from "./Unpaid";
 import Paid from "./Paid";
 
-
-
 function QueriesTab(props) {
   const userId = window.localStorage.getItem("tpkey");
   const [tabIndex, setTabIndex] = useState(0);
+  const [allPayment, setAllPayment] = useState("");
+  const [paid, setPaid] = useState("");
+  const [unpaid, setUnpaid] = useState("");
+  const [bgColor, setbgColor] = useState("#2b5f55");
 
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
-
-
-  const [allPayment, setAllPayment] = useState("");
-  const [paid, setPaid] = useState("");
-  const [unpaid, setUnpaid] = useState("");
-
+  const token = window.localStorage.getItem("tptoken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
 
   useEffect(() => {
     getAllPaid();
@@ -31,97 +33,101 @@ function QueriesTab(props) {
     getUnpaid();
   }, []);
 
-
   const getAllPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userId)}`)
+      .get(
+        `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+          userId
+        )}&count=1`,
+        myConfig
+      )
       .then((res) => {
-        console.log(res);
-        setAllPayment(res.data.result.length);
+        setAllPayment(res?.data?.result?.recordcount);
       });
   };
 
   const getPaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userId)}&status=1`)
+      .get(
+        `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+          userId
+        )}&status=1&count=1`,
+        myConfig
+      )
       .then((res) => {
-        console.log(res);
-        setPaid(res.data.result.length);
+        setPaid(res?.data?.result?.recordcount);
       });
   };
 
   const getUnpaid = () => {
     axios
-      .get(`${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(userId)}&status=2`)
+      .get(
+        `${baseUrl}/tl/getUploadedProposals?tp_id=${JSON.parse(
+          userId
+        )}&status=2&count=1`,
+        myConfig
+      )
       .then((res) => {
-        console.log(res);
-        setUnpaid(res.data.result.length);
+        setUnpaid(res?.data?.result?.recordcount);
       });
   };
 
+  const tableIndex = (index) => {
+    setTabIndex(index);
+    console.log(index);
+    if (index === 0) {
+      setbgColor("#2b5f55");
+    } else if (index === 1) {
+      setbgColor("#3e8678");
+    } else if (index === 2) {
+      setbgColor("#3e8678");
+    } else if (index === 3) {
+      setbgColor("#3e8678");
+    }
+  };
 
   const myStyle1 = {
-    backgroundColor: "grey",
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    color: "white",
+    margin: "10px auto",
+    fontSize: "18px",
     cursor: "pointer",
   };
-
   const myStyle2 = {
-    padding: "12px",
-    borderRadius: "50px",
-    width: "200px",
-    textAlign: "center",
-    backgroundColor: "blue",
-    color: "white",
+    margin: "10px auto",
+    fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
-
-
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userId}>
-      <div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList
-            style={{
-              listStyleType: "none",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Tab style={tabIndex == 0 ? myStyle2 : myStyle1}>
-              All Payment ({allPayment})
-            </Tab>
-            <Tab style={tabIndex == 1 ? myStyle2 : myStyle1}>
-              Unpaid ({paid})
-            </Tab>
-            <Tab style={tabIndex == 2 ? myStyle2 : myStyle1}>
-              Paid ({unpaid})
-            </Tab>
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+        <TabList className="fixedTab">
+          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            All payment ({allPayment})
+          </Tab>
+          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            Unpaid ({paid})
+          </Tab>
+          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+            Paid ({unpaid})
+          </Tab>
+        </TabList>
 
-          </TabList>
+        <TabPanel>
+          <AllPayment />
+        </TabPanel>
 
-          <TabPanel>
-            <AllPayment />
-          </TabPanel>
+        <TabPanel>
+          <Unpaid />
+        </TabPanel>
 
-          <TabPanel>
-            <Unpaid />
-          </TabPanel>
-
-          <TabPanel>
-            <Paid />
-          </TabPanel>
-        </Tabs>
-      </div>
+        <TabPanel>
+          <Paid />
+        </TabPanel>
+      </Tabs>
     </Layout>
   );
 }
 
 export default QueriesTab;
-
-

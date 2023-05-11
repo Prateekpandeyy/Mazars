@@ -19,14 +19,14 @@ function ChatHistory({ chatHandler, addPaymentModal, qno }) {
         )}&type=2&q_no=${qno}`
       )
       .then((res) => {
-        console.log(res);
+       
         if (res.data.code === 1) {
           setNotification(res.data.result);
         }
       });
   };
 
-  console.log("notification", notification);
+ 
 
   return (
     <div>

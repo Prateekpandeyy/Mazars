@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import React, { useState } from "react";
+import { Modal, ModalHeader, ModalBody , Button } from "reactstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -23,16 +22,16 @@ function RejectedModal({
   getData
 }) {
   const userId = window.localStorage.getItem("userid");
-  const { handleSubmit, register, reset, errors } = useForm({
+  const token = window.localStorage.getItem("clientToken")
+  const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 
   const [loading, setLoading] = useState(false);
 
-  console.log("dataItem :", dataItem);
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+   
     setLoading(true)
 
     let formData = new FormData();
@@ -46,10 +45,13 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/customers/draftAccept`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("response-", response);
+    
         if (response.data.code === 1) {
           setLoading(false)
           toggleNested();
@@ -61,7 +63,7 @@ function RejectedModal({
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
@@ -93,10 +95,10 @@ function RejectedModal({
                   <Spinner color="primary" />
                   :
                   <div>
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="customBtn">
                       Submit
                     </button>
-                    <Button color="primary" onClick={toggleNested}>Cancel</Button>
+                    <button className="dangerBtn ml-2" onClick={toggleNested}>Cancel</button>
                   </div>
               }
             </div>

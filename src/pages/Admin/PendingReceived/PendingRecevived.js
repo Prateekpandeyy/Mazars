@@ -4,7 +4,7 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { baseUrl2 } from '../../../config/config';
+import { baseUrl2 } from "../../../config/config";
 import {
   Card,
   CardHeader,
@@ -15,7 +15,6 @@ import {
   Table,
 } from "reactstrap";
 
-
 function PendingRecevied() {
   const [submitData, setSubmitData] = useState([]);
   const [assingNo, setAssingmentNo] = useState();
@@ -25,53 +24,64 @@ function PendingRecevied() {
   const history = useHistory();
 
   const userid = window.localStorage.getItem("adminkey");
-
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   useEffect(() => {
     const getSubmittedAssingment = () => {
-      axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setSubmitData(res.data.result);
-          setDisplaySpecific(res.data.additional_queries);
-          setAssingmentNo(res.data.result[0].assign_no);
-        }
-      });
+      axios
+        .get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig)
+        .then((res) => {
+          if (res.data.code === 1) {
+            setSubmitData(res.data.result);
+            setDisplaySpecific(res.data.additional_queries);
+            setAssingmentNo(res.data.result[0].assign_no);
+          }
+        });
     };
 
     getSubmittedAssingment();
-    getQuery();
+    // getQuery();
   }, [assingNo]);
 
-  console.log(assingNo);
+  // const getQuery = () => {
+  //  if(assingNo === undefined){
+  //    return false
+  //  }
+  //  else{
+  //   axios
+  //   .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
+  //   .then((res) => {
 
-  const getQuery = () => {
-    axios
-      .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setDisplayQuery(res.data.result);
-        }
-      });
-  };
+  //     if (res.data.code === 1) {
+  //       setDisplayQuery(res.data.result);
+  //     }
+  //   });
+  //  }
+  // };
 
-     //change date format
-     function ChangeFormateDate(oldDate) {
-      console.log("date", oldDate);
-      if (oldDate == null) {
-        return null;
-      }
-      return oldDate.toString().split("-").reverse().join("-");
+  //change date format
+  function ChangeFormateDate(oldDate) {
+    if (oldDate == null) {
+      return null;
     }
-    
+    return oldDate.toString().split("-").reverse().join("-");
+  }
+
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <Card>
         <CardHeader>
           <Row>
             <Col md="4">
-              <button class="btn btn-success" onClick={() => history.goBack()}>
-                <i class="fas fa-arrow-left mr-2"></i>
+              <button
+                className="btn btn-success"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-arrow-left mr-2"></i>
                 Go Back
               </button>
             </Col>
@@ -85,8 +95,8 @@ function PendingRecevied() {
         </CardHeader>
         <CardBody>
           {submitData.map((p, i) => (
-            <div class="card-body">
-              <table class="table table-bordered">
+            <div className="card-body">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">Titles</th>
@@ -94,11 +104,11 @@ function PendingRecevied() {
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
+                  <tr>
                     <th scope="row">Query No</th>
                     <td>{p.assign_no}</td>
                   </tr>
-                <tr>
+                  <tr>
                     <th scope="row">Query Status</th>
                     <td>{p.status}</td>
                   </tr>
@@ -136,7 +146,7 @@ function PendingRecevied() {
                           <a
                             href={`${baseUrl2}/mazarsapi/assets/image/${p.upload_doc_1}`}
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                         </p>
                       )}
@@ -148,7 +158,7 @@ function PendingRecevied() {
                           <a
                             href={`${baseUrl2}/mazarsapi/mazarapi/assets/image/${p.upload_doc_2}`}
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                         </p>
                       )}
@@ -160,7 +170,7 @@ function PendingRecevied() {
                           <a
                             href={`${baseUrl2}/mazarsapi/mazarapi/assets/image/${p.upload_doc_3}`}
                           >
-                            <i class="fa fa-photo"></i>
+                            <i className="fa fa-photo"></i>
                           </a>
                         </p>
                       )}
@@ -184,20 +194,18 @@ function PendingRecevied() {
                   <tr>
                     <th scope="row">Action</th>
                     <td>
-                    {p.allocation_status == "0" || p.allocation_status == "3"  ? (
-                        <Link to={`/admin/queryassing/${p.id}`}>
-                        <i class="fa fa-share"></i>
-                      </Link>
-                      ) : (                  
-                       null
-                      )}
+                      {p.allocation_status == "0" ||
+                      p.allocation_status == "3" ? (
+                        <Link to={`/admin_queryassing/${p.id}`}>
+                          <i className="fa fa-share"></i>
+                        </Link>
+                      ) : null}
                     </td>
                   </tr>
-                 
                 </tbody>
               </table>
 
-              <table class="table table-bordered">
+              <table className="table table-bordered">
                 {displayQuery.length > 0 && (
                   <thead>
                     <tr>
@@ -223,7 +231,7 @@ function PendingRecevied() {
                             <a
                               href={`${baseUrl2}/mazarsapi/mazarapi/assets/image/${p.upload_doc}`}
                             >
-                              <i class="fa fa-photo"></i>
+                              <i className="fa fa-photo"></i>
                             </a>
                           </p>
                         )}

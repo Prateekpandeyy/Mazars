@@ -6,7 +6,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
@@ -15,11 +15,19 @@ import { useParams, Link } from "react-router-dom";
 import Alerts from "../../common/Alerts";
 import ResendOtp from "./ResendOtp";
 import { Spinner } from "reactstrap";
-
-
-
+import ShowError from "../../components/LoadingTime/LoadingTime";
+import { OuterloginContainer } from "../../components/Common/OuterloginContainer";
+import { styled , makeStyles} from "@material-ui/styles";
+import {  Box, Typography } from "@material-ui/core";
+const MyContainer = styled(Box)({
+  display : "flex", 
+  justifyContent : "center", 
+  alignItems : "center", 
+  width: "100%",
+  flexDirection : "column"
+})
 function NewPassword(props) {
-  const alert = useAlert();
+  
   const { register, handleSubmit, errors, getValues, reset } = useForm();
   const { id } = useParams();
 
@@ -31,7 +39,7 @@ function NewPassword(props) {
   const [time, setTime] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [load, setLoad] = useState(true);
-
+  const [user, setUser] = useState("")
   const togglePasssword = () => {
     setPasswordShow(!isPasswordShow)
   };
@@ -69,12 +77,12 @@ function NewPassword(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
 
     let formData = new FormData();
-    // formData.append("user_id", value.p_name);
-    formData.append("email", value.p_email);
+    formData.append("user_id", props.history.location.index);
+    formData.append("email", id);
     formData.append("code", value.p_code);
     formData.append("password", value.p_password);
     formData.append("rpassword", value.p_confirm_password);
@@ -85,7 +93,7 @@ function NewPassword(props) {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+       
         if (response.data.code === 1) {
           setLoading(false)
           var variable = "Password reset successfully."
@@ -94,27 +102,58 @@ function NewPassword(props) {
           props.history.push("/");
         } else if (response.data.code === 0) {
           setLoading(false)
-          console.log(response.data.result);
+          
           Alerts.ErrorNormal("Incorrect OTP, please try again.")
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+        ShowError.LoadingError(setLoading)
       });
   };
+  const getUser = (e) => {
+    var regEx = /^[0-9a-zA-Z]+$/;
+    if(e.target.value.match(regEx)){
+      setUser(e.target.value.toUpperCase())
+    }
+    else{
+      setUser("")
+    }
+   
+  }
 
   return (
     <>
-      <Header cust_sign="cust_sign" />
-      <div className="container">
+    <OuterloginContainer>
+    <Header noSign="noSign" />
+     <MyContainer>
+     <div className="container">
         <div className="form">
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             <div className="heading">
               <h2>Reset Password</h2>
             </div>
             <div className="row">
+<div className="col-md-12">
+<div className="mb-3">
 
+
+<label className="form-label">User Id<span className="declined">*</span></label>
+<input
+  type="text"
+  onChange={(e) => getUser(e)}
+ value={props.history.location.index}
+ disabled
+  name="p_user"
+  ref={register({ required: true })}
+  placeholder="Enter User Id"
+  className={classNames("form-control", {
+    "is-invalid": errors.p_user 
+  })}
+/>
+
+</div>
+  </div>
               <div className="col-md-12">
                 <div className="mb-3">
                   <label className="form-label">Email<span className="declined">*</span></label>
@@ -124,6 +163,7 @@ function NewPassword(props) {
                       "is-invalid": errors.p_email,
                     })}
                     name="p_email"
+                    disabled
                     placeholder="Enter Email"
                     defaultValue={id}
                     ref={register({
@@ -159,7 +199,7 @@ function NewPassword(props) {
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
                         message:
-                          "Password should be of minimum 8 Characters, including at least 1 upper case, lower case, special character and number.",
+                          "Password should be of minimum 8 characters, including at least 1 upper case, lower case, special character and number.",
                       },
                     })}
                     onPaste={((e) => {
@@ -252,7 +292,7 @@ function NewPassword(props) {
                       ""
                       :
                       <div>
-                        <button type="submit" className="btn btn-primary" >
+                        <button type="submit" className="customBtn" >
                           Submit
                         </button>
                         <Cancel />
@@ -267,7 +307,7 @@ function NewPassword(props) {
           {
             disabled ?
               <ResendOtp id={id} setDisabled={setDisabled} getTime={getTime}
-                setLoad={setLoad} setLoading={setLoading} />
+              userId = {props.history.location.index}  setLoad={setLoad} setLoading={setLoading} />
               :
               null
           }
@@ -277,7 +317,9 @@ function NewPassword(props) {
 
         </div>
       </div>
+       </MyContainer>
       <Footer />
+    </OuterloginContainer>
     </>
   )
 }
@@ -290,7 +332,7 @@ const Cancel = () => {
   return (
     <>
       <Link to="/customer/forget-password" style={{ "margin": "10px" }}>
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" className="customBtn">
           Cancel
         </button>
       </Link>

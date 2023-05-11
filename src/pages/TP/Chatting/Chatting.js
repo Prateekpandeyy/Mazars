@@ -5,7 +5,7 @@ import * as yup from "yup";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
+
 import {
   Card,
   CardHeader,
@@ -17,11 +17,11 @@ import {
   Tooltip,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
-import Alerts from "../../../common/Alerts";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
-
+import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 const Schema = yup.object().shape({
   msg_type: yup.string().required(""),
   p_message: yup.string().required(""),
@@ -30,7 +30,7 @@ const Schema = yup.object().shape({
 
 
 function Chatting(props) {
-  const alert = useAlert();
+
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -42,10 +42,15 @@ function Chatting(props) {
   const [item, setItem] = useState("");
   const [data, setData] = useState({})
   const { message_type, query_id, query_No, routes } = data
-
+  const token = window.localStorage.getItem("tptoken")
+  const myConfig = {
+      headers : {
+       "uit" : token
+      }
+    }
 
   useEffect(() => {
-    console.log("useEffect", props)
+   
     const dataItem = props.location.obj
 
     if (dataItem) {
@@ -62,7 +67,7 @@ function Chatting(props) {
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+  
     setLoading(true)
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
@@ -74,36 +79,45 @@ function Chatting(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/tp/messageSent`,
+      headers: {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           reset();
           setLoading(false)
-          var variable = "Message sent successfully."
-          Alerts.SuccessNormal(variable)
+          
+         Swal.fire({
+          title : "success",
+          html : "Message sent successfully.",
+          icon : "success"
+         })
           props.history.push(routes);
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+       
       });
   };
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userId}>
-      <Card>
+       <Card>
         <CardHeader>
           <Row>
-            <Col md="4">
-              <button
-                class="btn btn-success ml-3"
-                onClick={() => history.goBack()}
-              >
-                <i class="fas fa-arrow-left mr-2"></i>
-                Go Back
-              </button>
+          <Col md="4">
+            <Link
+                  to={{
+                    pathname: `/taxprofessional/${props.location.routes}`,
+                    index: props.location.index,
+                  }}
+                >
+                  <button class="autoWidthBtn ml-3">Go Back</button>
+                </Link>
+              
             </Col>
             <Col md="8">
               <h4>Message</h4>
@@ -159,27 +173,7 @@ function Chatting(props) {
                         )}
 
                       </div>
-                      {/* <div class="form-group">
-                        <label>To<span className="declined">*</span></label>
-                        <select
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_to,
-                          })}
-                          name="p_to"
-                          ref={register}
-                          style={{ height: "33px" }}
-                        >
-                          <option value="">--select--</option>
-                          <option value="customer">Customer</option>
-                          <option value="tl">Team Leader</option>
-                          <option value="both">Both</option>
-                        </select>
-                        {errors.p_to && (
-                          <div className="invalid-feedback">
-                            {errors.p_to.message}
-                          </div>
-                        )}
-                      </div> */}
+                     
 
                       <div class="form-group">
                         <label>Message<span className="declined">*</span></label>
@@ -198,7 +192,7 @@ function Chatting(props) {
                           </div>
                         )}
                       </div>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="customBtn">
                         Send
                       </button>
                     </div>

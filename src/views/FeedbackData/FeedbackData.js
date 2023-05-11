@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
+
 import {
     Card,
     CardHeader,
@@ -10,20 +10,28 @@ import {
     CardTitle,
     Row,
     Col,
-    Table,
+    Modal ,
+    ModalBody, 
+    ModalHeader, 
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import CommonServices from "../../common/common";
-
-
+import  {HelpIcon} from "../../components/Common/MessageIcon";
+import ModalManual from "../ModalManual/AllComponentManual";
+import CustomHeading from "../../components/Common/CustomHeading";
 function FeedbackData(props) {
-    console.log("props", props.location.obj)
+
 
     const userId = window.localStorage.getItem("userid");
     const [query, setQuery] = useState([]);
-
-
+    const [openManual, setManual] = useState(false)
+    const token = window.localStorage.getItem("clientToken")
+    const myConfig = {
+        headers : {
+         "uit" : token
+        }
+      }
     useEffect(() => {
         getMessage();
     }, []);
@@ -32,10 +40,10 @@ function FeedbackData(props) {
     const getMessage = () => {
         axios
             .get(
-                `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`
+                `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}`, myConfig
             )
             .then((res) => {
-                console.log(res);
+            
                 if (res.data.code === 1) {
                     setQuery(res.data.result);
                 }
@@ -51,7 +59,7 @@ function FeedbackData(props) {
                 return rowIndex + 1;
             },
             headerStyle: () => {
-                return { fontSize: "12px", width: "10px" };
+                return { fontSize: "12px", width: "10px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
             },
         },
         {
@@ -59,29 +67,19 @@ function FeedbackData(props) {
             dataField: "created",
             sort: true,
             headerStyle: () => {
-                return { fontSize: "12px", width: "60px" };
+                return { fontSize: "12px", width: "60px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
             },
-            // formatter: function nameFormatter(cell, row) {
-            //     console.log(row);
-            //     return (
-            //         <>
-            //             <div style={{ display: "flex" }}>
-            //                 <p>{CommonServices.removeTime(row.created)}</p>
-            //                 <p style={{ marginLeft: "15px" }}>{CommonServices.removeDate(row.created)}</p>
-            //             </div>
-            //         </>
-            //     );
-            // },
+          
         },
 
         {
             text: "Query No",
             dataField: "assign_no",
             headerStyle: () => {
-                return { fontSize: "12px", width: "40px" };
+                return { fontSize: "12px", width: "40px", border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f" };
             },
             formatter: function nameFormatter(cell, row) {
-                console.log(row);
+               
                 return (
                     <>
                         {row.assign_no}
@@ -94,22 +92,30 @@ function FeedbackData(props) {
             text: "Feedback",
             dataField: "feedback",
             headerStyle: () => {
-                return { fontSize: "12px", width: "150px" };
+                return { fontSize: "12px", width: "150px" , border: "1px solid #081f8f", color:"#fff", backgroundColor:"#081f8f"};
             },
         },
     ];
 
 
 
-
+    const needHelp = () => {
+        
+        setManual(!openManual)
+    }
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
             <Card>
                 <CardHeader>
                     <Row>
-                        <Col md="9">
-                            <CardTitle tag="h4">Feedback</CardTitle>
+                        <Col md="7">
+                         <CustomHeading>
+                            Feedback
+                         </CustomHeading>
                         </Col>
+                        <Col md="5">
+            <span onClick= {(e) => needHelp()}> <HelpIcon /></span>
+            </Col>
                     </Row>
                 </CardHeader>
                 <CardBody>
@@ -123,23 +129,15 @@ function FeedbackData(props) {
 
                 </CardBody>
             </Card>
+            <Modal isOpen={openManual} toggle={needHelp} size="lg">
+                        <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+                        <ModalBody>
+                            <ModalManual tar= {"feedback"} />
+                        </ModalBody>
+                    </Modal>
         </Layout>
     );
 }
 
 export default FeedbackData;
-        // {
-        //     text: "Time",
-        //     sort: true,
-        //     headerStyle: () => {
-        //         return { fontSize: "12px", width: "30px" };
-        //     },
-        //     formatter: function nameFormatter(cell, row) {
-        //         console.log(row);
-        //         return (
-        //             <>
-        //                 {CommonServices.removeDate(row.created)}
-        //             </>
-        //         );
-        //     },
-        // },
+       

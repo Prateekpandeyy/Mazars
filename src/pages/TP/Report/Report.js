@@ -1,294 +1,1889 @@
-import React from 'react';
-import { useState } from 'react';
+import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
-import { baseUrl } from "../../../config/config";
-import './Admin.css';
-import Select from 'react-select';
+import { baseUrl, baseUrl3 } from "../../../config/config";
+import "./Admin.css";
+import Select from "react-select";
 import Layout from "../../../components/Layout/Layout";
-import { Typography } from '@material-ui/core';
-import Mandatory from '../../../components/Common/Mandatory';
-
+import { useHistory } from "react-router";
+import { Row, Col } from "reactstrap";
+import Swal from "sweetalert2";
+import CustomHeading from "../../../components/Common/CustomHeading";
+import Cookies from "js-cookie";
 const Report = () => {
-    const userid = window.localStorage.getItem("tpkey");
-    var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
- 
-    const [item] = useState(current_date);
-    const { handleSubmit, register, errors, getValues } = useForm();
-    const onSubmit = (value) => {
+  const userid = window.localStorage.getItem("tpkey");
+  const [subData, subCategeryData] = useState([]);
+  const [clientName, setClientName] = useState([]);
+  const [tax2, setTax2] = useState([]);
+  const [error2, setError2] = useState();
+  const [qno, setQno] = useState();
+  const [custData, setcustData] = useState();
+  const [cname, setcName] = useState("");
+  const [qqno, setQqno] = useState("");
+  const [checkBox, setCheckBox] = useState(null);
+  const [proposalCheckbox, setProposalCheckbox] = useState(null);
+  const [assignmentCheckbox, setAssignmentCheckbox] = useState(null);
+  const [paymnetCheckbox, setPaymentCheckbox] = useState(null);
+  const [manualCheckbox, setManualCheckbox] = useState(null);
+  const [manualSearch, setManualSearch] = useState(false);
+  const [companyName, setCompanyName] = useState([]);
+  const [companyName2, setCompanyName2] = useState([]);
+  const [tlName, setTlName] = useState("");
+  const [categoryName, setCategoryName] = useState({
+    label: "",
+    value: "",
+  });
+  const [basicValue, setBasicValue] = useState({
+    brief_fact_case: false,
+    assessment: false,
+    purpose_p: false,
+    p_format: false,
+    t_requested: false,
+    spc_que: false,
+
+    process_status: false,
+    dateofacceptance: false,
+  });
+  const [proposalValue, setProposalValue] = useState({
+    paymentDeclinedReason: false,
+    declinedDate: false,
+    amount_overdue: false,
+    amountOutstanding: false,
+    amount_receipt: false,
+    date_acceptance: false,
+    acceptedAmount: false,
+    proposal_status: false,
+    paymentTerms: false,
+    proposedAmount: false,
+    dateProposal: false,
+    issue_invoice: false,
+  });
+  const [assignmeneValue, setAssignmentValue] = useState({
+    assignDate: false,
+    completionDate: false,
+    assignStatus: false,
+    completionQuery: false,
+    assignTime: false,
+  });
+  const [paymentValue, setPaymentValue] = useState({
+    companyName: false,
+    invoice_number: false,
+    dos: false,
+    basic_amount: false,
+    pocket_expensive: false,
+    cget_tax: false,
+    sgst_tax: false,
+    igst_tax: false,
+    total_gst: false,
+    total_invoice: false,
+    tds: false,
+    receiptDate: false,
+    amount_type: false,
+    amountReceived: false,
+    how_paid: false,
+  });
+  const [manualReceipt, setManualReceipt] = useState({
+    mpayable_amount: false,
+    mamount_credited: false,
+    maccount_number: false,
+    mpayment_receipt_date: false,
+    mpayment_type: false,
+    mpayment_info: false,
+    other_info: false,
+  });
+  const gettpName = Cookies.get("tpName");
+  const token = window.localStorage.getItem("tptoken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
+
+  const tpName = {
+    value: JSON.parse(userid),
+    label: gettpName,
+  };
+
+  const [dd, setDd] = useState([]);
+  const history = useHistory();
+  const { handleSubmit, register, errors, getValues, reset } = useForm();
+
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
+
+  const [item] = useState(current_date);
+  const [querySearchData, setQueryString] = useState({
+    fromdate: "",
+    todate: current_date,
+    tl: "",
+    tp: "",
+    cat: "",
+    sub_cat: "",
+    cid: "",
+  });
+  const [selectQuery, setSelectedQuery] = useState([]);
+
+  const getSubCategory = async (e) => {
+    await axios.get(`${baseUrl}/customers/getCategory?pid=${e}`).then((res) => {
+      if (res.data.code === 1) {
+        setTax2(res.data.result);
+      }
+    });
+  };
+  const getCompany = () => {
+    let company = [];
+    let a = {};
+    axios.get(`${baseUrl}/tl/getcompany`, myConfig).then((res) => {
+      res.data.result.map((i) => {
+        a = {
+          value: i.company_prefix,
+          label: i.name,
+        };
+        company.push(a);
+      });
+      setCompanyName(company);
+    });
+  };
+  useEffect(() => {
+    getData();
+    getupdateQuery();
+    getTeamLeader();
+    getCompany();
+  }, []);
+
+  const getupdateQuery = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/getAllQueryList?taxprofessional=${JSON.parse(userid)}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let b = res.data.result;
+          setQno(b.map(getqNo));
+        }
+      });
+  };
+  const getTeamLeader = () => {
+    axios
+      .get(`${baseUrl}/tp/gettpuserinfo?id=${JSON.parse(userid)}`, myConfig)
+      .then((res) => {
+        getSubCategory(res.data.result.pcat_id);
+        setTlName({
+          label: res.data.result.parent_post_name,
+          value: res.data.result.parent_user,
+        });
+        setCategoryName({
+          label: res.data.result.category,
+          value: res.data.result.pcat_id,
+        });
+      });
+  };
+
+  let pk = [];
+  const custName = (a) => {
+    setClientName(a);
+    a.map((r) => {
+      pk.push(r.value);
+    });
+    setcName(pk);
+    filterQuery({
+      name: "cid",
+      value: pk,
+    });
+  };
+  const filterQuery = (cust) => {
+    let data = {};
+    let sub_cat = [];
+    var { name, value } = cust;
+
+    if (name === "cat") {
+      sub_cat = [];
+    } else if (name === "sub_cat") {
+      sub_cat = value;
+    } else {
+      sub_cat = querySearchData.sub_cat;
+    }
+
+    setQueryString((payload) => {
+      return {
+        ...payload,
+        [name]: value,
+      };
+    });
+    if (cust) {
+      data = {
+        ...querySearchData,
+        [name]: value,
+      };
+    } else {
+      data = {
+        fromdate: "",
+        todate: current_date,
+        tl: "",
+        tp: "",
+        cat: "",
+        sub_cat: "",
+        cid: "",
+      };
+    }
+
+    axios
+      .get(
+        `${baseUrl}/tl/getAllQueryList?from=${data.fromdate}&to=${
+          data.todate
+        }&category=${categoryName.value}&subcategory=${
+          data.sub_cat
+        }&teamleader=${tlName.value}&taxprofessional=${JSON.parse(
+          userid
+        )}&customer=${data.cid}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let b = res.data.result;
+          let remainQu = [];
+          b.forEach((i) => {
+            selectQuery.forEach((q) => {
+              if (q.value === i.assign_no) {
+                remainQu.push(q);
+              }
+            });
+          });
+
+          setSelectedQuery(remainQu);
+          setQno(b.map(getqNo));
+        }
+      });
+  };
+  const getData = () => {
+    axios
+      .get(`${baseUrl}/tl/allClient?tp_id=${JSON.parse(userid)}`, myConfig)
+      .then((res) => {
+        var a = res.data.result;
+        if (a) {
+          setcustData(a.map(mapAppointmentData));
+        }
+      });
+  };
+
+  const mapAppointmentData = (appiontmentData) => ({
+    label: appiontmentData.name,
+    value: appiontmentData.id,
+  });
+  const getqNo = (i) => ({
+    label: i.assign_no,
+    value: i.assign_no,
+  });
+
+  const options2 = tax2.map((v) => ({
+    value: v.id,
+    label: v.details,
+  }));
+
+  const resetData = () => {
+    reset();
+    setManualSearch(false);
+    setSelectedQuery([]);
+    subCategeryData([]);
+    setClientName([]);
+    setCompanyName2([]);
+    let assignValue = assignmeneValue;
+    let pVAlue = paymentValue;
+    let proposValue = proposalValue;
+    let bValue = basicValue;
+    let manualValue = manualReceipt;
+    setQueryString({
+      fromdate: "",
+      todate: current_date,
+      tl: "",
+      tp: "",
+      cat: "",
+      sub_cat: "",
+      cid: "",
+    });
+
+    setFromDate("");
+    setToDate(current_date);
+    Object.keys(bValue).forEach((key) => {
+      bValue[key] = false;
+    });
+
+    setBasicValue({
+      ...basicValue,
+      pVAlue,
+    });
+    setCheckBox(false);
+
+    Object.keys(proposValue).forEach((key) => {
+      proposValue[key] = false;
+    });
+
+    setProposalValue({
+      ...proposalValue,
+      proposValue,
+    });
+    Object.keys(assignValue).forEach((key) => {
+      assignValue[key] = false;
+    });
+
+    setAssignmentValue({
+      ...assignmeneValue,
+      assignValue,
+    });
+    Object.keys(pVAlue).forEach((key) => {
+      pVAlue[key] = false;
+    });
+
+    setPaymentValue({
+      ...paymentValue,
+      pVAlue,
+    });
+    Object.keys(manualValue).forEach((key) => {
+      manualValue[key] = false;
+    });
+
+    setManualReceipt({
+      ...manualReceipt,
+      manualValue,
+    });
+    setManualCheckbox(false);
+    setPaymentCheckbox(false);
+
+    setAssignmentCheckbox(false);
+    setPaymentCheckbox(false);
+    setCheckBox(false);
+    setProposalCheckbox(false);
+    setQno([]);
+    getData();
+    getupdateQuery();
+    getTeamLeader();
+    getCompany();
+  };
+  const onSubmit = (value) => {
+    let comp = [];
+    companyName2.map((i) => {
+      comp.push(i.value);
+    });
+    let basic_info = false;
+    let proposal_info = false;
+    let assignment_info = false;
+    let payment_info = false;
+    let manual_payment_info = false;
+    if (
+      value.process_status ||
+      value.brief_fact_case ||
+      value.assessment ||
+      value.purpose_p ||
+      value.p_format ||
+      value.t_requested ||
+      value.spc_que ||
+      value.dateofacceptance
+    ) {
+      basic_info = true;
+    }
+    if (
+      value.dateProposal ||
+      value.proposedAmount ||
+      value.paymentTerms ||
+      value.proposal_status ||
+      value.acceptedAmount ||
+      value.paymentDeclinedReason ||
+      value.date_acceptance ||
+      value.amountOutstanding ||
+      value.amount_overdue ||
+      value.declinedDate ||
+      value.amount_receipt ||
+      value.issue_invoice
+    ) {
+      proposal_info = true;
+    }
+    if (
+      value.assignDate ||
+      value.completionDate ||
+      value.assignStatus ||
+      value.completionQuery ||
+      value.assignTime
+    ) {
+      assignment_info = true;
+    }
+
+    if (
+      value.sgst_tax ||
+      value.invoice_number ||
+      value.companyName ||
+      value.invoice_number ||
+      value.dos ||
+      value.basic_amount ||
+      value.pocket_expensive ||
+      value.cget_tax ||
+      value.igst_tax ||
+      value.total_gst ||
+      value.tds ||
+      value.total_invoice ||
+      value.receiptDate ||
+      value.amountReceived ||
+      value.amount_type ||
+      value.how_paid
+    ) {
+      payment_info = true;
+    }
+    if (
+      value.mpayable_amount ||
+      value.mamount_credited ||
+      value.maccount_number ||
+      value.mpayment_receipt_date ||
+      value.mpayment_type ||
+      value.mpayment_info ||
+      value.other_info
+    ) {
+      manual_payment_info = true;
+    }
+    if (value.search_online) {
+      if (payment_info) {
         let formData = new FormData();
+        formData.append("amount_receipt", Number(value.amount_receipt));
+        formData.append("report_name", value.report_name);
+        formData.append("basic_info", Number(basic_info));
+        formData.append("proposal_info", Number(proposal_info));
+        formData.append("assignment_info", Number(assignment_info));
+        formData.append("payment_info", Number(payment_info));
+        formData.append("manual_payment_info", Number(manual_payment_info));
         formData.append("from", value.p_from);
         formData.append("to", value.p_to);
-      
-        // formData.append("category",);
-        // formData.append("subCategory");
-        formData.append("q_no", value.qno);
-        formData.append("date_query", value.dateQuery);
-        formData.append("cust_id", value.cust_id);
-        formData.append("basic_category", value.basicCategory);
-        formData.append("basic_sub_category", value.basic_sub_category);
-        formData.append("assessment", value.assessment);
-        formData.append("purpose", value.purpose);
-        formData.append("p_format", value.p_format);
-        formData.append("t_requested", value.t_requester);
-        formData.append("spc_que", value.spc_que);
-        formData.append("date_allocation", value.doa);
-        
-        formData.append("date_proposal", value.dateProposal);
-        formData.append("proposed_amount", value.proposedAmount);
-        formData.append("payment_terms", value.paymentTerms);
-        formData.append("proposal_status", value.proposal_status);
-        formData.append("accepted_amount", value.acceptedAmount);
-        formData.append("payment_declined_reasen", value.paymentDeclinedReason);
-        formData.append("date_of_acceptance", value.date_acceptance);
-        formData.append("amount_received", value.amountReceived);
-        formData.append("amount_outstanding", value.amountOutstanding);
-        formData.append("amount_overdue", value.amount_overdue);
-        formData.append("payment_declined", value.declinedDate);
-        formData.append("assignment_number", value.assignNumber);
-        formData.append("assign_date", value.assignDate);
-        formData.append("proposed_completion_date", value.completionDate);
-        formData.append("assignment_status", value.assignStatus);
-        formData.append("date_complation", value.completionQuery);
-        formData.append("assign_time", value.assignTime);
-        formData.append("payment_recived_date", value.receiptDate);
-        formData.append("amount_received", value.amountReceived);
-   axios({
-     method : "POST",
-     url : `${baseUrl}/reports`,
-     data : formData
+        formData.append("customer_name", cname);
+        formData.append("teamleader", tlName.value);
+        formData.append("query_no", qqno);
+        formData.append("category", categoryName.value);
+        formData.append("subCategory", dd);
+        formData.append("dateofacceptance", Number(value.dateofacceptance));
+        formData.append("q_no", Number(value.qno));
+        formData.append("date_query", Number(value.dataQuery));
+        formData.append("cust_id", Number(value.cust_id));
+        formData.append("basic_category", Number(value.basicCategory));
+        formData.append("basic_sub_category", Number(value.basic_sub_category));
+        formData.append("assessment", Number(value.assessment));
+        formData.append("purpose", Number(value.purpose_p));
+        formData.append("p_format", Number(value.p_format));
+        formData.append("t_requested", Number(value.t_requested));
+        formData.append("spc_que", Number(value.spc_que));
 
-   })
+        formData.append("brief_fact_case", Number(value.brief_fact_case));
+        // formData.append("teamleader", Number(value.tl_name));
+        // formData.append("taxprofessional", Number(value.tp_name));
+        formData.append("date_proposal", Number(value.dateProposal));
+        formData.append("proposed_amount", Number(value.proposedAmount));
+        formData.append("payment_terms", Number(value.paymentTerms));
+        formData.append("proposal_status", Number(value.proposal_status));
+        formData.append("accepted_amount", Number(value.acceptedAmount));
+        formData.append(
+          "payment_declined_reasen",
+          Number(value.paymentDeclinedReason)
+        );
+        formData.append("date_of_acceptance", Number(value.date_acceptance));
+        // formData.append("amount_received", value.amountReceived);
+        formData.append("amount_outstanding", Number(value.amountOutstanding));
+        formData.append("amount_overdue", Number(value.amount_overdue));
+        formData.append("payment_declined", Number(value.declinedDate));
+        // formData.append("assignment_number", Number(value.assignNumber));
+        formData.append("assign_date", Number(value.assignDate));
+        formData.append(
+          "proposed_completion_date",
+          Number(value.completionDate)
+        );
+        formData.append("assignment_status", Number(value.assignStatus));
+        formData.append("date_complation", Number(value.completionQuery));
+        formData.append("assign_time", Number(value.assignTime));
+        formData.append("payment_recived_date", Number(value.receiptDate));
+        formData.append("basic_amount", Number(value.basic_amount));
+        formData.append("pocket_expensive", Number(value.pocket_expensive));
+        formData.append("cget_tax", Number(value.cget_tax));
+        formData.append("igst_tax", Number(value.igst_tax));
+        formData.append("sgst_tax", Number(value.sgst_tax));
+        formData.append("invoice_amount", Number(value.total_invoice));
+        formData.append("total_gst", Number(value.total_gst));
+        formData.append("process_status", Number(value.process_status));
+        formData.append("tds", Number(value.tds));
+
+        formData.append("amount_received", Number(value.amountReceived));
+        formData.append("uid", JSON.parse(userid));
+        formData.append("t", Math.floor(Math.random() * 110000));
+        formData.append("amount_type", Number(value.amount_type));
+        formData.append("dos", Number(value.dos));
+        formData.append("invoice_number", Number(value.invoice_number));
+        formData.append("search_online", Number(value.search_online));
+        formData.append("invoicing_company", Number(value.companyName));
+        formData.append("company", comp);
+        formData.append("mpayable_amount", Number(value.mpayable_amount));
+        formData.append("mamount_creditedt", Number(value.mamount_credited));
+        formData.append("maccount_number", Number(value.maccount_number));
+        formData.append(
+          "mpayment_receipt_date",
+          Number(value.mpayment_receipt_date)
+        );
+        formData.append("mpayment_type", Number(value.mpayment_type));
+        formData.append("search_manual", Number(value.search_manual));
+        formData.append("mpayment_info", Number(value.mpayment_info));
+        formData.append("other_info", Number(value.other_info));
+        formData.append("how_paid", Number(value.how_paid));
+        formData.append("issue_invoice", Number(value.issue_invoice));
+        axios({
+          method: "POST",
+          url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
+            Math.floor(Math.random() * 110000)
+          )}`,
+          headers: {
+            uit: token,
+          },
+          data: formData,
+        })
+          .then(function (response) {
+            if (response.data.code === 1) {
+              const myConfig2 = {
+                headers: {
+                  uit: token,
+                },
+                responseType: "blob",
+              };
+              axios
+                .get(
+                  `${baseUrl}/report/viewReport?id=${response.data.id}`,
+                  myConfig2
+                )
+                .then((res2) => {
+                  window.URL = window.URL || window.webkitURL;
+                  var url = window.URL.createObjectURL(res2.data);
+                  var a = document.createElement("a");
+                  document.body.appendChild(a);
+                  a.style = "display: none";
+                  a.href = url;
+
+                  a.download = "report.xlsx";
+                  a.target = "_blank";
+                  a.click();
+                });
+              Swal.fire({
+                title: "success",
+                html: "Report generated successfully",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "error",
+                html: "Something went wrong , please try again",
+                icon: "error",
+              });
+            }
+          })
+          .catch((error) => {});
+      } else {
+        Swal.fire({
+          title: "error",
+          html: "Please select atleast one field in payment section",
+          icon: "error",
+        });
+      }
+    } else if (
+      basic_info === false &&
+      proposal_info === false &&
+      assignment_info === false &&
+      payment_info === false &&
+      manual_payment_info === false
+    ) {
+      Swal.fire({
+        title: "error",
+        html: "Please select atleast one field",
+        icon: "error",
+      });
+    } else {
+      let formData = new FormData();
+      formData.append("amount_receipt", Number(value.amount_receipt));
+      formData.append("report_name", value.report_name);
+      formData.append("basic_info", Number(basic_info));
+      formData.append("proposal_info", Number(proposal_info));
+      formData.append("assignment_info", Number(assignment_info));
+      formData.append("payment_info", Number(payment_info));
+      formData.append("manual_payment_info", Number(manual_payment_info));
+      formData.append("from", value.p_from);
+      formData.append("to", value.p_to);
+      formData.append("customer_name", cname);
+      formData.append("teamleader", tlName.value);
+      formData.append("query_no", qqno);
+      formData.append("category", categoryName.value);
+      formData.append("subCategory", dd);
+      formData.append("dateofacceptance", Number(value.dateofacceptance));
+      formData.append("q_no", Number(value.qno));
+      formData.append("date_query", Number(value.dataQuery));
+      formData.append("cust_id", Number(value.cust_id));
+      formData.append("basic_category", Number(value.basicCategory));
+      formData.append("basic_sub_category", Number(value.basic_sub_category));
+      formData.append("assessment", Number(value.assessment));
+      formData.append("purpose", Number(value.purpose_p));
+      formData.append("p_format", Number(value.p_format));
+      formData.append("t_requested", Number(value.t_requested));
+      formData.append("spc_que", Number(value.spc_que));
+
+      formData.append("brief_fact_case", Number(value.brief_fact_case));
+      // formData.append("teamleader", Number(value.tl_name));
+      // formData.append("taxprofessional", Number(value.tp_name));
+      formData.append("date_proposal", Number(value.dateProposal));
+      formData.append("proposed_amount", Number(value.proposedAmount));
+      formData.append("payment_terms", Number(value.paymentTerms));
+      formData.append("proposal_status", Number(value.proposal_status));
+      formData.append("accepted_amount", Number(value.acceptedAmount));
+      formData.append(
+        "payment_declined_reasen",
+        Number(value.paymentDeclinedReason)
+      );
+      formData.append("date_of_acceptance", Number(value.date_acceptance));
+      // formData.append("amount_received", value.amountReceived);
+      formData.append("amount_outstanding", Number(value.amountOutstanding));
+      formData.append("amount_overdue", Number(value.amount_overdue));
+      formData.append("payment_declined", Number(value.declinedDate));
+      // formData.append("assignment_number", Number(value.assignNumber));
+      formData.append("assign_date", Number(value.assignDate));
+      formData.append("proposed_completion_date", Number(value.completionDate));
+      formData.append("assignment_status", Number(value.assignStatus));
+      formData.append("date_complation", Number(value.completionQuery));
+      formData.append("assign_time", Number(value.assignTime));
+      formData.append("payment_recived_date", Number(value.receiptDate));
+      formData.append("basic_amount", Number(value.basic_amount));
+      formData.append("pocket_expensive", Number(value.pocket_expensive));
+      formData.append("cget_tax", Number(value.cget_tax));
+      formData.append("igst_tax", Number(value.igst_tax));
+      formData.append("sgst_tax", Number(value.sgst_tax));
+      formData.append("invoice_amount", Number(value.total_invoice));
+      formData.append("total_gst", Number(value.total_gst));
+      formData.append("process_status", Number(value.process_status));
+      formData.append("tds", Number(value.tds));
+
+      formData.append("amount_received", Number(value.amountReceived));
+      formData.append("uid", JSON.parse(userid));
+      formData.append("t", Math.floor(Math.random() * 110000));
+      formData.append("amount_type", Number(value.amount_type));
+      formData.append("dos", Number(value.dos));
+      formData.append("invoice_number", Number(value.invoice_number));
+      formData.append("search_online", Number(value.search_online));
+      formData.append("invoicing_company", Number(value.companyName));
+      formData.append("company", comp);
+      formData.append("mpayable_amount", Number(value.mpayable_amount));
+      formData.append("mamount_creditedt", Number(value.mamount_credited));
+      formData.append("maccount_number", Number(value.maccount_number));
+      formData.append(
+        "mpayment_receipt_date",
+        Number(value.mpayment_receipt_date)
+      );
+      formData.append("mpayment_type", Number(value.mpayment_type));
+      formData.append("search_manual", Number(value.search_manual));
+      formData.append("mpayment_info", Number(value.mpayment_info));
+      formData.append("other_info", Number(value.other_info));
+      formData.append("how_paid", Number(value.how_paid));
+      formData.append("issue_invoice", Number(value.issue_invoice));
+      axios({
+        method: "POST",
+        url: `${baseUrl}/report/generateReport?t=${JSON.stringify(
+          Math.floor(Math.random() * 110000)
+        )}`,
+        headers: {
+          uit: token,
+        },
+        data: formData,
+      })
+        .then(function (response) {
+          if (response.data.code === 1) {
+            const myConfig2 = {
+              headers: {
+                uit: token,
+              },
+              responseType: "blob",
+            };
+            axios
+              .get(
+                `${baseUrl}/report/viewReport?id=${response.data.id}`,
+                myConfig2
+              )
+              .then((res2) => {
+                window.URL = window.URL || window.webkitURL;
+                var url = window.URL.createObjectURL(res2.data);
+                var a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style = "display: none";
+                a.href = url;
+
+                a.download = "report.xlsx";
+                a.target = "_blank";
+                a.click();
+              });
+            Swal.fire({
+              title: "success",
+              html: "Report generated successfully",
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: "error",
+              html: "Something went wrong , please try again",
+              icon: "error",
+            });
+          }
+        })
+        .catch((error) => {});
     }
-    return (
-        <>
-          <Layout TPDashboard="TPDashboard" TPuserId={userid}>
-          <div className="adminForm">
-          <Typography variant="h4">Taxprofessional Report</Typography>
-  <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
-    <div className="row">
-      <div className="col-md-3">
+  };
 
-      <div className="mb-3">
-          <label className="form-label">From</label>
-          <input
-            type="date"
-            name="p_from"
-            ref={register}
-            placeholder="Enter Mobile Number"
-            className={classNames("form-control", {
-              "is-invalid": errors.p_mobile,
-            })}
-          />
-        </div>
-      </div>
+  // Sub Category Function
+  const subCategory22 = (e) => {
+    let kk = [];
+    subCategeryData(e);
 
-      <div className="col-md-3">
-      <div className="mb-3">
-          <label className="form-label">To</label>
-          <input
-            type="date"
-            name="p_to"
-            className={classNames("form-control", {
-              "is-invalid": errors.p_type,
-            })}
-            defaultValue={item}
-            max={item}
-            placeholder="Enter type"
-            ref={register({ required: true })}
-          />
-        </div>
-      </div>
-      <div className="col-md-3">
-           <label className="form-label">Category</label>
-           <Select isMulti = {true} />
-        </div>
-        <div className="col-md-3">
-            <label className="form-label">Sub Category</label>
-            <Select isMulti={true} />
+    setError2("");
+
+    e.map((i) => {
+      kk.push(i.value);
+    });
+    setDd(kk);
+    filterQuery({
+      name: "sub_cat",
+      value: kk,
+    });
+  };
+
+  const queryNumber = (e) => {
+    setSelectedQuery(e);
+    let kk4 = [];
+    e.map((i) => {
+      kk4.push(i.value);
+    });
+    setQqno(kk4);
+  };
+  const selectAllManualPayment = (e) => {
+    let kd = manualReceipt;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setManualReceipt({
+      ...manualReceipt,
+      kd,
+    });
+    setManualCheckbox(e.target.checked);
+  };
+  const selectAllbasic = (e) => {
+    let kd = basicValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setBasicValue({
+      ...basicValue,
+      kd,
+    });
+    setCheckBox(e.target.checked);
+  };
+  const selectAllproposal = (e) => {
+    let kd = proposalValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setProposalValue({
+      ...proposalValue,
+      kd,
+    });
+    setProposalCheckbox(e.target.checked);
+  };
+  const selectAllAssignment = (e) => {
+    let kd = assignmeneValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setAssignmentValue({
+      ...assignmeneValue,
+      kd,
+    });
+    setAssignmentCheckbox(e.target.checked);
+  };
+  const selectAllPayment = (e) => {
+    let kd = paymentValue;
+    Object.keys(kd).forEach((key) => {
+      kd[key] = e.target.checked;
+    });
+
+    setPaymentValue({
+      ...paymentValue,
+      kd,
+    });
+    setPaymentCheckbox(e.target.checked);
+  };
+  const handleAssignment = (e) => {
+    const { name, checked } = e.target;
+    setAssignmentValue({
+      ...assignmeneValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setAssignmentCheckbox(false);
+    }
+  };
+  const handleProposal = (e) => {
+    const { name, checked } = e.target;
+    setProposalValue({
+      ...proposalValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setProposalCheckbox(false);
+    }
+  };
+
+  const handleBasic = (e) => {
+    const { name, checked } = e.target;
+    setBasicValue({
+      ...basicValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setCheckBox(false);
+    }
+  };
+  const handleManualPayment = (e) => {
+    const { name, checked } = e.target;
+    setManualReceipt({
+      ...manualReceipt,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setManualCheckbox(false);
+    }
+  };
+  const handlePayment = (e) => {
+    const { name, checked } = e.target;
+    setPaymentValue({
+      ...paymentValue,
+      [name]: checked,
+    });
+    if (e.target.checked === false) {
+      setPaymentCheckbox(false);
+    }
+  };
+
+  return (
+    <>
+      <Layout TPDashboard="TPDashboard" TPuserId={userid}>
+        <div className="adminForm">
+          <Row>
+            <Col md="4">
+              <button class="autoWidthBtn" onClick={() => history.goBack()}>
+                Go Back
+              </button>
+            </Col>
+            <Col md="4">
+              <CustomHeading>Report</CustomHeading>
+            </Col>
+            <Col md="4">
+              <label className="form-label">Report Name</label>
+              <input
+                type="text"
+                name="report_name"
+                className={classNames("form-control", {
+                  "is-invalid": errors.report_name,
+                })}
+                defaultValue="report"
+                placeholder="Enter report name"
+                ref={register({ required: true })}
+              />
+            </Col>
+          </Row>
+          <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
+            <div className="row">
+              <div className="col-md-3">
+                <div className="mb-3">
+                  <label className="form-label">From</label>
+                  <input
+                    type="date"
+                    name="p_from"
+                    value={fromDate}
+                    onChange={(e) => {
+                      setFromDate(e.target.value);
+                      filterQuery({
+                        name: "fromdate",
+                        value: e.target.value,
+                      });
+                    }}
+                    ref={register}
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_mobile,
+                    })}
+                  />
+                </div>
+              </div>
+
+              <div className="col-md-3">
+                <div className="mb-3">
+                  <label className="form-label">To</label>
+                  <input
+                    type="date"
+                    name="p_to"
+                    value={toDate}
+                    onChange={(e) => {
+                      setToDate(e.target.value);
+                      filterQuery({
+                        name: "todate",
+                        value: e.target.value,
+                      });
+                    }}
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_type,
+                    })}
+                    defaultValue={item}
+                    max={item}
+                    ref={register({ required: true })}
+                  />
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="mb-3">
+                  <label className="form-label">Team Leader</label>
+                  <Select
+                    isDisabled={true}
+                    value={tlName}
+                    styles={{
+                      singleValue: (styles, { data }) => ({
+                        ...styles,
+                        color: "#000",
+                      }),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="col-md-3">
+                <div className="mb-3">
+                  <label className="form-label">Tax Professional</label>
+                  <Select value={tpName} isDisabled={true} />
+                </div>
+              </div>
             </div>
-   </div> 
-  
-   <div className="row">
-       <div className="col-md-12">
-       <fieldset className="my-fieldset">
-           <legend className="login-legend">Basic Query Details</legend>
-            <div className="basicFeild">
-            <span>
-               <input type="checkbox" name="sno" id="sno" checked disabled ref={register}></input>
-               <label htmlFor="sno">S.No</label>
-               </span>
-               <span>
-               <input type="checkbox" name="qno" ref={register} id="qno" checked disabled></input>
-               <label htmlFor="qno">Query No</label>
-               </span>
-               <span>
-               <input type="checkbox" ref={register} name="dataQuery" id="dataQuery" checked disabled></input>
-               <label htmlFor="dataQuery">Data Query</label>
-               </span>
-               <span>
-               <input type="checkbox" ref={register} name="cust_id" id="cust_id" checked disabled></input>
-               <label htmlFor="cust_id">Customer Id</label>
-            </span>
-            <span>
-               <input type="checkbox" ref={register} name="basicCategory" id="basicCategory" checked disabled></input>
-               <label htmlFor="basicCategory">Category</label>
-             </span>
-             <span>
-               <input type="checkbox" ref={register} name="basic_sub_category" id="basic_sub_category" checked disabled></input>
-               <label htmlFor="basic_sub_category">Sub Category</label>
-               </span>
-               <span> 
-<input type="checkbox" ref={register} name="tl_name" id="tl_name" checked disabled></input>
-<label htmlFor="tl_name">Name of Team Leader</label>
-
-</span>
-<span>
-<input type="checkbox"  ref={register}name="tp_name" id="tp_name" checked disabled></input>
-<label htmlFor="tp_name">Name of Tax Professional</label>
-</span> 
-               <span>
-<input type="checkbox" name="assessment" ref={register} id="assessment"></input>
-<label htmlFor="assess_year">Assessment Year(s)</label>
-</span>
-           
-<span>
-<input type="checkbox" ref={register} name="purpose" id="purpose"></input>
-<label htmlFor="purpose">Purpose for which Opinion is sought</label>
-</span>
-<span>
-    <input type="checkbox" ref={register} name="format_p" id="format_p"></input>
-<label htmlFor="format_p">Format in which Opinion is required</label>
-</span>
-<span>
-    <input type="checkbox" ref={register} name="t_requested" id="t_requested"></input>
-<label htmlFor="t_requested">Timeline Requested</label>
-</span>
-<span>  <input type="checkbox" ref={register} name="spc_que" id="spc_que"></input>
-<label htmlFor="spc_que">Specific questions</label>
-</span>
-<span>  <input type="checkbox" ref={register} name="doa" id="doa"></input>
-<label htmlFor="doa">Date of Allocation of Query</label>
-</span>
-</div>
-</fieldset>
-</div>
-</div>
-
-
-   {/* Proposal */}
-   <div className="row">
-       <div className="col-md-12">
-       <fieldset className="my-fieldset">
-           <legend className="login-legend">Proposal</legend>
-            <div className="basicFeild">
-<span>
-<input type="checkbox" ref={register} name="dateProposal" id="dateProposal"></input>
-<label htmlFor="dateProposal">Date of Proposal</label>
-</span>
-<span>
-<input type="checkbox" ref={register} name="proposedAmount" id="proposedAmount"></input>
-<label htmlFor="proposedAmount">Proposed Amount</label>
-</span>
-<span>
-<input type="checkbox"  ref={register} name="paymentTerms" id="paymentTerms"></input>
-<label htmlFor="paymentTerms">Payment Terms</label>
-</span>
-<span>
-<input type="checkbox" ref={register} name="proposal_status" id="proposal_status"></input>
-<label htmlFor="proposal_status">Proposal Status</label>
-</span>
-<span>  <input type="checkbox" ref={register} name="acceptedAmount" id="acceptedAmount"></input>
-<label htmlFor="acceptedAmount">Accepted Amount </label>
-</span>
-<span>  <input type="checkbox" ref={register} name="paymentDeclinedReason" id="paymentDeclinedReason"></input>
-<label htmlFor="paymentDeclinedReason">Payment decline reason </label>
-</span>
-<span>  <input type="checkbox" ref={register} name="date_acceptance" id="date_acceptance"></input>
-<label htmlFor="date_acceptance">Date of Acceptance / Decline</label>
-</span>
-<span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Total Amount Received</label>
-</span>
-<span>
-    <input type="checkbox" ref={register} name="amountOutstanding" id="amountOutstanding"></input>
-<label htmlFor="amountOutstanding">Total Amount Outstanding</label>
-</span>
-<span>
-    <input type="checkbox" ref={register} name="amount_overdue" id="amount_overdue"></input>
-<label htmlFor="amount_overdue">Total Amount Overdue</label>
-</span>
-<span>  <input type="checkbox" ref={register} name="declinedDate" id="declinedDate"></input>
-<label htmlFor="declinedDate">Payment decline date</label>
-</span>             
-            </div>      
-           </fieldset>
-           </div>
-   </div>
-
-   {/* Assignment */}
-   <div className="row">
-       <div className="col-md-12">
-       <fieldset className="my-fieldset">
-           <legend className="login-legend">Assignment</legend>
-            <div className="basicFeild">
-            <span>
-<input type="checkbox" ref={register} name="assignNumber" id="assignNumber"></input>
-<label htmlFor="assignNumber">Assignment Number</label>
-</span>
-<span>
-<input type="checkbox" ref={register} name="assignDate" id="assignDate"></input>
-<label htmlFor="assignDate">Assignment Date</label>
-</span>
-<span>
-    <input type="checkbox" ref={register} name="completionDate" id="completionDate"></input>
-<label htmlFor="completionDate">Proposed Date of Completion/ Expected Date of Delivery</label>
-</span>
-<span>
-    <input type="checkbox" ref={register} name="assignStatus" id="assignStatus"></input>
-<label htmlFor="assignStatus">Assignment Status</label>
-</span>
-
-<span>  <input type="checkbox" ref={register} name="completionQuery" id="completionQuery"></input>
-<label htmlFor="completionQuery">Date of Completion of Query </label>
-</span>
-<span>  <input type="checkbox" ref={register} name="assignTime" id="assignTime"></input>
-<label htmlFor="assignTime">Time taken to complete the assignment</label>
-</span>
-            </div>    
-           </fieldset>
-           </div>
-   </div>
-
-
-   {/* Payment Receipt */}
-
-   <div className="row">
-       <div className="col-md-12">
-       <fieldset className="my-fieldset">
-           <legend className="login-legend">Payment Receipt</legend>  
-            <div className="basicFeild">
-            <span>
-<input type="checkbox" ref={register} name="receiptDate" id="receiptDate"></input>
-<label htmlFor="receiptDate">Date of Receipt</label>
-</span>   
-<span>
-<input type="checkbox" ref={register} name="amountReceived" id="amountReceived"></input>
-<label htmlFor="amountReceived">Amount Received</label>
-</span>
+            <div className="row">
+              <div className="col-md-3">
+                <label className="form-label">Category</label>
+                <Select value={categoryName} isDisabled={true}></Select>
+              </div>
+              <div className="col-md-3">
+                <label className="form-label">Sub Category</label>
+                <Select
+                  isMulti
+                  options={options2}
+                  className={error2 ? "customError" : ""}
+                  onChange={subCategory22}
+                  styles={{
+                    option: (styles, { data }) => {
+                      return {
+                        ...styles,
+                        color: data.value > 8 ? "green" : "blue",
+                      };
+                    },
+                    multiValueLabel: (styles, { data }) => ({
+                      ...styles,
+                      color: data.value > 8 ? "green" : "blue",
+                    }),
+                  }}
+                  value={subData}
+                ></Select>
+              </div>
+              <div className="col-md-3">
+                <div className="mb-3">
+                  <label className="form-label">Client Id</label>
+                  <Select
+                    isMulti
+                    options={custData}
+                    value={clientName}
+                    onChange={(e) => custName(e)}
+                  ></Select>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="mb-3">
+                  <label className="form-label">Query Number</label>
+                  <Select
+                    isMulti={true}
+                    options={qno}
+                    value={selectQuery}
+                    onChange={(e) => queryNumber(e)}
+                  />
+                </div>
+              </div>
             </div>
-           </fieldset>
-           </div>
-   </div>
-   <button type="submit" class="btn btn-success btn-lg my-3">Generate Report</button>
-   <Mandatory />
-  </form>
-  </div>
-            </Layout>
-              </>
-   
-       );
-   }
+            <div className="row">
+              <div className="col-md-12">
+                <fieldset className="my-fieldset">
+                  <legend className="login-legend">Basic query details</legend>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={(i) => selectAllbasic(i)}
+                        value={checkBox}
+                        name="select_all"
+                        className="selectall"
+                        id="select_all"
+                        ref={register}
+                      ></input>
+                      <label htmlFor="select_all">Select all</label>
+                    </span>
+                  </div>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        name="sno"
+                        id="sno"
+                        ref={register}
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="sno">S.no</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        name="qno"
+                        ref={register}
+                        id="qno"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="qno">Query no</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="dataQuery"
+                        id="dataQuery"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="dataQuery">Query date </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="cust_id"
+                        id="cust_id"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="cust_id">Client id</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="basicCategory"
+                        id="basicCategory"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="basicCategory">Category</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="basic_sub_category"
+                        id="basic_sub_category"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="basic_sub_category">Sub category</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="tl_name"
+                        id="tl_name"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="tl_name">Name of team leader</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="tp_name"
+                        id="tp_name"
+                        checked
+                        disabled
+                      ></input>
+                      <label htmlFor="tp_name">Name of tax professional</label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="dateofacceptance"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.dateofacceptance}
+                        id="dateofacceptance"
+                      ></input>
+                      <label htmlFor="dateofacceptance">
+                        Date of acceptance
+                      </label>
+                    </span>
+                    {/* <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="doa"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.doa}
+                        id="doa"
+                      ></input>
+                      <label htmlFor="doa">Date of allocation</label>
+                    </span> */}
+                    <span>
+                      <input
+                        type="checkbox"
+                        name="assessment"
+                        ref={register}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.assessment}
+                        id="assessment"
+                      ></input>
+                      <label htmlFor="assessment">Assessment year(s)</label>
+                    </span>
+
+                    <span>
+                      <input
+                        type="checkbox"
+                        name="brief_fact_case"
+                        ref={register}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.brief_fact_case}
+                        id="brief_fact_case"
+                      ></input>
+                      <label htmlFor="brief_fact_case">Name of the case</label>
+                    </span>
+
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="purpose_p"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.purpose_p}
+                        id="purpose_p"
+                      ></input>
+                      <label htmlFor="purpose_p">
+                        Purpose for Which opinion is sought
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="p_format"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.p_format}
+                        id="p_format"
+                      ></input>
+                      <label htmlFor="p_format">
+                        Format in which opinion is required
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="t_requested"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.t_requested}
+                        id="t_requested"
+                      ></input>
+                      <label htmlFor="t_requested">Timeline requested</label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="spc_que"
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.spc_que}
+                        id="spc_que"
+                      ></input>
+                      <label htmlFor="spc_que">Specific questions</label>
+                    </span>
+
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        onClick={(e) => handleBasic(e)}
+                        checked={basicValue.process_status}
+                        name="process_status"
+                        id="process_status"
+                      ></input>
+                      <label htmlFor="process_status">Process status</label>
+                    </span>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            {/* Proposal */}
+            <div className="row">
+              <div className="col-md-12">
+                <fieldset className="my-fieldset">
+                  <legend className="login-legend">Proposal</legend>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={(i) => selectAllproposal(i)}
+                        checked={proposalCheckbox}
+                        name="selectallProposal"
+                        className="selectall"
+                        id="selectallProposal"
+                        ref={register}
+                      ></input>
+                      <label htmlFor="selectallProposal">Select all</label>
+                    </span>
+                  </div>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="dateProposal"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.dateProposal}
+                        id="dateProposal"
+                      ></input>
+                      <label htmlFor="dateProposal">Date of proposal</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="proposedAmount"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.proposedAmount}
+                        id="proposedAmount"
+                      ></input>
+                      <label htmlFor="proposedAmount">Proposed amount</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="paymentTerms"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.paymentTerms}
+                        id="paymentTerms"
+                      ></input>
+                      <label htmlFor="paymentTerms">Payment plan</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="proposal_status"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.proposal_status}
+                        id="proposal_status"
+                      ></input>
+                      <label htmlFor="proposal_status">Proposal status</label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.acceptedAmount}
+                        name="acceptedAmount"
+                        id="acceptedAmount"
+                      ></input>
+                      <label htmlFor="acceptedAmount">Accepted amount </label>
+                    </span>
+
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="date_acceptance"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.date_acceptance}
+                        id="date_acceptance"
+                      ></input>
+                      <label htmlFor="date_acceptance">
+                        Date of acceptance / Decline
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.amount_receipt}
+                        name="amount_receipt"
+                        id="amount_receipt"
+                      ></input>
+                      <label htmlFor="amount_receipt">
+                        Total amount received
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="amountOutstanding"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.amountOutstanding}
+                        id="amountOutstanding"
+                      ></input>
+                      <label htmlFor="amountOutstanding">
+                        Total amount outstanding
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="amount_overdue"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.amount_overdue}
+                        id="amount_overdue"
+                      ></input>
+                      <label htmlFor="amount_overdue">
+                        Total amount overdue
+                      </label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="declinedDate"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.declinedDate}
+                        id="declinedDate"
+                      ></input>
+                      <label htmlFor="declinedDate">Payment decline date</label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="paymentDeclinedReason"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.paymentDeclinedReason}
+                        id="paymentDeclinedReason"
+                      ></input>
+                      <label htmlFor="paymentDeclinedReason">
+                        Payment decline reason{" "}
+                      </label>
+                    </span>
+
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="issue_invoice"
+                        onClick={(e) => handleProposal(e)}
+                        checked={proposalValue.issue_invoice}
+                        id="issue_invoice"
+                      ></input>
+                      <label htmlFor="issue_invoice">Issue to invoice </label>
+                    </span>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            {/* Assignment */}
+            <div className="row">
+              <div className="col-md-12">
+                <fieldset className="my-fieldset">
+                  <legend className="login-legend">Assignment</legend>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={(i) => selectAllAssignment(i)}
+                        checked={assignmentCheckbox}
+                        name="selectAllAssignment"
+                        className="selectall"
+                        id="selectAllAssignment"
+                        ref={register}
+                      ></input>
+                      <label htmlFor="selectAllAssignment">Select all</label>
+                    </span>
+                  </div>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={assignmeneValue.assignDate}
+                        onClick={(e) => handleAssignment(e)}
+                        name="assignDate"
+                        id="assignDate"
+                      ></input>
+                      <label htmlFor="assignDate">Assignment date</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={assignmeneValue.completionDate}
+                        onClick={(e) => handleAssignment(e)}
+                        name="completionDate"
+                        id="completionDate"
+                      ></input>
+                      <label htmlFor="completionDate">
+                        {" "}
+                        Expected date of delivery
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={assignmeneValue.assignStatus}
+                        onClick={(e) => handleAssignment(e)}
+                        name="assignStatus"
+                        id="assignStatus"
+                      ></input>
+                      <label htmlFor="assignStatus">Assignment status</label>
+                    </span>
+
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={assignmeneValue.completionQuery}
+                        onClick={(e) => handleAssignment(e)}
+                        name="completionQuery"
+                        id="completionQuery"
+                      ></input>
+                      <label htmlFor="completionQuery">
+                        Date of completion of query{" "}
+                      </label>
+                    </span>
+                    <span>
+                      {" "}
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={assignmeneValue.assignTime}
+                        onClick={(e) => handleAssignment(e)}
+                        name="assignTime"
+                        id="assignTime"
+                      ></input>
+                      <label htmlFor="assignTime">
+                        Time taken to complete the assignment
+                      </label>
+                    </span>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            {/* Payment Receipt */}
+            <div className="row">
+              <div className="col-md-12">
+                <fieldset className="my-fieldset">
+                  <legend className="login-legend">Payment receipt</legend>
+
+                  <div className="row">
+                    <div className="col-md-2">
+                      <span>
+                        <input
+                          style={{ margin: "0px 10px" }}
+                          type="checkbox"
+                          onClick={(i) => selectAllPayment(i)}
+                          checked={paymnetCheckbox}
+                          name="selectAllPayment"
+                          className="selectall"
+                          id="selectAllPayment"
+                          ref={register}
+                        ></input>
+                        <label htmlFor="selectAllPayment">Select all</label>
+                      </span>
+                    </div>
+                    <div className="col-md-3">
+                      <span>
+                        <Select
+                          isMulti={true}
+                          options={companyName}
+                          value={companyName2}
+                          placeholder="Select Company"
+                          onChange={(e) => setCompanyName2(e)}
+                        />
+                      </span>
+                    </div>
+                    <div className="col-md-2">
+                      <span>
+                        <input
+                          style={{ margin: "0px 10px" }}
+                          type="checkbox"
+                          ref={register}
+                          name="search_online"
+                          id="search_online"
+                        ></input>
+                        <label htmlFor="search_online">Online Payment</label>
+                      </span>
+                    </div>
+                    <div className="col-md-2">
+                      <span>
+                        <input
+                          style={{ margin: "0px 10px" }}
+                          type="checkbox"
+                          ref={register}
+                          name="search_manual"
+                          checked={manualSearch}
+                          onClick={(e) => {
+                            setManualSearch(!manualSearch);
+                            if (e.target.checked === false) {
+                              selectAllManualPayment(e);
+                            }
+                          }}
+                          id="search_manual"
+                        ></input>
+                        <label htmlFor="search_manual">Manual credit</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="basicFeild">
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="companyName"
+                        onClick={(e) => handlePayment(e)}
+                        id="companyName"
+                        checked={paymentValue.companyName}
+                      ></input>
+                      <label htmlFor="companyName">Invoicing company</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.invoice_number}
+                        onClick={(e) => handlePayment(e)}
+                        name="invoice_number"
+                        id="invoice_number"
+                      ></input>
+                      <label htmlFor="invoice_number">Invoice number</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.dos}
+                        onClick={(e) => handlePayment(e)}
+                        name="dos"
+                        id="dos"
+                      ></input>
+                      <label htmlFor="dos">Description of services</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.basic_amount}
+                        onClick={(e) => handlePayment(e)}
+                        name="basic_amount"
+                        id="basic_amount"
+                      ></input>
+                      <label htmlFor="basic_amount">Basic amount</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.pocket_expensive}
+                        onClick={(e) => handlePayment(e)}
+                        name="pocket_expensive"
+                        id="pocket_expensive"
+                      ></input>
+                      <label htmlFor="pocket_expensive">
+                        Out of pocket expenses
+                      </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.cget_tax}
+                        onClick={(e) => handlePayment(e)}
+                        name="cget_tax"
+                        id="cget_tax"
+                      ></input>
+                      <label htmlFor="cget_tax">CGST tax</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.igst_tax}
+                        onClick={(e) => handlePayment(e)}
+                        name="igst_tax"
+                        id="igst_tax"
+                      ></input>
+                      <label htmlFor="igst_tax">IGST tax </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.sgst_tax}
+                        onClick={(e) => handlePayment(e)}
+                        name="sgst_tax"
+                        id="sgst_tax"
+                      ></input>
+                      <label htmlFor="sgst_tax">SGST tax</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.total_gst}
+                        onClick={(e) => handlePayment(e)}
+                        name="total_gst"
+                        id="total_gst"
+                      ></input>
+                      <label htmlFor="total_gst">Total GST </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.total_invoice}
+                        onClick={(e) => handlePayment(e)}
+                        name="total_invoice"
+                        id="total_invoice"
+                      ></input>
+                      <label htmlFor="total_invoice">Invoice amount </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.tds}
+                        onClick={(e) => handlePayment(e)}
+                        name="tds"
+                        id="tds"
+                      ></input>
+                      <label htmlFor="tds">TDS deducted</label>
+                    </span>
+
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.receiptDate}
+                        onClick={(e) => handlePayment(e)}
+                        name="receiptDate"
+                        id="receiptDate"
+                      ></input>
+                      <label htmlFor="receiptDate">Date of receipt</label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.amountReceived}
+                        onClick={(e) => handlePayment(e)}
+                        name="amountReceived"
+                        id="amountReceived"
+                      ></input>
+                      <label htmlFor="amountReceived">Amount received</label>
+                    </span>
+
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        checked={paymentValue.amount_type}
+                        onClick={(e) => handlePayment(e)}
+                        name="amount_type"
+                        id="amount_type"
+                      ></input>
+                      <label htmlFor="amount_type">Payment mode </label>
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        ref={register}
+                        name="how_paid"
+                        id="how_paid"
+                        checked={paymentValue.how_paid}
+                        onClick={(e) => handlePayment(e)}
+                      ></input>
+                      <label htmlFor="how_paid">How paid</label>
+                    </span>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <fieldset className="my-fieldset">
+                        <legend className="login-legend">Manual credit</legend>
+                        <div className="basicFeild">
+                          <span>
+                            <input
+                              type="checkbox"
+                              onClick={(i) => selectAllManualPayment(i)}
+                              checked={manualCheckbox}
+                              disabled={!manualSearch}
+                              name="selectAllManualPayment"
+                              className="selectall"
+                              id="selectAllManualPayment"
+                              ref={register}
+                            ></input>
+                            <label htmlFor="selectAllManualPayment">
+                              Select all
+                            </label>
+                          </span>
+                        </div>
+                        <div className="basicFeild">
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mpayable_amount"
+                              id="mpayable_amount"
+                              disabled={!manualSearch}
+                              checked={manualReceipt.mpayable_amount}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayable_amount">
+                              Payable amount
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="mamount_credited"
+                              disabled={!manualSearch}
+                              id="mamount_credited"
+                              checked={manualReceipt.mamount_credited}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mamount_credited">
+                              Amount credited
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              disabled={!manualSearch}
+                              name="maccount_number"
+                              id="maccount_number"
+                              checked={manualReceipt.maccount_number}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="maccount_number">
+                              Paid in bank account number
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              disabled={!manualSearch}
+                              name="mpayment_receipt_date"
+                              id="mpayment_receipt_date"
+                              checked={manualReceipt.mpayment_receipt_date}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_receipt_date">
+                              Payment receipt date
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              disabled={!manualSearch}
+                              ref={register}
+                              name="mpayment_type"
+                              id="mpayment_type"
+                              checked={manualReceipt.mpayment_type}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_type">Payment type</label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              disabled={!manualSearch}
+                              ref={register}
+                              name="mpayment_info"
+                              id="mpayment_info"
+                              checked={manualReceipt.mpayment_info}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="mpayment_info">
+                              Payment information
+                            </label>
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              ref={register}
+                              name="other_info"
+                              disabled={!manualSearch}
+                              id="other_info"
+                              checked={manualReceipt.other_info}
+                              onClick={(e) => handleManualPayment(e)}
+                            ></input>
+                            <label htmlFor="other_info">
+                              Other information
+                            </label>
+                          </span>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <button type="submit" class="autoWidthBtn my-3">
+              Generate Report
+            </button>
+            <button
+              type="button"
+              class="customBtn m-3"
+              onClick={() => resetData()}
+            >
+              Reset
+            </button>
+          </form>
+        </div>
+      </Layout>
+    </>
+  );
+};
 export default Report;

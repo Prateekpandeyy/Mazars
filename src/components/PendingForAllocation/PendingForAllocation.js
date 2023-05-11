@@ -1,98 +1,313 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import "./Allocation.css";
 import { baseUrl } from "../../config/config";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import "antd/dist/antd.css";
-import { Select } from "antd";
-import AdminFilter from "../../components/Search-Filter/AdminFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import History from "./History";
 import Swal from "sweetalert2";
-import Records from "../../components/Records/Records";
-
-
-function PendingAllocation({ CountPendingForAllocation }) {
-
+import AdminFilter from "../../components/Search-Filter/AdminFilter";
+import DataTablepopulated from "../DataTablepopulated/DataTabel";
+import {
+  DeleteIcon,
+  DiscussProposal,
+} from "../../components/Common/MessageIcon";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
+function PendingAllocation(props) {
+  const classes = useStyles();
+  const myRef = useRef([]);
   const [pendingData, setPendingData] = useState([]);
-  const [selectedData, setSelectedData] = useState([]);
   const [history, setHistory] = useState([]);
   const [records, setRecords] = useState([]);
-
+  const [scrolledTo, setScrolledTo] = useState("");
   const [modal, setModal] = useState(false);
-
-  const toggle = (key) => {
-    console.log("key", key);
-    setModal(!modal);
-
-    fetch(`${baseUrl}/customers/getQueryHistory?q_id=${key}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        setHistory(response.result);
-      })
-      .catch((error) => console.log(error));
+  const [countNotification, setCountNotification] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [atPage, setAtpage] = useState(1);
+  const [accend, setAccend] = useState(false);
+  const [orderby, setOrderBy] = useState("");
+  const [fieldBy, setFiledBy] = useState("");
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
   };
 
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
 
-
-
+    if (
+      localStorage.getItem("accendq2") === column.dataField ||
+      localStorage.getItem("prevq2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevq2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendq2") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+  const toggle = (key) => {
+    if (key.length > 0) {
+      setModal(!modal);
+      if (modal === false) {
+        setScrolledTo(key);
+      }
+      fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
+        method: "GET",
+        headers: new Headers({
+          Accept: "application/vnd.github.cloak-preview",
+          uit: token,
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          setHistory(response.result);
+        })
+        .catch((error) =>
+          Swal.fire({
+            tilte: "error",
+            html: error,
+            icon: "error",
+          })
+        );
+    } else {
+      setModal(!modal);
+    }
+  };
   useEffect(() => {
-    getPendingForAllocation();
+    let localPage = Number(localStorage.getItem("adminqp2"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendq2"));
+    setPrev(localStorage.getItem("prevq2"));
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValue2", JSON.stringify(sort));
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("admin_record_per_page")));
+    getPendingForAllocation(localPage);
   }, []);
+  useEffect(() => {
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [modal]);
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    getPendingForAllocation(1);
+    localStorage.setItem("adminqp2", 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    getPendingForAllocation(page - 1);
+    localStorage.setItem("adminqp2", Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    getPendingForAllocation(page + 1);
+    localStorage.setItem("adminqp2", Number(page) + 1);
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getPendingForAllocation(defaultPage.at(-1));
+    setAtpage(totalPages);
+    localStorage.setItem("adminqp2", defaultPage.at(-1));
+  };
+  const getPendingForAllocation = (e) => {
+    let allEnd = Number(localStorage.getItem("admin_record_per_page"));
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValue2"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    if (searchData) {
+      remainApiPath = `/admin/pendingAllocation?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&category=${
+        searchData.store
+      }&date1=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&date2=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/pendingAllocation?page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setPendingData(all);
+          let end = e * allEnd;
 
-  const getPendingForAllocation = () => {
-    axios.get(`${baseUrl}/admin/pendingAllocation`).then((res) => {
-      console.log("repforquery", res.data.result);
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+      });
+    }
+  };
+  const sortMessage = (val, field) => {
+    setOrderBy(val);
+    setFiledBy(field);
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("adminqp2", 1);
+    localStorage.setItem("sortedValue2", JSON.stringify(sort));
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDataadquery2`));
+    if (searchData) {
+      remainApiPath = `/admin/pendingAllocation?orderby=${val}&orderbyfield=${field}&category=${
+        searchData.store
+      }&date1=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&date2=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&pcat_id=${searchData.pcatId}&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `admin/pendingAllocation?orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
-        // CountPendingForAllocation(res.data.result.length);
-        setPendingData(res.data.result);
-        setRecords(res.data.result.length);
+        setPage(1);
+        setBig(1);
+        setEnd(Number(localStorage.getItem("admin_record_per_page")));
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setPendingData(all);
       }
     });
   };
-
-
-
   const columns = [
     {
-      text: "S.No",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
-      },
+      text: "S.no",
+      dataField: "cid",
+
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return { width: "50px" };
       },
     },
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
         var oldDate = row.created;
         if (oldDate == null) {
           return null;
@@ -101,18 +316,15 @@ function PendingAllocation({ CountPendingForAllocation }) {
       },
     },
     {
-      text: "Query No",
+      text: "Query no",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
         return (
           <>
             <Link
               to={{
-                pathname: `/admin/queries/${row.id}`,
+                pathname: `/admin_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}
@@ -127,46 +339,101 @@ function PendingAllocation({ CountPendingForAllocation }) {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
       },
     },
     {
-      text: "Sub Category",
+      text: "Sub category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
       },
     },
     {
-      text: "Customer Name",
+      text: "Client name",
+      headerFormatter: headerLabelFormatter,
       dataField: "name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
       },
     },
     {
       text: "Status",
+      sort: true,
       dataField: "status",
-      headerStyle: () => {
-        return { fontSize: "12px" };
+      headerFormatter: headerLabelFormatter,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendq2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendq2");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
       },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
-
               {row.status} /
-              {
-                row.status == "Inprogress Query" ?
-                  <p className="inprogress">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  null
-              }
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );
@@ -175,66 +442,25 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "Action",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function (cell, row) {
         return (
-         
           <>
             {row.is_assigned === "1" ? (
-              <p style={{ color: "green", fontSize: "10px" }}>
+              <p className="inprogress">
                 Allocated to {row.tname} on
                 <p>{row.allocation_time}</p>
               </p>
             ) : (
               <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <div title="Assign to">
-                  <Link
-                    to={`/admin/queryassing/${row.id}`}
-                  >
-                    <i class="fa fa-share"></i>
-                  </Link>
+                <Link to={`/admin_queryassing/${row.id}`}>
+                  <DiscussProposal titleName="Assign to" />
+                </Link>
 
-                </div>
-                <div title="Decline Query">
-                  <Link
-                    to={`/admin/query_rejection/${row.id}`}
-                  >
-                    <i
-                      className="fa fa-trash"
-                    ></i>
-                  </Link>
-                </div>
-
-                {/* <div title="Send Message">
-                  <Link
-                    to={{
-                      pathname: `/admin/chatting/${row.id}`,
-                      obj: {
-                        message_type: "4",
-                        query_No: row.assign_no,
-                        query_id: row.id,
-                        routes: `/admin/queriestab`
-                      }
-                    }}
-                  >
-                    <i
-                      class="fa fa-comments-o"
-                      style={{
-                        fontSize: 16,
-                        cursor: "pointer",
-                        marginLeft: "8px",
-                        color: "blue"
-                      }}
-                    ></i>
-                  </Link>
-                </div> */}
-
+                <Link to={`/admin/query_rejection/${row.id}`}>
+                  <DeleteIcon titleName="Decline Query" />
+                </Link>
               </div>
-
-
-
             )}
           </>
         );
@@ -243,15 +469,16 @@ function PendingAllocation({ CountPendingForAllocation }) {
     {
       text: "History",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function (cell, row) {
         return (
           <>
             <button
               type="button"
-              class="btn btn-info btn-sm"
+              className="autoWidthBtn"
+              div
+              id={row.id}
+              ref={(el) => (myRef.current[row.id] = el)}
               onClick={() => toggle(row.id)}
             >
               History
@@ -261,9 +488,16 @@ function PendingAllocation({ CountPendingForAllocation }) {
       },
     },
   ];
-
-
-
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    setOrderBy("");
+    setFiledBy("");
+    localStorage.removeItem("adminqp2");
+    localStorage.removeItem("sortedValue2");
+    localStorage.removeItem("accendq2");
+    localStorage.removeItem("prevq2");
+  };
   return (
     <>
       <Card>
@@ -274,17 +508,89 @@ function PendingAllocation({ CountPendingForAllocation }) {
             pendingAlloation="pendingAlloation"
             setRecords={setRecords}
             records={records}
+            setDefaultPage={setDefaultPage}
+            resetPaging={resetPaging}
+            setCountNotification={setCountNotification}
+            page={page}
+            setBig={setBig}
+            setEnd={setEnd}
+            index="adquery2"
           />
         </CardHeader>
-        <CardBody>
-          <Records records={records} />
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
+        <CardBody className="card-body">
+          <CardHeader>
+            <Row>
+              <Col md="12" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(e.target.value);
+                            getPendingForAllocation(e.target.value);
+                            localStorage.setItem("adminqp2", e.target.value);
+                          }}
+                          className="form-control"
+                        >
+                          {defaultPage.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage.length > page ? (
+                        <>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton mx-1"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </CardHeader>
+
+          <DataTablepopulated
+            bgColor="#55425f"
+            keyField={"assign_no"}
             data={pendingData}
             columns={columns}
-            rowIndex
-          />
+          ></DataTablepopulated>
           <History history={history} toggle={toggle} modal={modal} />
         </CardBody>
       </Card>
@@ -292,75 +598,4 @@ function PendingAllocation({ CountPendingForAllocation }) {
   );
 }
 
-export default PendingAllocation;
-  // axios
-    //   .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
-    //   .then(function (response) {
-    //     console.log("delete-", response);
-    // if (response.data.code === 1) {
-    //   Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    //   getTeamLeader();
-    // } else {
-    //   Swal.fire("Oops...", "Errorr ", "error");
-    // }
-
-    //   })
-    //   .catch((error) => {
-    //     console.log("erroror - ", error);
-    //   });
-
-
-/* <td style={{ textAlign: "center" }}>
-                      {p.is_assigned === "1" && (
-                        <p style={{ color: "green" }}>
-                          <i class="fa fa-circle"
-                          style={{fontSize:"10px" ,marginRight:"4px"}}>
-                            </i>
-                            {p.allocation_time}
-                          </p>
-                      )}
-
-                      {p.reject === "3" && (
-                        <p style={{ color: "red" }}>
-                          Query Rejected By {p.tname}
-                        </p>
-                      )}
-                    </td> */
-
-//   <Modal isOpen={addModal} toggle={addHandler} size="md">
-//   <ModalHeader toggle={addHandler}>Show history</ModalHeader>
-//   <ModalBody>
-// <table class="table table-bordered">
-//   <thead>
-//     <tr>
-//       <th scope="col">Titles</th>
-//       <th scope="col">Data</th>
-//     </tr>
-//   </thead>
-
-//   {history.length > 0
-//     ? history.map((p, i) => (
-//         <tbody>
-//           <tr>
-//             <th scope="row">Name</th>
-//             <td>{p.name}</td>
-//           </tr>
-
-//           <tr>
-//             <th scope="row">Date of Allocation</th>
-//             <td>{ChangeFormateDate(p.date_of_allocation)}</td>
-//           </tr>
-//           <tr>
-//             <th scope="row">Query No</th>
-//             <td>{p.assign_no}</td>
-//           </tr>
-//           <tr>
-//             <th scope="row">Status</th>
-//             <td>{p.status}</td>
-//           </tr>
-//         </tbody>
-//       ))
-//     : null}
-// </table>
-//   </ModalBody>
-// </Modal>
+export default React.memo(PendingAllocation);

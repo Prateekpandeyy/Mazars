@@ -1,113 +1,214 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import BootstrapTable from "react-bootstrap-table-next";
 import Records from "../../components/Records/Records";
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PublishIcon from '@material-ui/icons/Publish';
 import AdditionalQueryModal from "./AdditionalQueryModal";
 import Swal from "sweetalert2";
 import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
+import ModalManual from "../ModalManual/AllComponentManual";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
 
-function InprogressAllocation() {
-
-  const alert = useAlert();
+import MessageIcon, {
+  DeleteIcon,
+  EditQuery,
+  ViewDiscussionIcon,
+  HelpIcon,
+  UploadDocument,
+  FeedBackICon,
+} from "../../components/Common/MessageIcon";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+function InprogressAllocation({
+  allQueriesCount,
+  // setAllQueriesCount,
+  CountAllQuery,
+}) {
   const userId = window.localStorage.getItem("userid");
-  const [query, setQuery] = useState([]);
-  const [queriesCount, setCountQueries] = useState(null);
-  const [records, setRecords] = useState([]);
-
-  const [assignNo, setAssignNo] = useState('');
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const classes = useStyles();
+  const allEnd = 50;
+  const [assignNo, setAssignNo] = useState("");
+  const [inprogressAllocation, setInprogressAllocation] = useState([]);
   const [additionalQuery, setAdditionalQuery] = useState(false);
-  const additionalHandler = (key) => {
-    setAdditionalQuery(!additionalQuery);
-    setAssignNo(key)
+  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [openManual, setManual] = useState(false);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const myRef = useRef([]);
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
   };
 
-  const [ViewDiscussion, setViewDiscussion] = useState(false);
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
+  const additionalHandler = (key) => {
+    setAdditionalQuery(!additionalQuery);
+    setAssignNo(key);
+    if (additionalQuery === false) {
+      setScrolledTo(key)
+    }
+  };
+
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
-    setAssignNo(key)
-  }
+    setAssignNo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key)
+    }
+  };
 
   useEffect(() => {
-    getQueriesData();
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
+    }
+  }, [additionalQuery]);
+
+  useEffect(() => {
+    var element = document.getElementById(scrolledTo);
+    if (element) {
+      let runTo = myRef.current[scrolledTo]
+      runTo?.scrollIntoView(false);
+      runTo?.scrollIntoView({ block: 'center' });
+    }
+  }, [ViewDiscussion]);
+
+  const needHelp = () => {
+    setManual(!openManual);
+  };
+
+  useEffect(() => {
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery2`));
+    let pageno = JSON.parse(localStorage.getItem("custQuery2"));
+    let arrow = localStorage.getItem("custArrowQuery2")
+    let pre =localStorage.getItem("prevcustq2")
+    if(pre){
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+      if (pageno) {
+      CountInprogressAllocation(pageno);
+      }else{
+      CountInprogressAllocation(1); 
+      }
+    // }
   }, []);
 
-  const getQueriesData = () => {
+  const CountInprogressAllocation = (e) => {
+    if ((e === undefined)) {
+      console.log(e,'e');
+      e=1;
+    }
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery2"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustQuery2"));
+    localStorage.setItem(`custQuery2`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if ((data) && (!pagetry)){
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+    }else if ((data) && (pagetry)){
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    }else if ((!data) && (pagetry)){
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&status=1&orderby=${val}&orderbyfield=${field}`
+    }else{
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&status=1`
+    }
     axios
       .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}&status=1`
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
       )
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setCountQueries(res.data.result.length);
-          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setInprogressAllocation(all);
+          setCount(res.data.total);
         }
       });
   };
 
-
   const columns = [
     {
       text: "S.No",
-      dataField: "",
+
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return <div id={row.assign_no}
+          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
       },
       headerStyle: () => {
-        return { fontSize: "12px", width: "50px" };
+        return {
+          width: "50px",
+        };
       },
     },
     {
       text: "Date",
       dataField: "created",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.created);
-        var oldDate = row.created;
-        if (oldDate == null) {
-          return null;
-        }
-        return oldDate.toString().split("-").reverse().join("-");
+
+      formatter: function dateFormatter(cell, row) {
+        return <>{CommonServices.changeFormateDate(row.created)}</>;
       },
     },
     {
       text: "Query No",
       dataField: "assign_no",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
         return (
           <>
-            {/* <Link to={`/customer/my-assingment/${row.id}`}>
-              {row.assign_no}
-            </Link> */}
             <Link
               to={{
-                pathname: `/customer/my-assingment/${row.id}`,
+                pathname: `/customer_my-assingment/${row.id}`,
                 index: 1,
                 routes: "queries",
               }}
@@ -122,251 +223,197 @@ function InprogressAllocation() {
       text: "Category",
       dataField: "parent_id",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
     },
     {
       text: "Status",
       dataField: "",
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>
             <div>
-              {
-                row.status == "Inprogress Query" ?
-                  <div>
-                    {row.status}/
-                    <p className="inprogress">
-                      {row.status_message}
-                    </p>
-                  </div>
-                  :
-                  row.status == "Inprogress; Allocation" ?
-                    <p>
-                      {row.status}
-                    </p>
-                    :
-                    row.status == "Inprogress; Proposals" ?
-                      <p>
-                        {row.status}
-                      </p>
-                      :
-                      row.status == "Inprogress; Assignments" ?
-                        <p>
-                          {row.status}
-                        </p>
-                        :
-                        null
-              }
+              {row.status}/
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.status_message}</p>
+              ) : row.status == "Declined Query" ? (
+                <p className="declined">{row.status_message}</p>
+              ) : row.status == "Completed Query" ? (
+                <p className="completed">{row.status_message}</p>
+              ) : null}
             </div>
           </>
         );
       },
     },
     {
-      text: "Expected Delivery Date",
+      text: "Expected / Actual Delivery Date",
       dataField: "exp_delivery_date",
       sort: true,
-      headerStyle: () => {
-        return { fontSize: "12px" };
-      },
-      formatter: function dateFormat(cell, row) {
-        console.log("dt", row.exp_delivery_date);
 
+      formatter: function dateFormat(cell, row) {
         return (
           <>
-            {
-              row.status == "Declined Query"
-                ? null
-                :
-                row.status_code >= "1" ?
-                  CommonServices.removeTime(row.exp_delivery_date)
-                  :
-                  null
-            }
+            {row.status == "Declined Query" ? null : row.status_code != "3" &&
+              row.status_code > "1" ? (
+              <>
+                {row.final_discussion === "completed"
+                  ? CommonServices.removeTime(row.final_date)
+                  : CommonServices.removeTime(row.exp_delivery_date)}
+              </>
+            ) : null}
           </>
-        )
+        );
       },
     },
     {
       text: "Action",
-      headerStyle: () => {
-        return { fontSize: "12px", textAlign: "center", width: "130px" };
-      },
+
       formatter: function (cell, row) {
-        var dateMnsFive = moment(row.exp_delivery_date).add(15, 'day').format("YYYY-MM-DD");
-              
-               
-        var curDate = moment().format("YYYY-MM-DD")
-     
+        var dateMnsFive = moment(row.exp_delivery_date)
+          .add(15, "day")
+          .format("YYYY-MM-DD");
+
+        var curDate = moment().format("YYYY-MM-DD");
+
         return (
           <>
-            {
-              row.status == "Declined Query" ?
-                null
-                :
-                <div>
-                  {
-                    row.status_code == "0" || row.status_code == "1" || row.status_code == "3" ?
-                      <div style={{ display: "flex", justifyContent: "space-around" }}>
-                        <div title="Update Query">
-                          <Link to={`/customer/edit-query/${row.id}`}>
-                            <i
-                              className="fa fa-edit"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
+            {row.status == "Declined Query" ? (
+              <>
+                <>
+                  {dateMnsFive > curDate === true ? (
+                    <span className="ml-1">
+                      <Link
+                        to={{
+                          pathname: `/customer_feedback/${row.assign_no}`,
+                          index: 1,
+                          routes: "queries",
+                        }}
+                      >
+                        <FeedBackICon />
+                      </Link>
+                    </span>
+                  ) : (
+                    ""
+                  )}
 
-                        <div title="Delete Query">
-                          <i
-                            className="fa fa-trash"
-                            style={{
-                              fontSize: 16,
-                              cursor: "pointer",
+                  <span
+                    onClick={() => ViewDiscussionToggel(row.assign_no)}
+                    className="ml-1"
+                  >
+                    <ViewDiscussionIcon />
+                  </span>
+                </>
+              </>
+            ) : (
+              <>
+                {row.status_code == "0" ||
+                  row.status_code == "1" ||
+                  row.status_code == "3" ? (
+                  <>
+                    <span className="ml-1">
+                      <Link to={`/customer_edit-query/${row.id}`}>
+                        <EditQuery />
+                      </Link>
+                    </span>
 
-                            }}
-                            onClick={() => del(row.id)}
-                          ></i>
-                        </div>
-                        <div title="Send Message">
-                          <Link
-                            to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
-                              obj: {
-                                message_type: "4",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/queries`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                color: "blue"
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
-                        <div title="View Discussion Message">
-                                                    <i
-                                                        class="fa fa-comments-o"
-                                                        style={{
-                                                            fontSize: 16,
-                                                            cursor: "pointer",
-                                                            color: "orange"
-                                                        }}
-                                                        onClick={() => ViewDiscussionToggel(row.assign_no)}
-                                                    ></i>
-                                                </div>
+                    <span onClick={() => del(row.id)} className="ml-1">
+                      <DeleteIcon />
+                    </span>
+                    <span className="ml-1">
+                      <Link
+                        to={{
+                          pathname: `/customer_chatting/${row.id}&type=4`,
+                          index: 1,
+                          routes: "queries",
+                          obj: {
+                            message_type: "4",
+                            query_No: row.assign_no,
+                            query_id: row.id,
+                            routes: `/customer/queries`,
+                          },
+                        }}
+                      >
+                        <MessageIcon />
+                      </Link>
+                    </span>
+                    <span
+                      onClick={() => ViewDiscussionToggel(row.assign_no)}
+                      className="ml-1"
+                    >
+                      <ViewDiscussionIcon />
+                    </span>
+                  </>
+                ) : null}
 
-                      </div> :
-                      null
-                  }
-
-                                    {
-                                        row.status_code == "4" || 8 < parseInt(row.status_code) || row.status_code == "2" ?
-                                          
-                                          <div style={{ display: "flex", justifyContent: "space-around" }}>
-
-                                                {dateMnsFive > curDate === true ?
-                                                <div title="Send Feedback"
-                                                style={{
-                                                    cursor: "pointer",
-                                                }}>
-                                                <Link
-                                                    to={{
-                                                        pathname: `/customer/feedback/${row.assign_no}`,
-                                                        obj: {
-                                                            routes: `/customer/queries`
-                                                        }
-                                                    }}
-                                                >
-                                                    <FeedbackIcon />
-                                                </Link>
-                                            </div> : ""}
-                                          
-                        {
-                          row.delivery_report == "completed" ? null :
-                            <div title="Upload Additional Documents"
-                              style={{ cursor: "pointer" }}
-                              onClick={() => additionalHandler(row.assign_no)}
-                            >
-                              <PublishIcon color="secondary" />
-                            </div>
-                        }
-                        <div title="Send Message">
-                          <Link
-                            to={{
-                              pathname: `/customer/chatting/${row.id}&type=4`,
-                              obj: {
-                                message_type: "4",
-                                query_No: row.assign_no,
-                                query_id: row.id,
-                                routes: `/customer/queries`
-                              }
-                            }}
-                          >
-                            <i
-                              class="fa fa-comments-o"
-                              style={{
-                                fontSize: 16,
-                                cursor: "pointer",
-                                color: "blue"
-                              }}
-                            ></i>
-                          </Link>
-                        </div>
-
-                        <div title="View Discussion Message">
-                          <i
-                            class="fa fa-comments-o"
-                            style={{
-                              fontSize: 16,
-                              cursor: "pointer",
-                              color: "orange"
-                            }}
-                            onClick={() => ViewDiscussionToggel(row.assign_no)}
-                          ></i>
-                        </div>
-                      </div>
-                      :
-                      null
-                  }
-                </div>
-
-            }
+                {row.status_code == "4" ||
+                  8 < parseInt(row.status_code) ||
+                  row.status_code == "2" ? (
+                  <>
+                    {dateMnsFive > curDate === true ? (
+                      <span className="ml-1">
+                        <Link
+                          to={{
+                            pathname: `/customer_feedback/${row.assign_no}`,
+                            index: 1,
+                            routes: "queries",
+                          }}
+                        >
+                          <FeedBackICon />
+                        </Link>
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {row.delivery_report == "completed" ? null : (
+                      <span
+                        className="ml-1"
+                        onClick={() => additionalHandler(row.assign_no)}
+                      >
+                        <UploadDocument />
+                      </span>
+                    )}
+                    {row.status_code == "10" ? null : (
+                      <span className="ml-1">
+                        <Link
+                          to={{
+                            pathname: `/customer_chatting/${row.id}&type=4`,
+                            index: 1,
+                            routes: "queries",
+                            obj: {
+                              message_type: "4",
+                              query_No: row.assign_no,
+                              query_id: row.id,
+                              routes: `/customer/queries`,
+                            },
+                          }}
+                        >
+                          <MessageIcon />
+                        </Link>
+                      </span>
+                    )}
+                    <span
+                      onClick={() => ViewDiscussionToggel(row.assign_no)}
+                      className="ml-1"
+                    >
+                      <ViewDiscussionIcon />
+                    </span>
+                  </>
+                ) : null}
+              </>
+            )}
           </>
         );
       },
     },
   ];
 
-
-
-
   //check
   const del = (id) => {
-    console.log("del", id);
-
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to delete query ?",
@@ -374,7 +421,7 @@ function InprogressAllocation() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, deleted it!",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
         deleteCliente(id);
@@ -393,74 +440,100 @@ function InprogressAllocation() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
         if (response.data.code === 1) {
           Swal.fire("", "Query deleted successfully.", "success");
-          getQueriesData();
+          CountInprogressAllocation();
         } else {
           Swal.fire("Oops...", "Errorr ", "error");
         }
       })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
+      .catch((error) => { });
   };
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custQuery2");
+    localStorage.removeItem(`freezecustQuery2`);
+    localStorage.removeItem("custArrowQuery2");
+    localStorage.removeItem("prevcustQuery2");
+    setPrev("");
+  }
 
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CustomerFilter
-            setData={setQuery}
-            getData={getQueriesData}
-            id={userId}
-            InprogressAllocation="InprogressAllocation"
-            records={records}
-            setRecords={setRecords}
-          />
-        </CardHeader>
-        <CardBody>
-          <Records records={records} />
+    <Card>
+      <CardHeader>
+        <span onClick={(e) => needHelp()}>
+          {" "}
+          <HelpIcon />
+        </span>
+        <CustomerFilter
+          setData={setInprogressAllocation}
+          getData={CountInprogressAllocation}
+          id={userId}
+          InprogressAllocation="InprogressAllocation"
+          records={allQueriesCount.length}
+          index="custQuery2"
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
+        />
+      </CardHeader>
+      <CardBody>
+        {/* <Records records={allQueriesCount.length} /> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              index="custQuery2"
+              setData={setInprogressAllocation}
+              getData={CountInprogressAllocation}
+              InprogressAllocation="InprogressAllocation"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row>
 
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={query}
-            columns={columns}
-            rowIndex
-          />
-
-          <AdditionalQueryModal
-            additionalHandler={additionalHandler}
-            additionalQuery={additionalQuery}
-            assignNo={assignNo}
-            getQueriesData={getQueriesData}
-          />
-
+        <DataTablepopulated
+          bgColor="#6e557b"
+          keyField={"assign_no"}
+          data={inprogressAllocation}
+          columns={columns}
+        ></DataTablepopulated>
+        <AdditionalQueryModal
+          additionalHandler={additionalHandler}
+          additionalQuery={additionalQuery}
+          assignNo={assignNo}
+          getQueriesData={CountInprogressAllocation}
+        />
+        {ViewDiscussion === true ? (
           <DiscardReport
             ViewDiscussionToggel={ViewDiscussionToggel}
             ViewDiscussion={ViewDiscussion}
             report={assignNo}
-            getData={getQueriesData}
+            getData={CountInprogressAllocation}
+            headColor="#6e557b"
           />
-
-        </CardBody>
-      </Card>
-    </div>
+        ) : (
+          ""
+        )}
+        <Modal
+          isOpen={openManual}
+          toggle={needHelp}
+          style={{ display: "block", position: "absolute", left: "280px" }}
+          size="lg"
+        >
+          <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
+          <ModalBody>
+            <ModalManual tar={"freshQuery"} />
+          </ModalBody>
+        </Modal>
+      </CardBody>
+    </Card>
   );
 }
 
-export default InprogressAllocation;
-
-
-const arr = [
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-  { name: "nitin", add: "noida" },
-
-  { name: "nitin", add: "noida" },
-]
+export default React.memo(InprogressAllocation);

@@ -5,10 +5,9 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import axios from "axios";
 import { baseUrl, baseUrl2 } from "../../config/config";
 import { useForm } from "react-hook-form";
-import { useAlert } from "react-alert";
-
+import Swal from 'sweetalert2';
 function MyAssingment() {
-  const alert = useAlert();
+ 
   const { handleSubmit, register, reset } = useForm();
 
   const [submitData, setSubmitData] = useState([]);
@@ -131,7 +130,13 @@ function MyAssingment() {
       .then(function (response) {
         console.log("res-", response);
         if (response.data.code === 1) {
-          alert.success(<Msg />);
+          Swal.fire({
+            title : "success",
+            html : "Additional Queries added",
+            icon : "success"
+           })
+         
+          
           reset();
           getQuery();
         }
@@ -204,7 +209,7 @@ function MyAssingment() {
                     class="btn btn-success ml-3"
                     onClick={() => history.goBack()}
                   >
-                    <i class="fas fa-arrow-left mr-2"></i>
+                   
                     Go Back
                   </button>
                   <div

@@ -25,11 +25,10 @@ function PendingForAllocation() {
     getPendingForAllocation();
   }, []);
 
-  const getPendingForAllocation= () => {
+  const getPendingForAllocation = () => {
     axios
       .get(`${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           setPendingAllocation(res.data.result);
         }
@@ -55,9 +54,8 @@ function PendingForAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.query_date);
         var updatedate = row.query_date.split(" ")[0];
-        console.log(updatedate);
+
         if (updatedate == null) {
           return null;
         }
@@ -71,10 +69,9 @@ function PendingForAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
         return (
           <>
-            <Link to={`/teamleader/queries/${row.id}`}>{row.assign_no}</Link>
+            <Link to={`/teamleader_queries/${row.id}`}>{row.assign_no}</Link>
           </>
         );
       },
@@ -96,7 +93,7 @@ function PendingForAllocation() {
       },
     },
     {
-      text: "Customer Name",
+      text: "Clinet Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {
@@ -111,7 +108,6 @@ function PendingForAllocation() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -135,7 +131,7 @@ function PendingForAllocation() {
                 color: "green",
               }}
             >
-              <Link to={`/teamleader/queryassing/${row.id}`}>
+              <Link to={`/teamleader_queryassing/${row.id}`}>
                 <i class="fa fa-share"></i>
               </Link>
             </div>

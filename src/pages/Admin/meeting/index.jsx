@@ -1,66 +1,4 @@
-// import React from "react";
-// import * as Cookies from "js-cookie";
 
-// import "./meeting.css";
-// import AgoraVideoCall from "../AgoraVideoCall/index";
-// import { AGORA_APP_ID } from "../../../agora.config";
-
-// class Meeting extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.videoProfile = Cookies.get("videoProfile_3");
-//     this.channel = Cookies.get("channel_3") || "test";
-//     this.transcode = Cookies.get("transcode_3") || "interop";
-//     this.attendeeMode = Cookies.get("attendeeMode_3") || "video";
-//     this.baseMode = Cookies.get("baseMode_3") || "avc";
-
-//     this.appId = AGORA_APP_ID;
-//     if (!this.appId) {
-//       return alert("Get App ID first!");
-//     }
-//     this.uid = undefined;
-//   }
-
-
-//   render() {
-//     console.log("channelid-",this.channel)
-//     console.log("render")
-
-
-
-//     return (
-//       <div className="wrapper meeting">
-//         <div
-//           className="ag-header"
-//           style={{ color: "green", fontWeight: "bold" }}
-//         >
-//           <div className="ag-header-lead">
-//             <span>Video Call</span>
-//           </div>
-//           <div className="ag-header-msg">
-//             &nbsp;<span id="room-name">{this.channel}</span>
-//           </div>
-//         </div>
-//         <div className="ag-main">
-//           <div className="ag-container">
-//             <AgoraVideoCall
-//               videoProfile={this.videoProfile}
-//               channel={this.channel}
-//               transcode={this.transcode}
-//               attendeeMode={this.attendeeMode}
-//               baseMode={this.baseMode}
-//               appId={this.appId}
-//               uid={this.uid}
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default Meeting;
 import React from "react";
 import * as Cookies from "js-cookie";
 
@@ -73,7 +11,7 @@ import ReactPlayer from "react-player";
 class Meeting extends React.Component {
   constructor(props) {
     super(props);
-   
+    this.userEmail = Cookies.get("adminid");
     this.videoProfile = Cookies.get("videoProfile_2");
     this.channel = Cookies.get("channel_2") || "test";
     this.transcode = Cookies.get("transcode_2") || "interop";
@@ -92,15 +30,13 @@ class Meeting extends React.Component {
   }
  
   render() {
-    console.log("channelid-",this.channel)
-    console.log("render")
-
+ 
     return (
       
-      <div className="wrapper meeting">
+      <div className="wrapper meeting" style={{ display : "flex", flexDirection: "column" , height: "100vh" }}>
                  
          {this.state.showmeetingScreen === true ?
-       <div>
+             <div style={{ display : "flex", flexDirection: "column" , height: "100%" }}>
           <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
@@ -123,6 +59,8 @@ class Meeting extends React.Component {
               appId={this.appId}
               uid={this.uid}
               id={this.props.id}
+              name={"admin"}
+              adminEmail = {this.userEmail}
             />
           </div>
         </div>
@@ -133,7 +71,7 @@ class Meeting extends React.Component {
          playing={true}
          onEnded={() => this.setState({showmeetingScreen : true})}
          width='100%'
-         height='600px'
+         height='650px'
         />}
       </div>
     );

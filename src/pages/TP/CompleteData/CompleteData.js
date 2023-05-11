@@ -14,15 +14,11 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 
-
-
 function CompletedQuery() {
   const userid = window.localStorage.getItem("tpkey");
 
   const [incompleteData, setInCompleteData] = useState([]);
   const [records, setRecords] = useState([]);
-
-
 
   useEffect(() => {
     getInCompleteAssingment();
@@ -30,13 +26,13 @@ function CompletedQuery() {
 
   const getInCompleteAssingment = () => {
     axios
-      .get(`${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`)
+      .get(
+        `${baseUrl}/tl/getIncompleteQues?tp_id=${JSON.parse(userid)}&status=2`
+      )
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           setInCompleteData(res.data.result);
           setRecords(res.data.result.length);
-
         }
       });
   };
@@ -67,12 +63,11 @@ function CompletedQuery() {
         return { fontSize: "12px" };
       },
       formatter: function nameFormatter(cell, row) {
-        console.log(row);
         return (
           <>
             <Link
               to={{
-                pathname: `/taxprofessional/queries/${row.id}`,
+                pathname: `/taxprofessional_queries/${row.id}`,
                 index: 1,
                 routes: "queriestab",
               }}
@@ -100,7 +95,7 @@ function CompletedQuery() {
       },
     },
     {
-      text: "Customer Name",
+      text: "Client Name",
       dataField: "name",
       sort: true,
       headerStyle: () => {
@@ -115,7 +110,6 @@ function CompletedQuery() {
         return { fontSize: "12px" };
       },
       formatter: function dateFormat(cell, row) {
-        console.log("dt", row.Exp_Delivery_Date);
         var oldDate = row.Exp_Delivery_Date;
         if (oldDate == null) {
           return null;
@@ -132,25 +126,15 @@ function CompletedQuery() {
         return (
           <>
             <div>
-              {row.status}{row.statusdescription && "/"}
-              {
-                row.status == "Inprogress Query" ?
-                  <p className="inprogress">
-                    {row.statusdescription}
-                  </p>
-                  :
-                  row.status == "Declined Query" ?
-                    <p className="declined">
-
-                      {row.statusdescription}
-                    </p> :
-                    row.status == "Completed Query" ?
-                      <p className="completed">
-
-                        {row.statusdescription}
-                      </p> :
-                      null
-              }
+              {row.status}
+              {row.statusdescription && "/"}
+              {row.status == "Inprogress Query" ? (
+                <p className="inprogress">{row.statusdescription}</p>
+              ) : row.status == "Declined Query" ? (
+                <p className="declined">{row.statusdescription}</p>
+              ) : row.status == "Completed Query" ? (
+                <p className="completed">{row.statusdescription}</p>
+              ) : null}
             </div>
           </>
         );

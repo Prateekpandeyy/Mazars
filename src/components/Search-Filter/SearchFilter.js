@@ -4,7 +4,11 @@ import { baseUrl } from "../../config/config";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import { useForm } from "react-hook-form";
-
+import 'antd/dist/antd.css';
+import { DatePicker, Space } from 'antd';
+import moment from "moment";
+const dateFormat = 'YYYY/MM/DD';
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 function SearchFilter(props) {
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
@@ -12,24 +16,29 @@ function SearchFilter(props) {
   const [selectedData, setSelectedData] = useState([]);
 
   const { setData, getData, allquery, pendingAllocation } = props;
-
+  const [fromDate, setFromDate] = useState("")
+  const [toDate, setToDate] = useState(new Date().toISOString().slice(0, 10))
+ const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days")
+ const fromDateFun = (e) => {
+  setFromDate(e.format("YYYY-MM-DD"))
+}
   //search filter
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+
     setSelectedData(value);
     getData();
   };
 
   //reset date
   const resetData = () => {
-    console.log("resetData ..");
+  
     reset();
     getData();
   };
 
   //reset category
   const resetCategory = () => {
-    console.log("resetData ..");
+  
     setSelectedData([]);
     getData();
   };
@@ -37,16 +46,15 @@ function SearchFilter(props) {
 
   
   const onSubmit = (data) => {
-    console.log("data :", data);
-    console.log("selectedData :", selectedData);
+ 
 
     if (allquery == "allquery") {
       axios
         .get(
-          `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${data.p_dateFrom}&to=${data.p_dateTo}`
+          `${baseUrl}/admin/getAllQueries?cat_id=${selectedData}&from=${fromDate}&to=${toDate}`
         )
         .then((res) => {
-          console.log(res);
+        
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -58,10 +66,10 @@ function SearchFilter(props) {
     if (pendingAllocation == "pendingAllocation") {
       axios
         .get(
-          `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${data.p_dateFrom}&date2=${data.p_dateTo}`
+          `${baseUrl}/admin/pendingAllocation?category=${selectedData}&date1=${fromDate}&date2=${toDate}`
         )
         .then((res) => {
-          console.log(res);
+         
           if (res.data.code === 1) {
             if (res.data.result) {
               setData(res.data.result);
@@ -74,7 +82,7 @@ function SearchFilter(props) {
   return (
     <div>
       <div className="row">
-        <div class="col-sm-3 d-flex">
+        <div className="col-sm-3 d-flex">
           <Select
             mode="multiple"
             style={{ width: "100%" }}
@@ -127,7 +135,7 @@ function SearchFilter(props) {
           <div>
             <button
               type="submit"
-              class="btn btn-primary mb-2 ml-3"
+              className="btn btn-primary mb-2 ml-3"
               onClick={resetCategory}
             >
               X
@@ -137,31 +145,41 @@ function SearchFilter(props) {
 
         <div className="col-sm-9 d-flex">
           <div>
-            <form class="form-inline" onSubmit={handleSubmit(onSubmit)}>
-              <div class="form-group mx-sm-3 mb-2">
+            <form className="form-inline" onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-group mx-sm-3 mb-2">
                 <label className="form-select form-control">From</label>
               </div>
-              <div class="form-group mx-sm-3 mb-2">
-                <input
+              <div className="form-group mx-sm-3 mb-2">
+              <DatePicker 
+                 
+                 onChange={(e) =>fromDateFun(e)}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                  format={dateFormatList} />
+                {/* <input
                   type="date"
                   name="p_dateFrom"
                   className="form-select form-control"
                   ref={register}
-                />
+                /> */}
               </div>
 
-              <div class="form-group mx-sm-3 mb-2">
+              <div className="form-group mx-sm-3 mb-2">
                 <label className="form-select form-control">To</label>
               </div>
-              <div class="form-group mx-sm-3 mb-2">
-                <input
+              <div className="form-group mx-sm-3 mb-2">
+                {/* <input
                   type="date"
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                />
+                /> */}
+                  <DatePicker 
+                 onChange={(e) =>setToDate(e.format("YYYY-MM-DD"))}
+                 disabledDate={d => !d || d.isAfter(maxDate) }
+                 defaultValue={moment(new Date(), "DD MM, YYYY")}
+                    format={dateFormatList} />
               </div>
-              <button type="submit" class="btn btn-primary mb-2">
+              <button type="submit" className="btn btn-primary mb-2">
                 Search
               </button>
             </form>
@@ -170,7 +188,7 @@ function SearchFilter(props) {
           <div>
             <button
               type="submit"
-              class="btn btn-primary mb-2 ml-3"
+              className="btn btn-primary mb-2 ml-3"
               onClick={resetData}
             >
               Reset

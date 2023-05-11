@@ -1,260 +1,679 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout/Layout";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
-import "antd/dist/antd.css";
-import {
-  Form,
-  Input,
-  Select,
-  Space,
-  Button,
-  Checkbox,
-  Radio,
-  Upload,
-} from "antd";
-import {
-  MinusCircleOutlined,
-  PlusOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { Link, useHistory } from "react-router-dom";
+import "../../assets/css/style.css";
+import mazars from "../../mazars_logo.png";
+import { useState, useEffect } from "react";
+import Collapse from "@mui/material/Collapse";
+import ListItemButton from "@mui/material/ListItemButton";
+import List from "@mui/material/List";
+import Cookies from "js-cookie";
+import CookieConsent from "react-cookie-consent";
+import CloseIcon from "@material-ui/icons/Close";
+import CustomTypography from "../Common/CustomTypography";
+import SubHeading from "../Common/SubHeading";
+import CustomHeading from "../Common/CustomHeading";
 
-function Fresh() {
-  const userId = window.localStorage.getItem("userid");
-  const category = window.localStorage.getItem("category");
-  const { Option } = Select;
+function Header({
+  id,
+  cust_sign,
+  noAdminSign,
+  noTlSign,
+  noTpSign,
+  admin,
+  mtl,
+  mtp,
+  noSign,
+  loginOTP,
+  getData,
+  showCook,
+}) {
+  const [logomin, setLogimin] = useState(false);
+  let history = useHistory();
 
-  const onFinish = (values) => {
-    console.log(values);
-    console.log(values.query.upload.fileList);
-
-var arr = values.query.upload.fileList
-    let formData = new FormData();
-
-    for (var i = 0; i < arr.length; i++) {
-      console.log("pics", arr[i].originFileObj);
-
-      let a =arr[i].originFileObj;
-      formData.append("upload_1", a);
+  const custLogout = () => {
+    localStorage.removeItem("userid");
+    localStorage.removeItem("name");
+    localStorage.removeItem("uid");
+    localStorage.removeItem("category");
+    history.push("/customer/signin");
+  };
+  useEffect(() => {
+    if (
+      window.location.pathname.split("/")[1] === "customer" ||
+      window.location.pathname.split("/")[1].length === 0
+    ) {
+      setLogimin(false);
+    } else {
+      setLogimin(true);
     }
+    const handleScroll = (event) => {
+      if (window.pageYOffset > 0) {
+        setLogimin(true);
+      } else if (
+        window.location.pathname.split("/")[1] === "customer" ||
+        window.location.pathname.split("/")[1].length === 0
+      ) {
+        setLogimin(false);
+      }
+    };
 
+    window.addEventListener("scroll", handleScroll);
 
-    
-
-    formData.append("fact", values.query.fact);
-    formData.append("specific", JSON.stringify(values.query.specific));
-    formData.append("case_name", values.query.case);
-    formData.append("assessment_year  ", values.query.assessment_year);
-    formData.append("purpose", values.query.purpose);
-    formData.append("timelines", values.query.timelines);
-   
-
-    formData.append("user", JSON.parse(userId));
-    formData.append("cid", JSON.parse(category));
-
-    axios
-      .post(`${baseUrl}/customers/PostQuestion`, formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log("res-", response);
-      })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
-  };
-
-  const options = [
-    { label: "Softcopy - Word/ Pdf", value: "Softcopy - Word/ Pdf" },
-    {
-      label: "SoftCopy- Digitally Signed",
-      value: "SoftCopy- Digitally Signed",
-    },
-  ];
-
-  const props = {
-    onChange({ file, fileList }) {
-      console.log("img :", file, fileList);
-    },
-  };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <Layout custDashboard="custDashboard" custUserId={userId}>
-      <Card>
-        <CardHeader>
-          <Form name="nest-messages" onFinish={onFinish}>
-            <Form.Item name={["query", "fact"]} label="Facts of the case">
-              <Input.TextArea />
-            </Form.Item>
+    <>
+      <div className={logomin === true ? "headerMin" : "header"}>
+        {id && (
+          <div className={logomin === true ? "logomin" : "logo"}>
+            <Link to="/customer/questionnaire-page">
+              <img src={mazars} alt="mazar" />
+            </Link>
+          </div>
+        )}
 
-            <Form.Item name={["query", "case"]} label="Case name">
-              <Input />
-            </Form.Item>
+        {cust_sign && (
+          <div className="noSignINBox">
+            <div className={logomin === true ? "logomin" : "logo"}>
+              <Link to="/">
+                <img
+                  src="https://www.mazars.co.in/extension/ezmazars_rwdesign/design/mazars2020/images/mazars-logo.png"
+                  alt="mazar"
+                />
+              </Link>
+            </div>
+          </div>
+        )}
 
-            <Form.Item
-              name={["query", "purpose"]}
-              label="Purpose for which Opinion is sought name"
-            >
-              <Select placeholder="Select a person">
-                <Option value="Assessment">Assessment</Option>
-                <Option value="2011-12">Lucy</Option>
-              </Select>
-            </Form.Item>
+        {noSign && (
+          <div
+            id="myP"
+            style={{
+              display: "flex",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div className={logomin === true ? "logomin" : "logo"}>
+              <Link to="/">
+                <img
+                  src={mazars}
+                  alt="mazar"
+                  style={{ display: "flex", maxWidth: "100%" }}
+                />
+              </Link>
+            </div>
 
-            <Form.Item
-              name={["query", "assessment_year"]}
-              label="Assessment year"
-            >
-              <Select mode="tags" allowClear>
-                <Option value="2010-11">2010-11</Option>
-                <Option value="2011-12">2011-12</Option>
-                <Option value="2013-14">2013-14</Option>
-              </Select>
-            </Form.Item>
+            <CmsCont getData={getData} showCook={showCook} />
+          </div>
+        )}
 
-            <Form.Item
-              name={["query", "format"]}
-              label="Format in which Opinion is required"
-            >
-              <Checkbox.Group
-                options={options}
-                // defaultValue={["Pear"]}
-              />
-            </Form.Item>
+        {loginOTP && (
+          <div>
+            <img
+              src={mazars}
+              className={logomin === true ? "logomin" : "logo"}
+              alt="mazar"
+            />
+          </div>
+        )}
 
-            <Form.Item
-              name={["query", "timelines"]}
-              label="Timelines within which Opinion is Required"
-            >
-              <Radio.Group defaultValue="Urgent, (4-5 Working Days)">
-                <Radio.Button value="Urgent, (4-5 Working Days)">
-                  Urgent, (4-5 Working Days)
-                </Radio.Button>
-                <Radio.Button value="Regular (10-12 Working Days)">
-                  Regular (10-12 Working Days)
-                </Radio.Button>
-              </Radio.Group>
-            </Form.Item>
+        {admin && (
+          <div className="headerWrapper">
+            <Link to="/admin/start">
+              <img src={mazars} className="logomin" alt="mazar" />
+            </Link>
+          </div>
+        )}
 
-            <Form.Item>Specific Questions for advisory</Form.Item>
-            <Form.List name={["query", "specific"]}>
-              {(fields, { add, remove }) => (
-                <>
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      block
-                      icon={<PlusOutlined />}
-                    >
-                      Add field
-                    </Button>
-                  </Form.Item>
-                  {fields.map(({ key, name, fieldKey, ...restField }) => (
-                    <Space key={key}>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "first"]}
-                        fieldKey={[fieldKey, "first"]}
-                      >
-                        <Input placeholder="specfic question" />
-                      </Form.Item>
+        {mtl && (
+          <div className="headerWrapper">
+            <Link to="/teamleader/start">
+              <img src={mazars} className="logomin" alt="mazar" />
+            </Link>
+          </div>
+        )}
 
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                </>
-              )}
-            </Form.List>
+        {mtp && (
+          <div className="headerWrapper">
+            <Link to="/taxprofessional/start">
+              <img src={mazars} className="logomin" alt="mazar" />
+            </Link>
+          </div>
+        )}
 
-            <Form.Item name={["query", "upload"]} label="Upload file">
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Upload</Button>
-              </Upload>
-            </Form.Item>
+        <div className="noSignINBox">
+          {id && (
+            <ul className="menu">
+              <li style={{ color: "#fff" }}>{id}</li>
+              <li onClick={custLogout} style={{ color: "#fff" }}>
+                <i className="fa fa-sign-out">logout</i>
+              </li>
+            </ul>
+          )}
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </CardHeader>
-      </Card>
-    </Layout>
+          {cust_sign && (
+            <button className="customBtn">
+              <Link
+                className="SignUpLink"
+                to={{
+                  pathname: "/",
+                }}
+              >
+                Sign In
+              </Link>
+            </button>
+          )}
+
+          {admin && !noAdminSign && (
+            <button className="customBtn">
+              <Link
+                className="SignUpLink"
+                to={{
+                  pathname: "/admin/login",
+                }}
+              >
+                Sign In
+              </Link>
+            </button>
+          )}
+
+          {mtl && !noTlSign && (
+            <button className="customBtn">
+              <Link
+                className="SignUpLink"
+                to={{
+                  pathname: "/teamleader/login",
+                }}
+              >
+                Sign In
+              </Link>
+            </button>
+          )}
+
+          {mtp && !noTpSign && (
+            <button className="customBtn">
+              <Link
+                className="SignUpLink"
+                to={{
+                  pathname: "/taxprofessional/login",
+                }}
+              >
+                Sign In
+              </Link>
+            </button>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
-export default Fresh;
-const assessment_year = [
-  {
-    year: "2010-11",
-  },
-  {
-    year: "2011-12",
-  },
-  {
-    year: "2012-13",
-  },
-  {
-    year: "2013-14",
-  },
-  {
-    year: "2014-15",
-  },
-  {
-    year: "2015-16",
-  },
-  {
-    year: "2016-17",
-  },
-  {
-    year: "2017-18",
-  },
-  {
-    year: "2018-19",
-  },
-  {
-    year: "2019-20",
-  },
-  {
-    year: "2020-21",
-  },
-  {
-    year: "2021-22",
-  },
-  {
-    year: "2022-23",
-  },
-  {
-    year: "2023-24",
-  },
-  {
-    year: "2024-25",
-  },
-  {
-    year: "2025-26",
-  },
-  {
-    year: "2026-27",
-  },
-  {
-    year: "2027-28",
-  },
-];
-style.backgroundColor = "#7eb5a6";
-style.color = "white"
+export default Header;
 
-style.backgroundColor = "#f3f0d7";
-style.color = "#000000"
+const CmsCont = (props) => {
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [showCookie, setShowCookie] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const cookieEnable = Cookies.get("accept");
+
+  let history = useHistory();
+  useEffect(() => {
+    if (history.location.pathname === "/") {
+    } else if (cookieEnable) {
+      setShowCookie(false);
+    } else {
+      setShowCookie(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", getScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", getScreenWidth);
+    };
+  });
+  const getScreenWidth = () => {
+    console.log(window.screen.width);
+    if (window.screen.width > 768) {
+      setIsMobile(false);
+    } else {
+      setIsMobile(true);
+    }
+  };
+  const handleClickOn2 = () => {
+    setOpen2(false);
+  };
+  const handleClickOff2 = () => {
+    setOpen2(true);
+  };
+  const handleClickOn3 = () => {
+    setOpen3(false);
+  };
+  const handleClickOff3 = () => {
+    setOpen3(true);
+  };
+  const handleClickUpdateOpen = () => {
+    setUpdateOpen(true);
+  };
+  const handleClickUpdateClose = () => {
+    setUpdateOpen(false);
+  };
+
+  const myLink = (e) => {
+    if (cookieEnable) {
+      if (e === "direct") {
+        history.push("/customer/direct");
+      } else if (e === "indirect") {
+        history.push("/customer/indirect");
+      } else if (e === "photo") {
+        history.push("/customer/media");
+      } else if (e === "video") {
+        history.push("/customer/videolist");
+      } else if (e === "mediacontent") {
+        history.push("/customer/mediacontent");
+      } else if (e === "faqlist") {
+        history.push("/customer/faq-question");
+      } else if (e === "linklist") {
+        history.push("/customer/outerLinks");
+      } else if (e === "updatelist") {
+        history.push("/customer/updates");
+      } else if (e === "updatedirect") {
+        history.push("/customer/updatedirect");
+      } else if (e === "updateindirect") {
+        history.push("/customer/updateindirect");
+      } else if (e === "updatemiscellaneous") {
+        history.push("/customer/miscellaneous");
+      } else if (e === "enquiry") {
+        history.push("/customer/customerquery");
+      } else if (e === "contactUs") {
+        history.push("/customer/contactbasic");
+      } else if (e === "about") {
+        history.push("/customer/aboutbasic");
+      }
+    } else {
+      props.showCook("showCookies");
+    }
+  };
+  return (
+    <>
+      {isMobile === true ? (
+        <ul>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("direct")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Articles</span>
+            </ListItemButton>
+          </li>
+
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onMouseOver={() => handleClickUpdateOpen()}
+            onMouseLeave={() => handleClickUpdateClose()}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Updates</span>
+            </ListItemButton>
+
+            <Collapse in={updateOpen} unmountOnExit>
+              <List component="div" className="myLink22">
+                <ul>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("updatedirect")}
+                  >
+                    <span className="headerMenu">Direct tax</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("updateindirect")}
+                  >
+                    <span className="headerMenu">Indirect tax</span>
+                  </li>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("updatemiscellaneous")}
+                  >
+                    <span className="headerMenu">Miscellaneous</span>
+                  </li>
+                </ul>
+              </List>
+            </Collapse>
+          </li>
+
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("linklist")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Important links</span>
+            </ListItemButton>
+          </li>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onMouseLeave={() => handleClickOn2()}
+          >
+            <ListItemButton
+              style={{ backgroundColor: "#fff" }}
+              onMouseOver={() => handleClickOff2()}
+            >
+              <span className="headerMenu">Media gallery</span>
+            </ListItemButton>
+            <Collapse in={open2} unmountOnExit>
+              <List component="div" className="myLink22">
+                <ul>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("photo")}
+                  >
+                    <span className="headerMenu">Photo gallery</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("video")}
+                  >
+                    <span className="headerMenu">Video gallery</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("mediacontent")}
+                  >
+                    <span className="headerMenu">Media news</span>
+                  </li>
+                </ul>
+              </List>
+            </Collapse>
+          </li>
+
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("faqlist")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">FAQs</span>
+            </ListItemButton>
+          </li>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("about")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">About us</span>
+            </ListItemButton>
+          </li>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onMouseLeave={() => handleClickOn3()}
+          >
+            <ListItemButton
+              style={{ backgroundColor: "#fff" }}
+              onMouseOver={() => handleClickOff3()}
+            >
+              <span className="headerMenu">Contact us</span>
+            </ListItemButton>
+            <Collapse in={open3} unmountOnExit>
+              <List component="div" className="myLink22">
+                <ul>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("enquiry")}
+                  >
+                    <span className="headerMenu">Enquiry form</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("contactUs")}
+                  >
+                    <span className="headerMenu">Our office</span>
+                  </li>
+                </ul>
+              </List>
+            </Collapse>
+          </li>
+        </ul>
+      ) : (
+        <div className="clientSubMenu">
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("direct")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Articles</span>
+            </ListItemButton>
+          </li>
+
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onMouseOver={() => handleClickUpdateOpen()}
+            onMouseLeave={() => handleClickUpdateClose()}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Updates</span>
+            </ListItemButton>
+
+            <Collapse in={updateOpen} unmountOnExit>
+              <List component="div" className="myLink22">
+                <ul>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("updatedirect")}
+                  >
+                    <span className="headerMenu">Direct tax</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("updateindirect")}
+                  >
+                    <span className="headerMenu">Indirect tax</span>
+                  </li>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("updatemiscellaneous")}
+                  >
+                    <span className="headerMenu">Miscellaneous</span>
+                  </li>
+                </ul>
+              </List>
+            </Collapse>
+          </li>
+
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("linklist")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">Important links</span>
+            </ListItemButton>
+          </li>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onMouseLeave={() => handleClickOn2()}
+          >
+            <ListItemButton
+              style={{ backgroundColor: "#fff" }}
+              onMouseOver={() => handleClickOff2()}
+            >
+              <span className="headerMenu">Media gallery</span>
+            </ListItemButton>
+            <Collapse in={open2} unmountOnExit>
+              <List component="div" className="myLink22">
+                <ul>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("photo")}
+                  >
+                    <span className="headerMenu">Photo gallery</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("video")}
+                  >
+                    <span className="headerMenu">Video gallery</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("mediacontent")}
+                  >
+                    <span className="headerMenu">Media news</span>
+                  </li>
+                </ul>
+              </List>
+            </Collapse>
+          </li>
+
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("faqlist")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">FAQs</span>
+            </ListItemButton>
+          </li>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onClick={() => myLink("about")}
+          >
+            <ListItemButton style={{ backgroundColor: "#fff" }}>
+              <span className="headerMenu">About us</span>
+            </ListItemButton>
+          </li>
+          <li
+            className="nav-item tabHoverLinksubMenu"
+            onMouseLeave={() => handleClickOn3()}
+          >
+            <ListItemButton
+              style={{ backgroundColor: "#fff" }}
+              onMouseOver={() => handleClickOff3()}
+            >
+              <span className="headerMenu">Contact us</span>
+            </ListItemButton>
+            <Collapse in={open3} unmountOnExit>
+              <List component="div" className="myLink22">
+                <ul>
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("enquiry")}
+                  >
+                    <span className="headerMenu">Enquiry form</span>
+                  </li>
+
+                  <li
+                    className="tabHover subMenuHeader"
+                    onClick={() => myLink("contactUs")}
+                  >
+                    <span className="headerMenu">Our office</span>
+                  </li>
+                </ul>
+              </List>
+            </Collapse>
+          </li>
+        </div>
+      )}
+      {showCookie === true ? (
+        <div className="popup">
+          <CookieConsent
+            debug={true}
+            declineButtonText={<CloseIcon />}
+            onDecline={() => {
+              setShowCookie(false);
+              history.push("/");
+            }}
+            enableDeclineButton
+            disableStyles
+            location="none"
+            buttonText="Agree"
+            expires={1}
+            overlay
+            declineButtonClasses="myCookiesdecBtn"
+            buttonStyle={{
+              borderBottomLeftRadius: "1.75rem",
+
+              backgroundColor: "#0071CE",
+              border: "1px solid #0071CE",
+              color: "#fff",
+              cursor: "pointer",
+              fontSize: "1rem",
+              fontWeight: 500,
+              minWidth: "100px",
+              minHeight: "3rem",
+              textAlign: "center",
+              display: "block",
+              marginLeft: "auto",
+            }}
+            onAccept={(e) => {
+              localStorage.setItem("myData", "outerLogin");
+              Cookies.set("accept", "agree");
+            }}
+            overlayClasses="overlayclass"
+          >
+            <CustomHeading>Disclaimer</CustomHeading>
+            <SubHeading>
+              By clicking on the "Agree" button below, the user hereby
+              acknowledges having read and understood the disclaimer below:
+            </SubHeading>
+            <ul>
+              <li>
+                <CustomTypography margin="5px">
+                  The user on his own accord wishes to know more about Mazars
+                  Advisory Solutions and any of its members for his own
+                  information and use.
+                </CustomTypography>
+              </li>
+              <li>
+                <CustomTypography margin="5px">
+                  The user acknowledges that there has been no solicitation,
+                  invitation, or inducement of any sort whatsoever from Mazars
+                  Advisory Solutions or any of its members to create an
+                  Attorney/Consultant-Client relationship.
+                </CustomTypography>
+              </li>
+              <li>
+                <CustomTypography margin="5px">
+                  The user acknowledges that Mazars Advisory Solutions makes
+                  every effort to maintain updated and accurate information on
+                  this website and cannot accept responsibility for any
+                  prejudice, loss or damage which may occur from use of such
+                  information. Mazars Advisory Solutions assumes no liability
+                  for the interpretation or use of content or information
+                  contained on this website, nor does it offer any warranty of
+                  any kind, either express or implied in relation to such
+                  content or information.
+                </CustomTypography>
+              </li>
+
+              <li>
+                <CustomTypography margin="5px">
+                  The user acknowledges that Mazars Advisory Solutions does not
+                  intend that links / URLs contained on this website
+                  re-directing users to third party websites be considered as
+                  referrals to, endorsements of, or affiliations with any such
+                  third-party website operators. Mazars Advisory Solutions is
+                  not responsible for, and makes no representation or warranty,
+                  express or implied, about the content or information contained
+                  on such third-party websites.
+                </CustomTypography>
+              </li>
+            </ul>
+          </CookieConsent>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};

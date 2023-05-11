@@ -1,474 +1,159 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Layout from "../../components/Layout/Layout";
-import axios from "axios";
-import { baseUrl } from "../../config/config";
-import { useAlert } from "react-alert";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
-import { Link } from "react-router-dom";
-import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import TableHeader from "../../components/DataTable/Header/index";
+import { title } from "process"
+task done 
+password autofill
+Today done 
+client section - Ipad 
+User id should be prefill in forget password (done)
+Mobile and secondary email validation is not working in Ipad (done)
+message is not comming  properly at client side in case of admin declined query (done)
+document share button is not working in Ipad (Video call)
+in case of disconnect all meeting is not removed from scheduler (done)
+client change password is not working (done)
+Assignment Search is not working in admin, client, Tp, Tl (done)
+icons is not comming properly in Ipad 
+Vactor in client end is not properly
+message history is not comming properly in Ipad
+properly is not visible properly in admin section Ipad
+from and to button in search in Ipad (client issue)
+invoice form and to (box issue)(Ipad)
+scheduler submenu in not opening in Ipad
+show client details in admin(admin - client Record - secondary email)
+Special character disable 
+background in player
+partcipants is not comming in scheduler
+auto logout in case of token expire
+userId , GST IN , secondary email (done)
+media gallery, video gallery
+Admin query details (deleted)
+profile seccondanry eamil delete button  (singup)
+image resize
+gallery image 
+video icons
+data shold not be change 
+sign up page changes
+vactor
+admin client (scroll)
+total in fiter 
+paging in staging (last)us
+assignment search (tp)
+console.log("eeee", i,  e)
 
-function QueriesTab() {
-  // const [queriesData, setQueriesData] = useState([]);
-  const [queriesCount, setCountQueries] = useState("");
-  const [query, setQuery] = useState([]);
-  const userId = window.localStorage.getItem("userid");
+unauthorizate user message in cms
+admin customer points
+photo gallery icons 
+video gallery icons
+image_220727140707_62e0ff4b736ff.png
+occuption in admin client
+cms auto logout
+photo thumbnail icons(thumb)
+following screen/window (dashboard)
+. and space should be allowed
 
-  const [sorting, setSorting] = useState({ field: "", order: "" });
-  const headers = [
-    { name: "S.no", sortable: true },
-    { name: "Date", field: "created", sortable: true },
-    { name: "Query No", field: "assign_no", sortable: true },
-    { name: "Category", field: "parent_id", sortable: true },
-    { name: "Sub Category", field: "cat_name", sortable: true },
-    { name: "Status", field: "status", sortable: true },
-    {
-      name: "Expected Delivery Date",
-      field: "exp_delivery_date",
-      sortable: false,
-    },
-  ];
+new points 9
+admin proposal search
+Publish and unpublish (updates)
+phone validation in number (Signup)
 
-  useEffect(() => {
-    getQueriesData();
-  }, []);
-
-  const getQueriesData = () => {
-    axios
-      .get(
-        `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setQuery(res.data.result);
-          setCountQueries(res.data.result.length);
-        }
-      });
-  };
-
-
-  const queryData = useMemo(() => {
-    let computedData = query;
-
-    //Sorting comments
-    if (sorting.field) {
-      const reversed = sorting.order === "asc" ? 1 : -1;
-
-      computedData = computedData.sort(
-        (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
-      );
-    }
-
-    return computedData;
-  }, [query, sorting]);
-  
-
-  //change date format
-  function ChangeFormateDate(oldDate) {
-    console.log("date", oldDate);
-    if (oldDate == null) {
-      return null;
-    }
-    return oldDate.toString().split("-").reverse().join("-");
-  }
-
-  //show status by spinner
-  function showStatus(status) {
-    console.log("status", status);
-    if (status == null) {
-      return null;
-    }
-  }
-
-  return (
-    <Layout custDashboard="custDashboard" custUserId={userId}>
-      <Card>
-        <CardHeader>
-          <Row>
-            <Col md="9">
-              <CardTitle tag="h4">Queries ({queriesCount})</CardTitle>
-            </Col>
-            <Col md="3">
-              <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <Link to="/customer/select-category" class="btn btn-primary">
-                  Fresh Query
-                </Link>
-              </div>
-            </Col>
-          </Row>
-        </CardHeader>
-        <CardHeader>
-          <CustomerFilter
-            setData={setQuery}
-            getData={getQueriesData}
-            id={userId}
-            query="query"
-          />
-        </CardHeader>
-        <CardBody>
-          <Table responsive="sm" bordered>
-            <TableHeader
-              headers={headers}
-              onSorting={(field, order) => setSorting({ field, order })}
-            />
-            <tbody>
-              {queryData.map((p, i) => (
-                <tr>
-                  <td>{i + 1}</td>
-                  <td>{ChangeFormateDate(p.created)}</td>
-                  <th>
-                    <Link to={`/customer/my-assingment/${p.id}`}>
-                      {p.assign_no}
-                    </Link>
-                  </th>
-                  <td>{p.parent_id}</td>
-                  <td>{p.cat_name}</td>
-                  <td>{p.status}</td>
-                  <td>{ChangeFormateDate(p.exp_delivery_date)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </CardBody>
-      </Card>
-    </Layout>
-  );
-}
-
-export default QueriesTab;
-
-// function ChangeFormateDate2(date) {
-//   var month = (1 + date.getMonth()).toString();
-//   month = month.length > 1 ? month : '0' + month;
-
-//   var day = date.getDate().toString();
-//   day = day.length > 1 ? day : '0' + day;
-
-//   return month + '/' + day + '/' + year;
-// }
-
-{
-  /* <Table responsive="sm" bordered>
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Date</th>
-                <th>Query No</th>
-                <th>Category</th>
-                <th>Sub Category</th>
-                <th>Status</th>
-                <th>Expected Delivery Date</th>
-              </tr>
-            </thead>
-            <tbody style={{ height: "400px", overflowY: "scroll" }}>
-              {queriesData.length > 0 ? (
-                queriesData.map((p, i) => (
-                  <tr key={i}>
-                    <td>{i + 1}</td>
-                    <td>{ChangeFormateDate(p.created)}</td>
-                    <th>
-                      <Link to={`/customer/my-assingment/${p.id}`}>
-                        {p.assign_no}
-                      </Link>
-                    </th>
-                    <td>{p.parent_id}</td>
-                    <td>{p.cat_name}</td>
-                    <td>{p.status}</td>
-                    <td>{ChangeFormateDate(p.exp_delivery_date)}</td>               
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="9">No Records</td>
-                </tr>
-              )}
-            </tbody>
-          </Table> */
-}
-
-//   <MaterialTable
-//   title={false}
-//   columns={columns}
-//   data={queriesData}
-//   options={{
-//     sorting: true,
-//     search: false,
-//   }}
-
-// />
-
-// const columns = [
-//   { title: "S.No", field: "s_no" },
-//   { title: "Date", field: "created" },
-//   { title: "Query No", field: "assign_no" },
-//   { title: "Category", field: "parent_id" },
-//   { title: "Sub Category", field: "cat_name" },
-//   { title: "Status", field: "status" },
-//   { title: "Expected Delivery Date", field: "exp_delivery_date" },
-// ];
-import React, { useState, useEffect } from "react";
-import Layout from "../../../components/Layout/Layout";
-import "./index.css";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "../../../config/config";
-import { useAlert } from "react-alert";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
-import { AgGridColumn, AgGridReact } from "ag-grid-react";
+new points 
 
 
-function TeamLeaderTab() {
-  const alert = useAlert();
-  const [data, setData] = useState([]);
-  const [tlCount, setTlCount] = useState("");
-  const userid = window.localStorage.getItem("adminkey");
+incorrect captcha code(Enter correct captcha code)
+details in articles (done)
+router in articles (DeviceMotionEvent)
+editor target blank (link open in next tab)
+google analysis in each page of client
+articles and update pdf title
+date reset 
+xls file open in download
+ipad (working)
+document in folder cliend (side)
+ask for email before download  in articles if client not login
 
-  // const actionButton = () =>{}
+global header extra token
+Amount TypeError(Mode of payment)(Query details proposal tab)
+payment plan (fee)
+user id should be mendatory in userid
+login and signup mesage sent otp changed
+disclamer
+Fee - Payment Plan 
+        '1'=>'Fixed amount-Lumpsum payment',
+		'2'=>'Fixed amount-Instalment plan',
+		'3'=>'Retainership plan-specified period',
+		'4'=>'Retainership plan-unspecified period'
+Due Date- Date of month
 
-
-  var hashValueGetter = function (params) {
-    return params.node.rowIndex + 1;
-  };
-
-  const column = [
-    {
-      headerName: "S.No",
-      field: "",
-      valueGetter: hashValueGetter,
-      sortable: true,
-      width: 70,
-    },
-    { headerName: "Name", field: "name", sortable: true, width: 140 },
-    { headerName: "Category", field: "parent_id", sortable: true, width: 140 },
-    {
-      headerName: "Sub Category",
-      field: "cat_name",
-      sortable: true,
-      width: 160,
-    },
-    { headerName: "Email", field: "email", sortable: true, width: 160 },
-    { headerName: "Phone", field: "phone", sortable: true, width: 130 },
-    {
-      headerName: "Edit",
-      field: "id",
-      width: 70,
-      cellRendererFramework: (params) => {
-        return (
-          <div>
-            <Link to={`/admin/edittl/${params.data.id}`}>
-              <i
-                className="fa fa-edit"
-                style={{
-                  fontSize: 18,
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                }}
-              ></i>
-            </Link>
-          </div>
-        );
-      },
-    },
-    {
-      headerName: "Edit",
-      field: "id",
-      width: 70,
-      cellRendererFramework: (params) => (
-        <div>
-          <i
-            className="fa fa-trash"
-            style={{ fontSize: 22, cursor: "pointer", marginLeft: "8px" }}
-            onClick={() => del(params.data.id)}
-          ></i>
-        </div>
-      ),
-    },
-  ];
-
-  // const onGridReady = (params) => {
-  //   setGridApi(params.api);
-  //   setGridColumnApi(params.columnApi);
-  // };
-
-  useEffect(() => {
-    getTeamLeader();
-  }, []);
-
-  const getTeamLeader = () => {
-    axios.get(`${baseUrl}/tl/getTeamLeader`).then((res) => {
-      console.log(res);
-      if (res.data.code === 1) {
-        setData(res.data.result);
-        setTlCount(res.data.result.length);
-      }
-    });
-  };
+Amount of monthly fee - Price
+Payment type - Payment plan
+calling due on (15) days of sucesseding month (Payment Terms)
+style={{display : "flex",
+maxWidth: "700px",
+flexWrap: "wrap",
+width: "100%",
+overflow: "auto"}}
+we would charge professional fees of rupees 600000, payable in monthly installments of rupees 
+50000 falling due on 16th day of the following month. 
+Halyard book
+large 
 
 
-  // delete data
-  const del = (id) => {
-    console.log("del", id);
 
-    axios
-      .get(`${baseUrl}/tl/deleteTeamLeader?id=${id}`)
-      .then(function (response) {
-        console.log("delete-", response);
-        alert.success("successfully deleted ");
-        getTeamLeader();
-      })
-      .catch((error) => {
-        console.log("erroror - ", error);
-      });
-  };
+general font size - 14px;
+underline line should not come by default through out product
+everything should be left align
+remove bold from news flash in home page
+remove background from vactors
+color of vactors will be change in vactors
+icons color should be outer space
+background color of entire website((#E5F0FA))
+footer background color should be same like mazars.co.in
+signin background color  - #5A6A6B
+enquiry page should be like about and contact us page
+heading background should be remove from contact us and about us page
+hover color should be #0071CE through out product 
+sign up should be left align and button color should be smae like get otp 
+media imagge icons should be changed
+Question font size will be increase to difference from Question in FAQ and remove bold from Question
 
-  
-  return (
-    <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      <Card>
-        <CardHeader>
-          <Row>
-            <Col md="10">
-              <CardTitle tag="h4">Team Leaders ({tlCount})</CardTitle>
-            </Col>
-            <Col md="2">
-              <Link to={"/admin/addnewtl"} class="btn btn-primary">
-                Add New
-              </Link>
-            </Col>
-          </Row>
-        </CardHeader>
-        <CardBody>
-          <div className="ag-theme-alpine" style={{ height: 400, width: 950 }}>
-            <AgGridReact rowData={data} columnDefs={column} />
-          </div>
-        </CardBody>
-      </Card>
-    </Layout>
-  );
-}
 
-export default TeamLeaderTab;
 
-{
-  /* <Table responsive="sm" bordered>
-            <thead>
-              <tr>
-                <th scope="col">S.No.</th>
-                <th scope="col">Name</th>
-                <th>Category</th>
-                <th>Sub Category</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone No.</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((p, i) => (
-                <tr>
-                  <th scope="row">{i + 1}</th>
-                  <td>{p.name}</td>
-                  <td>{p.parent_id}</td>
-                  <td>{p.cat_name}</td>
-                  <td>{p.email}</td>
-                  <td>{p.phone}</td>
-                  <td>
-                    <Link to={`/admin/edittl/${p.id}`}>
-                      <i
-                        className="fa fa-edit"
-                        style={{
-                          fontSize: 18,
-                          cursor: "pointer",
-                          marginLeft: "8px",
-                        }}
-                      ></i>
-                    </Link>
-                  </td>
-                  <td onClick={() => del(p.id)}>
-                    <i
-                      className="fa fa-trash"
-                      style={{
-                        fontSize: 22,
-                        cursor: "pointer",
-                        marginLeft: "8px",
-                      }}
-                    ></i>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table> */
-}
+profile logo should be changed
 
-// <div class="row mt-3">
-//         <div class="col-md-12">
-//           <div class="schedule">
-//             <h3>Team Leaders</h3>
-// <Link to={"/admin/addnew"} class="btn btn-primary">
-//   Add New
-// </Link>
-//           </div>
-//         </div>
-//         <br />
-//         <br />
-//         <br />
-//         <br />
-//         <div class="col-md-12">
-//           <table class="table">
-// <thead>
-//   <tr>
-//     <th scope="col">No.</th>
-//     <th scope="col">Name</th>
-//     <th scope="col">Email</th>
-//     <th scope="col">Phone No.</th>
-//     <th scope="col">Edit</th>
-//     <th scope="col">Delete</th>
-//   </tr>
-// </thead>
-// {data.map((p, i) => (
-//   <tr>
-//     <th scope="row">{i + 1}</th>
-//     <td>{p.name}</td>
-//     <td>{p.email}</td>
-//     <td>{p.Phone}</td>
-//     <td>
-//       <Link to={`/admin/edit/${p.id}`}>
-//         <i
-//           className="fa fa-edit"
-//           style={{ fontSize: 18, cursor: "pointer", marginLeft:"8px" }}
-//         ></i>
-//       </Link>
-//     </td>
-//     <td
-//     onClick={() => del(p.id)}>
-// <i className="fa fa-trash" style={{ fontSize: 22, cursor: "pointer" ,marginLeft:"8px" }}>
-// </i>
-//     </td>
-//   </tr>
-// ))}
-//           </table>
-//         </div>
-//       </div>
+ -
+	
+	 Date case sentence in schedule
 
-// cellRenderer:  (params)=> {
-//   return <Link to={`/?info=${params.data.Id}`}>"+{params.value}+"</Link>,
 
-// const [gridApi, setGridApi] = useState(null);
-// const [gridColumnApi, setGridColumnApi] = useState(null);
+done 
+Inbox logo bedge should be changes (done)
+help icon should be color match with brand (suggestion - outer grey)
+upload and message history icon color should be changed (for upload)
+cross button in search bar
+search button should be align with button
+Heading should be large in compare to content
+#BC363D, for message history = #B63C00 for action - #393470)
+font changes - 
+dark background: white (#ffffff)
+light background: outer space grey (#464646)
+in message (read and unread) icon color should be changed(unread = #BC363D, read = #348719)
+
+font color (464646)
+hover(0071ce)
+
+send otp should be left align
+bold in updates details
+spacing in enquiry form and * in placeholder
+About Us formatting
+link from phone number should be remove (contact us)
+. after complete message in sign up
+button should be left align in sign up 
+
+breadcrumb size
+align button left in sign up
+update details remove 
+
+sign up image should be adjecent to text . page no 4. 
+on the above email address and mobile number.
+Sign up successful replaced by sign up successfully.
+After successful login by an existing client or registration of a new client, following
+screen/ window will open. (wiil be repalced by)
+After successful login by an existing client or registration of a new client, Client dashboard screen / window will open.(Remove below screen)(for need help and signup)

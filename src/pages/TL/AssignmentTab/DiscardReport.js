@@ -6,12 +6,12 @@ import { baseUrl } from "../../../config/config";
 import CommonServices from "../../../common/common";
 import Alerts from "../../../common/Alerts";
 
-
 function DiscardReport({
   ViewDiscussion,
   ViewDiscussionToggel,
   report,
-  getData
+  getData,
+  headColor,
 }) {
   const userId = window.localStorage.getItem("tlkey");
   const [data, setData] = useState([]);
@@ -19,67 +19,127 @@ function DiscardReport({
   useEffect(() => {
     getHistory();
   }, [report]);
-  
-  const getHistory = () => {
-   
-  if(report != undefined && report.length != 0){
-   
-    axios.get(`${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`).then((res) => {
-    
-      if (res.data.code === 1) {
-        setData(res.data.result);
-      }
-    });
-  }
+  const token = window.localStorage.getItem("tlToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
   };
-
+  const getHistory = () => {
+    if (report != undefined && report.length > 0) {
+      axios
+        .get(
+          `${baseUrl}/tl/getMessage?id=${JSON.parse(userId)}&q_no=${report}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setData(res.data.result);
+          }
+        });
+    }
+  };
 
   return (
     <div>
-      <Modal isOpen={ViewDiscussion} toggle={ViewDiscussionToggel} size="lg" scrollable>
-        <ModalHeader toggle={ViewDiscussionToggel}>Discussion History </ModalHeader>
+      <Modal
+        isOpen={ViewDiscussion}
+        toggle={ViewDiscussionToggel}
+        size="lg"
+        scrollable
+      >
+        <ModalHeader toggle={ViewDiscussionToggel}>
+          Discussion history{" "}
+        </ModalHeader>
         <ModalBody>
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="row">S.No</th>
-                <th scope="row">Date</th>
-                <th scope="row">Name</th>
-                <th scope="row">Message</th>
+                <th
+                  scope="row"
+                  style={{
+                    border: `1px solid ${headColor}`,
+                    backgroundColor: `${headColor}`,
+                    color: "#fff",
+                  }}
+                >
+                  S.No
+                </th>
+                <th
+                  scope="row"
+                  style={{
+                    border: `1px solid ${headColor}`,
+                    backgroundColor: `${headColor}`,
+                    color: "#fff",
+                  }}
+                >
+                  Date
+                </th>
+                <th
+                  scope="row"
+                  style={{
+                    border: `1px solid ${headColor}`,
+                    backgroundColor: `${headColor}`,
+                    color: "#fff",
+                  }}
+                >
+                  Name
+                </th>
+                <th
+                  scope="row"
+                  style={{
+                    border: `1px solid ${headColor}`,
+                    backgroundColor: `${headColor}`,
+                    color: "#fff",
+                  }}
+                >
+                  Message
+                </th>
               </tr>
             </thead>
             {data.length > 0
               ? data.map((p, i) => (
-                <tbody>
-                  <tr className={p.type == "sent" ? "send" : "received"}>
-                    <td>{i + 1}</td>
-                    <td>{CommonServices.removeTime(p.setdate)}</td>
-                    <td>{p.sender}</td>
-                    <td>
-                      {
-                        p.type == "sent" ?
-                          <i class="fa fa-mail-forward" style={{ color: "red", marginLeft: "10px", marginRight: "10px" }}></i>
-                          :
-                          <i class="fa fa-mail-reply" style={{ color: "green", marginLeft: "10px", marginRight: "10px" }}></i>
-                      }
-                      {p.message}
-                    </td>
-                  </tr>
-                </tbody>
-              ))
+                  <tbody>
+                    <tr className={p.type == "sent" ? "send" : "received"}>
+                      <td>{i + 1}</td>
+                      <td>{CommonServices.removeTime(p.setdate)}</td>
+                      <td>{p.sender}</td>
+                      <td style={{ width: "460px", overflow: "wrap" }}>
+                        {p.type == "sent" ? (
+                          <i
+                            class="fa fa-mail-forward"
+                            style={{
+                              color: "red",
+                              marginLeft: "10px",
+                              marginRight: "10px",
+                            }}
+                          ></i>
+                        ) : (
+                          <i
+                            class="fa fa-mail-reply"
+                            style={{
+                              color: "green",
+                              marginLeft: "10px",
+                              marginRight: "10px",
+                            }}
+                          ></i>
+                        )}
+                        {p.message}
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
               : null}
           </table>
         </ModalBody>
         <ModalFooter>
-          <div>
-            <Button color="primary" onClick={ViewDiscussionToggel}>Cancel</Button>
-          </div>
+          <button className="customBtn mr-auto" onClick={ViewDiscussionToggel}>
+            Cancel
+          </button>
         </ModalFooter>
-      </Modal >
-
-    </div >
+      </Modal>
+    </div>
   );
 }
 
 export default DiscardReport;
-

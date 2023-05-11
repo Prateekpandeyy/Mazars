@@ -1,49 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { baseUrl } from "../../../config/config";
-import { useParams, useHistory, Link } from "react-router-dom";
-import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
-  CardBody,
-  CardTitle,
   Row,
   Col,
-  Table,
-  Tooltip,
+  
 } from "reactstrap";
-import Alerts from "../../../common/Alerts";
+import { useParams, useHistory, Link } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
+import CommonServices from "../../../common/common";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { baseUrl } from "../../../config/config";
 import classNames from "classnames";
 import Mandatory from "../../../components/Common/Mandatory";
-import Loader from "../../../components/Loader/Loader";
-import CommonServices from "../../../common/common"
-
-
+import CustomHeading from "../../../components/Common/CustomHeading";
 const Schema = yup.object().shape({
   p_taxprof: yup.string().required(""),
   p_expdeldate: yup.string().required(""),
 });
-
-
-function QueryAssingment() {
-  const alert = useAlert();
-  const { handleSubmit, register, errors, reset } = useForm({
-    resolver: yupResolver(Schema),
-  });
-
-  const { id } = useParams();
-  const history = useHistory();
-
-  const [taxProfessionDisplay, setTaxProfessionDisplay] = useState([]);
+const QueryAssingment = (props) => {
+  const [loading, setLoading] = useState(false);
   const [taxID, setTaxID] = useState(null);
   const [teamName, setTeamName] = useState('');
-  const [loading, setLoading] = useState(false);
-
+  const [queryData, setQuerData] = useState({
+    queryNo: "",
+    timelines: "",
+    custId: "",
+    expect_dd: "",
+  });
   const [hideQuery, setHideQuery] = useState({
     name: "",
     timeline: "",
@@ -52,62 +41,41 @@ function QueryAssingment() {
   });
 
   const [query, setQuery] = useState(true);
-  const userId = window.localStorage.getItem("tlkey");
-  const tpkey = window.localStorage.getItem("tpkey");
-
-  const [queryData, setQuerData] = useState({
-    queryNo: "",
-    timelines: "",
-    custId: "",
-    expect_dd: "",
-  });
-
-  const { queryNo, timelines, custId, expect_dd } = queryData;
-
+  const [taxProfessionDisplay, setTaxProfessionDisplay] = useState([]);
   var current_date = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
-  console.log("current_date :", current_date);
+ 
   const [item] = useState(current_date);
-
-
+  const userId = window.localStorage.getItem("tlkey");
+  const token = window.localStorage.getItem("tlToken")
+  const { id } = useParams();
+  const { queryNo, timelines, custId, expect_dd } = queryData;
+  const { handleSubmit, register, errors, reset } = useForm({
+    resolver: yupResolver(Schema),
+  });
+  const myConfig = {
+    headers : {
+     "uit" : token
+    }
+  }
   useEffect(() => {
     getTaxProfession();
     getQueryData();
-  }, []);
-
-  const getTaxProfession = () => {
-    axios
-      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 1) {
-          setTaxProfessionDisplay(res.data.result);
-        }
-      });
-  };
-
-  const getQueryData = () => {
-    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`).then((res) => {
-      console.log(res);
-      if (res.data.code === 1) {
-        setQuerData({
-          queryNo: res.data.result[0].assign_no,
-          timelines: res.data.result[0].Timelines,
-          custId: res.data.result[0].customer_id,
-          expect_dd: CommonServices.changeFormateDate(res.data.result[0].Exp_Delivery_Date),
-        });
-      }
-    });
-  };
-
-  useEffect(() => {
     getQuery();
-  }, [queryNo]);
-
+  }, []);
+  const handleChange = (e) => {
+   
+    setTaxID(e.target.value)
+    var value = taxProfessionDisplay.filter(function (item) {
+      return item.id == e.target.value
+    })
+  
+    setTeamName(value[0].name)
+  }
   const getQuery = () => {
     axios
-      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`)
+      .get(`${baseUrl}/tl/TlCheckIfAssigned?assignno=${queryNo}`, myConfig)
       .then((res) => {
-        console.log(res);
+        
         if (res.data.code === 1) {
           setQuery(false);
           // setHideQuery(res.data.meta);
@@ -121,19 +89,34 @@ function QueryAssingment() {
       });
   };
 
-  const handleChange = (e) => {
-    console.log("val-", e.target.value);
-    setTaxID(e.target.value)
-    var value = taxProfessionDisplay.filter(function (item) {
-      return item.id == e.target.value
-    })
-    console.log(value[0]);
-    setTeamName(value[0].name)
-  }
+  const getTaxProfession = () => {
+    axios
+      .get(`${baseUrl}/tp/getTaxProfessional?tl_id=${JSON.parse(userId)}&&q_id=${id}`, myConfig)
+      .then((res) => {
+        
+        if (res.data.code === 1) {
+          setTaxProfessionDisplay(res.data.result);
+        }
+      });
+  };
+
+  const getQueryData = () => {
+    axios.get(`${baseUrl}/tl/GetQueryDetails?id=${id}`, myConfig).then((res) => {
+      
+      if (res.data.code === 1) {
+        setQuerData({
+          queryNo: res.data.result[0].assign_no,
+          timelines: res.data.result[0].Timelines,
+          custId: res.data.result[0].customer_id,
+          expect_dd: CommonServices.changeFormateDate(res.data.result[0].Exp_Delivery_Date),
+        });
+      }
+    });
+  };
 
 
   const onSubmit = (value) => {
-    console.log("value :", value);
+ 
     setLoading(true)
 
     var expdeliverydate = value.p_expdeldate.replace(
@@ -156,27 +139,41 @@ function QueryAssingment() {
     axios({
       method: "POST",
       url: `${baseUrl}/tl/AddQueryAssignment`,
+      headers : {
+        uit : token
+      },
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
+      
         if (response.data.code === 1) {
           setLoading(false)
-          var variable = "Query assigned successfully."
-          Alerts.SuccessNormal(variable)
          
+          Swal.fire({
+            title : 'success',
+            html : "Query assigned successfully.",
+            icon : "success"
+          })
+          props.history.push({
+            pathname: `/teamleader/queriestab`,
+            index: 3,
+          });
           getQuery();
           reset();
-          history.push('/teamleader/queriestab')
+         
         } if (response.data.code === 0) {
           setLoading(false)
+          Swal.fire({
+            title : 'error',
+            html : "Something went wrong, please try again",
+            icon : "error"
+          })
         }
       })
       .catch((error) => {
-        console.log("erroror - ", error);
+     
       });
   };
-
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userId}>
       <Card>
@@ -186,21 +183,21 @@ function QueryAssingment() {
               <Link
                 to={{
                   pathname: `/teamleader/queriestab`,
-                  index: 0,
+                  index: 3,
                 }}
               >
                 <button
-                  class="btn btn-success ml-3"
+                  class="autoWidthBtn ml-3"
                 >
-                  <i class="fas fa-arrow-left mr-2"></i>
+                
                   Go Back
                 </button>
               </Link>
             </Col>
-            <Col md="4">
-              <div style={{ textAlign: "center" }}>
-                <h2>Query Allocation</h2>
-              </div>
+            <Col md="4" align="center">
+             <CustomHeading>
+             Query allocation
+             </CustomHeading>
             </Col>
           </Row>
         </CardHeader>
@@ -218,10 +215,10 @@ function QueryAssingment() {
                         <table class="table">
                           <thead>
                             <tr>
-                              <th scope="col">Query No.</th>
-                              <th scope="col">Tax Professional<span className="declined">*</span></th>
-                              <th scope="col">Expected Timeline</th>
-                              <th scope="col">Exp. Delivery Date<span className="declined">*</span></th>
+                              <th scope="col">Query no.</th>
+                              <th scope="col">Tax professional<span className="declined">*</span></th>
+                              <th scope="col">Expected timeline</th>
+                              <th scope="col">Exp. delivery date<span className="declined">*</span></th>
                               <th scope="col">Action</th>
                             </tr>
                           </thead>
@@ -241,7 +238,7 @@ function QueryAssingment() {
                                     <option value="">--select--</option>
                                     {taxProfessionDisplay.map((p, index) => (
                                       <option key={index} value={p.id}>
-                                        { p.tl_post_name + "-"   + p.name}
+                                        { p.post_name + "-"   + p.name}
                                       </option>
                                     ))}
                                   </select>
@@ -257,6 +254,7 @@ function QueryAssingment() {
                                     type="text"
                                     ref={register}
                                     name="p_timelines"
+                                    autoComplete="off"
                                     value={timelines}
                                     class="form-control"
                                   />
@@ -280,7 +278,7 @@ function QueryAssingment() {
                                 </td>
 
                                 <td>
-                                  <button type="submit" class="btn btn-success">
+                                  <button type="submit" class="customBtn">
                                     Assign
                                   </button>
                                 </td>
@@ -316,7 +314,7 @@ function QueryAssingment() {
                                 </td>
 
                                 <td>
-                                  <button class="btn btn-success" disabled>
+                                  <button disabled  className="customBtnDisabled">
                                     Assigned
                                   </button>
                                 </td>

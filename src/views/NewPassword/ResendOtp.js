@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Alerts from "../../common/Alerts";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 
-
-function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
+function ResendOtp({ id, setDisabled, userId, getTime, setLoad, setLoading }) {
 
     const { handleSubmit, errors, reset } = useForm();
 
@@ -14,6 +14,7 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
         setLoading(true)
 
         let formData = new FormData();
+        formData.append("user_id", userId);
         formData.append("email", id);
         formData.append("p", "forgot");
 
@@ -23,10 +24,10 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
             data: formData,
         })
             .then(function (response) {
-                console.log("res-", response);
+            
                 if (response.data.code === 1) {
                     setLoading(false)
-                    Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered email address.")
+                    Alerts.SuccessNormal("As per your request, OTP has been sent to your regsitered mobile number / email address.")
                     setDisabled(false)
                     setLoad(true)
                     getTime();
@@ -35,16 +36,16 @@ function ResendOtp({ id, setDisabled, getTime, setLoad, setLoading }) {
                 }
             })
             .catch((error) => {
-                console.log("erroror - ", error);
+              ShowError.LoadingError(setLoading)
             });
     };
 
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div style={{ paddingTop: "10px" }}>
-                    <button type="submit" class="btn btn-success">SEND OTP</button>
+                    <button type="submit" className="autoWidthBtn">SEND OTP</button>
                 </div>
             </form>
         </>

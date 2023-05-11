@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
+import Select from "react-select";
 import { baseUrl } from "../../../config/config";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
@@ -25,23 +26,45 @@ import * as Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Alerts from "../../../common/Alerts";
 import Loader from "../../../components/Loader/Loader";
-
-
+import { makeStyles } from "@material-ui/styles";
+import InviteModal from "./InviteModal";
+const useStyle = makeStyles(() => ({
+  rchStyle: {
+    color: "green",
+    display: "flex",
+    overflow: "hidden",
+  },
+  OverlayBase: {
+    display: "flex",
+    width: "670px",
+  },
+}));
 
 function Demo() {
+  const classes = useStyle();
   const userId = window.localStorage.getItem("adminkey");
+  const userEmail = window.localStorage.getItem("adminEmail");
+  // const userEmail = null
+  const em = JSON.parse(userEmail);
   const history = useHistory();
-
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [assignmentdata, setAssignmentData] = useState([]);
   const [owner, setOwner] = useState([]);
   const [read, setRead] = useState(false);
-
   const [baseMode, SetbaseMode] = useState("avc");
   const [transcode, SetTranscode] = useState("interop");
   const [attendeeMode, SetAttendeeMode] = useState("video");
-  const [videoProfile, SetVideoProfile] = useState("480p_4");
+  const [showVideoIcon, setShowVideoIcon] = useState(false);
+  const [videoProfile, SetVideoProfile] = useState("240p_4");
+  const [invite, setInvite] = useState(false);
+  const [inviteData, setInviteData] = useState();
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
   var date = new Date();
 
   function convert(str) {
@@ -59,15 +82,12 @@ function Demo() {
   }, []);
 
   const getData = () => {
-    axios
-    .get(`${baseUrl}/tl/videoScheduler?tl_id=1`)
-      .then((res) => {
-
-        var a = res.data.result.items;
-        if (a) {
-          setData(a.map(mapAppointmentData));
-        }
-      });
+    axios.get(`${baseUrl}/admin/videoScheduler`, myConfig).then((res) => {
+      var a = res.data.result.items;
+      if (a) {
+        setData(a.map(mapAppointmentData));
+      }
+    });
   };
 
   const mapAppointmentData = (appointment) => ({
@@ -79,54 +99,54 @@ function Demo() {
     question_id: appointment.question_id,
     vstart: appointment.vstart,
     vend: appointment.vend,
-    user: appointment.user.split(','),
+    user: appointment.user.split(","),
     owner: appointment.owner,
     username: appointment.username,
   });
 
   const getAssignmentNo = () => {
-    axios
-    .get(`${baseUrl}/admin/getAllQuery`)
-      .then((res) => {
-       
-        if (res.data.code === 1) {
-          var data = res.data.result;
-
-          const newArrayOfObj = data.map(({ assign_no: text, ...rest }) => ({
-            text,
-            ...rest,
-          }));
-       
-          setAssignmentData(newArrayOfObj);
-        }
-      });
-  };
-
-  const getUsers = () => {
-    axios.get(`${baseUrl}/tl/allAttendees?uid=${JSON.parse(userId)}`).then((res) => {
-
+    axios.get(`${baseUrl}/admin/getAllQuery`, myConfig).then((res) => {
       if (res.data.code === 1) {
         var data = res.data.result;
-        const newOwners = data.map(({ name: text, ...rest }) => ({
+
+        const newArrayOfObj = data.map(({ assign_no: text, ...rest }) => ({
           text,
           ...rest,
         }));
-       
-        setOwner(newOwners);
+
+        setAssignmentData(newArrayOfObj);
       }
     });
+  };
+
+  const getUsers = () => {
+    axios
+      .get(`${baseUrl}/admin/allAttendees?uid=${JSON.parse(userId)}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          var data = res.data.result;
+          const newOwners = data.map(({ name: text, ...rest }) => ({
+            text,
+            ...rest,
+          }));
+
+          setOwner(newOwners);
+        }
+      });
   };
 
   const resources = [
     {
       fieldName: "question_id",
       title: "Query No",
+      colorField: "green",
       instances: assignmentdata,
     },
     {
       fieldName: "user",
       title: "Users",
       instances: owner,
+
       allowMultiple: true,
     },
   ];
@@ -144,11 +164,15 @@ function Demo() {
     },
   });
 
-
   const B = (key) => {
-    setRead(!key)
-  }
-
+    setRead(!key);
+  };
+  const showInvite = (data) => {
+    if (data) {
+      setInviteData(data);
+    }
+    setInvite(!invite);
+  };
   const AppointmentBase = ({
     children,
     data,
@@ -160,23 +184,25 @@ function Demo() {
     <div onDoubleClick={() => B(data.owner)}>
       <Appointments.Appointment {...restProps}>
         <div style={{ display: "flex" }}>
-        <i
-            class="fa fa-video-camera"
+          <i
             onClick={() => handleJoin(data)}
-            style={{ fontSize: "18px", padding: "5px" , color: "#fff" }}
+            class="fa fa-video-camera"
+            style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
           ></i>
-          <div>{children}</div>
-          
-          <div
-          
-          >
+
+          <div style={{ display: "flex", width: "100px", overflow: "hidden" }}>
+            {children}
           </div>
+          <span onClick={() => showInvite(data)}>
+            <i
+              class="fa fa-user-plus"
+              style={{ fontSize: "18px", padding: "5px", color: "#fff" }}
+            ></i>
+          </span>
         </div>
       </Appointments.Appointment>
     </div>
   );
-
-  
 
   const Appointment = withStyles(styles, { name: "Appointment" })(
     AppointmentBase
@@ -186,30 +212,25 @@ function Demo() {
     return (
       <Appointment
         {...props}
-      // onAppointmentMetaChange={onAppointmentMetaChange}
+        // onAppointmentMetaChange={onAppointmentMetaChange}
       />
     );
   };
 
-
   //handleJoin
   const handleJoin = (data) => {
- 
-
     Cookies.set("channel_2", data.question_id);
     Cookies.set("baseMode_2", baseMode);
     Cookies.set("transcode_2", transcode);
     Cookies.set("attendeeMode_2", attendeeMode);
     Cookies.set("videoProfile_2", videoProfile);
-    // history.push("/teamleader/meeting/");
-    history.push(`/admin/meeting/${data.id}`);
+    Cookies.set("adminid", data.id);
 
+    history.push(`/admin_meeting/${data.id}`);
   };
 
   const changeFormat = (d) => {
-
-    if (typeof d === 'object') {
-   
+    if (typeof d === "object") {
       return (
         d.getFullYear() +
         "-" +
@@ -220,16 +241,13 @@ function Demo() {
         d.toString().split(" ")[4]
       );
     } else {
-    
       return d;
     }
   };
 
   const commitChanges = ({ added, changed, deleted }) => {
-
     if (added) {
-      setLoading(true)
-      
+      setLoading(true);
 
       var startDate = added.startDate;
       var endDate = added.endDate;
@@ -245,39 +263,37 @@ function Demo() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/aminPostCallSchedule`,
+        url: `${baseUrl}/admin/aminPostCallSchedule`,
+        headers: {
+          uit: token,
+        },
         data: formData,
       })
         .then(function (response) {
-        
           if (response.data.code === 1) {
-            setLoading(false)
-            Alerts.SuccessNormal("New call scheduled successfully.")
+            setLoading(false);
+            Alerts.SuccessNormal("New call scheduled successfully.");
           } else if (response.data.code === 0) {
-            setLoading(false)
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
 
           getData();
         })
-        .catch((error) => {
-
-        });
+        .catch((error) => {});
     }
     if (changed) {
-  
-      setLoading(true)
+      setLoading(true);
       const data2 = data.map((appointment) =>
         changed[appointment.id]
           ? { ...appointment, ...changed[appointment.id] }
           : appointment
       );
-     
 
       let valuesArray = Object.entries(changed);
       let id = valuesArray[0][0];
-     
+
       let dataIttem;
 
       for (var i = 0; i < data2.length; i++) {
@@ -285,13 +301,12 @@ function Demo() {
           dataIttem = data2[i];
         }
       }
-      var a = dataIttem.startDate
-      var b = dataIttem.endDate
-
+      var a = dataIttem.startDate;
+      var b = dataIttem.endDate;
 
       if (!dataIttem.owner) {
-        var variable = "Error"
-        Alerts.ErrorEdit(variable)
+        var variable = "Error";
+        Alerts.ErrorEdit(variable);
         return false;
       }
       let formData = new FormData();
@@ -306,51 +321,46 @@ function Demo() {
 
       axios({
         method: "POST",
-        url: `${baseUrl}/tl/aminPostCallSchedule`,
+        url: `${baseUrl}/admin/aminPostCallSchedule`,
+        headers: {
+          uit: token,
+        },
         data: formData,
       })
         .then(function (response) {
-         
-
           if (response.data.code === 1) {
-            setLoading(false)
-            var msg = "Call details updated successfully."
-            Alerts.SuccessNormal(msg)
-          }
-          else if (response.data.code === 0) {
-            setLoading(false)
-         
-            var msg = response.data.result
-            Alerts.ErrorNormal(msg)
+            setLoading(false);
+            var msg = "Call details updated successfully.";
+            Alerts.SuccessNormal(msg);
+          } else if (response.data.code === 0) {
+            setLoading(false);
+
+            var msg = response.data.result;
+            Alerts.ErrorNormal(msg);
           }
           getData();
         })
-        .catch((error) => {
-
-        });
+        .catch((error) => {});
     }
 
     if (deleted !== undefined) {
-     
-      setLoading(true)
+      setLoading(true);
       var value;
       data.filter((data) => {
         if (data.id == deleted) {
-         
-          value = data.owner
+          value = data.owner;
         }
       });
 
-   
       if (!value) {
-        var variable = "Error"
-        Alerts.ErrorDelete(variable)
+        var variable = "Error";
+        Alerts.ErrorDelete(variable);
         return false;
       }
 
       Swal.fire({
         title: "Are you sure?",
-        text: "It will be permanently deleted !",
+        text: "It will be permanently deleted",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -358,26 +368,29 @@ function Demo() {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          axios.get(`${baseUrl}/tl/freeslot?id=${deleted}`).then((res) => {
-           
-            if (res.data.code === 1) {
-              setLoading(false)
-              Swal.fire("Deleted!", "Scheduled call has been deleted.", "success");
-              getData();
-            } else {
-              setLoading(false)
-              Swal.fire("Oops...", "Errorr ", "error");
-            }
-          });
-        }
-        else{
+          axios
+            .get(`${baseUrl}/admin/freeslot?id=${deleted}`, myConfig)
+            .then((res) => {
+              if (res.data.code === 1) {
+                setLoading(false);
+                Swal.fire(
+                  "Deleted!",
+                  "Scheduled call has been deleted.",
+                  "success"
+                );
+                getData();
+              } else {
+                setLoading(false);
+                Swal.fire("Oops...", "Errorr ", "error");
+              }
+            });
+        } else {
           setLoading(false);
-          history.push("/admin/schedule")
+          history.push("/admin/schedule");
         }
       });
     }
   };
-
 
   const BooleanEditor = (props) => {
     if (props.label === "All Day" || props.label === "Repeat") {
@@ -392,74 +405,78 @@ function Demo() {
 
   //basic layout
   const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-
     return (
       <AppointmentForm.BasicLayout
         appointmentData={appointmentData}
         onFieldChange={onFieldChange}
         {...restProps}
       >
-
-        <AppointmentForm.Label text="All Participants" type="title" />
-        <AppointmentForm.TextEditor
-          value={appointmentData.username}
-          readOnly
-        />
-
+        <AppointmentForm.Label text="All participants" type="title" />
+        <AppointmentForm.TextEditor value={appointmentData.username} readOnly />
       </AppointmentForm.BasicLayout>
     );
   };
 
-
   return (
     <>
-      {
-        loading ?
-          <Loader />
-          :
-          <>
-            <Paper>
-              <Scheduler data={data} height={570}>
-                <ViewState
-                  defaultCurrentDate={currentDate}
-                  defaultCurrentViewName="Week"
-                />
-                <EditingState onCommitChanges={commitChanges} />
-                <EditRecurrenceMenu />
+      <div style={{ display: "flex", height: "700px" }}>
+        <Paper>
+          <Scheduler data={data}>
+            <ViewState
+              className={classes.rchStyle}
+              defaultCurrentDate={currentDate}
+              defaultCurrentViewName="Week"
+            />
+            <EditingState
+              className={classes.OverlayBase}
+              onCommitChanges={commitChanges}
+            />
+            <EditRecurrenceMenu />
 
-                <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
-                <WeekView cellDuration={60} startDayHour={0} endDayHour={24} TimeTableLayoutProps={8} />
-                
-                <Appointments appointmentComponent={myAppointment} />
+            <DayView cellDuration={60} startDayHour={0} endDayHour={24} />
+            <WeekView
+              cellDuration={60}
+              startDayHour={0}
+              endDayHour={24}
+              TimeTableLayoutProps={8}
+            />
 
-                <Toolbar />
-                <DateNavigator />
-                <TodayButton />
-                <ViewSwitcher />
+            <Appointments appointmentComponent={myAppointment} />
 
-                <AppointmentTooltip showOpenButton />
-                {
-                  read ?
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                      readOnly
-                    />
-                    :
-                    <AppointmentForm
-                      booleanEditorComponent={BooleanEditor}
-                      basicLayoutComponent={BasicLayout}
-                      textEditorComponent={TextEditor}
-                    />
-                }
-                <Resources
-                  data={resources}
-                />
-              </Scheduler>
-            </Paper>
-          </>
-      }
+            <Toolbar />
+            <DateNavigator />
+            <TodayButton />
+            <ViewSwitcher />
+
+            <AppointmentTooltip showOpenButton />
+            {read ? (
+              <AppointmentForm
+                booleanEditorComponent={BooleanEditor}
+                basicLayoutComponent={BasicLayout}
+                textEditorComponent={TextEditor}
+                readOnly
+              />
+            ) : (
+              <AppointmentForm
+                booleanEditorComponent={BooleanEditor}
+                basicLayoutComponent={BasicLayout}
+                textEditorComponent={TextEditor}
+              />
+            )}
+            <Resources data={resources} />
+          </Scheduler>
+        </Paper>
+      </div>
+
+      {invite === true ? (
+        <InviteModal
+          inviteData={inviteData}
+          showInvite={showInvite}
+          invite={invite}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }
