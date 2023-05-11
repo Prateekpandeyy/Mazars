@@ -348,7 +348,11 @@ const Generated = () => {
         if (res.data.code === 1) {
           setPage(1);
           setBig(1);
+          if((res.data.total)< allEnd){
+            setEnd(res.data.total);
+          }else{
           setEnd(Number(localStorage.getItem("tp_record_per_page")));
+          }
           let all = [];
           let sortId = 1;
 
