@@ -481,25 +481,6 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tlArrowAs2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tlArrowAs2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
 
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
