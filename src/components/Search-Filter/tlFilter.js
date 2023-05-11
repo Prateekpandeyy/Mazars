@@ -244,7 +244,6 @@ function TeamFilter(props) {
     }
   };
   const dateFormat = (e, b) => {
-    console.log(e, b);
     let k = "";
     if (e) {
       let date = e.split("-").reverse().join("-");
@@ -257,6 +256,7 @@ function TeamFilter(props) {
     }
   };
   const onSubmit = (data) => {
+    console.log("toDate", toDate);
     let obj = {};
     if (data.route) {
       obj = {
@@ -273,7 +273,7 @@ function TeamFilter(props) {
       obj = {
         store: store2,
         fromDate: fromDate,
-        toDate: toDate,
+        toDate: toDate.length > 0 ? toDate : moment().format("DD-MM-YYYY"),
         pcatId: selectedData,
         query_no: data?.query_no,
         p_status: data?.p_status,
@@ -281,7 +281,7 @@ function TeamFilter(props) {
         index: index,
       };
     }
-
+    console.log("toDate", toDate);
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     if (AllQuery == "AllQuery") {
       if (data.route) {
@@ -599,11 +599,12 @@ function TeamFilter(props) {
             .get(
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
                 userid
-              )}&cat_id=${store2}from=${dateFormat(fromDate)}&to=${dateFormat(
-                toDate
-              )}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
-                data.query_no
-              }`,
+              )}&cat_id=${store2}&from=${dateFormat(
+                fromDate,
+                "fromDate"
+              )}&to=${dateFormat(toDate, "toDate")}&status=${
+                data.p_status
+              }&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {
@@ -616,8 +617,12 @@ function TeamFilter(props) {
             .get(
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(
                 userid
-              )}&cat_id=${store2}&from=${dateFormat(fromDate)}&to=${dateFormat(
-                toDate
+              )}&cat_id=${store2}&from=${dateFormat(
+                fromDate,
+                "fromDate"
+              )}&to=${dateFormat(
+                toDate,
+                "toDate"
               )}&status=1&pcat_id=${selectedData}`,
               myConfig
             )

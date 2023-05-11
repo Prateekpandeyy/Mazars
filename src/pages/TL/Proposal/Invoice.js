@@ -126,7 +126,7 @@ const Invoice = (updateTab) => {
     }
     let remainApiPath = "";
 
-    if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
+    if (searchData && Object.values(searchData).length > 0) {
       remainApiPath = `/tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
       &installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
     } else {
