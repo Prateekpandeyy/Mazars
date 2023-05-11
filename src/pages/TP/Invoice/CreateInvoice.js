@@ -341,7 +341,7 @@ const CreateInvoice = () => {
         setPage(1);
         setBig(1);
         if (res.data.total < allEnd) {
-          setBig(res.data.total);
+          setEnd(res.data.total);
         } else {
           setEnd(allEnd);
         }
