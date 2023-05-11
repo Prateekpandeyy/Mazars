@@ -250,6 +250,8 @@ function AdminHeader({
       localStorage.removeItem("tpMessage1");
       localStorage.removeItem("tpcreate");
       localStorage.removeItem("tpFeedback");
+      localStorage.removeItem("preMessage");
+      localStorage.removeItem("prevtpmsg");
       localStorage.removeItem("freezetpFeedback");
       localStorage.removeItem("tpArrowFeed");
       localStorage.removeItem("tpMessage");
