@@ -527,7 +527,7 @@ function AssignmentTab(props) {
           localStorage.removeItem("tpArrowAs1");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -551,7 +551,7 @@ function AssignmentTab(props) {
           setIsActive(field);
           localStorage.removeItem("tpArrowAs1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

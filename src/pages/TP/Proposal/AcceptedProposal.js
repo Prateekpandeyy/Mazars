@@ -366,7 +366,7 @@ function AcceptedProposal() {
           localStorage.removeItem("tpArrowProposal3");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -389,7 +389,7 @@ function AcceptedProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal3");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -412,7 +412,7 @@ function AcceptedProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal3");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -454,7 +454,7 @@ function AcceptedProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal3");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -485,7 +485,7 @@ function AcceptedProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal3");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -511,10 +511,10 @@ function AcceptedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal3");
         }
         if (accend === field) {
           val = 0;
@@ -546,12 +546,12 @@ function AcceptedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal3");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -576,12 +576,12 @@ function AcceptedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("tpArrowProp2", field);
+          localStorage.setItem("tpArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tpArrowProp2");
+          localStorage.removeItem("tpArrowProposal3");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;

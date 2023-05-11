@@ -359,7 +359,7 @@ function Paginator(props) {
                 //if Data then Api Path
                 remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
                     userid
-                )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+                )}&status=1&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
@@ -370,7 +370,7 @@ function Paginator(props) {
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
                     userid
-                )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
+                )}&status=1&cat_id=${data.store}&from=${data.fromDate
                     ?.split("-")
                     .reverse()
                     .join("-")}&to=${data.toDate
@@ -391,11 +391,11 @@ function Paginator(props) {
             }
         }
         else if (DeclinedQuery == "DeclinedQuery") {
-            let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
+            let data = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem(""));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(`tpQuery2`, JSON.stringify(e));
+            localStorage.setItem(``, JSON.stringify(e));
             if ((data) && (!pagetry)) {
 
             } else if ((data) && (pagetry)) {

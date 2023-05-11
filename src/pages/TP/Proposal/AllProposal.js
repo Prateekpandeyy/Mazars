@@ -394,7 +394,7 @@ function AllProposal() {
           localStorage.removeItem("tpArrowProposal1");
         }
 
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -417,7 +417,7 @@ function AllProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -440,7 +440,7 @@ function AllProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -482,7 +482,7 @@ function AllProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -513,7 +513,7 @@ function AllProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -586,7 +586,7 @@ function AllProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
@@ -616,7 +616,7 @@ function AllProposal() {
           setAccend("");
           localStorage.removeItem("tpArrowProposal1");
         }
-        if (accend === true) {
+        if (accend === field) {
           val = 0;
         } else {
           val = 1;
