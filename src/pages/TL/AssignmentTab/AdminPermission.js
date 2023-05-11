@@ -65,7 +65,7 @@ function AdminPermission(props) {
   var rowStyle2 = {};
   const [reportModal, setReportModal] = useState(false);
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [queryNo, setQueryNo] = useState("");
   const ViewReport = (key) => {
     setReportModal(!reportModal);
@@ -172,9 +172,9 @@ function AdminPermission(props) {
     },
   };
   const getAssignmentData = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment4"));

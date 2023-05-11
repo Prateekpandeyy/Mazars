@@ -61,7 +61,7 @@ function AssignmentTab() {
   const [reportModal, setReportModal] = useState(false);
   const [qid, setQid] = useState("");
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [queryNo, setQueryNo] = useState("");
   const [categoryData, setCategory] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
@@ -122,9 +122,9 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment3"));
