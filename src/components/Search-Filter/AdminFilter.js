@@ -236,6 +236,7 @@ function AdminFilter(props) {
           });
       }
     }
+
     if (pendingAlloation == "pendingAlloation") {
       if (data.route) {
         axios
@@ -347,6 +348,7 @@ function AdminFilter(props) {
           });
       }
     }
+
     if (allProposal == "allProposal") {
       if (data.route) {
         axios
@@ -510,6 +512,7 @@ function AdminFilter(props) {
           });
       }
     }
+
     if (declinedProposal == "declinedProposal") {
       if (data.route) {
         axios

@@ -87,7 +87,7 @@ function AllQueriesData({
       runTo?.scrollIntoView(false);
       runTo?.scrollIntoView({ block: 'center' });
     }
-  }, [additionalQuery]);
+}, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
     // console.log(tableId);
@@ -499,6 +499,17 @@ function AllQueriesData({
             />
           </Col>
         </Row>
+        {/* <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              setOnPage={setOnPage}
+              // resetPaging={resetPaging}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row> */}
         <DataTablepopulated
           bgColor="#55425f"
           keyField={"assign_no"}

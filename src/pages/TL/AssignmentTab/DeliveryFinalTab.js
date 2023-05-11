@@ -254,7 +254,7 @@ function AssignmentTab() {
       setFianlModal(!fianlModal);
       setFinalId(id);
       setQid(id.q_id);
-      console.log("else");
+      setLoading(false);
       setScrolledTo(id.assign_no);
     }
   };

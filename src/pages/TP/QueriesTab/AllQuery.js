@@ -60,7 +60,7 @@ function AllQuery(props) {
       runTo.scrollIntoView(false);
       runTo.scrollIntoView({ block: 'center' });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {

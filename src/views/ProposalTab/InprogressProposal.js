@@ -10,8 +10,8 @@ import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Records from "../../components/Records/Records";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../components/commonShowProposal/CommonShowProposal";
-import ModalManual from "../ModalManual/AllComponentManual";
 import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import ModalManual from "../ModalManual/AllComponentManual";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import MessageIcon, {
   EyeIcon,
@@ -178,6 +178,7 @@ function InprogressProposal() {
           setCount(res.data.total);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
+          setCount(res.data.total);
         }
       });
   };

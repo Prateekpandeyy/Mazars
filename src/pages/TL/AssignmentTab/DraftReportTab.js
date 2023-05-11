@@ -134,6 +134,7 @@ function AssignmentTab() {
       setScrolledTo(id.assign_no);
     } else {
       setDraftModal(!draftModal);
+      setLoading(false);
       setId(id.id);
     }
   };

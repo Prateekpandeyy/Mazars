@@ -31,6 +31,17 @@ function ProposalTab() {
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState('');
+  const [accend, setAccend] = useState(false);
+  const [resetTrigger, setresetTrigger] = useState(false);
+
   const [viewData, setViewData] = useState({});
   const [viewModal, setViewModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -39,6 +50,7 @@ function ProposalTab() {
   const [openManual, setManual] = useState(false);
   const [proposalId, setProposalId] = useState();
   const token = window.localStorage.getItem("clientToken");
+
   const myConfig = {
     headers: {
       uit: token,
@@ -48,15 +60,6 @@ function ProposalTab() {
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
   // const classes = useStyles();
   const allEnd = 50;
-  const [count, setCount] = useState(0);
-  const [onPage, setOnPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
-  const [resetTrigger, setresetTrigger] = useState(false);
-  const [accend, setAccend] = useState(false);
-  const [turnGreen, setTurnGreen] = useState(false);
-  const [isActive, setIsActive] = useState("");
   const [prev, setPrev] = useState("");
 
   const ViewHandler = (key) => {
@@ -184,6 +187,7 @@ function ProposalTab() {
           setCount(res.data.total);
           setCountProposal(res.data.result.length);
           setRecords(res.data.result.length);
+          setCount(res.data.total)
         } else if (res.data.code === 0) {
           CommonServices.clientLogout(history);
         }

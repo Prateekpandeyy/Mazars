@@ -43,6 +43,7 @@ function QueriesTab(props) {
   }, []);
 
   const CountAllQuery = (data) => {
+    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery1`));
     axios
       .get(
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`,
@@ -62,6 +63,7 @@ function QueriesTab(props) {
   };
 
   const CountInprogressAllocation = () => {
+    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery2`));
     axios
       .get(
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -83,6 +85,7 @@ function QueriesTab(props) {
   };
 
   const CountInprogressProposal = () => {
+    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
     axios
       .get(
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -92,7 +95,9 @@ function QueriesTab(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          // if(local){
           setInprogressProposal(res.data.result);
+          // }
           setAllResult((preValue) => {
             return {
               ...preValue,
@@ -104,6 +109,7 @@ function QueriesTab(props) {
   };
 
   const CountDeclined = () => {
+    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery4`));
     axios
       .get(
         `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`,

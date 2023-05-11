@@ -30,10 +30,11 @@ function CreateFolder({
   });
 
   const onSumbit = (value) => {
+    console.log(window.location.pathname.split("_"));
     var confToken = "";
-    if (window.location.pathname.split("/")[1] === "teamleader") {
+    if (window.location.pathname.split("_")[0] === "/teamleader") {
       confToken = window.localStorage.getItem("tlToken");
-    } else if (window.location.pathname.split("/")[1] === "taxprofessional") {
+    } else if (window.location.pathname.split("_")[1] === "/taxprofessional") {
       confToken = window.localStorage.getItem("tptoken");
       console.log('tptoken',confToken);
     }else if (window.location.pathname.split("/")[1] === "taxprofessional_queries") {

@@ -531,10 +531,11 @@ function CustomerFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-              id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-            }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=${
+              data.p_status
+            }&pcat_id=${data.pcatId}`,
             myConfig
           )
           .then((res) => {
@@ -552,7 +553,7 @@ function CustomerFilter(props) {
                   all.push(data);
                 });
                 setData(all);
-                // setRecords(res.data.result.length);
+                setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
             }
@@ -565,7 +566,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -584,10 +586,10 @@ function CustomerFilter(props) {
                   all.push(data);
                 });
                 setData(all);
-                // setRecords(res.data.result.length);
+                setRecords(res.data.result.length);
                 setCount(res.data.total);
                 resetTriggerFunc();
-                localStorage.setItem(`custProposal1`, JSON.stringify(1));
+                localStorage.setItem(`custProp1`, JSON.stringify(1));
               }
             }
           })
@@ -602,10 +604,11 @@ function CustomerFilter(props) {
         if (data.p_status) {
           axios
             .get(
-              `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-                id
-              )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-              }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+                data.store
+              }&from=${data.fromDate}&to=${data.toDate}&status=${
+                data.p_status
+              }&pcat_id=${data.pcatId}`,
               myConfig
             )
             .then((res) => {
@@ -623,7 +626,7 @@ function CustomerFilter(props) {
                     all.push(data);
                   });
                   setData(all);
-                  // setRecords(res.data.result.length);
+                  setRecords(res.data.result.length);
                   setCount(res.data.total);
                 }
               }
@@ -634,10 +637,11 @@ function CustomerFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-                id
-              )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-              }&status=1&pcat_id=${data.pcatId}`,
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+                data.store
+              }&from=${data.fromDate}&to=${data.toDate}&status=1&pcat_id=${
+                data.pcatId
+              }`,
               myConfig
             )
             .then((res) => {
@@ -655,7 +659,7 @@ function CustomerFilter(props) {
                     all.push(data);
                   });
                   setData(all);
-                  // setRecords(res.data.result.length);
+                  setRecords(res.data.result.length);
                   setCount(res.data.total);
                 }
               }
@@ -670,7 +674,8 @@ function CustomerFilter(props) {
             .get(
               `${baseUrl}/customers/getProposals?uid=${JSON.parse(
                 id
-              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
               }&status=${data.p_status}&pcat_id=${selectedData}`,
               myConfig
             )
@@ -689,10 +694,10 @@ function CustomerFilter(props) {
                     all.push(data);
                   });
                   setData(all);
-                  // setRecords(res.data.result.length);
+                  setRecords(res.data.result.length);
                   setCount(res.data.total);
                   resetTriggerFunc();
-                  localStorage.setItem(`custProposal2`, JSON.stringify(1));
+                  localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
                 }
               }
             })
@@ -704,7 +709,8 @@ function CustomerFilter(props) {
             .get(
               `${baseUrl}/customers/getProposals?uid=${JSON.parse(
                 id
-              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
               }&status=1&pcat_id=${selectedData}`,
               myConfig
             )
@@ -723,10 +729,10 @@ function CustomerFilter(props) {
                     all.push(data);
                   });
                   setData(all);
-                  // setRecords(res.data.result.length);
+                  setRecords(res.data.result.length);
                   setCount(res.data.total);
                   resetTriggerFunc();
-                  localStorage.setItem(`custProposal2`, JSON.stringify(1));
+                  localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
                 }
               }
             })
@@ -741,10 +747,11 @@ function CustomerFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-              id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-            }&status=2&pcat_id=${data.pcatId}`,
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${
+              data.pcatId
+            }`,
             myConfig
           )
           .then((res) => {
@@ -764,7 +771,7 @@ function CustomerFilter(props) {
                 setData(all);
                 setCount(res.data.total);
                 // setData(res.data.result);
-                // setRecords(res.data.result.length);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -776,7 +783,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
@@ -797,9 +805,7 @@ function CustomerFilter(props) {
                 setData(all);
                 setCount(res.data.total);
                 // setData(res.data.result);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custProposal3`, JSON.stringify(1));
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -813,10 +819,11 @@ function CustomerFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(
-              id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-            }&status=3&pcat_id=${data.pcatId}`,
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=3&pcat_id=${
+              data.pcatId
+            }`,
             myConfig
           )
           .then((res) => {
@@ -835,7 +842,7 @@ function CustomerFilter(props) {
                 });
                 setData(all);
                 setCount(res.data.total);
-                // setRecords(res.data.result.length);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -847,7 +854,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=3&pcat_id=${selectedData}`,
             myConfig
           )
@@ -867,9 +875,7 @@ function CustomerFilter(props) {
                 });
                 setData(all);
                 setCount(res.data.total);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custProposal4`, JSON.stringify(1));
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -885,7 +891,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -893,18 +900,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -916,7 +913,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -924,21 +922,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custAs1`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -953,7 +938,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=1&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -961,18 +947,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -984,7 +960,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=1&pcat_id=${selectedData}`,
             myConfig
           )
@@ -992,21 +969,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custAs2`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1021,7 +985,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=2&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1029,18 +994,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1052,7 +1007,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1060,21 +1016,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custAs3`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1089,7 +1032,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=3&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1097,18 +1041,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1120,7 +1054,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=3&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1128,21 +1063,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custAs4`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1157,7 +1079,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1165,18 +1088,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1188,7 +1101,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1196,21 +1110,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let data = res.data.result;
-                let all = [];
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custAs5`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1225,7 +1126,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1233,19 +1135,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                // setRecords(res.data.result.length);
-                setCount(res.data.total);
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1257,7 +1148,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1266,9 +1158,7 @@ function CustomerFilter(props) {
               setLoading(false);
               if (res.data.result) {
                 setData(res.data.result);
-                // setRecords(res.data.result.length);
-                resetTriggerFunc();
-                localStorage.setItem(`custPay1`, JSON.stringify(1));
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1283,7 +1173,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=2&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1292,7 +1183,7 @@ function CustomerFilter(props) {
               setLoading(false);
               if (res.data.result) {
                 setData(res.data.result);
-                // setRecords(res.data.result.length);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1304,7 +1195,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1312,20 +1204,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                setCount(res.data.total);
-                resetTriggerFunc();
-                localStorage.setItem(`custPay2`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1340,7 +1220,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=1&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1349,7 +1230,7 @@ function CustomerFilter(props) {
               setLoading(false);
               if (res.data.result) {
                 setData(res.data.result);
-                // setRecords(res.data.result.length);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1361,7 +1242,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=1&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1369,21 +1251,8 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                let all = [];
-                let data = res.data.result;
-                data.map((i) => {
-                  let data = {
-                    ...i,
-                    cid: customId,
-                  };
-                  customId++;
-                  all.push(data);
-                });
-                setData(all);
-                // setRecords(res.data.result.length);
-                setCount(res.data.total);
-                resetTriggerFunc();
-                localStorage.setItem(`custPay3`, JSON.stringify(1));
+                setData(res.data.result);
+                setRecords(res.data.result.length);
               }
             }
           })
@@ -1491,7 +1360,6 @@ function CustomerFilter(props) {
                     style={{ height: "33px" }}
                     value={status1}
                     onChange={(e) => setStatus1(e.target.value)}
-
                   >
                     <option value="">--select--</option>
                     <option value="1">Inprogress Queries</option>

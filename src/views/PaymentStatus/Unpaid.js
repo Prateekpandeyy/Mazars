@@ -603,14 +603,14 @@ function Paid() {
                   </thead>
                   {pay.length > 0
                     ? pay.map((p, i) => (
-                        <tbody>
-                          <tr>
-                            <td>{i + 1}</td>
-                            <td>{CommonServices.removeTime(p.payment_date)}</td>
-                            <td>{p.paid_amount}</td>
-                          </tr>
-                        </tbody>
-                      ))
+                      <tbody>
+                        <tr>
+                          <td>{i + 1}</td>
+                          <td>{CommonServices.removeTime(p.payment_date)}</td>
+                          <td>{p.paid_amount}</td>
+                        </tr>
+                      </tbody>
+                    ))
                     : null}
                 </table>
               </ModalBody>
