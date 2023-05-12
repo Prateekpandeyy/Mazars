@@ -13,7 +13,6 @@ import moment from "moment";
 import ModalManual from "../ModalManual/AllComponentManual";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import PaginatorCust from "../../components/Paginator/PaginatorCust";
-
 import MessageIcon, {
   DeleteIcon,
   EditQuery,
@@ -23,6 +22,16 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 function InprogressAllocation({
   allQueriesCount,
   // setAllQueriesCount,
@@ -45,7 +54,7 @@ function InprogressAllocation({
       uit: token,
     },
   };
-
+  const classes = useStyles();
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -94,6 +103,37 @@ function InprogressAllocation({
   const needHelp = () => {
     setManual(!openManual);
   };
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowQuery2") === column.dataField ||
+      localStorage.getItem("prevcustq2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustq2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowQuery2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustQuery2`));
@@ -176,6 +216,55 @@ function InprogressAllocation({
       });
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custQuery2`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustQuery2`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery2"));
+
+    if (data) {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&status=1&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setInprogressAllocation(all);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       text: "S.No",
@@ -193,7 +282,25 @@ function InprogressAllocation({
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormatter(cell, row) {
         return <>{CommonServices.changeFormateDate(row.created)}</>;
@@ -202,6 +309,26 @@ function InprogressAllocation({
     {
       text: "Query No",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
+
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -222,16 +349,71 @@ function InprogressAllocation({
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Status",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -253,7 +435,25 @@ function InprogressAllocation({
     {
       text: "Expected / Actual Delivery Date",
       dataField: "exp_delivery_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         return (
