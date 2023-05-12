@@ -106,7 +106,7 @@ function Linklist() {
         let rem = (p - 1) * allEnd;
         if (p === 1) {
           if((res.data.total)< allEnd){
-            setBig(res.data.total);
+            setBig(1);
             setEnd(end);
           }else{
           setBig(rem + p);
