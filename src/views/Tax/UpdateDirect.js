@@ -52,7 +52,7 @@ const UpdateDirect = () => {
   const [loading, setLoading] = useState(false);
   const [isSorted, setisSorted] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -78,7 +78,7 @@ const UpdateDirect = () => {
   }, []);
   useEffect(() => {
     const dynamicPage = Math.ceil(count / allEnd);
-    setTotalPage(dynamicPage)
+    setTotalPage(dynamicPage);
   }, [count]);
   // const onChangePage = (event, nextPage) => {
   //   setPage(nextPage);
@@ -100,9 +100,9 @@ const UpdateDirect = () => {
       customId = allEnd * (p - 1) + 1;
     }
     if (isActive == true) {
-      remainApiPath = `customers/getupdated?page=${p}&type=direct&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getupdated?page=${p}&type=direct&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getupdated?page=${p}&type=direct`
+      remainApiPath = `customers/getupdated?page=${p}&type=direct`;
     }
 
     axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
@@ -147,9 +147,9 @@ const UpdateDirect = () => {
     let formData = new FormData();
     formData.append("content", searchText);
     if (isActive == true) {
-      remainApiPath = `customers/getarticles?type=direct&page=${p}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getarticles?type=direct&page=${p}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getupdated?type=direct&page=${p}`
+      remainApiPath = `customers/getupdated?type=direct&page=${p}`;
     }
 
     axios({
@@ -203,28 +203,26 @@ const UpdateDirect = () => {
 
   //page counter
   const prevChunk = () => {
-    if (((atPage < (totalPage)) && (atPage > 1)) || (atPage == totalPage)) {
+    if ((atPage < totalPage && atPage > 1) || atPage == totalPage) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
       if (searchText.length != 0) {
-        searchArticle(atPage - 1)
+        searchArticle(atPage - 1);
       } else {
         getData(atPage - 1);
       }
     }
-
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (totalPage))) {
+    if (atPage > 0 && atPage < totalPage) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
       if (searchText.length != 0) {
-        searchArticle(atPage + 1)
+        searchArticle(atPage + 1);
       } else {
         getData(atPage + 1);
       }
     }
-
   };
 
   const sortMessage = (val, field) => {
@@ -235,7 +233,7 @@ const UpdateDirect = () => {
     setSortVal(val);
     setSortField(field);
     setAccend(!accend);
-    if (((searchText?.length) != 0)) {
+    if (searchText?.length != 0) {
       let formData = new FormData();
       formData.append("content", searchText);
       axios({
@@ -276,47 +274,43 @@ const UpdateDirect = () => {
         }
       });
     } else {
-      remainApiPath = `customers/getupdated?type=direct&page=1&orderby=${val}&orderbyfield=${field}&page=1`
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let all = [];
-            let dataObj = {};
-            let dataList = [];
-            let customId = 1;
-            let sortId = 1;
-            res.data.result.map((i, e) => {
-              dataObj = {
-                sn: ++e,
-                content: i.content,
-                file: i.file,
-                heading: i.heading,
-                id: i.id,
-                publish_date: i.publish_date,
-                status: i.status,
-                type: i.type,
-                writer: i.writer,
-                cid: customId++,
-              };
-              dataList.push(dataObj);
-            });
-            let end = 1 * allEnd;
-            // let dynamicPage = Math.ceil(res.data.total / allEnd);
-            setData(dataList);
-            setCount(res.data.total);
-            setTurnGreen(true);
-            let rem = 0 * allEnd;
-            setBig(rem + 1);
-            setEnd(end);
-            setAtpage(1);
-            setPage(1);
-          }
-        });
+      remainApiPath = `customers/getupdated?type=direct&page=1&orderby=${val}&orderbyfield=${field}&page=1`;
+      axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          let sortId = 1;
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+              cid: customId++,
+            };
+            dataList.push(dataObj);
+          });
+          let end = 1 * allEnd;
+          // let dynamicPage = Math.ceil(res.data.total / allEnd);
+          setData(dataList);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          let rem = 0 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
+          setAtpage(1);
+          setPage(1);
+        }
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -375,24 +369,24 @@ const UpdateDirect = () => {
                             <span className="d-flex">
                               {atPage > 1 ? (
                                 <>
-                                <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
+                                  <button
+                                    className="navButton"
+                                    onClick={(e) => prevChunk()}
+                                  >
+                                    <KeyboardArrowLeftIcon />
+                                  </button>
                                 </>
                               ) : (
                                 ""
                               )}
                               {atPage < totalPage ? (
                                 <>
-                                   <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
+                                  <button
+                                    className="navButton"
+                                    onClick={(e) => nextChunk()}
+                                  >
+                                    <KeyboardArrowRightIcon />
+                                  </button>
                                 </>
                               ) : (
                                 ""
@@ -424,8 +418,7 @@ const UpdateDirect = () => {
                                       Date of publishing
                                       {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
-                                  )
-                                  }
+                                  )}
                                 </TableCell>
                                 <TableCell>
                                   <SubHeading>Heading</SubHeading>
@@ -557,40 +550,40 @@ const UpdateDirect = () => {
                       </SearchBtn>
                     </div>
                     <SearchBtn outer="outer">
-                        <div className="customPagination">
-                          <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                            <span>
-                              {big}-{end} of {count}
-                            </span>
-                            <span className="d-flex">
-                              {atPage > 1 ? (
-                                <>
-                               <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
-                                </>
-                              ) : (
-                                ""
-                              )}
-                              {atPage < totalPage ? (
-                                <>
-                                  <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                                </>
-                              ) : (
-                                ""
-                              )}
-                            </span>
-                          </div>
+                      <div className="customPagination">
+                        <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                          <span>
+                            {big}-{end} of {count}
+                          </span>
+                          <span className="d-flex">
+                            {atPage > 1 ? (
+                              <>
+                                <button
+                                  className="navButton"
+                                  onClick={(e) => prevChunk()}
+                                >
+                                  <KeyboardArrowLeftIcon />
+                                </button>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                            {atPage < totalPage ? (
+                              <>
+                                <button
+                                  className="navButton"
+                                  onClick={(e) => nextChunk()}
+                                >
+                                  <KeyboardArrowRightIcon />
+                                </button>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </span>
                         </div>
-                      </SearchBtn>
+                      </div>
+                    </SearchBtn>
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>
@@ -614,8 +607,7 @@ const UpdateDirect = () => {
                                     Date of publishing
                                     {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
-                                )
-                                }
+                                )}
                               </TableCell>
                               <TableCell>
                                 <SubHeading>Heading</SubHeading>
@@ -699,10 +691,8 @@ const UpdateDirect = () => {
                     </div>
                   </>
                 </TableContainer>
-
               </div>
             </div>
-
           </MyContainer>
           <Footer />
         </OuterloginContainer>

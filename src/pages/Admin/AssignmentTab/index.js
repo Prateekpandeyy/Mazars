@@ -99,6 +99,10 @@ function AssignmentTab(props) {
 
     color: "#5a625a",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (
