@@ -301,7 +301,6 @@ function AllQueriesData({
     {
       text: "Date",
       dataField: "created",
-      sort: true,
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {

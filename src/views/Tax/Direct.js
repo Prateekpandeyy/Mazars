@@ -688,12 +688,18 @@ const Direct = () => {
                         </TableCell>
                         <TableCell style={{ width: "200px" }}>
                           {accend == true ? (
-                            <SubHeading onClick={() => sortMessage(1, 1)}>
-                              Date of publishing  <ArrowDropDownIcon />
+                            <SubHeading 
+                            // onClick={() => sortMessage(1, 1)}
+                            >
+                              Date of publishing  
+                              {/* <ArrowDropDownIcon /> */}
                             </SubHeading>
                           ) : (
-                            <SubHeading onClick={() => sortMessage(0, 1)}>
-                              Date of publishing <ArrowDropUpIcon />
+                            <SubHeading 
+                            // onClick={() => sortMessage(0, 1)}
+                            >
+                              Date of publishing 
+                              {/* <ArrowDropUpIcon /> */}
                             </SubHeading>
                           )
                           }
