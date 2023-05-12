@@ -586,7 +586,6 @@ function Unpaid() {
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },
-
     {
       text: "Amount Outstanding",
       dataField: "amount_outstanding",
@@ -851,11 +850,11 @@ function Unpaid() {
             <CustomerFilter
               setData={setPayment}
               getData={getPaymentStatus}
-              unpaid="unpaid"
+              paid="paid"
               setRecords={setRecords}
               records={records}
               id={userId}
-              index="custPay2"
+              index="custPay3"
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />
@@ -875,7 +874,7 @@ function Unpaid() {
                   id={userId}
                   setData={setPayment}
                   getData={getPaymentStatus}
-                  unpaid="unpaid"
+                  paid="paid"
                   index="custPay3"
                   setOnPage={setOnPage}
                   resetTrigger={resetTrigger}

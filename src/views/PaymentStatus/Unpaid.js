@@ -836,7 +836,7 @@ function Paid() {
             <CustomerFilter
               setData={setPayment}
               getData={getPaymentStatus}
-              paid="paid"
+              unpaid="unpaid"
               setRecords={setRecords}
               records={records}
               id={userId}
@@ -852,7 +852,7 @@ function Paid() {
                   id={userId}
                   setData={setPayment}
                   getData={getPaymentStatus}
-                  paid="paid"
+                  unpaid="unpaid"
                   index="custPay2"
                   setOnPage={setOnPage}
                   resetTrigger={resetTrigger}
