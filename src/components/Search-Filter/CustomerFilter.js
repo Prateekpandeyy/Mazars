@@ -157,7 +157,7 @@ function CustomerFilter(props) {
     console.log('data to submit in form',);
     setLoading(true);
     let obj = {};
-    if ((assignment == "assignment")|| (proposal == "proposal") ||(InprogressAllocation == "InprogressAllocation") ) {
+    if ((assignment == "assignment") || (proposal == "proposal") || (InprogressAllocation == "InprogressAllocation")) {
       if (data.route) {
         obj = {
           store: data.store,
@@ -208,7 +208,7 @@ function CustomerFilter(props) {
     }
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
-    console.log("Obj", obj);
+    // console.log("Obj", obj);
     let customId = 1;
     let remainApiPath = ` `;
 
@@ -786,7 +786,6 @@ function CustomerFilter(props) {
                 });
                 setData(all);
                 setCount(res.data.total);
-                // setData(res.data.result);
                 setRecords(res.data.result.length);
               }
             }
@@ -819,8 +818,9 @@ function CustomerFilter(props) {
                 });
                 setData(all);
                 setCount(res.data.total);
-                // setData(res.data.result);
                 setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custPropsosal3`, JSON.stringify(1));
               }
             }
           })
@@ -888,6 +888,8 @@ function CustomerFilter(props) {
                 setData(all);
                 setCount(res.data.total);
                 setRecords(res.data.result.length);
+                resetTriggerFunc();
+                localStorage.setItem(`custPropsosal4`, JSON.stringify(1));
               }
             }
           })
@@ -913,6 +915,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -934,6 +937,10 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs1`, JSON.stringify(1));
+                
               }
             }
           })
@@ -958,6 +965,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -979,6 +987,9 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs2`, JSON.stringify(1));
               }
             }
           })
@@ -1003,6 +1014,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1024,6 +1036,9 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs3`, JSON.stringify(1));
               }
             }
           })
@@ -1048,6 +1063,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1069,6 +1085,9 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custAs4`, JSON.stringify(1));
               }
             }
           })
@@ -1093,6 +1112,7 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total);
               }
             }
           })
@@ -1114,6 +1134,9 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
+                setCount(res.data.total)
+                resetTriggerFunc();
+                localStorage.setItem(`custAs5`, JSON.stringify(1));
               }
             }
           })
@@ -1160,7 +1183,9 @@ function CustomerFilter(props) {
               if (res.data.result) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
-                setCount(res.data.total);
+                setCount(res.data.total)
+                resetTriggerFunc();
+                localStorage.setItem(`custPay1`, JSON.stringify(1));
               }
             }
           })
@@ -1208,6 +1233,8 @@ function CustomerFilter(props) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custPay2`, JSON.stringify(1));
               }
             }
           })
@@ -1255,6 +1282,8 @@ function CustomerFilter(props) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
+                resetTriggerFunc();
+                localStorage.setItem(`custPay3`, JSON.stringify(1));
               }
             }
           })

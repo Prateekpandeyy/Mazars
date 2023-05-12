@@ -158,7 +158,7 @@ function Paid() {
 
   const getPaymentStatus = (e) => {
     if ((e === undefined)) {
-      console.log(e,'e');
+      // console.log(e,'e');
       e=1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
@@ -317,7 +317,7 @@ function Paid() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },
@@ -336,7 +336,7 @@ function Paid() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.paid_amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },

@@ -1104,7 +1104,7 @@ function AssignmentTab() {
                 resetTrigger={resetTrigger}
                 setresetTrigger={setresetTrigger}
                 tpDeliveryTab="tpDeliveryTab"
-                index="tpAssignment2"
+                index="tpAssignment3"
                 setData={setAssignment}
                 getData={getAssignmentList}
               />
