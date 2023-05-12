@@ -17,6 +17,16 @@ import MessageIcon, {
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function DeclinedQueries({
   allQueriesCount,
@@ -35,6 +45,7 @@ function DeclinedQueries({
   const [loading, setLoading] = useState(false);
   const [declined, setDeclined] = useState([]);
   const myRef = useRef([]);
+  const classes = useStyles();
   const myConfig = {
     headers: {
       uit: token,
@@ -89,6 +100,37 @@ function DeclinedQueries({
       }
     // }
   }, []);
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowQuery4") === column.dataField ||
+      localStorage.getItem("prevcustq4") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustq4", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowQuery4") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   const CountDeclined = (e) => {
     if ((e === undefined)) {
@@ -151,6 +193,52 @@ function DeclinedQueries({
     setManual(!openManual);
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custQuery4`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustQuery4`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery4"));
+
+    if (data) {
+      remainApiPath = `customers/declinedQueries?page=1&uid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&pcat_id=${data.pcatId}&status=${data.p_status}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/declinedQueries?page=1&uid=${JSON.parse(userId)}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setDeclined(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       text: "S.No",
@@ -168,7 +256,25 @@ function DeclinedQueries({
     {
       text: "Date",
       dataField: "created",
-      sort: true,
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery4", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery4");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 1);
+      // },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -181,6 +287,25 @@ function DeclinedQueries({
     {
       text: "Query No",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -201,15 +326,70 @@ function DeclinedQueries({
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Status",
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery4", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery4");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -231,7 +411,25 @@ function DeclinedQueries({
     {
       text: "Expected Delivery Date",
       dataField: "exp_delivery_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         return (
@@ -378,7 +576,7 @@ function DeclinedQueries({
     localStorage.removeItem("custQuery4");
     localStorage.removeItem(`freezecustQuery4`);
     localStorage.removeItem("custArrowQuery4");
-    localStorage.removeItem("prevcustQuery4");
+    localStorage.removeItem("prevcustq4");
     setPrev("");
   }
 

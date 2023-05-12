@@ -237,7 +237,7 @@ function InprogressAllocation({
     } else {
       remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
         userId
-      )}&status=1&orderby=${val}&orderbyfield=${field}`
+      )}&status=1`
     }
 
     axios
@@ -309,25 +309,25 @@ function InprogressAllocation({
     {
       text: "Query No",
       dataField: "assign_no",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowQuery2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowQuery2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery2", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery2");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
 
       formatter: function nameFormatter(cell, row) {
@@ -395,25 +395,25 @@ function InprogressAllocation({
     {
       text: "Status",
       dataField: "",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowQuery2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowQuery2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery2", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery2");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -657,7 +657,7 @@ function InprogressAllocation({
     localStorage.removeItem("custQuery2");
     localStorage.removeItem(`freezecustQuery2`);
     localStorage.removeItem("custArrowQuery2");
-    localStorage.removeItem("prevcustQuery2");
+    localStorage.removeItem("prevcustq2");
     setPrev("");
   }
 

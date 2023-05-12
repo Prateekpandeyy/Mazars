@@ -18,6 +18,16 @@ import MessageIcon, {
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import CommonServices from "../../common/common";
 import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AcceptedProposal() {
   let history = useHistory();
@@ -32,7 +42,7 @@ function AcceptedProposal() {
   const myRef = useRef([]);
 
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
-  // const classes = useStyles();
+  const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
@@ -72,6 +82,37 @@ function AcceptedProposal() {
       runTo?.scrollIntoView({ block: 'center' });  
 }, [ViewDiscussion]);
 
+function headerLabelFormatter(column, colIndex) {
+  let isActive = true;
+
+  if (
+    localStorage.getItem("custArrowPropsal3") === column.dataField ||
+    localStorage.getItem("prevcustp3") === column.dataField
+  ) {
+    isActive = true;
+    setPrev(column.dataField);
+    localStorage.setItem("prevcustp3", column.dataField);
+  } else {
+    isActive = false;
+  }
+  return (
+    <div className="d-flex text-white w-100 flex-wrap">
+      <div style={{ display: "flex", color: "#fff" }}>
+        {column.text}
+        {localStorage.getItem("custArrowPropsal3") === column.dataField ? (
+          <ArrowDropUpIcon
+            className={isActive === true ? classes.isActive : ""}
+          />
+        ) : (
+          <ArrowDropDownIcon
+            className={isActive === true ? classes.isActive : ""}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal3`));
     let pageno = JSON.parse(localStorage.getItem("custProposal3"));
@@ -93,6 +134,7 @@ function AcceptedProposal() {
       }
     // }
   }, []);
+
   const showProposalModal2 = (e) => {
     console.log(e.assign_no,"eeee");
     setViewProposalModal(!viewProposalModal);
@@ -167,6 +209,52 @@ function AcceptedProposal() {
       });
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custProposal3`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustProposal3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
+
+    if (data) {
+      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(userId)}&status=2&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setProposalDisplay(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       text: "S.No",
@@ -185,7 +273,25 @@ function AcceptedProposal() {
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function (cell, row) {
         var oldDate = row.created;
@@ -198,6 +304,25 @@ function AcceptedProposal() {
     {
       text: "Query No",
       dataField: "assign_no",
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowProposal3", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowProposal3");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -218,16 +343,71 @@ function AcceptedProposal() {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Payment  plan",
       dataField: "paymnet_plan_code",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function paymentPlan(cell, row) {
         var subplan = "";
@@ -251,7 +431,25 @@ function AcceptedProposal() {
     {
       text: "Date of Proposal",
       dataField: "DateofProposal",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.DateofProposal;
@@ -264,7 +462,25 @@ function AcceptedProposal() {
     {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -276,6 +492,25 @@ function AcceptedProposal() {
     },
     {
       text: "Status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -288,7 +523,25 @@ function AcceptedProposal() {
     {
       text: "Proposed Amout",
       dataField: "ProposedAmount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
 
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
@@ -306,7 +559,25 @@ function AcceptedProposal() {
     {
       text: "Accepted Amount",
       dataField: "accepted_amount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposal3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
+      },
 
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
@@ -406,7 +677,7 @@ function AcceptedProposal() {
     localStorage.removeItem("custPropsal3");
     localStorage.removeItem(`freezecustPropsal3`);
     localStorage.removeItem("custArrowPropsal3");
-    localStorage.removeItem("prevcustPropsal3");
+    localStorage.removeItem("prevcustp3");
     setPrev("");
   }
 

@@ -203,7 +203,7 @@ function AllQueriesData({
     }else if ((!data) && (pagetry)){
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}`
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
     }
 
     axios
@@ -327,26 +327,26 @@ function AllQueriesData({
     {
       text: "Query No",
       dataField: "assign_no",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowQuery1");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
+      // sort: true,
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery1", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery1");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -414,26 +414,26 @@ function AllQueriesData({
     },
     {
       text: "Status",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowQuery1");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      // sort: true,
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery1", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery1");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -661,8 +661,9 @@ function AllQueriesData({
     localStorage.removeItem("custQuery1");
     localStorage.removeItem(`freezecustQuery1`);
     localStorage.removeItem("custArrowQuery1");
-    localStorage.removeItem("prevcustQuery1");
+    localStorage.removeItem("prevcustq1");
     setPrev("");
+    
   }
 
 

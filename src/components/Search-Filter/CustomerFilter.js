@@ -148,8 +148,8 @@ function CustomerFilter(props) {
     setStatus1("");
     setQueryNo("");
     localStorage.removeItem(`searchData${index}`);
-    getData(1);
     props.resetTriggerFunc();
+    getData(1);
   };
 
   const onSubmit = (data) => {
