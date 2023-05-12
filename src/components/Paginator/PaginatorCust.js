@@ -90,122 +90,122 @@ function PaginatorCust(props) {
     const renderCheck = () => {
         console.log("render being");
         if (index === "custQuery1") {
-            let page =JSON.parse(localStorage.getItem("custQuery1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custQuery1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custQuery1", JSON.stringify(1))
             }
         }
         else if (index === "custQuery2") {
-            let page =JSON.parse(localStorage.getItem("custQuery2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custQuery2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custQuery2", JSON.stringify(1))
             }
         }
         else if (index === "custQuery3") {
-            let page =JSON.parse(localStorage.getItem("custQuery3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custQuery3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custQuery3", JSON.stringify(1))
             }
         }
         else if (index === "custProposal1") {
-            let page =JSON.parse(localStorage.getItem("custProposal1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custProposal1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custProposal1", JSON.stringify(1))
             }
         }
         else if (index === "custProposal2") {
-            let page =JSON.parse(localStorage.getItem("custProposal2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custProposal2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custProposal2", JSON.stringify(1))
             }
         }
         else if (index === "custProposal3") {
-            let page =JSON.parse(localStorage.getItem("custProposal3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custProposal3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custProposal3", JSON.stringify(1))
             }
         }
         else if (index === "custProposal4") {
-            let page =JSON.parse(localStorage.getItem("custProposal4"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custProposal4"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custProposal4", JSON.stringify(1))
             }
         }
         else if (index === "custPay1") {
-            let page =JSON.parse(localStorage.getItem("custPay1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custPay1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custPay1", JSON.stringify(1))
             }
         }
         else if (index === "custPay2") {
-            let page =JSON.parse(localStorage.getItem("custPay2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custPay2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custPay2", JSON.stringify(1))
             }
         }
         else if (index === "custPay3") {
-            let page =JSON.parse(localStorage.getItem("custPay3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custPay3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custPay3", JSON.stringify(1))
             }
         }
         else if (index === "custAs1") {
-            let page =JSON.parse(localStorage.getItem("custAs1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custAs1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custAs1", JSON.stringify(1))
             }
         }
         else if (index === "custAs2") {
-            let page =JSON.parse(localStorage.getItem("custAs2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custAs2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custAs2", JSON.stringify(1))
             }
         }
         else if (index === "custAs3") {
-            let page =JSON.parse(localStorage.getItem("custAs3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custAs3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custAs3", JSON.stringify(1))
             }
         }
         else if (index === "custAs4") {
-            let page =JSON.parse(localStorage.getItem("custAs4"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custAs4"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custAs4", JSON.stringify(1))
             }
         }
         else if (index === "custAs5") {
-            let page =JSON.parse(localStorage.getItem("custAs5"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("custAs5"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("custAs5", JSON.stringify(1))
             }
         }
@@ -291,12 +291,12 @@ function PaginatorCust(props) {
             localStorage.setItem(`custQuery1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
@@ -327,12 +327,12 @@ function PaginatorCust(props) {
             } else if ((data) && (pagetry)) {
                 if (data.p_status.length > 0) {
                     remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
-                        id
+                        userId
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
                 } else {
                     remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
-                        id
+                        userId
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
                 }
@@ -355,12 +355,12 @@ function PaginatorCust(props) {
             localStorage.setItem(`custQuery3`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
                 remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
@@ -428,24 +428,24 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 if (data.p_status) {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                        id
+                        userId
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
                 } else {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                        id
+                        userId
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
                 }
             } else if ((data) && (pagetry)) {
                 if (data.p_status) {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                        id
+                        userId
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=${data.p_status}&pcat_id=${data.pcatId}`
                 } else {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                        id
+                        userId
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=1&pcat_id=${data.pcatId}`
                 }
@@ -466,12 +466,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -490,12 +490,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=3&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=3&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -514,12 +514,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
@@ -567,12 +567,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -595,12 +595,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=3&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=3&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -623,12 +623,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -651,12 +651,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=${data.p_status}&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -675,12 +675,12 @@ function PaginatorCust(props) {
             if ((data) && (!pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customecustomers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-                    id
+                    userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
@@ -816,9 +816,19 @@ function PaginatorCust(props) {
         <div className="customPagination">
             <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span className="customPaginationSpan">
+                    {count > 0 ? (
+                        <span className="customPaginationSpan">
+                            {big}-{end} of {count}
+                        </span>
+                    ) : (
+                        <span className="customPaginationSpan">
+                            0-0 of 0
+                        </span>
+                    )
+                    }
+                    {/* <span className="customPaginationSpan">
                         {big}-{end} of {count}
-                    </span>
+                    </span> */}
                     <span className="d-flex">
                         {page > 1 ? (
                             <button
