@@ -83,10 +83,10 @@ const PayDetails = (props) => {
         myConfig2
       )
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         if (res.status === 200) {
           //    window.open(URL.createObjectURL(res.data));
-          console.log(URL.createObjectURL(res.data));
+          // console.log(URL.createObjectURL(res.data));
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
           var a = document.createElement("a");
@@ -207,7 +207,7 @@ const PayDetails = (props) => {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.invoice_amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p>{nfObject.format(x)}</p>;
       },
     },
@@ -224,7 +224,7 @@ const PayDetails = (props) => {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.tds_amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <>{row.is_paid == "1" ? <p>{nfObject.format(x)}</p> : ""}</>;
       },
     },
@@ -240,7 +240,7 @@ const PayDetails = (props) => {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <>{row.is_paid == "1" ? <p>{nfObject.format(x)}</p> : ""}</>;
       },
     },

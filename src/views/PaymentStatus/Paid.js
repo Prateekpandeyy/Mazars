@@ -322,7 +322,7 @@ function Unpaid() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },
