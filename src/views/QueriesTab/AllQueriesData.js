@@ -13,6 +13,7 @@ import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import RejectedModal from "./RejectedModal";
 import ModalManual from "../ModalManual/AllComponentManual";
+
 import MessageIcon, {
   DeleteIcon,
   EditQuery,
@@ -23,6 +24,16 @@ import MessageIcon, {
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AllQueriesData({
   allQueriesCount,
@@ -48,6 +59,7 @@ function AllQueriesData({
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
   const tableId = React.createRef("");
+  const classes = useStyles();
 
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
   // const classes = useStyles();
@@ -79,6 +91,37 @@ function AllQueriesData({
       setScrolledTo(key)
     }
   };
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowQuery1") === column.dataField ||
+      localStorage.getItem("prevcustq1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustq1", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowQuery1") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
@@ -190,6 +233,57 @@ function AllQueriesData({
       });
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custQuery1`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustQuery1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
+
+    if (data) {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          // let record =Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = 1;
+          // if (onPage > 1) {
+          //   sortId = 1;
+          // }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAllQueriesCount(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       text: "S.No",
@@ -208,7 +302,25 @@ function AllQueriesData({
       text: "Date",
       dataField: "created",
       sort: true,
-
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormatter(cell, row) {
         return <>{CommonServices.changeFormateDate(row.created)}</>;
       },
@@ -216,6 +328,26 @@ function AllQueriesData({
     {
       text: "Query No",
       dataField: "assign_no",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -237,14 +369,72 @@ function AllQueriesData({
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Status",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -267,6 +457,25 @@ function AllQueriesData({
       text: "Expected / Actual delivery date",
       dataField: "exp_delivery_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         return (
