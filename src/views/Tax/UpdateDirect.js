@@ -161,6 +161,9 @@ const UpdateDirect = () => {
         let dataObj = {};
         let dataList = [];
         let customId = 1;
+        if (p > 1) {
+          customId = allEnd * (p - 1) + 1;
+        }
         if (res.data.result.length > 0) {
           res.data.result.map((i, e) => {
             dataObj = {
