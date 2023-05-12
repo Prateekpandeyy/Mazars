@@ -326,9 +326,9 @@ const CreateInvoice = () => {
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       if (searchData?.installment_no && searchData?.payment_plan) {
-        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
-      } else {
         remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      } else {
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
       }
     } else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(

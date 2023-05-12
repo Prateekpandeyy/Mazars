@@ -85,7 +85,7 @@ function AdminPermission(props) {
   const [error, setError] = useState(false);
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [categoryData, setCategory] = useState([]);
   let des = false;
   var rowStyle2 = {};
@@ -518,25 +518,25 @@ function AdminPermission(props) {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowAs4", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowAs4");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("tpArrowAs4", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("tpArrowAs4");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
 
       headerStyle: () => {
         return { width: "200px" };

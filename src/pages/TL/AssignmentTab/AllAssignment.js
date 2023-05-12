@@ -775,7 +775,6 @@ function AssignmentTab(props) {
   }, [draftModal]);
 
   // final modal
-  console.log("done");
   const uploadFinalReport = (id) => {
     if (id && id.id === undefined) {
       setLoading(false);

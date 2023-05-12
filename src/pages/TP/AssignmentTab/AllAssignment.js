@@ -84,7 +84,7 @@ function AssignmentTab(props) {
   const [draftModal, setDraftModal] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
   const [qid, setQid] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
   const [error, setError] = useState(false);
@@ -567,26 +567,26 @@ function AssignmentTab(props) {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowAs1", field);
-        } else {
-          setAccend("");
-          setIsActive(field);
-          localStorage.removeItem("tpArrowAs1");
-        }
-        if (order === "asc") {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("tpArrowAs1", field);
+      //   } else {
+      //     setAccend("");
+      //     setIsActive(field);
+      //     localStorage.removeItem("tpArrowAs1");
+      //   }
+      //   if (order === "asc") {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
 
       headerStyle: () => {
         return { width: "200px" };

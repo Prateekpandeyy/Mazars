@@ -78,7 +78,7 @@ function AssignmentTab() {
   const [dataItem, setDataItem] = useState({});
   const [loading, setLoading] = useState(false);
   const [queryNo, setQueryNo] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("tptoken");
@@ -531,25 +531,25 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowAs3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowAs3");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("tpArrowAs3", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("tpArrowAs3");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
 
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
