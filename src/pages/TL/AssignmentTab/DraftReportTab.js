@@ -72,7 +72,7 @@ function AssignmentTab() {
   const [qid, setQid] = useState("");
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [categoryData, setCategory] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const [lastDown, setLastDown] = useState("");
@@ -181,9 +181,9 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
@@ -481,25 +481,6 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tlArrowAs2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tlArrowAs2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 5);
-      },
 
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
