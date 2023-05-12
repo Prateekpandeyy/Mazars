@@ -609,7 +609,7 @@ function AssignmentTab() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
+        sortMessage(val, 7);
       },
 
       formatter: function dateFormat(cell, row) {
