@@ -786,7 +786,6 @@ function CustomerFilter(props) {
                 });
                 setData(all);
                 setCount(res.data.total);
-                // setData(res.data.result);
                 setRecords(res.data.result.length);
               }
             }
@@ -1065,8 +1064,6 @@ function CustomerFilter(props) {
                 setData(res.data.result);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
-                resetTriggerFunc();
-                localStorage.setItem(`custAs4`, JSON.stringify(1));
               }
             }
           })
