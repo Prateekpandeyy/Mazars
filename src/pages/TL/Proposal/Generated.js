@@ -115,7 +115,7 @@ const Generated = ({ updateTab }) => {
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
