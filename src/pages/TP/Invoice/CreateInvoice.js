@@ -359,6 +359,7 @@ const CreateInvoice = () => {
         setProposal(all);
         setCountNotification(res.data.total);
         setCount(res.data.total);
+        setresetTrigger(!resetTrigger);
         console.log("proposal", all);
       }
     });

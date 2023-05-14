@@ -253,8 +253,11 @@ function Paginator(props) {
         if (dynamicPage > 1) {
             if (e == 1) {
                 setBig(rem + e);
-                setEnd(allEnd);
-                // console.log("e at 1", big, end);
+                if(count < allEnd){
+                    setEnd(count);
+                    }else{
+                    setEnd(allEnd);
+                    }
             }
             else if ((e == (dynamicPage))) {
                 setBig(rem + 1);
@@ -669,6 +672,7 @@ function Paginator(props) {
         else if (tpgenerated == "tpgenerated") {
             let data = JSON.parse(localStorage.getItem("tpgenerated"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
+
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
@@ -874,7 +878,8 @@ function Paginator(props) {
                             customId = allEnd * (e - 1) + 1;
                         }
                         if ((tpgenerated == "tpgenerated") || (tpcreate == "tpcreate")) {
-                            setResult(res.data.payment_detail)
+                            let allEnd = 5;
+                            // setResult(res.data.payment_detail)
                             let data = res.data.payment_detail;
                             data.map((i) => {
                                 let data = {
@@ -902,7 +907,11 @@ function Paginator(props) {
                             if (dynamicPage > 1) {
                                 if (e == 1) {
                                     setBig(rem + e);
+                                    if(count < allEnd){
+                                    setEnd(count);
+                                    }else{
                                     setEnd(allEnd);
+                                    }
                                     // console.log("e at 1", big, end);
                                 }
                                 else if ((e == (dynamicPage))) {
