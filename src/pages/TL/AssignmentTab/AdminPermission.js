@@ -273,7 +273,7 @@ function AdminPermission(props) {
     setStatus("");
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment4");

@@ -7,8 +7,15 @@ const InvoiceFilter = (props) => {
   const { handleSubmit, register, errors, reset } = useForm();
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
+
   const [perPage, setPerPage] = useState(5);
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [status, setStatus] = useState("");
   const [installmentno, setInstallmentNo] = useState("");
   const [paymentPlan, setPaymentPlan] = useState("");
@@ -51,7 +58,7 @@ const InvoiceFilter = (props) => {
       formData.append("to", data.p_dateTo);
       formData.append("status", data.opt);
     }
-    {data.installment_no? formData.append("installment_no", data.installment_no): formData.append("installment_no", "");}
+    { data.installment_no ? formData.append("installment_no", data.installment_no) : formData.append("installment_no", ""); }
 
     // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
@@ -395,8 +402,8 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-          props.invoice == "tpcreate" ||
-          props.invoice === "admincreate" ? (
+            props.invoice == "tpcreate" ||
+            props.invoice === "admincreate" ? (
             ""
           ) : (
             <>

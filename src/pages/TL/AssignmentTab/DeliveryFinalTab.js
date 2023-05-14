@@ -230,7 +230,7 @@ function AssignmentTab() {
     reset();
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment3");

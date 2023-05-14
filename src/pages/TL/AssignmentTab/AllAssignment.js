@@ -251,7 +251,7 @@ function AssignmentTab(props) {
     setHide("");
     setStatus("");
     setSelectedData([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     setStore2([]);

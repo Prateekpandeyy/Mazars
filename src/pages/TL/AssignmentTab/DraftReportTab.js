@@ -242,10 +242,9 @@ function AssignmentTab() {
   //reset date
   const resetData = () => {
     reset();
-
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment2");
@@ -330,11 +329,15 @@ function AssignmentTab() {
       val: val,
       field: field,
     };
-    localStorage.setItem(`tl`, JSON.stringify(1));
-    localStorage.setItem(`freezetl`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatatl"));
+    localStorage.setItem(`tlAssignment2`, JSON.stringify(1));
+    localStorage.setItem(`freezetlAssignment2`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment2"));
     if (data) {
-      remainApiPath = ` `;
+      remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
+        userid
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
         userid
@@ -695,9 +698,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -743,12 +746,12 @@ function AssignmentTab() {
 
   const onSubmit = (data, e) => {
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
-    let pageno = JSON.parse(localStorage.getItem("tlAssignment2"));
-    if (pageno) {
-      let e = pageno;
-    } else {
-      let e = 1;
-    }
+    localStorage.setItem(`tlAssignment2`,e);
+    // if (pageno) {
+    //   let e = pageno;
+    // } else {
+    //   let e = 1;
+    // }
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -781,19 +784,15 @@ function AssignmentTab() {
       if (pagetry) {
         remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
           userid
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
-          data.pcatId
-        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+          }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
           userid
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&assignment_status="Draft_Report"&stages_status=1&pcat_id=${
-          data.pcatId
-        }&qno=${data.query_no}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+          }&qno=${data.query_no}`;
       }
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
         if (res.data.code === 1) {
@@ -826,10 +825,8 @@ function AssignmentTab() {
         .get(
           `${baseUrl}/tl/getAssignments?page=1&tl_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
-            data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
           }`,
           myConfig
         )
@@ -859,6 +856,7 @@ function AssignmentTab() {
               localStorage.removeItem("tlArrowAs2");
               setAccend("");
               setTurnGreen(false);
+
             }
           }
         });
