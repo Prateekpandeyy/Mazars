@@ -367,11 +367,9 @@ function AssignmentTab(props) {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQid("");
-
     localStorage.removeItem("searchDatatpAssignment1");
     getAssignmentList();
     setresetTrigger(!resetTrigger);
@@ -945,7 +943,7 @@ function AssignmentTab(props) {
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
-        stage_status: data?.assignment_status,
+        stage_status: data?.stage_status,
         route: window.location.pathname,
       };
     } else {
@@ -1064,6 +1062,7 @@ function AssignmentTab(props) {
               setresetTrigger(!resetTrigger);
               localStorage.removeItem(`freezetpAssignment1`);
               localStorage.removeItem("tpArrowAs1");
+              localStorage.removeItem("prevtpAs1");
               setAccend("");
               setTurnGreen(false);
             }

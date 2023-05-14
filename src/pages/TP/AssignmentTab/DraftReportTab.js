@@ -283,7 +283,7 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatpAssignment2");
@@ -944,6 +944,7 @@ function AssignmentTab() {
               setresetTrigger(!resetTrigger);
               localStorage.removeItem(`freezetpAssignment2`);
               localStorage.removeItem("tpArrowAs2");
+              localStorage.removeItem("prevtpAs2");
               setAccend("");
               setTurnGreen(false);
             }

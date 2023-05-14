@@ -325,7 +325,7 @@ function AdminPermission(props) {
     setStore2([]);
     setQueryNo("");
     setFromDate("");
-    setToDate("");
+    setToDate(current_date);
     getAssignmentList(1);
     setresetTrigger(!resetTrigger);
     setAccend("");
@@ -1000,6 +1000,7 @@ function AdminPermission(props) {
               setresetTrigger(!resetTrigger);
               localStorage.removeItem(`freezetpAssignment4`);
               localStorage.removeItem("tpArrowAs4");
+              localStorage.removeItem("prevtpAs4");
               setAccend("");
               setTurnGreen(false);
             }

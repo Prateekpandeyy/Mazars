@@ -261,7 +261,7 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatpAssignment3");
@@ -904,6 +904,7 @@ function AssignmentTab() {
               setAssignment(all);
               setRecords(res.data.result.length);
               setCount(res.data.total);
+              
             }
           }
         });
@@ -941,6 +942,7 @@ function AssignmentTab() {
               setresetTrigger(!resetTrigger);
               localStorage.removeItem(`freezetpAssignment3`);
               localStorage.removeItem("tpArrowAs3");
+              localStorage.removeItem("prevtpAs3");
               setAccend("");
               setTurnGreen(false);
             }

@@ -916,7 +916,7 @@ function Paginator(props) {
                             }
                             setDefaultPage(droppage);
                         } else {
-                            setResult(res.data.result)
+                            // setResult(res.data.result)
                             let data = res.data.result;
                             data.map((i) => {
                                 let data = {
