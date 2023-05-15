@@ -44,7 +44,7 @@ function AcceptedProposal() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
@@ -69,9 +69,9 @@ function AcceptedProposal() {
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [viewProposalModal]);
 
@@ -79,7 +79,7 @@ function AcceptedProposal() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
@@ -92,11 +92,11 @@ function AcceptedProposal() {
   //         <div className="d-flex text-white w-100 flex-wrap">
   //           {column.text}
   //           {accend === column.dataField ? (
-  //             <ArrowDropDownIcon 
+  //             <ArrowDropDownIcon
   //             className={turnGreen === true ? classes.isActive : ""}
   //             />
   //           ) : (
-  //             <ArrowDropUpIcon 
+  //             <ArrowDropUpIcon
   //             className={turnGreen === true ? classes.isActive : ""}
   //             />
   //           )}
@@ -140,7 +140,7 @@ function AcceptedProposal() {
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -152,22 +152,22 @@ function AcceptedProposal() {
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpProposal3"));
-    let arrow = localStorage.getItem("tpArrowProposal3")
+    let arrow = localStorage.getItem("tpArrowProposal3");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
       setTurnGreen(true);
     }
     let sort = localStorage.getItem("prevtppro3");
-    if(sort){
+    if (sort) {
       setPrev(sort);
     }
     // let sortVal = JSON.parse(localStorage.getItem("freezetpProposal3"));
@@ -187,127 +187,135 @@ function AcceptedProposal() {
   }, []);
 
   const getProposalList = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
-    let pagetry = JSON.parse(localStorage.getItem("freezetpProposal3"))
+    let pagetry = JSON.parse(localStorage.getItem("freezetpProposal3"));
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
     setOnPage(e);
 
-    if ((data) && (!pagetry)) {
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
-    } else if ((data) && (pagetry)) {
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-    } else if ((!data) && (pagetry)) {
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
+    if (data && !pagetry) {
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+    } else if (data && pagetry) {
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${
+        data.query_no
+      }&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=2`
+      remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&status=2`;
     }
 
-
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          setRecords(res.data.result.length);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposal(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setRecords(res.data.result.length);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
-
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposal(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`tpProposal3`, JSON.stringify(1))
+    localStorage.setItem(`tpProposal3`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezetpProposal3`, JSON.stringify(obj));
     localStorage.setItem(`tpProposal3`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal3"));
     if (data) {
-      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(
+        userid
+      )}&cat_id=${data.store}&from=${data.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${data.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${
+        data.query_no
+      }&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(userid)}&status=2&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getProposalTl?page=1&tp_id=${JSON.parse(
+        userid
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setProposal(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
-  }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setProposal(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
+  };
 
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
 
       headerStyle: () => {
@@ -348,31 +356,10 @@ function AcceptedProposal() {
     {
       text: "Query no",
       dataField: "assign_no",
-
     },
     {
       text: "Category",
       dataField: "parent_id",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowProposal3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowProposal3");
-        }
-
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
     },
     {
       text: "Sub category",
@@ -504,25 +491,6 @@ function AcceptedProposal() {
     {
       text: "Status",
       dataField: "Status",
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowProposal3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowProposal3");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 8);
-      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -654,25 +622,25 @@ function AcceptedProposal() {
     localStorage.removeItem("tpArrowProposal3");
     localStorage.removeItem("prevtppro3");
     setPrev("");
-  }
+  };
 
   return (
     <>
       <Card>
         <CardHeader>
-            <TaxProfessionalFilter
-              setData={setProposal}
-              getData={getProposalList}
-              proposal="proposal"
-              setRecords={setRecords}
-              index="tpproposal3"
-              records={records}
-              setCount={setCount}
-              resetTriggerFunc={resetTriggerFunc}
-            />
+          <TaxProfessionalFilter
+            setData={setProposal}
+            getData={getProposalList}
+            proposal="proposal"
+            setRecords={setRecords}
+            index="tpproposal3"
+            records={records}
+            setCount={setCount}
+            resetTriggerFunc={resetTriggerFunc}
+          />
         </CardHeader>
         <CardBody>
-        <Row className="mb-2">
+          <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 setData={setProposal}

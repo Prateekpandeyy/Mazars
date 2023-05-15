@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, CardHeader, CardBody, Row, Col, } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -35,8 +35,8 @@ function AllQuery(props) {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [onPage, setOnPage] = useState(1);
-  const [sortVal, setSortVal] = useState('');
-  const [sortField, setSortField] = useState('');
+  const [sortVal, setSortVal] = useState("");
+  const [sortField, setSortField] = useState("");
   const [accend, setAccend] = useState(false);
   const [resetTrigger, setresetTrigger] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -49,16 +49,16 @@ function AllQuery(props) {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo.scrollIntoView(false);
-      runTo.scrollIntoView({ block: 'center' });
+      runTo.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
@@ -68,75 +68,6 @@ function AllQuery(props) {
       uit: token,
     },
   };
-
-
-
-
-  // function headerLabelFormatter(column) {
-  //   // let reverse = "Exp_Delivery_Date"
-  //   return (
-  //     <div>
-  //       {column.dataField === isActive ?
-  //         (
-  //           <div className="d-flex text-white w-100 flex-wrap">
-  //             {column.text}
-  //             {accend === column.dataField ? (
-  //               <ArrowDropUpIcon
-  //                 className={turnGreen === true ? classes.isActive : ""}
-  //               />
-  //             ) : (
-  //               <ArrowDropDownIcon
-  //                 className={turnGreen === true ? classes.isActive : ""}
-  //               />
-  //             )}
-  //           </div>
-  //         )
-  //         :
-  //         (
-  //           <div className="d-flex text-white w-100 flex-wrap">
-  //             {column.text}
-  //             {accend === column.dataField ? (
-  //               <ArrowDropUpIcon />
-  //             ) : (
-  //               <ArrowDropDownIcon />
-  //             )}
-  //           </div>
-  //         )
-  //       }
-  //     </div>
-  //   )
-  // }
-
-  // function headerLabelFormatter(column, colIndex) {
-  //   let isActive = true;
-
-  //   if (
-  //     localStorage.getItem("tpArrowQuery1") === column.dataField ||
-  //     localStorage.getItem("prevtpq1") === column.dataField
-  //   ) {
-  //     isActive = true;
-  //     setPrev(column.dataField);
-  //     localStorage.setItem("prevtpq1", column.dataField);
-  //   } else {
-  //     isActive = false;
-  //   }
-  //   return (
-  //     <div className="d-flex text-white w-100 flex-wrap">
-  //       <div style={{ display: "flex", color: "#fff" }}>
-  //         {column.text}
-  //         {localStorage.getItem("tpArrowQuery1") === column.dataField ? (
-  //           <ArrowDropUpIcon
-  //             className={isActive === true ? classes.isActive : ""}
-  //           />
-  //         ) : (
-  //           <ArrowDropDownIcon
-  //             className={isActive === true ? classes.isActive : ""}
-  //           />
-  //         )}
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
@@ -156,11 +87,11 @@ function AllQuery(props) {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("tpArrowQuery1") === column.dataField ? (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -169,12 +100,11 @@ function AllQuery(props) {
     );
   }
 
-
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
-    let arrow = localStorage.getItem("tpArrowQuery1")
-    let pre =localStorage.getItem("prevtpq1")
-    if(pre){
+    let arrow = localStorage.getItem("tpArrowQuery1");
+    let pre = localStorage.getItem("prevtpq1");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -198,9 +128,9 @@ function AllQuery(props) {
   }, []);
 
   const getInCompleteAssingment = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpQuery1"));
@@ -211,74 +141,65 @@ function AllQuery(props) {
     setOnPage(e);
     setLoading(true);
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
-    if ((data) && (!pagetry)) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}`;
-    }
-    else if ((data) && (pagetry)) {
-      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${data.store
-        }&from=${data.fromDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&to=${data.toDate
-            ?.split("-")
-            .reverse()
-            .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId
-        }&qno=${data?.query_no}&orderby=${val}&orderbyfield=${field}`;
-    } else if ((!data) && (pagetry)) {
-      remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`
-    }
-    else {
+    if (data && !pagetry) {
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${
+        data.store
+      }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId}&qno=${
+        data?.query_no
+      }`;
+    } else if (data && pagetry) {
+      remainApiPath = `/tl/getIncompleteQues?page=${e}&cat_id=${
+        data.store
+      }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${data?.p_status}&pcat_id=${data.pcatId}&qno=${
+        data?.query_no
+      }&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`;
+    } else {
       remainApiPath = `tl/getIncompleteQues?page=${e}`;
     }
     if (e) {
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let data = res.data.result;
-            setRecords(res.data.result.length);
-            let all = [];
-            let customId = 1;
-            if (e > 1) {
-              customId = allEnd * (e - 1) + 1;
-            }
-            data.map((i) => {
-              let data = {
-                ...i,
-                cid: customId,
-              };
-              customId++;
-              all.push(data);
-            });
-            setInCompleteData(all);
-            setRecords(res.data.result.length);
-            setCount(res.data.total);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setRecords(res.data.result.length);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setInCompleteData(all);
+          setRecords(res.data.result.length);
+          setCount(res.data.total);
+        }
+      });
     }
-  }
+  };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`tpQuery1`, JSON.stringify(1))
+    localStorage.setItem(`tpQuery1`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezetpQuery1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery1"));
 
@@ -288,41 +209,35 @@ function AllQuery(props) {
       )}&status=${data.p_status}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
-        .join("-")}&to=${data.toDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        .join("-")}&to=${data.toDate?.split("-").reverse().join("-")}&pcat_id=${
+        data.pcatId
+      }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setInCompleteData(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setInCompleteData(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -333,7 +248,14 @@ function AllQuery(props) {
         return { width: "50px" };
       },
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
     },
     {
@@ -388,26 +310,6 @@ function AllQuery(props) {
     {
       text: "Category",
       dataField: "parent_id",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowQuery1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowQuery1");
-        }
-
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
     },
     {
       text: "Sub category",
@@ -578,7 +480,6 @@ function AllQuery(props) {
     },
   ];
 
-
   const resetTriggerFunc = () => {
     setresetTrigger(!resetTrigger);
     setAccend("");
@@ -588,7 +489,7 @@ function AllQuery(props) {
     localStorage.removeItem("prevtpq1");
     setPrev("");
     setTurnGreen(false);
-  }
+  };
 
   return (
     <>
@@ -605,7 +506,6 @@ function AllQuery(props) {
             resetTriggerFunc={resetTriggerFunc}
             setCount={setCount}
           />
-
         </CardHeader>
 
         <CardBody>

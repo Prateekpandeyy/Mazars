@@ -155,7 +155,7 @@ function InprogressProposal() {
     if (searchData?.p_status) {
       status = searchData.p_status;
     }
-    console.log("searchData", searchData);
+
     if (searchData) {
       remainApiPath = `/tl/getProposalTl?id=${JSON.parse(
         userid
