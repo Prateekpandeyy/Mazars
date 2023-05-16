@@ -136,7 +136,7 @@ function AcceptedProposal() {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("tpArrowProposal3") === column.dataField ? (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
