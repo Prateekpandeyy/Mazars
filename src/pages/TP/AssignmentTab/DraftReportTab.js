@@ -691,7 +691,7 @@ function AssignmentTab() {
     },
     {
       text: "Deliverable",
-      dataField: "",
+      dataField: "deliverable",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {

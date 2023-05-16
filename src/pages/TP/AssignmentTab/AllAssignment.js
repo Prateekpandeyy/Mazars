@@ -995,7 +995,7 @@ function AssignmentTab(props) {
         }
       } else {
         if (pagetry) {
-          remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(
+          remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
             userid
           )}&cat_id=${data.store}&from=${data.fromDate}&to=${
             data.toDate
@@ -1005,7 +1005,7 @@ function AssignmentTab(props) {
             data.query_no
           }&orderby=${val}&orderbyfield=${field}`;
         } else if (!pagetry) {
-          remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(
+          remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
             userid
           )}&cat_id=${data.store}&from=${data.fromDate}&to=${
             data.toDate
