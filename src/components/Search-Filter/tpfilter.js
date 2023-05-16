@@ -100,11 +100,12 @@ function TaxProfessionalFilter(props) {
   const resetData = () => {
     reset();
     setShowSubCat([]);
-
     setSelectedData([]);
     setStore2([]);
     setStatus1(1);
-
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
     localStorage.removeItem(`searchData${index}`);
     setFromDate("");
     setStatus1("");
