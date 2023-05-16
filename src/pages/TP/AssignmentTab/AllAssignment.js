@@ -88,6 +88,7 @@ function AssignmentTab(props) {
   const [toDate, setToDate] = useState(current_date);
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
+  const [showSubCat, setShowSubCat] = useState([]);
   const [error, setError] = useState(false);
   const [prev, setPrev] = useState("");
   let des = false;
@@ -343,7 +344,7 @@ function AssignmentTab(props) {
   const handleSubCategory = (value) => {
     setError(false);
     // setStore2(value);
-    // setStore2(value);
+    setShowSubCat(value);
     tax2.map((i) => {
       if (i.details == value.at(-1)) {
         setStore2((payload) => {
@@ -366,7 +367,7 @@ function AssignmentTab(props) {
   //reset category
   const resetCategory = () => {
     console.log(error);
-
+    setShowSubCat([]);
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
@@ -381,6 +382,7 @@ function AssignmentTab(props) {
     setError(false);
     setHide("");
     setStatus([]);
+    setShowSubCat([]);
     let fixedCat = localStorage.getItem("fixedCat");
     setCatShowData(fixedCat);
     setStore2([]);
@@ -900,7 +902,7 @@ function AssignmentTab(props) {
         setTax2(subCat);
         subCat?.map((i) => {
           if (dk.store.includes(i.id)) {
-            setStore2((payload) => {
+            setShowSubCat((payload) => {
               return [...payload, i.details];
             });
           }
@@ -1124,13 +1126,14 @@ function AssignmentTab(props) {
                   placeholder="Select Sub Category"
                   defaultValue={[]}
                   onChange={(e) => handleSubCategory(e)}
-                  value={store2}
+                  // value={store2}
+                  value={showSubCat}
                   allowClear
                 >
                   {tax2?.length > 0 ? (
                     <>
                       {tax2?.map((p, index) => (
-                        <Option value={p.id} key={index}>
+                        <Option value={p.details} key={index}>
                           {p.details}
                         </Option>
                       ))}

@@ -51,6 +51,8 @@ function AssignmentTab() {
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
 
+  const [catShowData, setCatShowData] = useState([]);
+
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
@@ -151,6 +153,21 @@ function AssignmentTab() {
     }
   }, [ViewDiscussion]);
   // console.log("catData", categoryData);
+
+  useEffect(() => {
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
+  }, []);
+
+  useEffect(() => {
+    console.log(catShowData, "final tax2");
+    if (catShowData == "Direct tax")
+      setSelectedData(1);
+    else {
+      setSelectedData(2);
+    }
+  }, [catShowData]);
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
@@ -505,6 +522,7 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
+
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
       },
@@ -952,8 +970,10 @@ function AssignmentTab() {
                   style={{ width: 130 }}
                   placeholder="Select Category"
                   defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
+                  // onChange={handleCategory}
+                  disabled={true}
+                  // value={selectedData}
+                  value={catShowData}
                 >
                   {categoryData?.map((p, index) => (
                     <Option value={p.id} key={index}>
