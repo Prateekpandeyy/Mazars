@@ -95,7 +95,7 @@ function AssignmentTab(props) {
         }
       });
   };
-  
+
   const getADminDeclinedPayment = () => {
     axios
       .get(
@@ -169,7 +169,7 @@ function AssignmentTab(props) {
             style={tabIndex === 4 ? myStyle2 : myStyle1}
             className="tabHover"
           >
-            Permission; issue to invoice ({adminDeclined})
+            Permission; to issue invoice ({adminDeclined})
           </Tab>
         </TabList>
 

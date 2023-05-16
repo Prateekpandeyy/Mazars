@@ -120,7 +120,7 @@ function AssignmentTab(props) {
           </Tab>
 
           <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-            Permission; Issue to invoice({adminPermission})
+            Permission; to issue invoice ({adminPermission})
           </Tab>
         </TabList>
 
