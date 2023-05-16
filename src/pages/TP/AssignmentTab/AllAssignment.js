@@ -372,7 +372,12 @@ function AssignmentTab(props) {
     setStore2([]);
     getAssignmentList();
     setError(false);
-    setTax2([]);
+    // setTax2([]);
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setStore2([]);
+    setShowSubCat([]);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
   };
 
   //reset date
