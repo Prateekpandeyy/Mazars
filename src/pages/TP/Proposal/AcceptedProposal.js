@@ -356,6 +356,21 @@ function AcceptedProposal() {
     {
       text: "Query no",
       dataField: "assign_no",
+      formatter: function nameFormatter(cell, row) {
+        return (
+          <>
+            <Link
+              to={{
+                pathname: `/taxprofessional_queries/${row.id}`,
+                index: 3,
+                routes: "proposal",
+              }}
+            >
+              {row.assign_no}
+            </Link>
+          </>
+        );
+      },
     },
     {
       text: "Category",
