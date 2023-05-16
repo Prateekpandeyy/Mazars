@@ -318,7 +318,7 @@ function AllPayment() {
         data.query_no
       }&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getUploadedProposals?page=1tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
         userid
       )}&status=1&orderby=${val}&orderbyfield=${field}`;
     }

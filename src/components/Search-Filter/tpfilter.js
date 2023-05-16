@@ -145,7 +145,6 @@ function TaxProfessionalFilter(props) {
             });
           }
         });
-
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);

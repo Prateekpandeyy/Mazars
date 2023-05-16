@@ -79,6 +79,7 @@ function AssignmentTab(props) {
   const [dataItem, setDataItem] = useState({});
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
+  const [catShowData, setCatShowData] = useState([]);
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [draftModal, setDraftModal] = useState(false);
@@ -206,6 +207,22 @@ function AssignmentTab(props) {
   }, [ViewDiscussion]);
 
   useEffect(() => {
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
+  }, []);
+
+  useEffect(() => {
+    console.log(catShowData, "final tax2");
+    if (catShowData == "Direct tax")
+      setSelectedData(1);
+    else {
+      setSelectedData(2);
+    }
+  }, [catShowData]);
+
+
+  useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
     let arrow = localStorage.getItem("tpArrowAs1");
     if (arrow) {
@@ -325,7 +342,15 @@ function AssignmentTab(props) {
   //handleSubCategory
   const handleSubCategory = (value) => {
     setError(false);
-    setStore2(value);
+    // setStore2(value);
+    // setStore2(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -356,8 +381,10 @@ function AssignmentTab(props) {
     setError(false);
     setHide("");
     setStatus([]);
-    setSelectedData([]);
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
     setStore2([]);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
     setToDate(current_date);
     setFromDate("");
     setQid("");
@@ -859,15 +886,25 @@ function AssignmentTab(props) {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
     console.log("dkk", dk);
+    let fixedCat = (localStorage.getItem("fixedCat"));
     if (dk) {
       if (dk.route === window.location.pathname) {
-        setStore2(dk.store);
+        setCatShowData(fixedCat);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
-        setSelectedData(dk.pcatId);
+        // setSelectedData(dk.pcatId);
         setStatus(dk.stage_status);
         setQid(dk.query_no);
         setHide(dk.p_status);
+        let subCat = JSON.parse(localStorage.getItem(`tp${fixedCat}`));
+        setTax2(subCat);
+        subCat?.map((i) => {
+          if (dk.store.includes(i.id)) {
+            setStore2((payload) => {
+              return [...payload, i.details];
+            });
+          }
+        });
         if (pageno) {
           onSubmit(dk, pageno);
         } else {
@@ -1068,8 +1105,9 @@ function AssignmentTab(props) {
                   style={{ width: 130 }}
                   placeholder="Select Category"
                   defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
+                  // onChange={handleCategory}
+                  disabled={true}
+                  value={catShowData}
                 >
                   {categoryData?.map((p, index) => (
                     <Option value={p.id} key={index}>
