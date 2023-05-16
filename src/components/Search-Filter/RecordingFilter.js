@@ -159,7 +159,7 @@ function RecordingFilter(props) {
       <>
         <button
           type="submit"
-          className="customBtn mx-sm-1"
+          className="customBtn mx-sm-1 mx-2"
           onClick={() => resetData()}
         >
           Reset
@@ -179,9 +179,9 @@ function RecordingFilter(props) {
                   type="text"
                   name="queryNo"
                   ref={register}
-                  className="form-select form-control"
+                  className="form-select form-control my-2"
                 />
-                <button type="submit" className="customBtn mx-sm-1">
+                <button type="submit" className="customBtn mx-2 my-2">
                   Search
                 </button>
                 <Reset />

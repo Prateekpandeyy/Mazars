@@ -118,7 +118,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "sessionTpid",
             JSON.stringify(response.data["user id"])
           );
-          localStorage.setItem("fixedCat", "Direct tax");
+          localStorage.setItem("fixedCat", response.data.tp_category);
           history.push("/taxprofessional/dashboard");
         } else {
           Alerts.ErrorNormal("Incorrect OTP, please try again.");
