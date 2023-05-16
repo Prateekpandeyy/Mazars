@@ -79,7 +79,7 @@ function AssignmentTab() {
   const [reportModal, setReportModal] = useState(false);
   const [queryNo, setQueryNo] = useState("");
   const [loading, setLoading] = useState(false);
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
   const [prev, setPrev] = useState("");
@@ -277,7 +277,7 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatpAssignment2");
@@ -505,7 +505,6 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
-
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
       },
@@ -899,6 +898,7 @@ function AssignmentTab() {
               setresetTrigger(!resetTrigger);
               localStorage.removeItem(`freezetpAssignment2`);
               localStorage.removeItem("tpArrowAs2");
+              localStorage.removeItem("prevtpAs2");
               setAccend("");
               setTurnGreen(false);
             }

@@ -78,7 +78,7 @@ function AssignmentTab() {
   const [dataItem, setDataItem] = useState({});
   const [loading, setLoading] = useState(false);
   const [queryNo, setQueryNo] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [fromDate, setFromDate] = useState("");
   const [categoryData, setCategory] = useState([]);
   const token = window.localStorage.getItem("tptoken");
@@ -257,7 +257,7 @@ function AssignmentTab() {
     setStatus([]);
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatpAssignment3");
@@ -899,6 +899,7 @@ function AssignmentTab() {
               setresetTrigger(!resetTrigger);
               localStorage.removeItem(`freezetpAssignment3`);
               localStorage.removeItem("tpArrowAs3");
+              localStorage.removeItem("prevtpAs3");
               setAccend("");
               setTurnGreen(false);
             }

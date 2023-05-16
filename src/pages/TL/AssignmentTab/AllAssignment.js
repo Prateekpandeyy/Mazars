@@ -251,7 +251,7 @@ function AssignmentTab(props) {
     setHide("");
     setStatus("");
     setSelectedData([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     setStore2([]);
@@ -775,7 +775,6 @@ function AssignmentTab(props) {
   }, [draftModal]);
 
   // final modal
-  console.log("done");
   const uploadFinalReport = (id) => {
     if (id && id.id === undefined) {
       setLoading(false);

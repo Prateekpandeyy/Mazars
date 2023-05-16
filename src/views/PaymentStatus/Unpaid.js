@@ -31,6 +31,17 @@ import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import PaginatorCust from "../../components/Paginator/PaginatorCust";
 
 import { useHistory } from "react-router-dom";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
 function Paid() {
   const { id } = useParams();
   let history = useHistory();
@@ -43,7 +54,7 @@ function Paid() {
   const [modal, setModal] = useState(false);
 
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
-  // const classes = useStyles();
+  const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
@@ -139,6 +150,37 @@ function Paid() {
       }
   }, []);
 
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowPay2") === column.dataField ||
+      localStorage.getItem("prevcustpay2") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustpay2", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowPay2") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
   const getPaymentStatus = (e) => {
     if ((e === undefined)) {
       // console.log(e,'e');
@@ -218,6 +260,59 @@ function Paid() {
       .catch((error) => console.log(error));
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custPay2`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustPay2`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustPay2"));
+
+    if (data) {
+      remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
+        userId
+      )}&status=1&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          // let record =Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = 1;
+          // if (onPage > 1) {
+          //   sortId = 1;
+          // }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setPayment(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       dataField: "",
@@ -235,7 +330,25 @@ function Paid() {
     {
       dataField: "query_created_date",
       text: "Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created_date;
@@ -248,6 +361,25 @@ function Paid() {
     {
       dataField: "assign_no",
       text: "Query No",
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowPay2", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowPay2");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -268,17 +400,71 @@ function Paid() {
     {
       dataField: "parent_id",
       text: "Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Date of acceptance of Proposal",
       dataField: "cust_accept_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
@@ -291,6 +477,25 @@ function Paid() {
     {
       text: "Status",
       dataField: "",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function (cell, row) {
         return (
@@ -307,7 +512,25 @@ function Paid() {
     {
       dataField: "accepted_amount",
       text: "Accepted Amount ",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
@@ -326,7 +549,25 @@ function Paid() {
     {
       text: "Amount Paid",
       dataField: "paid_amount",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
@@ -346,7 +587,25 @@ function Paid() {
     {
       text: "Amount Outstanding",
       dataField: "amount_outstanding",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
 
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
@@ -365,7 +624,25 @@ function Paid() {
     {
       text: "Date of Payment",
       dataField: "cust_paid_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowPay2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowPay2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_paid_date;
@@ -559,7 +836,7 @@ function Paid() {
             <CustomerFilter
               setData={setPayment}
               getData={getPaymentStatus}
-              paid="paid"
+              unpaid="unpaid"
               setRecords={setRecords}
               records={records}
               id={userId}
@@ -575,7 +852,7 @@ function Paid() {
                   id={userId}
                   setData={setPayment}
                   getData={getPaymentStatus}
-                  paid="paid"
+                  unpaid="unpaid"
                   index="custPay2"
                   setOnPage={setOnPage}
                   resetTrigger={resetTrigger}

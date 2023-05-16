@@ -298,7 +298,7 @@ function PaginatorTL(props) {
             let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
-            localStorage.setItem(`tlAssignment`, JSON.stringify(e));
+            localStorage.setItem(`tlAssignment2`, JSON.stringify(e));
             if ((data) && (pagetry)) {
                 remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate}&to=${data.toDate

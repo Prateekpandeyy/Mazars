@@ -253,8 +253,11 @@ function Paginator(props) {
         if (dynamicPage > 1) {
             if (e == 1) {
                 setBig(rem + e);
-                setEnd(allEnd);
-                // console.log("e at 1", big, end);
+                if(count < allEnd){
+                    setEnd(count);
+                    }else{
+                    setEnd(allEnd);
+                    }
             }
             else if ((e == (dynamicPage))) {
                 setBig(rem + 1);
@@ -452,7 +455,7 @@ function Paginator(props) {
                         .join("-")}&to=${data.toDate
                             ?.split("-")
                             .reverse()
-                            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+                            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
                 remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
@@ -462,7 +465,7 @@ function Paginator(props) {
                         .join("-")}&to=${data.toDate
                             ?.split("-")
                             .reverse()
-                            .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no
+                            .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
@@ -669,13 +672,22 @@ function Paginator(props) {
         else if (tpgenerated == "tpgenerated") {
             let data = JSON.parse(localStorage.getItem("tpgenerated"));
             let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
+
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
+                if(data.installment_no === undefined){
+                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}`
+                }else{
                 remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}`
+                }
             } else if ((data && Object.values(data).length > 0) && (pagetry)) {
-                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
+                if(data.installment_no === undefined){
+                    remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&orderby=${val}&orderbyfield=${field}`
+                }else{
+                    remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
+                }
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `tl/getPaymentDetail?page=${e}&tp_id=${JSON.parse(
                     userid
@@ -866,7 +878,8 @@ function Paginator(props) {
                             customId = allEnd * (e - 1) + 1;
                         }
                         if ((tpgenerated == "tpgenerated") || (tpcreate == "tpcreate")) {
-                            setResult(res.data.payment_detail)
+                            let allEnd = 5;
+                            // setResult(res.data.payment_detail)
                             let data = res.data.payment_detail;
                             data.map((i) => {
                                 let data = {
@@ -894,7 +907,11 @@ function Paginator(props) {
                             if (dynamicPage > 1) {
                                 if (e == 1) {
                                     setBig(rem + e);
+                                    if(count < allEnd){
+                                    setEnd(count);
+                                    }else{
                                     setEnd(allEnd);
+                                    }
                                     // console.log("e at 1", big, end);
                                 }
                                 else if ((e == (dynamicPage))) {
@@ -916,7 +933,7 @@ function Paginator(props) {
                             }
                             setDefaultPage(droppage);
                         } else {
-                            setResult(res.data.result)
+                            // setResult(res.data.result)
                             let data = res.data.result;
                             data.map((i) => {
                                 let data = {

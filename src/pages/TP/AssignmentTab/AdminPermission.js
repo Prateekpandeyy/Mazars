@@ -85,7 +85,7 @@ function AdminPermission(props) {
   const [error, setError] = useState(false);
   const [queryNo, setQueryNo] = useState("");
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [categoryData, setCategory] = useState([]);
   let des = false;
   var rowStyle2 = {};
@@ -325,7 +325,7 @@ function AdminPermission(props) {
     setStore2([]);
     setQueryNo("");
     setFromDate("");
-    setToDate("");
+    setToDate(current_date);
     getAssignmentList(1);
     setresetTrigger(!resetTrigger);
     setAccend("");

@@ -181,8 +181,8 @@ function Linklist() {
           setCount(res.data.total);
           let rem = 0 * allEnd;
           if((res.data.total)< allEnd){
-            setBig(res.data.total);
-            setEnd(end);
+            setBig(1);
+            setEnd(res.data.total);
           }else{
           setBig(rem + 1);
           setEnd(end);

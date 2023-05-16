@@ -148,8 +148,8 @@ function CustomerFilter(props) {
     setStatus1("");
     setQueryNo("");
     localStorage.removeItem(`searchData${index}`);
-    getData(1);
     props.resetTriggerFunc();
+    getData(1);
   };
 
   const onSubmit = (data) => {
@@ -935,9 +935,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setCount(res.data.total);
+                setRecords(res.data.result.length);
                 resetTriggerFunc();
                 localStorage.setItem(`custAs1`, JSON.stringify(1));
                 
@@ -985,11 +995,21 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setCount(res.data.total);
+                setRecords(res.data.result.length);
                 resetTriggerFunc();
-                localStorage.setItem(`custAs2`, JSON.stringify(1));
+                localStorage.setItem(`custAs1`, JSON.stringify(1));
               }
             }
           })
@@ -1034,9 +1054,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setCount(res.data.total);
+                setRecords(res.data.result.length);
                 resetTriggerFunc();
                 localStorage.setItem(`custAs3`, JSON.stringify(1));
               }
@@ -1083,9 +1113,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setCount(res.data.total);
+                setRecords(res.data.result.length);
                 resetTriggerFunc();
                 localStorage.setItem(`custAs4`, JSON.stringify(1));
               }
@@ -1132,9 +1172,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
                 setRecords(res.data.result.length);
-                setCount(res.data.total)
                 resetTriggerFunc();
                 localStorage.setItem(`custAs5`, JSON.stringify(1));
               }
@@ -1181,9 +1231,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
+                setCount(res.data.total);
                 setRecords(res.data.result.length);
-                setCount(res.data.total)
                 resetTriggerFunc();
                 localStorage.setItem(`custPay1`, JSON.stringify(1));
               }
@@ -1230,9 +1290,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setCount(res.data.total);
+                setRecords(res.data.result.length);
                 resetTriggerFunc();
                 localStorage.setItem(`custPay2`, JSON.stringify(1));
               }
@@ -1279,9 +1349,19 @@ function CustomerFilter(props) {
             if (res.data.code === 1) {
               setLoading(false);
               if (res.data.result) {
-                setData(res.data.result);
-                setRecords(res.data.result.length);
+                let data = res.data.result;
+                let all = [];
+                data.map((i) => {
+                  let data = {
+                    ...i,
+                    cid: customId,
+                  };
+                  customId++;
+                  all.push(data);
+                });
+                setData(all);
                 setCount(res.data.total);
+                setRecords(res.data.result.length);
                 resetTriggerFunc();
                 localStorage.setItem(`custPay3`, JSON.stringify(1));
               }

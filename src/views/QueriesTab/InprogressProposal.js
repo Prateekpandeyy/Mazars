@@ -17,6 +17,17 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
+
 function InprogressProposal({
   allQueriesCount,
   // setAllQueriesCount,
@@ -39,7 +50,7 @@ function InprogressProposal({
   };
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
   // const allEnd = 5;
-  // const classes = useStyles();
+  const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
@@ -69,6 +80,37 @@ function InprogressProposal({
   const needHelp = () => {
     setManual(!openManual);
   };
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowQuery3") === column.dataField ||
+      localStorage.getItem("prevcustq3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustq3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowQuery3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
@@ -155,6 +197,59 @@ function InprogressProposal({
       });
   };
 
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custQuery3`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustQuery3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
+
+    if (data) {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&status=2&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          // let record =Number(localStorage.getItem("tp_record_per_page"))
+          // let startAt = 1;
+          // if (onPage > 1) {
+          //   sortId = 1;
+          // }
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setInprogressProposal(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       text: "S.No",
@@ -172,7 +267,25 @@ function InprogressProposal({
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormatter(cell, row) {
         return <>{CommonServices.changeFormateDate(row.created)}</>;
@@ -181,6 +294,25 @@ function InprogressProposal({
     {
       text: "Query No",
       dataField: "assign_no",
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery3", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery3");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -201,15 +333,70 @@ function InprogressProposal({
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Sub Category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Status",
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery3", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery3");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 6);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -222,7 +409,25 @@ function InprogressProposal({
     {
       text: "Actual Delivery Date",
       dataField: "final_date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         return (
@@ -369,7 +574,7 @@ function InprogressProposal({
     localStorage.removeItem("custQuery3");
     localStorage.removeItem(`freezecustQuery3`);
     localStorage.removeItem("custArrowQuery3");
-    localStorage.removeItem("prevcustQuery3");
+    localStorage.removeItem("prevcustq3");
     setPrev("");
   }
 
