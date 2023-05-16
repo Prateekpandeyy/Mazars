@@ -106,6 +106,10 @@ function QueriesTab(props) {
 
     color: "#55425f",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (

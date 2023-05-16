@@ -85,7 +85,7 @@ function AllPayment({ setAllPayment }) {
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}

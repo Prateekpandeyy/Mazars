@@ -86,6 +86,10 @@ function PaymentStatus(props) {
 
     color: "#2b5f55",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (

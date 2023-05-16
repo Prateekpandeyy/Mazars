@@ -122,18 +122,18 @@ const CreateInvoice = () => {
       pageno = 1;
     }
     setPage(pageno);
-    if((count) < allEnd){
+    if (count < allEnd) {
       setEnd(count);
-    }else{
-    setEnd(allEnd);
+    } else {
+      setEnd(allEnd);
     }
     getProposalList(pageno);
   }, []);
 
   const getProposalList = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let searchData = JSON.parse(localStorage.getItem(`tpcreate`));
     let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
@@ -270,11 +270,11 @@ const CreateInvoice = () => {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("tpArrowInvoice2") === column.dataField ? (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}

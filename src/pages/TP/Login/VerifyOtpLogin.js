@@ -34,7 +34,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
     getCategory();
     LoadingTime.timer2(setTime, setDisabled);
   }, []);
-  
+
   function getCategory() {
     axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
       if (res.data.code === 1) {
@@ -84,7 +84,6 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
   //   });
   // };
 
-
   const onSubmit = (value) => {
     setLoading(true);
     let formData = new FormData();
@@ -97,9 +96,9 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
       data: formData,
     })
       .then(function (response) {
-        if (response.data.code ===  1) {
+        if (response.data.code === 1) {
           let categoryData = getCategory();
-          getCategory()
+          getCategory();
           setLoading(false);
           Cookies.set("tpName", response.data.displayname);
           Alerts.SuccessLogin("Logged in successfully.");
@@ -108,7 +107,10 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "tpEmail",
             JSON.stringify(response.data.displayname)
           );
-          localStorage.setItem("tp_record_per_page", response.data.record_per_page);
+          localStorage.setItem(
+            "tp_record_per_page",
+            response.data.record_per_page
+          );
           localStorage.setItem("tptoken", response.data.token);
           var timeStampInMs = Date.now();
           localStorage.setItem("tploginTime", timeStampInMs);
@@ -116,6 +118,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "sessionTpid",
             JSON.stringify(response.data["user id"])
           );
+          localStorage.setItem("fixedCat", "Direct tax");
           history.push("/taxprofessional/dashboard");
         } else {
           Alerts.ErrorNormal("Incorrect OTP, please try again.");

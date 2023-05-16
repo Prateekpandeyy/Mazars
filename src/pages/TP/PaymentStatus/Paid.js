@@ -63,7 +63,7 @@ function AllPayment() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -98,7 +98,6 @@ function AllPayment() {
   //   );
   // }
 
-
   // function headerLabelFormatter(column) {
   //   // let reverse = "Exp_Delivery_Date"
   //   return(
@@ -108,11 +107,11 @@ function AllPayment() {
   //         <div className="d-flex text-white w-100 flex-wrap">
   //           {column.text}
   //           {accend === column.dataField ? (
-  //             <ArrowDropDownIcon 
+  //             <ArrowDropDownIcon
   //             className={turnGreen === true ? classes.isActive : ""}
   //             />
   //           ) : (
-  //             <ArrowDropUpIcon 
+  //             <ArrowDropUpIcon
   //             className={turnGreen === true ? classes.isActive : ""}
   //             />
   //           )}
@@ -152,11 +151,11 @@ function AllPayment() {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("tpArrowPayment3") === column.dataField ? (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -166,9 +165,8 @@ function AllPayment() {
   }
 
   useEffect(() => {
-
     let pageno = JSON.parse(localStorage.getItem("tpPayment3"));
-    let arrow = localStorage.getItem("tpArrowPayment3")
+    let arrow = localStorage.getItem("tpArrowPayment3");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
@@ -179,103 +177,98 @@ function AllPayment() {
     } else {
       getPaymentStatus(1);
     }
-    let pre =localStorage.getItem("prevtppay3")
-    if(pre){
+    let pre = localStorage.getItem("prevtppay3");
+    if (pre) {
       setPrev(pre);
     }
 
     // getPaymentStatus();
   }, []);
 
-
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
   const getPaymentStatus = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
-    let pagetry = JSON.parse(localStorage.getItem("freezetpPayment3"))
+    let pagetry = JSON.parse(localStorage.getItem("freezetpPayment3"));
     let val = pagetry?.val;
     let field = pagetry?.field;
     let remainApiPath = "";
     setOnPage(e);
 
-    if ((data) && (!pagetry)) {
+    if (data && !pagetry) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`
-    } else if ((data) && (pagetry)) {
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+    } else if (data && pagetry) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-    } else if ((!data) && (pagetry)) {
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${
+        data.query_no
+      }&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=2&orderby=${val}&orderbyfield=${field}`
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=2`
+      )}&status=2`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          setRecords(res.data.result.length);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setRecords(res.data.result.length);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
-
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      }
+    });
   };
 
   const toggle = (key) => {
@@ -302,8 +295,8 @@ function AllPayment() {
       // pageno: pageno,
       val: val,
       field: field,
-    }
-    localStorage.setItem(`tpPayment3`, JSON.stringify(1))
+    };
+    localStorage.setItem(`tpPayment3`, JSON.stringify(1));
     localStorage.setItem(`freezetpPayment3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
     if (data) {
@@ -313,45 +306,48 @@ function AllPayment() {
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-          ?.split("-")
-          .reverse()
-          .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-    }
-    else {
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=2&pcat_id=${data.pcatId}&qno=${
+        data.query_no
+      }&orderby=${val}&orderbyfield=${field}`;
+    } else {
       remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
         userid
-      )}&status=2&orderby=${val}&orderbyfield=${field}`
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setTurnGreen(true)
-          setresetTrigger(!resetTrigger);
-        }
-      });
-  }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
+  };
 
   const columns = [
     {
       dataField: "",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
 
       headerStyle: () => {
@@ -393,7 +389,6 @@ function AllPayment() {
       dataField: "assign_no",
       text: "Query no",
 
-
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -413,25 +408,6 @@ function AllPayment() {
     {
       dataField: "parent_id",
       text: "Category",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowPayment3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowPayment3");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
     },
     {
       dataField: "cat_name",
@@ -704,27 +680,27 @@ function AllPayment() {
     localStorage.removeItem(`freezetpPayment3`);
     localStorage.removeItem("tpArrowPayment3");
     localStorage.removeItem("prevtppay3");
-    setPrev("")
-  }
+    setPrev("");
+  };
 
   return (
     <>
       <Card>
         <CardHeader>
-            <TaxProfessionalFilter
-              setData={setPayment}
-              getData={getPaymentStatus}
-              Paid="Paid"
-              setRecords={setRecords}
-              index="tppayment3"
-              records={records}
-              resetTriggerFunc={resetTriggerFunc}
-              setCount={setCount}
-            />
+          <TaxProfessionalFilter
+            setData={setPayment}
+            getData={getPaymentStatus}
+            Paid="Paid"
+            setRecords={setRecords}
+            index="tppayment3"
+            records={records}
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
+          />
         </CardHeader>
 
         <CardBody>
-        <Row className="mb-2">
+          <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 setData={setPayment}
@@ -775,14 +751,14 @@ function AllPayment() {
                 </thead>
                 {pay.length > 0
                   ? pay.map((p, i) => (
-                    <tbody>
-                      <tr>
-                        <td>{i + 1}</td>
-                        <td>{CommonServices.removeTime(p.payment_date)}</td>
-                        <td>{p.paid_amount}</td>
-                      </tr>
-                    </tbody>
-                  ))
+                      <tbody>
+                        <tr>
+                          <td>{i + 1}</td>
+                          <td>{CommonServices.removeTime(p.payment_date)}</td>
+                          <td>{p.paid_amount}</td>
+                        </tr>
+                      </tbody>
+                    ))
                   : null}
               </table>
             </ModalBody>

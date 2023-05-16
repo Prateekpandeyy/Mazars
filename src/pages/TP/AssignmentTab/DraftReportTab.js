@@ -42,11 +42,10 @@ function AssignmentTab() {
   const [id, setId] = useState("");
   const [stored, setStored] = useState("");
 
-
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -155,7 +154,7 @@ function AssignmentTab() {
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
-    let arrow = localStorage.getItem("tpArrowAs2")
+    let arrow = localStorage.getItem("tpArrowAs2");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
@@ -182,9 +181,9 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment2"));
@@ -194,42 +193,38 @@ function AssignmentTab() {
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((!data) && (pagetry)) {
+    if (!data && pagetry) {
       remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`
-    } else if ((!data) && (!pagetry)) {
+      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && !pagetry) {
       remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&assignment_status=Draft_Report&stages_status=1`
-    } else { }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          setRecords(res.data.result.length);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data?.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setAssignment(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
+      )}&assignment_status=Draft_Report&stages_status=1`;
+    } else {
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setRecords(res.data.result.length);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data?.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setAssignment(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      }
+    });
   };
 
   //get category
@@ -237,15 +232,13 @@ function AssignmentTab() {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    if(value == 1){
+    if (value == 1) {
       setTax2(JSON.parse(localStorage.getItem("Direct tax")));
-    }else{
+    } else {
       setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
     }
     setStore2([]);
   };
-
-  
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tpcategoryData"));
@@ -262,7 +255,8 @@ function AssignmentTab() {
       setTax2(JSON.parse(localStorage.getItem("tpDirect tax")));
     } else if (selectedData == 2) {
       setTax2(JSON.parse(localStorage.getItem("tpIndirect tax")));
-    } else { }
+    } else {
+    }
   }, [selectedData]);
 
   //handleSubCategory
@@ -295,7 +289,7 @@ function AssignmentTab() {
     localStorage.removeItem(`freezetpAssignment2`);
     localStorage.removeItem("tpArrowAs2");
     localStorage.removeItem("prevtpAs2");
-    setPrev("")
+    setPrev("");
   };
 
   //assingmentStatus
@@ -309,11 +303,11 @@ function AssignmentTab() {
   //         <div className="d-flex text-white w-100 flex-wrap">
   //           {column.text}
   //           {accend === column.dataField ? (
-  //             <ArrowDropDownIcon 
+  //             <ArrowDropDownIcon
   //             className={turnGreen === true ? classes.isActive : ""}
   //             />
   //           ) : (
-  //             <ArrowDropUpIcon 
+  //             <ArrowDropUpIcon
   //             className={turnGreen === true ? classes.isActive : ""}
   //             />
   //           )}
@@ -353,11 +347,11 @@ function AssignmentTab() {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("tpArrowAs2") === column.dataField ? (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -374,46 +368,43 @@ function AssignmentTab() {
       // pageno: pageno,
       val: val,
       field: field,
-    }
-    localStorage.setItem(`tpAssignment2`, JSON.stringify(1))
+    };
+    localStorage.setItem(`tpAssignment2`, JSON.stringify(1));
     localStorage.setItem(`freezetpAssignment2`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
     if (data) {
-      remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-        }&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
-        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
-    }
-    else {
       remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
         userid
-      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+        data.pcatId
+      }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
+        userid
+      )}&assignment_status=Draft_Report&stages_status=1&orderby=${val}&orderbyfield=${field}`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result?.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setAssignment(all);
-          setRecords(res.data.result.length);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
-  }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result?.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setAssignment(all);
+        setRecords(res.data.result.length);
+        setCount(res.data.total);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
+  };
   //columns
   const columns = [
     {
@@ -456,7 +447,6 @@ function AssignmentTab() {
         sortMessage(val, 1);
       },
 
-
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
         if (oldDate == null) {
@@ -488,25 +478,6 @@ function AssignmentTab() {
     {
       text: "Category",
       dataField: "parent_id",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tpArrowAs2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tpArrowAs2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 3);
-      },
     },
     {
       text: "Sub category",
@@ -534,26 +505,6 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
-      // headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     setIsActive(field);
-      //     localStorage.setItem("tpArrowAs2", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("tpArrowAs2");
-      //   }
-      //   if (accend === field) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 5);
-      // },
-
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
       },
@@ -786,9 +737,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                    row.draft_report == "inprogress" &&
-                    row.final_discussion == "inprogress" &&
-                    row.paid_status != 2 ? (
+                  row.draft_report == "inprogress" &&
+                  row.final_discussion == "inprogress" &&
+                  row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -870,53 +821,56 @@ function AssignmentTab() {
     localStorage.setItem(`searchDatatpAssignment2`, JSON.stringify(obj));
     if (data.route) {
       if (pagetry) {
-        remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-          }&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`
+        remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+          data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
-          }&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}`
+        remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
+          userid
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
+          data.pcatId
+        }&qno=${data.query_no}`;
       }
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setLoading(false);
-            if (res.data.result) {
-              let data = res.data.result;
-              setRecords(res.data.result.length);
-              let all = [];
-              let customId = 1;
-              if (e > 1) {
-                customId = allEnd * (e - 1) + 1;
-              }
-              data?.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              setAssignment(all);
-              setRecords(res.data.result.length);
-              setCount(res.data.total);
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          setLoading(false);
+          if (res.data.result) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
             }
+            data?.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignment(all);
+            setRecords(res.data.result.length);
+            setCount(res.data.total);
           }
-        });
+        }
+      });
     } else {
       axios
         .get(
           `${baseUrl}/tl/getAssignments?page=1&tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
           }`,
           myConfig
         )
@@ -987,120 +941,119 @@ function AssignmentTab() {
     return style;
   };
 
-
   return (
     <>
       <Card>
         <CardHeader>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div class="form-inline">
-                <div class="form-group mb-2">
-                  <Select
-                    style={{ width: 130 }}
-                    placeholder="Select Category"
-                    defaultValue={[]}
-                    onChange={handleCategory}
-                    value={selectedData}
-                  >
-                    {categoryData?.map((p, index) => (
-                      <Option value={p.id} key={index}>
-                        {p.details}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div class="form-inline">
+              <div class="form-group mb-2">
+                <Select
+                  style={{ width: 130 }}
+                  placeholder="Select Category"
+                  defaultValue={[]}
+                  onChange={handleCategory}
+                  value={selectedData}
+                >
+                  {categoryData?.map((p, index) => (
+                    <Option value={p.id} key={index}>
+                      {p.details}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
 
-                <div class="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="multiple"
-                    style={{ width: 250 }}
-                    placeholder="Select Sub Category"
-                    defaultValue={[]}
-                    onChange={handleSubCategory}
-                    value={store2}
-                    allowClear
-                  >
-                    {tax2?.length > 0 ? (
-                      <>
-                        {tax2?.map((p, index) => (
-                          <Option value={p.id} key={index}>
-                            {p.details}
-                          </Option>
-                        ))}
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </Select>
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    class="btnSearch mb-2 ml-3"
-                    onClick={resetCategory}
-                  >
-                    X
-                  </button>
-                </div>
+              <div class="form-group mx-sm-1  mb-2">
+                <Select
+                  mode="multiple"
+                  style={{ width: 250 }}
+                  placeholder="Select Sub Category"
+                  defaultValue={[]}
+                  onChange={handleSubCategory}
+                  value={store2}
+                  allowClear
+                >
+                  {tax2?.length > 0 ? (
+                    <>
+                      {tax2?.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </Select>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  class="btnSearch mb-2 ml-3"
+                  onClick={resetCategory}
+                >
+                  X
+                </button>
+              </div>
 
-                <div class="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">From</label>
-                </div>
+              <div class="form-group mx-sm-1  mb-2">
+                <label className="form-select form-control">From</label>
+              </div>
 
-                <div class="form-group mx-sm-1  mb-2">
-                  <input
-                    type="date"
-                    name="p_dateFrom"
-                    className="form-select form-control"
-                    ref={register}
-                    onChange={(e) => setFromDate(e.target.value)}
-                    value={fromDate}
-                    max={item}
-                  />
-                </div>
+              <div class="form-group mx-sm-1  mb-2">
+                <input
+                  type="date"
+                  name="p_dateFrom"
+                  className="form-select form-control"
+                  ref={register}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  value={fromDate}
+                  max={item}
+                />
+              </div>
 
-                <div class="form-group mx-sm-1  mb-2">
-                  <label className="form-select form-control">To</label>
-                </div>
+              <div class="form-group mx-sm-1  mb-2">
+                <label className="form-select form-control">To</label>
+              </div>
 
-                <div class="form-group mx-sm-1  mb-2">
-                  <input
-                    type="date"
-                    name="p_dateTo"
-                    className="form-select form-control"
-                    ref={register}
-                    onChange={(e) => setToDate(e.target.value)}
-                    value={toDate}
-                    max={item}
-                  />
-                </div>
-                <div className="form-group mx-sm-1  mb-2">
-                  <input
-                    type="text"
-                    name="query_no"
-                    ref={register}
-                    placeholder="Enter Query Number"
-                    className="form-control"
-                    onChange={(e) => setQueryNo(e.target.value)}
-                    value={queryNo}
-                  />
-                </div>
-                {/* <div class="form-group mx-sm-1  mb-2">
+              <div class="form-group mx-sm-1  mb-2">
+                <input
+                  type="date"
+                  name="p_dateTo"
+                  className="form-select form-control"
+                  ref={register}
+                  onChange={(e) => setToDate(e.target.value)}
+                  value={toDate}
+                  max={item}
+                />
+              </div>
+              <div className="form-group mx-sm-1  mb-2">
+                <input
+                  type="text"
+                  name="query_no"
+                  ref={register}
+                  placeholder="Enter Query Number"
+                  className="form-control"
+                  onChange={(e) => setQueryNo(e.target.value)}
+                  value={queryNo}
+                />
+              </div>
+              {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
                 </div> */}
-                <button type="submit" class="customBtn mx-sm-1 mb-2">
-                  Search
-                </button>
+              <button type="submit" class="customBtn mx-sm-1 mb-2">
+                Search
+              </button>
 
-                <Reset />
-              </div>
-            </form>
+              <Reset />
+            </div>
+          </form>
         </CardHeader>
 
         <CardBody>
-        <Row className="mb-2">
+          <Row className="mb-2">
             <Col md="12" align="right">
               <Paginator
                 count={count}

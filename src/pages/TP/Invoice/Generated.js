@@ -40,7 +40,7 @@ const Generated = () => {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -80,7 +80,7 @@ const Generated = () => {
   const addTdsToggle = (key) => {
     setTdsForm(!tdsForm);
     if (tdsForm === false) {
-      setScrolledTo(key.id)
+      setScrolledTo(key.id);
     }
     if (key) {
       setGstinNo(key.gstin_no);
@@ -95,14 +95,14 @@ const Generated = () => {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
   }, [tdsForm]);
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpInvoice1"));
-    let arrow = localStorage.getItem("tpArrowInvoice1")
+    let arrow = localStorage.getItem("tpArrowInvoice1");
     if (arrow) {
       setAccend(arrow);
       setIsActive(arrow);
@@ -111,7 +111,7 @@ const Generated = () => {
     if (!pageno) {
       pageno = 1;
     }
-    let pre = localStorage.getItem("prevtpInvoice1")
+    let pre = localStorage.getItem("prevtpInvoice1");
     if (pre) {
       setPrev(pre);
     }
@@ -129,9 +129,9 @@ const Generated = () => {
   }, []);
 
   const getProposalList = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice1"));
     let orderBy = 0;
@@ -145,8 +145,8 @@ const Generated = () => {
     if (searchData && Object.values(searchData).length > 0) {
       if (searchData?.installment_no) {
         remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&payment_plan=${searchData.payment_plan}`;
-      }else{
-      remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
+      } else {
+        remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
       }
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
@@ -171,53 +171,48 @@ const Generated = () => {
     // }
     // else { }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        let droppage = [];
-        if (res.data.code === 1) {
-          let data = res.data.payment_detail;
-          setRecords(res.data.total);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposal(all);
-
-          let end = e * allEnd;
-          setCountNotification(res.data.total);
-          if (end > res.data.total) {
-            end = res.data.total;
-          }
-          let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-          let rem = (e - 1) * allEnd;
-
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let droppage = [];
+      if (res.data.code === 1) {
+        let data = res.data.payment_detail;
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposal(all);
+
+        let end = e * allEnd;
+        setCountNotification(res.data.total);
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   const downloadpdf = (qno, id, installmentNumber) => {
@@ -308,7 +303,7 @@ const Generated = () => {
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropDownIcon
+            <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -325,61 +320,57 @@ const Generated = () => {
       orderBy: val,
       fieldBy: field,
     };
-    localStorage.setItem(`tpInvoice1`, JSON.stringify(1))
+    localStorage.setItem(`tpInvoice1`, JSON.stringify(1));
     localStorage.setItem(`freezetpInvoice1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("tpgenerated"));
     if (data && Object.values(data).length > 0) {
-      if (data?.installment_no === undefined) {
-        remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&orderby=${val}&orderbyfield=${field}`
+      if (data?.installment_no) {
+        remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
+        remainApiPath = `tl/getPaymentDetail?&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&orderby=${val}&orderbyfield=${field}`;
       }
-    }
-    else {
+    } else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
         userid
-      )}&invoice=1&orderby=${val}&orderbyfield=${field}`
+      )}&invoice=1&orderby=${val}&orderbyfield=${field}`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setPage(1);
-          setBig(1);
-          if((res.data.total)< allEnd){
-            setEnd(res.data.total);
-          }else{
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+        if (res.data.total < allEnd) {
+          setEnd(res.data.total);
+        } else {
           setEnd(allEnd);
-          }
-          let all = [];
-          let sortId = 1;
-
-          res.data.payment_detail.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setProposal(all);
-          setTurnGreen(true);
-          setCount(res.data.total);
-          setresetTrigger(!resetTrigger);
         }
-      });
-  }
+        let all = [];
+        let sortId = 1;
+
+        res.data.payment_detail.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setProposal(all);
+        setTurnGreen(true);
+        setCount(res.data.total);
+      }
+    });
+  };
 
   const columns = [
     {
       text: "S.no",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.id}
-          ref={el => (myRef.current[row.id] = el)}>{row.cid}</div>;
+        return (
+          <div id={row.id} ref={(el) => (myRef.current[row.id] = el)}>
+            {row.cid}
+          </div>
+        );
       },
       style: {
         fontSize: "11px",
@@ -734,20 +725,19 @@ const Generated = () => {
   const copyFun = (e, id) => {
     setCopy(id);
     navigator.clipboard.writeText(e);
-    setSwing(!swing)
+    setSwing(!swing);
     if (swing === false) {
-      setScrolledTo(id)
+      setScrolledTo(id);
       console.log("object");
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
     console.log("work");
   }, [swing]);
-
 
   rowStyle2 = (row, index) => {
     const style = {};
@@ -792,15 +782,14 @@ const Generated = () => {
     localStorage.removeItem(`freezetpInvoice1`);
     localStorage.removeItem("tpArrowInvoice1");
     localStorage.removeItem("prevtpInvoice1");
-    setPrev("")
-  }
+    setPrev("");
+  };
 
   useEffect(() => {
-    if(countNotification < allEnd){
+    if (countNotification < allEnd) {
       setEnd(countNotification);
     }
-  }, [setCountNotification])
-  
+  }, [setCountNotification]);
 
   const firstChunk = () => {
     setAtpage(1);

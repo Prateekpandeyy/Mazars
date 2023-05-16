@@ -58,7 +58,11 @@ const InvoiceFilter = (props) => {
       formData.append("to", data.p_dateTo);
       formData.append("status", data.opt);
     }
-    { data.installment_no ? formData.append("installment_no", data.installment_no) : formData.append("installment_no", ""); }
+    {
+      data.installment_no
+        ? formData.append("installment_no", data.installment_no)
+        : formData.append("installment_no", "");
+    }
 
     // formData.append("status", data.opt);
     localStorage.setItem(`${props.invoice}`, JSON.stringify(data));
@@ -267,7 +271,7 @@ const InvoiceFilter = (props) => {
               <option value="4">4</option>
             </select>
           </div>
-          {installmentno === "3A" ? (
+          {installmentno === "3B" ? (
             <div className="col-md-2">
               <input
                 ref={register}
@@ -282,7 +286,7 @@ const InvoiceFilter = (props) => {
           ) : (
             ""
           )}
-          {installmentno === "3B" ? (
+          {installmentno === "3A" ? (
             <div className="col-md-2">
               <select
                 ref={register}
@@ -430,7 +434,6 @@ const InvoiceFilter = (props) => {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={current_date}
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
                 />

@@ -32,6 +32,10 @@ const InvoiceTab = () => {
 
     color: "#42566a",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (
