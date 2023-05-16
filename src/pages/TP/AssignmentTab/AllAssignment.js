@@ -342,6 +342,7 @@ function AssignmentTab(props) {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
+    console.log(value,"value is ")
     setError(false);
     // setStore2(value);
     setShowSubCat(value);
