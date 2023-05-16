@@ -584,7 +584,7 @@ function TaxProfessionalFilter(props) {
               .join("-")}&to=${data.toDate
               ?.split("-")
               .reverse()
-              .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
+              .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
           .then((res) => {
@@ -606,7 +606,7 @@ function TaxProfessionalFilter(props) {
               .join("-")}&to=${toDate
               ?.split("-")
               .reverse()
-              .join("-")}&status=1&pcat_id=${selectedData}&qno=${
+              .join("-")}&status=${data.p_status}&pcat_id=${selectedData}&qno=${
               data.query_no
             }`,
             myConfig
