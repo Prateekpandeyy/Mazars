@@ -468,9 +468,9 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}`
             }
         }
         else if (proposal == "proposal") {
@@ -1009,8 +1009,8 @@ function Paginator(props) {
             if (pageno > 1) {
                 setPage(pageno);
                 setAtpage(pageno);
-                setting(pageno);
                 setOnPage(pageno);
+                setting(pageno);
             } else {
                 setPage(1);
                 setAtpage(1);
