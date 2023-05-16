@@ -997,6 +997,7 @@ function Paginator(props) {
         if (resetTrigger == true) {
             setPage(1);
             setAtpage(1);
+            setPageno(1);
             setting(1);
             setresetTrigger(!resetTrigger);
         }
