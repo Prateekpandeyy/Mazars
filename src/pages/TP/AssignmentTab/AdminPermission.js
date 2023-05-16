@@ -322,13 +322,22 @@ function AdminPermission(props) {
     setError(false);
     // setStore2(value);
     setShowSubCat(value);
-    tax2.map((i) => {
-      if (i.details == value.at(-1)) {
-        setStore2((payload) => {
-          return [...payload, i.id];
-        });
-      }
+    let allId = [];
+    tax2.map((id) => {
+      value.map((i) => {
+        if (i === id.details) {
+          allId.push(id.id);
+        }
+      });
     });
+    setStore2(allId);
+    // tax2.map((i) => {
+    //   if (i.details == value.at(-1)) {
+    //     setStore2((payload) => {
+    //       return [...payload, i.id];
+    //     });
+    //   }
+    // });
   };
 
   //reset category
