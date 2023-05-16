@@ -81,7 +81,7 @@ function AllPayment({ setAllPayment }) {
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
           {localStorage.getItem("accendtlpay1") === column.dataField ? (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
