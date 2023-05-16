@@ -448,7 +448,7 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -458,7 +458,7 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
