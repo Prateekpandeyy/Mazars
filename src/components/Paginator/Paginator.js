@@ -82,130 +82,130 @@ function Paginator(props) {
     const renderCheck = () => {
         console.log("render being");
         if (index === "tpquery1") {
-            let page =JSON.parse(localStorage.getItem("tpQuery1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpQuery1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpQuery1", JSON.stringify(1))
             }
         }
         else if (index === "tpquery2") {
-            let page =JSON.parse(localStorage.getItem("tpQuery2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpQuery2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpQuery2", JSON.stringify(1))
             }
         }
         else if (index === "tpquery3") {
-            let page =JSON.parse(localStorage.getItem("tpQuery3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpQuery3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpQuery3", JSON.stringify(1))
             }
         }
         else if (index === "tpproposal1") {
-            let page =JSON.parse(localStorage.getItem("tpProposal1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpProposal1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpProposal1", JSON.stringify(1))
             }
         }
         else if (index === "tpproposal2") {
-            let page =JSON.parse(localStorage.getItem("tpProposal2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpProposal2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpProposal2", JSON.stringify(1))
             }
         }
         else if (index === "tpproposal3") {
-            let page =JSON.parse(localStorage.getItem("tpProposal3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpProposal3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpProposal3", JSON.stringify(1))
             }
         }
         else if (index === "tpproposal4") {
-            let page =JSON.parse(localStorage.getItem("tpProposal4"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpProposal4"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpProposal4", JSON.stringify(1))
             }
         }
         else if (index === "tppayment1") {
-            let page =JSON.parse(localStorage.getItem("tpPayment1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpPayment1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpPayment1", JSON.stringify(1))
             }
         }
         else if (index === "tppayment2") {
-            let page =JSON.parse(localStorage.getItem("tpPayment2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpPayment2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpPayment2", JSON.stringify(1))
             }
         }
         else if (index === "tppayment3") {
-            let page =JSON.parse(localStorage.getItem("tpPayment3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpPayment3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpPayment3", JSON.stringify(1))
             }
         }
         else if (index === "tpInvoice1") {
-            let page =JSON.parse(localStorage.getItem("tpInvoice1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpInvoice1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpInvoice1", JSON.stringify(1))
             }
         }
         else if (index === "tpInvoice2") {
-            let page =JSON.parse(localStorage.getItem("tpInvoice2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpInvoice2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpInvoice2", JSON.stringify(1))
             }
         }
         else if (index === "tpAssignment1") {
-            let page =JSON.parse(localStorage.getItem("tpAssignment1"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpAssignment1"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpAssignment1", JSON.stringify(1))
             }
         }
         else if (index === "tpAssignment2") {
-            let page =JSON.parse(localStorage.getItem("tpAssignment2"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpAssignment2"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpAssignment2", JSON.stringify(1))
             }
         }
         else if (index === "tpAssignment3") {
-            let page =JSON.parse(localStorage.getItem("tpAssignment3"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpAssignment3"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpAssignment3", JSON.stringify(1))
             }
         }
         else if (index === "tpAssignment4") {
-            let page =JSON.parse(localStorage.getItem("tpAssignment4"));
-            if (page){
-            setPageno(page)
-            }else{
+            let page = JSON.parse(localStorage.getItem("tpAssignment4"));
+            if (page) {
+                setPageno(page)
+            } else {
                 localStorage.setItem("tpAssignment4", JSON.stringify(1))
             }
         }
@@ -253,11 +253,11 @@ function Paginator(props) {
         if (dynamicPage > 1) {
             if (e == 1) {
                 setBig(rem + e);
-                if(count < allEnd){
+                if (count < allEnd) {
                     setEnd(count);
-                    }else{
+                } else {
                     setEnd(allEnd);
-                    }
+                }
             }
             else if ((e == (dynamicPage))) {
                 setBig(rem + 1);
@@ -448,7 +448,7 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpProposal2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -458,7 +458,7 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }`
             } else if ((data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&cat_id=${data.store
                     }&from=${data.fromDate
                         ?.split("-")
                         .reverse()
@@ -468,9 +468,9 @@ function Paginator(props) {
                             .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
                     }&orderby=${val}&orderbyfield=${field}`
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}&status=1`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&orderby=${val}&orderbyfield=${field}`
             } else {
-                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}&status=1`
+                remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(userid)}`
             }
         }
         else if (proposal == "proposal") {
@@ -677,15 +677,15 @@ function Paginator(props) {
             let field = pagetry?.field;
             localStorage.setItem(`tpInvoice1`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                if(data.installment_no === undefined){
-                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}`
-                }else{
-                remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}`
+                if (data.installment_no === undefined) {
+                    remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}`
+                } else {
+                    remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}`
                 }
             } else if ((data && Object.values(data).length > 0) && (pagetry)) {
-                if(data.installment_no === undefined){
+                if (data.installment_no === undefined) {
                     remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&orderby=${val}&orderbyfield=${field}`
-                }else{
+                } else {
                     remainApiPath = `tl/getPaymentDetail?page=${e}&invoice=1&qno=${data.query_no}&payment_plan=${data.payment_plan}&from=${data.p_dateFrom}&to=${data.p_dateTo}&status=${data.opt}&installment_no=${data?.installment_no}&orderby=${val}&orderbyfield=${field}`
                 }
             } else if ((!data) && (pagetry)) {
@@ -907,10 +907,10 @@ function Paginator(props) {
                             if (dynamicPage > 1) {
                                 if (e == 1) {
                                     setBig(rem + e);
-                                    if(count < allEnd){
-                                    setEnd(count);
-                                    }else{
-                                    setEnd(allEnd);
+                                    if (count < allEnd) {
+                                        setEnd(count);
+                                    } else {
+                                        setEnd(allEnd);
                                     }
                                     // console.log("e at 1", big, end);
                                 }
@@ -1009,8 +1009,8 @@ function Paginator(props) {
             if (pageno > 1) {
                 setPage(pageno);
                 setAtpage(pageno);
-                setting(pageno);
                 setOnPage(pageno);
+                setting(pageno);
             } else {
                 setPage(1);
                 setAtpage(1);
@@ -1018,9 +1018,9 @@ function Paginator(props) {
                 setting(1);
             }
         }
-        if (count == 0){
+        if (count == 0) {
             setSearchResult(false);
-        }else{
+        } else {
             setSearchResult(true);
         }
     }, [count]);
@@ -1091,7 +1091,7 @@ function Paginator(props) {
             ) : (
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                     <span className="customPaginationSpan nullClass">
-                    0 - 0 of 0
+                        0 - 0 of 0
                     </span>
                 </div>
             )}

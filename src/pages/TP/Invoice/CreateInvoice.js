@@ -149,8 +149,10 @@ const CreateInvoice = () => {
     }
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-      if (searchData?.installment_no && searchData?.payment_plan) {
+      if (!(searchData?.installment_no) && (searchData?.payment_plan)) {
         remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      }else if(searchData?.installment_no && searchData?.payment_plan){
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}`;
       } else {
         remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&installment_no=${searchData?.installment_no}&payment_plan=${searchData?.payment_plan}`;
       }
@@ -325,9 +327,12 @@ const CreateInvoice = () => {
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-      if (searchData?.installment_no && searchData?.payment_plan) {
-        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
-      } else {
+      if (!(searchData?.installment_no) && searchData?.payment_plan) {
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&orderby=${val}&orderbyfield=${field}`;
+      }else if((searchData?.installment_no) && searchData?.payment_plan){
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=1&orderby=${val}&orderbyfield=${field}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}`;
+      }
+       else {
         remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
       }
     } else {

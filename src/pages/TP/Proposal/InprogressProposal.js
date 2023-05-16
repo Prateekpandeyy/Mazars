@@ -181,7 +181,7 @@ function InprogressProposal() {
         .join("-")}&to=${data.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
     } else if (data && pagetry) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
         userid
@@ -191,17 +191,17 @@ function InprogressProposal() {
         .join("-")}&to=${data.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${
+        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
         data.query_no
       }&orderby=${val}&orderbyfield=${field}`;
     } else if (!data && pagetry) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=1`;
+      )}`;
     }
 
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -248,13 +248,13 @@ function InprogressProposal() {
       }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${
+        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
         data.query_no
       }&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(
         userid
-      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+      )}&orderby=${val}&orderbyfield=${field}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {

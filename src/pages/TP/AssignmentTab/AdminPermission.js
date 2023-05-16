@@ -49,6 +49,9 @@ function AdminPermission(props) {
   const [finalId, setFinalId] = useState("");
   const [stored, setStored] = useState("");
 
+  const [catShowData, setCatShowData] = useState([]);
+  const [showSubCat, setShowSubCat] = useState([]);
+
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
   const [sortVal, setSortVal] = useState(0);
@@ -187,6 +190,23 @@ function AdminPermission(props) {
     );
   }
 
+
+  useEffect(() => {
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
+  }, []);
+
+  useEffect(() => {
+    console.log(catShowData, "final tax2");
+    if (catShowData == "Direct tax")
+      setSelectedData(1);
+    else {
+      setSelectedData(2);
+    }
+  }, [catShowData]);
+
+
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment4"));
     let arrow = localStorage.getItem("tpArrowAs4");
@@ -300,7 +320,15 @@ function AdminPermission(props) {
   //handleSubCategory
   const handleSubCategory = (value) => {
     setError(false);
-    setStore2(value);
+    // setStore2(value);
+    setShowSubCat(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
 
   //reset category
@@ -310,7 +338,12 @@ function AdminPermission(props) {
     setStore2([]);
     getAssignmentList();
     setError(false);
-    setTax2([]);
+    // setTax2([]);
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setStore2([]);
+    setShowSubCat([]);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
   };
 
   //reset date
@@ -326,6 +359,11 @@ function AdminPermission(props) {
     setQueryNo("");
     setFromDate("");
     setToDate(current_date);
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setStore2([]);
+    setShowSubCat([]);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
     getAssignmentList(1);
     setresetTrigger(!resetTrigger);
     setAccend("");
@@ -808,9 +846,10 @@ function AdminPermission(props) {
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment4"));
-
+    let fixedCat = (localStorage.getItem("fixedCat"));
     if (dk) {
       if (dk.route === window.location.pathname) {
+        setCatShowData(fixedCat);
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -818,7 +857,15 @@ function AdminPermission(props) {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
-
+        let subCat = JSON.parse(localStorage.getItem(`tp${fixedCat}`));
+        setTax2(subCat);
+        subCat?.map((i) => {
+          if (dk.store.includes(i.id)) {
+            setShowSubCat((payload) => {
+              return [...payload, i.details];
+            });
+          }
+        });
         if (pageno) {
           onSubmit(dk, pageno);
         } else {
@@ -1012,7 +1059,9 @@ function AdminPermission(props) {
                   placeholder="Select Category"
                   defaultValue={[]}
                   onChange={handleCategory}
-                  value={selectedData}
+                  // value={selectedData}
+                  value={catShowData}
+                  disabled={true}
                 >
                   {categoryData?.map((p, index) => (
                     <Option value={p.id} key={index}>
@@ -1029,13 +1078,14 @@ function AdminPermission(props) {
                   placeholder="Select Sub Category"
                   defaultValue={[]}
                   onChange={(e) => handleSubCategory(e)}
-                  value={store2}
+                  // value={store2}
+                  value={showSubCat}
                   allowClear
                 >
                   {tax2?.length > 0 ? (
                     <>
                       {tax2?.map((p, index) => (
-                        <Option value={p.id} key={index}>
+                        <Option value={p.details} key={index}>
                           {p.details}
                         </Option>
                       ))}

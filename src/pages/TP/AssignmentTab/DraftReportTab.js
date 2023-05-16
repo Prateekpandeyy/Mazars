@@ -51,6 +51,9 @@ function AssignmentTab() {
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
 
+  const [catShowData, setCatShowData] = useState([]);
+  const [showSubCat, setShowSubCat] = useState([]);
+
   const [records, setRecords] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [status, setStatus] = useState([]);
@@ -151,6 +154,21 @@ function AssignmentTab() {
     }
   }, [ViewDiscussion]);
   // console.log("catData", categoryData);
+
+  useEffect(() => {
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
+  }, []);
+
+  useEffect(() => {
+    console.log(catShowData, "final tax2");
+    if (catShowData == "Direct tax")
+      setSelectedData(1);
+    else {
+      setSelectedData(2);
+    }
+  }, [catShowData]);
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
@@ -261,7 +279,15 @@ function AssignmentTab() {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    setStore2(value);
+    // setStore2(value);
+    setShowSubCat(value);
+    tax2.map((i) => {
+      if (i.details == value.at(-1)) {
+        setStore2((payload) => {
+          return [...payload, i.id];
+        });
+      }
+    });
   };
 
   //reset category
@@ -269,6 +295,11 @@ function AssignmentTab() {
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setStore2([]);
+    setShowSubCat([]);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
   };
 
   //reset date
@@ -280,6 +311,11 @@ function AssignmentTab() {
     setToDate(current_date);
     setFromDate("");
     setQueryNo("");
+    let fixedCat = localStorage.getItem("fixedCat");
+    setCatShowData(fixedCat);
+    setStore2([]);
+    setShowSubCat([]);
+    setTax2(JSON.parse(localStorage.getItem(`tp${fixedCat}`)));
     localStorage.removeItem("searchDatatpAssignment2");
     getAssignmentList(1);
     setresetTrigger(!resetTrigger);
@@ -505,6 +541,7 @@ function AssignmentTab() {
     {
       dataField: "status",
       text: "Status",
+
       headerStyle: () => {
         return { fontSize: "11px", width: "200px" };
       },
@@ -766,8 +803,10 @@ function AssignmentTab() {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment2"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment2"));
     console.log("dkk2", dk);
+    let fixedCat = (localStorage.getItem("fixedCat"));
     if (dk) {
       if (dk.route === window.location.pathname) {
+        setCatShowData(fixedCat);
         setStore2(dk.store);
         setToDate(dk.toDate);
         setFromDate(dk.fromDate);
@@ -775,6 +814,15 @@ function AssignmentTab() {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
+        let subCat = JSON.parse(localStorage.getItem(`tp${fixedCat}`));
+        setTax2(subCat);
+        subCat?.map((i) => {
+          if (dk.store.includes(i.id)) {
+            setShowSubCat((payload) => {
+              return [...payload, i.details];
+            });
+          }
+        });
         if (pageno) {
           onSubmit(dk, pageno);
         } else {
@@ -952,8 +1000,10 @@ function AssignmentTab() {
                   style={{ width: 130 }}
                   placeholder="Select Category"
                   defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
+                  // onChange={handleCategory}
+                  disabled={true}
+                  // value={selectedData}
+                  value={catShowData}
                 >
                   {categoryData?.map((p, index) => (
                     <Option value={p.id} key={index}>
@@ -970,13 +1020,14 @@ function AssignmentTab() {
                   placeholder="Select Sub Category"
                   defaultValue={[]}
                   onChange={handleSubCategory}
-                  value={store2}
+                  // value={store2}
+                  value={showSubCat}
                   allowClear
                 >
                   {tax2?.length > 0 ? (
                     <>
                       {tax2?.map((p, index) => (
-                        <Option value={p.id} key={index}>
+                        <Option value={p.details} key={index}>
                           {p.details}
                         </Option>
                       ))}

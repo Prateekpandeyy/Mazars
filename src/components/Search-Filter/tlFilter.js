@@ -76,6 +76,7 @@ function TeamFilter(props) {
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
+    console.log(data,"category ");
   }, []);
 
   //handleCategory
