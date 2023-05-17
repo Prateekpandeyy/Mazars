@@ -599,7 +599,7 @@ function Paginator(props) {
         }
         else if (Unpaid == "Unpaid") {
             let data = JSON.parse(localStorage.getItem("searchDatatppayment2"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetppayment2"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpPayment2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpPayment2`, JSON.stringify(e));
@@ -635,7 +635,7 @@ function Paginator(props) {
         }
         else if (Paid == "Paid") {
             let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));
-            let pagetry = JSON.parse(localStorage.getItem("freezetppayment3"));
+            let pagetry = JSON.parse(localStorage.getItem("freezetpPayment3"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`tpPayment3`, JSON.stringify(e));

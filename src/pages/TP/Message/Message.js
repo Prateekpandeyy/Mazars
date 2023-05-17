@@ -406,13 +406,16 @@ function Message(props) {
                       {big}-{end} of {count}
                     </span>
                     <span className="d-flex">
+                    {page > 1 ? (
                       <button
                         className="navButton"
                         onClick={(e) => firstChunk()}
                       >
                         <KeyboardDoubleArrowLeftIcon />
                       </button>
-
+                      ) : (
+                        ""
+                      )}
                       {page > 1 ? (
                         <button
                           className="navButton"
@@ -446,12 +449,16 @@ function Message(props) {
                       ) : (
                         ""
                       )}
+                      {defaultPage.length > page ? (
                       <button
                         className="navButton"
                         onClick={(e) => lastChunk()}
                       >
                         <KeyboardDoubleArrowRightIcon />
                       </button>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>

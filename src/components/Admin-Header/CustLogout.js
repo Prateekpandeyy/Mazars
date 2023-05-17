@@ -19,25 +19,23 @@ export const CustLogout = () => {
       localStorage.removeItem("custEmail");
       localStorage.removeItem("category");
       localStorage.removeItem("clientToken");
-
-
       localStorage.removeItem("custQuery1");
+      localStorage.removeItem("custQuery2");
+      localStorage.removeItem("custQuery3");
+      localStorage.removeItem("custQuery4");
       localStorage.removeItem(`freezecustQuery1`);
+      localStorage.removeItem(`freezecustQuery2`);
+      localStorage.removeItem(`freezecustQuery3`);
+      localStorage.removeItem(`freezecustQuery4`);
       localStorage.removeItem("custArrowQuery1");
       localStorage.removeItem("prevcustQuery1");
       localStorage.removeItem("searchDatacustQuery1");
-      localStorage.removeItem("custQuery2");
-      localStorage.removeItem(`freezecustQuery2`);
       localStorage.removeItem("custArrowQuery2");
       localStorage.removeItem("prevcustQuery2");
       localStorage.removeItem("searchDatacustQuery2");
-      localStorage.removeItem("custQuery3");
-      localStorage.removeItem(`freezecustQuery3`);
       localStorage.removeItem("custArrowQuery3");
       localStorage.removeItem("prevcustQuery3");
       localStorage.removeItem("searchDatacustQuery3");
-      localStorage.removeItem("custQuery4");
-      localStorage.removeItem(`freezecustQuery4`);
       localStorage.removeItem("custArrowQuery4");
       localStorage.removeItem("prevcustQuery4");
       localStorage.removeItem("searchDatacustQuery4");
