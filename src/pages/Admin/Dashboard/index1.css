@@ -22,11 +22,14 @@
 	border-top: 0px;
 	padding: 7px !important;
 }
-
+.table thead th{
+	border-bottom: 0px !important;
+}
 .left_side{
 	width: 80%;
 	padding-left: 0px;
 	font-size: 12px;
+	border-bottom: 0px !important;
 }
 
 
