@@ -763,7 +763,7 @@ function Paid() {
               setRecords={setRecords}
               records={records}
               id={userId}
-              index="custPay3"
+              index="custPay2"
               resetTriggerFunc={resetTriggerFunc}
               setCount={setCount}
             />

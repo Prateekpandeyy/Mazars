@@ -21,6 +21,16 @@ import MessageIcon, {
   ViewDiscussionIcon,
   HelpIcon,
 } from "../../components/Common/MessageIcon";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 function AdminAssignment() {
   let history = useHistory();
   const userId = window.localStorage.getItem("userid");
@@ -35,7 +45,7 @@ function AdminAssignment() {
   const myRef = useRef([]);
 
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
-  // const classes = useStyles();
+  const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
@@ -139,12 +149,12 @@ function AdminAssignment() {
       remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+        }&pcat_id=${data.pcatId}`
     } else if ((data) && (pagetry)) {
       remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
     } else if ((!data) && (pagetry)) {
       remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
         userId
@@ -185,6 +195,85 @@ function AdminAssignment() {
       });
   };
 
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowAs5") === column.dataField ||
+      localStorage.getItem("prevcustAs5") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustAs5", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowAs5") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custAs5`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustAs5`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustAs5"));
+
+    if (data) {
+      remainApiPath = `customers/completeAssignmentspermission?page=1&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/completeAssignmentspermission?page=1&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignmentDisplay(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       dataField: "",
@@ -203,7 +292,25 @@ function AdminAssignment() {
     {
       dataField: "created",
       text: "Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs5", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs5");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -236,12 +343,48 @@ function AdminAssignment() {
     {
       dataField: "parent_id",
       text: "Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs5", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs5");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs5", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs5");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "status",
@@ -325,24 +468,28 @@ function AdminAssignment() {
         );
       },
     },
-    // {
-    //   dataField: "Exp_Delivery_Date",
-    //   text: "Expected date of delivery",
-    //   sort: true,
-
-    //   formatter: function dateFormat(cell, row) {
-
-    //     var oldDate = row.created;
-    //     if (oldDate == null) {
-    //       return null;
-    //     }
-    //     return oldDate.toString().split("-").reverse().join("-");
-    //   },
-    // },
     {
       dataField: "final_date",
       text: "Expected / Actual date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs5", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs5");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate1 = row.final_date;
@@ -474,6 +621,8 @@ function AdminAssignment() {
             setOnPage={setOnPage}
             resetTrigger={resetTrigger}
             setresetTrigger={setresetTrigger}
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
           />
         </CardHeader>
 

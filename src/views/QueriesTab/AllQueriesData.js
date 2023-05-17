@@ -203,7 +203,7 @@ function AllQueriesData({
     }else if ((!data) && (pagetry)){
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
     }else{
-      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}`
     }
 
     axios

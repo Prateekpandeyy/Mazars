@@ -1177,7 +1177,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${data.store}&from=${data.fromDate}&to=${
               data.toDate
-            }&status=${data.p_status}&pcat_id=${data.pcatId}`,
+            }&pcat_id=${data.pcatId}`,
             myConfig
           )
           .then((res) => {
@@ -1200,7 +1200,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${selectedData}`,
+            }&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
