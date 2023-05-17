@@ -269,7 +269,7 @@ function AssignmentTab(props) {
     setOnPage(e);
     setLoading(true);
     if (!data && pagetry) {
-      remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(
+      remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -295,7 +295,7 @@ function AssignmentTab(props) {
         }
       });
     } else if (!data && !pagetry) {
-      remainApiPath = `tl/getAssignments?tp_id=${JSON.parse(userid)}`;
+      remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}`;
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
         if (res.data.code === 1) {
           let data = res.data.result;
