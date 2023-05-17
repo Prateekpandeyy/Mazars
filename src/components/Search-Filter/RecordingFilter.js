@@ -99,10 +99,10 @@ function RecordingFilter(props) {
       // }
     }
   };
-  const onSubmit = (data,e) => {
-    localStorage.setItem("recordingData", JSON.stringify(data));
-    setSearchText(data)
-    if (data.queryNo) {
+  const onSubmit = (data, e) => {
+    setSearchText(data);
+    if ((SearchQuery = "adminQuery")) {
+      localStorage.setItem("recordingData", JSON.stringify(data));
       const token = window.localStorage.getItem("adminToken");
       const myConfig = {
         headers: {
@@ -126,6 +126,7 @@ function RecordingFilter(props) {
           }
         });
     } else if (SearchQuery == "tlQuery") {
+      localStorage.setItem("recordingDatatl", JSON.stringify(data));
       const token = window.localStorage.getItem("tlToken");
       const myConfig = {
         headers: {
@@ -189,10 +190,10 @@ function RecordingFilter(props) {
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
-    if(searchText){
-      onsubmit(searchText,1)
-    }else{
-    getData(1);
+    if (searchText) {
+      onsubmit(searchText, 1);
+    } else {
+      getData(1);
     }
     localStorage.setItem(pageValue, 1);
   };
@@ -201,10 +202,10 @@ function RecordingFilter(props) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(Number(page) - 1);
-    if(searchText){
-      onsubmit(searchText,page - 1)
-    }else{
-    getData(page - 1);
+    if (searchText) {
+      onsubmit(searchText, page - 1);
+    } else {
+      getData(page - 1);
     }
     localStorage.setItem(pageValue, Number(page) - 1);
   };
@@ -214,25 +215,25 @@ function RecordingFilter(props) {
     }
     setPage(Number(page) + 1);
     localStorage.setItem(pageValue, Number(page) + 1);
-    if(searchText){
-      onsubmit(searchText,page + 1)
-    }else{
-    getData(page + 1);
+    if (searchText) {
+      onsubmit(searchText, page + 1);
+    } else {
+      getData(page + 1);
     }
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getData(defaultPage.at(-1));
-    if(searchText){
-      onsubmit(searchText,totalPages)
-    }else{
-    setAtpage(totalPages);
+    if (searchText) {
+      onsubmit(searchText, totalPages);
+    } else {
+      setAtpage(totalPages);
     }
     localStorage.setItem(pageValue, defaultPage.at(-1));
   };
-  
+
   useEffect(() => {
-    console.log(searchText,"searchText");
+    console.log(searchText, "searchText");
   }, [searchText]);
 
   return (
