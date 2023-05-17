@@ -10,8 +10,18 @@ import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import { Link } from "react-router-dom";
 import "./recording.css";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function Recording() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [feedbackData, setFeedBackData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +34,15 @@ function Recording() {
     assignid: "",
     id: "",
   });
+
+  const [lastDown, setLastDown] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const openModal = (videoContent) => {
     setIsOpen(true);
     setVideoId(videoContent);
@@ -86,7 +105,39 @@ function Recording() {
       id: id,
     });
   };
+  const sortMessage = (e) => {
+    console.log("eee", e);
+  };
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
 
+    if (
+      localStorage.getItem("accendtlpay1") === column.dataField ||
+      localStorage.getItem("prevtlpay1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlpay1", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlpay1") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   const columns = [
     {
       text: "S.No",
@@ -100,8 +151,28 @@ function Recording() {
     },
     {
       text: "Date",
-      sort: true,
+
       dataField: "created_date",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       headerStyle: () => {
         return { fontSize: "12px", width: "30px" };
       },
@@ -135,6 +206,26 @@ function Recording() {
       headerStyle: () => {
         return { fontSize: "12px", width: "40px" };
       },
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function formatterName(cell, row) {
         return <p>{row.participants}</p>;
       },
@@ -145,6 +236,26 @@ function Recording() {
       dataField: "message",
       headerStyle: () => {
         return { fontSize: "12px", width: "80px" };
+      },
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
       },
     },
     {
@@ -237,6 +348,20 @@ function Recording() {
                 records={records}
                 userid={userid}
                 getRecording={getRecording}
+                page={page}
+                getData={getRecording}
+                big={big}
+                end={end}
+                setBig={setBig}
+                setEnd={setEnd}
+                setPage={setPage}
+                defaultPage={defaultPage}
+                setDefaultPage={setDefaultPage}
+                pageValue="tlrecording"
+                localAccend="accendtlrecording"
+                localPrev="prevtlrecording"
+                localSorted="sortedValuetlrecording"
+                index="tlrecording"
               />
               <DataTablepopulated
                 bgColor="#42566a"

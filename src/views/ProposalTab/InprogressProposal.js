@@ -1,8 +1,8 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody,Col,Row} from "reactstrap";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -49,7 +49,7 @@ function InprogressProposal() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -74,15 +74,15 @@ function InprogressProposal() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
     console.log("eeee");
@@ -92,17 +92,17 @@ function InprogressProposal() {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [viewProposalModal]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal2`));
     let pageno = JSON.parse(localStorage.getItem("custProposal2"));
-    let arrow = localStorage.getItem("custArrowProposal2")
-    let pre =localStorage.getItem("prevcustp2")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowProposal2");
+    let pre = localStorage.getItem("prevcustp2");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -111,11 +111,11 @@ function InprogressProposal() {
       setTurnGreen(true);
     }
     // if (!local) {
-      if (pageno) {
-        getProposalData(pageno);
-      }else{
-    getProposalData(1);
-      }
+    if (pageno) {
+      getProposalData(pageno);
+    } else {
+      getProposalData(1);
+    }
     // }
   }, []);
 
@@ -151,9 +151,9 @@ function InprogressProposal() {
   }
 
   const getProposalData = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal2"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal2"));
@@ -164,123 +164,128 @@ function InprogressProposal() {
     setOnPage(e);
     setLoading(true);
 
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       if (data.p_status) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           id
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`
-      }else{
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+      } else {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           id
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=1&pcat_id=${data.pcatId}`
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=1&pcat_id=${data.pcatId}`;
       }
-    }else if ((data) && (pagetry)){
+    } else if (data && pagetry) {
       if (data.p_status) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           id
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-      }else{
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=${data.p_status}&pcat_id=${
+          data.pcatId
+        }&orderby=${val}&orderbyfield=${field}`;
+      } else {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           id
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       }
-    }else if ((!data) && (pagetry)){
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&status=1`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposalDisplay(all);
-          setCount(res.data.total);
-          setCountProposal(res.data.result.length);
-          setRecords(res.data.result.length);
-          setCount(res.data.total);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposalDisplay(all);
+        setCount(res.data.total);
+        setCountProposal(res.data.result.length);
+        setRecords(res.data.result.length);
+        setCount(res.data.total);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custProposal2`, JSON.stringify(1))
+    localStorage.setItem(`custProposal2`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustProposal2`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal2"));
 
     if (data) {
       if (data.p_status) {
-      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-        id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-        id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }
-
+        remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+          id
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=${data.p_status}&pcat_id=${
+          data.pcatId
+        }&orderby=${val}&orderbyfield=${field}`;
+      } else {
+        remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+          id
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+      }
     } else {
-      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+        userId
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setProposalDisplay(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setProposalDisplay(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -289,8 +294,14 @@ function InprogressProposal() {
       dataField: "",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -308,10 +319,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -339,10 +350,10 @@ function InprogressProposal() {
       //   if (accend !== field) {
       //     setAccend(field);
       //     setIsActive(field);
-      //     localStorage.setItem("custArrowProposal2", field);
+      //     localStorage.setItem("custArrowPropsal2", field);
       //   } else {
       //     setAccend("");
-      //     localStorage.removeItem("custArrowProposal2");
+      //     localStorage.removeItem("custArrowPropsal2");
       //   }
       //   if (accend === field) {
       //     val = 0;
@@ -378,10 +389,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -401,10 +412,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -424,10 +435,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -466,10 +477,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -497,10 +508,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -527,10 +538,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -575,10 +586,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -611,10 +622,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal2", field);
+          localStorage.setItem("custArrowPropsal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal2");
+          localStorage.removeItem("custArrowPropsal2");
         }
         if (accend === field) {
           val = 0;
@@ -741,7 +752,7 @@ function InprogressProposal() {
     localStorage.removeItem("custArrowPropsal2");
     localStorage.removeItem("prevcustp2");
     setPrev("");
-  }
+  };
 
   return (
     <Card>

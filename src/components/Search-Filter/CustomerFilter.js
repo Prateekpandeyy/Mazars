@@ -34,7 +34,7 @@ function CustomerFilter(props) {
     setCount,
   } = props;
 
-  const [selectedData, setSelectedData] = useState("Please select category");
+  const [selectedData, setSelectedData] = useState("");
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -67,8 +67,8 @@ function CustomerFilter(props) {
         let parentId = "";
         let catData = JSON.parse(localStorage.getItem("categoryData"));
         catData.forEach((element) => {
+          console.log("eleent", element.id, dk);
           if (element.id === dk.pcatId) {
-            console.log("eleent", element.details);
             setCatShowData(element.details);
             parentId = element.details;
           }
@@ -91,13 +91,9 @@ function CustomerFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus1(dk.p_status);
         setQueryNo(dk.query_no);
-        // onSubmit(dk);
-        console.log(showSubCat, "subshowCat");
       }
     }
   }, []);
-
-
 
   //handleCategory
   const handleCategory = (value) => {
@@ -134,7 +130,6 @@ function CustomerFilter(props) {
     setCatShowData([]);
   };
 
-
   //reset date
   const resetData = () => {
     reset();
@@ -153,11 +148,13 @@ function CustomerFilter(props) {
   };
 
   const onSubmit = (data) => {
-    console.log("data on submit", data);
-    console.log('data to submit in form',);
     setLoading(true);
     let obj = {};
-    if ((assignment == "assignment") || (proposal == "proposal") || (InprogressAllocation == "InprogressAllocation")) {
+    if (
+      assignment == "assignment" ||
+      proposal == "proposal" ||
+      InprogressAllocation == "InprogressAllocation"
+    ) {
       if (data.route) {
         obj = {
           store: data.store,
@@ -174,7 +171,7 @@ function CustomerFilter(props) {
           store: showSubCat,
           fromDate: data.p_dateFrom,
           toDate: data.p_dateTo,
-          pcatId: status1,
+          pcatId: selectedData,
           query_no: data?.query_no,
           p_status: data?.p_status,
           route: window.location.pathname,
@@ -215,11 +212,14 @@ function CustomerFilter(props) {
     if (query == "query") {
       if (data.route) {
         axios
-          .get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          .get(
+            `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
-            myConfig)
+            myConfig
+          )
           .then((res) => {
             if (res.data.code === 1) {
               setLoading(false);
@@ -248,7 +248,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -285,11 +286,11 @@ function CustomerFilter(props) {
         if (data.p_status.length > 0) {
           let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
             id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-            }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+            data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
           axios
-            .get(`${baseUrl}/${remainApiPath}`,
-              myConfig)
+            .get(`${baseUrl}/${remainApiPath}`, myConfig)
             .then((res) => {
               if (res.data.code === 1) {
                 setLoading(false);
@@ -316,11 +317,11 @@ function CustomerFilter(props) {
         } else {
           let remainApiPath = `customers/incompleteAssignments?user=${JSON.parse(
             id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-            }&status=1&pcat_id=${data.pcatId}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+            data.toDate
+          }&status=1&pcat_id=${data.pcatId}`;
           axios
-            .get(`${baseUrl}/${remainApiPath}`,
-              myConfig)
+            .get(`${baseUrl}/${remainApiPath}`, myConfig)
             .then((res) => {
               if (res.data.code === 1) {
                 setLoading(false);
@@ -351,8 +352,9 @@ function CustomerFilter(props) {
             .get(
               `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
                 id
-              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
-              }&status=${data.p_status}&pcat_id=${status1}`,
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
+              }&status=${data.p_status}&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -385,8 +387,9 @@ function CustomerFilter(props) {
             .get(
               `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
                 id
-              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
-              }&status=1&pcat_id=${status1}`,
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
+              }&status=1&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -421,11 +424,14 @@ function CustomerFilter(props) {
     if (InprogressQueryProposal == "InprogressQueryProposal") {
       if (data.route) {
         axios
-          .get(`${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
-            id
-          )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          .get(
+            `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
+              id
+            )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&pcat_id=${data.pcatId}`,
-            myConfig)
+            myConfig
+          )
           .then((res) => {
             if (res.data.code === 1) {
               setLoading(false);
@@ -454,7 +460,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
               id
-            )}&status=2&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&status=2&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&pcat_id=${selectedData}`,
             myConfig
           )
@@ -489,11 +496,14 @@ function CustomerFilter(props) {
     if (DeclinedQuery == "DeclinedQuery") {
       if (data.route) {
         axios
-          .get(`${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
-            id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          .get(
+            `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
+              id
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&pcat_id=${data.pcatId}&status=${data.p_status}`,
-            myConfig)
+            myConfig
+          )
           .then((res) => {
             if (res.data.code === 1) {
               setLoading(false);
@@ -522,7 +532,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&pcat_id=${selectedData}&status=${data.p_status}`,
             myConfig
           )
@@ -558,8 +569,10 @@ function CustomerFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${data.store
-            }&from=${data.fromDate}&to=${data.toDate}&status=${data.p_status
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=${
+              data.p_status
             }&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -591,8 +604,9 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${status1}`,
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
@@ -628,8 +642,10 @@ function CustomerFilter(props) {
         if (data.p_status) {
           axios
             .get(
-              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${data.store
-              }&from=${data.fromDate}&to=${data.toDate}&status=${data.p_status
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+                data.store
+              }&from=${data.fromDate}&to=${data.toDate}&status=${
+                data.p_status
               }&pcat_id=${data.pcatId}`,
               myConfig
             )
@@ -659,8 +675,10 @@ function CustomerFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${data.store
-              }&from=${data.fromDate}&to=${data.toDate}&status=1&pcat_id=${data.pcatId
+              `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+                data.store
+              }&from=${data.fromDate}&to=${data.toDate}&status=1&pcat_id=${
+                data.pcatId
               }`,
               myConfig
             )
@@ -694,7 +712,8 @@ function CustomerFilter(props) {
             .get(
               `${baseUrl}/customers/getProposals?uid=${JSON.parse(
                 id
-              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
               }&status=${data.p_status}&pcat_id=${selectedData}`,
               myConfig
             )
@@ -728,7 +747,8 @@ function CustomerFilter(props) {
             .get(
               `${baseUrl}/customers/getProposals?uid=${JSON.parse(
                 id
-              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+              )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+                data.p_dateTo
               }&status=1&pcat_id=${selectedData}`,
               myConfig
             )
@@ -765,8 +785,10 @@ function CustomerFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${data.store
-            }&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${data.pcatId
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=2&pcat_id=${
+              data.pcatId
             }`,
             myConfig
           )
@@ -798,7 +820,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
@@ -834,8 +857,10 @@ function CustomerFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${data.store
-            }&from=${data.fromDate}&to=${data.toDate}&status=3&pcat_id=${data.pcatId
+            `${baseUrl}/customers/getProposals?uid=${JSON.parse(id)}&cat_id=${
+              data.store
+            }&from=${data.fromDate}&to=${data.toDate}&status=3&pcat_id=${
+              data.pcatId
             }`,
             myConfig
           )
@@ -867,7 +892,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getProposals?uid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=3&pcat_id=${selectedData}`,
             myConfig
           )
@@ -905,7 +931,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -927,7 +954,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${status1}`,
             myConfig
           )
@@ -950,7 +978,6 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 resetTriggerFunc();
                 localStorage.setItem(`custAs1`, JSON.stringify(1));
-                
               }
             }
           })
@@ -965,7 +992,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=1&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -987,7 +1015,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=1&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1024,7 +1053,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=2&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1046,7 +1076,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1083,7 +1114,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=3&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1105,7 +1137,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignments?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=3&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1142,7 +1175,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1164,7 +1198,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/completeAssignmentspermission?user=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1201,7 +1236,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=${data.p_status}&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1223,7 +1259,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1260,7 +1297,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=2&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1282,7 +1320,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
@@ -1319,7 +1358,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+              data.toDate
             }&status=1&pcat_id=${data.pcatId}`,
             myConfig
           )
@@ -1341,7 +1381,8 @@ function CustomerFilter(props) {
           .get(
             `${baseUrl}/customers/getUploadedProposals?cid=${JSON.parse(
               id
-            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${data.p_dateTo
+            )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
+              data.p_dateTo
             }&status=1&pcat_id=${selectedData}`,
             myConfig
           )

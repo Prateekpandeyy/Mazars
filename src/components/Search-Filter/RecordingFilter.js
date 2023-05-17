@@ -2,7 +2,11 @@ import React from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
-
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 function RecordingFilter(props) {
   const { handleSubmit, register, reset } = useForm();
 
@@ -20,6 +24,16 @@ function RecordingFilter(props) {
     page,
     setBig,
     setEnd,
+    countNotification,
+    getData,
+    pageValue,
+    lastChunk,
+    big,
+    end,
+    firstChunk,
+    prevChunk,
+    nextChunk,
+    defaultPage,
   } = props;
 
   //reset date
@@ -172,7 +186,7 @@ function RecordingFilter(props) {
     <>
       <div className="row">
         <div className="col-sm-12 d-flex">
-          <div>
+          <div className="d-flex w-100 justify-content-between">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-inline">
                 <input
@@ -192,6 +206,70 @@ function RecordingFilter(props) {
                 </div>
               </div>
             </form>
+            <Row>
+              <Col md="12" align="right">
+                <div className="customPagination">
+                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                    <span className="customPaginationSpan">
+                      {big}-{end} of {countNotification}
+                    </span>
+                    <span className="d-flex">
+                      {page > 1 ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => firstChunk()}
+                          >
+                            <KeyboardDoubleArrowLeftIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => prevChunk()}
+                          >
+                            <KeyboardArrowLeftIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <div className="navButtonSelectDiv">
+                        <select
+                          value={page}
+                          onChange={(e) => {
+                            setPage(Number(e.target.value));
+                            getData(Number(e.target.value));
+                            localStorage.setItem(pageValue, e.target.value);
+                          }}
+                          className="form-control"
+                        >
+                          {defaultPage?.map((i) => (
+                            <option value={i}>{i}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {defaultPage?.length > page ? (
+                        <>
+                          <button
+                            className="navButton"
+                            onClick={(e) => nextChunk()}
+                          >
+                            <KeyboardArrowRightIcon />
+                          </button>
+                          <button
+                            className="navButton"
+                            onClick={(e) => lastChunk()}
+                          >
+                            <KeyboardDoubleArrowRightIcon />
+                          </button>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
           </div>
         </div>
       </div>
