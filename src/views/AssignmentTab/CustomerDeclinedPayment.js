@@ -344,7 +344,7 @@ function CustomerDeclinedPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -367,7 +367,7 @@ function CustomerDeclinedPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 4);
       },
     },
     {
@@ -468,7 +468,7 @@ function CustomerDeclinedPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 6);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -498,7 +498,7 @@ function CustomerDeclinedPayment() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
+        sortMessage(val, 7);
       },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
