@@ -420,11 +420,9 @@ function AssignmentTab() {
     if (data) {
       remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
         userid
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-        data.toDate
-      }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
-        data.pcatId
-      }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getAssignments?page=1&tp_id=${JSON.parse(
         userid
@@ -783,9 +781,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -880,19 +878,15 @@ function AssignmentTab() {
       if (pagetry) {
         remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
           userid
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
-          data.pcatId
-        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+          }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(
           userid
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&assignment_status=Draft_Report&stages_status=1&pcat_id=${
-          data.pcatId
-        }&qno=${data.query_no}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${data.pcatId
+          }&qno=${data.query_no}`;
       }
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
         if (res.data.code === 1) {
@@ -924,10 +918,8 @@ function AssignmentTab() {
         .get(
           `${baseUrl}/tl/getAssignments?page=1&tp_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
-            data.p_dateTo
-          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${
-            data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
+          }&assignment_status=Draft_Report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
           }`,
           myConfig
         )

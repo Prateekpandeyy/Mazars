@@ -1028,6 +1028,7 @@ function AdminPermission(props) {
             setresetTrigger(!resetTrigger);
             localStorage.removeItem(`freezetpAssignment4`);
             localStorage.removeItem("tpArrowAs4");
+            localStorage.removeItem("prevtpAs4");
             setAccend("");
             setTurnGreen(false);
           }
