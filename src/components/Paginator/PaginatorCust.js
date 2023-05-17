@@ -526,7 +526,6 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(userId)}`;
             }
         }
@@ -537,7 +536,6 @@ function PaginatorCust(props) {
             let field = pagetry?.field;
             localStorage.setItem(`custAs2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                console.log('if data inpagination');
                 remainApiPath = `customers/completeAssignments?user=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -644,7 +642,7 @@ function PaginatorCust(props) {
         }
         else if (allPayment == "allPayment") {
             let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustPay1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custPay1`, JSON.stringify(e));
