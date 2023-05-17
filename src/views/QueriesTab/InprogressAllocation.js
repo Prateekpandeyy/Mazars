@@ -59,7 +59,7 @@ function InprogressAllocation({
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -70,7 +70,7 @@ function InprogressAllocation({
     setAdditionalQuery(!additionalQuery);
     setAssignNo(key);
     if (additionalQuery === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
@@ -78,25 +78,25 @@ function InprogressAllocation({
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [additionalQuery]);
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
@@ -138,9 +138,9 @@ function InprogressAllocation({
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustQuery2`));
     let pageno = JSON.parse(localStorage.getItem("custQuery2"));
-    let arrow = localStorage.getItem("custArrowQuery2")
-    let pre =localStorage.getItem("prevcustq2")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowQuery2");
+    let pre = localStorage.getItem("prevcustq2");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -149,18 +149,18 @@ function InprogressAllocation({
       setTurnGreen(true);
     }
     // if (!local) {
-      if (pageno) {
+    if (pageno) {
       CountInprogressAllocation(pageno);
-      }else{
-      CountInprogressAllocation(1); 
-      }
+    } else {
+      CountInprogressAllocation(1);
+    }
     // }
   }, []);
 
   const CountInprogressAllocation = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery2"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustQuery2"));
@@ -170,99 +170,92 @@ function InprogressAllocation({
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&status=1&orderby=${val}&orderbyfield=${field}`
-    }else{
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    } else {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&status=1`
+      )}&status=1`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setInprogressAllocation(all);
-          setCount(res.data.total);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setInprogressAllocation(all);
+        setCount(res.data.total);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custQuery2`, JSON.stringify(1))
+    localStorage.setItem(`custQuery2`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustQuery2`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery2"));
 
     if (data) {
       remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
         userId
-      )}&status=1`
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setInprogressAllocation(all);
-          setCount(res.data.total);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setInprogressAllocation(all);
+        setCount(res.data.total);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -270,8 +263,14 @@ function InprogressAllocation({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no}
-          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -328,7 +327,6 @@ function InprogressAllocation({
       //   }
       //   sortMessage(val, 2);
       // },
-
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -512,8 +510,8 @@ function InprogressAllocation({
             ) : (
               <>
                 {row.status_code == "0" ||
-                  row.status_code == "1" ||
-                  row.status_code == "3" ? (
+                row.status_code == "1" ||
+                row.status_code == "3" ? (
                   <>
                     <span className="ml-1">
                       <Link to={`/customer_edit-query/${row.id}`}>
@@ -551,8 +549,8 @@ function InprogressAllocation({
                 ) : null}
 
                 {row.status_code == "4" ||
-                  8 < parseInt(row.status_code) ||
-                  row.status_code == "2" ? (
+                8 < parseInt(row.status_code) ||
+                row.status_code == "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-1">
@@ -647,7 +645,7 @@ function InprogressAllocation({
           Swal.fire("Oops...", "Errorr ", "error");
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   const resetTriggerFunc = () => {
@@ -659,7 +657,7 @@ function InprogressAllocation({
     localStorage.removeItem("custArrowQuery2");
     localStorage.removeItem("prevcustq2");
     setPrev("");
-  }
+  };
 
   return (
     <Card>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
@@ -48,7 +48,7 @@ function AcceptedProposal() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -73,52 +73,52 @@ function AcceptedProposal() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
   useEffect(() => {
-      let runTo = myRef.current[scrolledTo]
-      runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });  
-}, [ViewDiscussion]);
+    let runTo = myRef.current[scrolledTo];
+    runTo?.scrollIntoView(false);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
-function headerLabelFormatter(column, colIndex) {
-  let isActive = true;
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
 
-  if (
-    localStorage.getItem("custArrowPropsal3") === column.dataField ||
-    localStorage.getItem("prevcustp3") === column.dataField
-  ) {
-    isActive = true;
-    setPrev(column.dataField);
-    localStorage.setItem("prevcustp3", column.dataField);
-  } else {
-    isActive = false;
-  }
-  return (
-    <div className="d-flex text-white w-100 flex-wrap">
-      <div style={{ display: "flex", color: "#fff" }}>
-        {column.text}
-        {localStorage.getItem("custArrowPropsal3") === column.dataField ? (
-          <ArrowDropUpIcon
-            className={isActive === true ? classes.isActive : ""}
-          />
-        ) : (
-          <ArrowDropDownIcon
-            className={isActive === true ? classes.isActive : ""}
-          />
-        )}
+    if (
+      localStorage.getItem("custArrowPropsal3") === column.dataField ||
+      localStorage.getItem("prevcustp3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustp3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowPropsal3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal3`));
     let pageno = JSON.parse(localStorage.getItem("custProposal3"));
-    let arrow = localStorage.getItem("custArrowProposal3")
-    let pre =localStorage.getItem("prevcustp3")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowPropsal3");
+    let pre = localStorage.getItem("prevcustp3");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -127,31 +127,30 @@ function headerLabelFormatter(column, colIndex) {
       setTurnGreen(true);
     }
     // if (!local) {
-      if (pageno) {
-        getProposalData(pageno);
-      }else{
-    getProposalData(1);
-      }
+    if (pageno) {
+      getProposalData(pageno);
+    } else {
+      getProposalData(1);
+    }
     // }
   }, []);
 
   const showProposalModal2 = (e) => {
-    console.log(e.assign_no,"eeee");
+    console.log(e.assign_no, "eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.q_id);
-    setScrolledTo(e.assign_no)
+    setScrolledTo(e.assign_no);
   };
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });  
-}, [viewProposalModal]);
-
+    runTo?.scrollIntoView({ block: "center" });
+  }, [viewProposalModal]);
 
   const getProposalData = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal3"));
@@ -162,97 +161,96 @@ function headerLabelFormatter(column, colIndex) {
     setOnPage(e);
     setLoading(true);
 
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
         id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=2&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=2&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
         id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=2`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&status=2`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposalDisplay(all);
-          setCount(res.data.total);
-          setCountProposal(res.data.result.length);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposalDisplay(all);
+        setCount(res.data.total);
+        setCountProposal(res.data.result.length);
+        setRecords(res.data.result.length);
+      } else if (res.data.code === 0) {
+        CommonServices.clientLogout(history);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custProposal3`, JSON.stringify(1))
+    localStorage.setItem(`custProposal3`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustProposal3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
 
     if (data) {
       remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
         id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(userId)}&status=2&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+        userId
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setProposalDisplay(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setProposalDisplay(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -261,8 +259,14 @@ function headerLabelFormatter(column, colIndex) {
       dataField: "",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -280,10 +284,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -304,25 +308,6 @@ function headerLabelFormatter(column, colIndex) {
     {
       text: "Query No",
       dataField: "assign_no",
-      // headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     setIsActive(field);
-      //     localStorage.setItem("custArrowProposal3", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("custArrowProposal3");
-      //   }
-      //   if (accend === field) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 2);
-      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -350,10 +335,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -373,10 +358,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -396,10 +381,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -438,10 +423,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -469,10 +454,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -492,25 +477,6 @@ function headerLabelFormatter(column, colIndex) {
     },
     {
       text: "Status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowProposal3");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 8);
-      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -530,10 +496,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -566,10 +532,10 @@ function headerLabelFormatter(column, colIndex) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal3", field);
+          localStorage.setItem("custArrowPropsal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal3");
+          localStorage.removeItem("custArrowPropsal3");
         }
         if (accend === field) {
           val = 0;
@@ -679,7 +645,7 @@ function headerLabelFormatter(column, colIndex) {
     localStorage.removeItem("custArrowPropsal3");
     localStorage.removeItem("prevcustp3");
     setPrev("");
-  }
+  };
 
   return (
     <Card>

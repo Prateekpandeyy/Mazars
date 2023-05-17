@@ -67,8 +67,8 @@ function CustomerFilter(props) {
         let parentId = "";
         let catData = JSON.parse(localStorage.getItem("categoryData"));
         catData.forEach((element) => {
+          console.log("eleent", element.id, dk);
           if (element.id === dk.pcatId) {
-            console.log("eleent", element.details);
             setCatShowData(element.details);
             parentId = element.details;
           }
@@ -91,8 +91,6 @@ function CustomerFilter(props) {
         setSelectedData(dk.pcatId);
         setStatus1(dk.p_status);
         setQueryNo(dk.query_no);
-        // onSubmit(dk);
-        console.log(showSubCat, "subshowCat");
       }
     }
   }, []);
@@ -150,8 +148,6 @@ function CustomerFilter(props) {
   };
 
   const onSubmit = (data) => {
-    console.log("data on submit", data);
-    console.log("data to submit in form");
     setLoading(true);
     let obj = {};
     if (
@@ -175,7 +171,7 @@ function CustomerFilter(props) {
           store: showSubCat,
           fromDate: data.p_dateFrom,
           toDate: data.p_dateTo,
-          pcatId: status1,
+          pcatId: selectedData,
           query_no: data?.query_no,
           p_status: data?.p_status,
           route: window.location.pathname,
@@ -358,7 +354,7 @@ function CustomerFilter(props) {
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
                 data.p_dateTo
-              }&status=${data.p_status}&pcat_id=${status1}`,
+              }&status=${data.p_status}&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -393,7 +389,7 @@ function CustomerFilter(props) {
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
                 data.p_dateTo
-              }&status=1&pcat_id=${status1}`,
+              }&status=1&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -610,7 +606,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${status1}`,
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
-import Records from "../../components/Records/Records";
 import CommonServices from "../../common/common";
 import moment from "moment";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -44,8 +43,8 @@ function InprogressProposal({
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
-      console.log(key, 'set');
+      setScrolledTo(key);
+      console.log(key, "set");
     }
   };
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
@@ -56,7 +55,7 @@ function InprogressProposal({
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -71,9 +70,9 @@ function InprogressProposal({
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
     console.log("object");
   }, [ViewDiscussion]);
 
@@ -115,8 +114,8 @@ function InprogressProposal({
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
     let pageno = JSON.parse(localStorage.getItem("custQuery3"));
-    let arrow = localStorage.getItem("custArrowQuery3")
-    let pre = localStorage.getItem("prevcustq3")
+    let arrow = localStorage.getItem("custArrowQuery3");
+    let pre = localStorage.getItem("prevcustq3");
     if (pre) {
       setPrev(pre);
     }
@@ -134,11 +133,10 @@ function InprogressProposal({
     // }
   }, []);
 
-
   const CountInprogressProposal = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustQuery3"));
@@ -148,106 +146,95 @@ function InprogressProposal({
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((data) && (!pagetry)) {
+    if (data && !pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&pcat_id=${data.pcatId}`
-    } else if ((data) && (pagetry)) {
+      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    } else if ((!data) && (pagetry)) {
+      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&status=2&orderby=${val}&orderbyfield=${field}`
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&status=2`
+      )}&status=2`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setInprogressProposal(all);
-          setCount(res.data.total);
-          console.log('all',all);
-          console.log('all.cid',all.cid);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setInprogressProposal(all);
+        setCount(res.data.total);
+        console.log("all", all);
+        console.log("all.cid", all.cid);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custQuery3`, JSON.stringify(1))
+    localStorage.setItem(`custQuery3`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustQuery3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
 
     if (data) {
       remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
         userId
-      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
         userId
-      )}&status=2&orderby=${val}&orderbyfield=${field}`
+      )}&status=2&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setInprogressProposal(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setInprogressProposal(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -255,8 +242,14 @@ function InprogressProposal({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no}
-          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -294,26 +287,6 @@ function InprogressProposal({
     {
       text: "Query No",
       dataField: "assign_no",
-      // headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     setIsActive(field);
-      //     localStorage.setItem("custArrowQuery3", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("custArrowQuery3");
-      //   }
-      //   if (accend === field) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 2);
-      // },
-
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -350,7 +323,7 @@ function InprogressProposal({
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -373,31 +346,11 @@ function InprogressProposal({
         } else {
           val = 1;
         }
-        sortMessage(val, 5);
+        sortMessage(val, 4);
       },
     },
     {
       text: "Status",
-      // headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     setIsActive(field);
-      //     localStorage.setItem("custArrowQuery3", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("custArrowQuery3");
-      //   }
-      //   if (accend === field) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 6);
-      // },
-
       formatter: function nameFormatter(cell, row) {
         return (
           <>
@@ -426,7 +379,7 @@ function InprogressProposal({
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
+        sortMessage(val, 6);
       },
 
       formatter: function dateFormat(cell, row) {
@@ -435,8 +388,8 @@ function InprogressProposal({
             {row.status == "Declined Query"
               ? null
               : row.status_code >= "1"
-                ? CommonServices.removeTime(row.final_date)
-                : null}
+              ? CommonServices.removeTime(row.final_date)
+              : null}
           </>
         );
       },
@@ -483,8 +436,8 @@ function InprogressProposal({
             ) : (
               <>
                 {row.status_code == "0" ||
-                  row.status_code == "1" ||
-                  row.status_code == "3" ? (
+                row.status_code == "1" ||
+                row.status_code == "3" ? (
                   <>
                     <span className="ml-2">
                       <Link
@@ -513,8 +466,8 @@ function InprogressProposal({
                 ) : null}
 
                 {row.status_code == "4" ||
-                  8 < parseInt(row.status_code) ||
-                  row.status_code == "2" ? (
+                8 < parseInt(row.status_code) ||
+                row.status_code == "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-2">
@@ -576,7 +529,7 @@ function InprogressProposal({
     localStorage.removeItem("custArrowQuery3");
     localStorage.removeItem("prevcustq3");
     setPrev("");
-  }
+  };
 
   return (
     <>
@@ -598,7 +551,6 @@ function InprogressProposal({
           />
         </CardHeader>
         <CardBody>
-          {/* <Records records={allQueriesCount.length} /> */}
           <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorCust
