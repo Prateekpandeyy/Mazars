@@ -136,7 +136,7 @@ const CreateInvoice = () => {
       e = 1;
     }
     let searchData = JSON.parse(localStorage.getItem(`tpcreate`));
-    let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     let orderBy = 0;
     let fieldBy = 0;
     let remainApiPath = "";
