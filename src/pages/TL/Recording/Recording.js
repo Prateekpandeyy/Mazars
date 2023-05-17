@@ -42,7 +42,14 @@ function Recording() {
   const [page, setPage] = useState(0);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
-  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+
+
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState('');
+  const [sortField, setSortField] = useState('');
+  const [defaultPage, setDefaultPage] = useState(["1"]);
   const openModal = (videoContent) => {
     setIsOpen(true);
     setVideoId(videoContent);
@@ -62,10 +69,10 @@ function Recording() {
       uit: token,
     },
   };
-  const getRecording = () => {
+  const getRecording = (e) => {
     axios
       .get(
-        `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`,
+        `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(userid)}`,
         myConfig
       )
       .then((res) => {
