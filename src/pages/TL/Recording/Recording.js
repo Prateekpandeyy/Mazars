@@ -43,12 +43,11 @@ function Recording() {
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
 
-
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sortVal, setSortVal] = useState('');
-  const [sortField, setSortField] = useState('');
+  const [sortVal, setSortVal] = useState("");
+  const [sortField, setSortField] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const openModal = (videoContent) => {
     setIsOpen(true);
@@ -56,7 +55,7 @@ function Recording() {
   };
 
   useEffect(() => {
-    getRecording();
+    getRecording(1);
   }, []);
   const videoIcon = {
     display: "flex",
@@ -70,39 +69,64 @@ function Recording() {
     },
   };
   const getRecording = (e) => {
+    let sorted = localStorage.getItem("sortedrectl");
     axios
       .get(
-        `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(userid)}`,
+        `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
+          userid
+        )}`,
         myConfig
       )
       .then((res) => {
+        let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+        // if (res.data.code === 1) {
+        //   setFeedBackData(res.data.result);
+        //   setRecords(res.data.result.length);
+        // }
+        let droppage = [];
         if (res.data.code === 1) {
-          setFeedBackData(res.data.result);
-          setRecords(res.data.result.length);
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setFeedBackData(all);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
   };
-  const modalBox = {
-    display: "flex",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "auto",
-    flexDirection: "column",
-  };
-  const canBtn = {
-    display: "flex",
-    width: "50vw",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-    padding: "20px",
-    cursor: "pointer",
-    color: "red",
-  };
+
   const editRecording = (participants, assign_id, message, id) => {
     setShowEditModal(!showEditModal);
     setEditData({
@@ -112,19 +136,59 @@ function Recording() {
       id: id,
     });
   };
-  const sortMessage = (e) => {
-    console.log("eee", e);
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+
+    localStorage.setItem("sortedrectl", JSON.stringify(sort));
+
+    let queryNo = JSON.parse(localStorage.getItem(`recordingDatatl`));
+    let remainApiPath = "";
+    if (queryNo) {
+      remainApiPath = `/tl/callRecordingPostlist?id=${JSON.parse(
+        userid
+      )}&assign_id=${queryNo}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `/tl/callRecordingPostlist?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        if (
+          Number(all.length) <
+          Number(localStorage.getItem("tl_record_per_page"))
+        ) {
+          setEnd(all.length);
+        } else {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        }
+        setFeedBackData(all);
+      }
+    });
   };
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (
-      localStorage.getItem("accendtlpay1") === column.dataField ||
-      localStorage.getItem("prevtlpay1") === column.dataField
-    ) {
+    if (localStorage.getItem("accendtlrec") === column.dataField) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevtlpay1", column.dataField);
     } else {
       isActive = false;
     }
@@ -132,7 +196,7 @@ function Recording() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("accendtlpay1") === column.dataField ? (
+          {localStorage.getItem("accendtlrec") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -167,10 +231,10 @@ function Recording() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpay1", field);
+          localStorage.setItem("accendtlrec", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpay1");
+          localStorage.removeItem("accendtlrec");
         }
 
         if (accend === field) {
@@ -220,10 +284,10 @@ function Recording() {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          localStorage.setItem("accendtlpay1", field);
+          localStorage.setItem("accendtlrec", field);
         } else {
           setAccend("");
-          localStorage.removeItem("accendtlpay1");
+          localStorage.removeItem("accendtlrec");
         }
 
         if (accend === field) {
@@ -231,7 +295,7 @@ function Recording() {
         } else {
           val = 1;
         }
-        sortMessage(val, 1);
+        sortMessage(val, 3);
       },
       formatter: function formatterName(cell, row) {
         return <p>{row.participants}</p>;
@@ -243,26 +307,6 @@ function Recording() {
       dataField: "message",
       headerStyle: () => {
         return { fontSize: "12px", width: "80px" };
-      },
-      sort: true,
-      headerFormatter: headerLabelFormatter,
-
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendtlpay1", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendtlpay1");
-        }
-
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 1);
       },
     },
     {
