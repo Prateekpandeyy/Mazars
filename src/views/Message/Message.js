@@ -34,8 +34,7 @@ function Message(props) {
   const getMessage = () => {
     axios
       .get(
-        `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}
-                &type_list=all`,
+        `${baseUrl}/customers/getNotification?id=${JSON.parse(userId)}&type_list=all`,
         myConfig
       )
       .then((res) => {
