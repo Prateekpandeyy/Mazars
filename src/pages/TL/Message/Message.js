@@ -69,35 +69,6 @@ function Message(props) {
       uit: token,
     },
   };
-  // function headerLabelFormatter(column) {
-  //   return (
-  //     <div>
-  //       {column.dataField === isActive ? (
-  //         <div className="d-flex text-white w-100 flex-wrap">
-  //           {column.text}
-  //           {accend === column.dataField ? (
-  //             <ArrowDropUpIcon
-  //               className={turnGreen === true ? classes.isActive : ""}
-  //             />
-  //           ) : (
-  //             <ArrowDropDownIcon
-  //               className={turnGreen === true ? classes.isActive : ""}
-  //             />
-  //           )}
-  //         </div>
-  //       ) : (
-  //         <div className="d-flex text-white w-100 flex-wrap">
-  //           {column.text}
-  //           {accend === column.dataField ? (
-  //             <ArrowDropUpIcon />
-  //           ) : (
-  //             <ArrowDropDownIcon />
-  //           )}
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // }
 
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
@@ -230,43 +201,13 @@ function Message(props) {
           let dynamicPage = Math.round(res.data.total / allEnd);
           let rem = (1 - 1) * allEnd;
           let end = 1 * allEnd;
-            setBig(rem + 1);
-            setEnd(end);
+          setBig(rem + 1);
+          setEnd(end);
           for (let i = 1; i <= dynamicPage; i++) {
             droppage.push(i);
           }
         }
       });
-  };
-
-  const setting = (e) => {
-    let droppage = [];
-    // setAtpage(e);
-    // setPage(e);
-    const dynamicPage = Math.ceil(count / allEnd);
-    console.log(dynamicPage, "to check dynamic page");
-    setTotalPages(dynamicPage);
-    let rem = (e - 1) * allEnd;
-    let end = e * allEnd;
-    if (dynamicPage > 1) {
-      if (e == 1) {
-        setBig(rem + e);
-        setEnd(allEnd);
-      } else if (e == dynamicPage) {
-        setBig(rem + 1);
-        setEnd(count);
-      } else {
-        setBig(rem + 1);
-        setEnd(end);
-      }
-    } else {
-      setBig(rem + 1);
-      setEnd(count);
-    }
-    for (let i = 1; i <= dynamicPage; i++) {
-      droppage.push(i);
-    }
-    setDefaultPage(droppage);
   };
 
   //page counter
