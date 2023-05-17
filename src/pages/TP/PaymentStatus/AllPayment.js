@@ -212,7 +212,7 @@ function AllPayment() {
     let remainApiPath = "";
     setOnPage(e);
     if (data && !pagetry) {
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
@@ -221,7 +221,7 @@ function AllPayment() {
         data.p_status
       }&pcat_id=${data.pcatId}&qno=${data.query_no}`;
     } else if (data && pagetry) {
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
@@ -232,11 +232,11 @@ function AllPayment() {
         data.query_no
       }&orderby=${val}&orderbyfield=${field}`;
     } else if (!data && pagetry) {
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(userid)}`;
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(userid)}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
@@ -314,7 +314,7 @@ function AllPayment() {
     localStorage.setItem(`tpPayment1`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatppayment1"));
     if (data) {
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
         userid
       )}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
@@ -325,7 +325,7 @@ function AllPayment() {
         data.query_no
       }&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getUploadedProposals?tp_id=${JSON.parse(
+      remainApiPath = `tl/getUploadedProposals?page=1&tp_id=${JSON.parse(
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
     }
