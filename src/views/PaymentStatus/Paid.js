@@ -274,7 +274,7 @@ function Unpaid() {
       remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=2&pcat_id=${data.pcatId}`
+      }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
         userId

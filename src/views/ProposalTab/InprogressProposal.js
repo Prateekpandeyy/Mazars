@@ -167,13 +167,13 @@ function InprogressProposal() {
     if (data && !pagetry) {
       if (data.p_status) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-          id
+          userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
         }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-          id
+          userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
         }&status=1&pcat_id=${data.pcatId}`;
@@ -181,7 +181,7 @@ function InprogressProposal() {
     } else if (data && pagetry) {
       if (data.p_status) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-          id
+          userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
         }&status=${data.p_status}&pcat_id=${
