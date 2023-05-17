@@ -159,10 +159,10 @@ function Unpaid() {
   }
 
   useEffect(() => {
-    let local = JSON.parse(localStorage.getItem(`searchDatacustPay2`));
-    let pageno = JSON.parse(localStorage.getItem("custPay2"));
-    let arrow = localStorage.getItem("custArrowPay2")
-    let pre =localStorage.getItem("prevcustpay2")
+    let local = JSON.parse(localStorage.getItem(`searchDatacustPay3`));
+    let pageno = JSON.parse(localStorage.getItem("custPay3"));
+    let arrow = localStorage.getItem("custArrowPay3")
+    let pre =localStorage.getItem("prevcustpay3")
     if(pre){
       setPrev(pre);
     }

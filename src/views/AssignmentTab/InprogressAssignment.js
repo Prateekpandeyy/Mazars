@@ -234,7 +234,7 @@ function InprogressAssignment() {
       val: val,
       field: field,
     }
-    localStorage.setItem(`freezecustAs3`, JSON.stringify(obj));
+    localStorage.setItem(`freezecustAs2`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustAs3"));
 
     if (data) {

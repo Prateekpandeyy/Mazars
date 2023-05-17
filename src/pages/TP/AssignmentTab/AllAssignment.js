@@ -1083,6 +1083,7 @@ function AssignmentTab(props) {
             setresetTrigger(!resetTrigger);
             localStorage.removeItem(`freezetpAssignment1`);
             localStorage.removeItem("tpArrowAs1");
+            localStorage.removeItem("prevtpAs1");
             setAccend("");
             setTurnGreen(false);
           }
