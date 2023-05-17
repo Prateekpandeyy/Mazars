@@ -236,7 +236,7 @@ function Paid() {
             all.push(data);
           });
           setPayment(all);
-          setCount(res.data.result.length);
+          setCount(res.data.total);
           setRecords(res.data.result.length);
         } else if (res.data.code === 0) {
           CommonServices.clientLogout(history);
@@ -652,94 +652,6 @@ function Paid() {
         return oldDate.slice(0, 10).toString().split("-").reverse().join("-");
       },
     },
-    //   {
-    //     text: "Action",
-    //     dataField: "",
-
-    //     formatter: function (cell, row) {
-    //       return (
-    //         <>
-    //         {row.paid_status === "2" ?
-    //         <>
-    //      <div style={{display : "flex"}}>
-
-    //                    <Link
-    //                           to={{
-    //                               pathname: `/customer/paydetails/${row.assign_id}`,
-    //                               index : 1,
-    //                               routes: "paymentstatus",
-    //                           }}
-    //                       >
-    //                                     <Payment />
-    //                 </Link>
-
-    //                 <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
-    //                                 <ViewDiscussionIcon />
-    //                               </span>
-
-    //        </div>   </>
-    //         :  <div style={{display : "flex"}}>
-
-    //           {
-    //             row.paid_status == "0" ?
-
-    //                   <Link
-    //                           to={{
-    //                               pathname: `/customer/paydetails/${row.assign_id}`,
-    //                               index : 1,
-    //                               routes: "paymentstatus",
-    //                           }}
-    //                       >
-    //                                     <Payment />
-    //                 </Link>
-    //               :
-    //               null
-    //           }
-
-    //           {
-    //             row.paid_amount > 0 && row.paid_status > 0 ?
-    //                 <Link
-    //                           to={{
-    //                               pathname: `/customer/paydetails/${row.assign_id}`,
-    //                               index : 1,
-    //                               routes: "paymentstatus",
-    //                           }}
-    //                       >
-    //                                     <Payment />
-    //                 </Link>
-
-    //               :
-    //               null
-    //           }
-
-    //           <Link className="ml-2"
-    //           to={{
-    //             pathname: `/customer/chatting/${row.assign_id}`,
-    //             index : 1,
-    //             routes: "paymentstatus",
-
-    //               obj: {
-    //                 message_type: "5",
-    //                 query_No: row.assign_no,
-    //                 query_id: row.assign_id,
-    //                 routes: `/customer/paymentstatus`
-    //               }
-    //             }}
-    //           >
-    //            <MessageIcon />
-    //           </Link>
-
-    //         <span onClick={() => ViewDiscussionToggel(row.assign_no)}  className="ml-2">
-    //                                 <ViewDiscussionIcon />
-    //                               </span>
-
-    //         </div>
-    //     }
-    //         </>
-    //       );
-    //     },
-    //   },
-    // ];
     {
       text: "Action",
       dataField: "",
@@ -824,6 +736,17 @@ function Paid() {
     },
   ];
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custPay2");
+    localStorage.removeItem(`freezecustPay2`);
+    localStorage.removeItem("custArrowPay2");
+    localStorage.removeItem("prevcustpay2");
+    setPrev("");
+  }
+
   return (
     <>
       <>
@@ -840,6 +763,9 @@ function Paid() {
               setRecords={setRecords}
               records={records}
               id={userId}
+              index="custPay3"
+              resetTriggerFunc={resetTriggerFunc}
+              setCount={setCount}
             />
           </CardHeader>
 

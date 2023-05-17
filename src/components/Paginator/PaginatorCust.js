@@ -658,9 +658,9 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}`;
+                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`;
             }
             else {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}`;
@@ -668,32 +668,31 @@ function PaginatorCust(props) {
         }
         else if (unpaid == "unpaid") {
             let data = JSON.parse(localStorage.getItem("searchDatacustPay2"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustPay2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custPay2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                console.log('if data inpagination');
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=2&pcat_id=${data.pcatId}`;
+                    }&status=1&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customecustomers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=2&pcat_id=${data.pcatId}`;
+                    }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=2`;
+                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`;
             }
             else {
                 console.log('else in pagination');
-                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=2`;
+                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=1`;
             }
         }
         else if (paid == "paid") {
             let data = JSON.parse(localStorage.getItem("searchDatacustPay3"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustPay3"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custPay3`, JSON.stringify(e));
@@ -701,17 +700,17 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=1&pcat_id=${data.pcatId}`;
+                    }&status=2&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=1&pcat_id=${data.pcatId}`;
+                    }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=1`;
+                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=2&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=1`;
+                remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=2`;
             }
         }
         else { console.log("into else void of pagination"); }
@@ -790,6 +789,7 @@ function PaginatorCust(props) {
         if (resetTrigger == true) {
             setPage(1);
             setAtpage(1);
+            setPageno(1);
             setting(1)
             setresetTrigger(!resetTrigger);
         }
