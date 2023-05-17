@@ -171,36 +171,6 @@ function FeedbackTab() {
     });
   };
 
-  // function headerLabelFormatter(column) {
-  //   return (
-  //     <div>
-  //       {column.dataField === isActive ? (
-  //         <div className="d-flex text-white w-100 flex-wrap">
-  //           {column.text}
-  //           {accend === column.dataField ? (
-  //             <ArrowDropUpIcon
-  //               className={turnGreen === true ? classes.isActive : ""}
-  //             />
-  //           ) : (
-  //             <ArrowDropDownIcon
-  //               className={turnGreen === true ? classes.isActive : ""}
-  //             />
-  //           )}
-  //         </div>
-  //       ) : (
-  //         <div className="d-flex text-white w-100 flex-wrap">
-  //           {column.text}
-  //           {accend === column.dataField ? (
-  //             <ArrowDropUpIcon />
-  //           ) : (
-  //             <ArrowDropUpIcon />
-  //           )}
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // }
-
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
@@ -273,14 +243,14 @@ function FeedbackTab() {
           setAtpage(1);
           setPage(1);
           let dynamicPage = Math.round(res.data.total / allEnd);
-        let rem = (1 - 1) * allEnd;
-        let end = 1 * allEnd;
+          let rem = (1 - 1) * allEnd;
+          let end = 1 * allEnd;
           setBig(rem + 1);
           setEnd(end);
-        for (let i = 1; i <= dynamicPage; i++) {
-          droppage.push(i);
-        }
-        setDefaultPage(droppage);
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
   };
@@ -440,7 +410,7 @@ function FeedbackTab() {
           getFeedback();
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   return (
