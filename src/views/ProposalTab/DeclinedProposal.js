@@ -51,7 +51,7 @@ function DeclinedProposal() {
     },
   };
 
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
@@ -72,7 +72,7 @@ function DeclinedProposal() {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
     if (
-      localStorage.getItem("custArrowPropsal4") === column.dataField ||
+      localStorage.getItem("custArrowProposal4") === column.dataField ||
       localStorage.getItem("prevcustp4") === column.dataField
     ) {
       isActive = true;
@@ -85,7 +85,7 @@ function DeclinedProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowPropsal4") === column.dataField ? (
+          {localStorage.getItem("custArrowProposalllll4") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -102,7 +102,7 @@ function DeclinedProposal() {
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal4`));
     let pageno = JSON.parse(localStorage.getItem("custProposal4"));
-    let arrow = localStorage.getItem("custArrowPropsal4");
+    let arrow = localStorage.getItem("custArrowProposall4");
     let pre = localStorage.getItem("prevcustp4");
     if (pre) {
       setPrev(pre);
@@ -277,10 +277,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposalll4");
         }
         if (accend === field) {
           val = 0;
@@ -308,10 +308,10 @@ function DeclinedProposal() {
       //   if (accend !== field) {
       //     setAccend(field);
       //     setIsActive(field);
-      //     localStorage.setItem("custArrowPropsal4", field);
+      //     localStorage.setItem("custArrowProposal4", field);
       //   } else {
       //     setAccend("");
-      //     localStorage.removeItem("custArrowPropsal4");
+      //     localStorage.removeItem("custArrowProposal4");
       //   }
       //   if (accend === field) {
       //     val = 0;
@@ -347,10 +347,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -370,10 +370,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposalllllll4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -393,10 +393,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -435,10 +435,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposall4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposall4");
         }
         if (accend === field) {
           val = 0;
@@ -466,10 +466,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -496,10 +496,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposall4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposallll4");
         }
         if (accend === field) {
           val = 0;
@@ -526,10 +526,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -556,10 +556,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -617,9 +617,9 @@ function DeclinedProposal() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("custPropsal4");
-    localStorage.removeItem(`freezecustPropsal4`);
-    localStorage.removeItem("custArrowPropsal4");
+    localStorage.removeItem("custProposal4");
+    localStorage.removeItem(`freezecustProposal4`);
+    localStorage.removeItem("custArrowProposal4");
     localStorage.removeItem("prevcustp4");
     setPrev("");
   };

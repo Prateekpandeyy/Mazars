@@ -45,7 +45,7 @@ function DeclinedQueries({ CountAllQuery }) {
       uit: token,
     },
   };
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);

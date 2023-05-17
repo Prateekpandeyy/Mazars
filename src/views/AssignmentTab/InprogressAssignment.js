@@ -44,7 +44,7 @@ function InprogressAssignment() {
   const [report, setReport] = useState();
   const [reportModal, setReportModal] = useState(false);
 
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);

@@ -38,7 +38,7 @@ function InprogressAllocation({
   CountAllQuery,
 }) {
   const userId = window.localStorage.getItem("userid");
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   // const classes = useStyles();
   const allEnd = 50;
   const [assignNo, setAssignNo] = useState("");

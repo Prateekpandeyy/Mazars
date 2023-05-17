@@ -42,7 +42,7 @@ function InprogressProposal() {
   const [id, setId] = useState(null);
   const [reject, setRejected] = useState(true);
 
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
@@ -123,7 +123,7 @@ function InprogressProposal() {
     let isActive = true;
 
     if (
-      localStorage.getItem("custArrowPropsal2") === column.dataField ||
+      localStorage.getItem("custArrowProposal2") === column.dataField ||
       localStorage.getItem("prevcustp2") === column.dataField
     ) {
       isActive = true;
@@ -136,7 +136,7 @@ function InprogressProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowPropsal2") === column.dataField ? (
+          {localStorage.getItem("custArrowProposall2") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -319,10 +319,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -350,10 +350,10 @@ function InprogressProposal() {
       //   if (accend !== field) {
       //     setAccend(field);
       //     setIsActive(field);
-      //     localStorage.setItem("custArrowPropsal2", field);
+      //     localStorage.setItem("custArrowProposal2", field);
       //   } else {
       //     setAccend("");
-      //     localStorage.removeItem("custArrowPropsal2");
+      //     localStorage.removeItem("custArrowProposal2");
       //   }
       //   if (accend === field) {
       //     val = 0;
@@ -389,10 +389,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -412,10 +412,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -435,10 +435,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -477,10 +477,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -508,10 +508,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -538,10 +538,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -586,10 +586,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -616,10 +616,10 @@ function InprogressProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal2", field);
+          localStorage.setItem("custArrowProposal2", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal2");
+          localStorage.removeItem("custArrowProposal2");
         }
         if (accend === field) {
           val = 0;
@@ -735,9 +735,9 @@ function InprogressProposal() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("custPropsal2");
-    localStorage.removeItem(`freezecustPropsal2`);
-    localStorage.removeItem("custArrowPropsal2");
+    localStorage.removeItem("custProposal2");
+    localStorage.removeItem(`freezecustProposal2`);
+    localStorage.removeItem("custArrowProposal2");
     localStorage.removeItem("prevcustp2");
     setPrev("");
   };

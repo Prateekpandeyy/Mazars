@@ -43,7 +43,7 @@ function CustomerDeclinedPayment() {
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
 
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);

@@ -47,8 +47,7 @@ function InprogressProposal({
       console.log(key, "set");
     }
   };
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
-  // const allEnd = 5;
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);

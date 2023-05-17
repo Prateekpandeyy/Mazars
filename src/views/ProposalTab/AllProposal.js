@@ -67,7 +67,7 @@ function ProposalTab() {
     },
   };
 
-  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [prev, setPrev] = useState("");
@@ -97,7 +97,7 @@ function ProposalTab() {
     let isActive = true;
 
     if (
-      localStorage.getItem("custArrowPropsal1") === column.dataField ||
+      localStorage.getItem("custArrowProposal1") === column.dataField ||
       localStorage.getItem("prevcustp1") === column.dataField
     ) {
       isActive = true;
@@ -110,7 +110,7 @@ function ProposalTab() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowPropsal1") === column.dataField ? (
+          {localStorage.getItem("custArrowProposal1") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -325,10 +325,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposal1");
         }
         if (accend === field) {
           val = 0;
@@ -395,10 +395,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposalllll1");
         }
         if (accend === field) {
           val = 0;
@@ -418,10 +418,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposal1");
         }
         if (accend === field) {
           val = 0;
@@ -441,10 +441,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposal1");
         }
         if (accend === field) {
           val = 0;
@@ -483,10 +483,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposal1");
         }
         if (accend === field) {
           val = 0;
@@ -514,10 +514,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposall1");
         }
         if (accend === field) {
           val = 0;
@@ -572,10 +572,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposallll1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposal1");
         }
         if (accend === field) {
           val = 0;
@@ -601,10 +601,10 @@ function ProposalTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPropsal1", field);
+          localStorage.setItem("custArrowProposal1", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPropsal1");
+          localStorage.removeItem("custArrowProposal1");
         }
         if (accend === field) {
           val = 0;
@@ -717,9 +717,9 @@ function ProposalTab() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("custPropsal1");
-    localStorage.removeItem(`freezecustPropsal1`);
-    localStorage.removeItem("custArrowPropsal1");
+    localStorage.removeItem("custProposal1");
+    localStorage.removeItem(`freezecustProposal1`);
+    localStorage.removeItem("custArrowProposal1");
     localStorage.removeItem("prevcustp1");
     setPrev("");
   };

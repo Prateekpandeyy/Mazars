@@ -631,7 +631,7 @@ function InprogressProposal() {
                       routes: "proposal",
                     }}
                   >
-                    <ActionIcon titleName="Dicision on propsal" />
+                    <ActionIcon titleName="Dicision on proposal" />
                   </Link>
                 ) : null}
               </div>

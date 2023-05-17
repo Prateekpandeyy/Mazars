@@ -664,7 +664,7 @@ function AllProposal({ setAllProposal }) {
                       routes: "proposal",
                     }}
                   >
-                    <ActionIcon titleName="Create propsal" />
+                    <ActionIcon titleName="Create proposal" />
                   </Link>
                 ) : null}
               </div>
