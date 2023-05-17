@@ -425,7 +425,7 @@ function PaginatorCust(props) {
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custProposal2`, JSON.stringify(e));
-            if ((data) && (!pagetry)) {
+            if ((data) && (pagetry)) {
                 if (data.p_status) {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                         userId
@@ -437,7 +437,7 @@ function PaginatorCust(props) {
                     )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                         }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
                 }
-            } else if ((data) && (pagetry)) {
+            } else if ((data) && (!pagetry)) {
                 if (data.p_status) {
                     remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                         userId
@@ -453,7 +453,6 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1&orderby=${val}&orderbyfield=${field}`;
             }
             else {
-                console.log('else in pagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=1`;
             }
         }
@@ -463,13 +462,13 @@ function PaginatorCust(props) {
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custProposal3`, JSON.stringify(e));
-            if ((data) && (!pagetry)) {
+            if ((data) && (pagetry)) {
                 console.log('if data inpagination');
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
-            } else if ((data) && (pagetry)) {
+            } else if ((data) && (!pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -492,14 +491,14 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=3&pcat_id=${data.pcatId}`;
+                    }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((data) && (pagetry)) {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=3&pcat_id=${data.pcatId}`;
             } else if ((!data) && (pagetry)) {
-                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`;
+                remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3&orderby=${val}&orderbyfield=${field}`;
             }
             else {
                 remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`;
@@ -600,7 +599,7 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=3&pcat_id=${data.pcatId}`;
+                    }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     userId
@@ -628,7 +627,7 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-                    }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+                    }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
             } else if ((!data) && (pagetry)) {
                 remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
                     userId
