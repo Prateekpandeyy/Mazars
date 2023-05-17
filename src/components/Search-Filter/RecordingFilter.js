@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,9 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 function RecordingFilter(props) {
   const { handleSubmit, register, reset } = useForm();
+  const [atPage, setAtpage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchText, setSearchText] = useState("");
 
   const {
     records,
@@ -27,12 +30,12 @@ function RecordingFilter(props) {
     countNotification,
     getData,
     pageValue,
-    lastChunk,
+    // lastChunk,
     big,
     end,
-    firstChunk,
-    prevChunk,
-    nextChunk,
+    // firstChunk,
+    // prevChunk,
+    // nextChunk,
     defaultPage,
   } = props;
 
@@ -96,8 +99,9 @@ function RecordingFilter(props) {
       // }
     }
   };
-  const onSubmit = (data) => {
+  const onSubmit = (data,e) => {
     localStorage.setItem("recordingData", JSON.stringify(data));
+    setSearchText(data)
     if (data.queryNo) {
       const token = window.localStorage.getItem("adminToken");
       const myConfig = {
@@ -130,7 +134,7 @@ function RecordingFilter(props) {
       };
       axios
         .get(
-          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(
+          `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
             userid
           )}&assign_id=${data.queryNo}`,
           myConfig
@@ -181,6 +185,55 @@ function RecordingFilter(props) {
       </>
     );
   };
+
+  const firstChunk = () => {
+    setAtpage(1);
+    setPage(1);
+    if(searchText){
+      onsubmit(searchText,1)
+    }else{
+    getData(1);
+    }
+    localStorage.setItem(pageValue, 1);
+  };
+  const prevChunk = () => {
+    if (atPage > 1) {
+      setAtpage((atPage) => atPage - 1);
+    }
+    setPage(Number(page) - 1);
+    if(searchText){
+      onsubmit(searchText,page - 1)
+    }else{
+    getData(page - 1);
+    }
+    localStorage.setItem(pageValue, Number(page) - 1);
+  };
+  const nextChunk = () => {
+    if (atPage < totalPages) {
+      setAtpage((atPage) => atPage + 1);
+    }
+    setPage(Number(page) + 1);
+    localStorage.setItem(pageValue, Number(page) + 1);
+    if(searchText){
+      onsubmit(searchText,page + 1)
+    }else{
+    getData(page + 1);
+    }
+  };
+  const lastChunk = () => {
+    setPage(defaultPage.at(-1));
+    getData(defaultPage.at(-1));
+    if(searchText){
+      onsubmit(searchText,totalPages)
+    }else{
+    setAtpage(totalPages);
+    }
+    localStorage.setItem(pageValue, defaultPage.at(-1));
+  };
+  
+  useEffect(() => {
+    console.log(searchText,"searchText");
+  }, [searchText]);
 
   return (
     <>
