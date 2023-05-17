@@ -535,12 +535,12 @@ function PaginatorCust(props) {
             let field = pagetry?.field;
             localStorage.setItem(`custAs2`, JSON.stringify(e));
             if ((data) && (!pagetry)) {
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=1&pcat_id=${data.pcatId}`;
             } else if ((data) && (pagetry)) {
-                remainApiPath = `customers/completeAssignments?user=${JSON.parse(
+                remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
                     userId
                 )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
                     }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;

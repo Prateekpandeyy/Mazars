@@ -149,12 +149,12 @@ function AdminAssignment() {
       remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`
+        }&pcat_id=${data.pcatId}`
     } else if ((data) && (pagetry)) {
       remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
     } else if ((!data) && (pagetry)) {
       remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
         userId
@@ -243,7 +243,7 @@ function AdminAssignment() {
       remainApiPath = `customers/completeAssignmentspermission?page=1&user=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/completeAssignmentspermission?page=1&user=${JSON.parse(
         userId
