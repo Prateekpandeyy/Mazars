@@ -1,9 +1,9 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 
-import { Card, CardHeader, CardBody,Row,Col} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 // import ChatComponent from "./ChatComponent";
 import "./index.css";
@@ -51,14 +51,14 @@ function DeclinedProposal() {
     },
   };
 
-   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
   const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -102,9 +102,9 @@ function DeclinedProposal() {
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustProposal4`));
     let pageno = JSON.parse(localStorage.getItem("custProposal4"));
-    let arrow = localStorage.getItem("custArrowProposal4")
-    let pre =localStorage.getItem("prevcustp4")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowPropsal4");
+    let pre = localStorage.getItem("prevcustp4");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -113,18 +113,18 @@ function DeclinedProposal() {
       setTurnGreen(true);
     }
     // if (!local) {
-      if (pageno) {
-        getProposalData(pageno);
-      }else{
-    getProposalData(1);
-      }
+    if (pageno) {
+      getProposalData(pageno);
+    } else {
+      getProposalData(1);
+    }
     // }
   }, []);
 
   const getProposalData = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustProposal4"));
@@ -135,95 +135,94 @@ function DeclinedProposal() {
     setOnPage(e);
     setLoading(true);
 
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
         id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=3&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=3&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
         id
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(userId)}&status=3`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&status=3&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
+        userId
+      )}&status=3`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setProposalDisplay(all);
-          setCount(res.data.total);
-          setCountProposal(res.data.result.length);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setProposalDisplay(all);
+        setCount(res.data.total);
+        setCountProposal(res.data.result.length);
+        setRecords(res.data.result.length);
+      } else if (res.data.code === 0) {
+        CommonServices.clientLogout(history);
+      }
+    });
   };
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
-    if(ViewDiscussion === false){
-    setScrolledTo(key);
+    if (ViewDiscussion === false) {
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
-const sortMessage = (val, field) => {
-  let remainApiPath = "";
-  setSortVal(val);
-  setSortField(field);
-  localStorage.setItem(`custProposal4`, JSON.stringify(1))
-  let obj = {
-    // pageno: pageno,
-    val: val,
-    field: field,
-  }
-  localStorage.setItem(`freezecustProposal4`, JSON.stringify(obj));
-  let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custProposal4`, JSON.stringify(1));
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    };
+    localStorage.setItem(`freezecustProposal4`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
 
-  if (data) {
-    remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-      id
-    )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-    }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-  } else {
-    remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(userId)}&status=3&orderby=${val}&orderbyfield=${field}`
-  }
+    if (data) {
+      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+        id
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
+        userId
+      )}&status=3&orderby=${val}&orderbyfield=${field}`;
+    }
 
-  axios
-    .get(
-      `${baseUrl}/${remainApiPath}`,
-      myConfig
-    )
-    .then((res) => {
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
         let all = [];
         let sortId = 1;
@@ -245,7 +244,7 @@ const sortMessage = (val, field) => {
         setresetTrigger(!resetTrigger);
       }
     });
-};
+  };
 
   const columns = [
     {
@@ -253,8 +252,14 @@ const sortMessage = (val, field) => {
       dataField: "",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -272,10 +277,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -303,10 +308,10 @@ const sortMessage = (val, field) => {
       //   if (accend !== field) {
       //     setAccend(field);
       //     setIsActive(field);
-      //     localStorage.setItem("custArrowProposal4", field);
+      //     localStorage.setItem("custArrowPropsal4", field);
       //   } else {
       //     setAccend("");
-      //     localStorage.removeItem("custArrowProposal4");
+      //     localStorage.removeItem("custArrowPropsal4");
       //   }
       //   if (accend === field) {
       //     val = 0;
@@ -342,10 +347,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -365,10 +370,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -388,10 +393,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -430,10 +435,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -461,10 +466,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -491,10 +496,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -521,10 +526,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -534,12 +539,6 @@ const sortMessage = (val, field) => {
         sortMessage(val, 9);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.ProposedAmount;
@@ -557,10 +556,10 @@ const sortMessage = (val, field) => {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
+          localStorage.setItem("custArrowPropsal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposal4");
+          localStorage.removeItem("custArrowPropsal4");
         }
         if (accend === field) {
           val = 0;
@@ -570,12 +569,6 @@ const sortMessage = (val, field) => {
         sortMessage(val, 10);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
@@ -629,7 +622,7 @@ const sortMessage = (val, field) => {
     localStorage.removeItem("custArrowPropsal4");
     localStorage.removeItem("prevcustp4");
     setPrev("");
-  }
+  };
 
   return (
     <Card>
