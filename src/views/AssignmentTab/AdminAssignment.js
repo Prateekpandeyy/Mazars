@@ -621,6 +621,8 @@ function AdminAssignment() {
             setOnPage={setOnPage}
             resetTrigger={resetTrigger}
             setresetTrigger={setresetTrigger}
+            resetTriggerFunc={resetTriggerFunc}
+            setCount={setCount}
           />
         </CardHeader>
 

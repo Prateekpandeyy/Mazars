@@ -459,7 +459,7 @@ function PaginatorCust(props) {
         }
         else if (acceptedProposal == "acceptedProposal") {
             let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustProposal3"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custProposal3`, JSON.stringify(e));
@@ -483,7 +483,7 @@ function PaginatorCust(props) {
         }
         else if (declinedProposal == "declinedProposal") {
             let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustProposal4"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custProposal4`, JSON.stringify(e));
@@ -507,7 +507,7 @@ function PaginatorCust(props) {
         }
         else if (assignment == "assignment") {
             let data = JSON.parse(localStorage.getItem("searchDatacustAs1"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustAs1"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custAs1`, JSON.stringify(e));
@@ -532,7 +532,7 @@ function PaginatorCust(props) {
         }
         else if (assignment == "assignmentInprogress") {
             let data = JSON.parse(localStorage.getItem("searchDatacustAs2"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustAs2"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custAs2`, JSON.stringify(e));
@@ -560,7 +560,7 @@ function PaginatorCust(props) {
         }
         else if (assignment == "completeAssignment") {
             let data = JSON.parse(localStorage.getItem("searchDatacustAs3"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustAs3"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custAs3`, JSON.stringify(e));
@@ -588,7 +588,7 @@ function PaginatorCust(props) {
         }
         else if (assignment == "declinedAssignment") {
             let data = JSON.parse(localStorage.getItem("searchDatacustAs4"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustAs4"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custAs4`, JSON.stringify(e));
@@ -616,7 +616,7 @@ function PaginatorCust(props) {
         }
         else if (assignment == "assignmentpermission") {
             let data = JSON.parse(localStorage.getItem("searchDatacustAs5"));
-            let pagetry = JSON.parse(localStorage.getItem(""));
+            let pagetry = JSON.parse(localStorage.getItem("freezecustAs5"));
             let val = pagetry?.val;
             let field = pagetry?.field;
             localStorage.setItem(`custAs5`, JSON.stringify(e));
@@ -713,6 +713,7 @@ function PaginatorCust(props) {
                 remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&status=2`;
             }
         }
+
         else { console.log("into else void of pagination"); }
 
         if (e) {

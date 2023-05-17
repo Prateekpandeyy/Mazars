@@ -640,6 +640,7 @@ function InprogressAssignment() {
             index="custAs2"
             resetTriggerFunc={resetTriggerFunc}
             setCount={setCount}
+            
           />
         </CardHeader>
 
