@@ -487,13 +487,13 @@ function PaginatorCust(props) {
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
-        }&status=2&pcat_id=${data.pcatId}`;
+        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
-        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        }&status=2&pcat_id=${data.pcatId}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
@@ -505,7 +505,7 @@ function PaginatorCust(props) {
       }
     } else if (declinedProposal == "declinedProposal") {
       let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
-      let pagetry = JSON.parse(localStorage.getItem("custProposal4"));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustProposal4"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custProposal4`, JSON.stringify(e));
@@ -515,13 +515,13 @@ function PaginatorCust(props) {
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
-        }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        }&status=3&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
-        }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        }&status=3&pcat_id=${data.pcatId}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
@@ -533,7 +533,7 @@ function PaginatorCust(props) {
       }
     } else if (assignment == "assignment") {
       let data = JSON.parse(localStorage.getItem("searchDatacustAs1"));
-      let pagetry = JSON.parse(localStorage.getItem(""));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustAs1"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custAs1`, JSON.stringify(e));
@@ -557,19 +557,17 @@ function PaginatorCust(props) {
           userId
         )}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        console.log("else in pagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
         )}`;
       }
     } else if (assignment == "assignmentInprogress") {
       let data = JSON.parse(localStorage.getItem("searchDatacustAs2"));
-      let pagetry = JSON.parse(localStorage.getItem(""));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustAs2"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custAs2`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?user=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
@@ -592,7 +590,7 @@ function PaginatorCust(props) {
       }
     } else if (assignment == "completeAssignment") {
       let data = JSON.parse(localStorage.getItem("searchDatacustAs3"));
-      let pagetry = JSON.parse(localStorage.getItem(""));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustAs3"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custAs3`, JSON.stringify(e));
@@ -620,7 +618,7 @@ function PaginatorCust(props) {
       }
     } else if (assignment == "declinedAssignment") {
       let data = JSON.parse(localStorage.getItem("searchDatacustAs4"));
-      let pagetry = JSON.parse(localStorage.getItem(""));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustAs4"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custAs4`, JSON.stringify(e));
@@ -648,7 +646,7 @@ function PaginatorCust(props) {
       }
     } else if (assignment == "assignmentpermission") {
       let data = JSON.parse(localStorage.getItem("searchDatacustAs5"));
-      let pagetry = JSON.parse(localStorage.getItem(""));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustAs5"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custAs5`, JSON.stringify(e));
@@ -676,7 +674,7 @@ function PaginatorCust(props) {
       }
     } else if (allPayment == "allPayment") {
       let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
-      let pagetry = JSON.parse(localStorage.getItem("custArrowPay1"));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustPay1"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custPay1`, JSON.stringify(e));
@@ -686,9 +684,7 @@ function PaginatorCust(props) {
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
-        }&status=${data.p_status}&pcat_id=${
-          data.pcatId
-        }&orderby=${val}&orderbyfield=${field}`;
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
@@ -700,7 +696,7 @@ function PaginatorCust(props) {
       } else if (!data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}`;
+        )}&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
@@ -708,39 +704,10 @@ function PaginatorCust(props) {
       }
     } else if (unpaid == "unpaid") {
       let data = JSON.parse(localStorage.getItem("searchDatacustPay2"));
-      let pagetry = JSON.parse(localStorage.getItem("custArrowPay2"));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustPay2"));
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`custPay2`, JSON.stringify(e));
-      if (data && !pagetry) {
-        console.log("if data inpagination");
-        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-          userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}`;
-      } else if (data && pagetry) {
-        remainApiPath = `customecustomers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-          userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
-      } else if (!data && pagetry) {
-        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-          userId
-        )}&status=2&orderby=${val}&orderbyfield=${field}`;
-      } else {
-        console.log("else in pagination");
-        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
-          userId
-        )}&status=2`;
-      }
-    } else if (paid == "paid") {
-      let data = JSON.parse(localStorage.getItem("searchDatacustPay3"));
-      let pagetry = JSON.parse(localStorage.getItem("custArrowPay3"));
-      let val = pagetry?.val;
-      let field = pagetry?.field;
-      localStorage.setItem(`custPay3`, JSON.stringify(e));
       if (data && !pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
@@ -748,7 +715,7 @@ function PaginatorCust(props) {
           data.toDate
         }&status=1&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
-        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        remainApiPath = `customecustomers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
@@ -758,9 +725,37 @@ function PaginatorCust(props) {
           userId
         )}&status=1&orderby=${val}&orderbyfield=${field}`;
       } else {
+        console.log("else in pagination");
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
         )}&status=1`;
+      }
+    } else if (paid == "paid") {
+      let data = JSON.parse(localStorage.getItem("searchDatacustPay3"));
+      let pagetry = JSON.parse(localStorage.getItem("freezecustPay3"));
+      let val = pagetry?.val;
+      let field = pagetry?.field;
+      localStorage.setItem(`custPay3`, JSON.stringify(e));
+      if (data && !pagetry) {
+        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+          userId
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=2&pcat_id=${data.pcatId}`;
+      } else if (data && pagetry) {
+        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+          userId
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+      } else if (!data && pagetry) {
+        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+          userId
+        )}&status=2&orderby=${val}&orderbyfield=${field}`;
+      } else {
+        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+          userId
+        )}&status=2`;
       }
     } else {
       console.log("into else void of pagination");
@@ -776,7 +771,7 @@ function PaginatorCust(props) {
           if (e > 1) {
             customId = allEnd * (e - 1) + 1;
           }
-          //   setResult(res.data.result);
+          setResult(res.data.result);
           let data = res.data.result;
           data.map((i) => {
             let data = {
@@ -832,6 +827,7 @@ function PaginatorCust(props) {
     if (resetTrigger == true) {
       setPage(1);
       setAtpage(1);
+      setPageno(1);
       setting(1);
       setresetTrigger(!resetTrigger);
     }

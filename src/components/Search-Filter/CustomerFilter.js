@@ -1299,7 +1299,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${data.store}&from=${data.fromDate}&to=${
               data.toDate
-            }&status=2&pcat_id=${data.pcatId}`,
+            }&status=1&pcat_id=${data.pcatId}`,
             myConfig
           )
           .then((res) => {
@@ -1322,7 +1322,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=2&pcat_id=${selectedData}`,
+            }&status=1&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
@@ -1360,7 +1360,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${data.store}&from=${data.fromDate}&to=${
               data.toDate
-            }&status=1&pcat_id=${data.pcatId}`,
+            }&status=2&pcat_id=${data.pcatId}`,
             myConfig
           )
           .then((res) => {
@@ -1383,7 +1383,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=1&pcat_id=${selectedData}`,
+            }&status=2&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
