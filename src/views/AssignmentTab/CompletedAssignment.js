@@ -21,6 +21,16 @@ import MessageIcon, {
   ViewDiscussionIcon,
   HelpIcon,
 } from "../../components/Common/MessageIcon";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 function CompleteAssignment() {
   let history = useHistory();
   const userId = window.localStorage.getItem("userid");
@@ -36,7 +46,7 @@ function CompleteAssignment() {
   const myRef = useRef([]);
 
   // const allEnd = Number(localStorage.getItem("tl_record_per_page"));
-  // const classes = useStyles();
+  const classes = useStyles();
   const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
@@ -174,6 +184,86 @@ function CompleteAssignment() {
       });
   };
 
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowAs3") === column.dataField ||
+      localStorage.getItem("prevcustAs3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustAs3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowAs3") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custAs3`, JSON.stringify(1))
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustAs3`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustAs3"));
+
+    if (data) {
+      remainApiPath = `customers/completeAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/completeAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&status=2&orderby=${val}&orderbyfield=${field}`
+    }
+
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setAssignmentDisplay(all);
+          setTurnGreen(true);
+          setresetTrigger(!resetTrigger);
+        }
+      });
+  };
+
   const columns = [
     {
       dataField: "",
@@ -191,7 +281,25 @@ function CompleteAssignment() {
     {
       dataField: "created",
       text: "Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -224,12 +332,48 @@ function CompleteAssignment() {
     {
       dataField: "parent_id",
       text: "Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub Category",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "status",
@@ -312,7 +456,25 @@ function CompleteAssignment() {
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.created;
@@ -325,7 +487,25 @@ function CompleteAssignment() {
     {
       dataField: "final_date",
       text: "Actual date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowAs3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowAs3");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
