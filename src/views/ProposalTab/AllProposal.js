@@ -67,9 +67,9 @@ function ProposalTab() {
     },
   };
 
-  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
-  const allEnd = 50;
+  // const allEnd = 50;
   const [prev, setPrev] = useState("");
 
   const ViewHandler = (key) => {

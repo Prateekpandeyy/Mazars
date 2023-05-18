@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FeedbackData(props) {
-  let allEnd = 50;
+  const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  // let allEnd = 50;
   const classes = useStyles();
   const userId = window.localStorage.getItem("userid");
   const [query, setQuery] = useState([]);

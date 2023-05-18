@@ -51,9 +51,9 @@ function Unpaid() {
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
 
-  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
-  const allEnd = 50;
+  // const allEnd = 50;
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);

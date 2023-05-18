@@ -44,7 +44,7 @@ const UpdateIndirect = () => {
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
-
+// const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const allEnd = 50;
   // const classes = useStyles();
   const [count, setCount] = useState(0);

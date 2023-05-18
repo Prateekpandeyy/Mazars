@@ -9,8 +9,8 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 function PaginatorCust(props) {
-  // let allEnd = Number(localStorage.getItem("cust_record_per_page"));
-  const allEnd = 50;
+  let allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  // const allEnd = 50;
   const history = useHistory();
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);

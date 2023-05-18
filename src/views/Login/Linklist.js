@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 function Linklist() {
   const [linkData, setLinkData] = useState([]);
   const [linkData22, showLinkData22] = useState(false);
-
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const allEnd = 50;
   const classes = useStyles();
   const [count, setCount] = useState(0);

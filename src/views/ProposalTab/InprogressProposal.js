@@ -42,9 +42,9 @@ function InprogressProposal() {
   const [id, setId] = useState(null);
   const [reject, setRejected] = useState(true);
 
-  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const classes = useStyles();
-  const allEnd = 50;
+  // const allEnd = 50;
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);

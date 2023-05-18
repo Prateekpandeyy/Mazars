@@ -44,7 +44,7 @@ const Direct = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  // const allEnd = Number(localStorage.getItem("client_record_per_page"));
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const allEnd = 50;
 
   const classes = useStyles();

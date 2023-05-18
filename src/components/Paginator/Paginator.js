@@ -878,7 +878,7 @@ function Paginator(props) {
                             customId = allEnd * (e - 1) + 1;
                         }
                         if ((tpgenerated == "tpgenerated") || (tpcreate == "tpcreate")) {
-                            let allEnd = 5;
+                            // let allEnd = 5;
                             // setResult(res.data.payment_detail)
                             let data = res.data.payment_detail;
                             data.map((i) => {
