@@ -284,6 +284,7 @@ function Message(props) {
           } else {
             setEnd(allEnd);
           }
+          console.log(all,"allHere");
         }
       });
   };
@@ -292,7 +293,7 @@ function Message(props) {
   const columns = [
     {
       text: "S.No",
-
+      dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return row.cid;
       },
