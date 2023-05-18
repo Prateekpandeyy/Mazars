@@ -191,12 +191,12 @@ function Unpaid() {
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((data) && (!pagetry)){
+    if ((data) && (pagetry)){
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
       }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((data) && (pagetry)){
+    }else if ((data) && (!pagetry)){
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
