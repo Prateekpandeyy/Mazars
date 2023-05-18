@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 const Generated = () => {
   var rowStyle2 = {};
   const userid = window.localStorage.getItem("tpkey");
-  // const allEnd = Number(localStorage.getItem("tp_record_per_page"));
-  const allEnd = 5;
+  const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  // const allEnd = 5;
   const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
