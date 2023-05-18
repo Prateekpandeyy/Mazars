@@ -67,6 +67,7 @@
     "react-material-ui-file-manager": "0.0.8",
     "react-modal": "^3.14.3",
     "react-multi-level-selector": "^1.0.1",
+    "react-pdf": "^6.2.2",
     "react-player": "^2.9.0",
     "react-pptx": "^2.14.1",
     "react-quill": "^2.0.0-beta.4",
