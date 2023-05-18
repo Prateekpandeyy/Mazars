@@ -27,6 +27,10 @@ function AdminHeader({
       localStorage.removeItem("custEmail");
       localStorage.removeItem("category");
       localStorage.removeItem("clientToken");
+      localStorage.removeItem("custArrowMsg");
+      localStorage.removeItem("prevcustmsg");
+      localStorage.removeItem("custMessage");
+      localStorage.removeItem("freezecustMsg");
       localStorage.removeItem("custQuery1");
       localStorage.removeItem("custQuery2");
       localStorage.removeItem("custQuery3");
