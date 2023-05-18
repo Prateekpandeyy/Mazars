@@ -189,7 +189,7 @@ function InprogressProposal() {
         }&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-          id
+          userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
         }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
@@ -245,7 +245,7 @@ function InprogressProposal() {
     if (data) {
       if (data.p_status) {
         remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-          id
+          userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
         }&status=${data.p_status}&pcat_id=${
@@ -253,7 +253,7 @@ function InprogressProposal() {
         }&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-          id
+          userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
         }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
