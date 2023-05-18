@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Message(props) {
   const userId = window.localStorage.getItem("userid");
+  let allEnd = Number(localStorage.getItem("cust_record_per_page"));
   const [query, setQuery] = useState([]);
   const [data, setData] = useState(null);
   const [addPaymentModal, setPaymentModal] = useState(false);
@@ -54,51 +55,78 @@ function Message(props) {
       uit: token,
     },
   };
+  // const firstChunk = () => {
+  //   if (atPage > 1) {
+  //     setAtpage(1);
+  //     setPage(1);
+  //     getMessage(1);
+  //   }
+  // };
+  // const prevChunk = () => {
+  //   if (atPage <= defaultPage.at(-1)) {
+  //     setAtpage((atPage) => atPage - 1);
+  //     setPage(Number(page) - 1);
+  //     getMessage(Number(page) - 1);
+  //   }
+  // };
+  // const nextChunk = () => {
+  //   if (atPage > 0 && atPage < defaultPage.at(-1)) {
+  //     setAtpage((atPage) => atPage + 1);
+  //     setPage(Number(page) + 1);
+  //     getMessage(Number(page) + 1);
+  //   }
+  // };
+  // const lastChunk = () => {
+  //   if (atPage < defaultPage.at(-1)) {
+  //     setPage(defaultPage.at(-1));
+  //     getMessage(defaultPage.at(-1));
+  //     setAtpage(defaultPage.at(-1));
+  //   }
+  // };
+
+  //page counter
   const firstChunk = () => {
-    if (atPage > 1) {
-      setAtpage(1);
-      setPage(1);
-      getMessage(1);
-    }
+    setAtpage(1);
+    setPage(1);
+    getMessage(1);
   };
   const prevChunk = () => {
-    if (atPage <= defaultPage.at(-1)) {
+    if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
-      setPage(Number(page) - 1);
-      getMessage(Number(page) - 1);
     }
+    setPage(Number(page) - 1);
+    getMessage(Number(page) - 1);
   };
   const nextChunk = () => {
-    if (atPage > 0 && atPage < defaultPage.at(-1)) {
+    if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
-      setPage(Number(page) + 1);
-      getMessage(Number(page) + 1);
     }
+    setPage(Number(page) + 1);
+    getMessage(Number(page) + 1);
   };
   const lastChunk = () => {
-    if (atPage < defaultPage.at(-1)) {
-      setPage(defaultPage.at(-1));
-      getMessage(defaultPage.at(-1));
-      setAtpage(defaultPage.at(-1));
-    }
+    setPage(defaultPage.at(-1));
+    getMessage(defaultPage.at(-1));
+    setAtpage(totalPages);
   };
+
   const paymentHandler = (key) => {
     setPaymentModal(!addPaymentModal);
   };
 
-  useEffect(() => {
-    getMessage(1);
-  }, []);
+  // useEffect(() => {
+  //   getMessage(1);
+  // }, []);
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
     if (
-      localStorage.getItem("tlArrowMsg") === column.dataField ||
-      localStorage.getItem("prevtlmsg") === column.dataField
+      localStorage.getItem("custArrowMsg") === column.dataField ||
+      localStorage.getItem("prevcustmsg") === column.dataField
     ) {
       isActive = true;
       setPrev(column.dataField);
-      localStorage.setItem("prevtlmsg", column.dataField);
+      localStorage.setItem("prevcustmsg", column.dataField);
     } else {
       isActive = false;
     }
@@ -106,7 +134,7 @@ function Message(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("tlArrowMsg") === column.dataField ? (
+          {localStorage.getItem("custArrowMsg") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -120,29 +148,153 @@ function Message(props) {
     );
   }
 
+  useEffect(() => {
+
+    let arrow = localStorage.getItem("custArrowMsg")
+    if (arrow) {
+      setAccend(arrow);
+    }
+
+    let pageno = JSON.parse(localStorage.getItem("custMessage"));
+    if (pageno) {
+      getMessage(pageno);
+      setPage(pageno);
+    } else {
+      setPage(1);
+      getMessage(1);
+      if ((count) < allEnd) {
+        setEnd(count);
+      } else {
+        setEnd(allEnd);
+      }
+    }
+
+  }, []);
+
   const getMessage = (e) => {
+    localStorage.setItem(`custMessage`, e);
+    console.log(e, "page test");
+    let pagetry = JSON.parse(localStorage.getItem("freezecustMsg"));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    let droppage = [];
+    if (pagetry) {
+      remainApiPath = `customers/getNotification?id=${JSON.parse(
+        userId
+      )}&type_list=all&page=${e}&orderby=${val
+        }&orderbyfield=${field}`
+    } else {
+      remainApiPath = `customers/getNotification?id=${JSON.parse(
+        userId
+      )}&type_list=all&page=${e}`
+    }
     axios
       .get(
-        `${baseUrl}/customers/getNotification?id=${JSON.parse(
-          userId
-        )}&type_list=all&page=${e}`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setQuery(res.data.result);
+          let data = res.data.result;
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setQuery(all);
+          setCount(res.data.total)
+          if ((count) < allEnd) {
+            setEnd(count);
+          } else {
+            setEnd(allEnd);
+          }
+          let dynamicPage = Math.round(res.data.total / allEnd);
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
+            if (dynamicPage > 1) {
+              if (e === 1) {
+                setBig(rem + e);
+                setEnd(end);
+              } else if ((e == (dynamicPage))) {
+                setBig(rem + 1);
+                setEnd(res.data.total);
+                // console.log("e at last page");
+              }
+              else {
+                setBig(rem + 1);
+                setEnd(end);
+              }
+            } else {
+              setBig(rem + e);
+              setEnd(res.data.total);
+            }
+            for (let i = 1; i <= dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
         }
       });
   };
-  const sortMessage = (e) => {
-    console.log("done");
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    localStorage.setItem(`custMessage`, 1)
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    }
+    localStorage.setItem(`freezecustMsg`, JSON.stringify(obj));
+    remainApiPath = `customers/getNotification?id=${JSON.parse(
+      userId
+    )}&type_list=all&page=1&orderby=${val}&orderbyfield=${field}`
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setQuery(all);
+          setCount(res.data.total);
+          setAtpage(1);
+          setPage(1);
+          setBig(1);
+          if ((count) < allEnd) {
+            setEnd(count);
+          } else {
+            setEnd(allEnd);
+          }
+        }
+      });
   };
+
+
   const columns = [
     {
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return row.cid;
       },
       headerStyle: () => {
         return {
@@ -165,10 +317,10 @@ function Message(props) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("tlArrowMsg", field);
+          localStorage.setItem("custArrowMsg", field);
         } else {
           setAccend("");
-          localStorage.removeItem("tlArrowMsg");
+          localStorage.removeItem("custArrowMsg");
         }
         if (accend === field) {
           val = 0;
@@ -191,6 +343,25 @@ function Message(props) {
     {
       text: "Query No",
       dataField: "assign_no",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowMsg", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowMsg");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 2);
+      },
       headerStyle: () => {
         return {
           fontSize: "12px",
@@ -206,25 +377,7 @@ function Message(props) {
     },
     {
       text: "Message",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("tlArrowMsg", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("tlArrowMsg");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 2);
-      },
+      
       headerStyle: () => {
         return {
           fontSize: "12px",
@@ -282,8 +435,8 @@ function Message(props) {
   const readNotification = (id) => {
     axios
       .get(`${baseUrl}/customers/markReadNotification?id=${id}`, myConfig)
-      .then(function (response) {})
-      .catch((error) => {});
+      .then(function (response) { })
+      .catch((error) => { });
   };
 
   return (
@@ -306,7 +459,7 @@ function Message(props) {
               <div className="customPagination">
                 <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
                   <span>
-                    {big}-{end} of {countNotification}
+                    {big}-{end} of {count}
                   </span>
                   <span className="d-flex">
                     {page > 1 ? (
@@ -390,8 +543,8 @@ function Message(props) {
           <PaymentModal
             paymentHandler={paymentHandler}
             addPaymentModal={addPaymentModal}
-            // data={data}
-            // getProposalData={getAssignmentData}
+          // data={data}
+          // getProposalData={getAssignmentData}
           />
         </CardBody>
       </Card>
