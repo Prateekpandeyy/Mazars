@@ -657,7 +657,7 @@ function InprogressProposal() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("tpPropsosal2");
+    localStorage.removeItem("tpProposal2");
     localStorage.removeItem(`freezetpProposal2`);
     localStorage.removeItem("tpArrowProposal2");
     localStorage.removeItem("prevtppro2");

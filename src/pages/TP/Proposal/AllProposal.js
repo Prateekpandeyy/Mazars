@@ -680,7 +680,7 @@ function AllProposal() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("tpPropsosal1");
+    localStorage.removeItem("tpProposal1");
     localStorage.removeItem(`freezetpProposal1`);
     localStorage.removeItem("tpArrowProposal1");
     localStorage.removeItem("prevtppro1");

@@ -659,7 +659,7 @@ function DeclinedProposal() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("tpPropsosal4");
+    localStorage.removeItem("tpProposal4");
     localStorage.removeItem(`freezetpProposal4`);
     localStorage.removeItem("tpArrowProposal4");
     localStorage.removeItem("prevtppro4");

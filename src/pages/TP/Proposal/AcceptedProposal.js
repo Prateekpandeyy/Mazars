@@ -632,7 +632,7 @@ function AcceptedProposal() {
     setresetTrigger(!resetTrigger);
     setAccend("");
     setTurnGreen(false);
-    localStorage.removeItem("tpPropsosal3");
+    localStorage.removeItem("tpProposal3");
     localStorage.removeItem(`freezetpProposal3`);
     localStorage.removeItem("tpArrowProposal3");
     localStorage.removeItem("prevtppro3");
