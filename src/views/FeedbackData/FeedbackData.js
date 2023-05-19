@@ -64,70 +64,68 @@ function FeedbackData(props) {
   const getMessage = (e) => {
     let droppage = [];
     let allEnd = Number(localStorage.getItem("cust_record_per_page"));
-    let sortVal = "";
+    let sortVal = JSON.parse(localStorage.getItem("allfeedSort"));
     let orderBy = 0;
     let fieldBy = 0;
 
     if (sortVal) {
-      orderBy = sortVal.orderBy;
-      fieldBy = sortVal.fieldBy;
+      orderBy = sortVal.val;
+      fieldBy = sortVal.field;
     }
-    axios
-      .get(
-        `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}&page=${e}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setQuery(all);
-          setCount(res.data.total);
-          if (count < allEnd) {
-            setEnd(count);
-          } else {
-            setEnd(allEnd);
-          }
-          let dynamicPage = Math.round(res.data.total / allEnd);
-          if (dynamicPage === 0) {
-            dynamicPage = 1;
-          }
-          let rem = (e - 1) * allEnd;
-          let end = e * allEnd;
-          if (dynamicPage > 1) {
-            if (e === 1) {
-              setBig(rem + e);
-              setEnd(end);
-            } else if (e == dynamicPage) {
-              setBig(rem + 1);
-              setEnd(res.data.total);
-              // console.log("e at last page");
-            } else {
-              setBig(rem + 1);
-              setEnd(end);
-            }
-          } else {
-            setBig(rem + e);
-            setEnd(res.data.total);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
+    let apiPath = `customers/getFeedback?uid=${JSON.parse(
+      userId
+    )}&page=${e}&&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    axios.get(`${baseUrl}/${apiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setQuery(all);
+        setCount(res.data.total);
+        if (count < allEnd) {
+          setEnd(count);
+        } else {
+          setEnd(allEnd);
+        }
+        let dynamicPage = Math.round(res.data.total / allEnd);
+        if (dynamicPage === 0) {
+          dynamicPage = 1;
+        }
+        let rem = (e - 1) * allEnd;
+        let end = e * allEnd;
+        if (dynamicPage > 1) {
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else if (e == dynamicPage) {
+            setBig(rem + 1);
+            setEnd(res.data.total);
+            // console.log("e at last page");
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+        } else {
+          setBig(rem + e);
+          setEnd(res.data.total);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   function headerLabelFormatter(column, colIndex) {
@@ -135,11 +133,11 @@ function FeedbackData(props) {
 
     if (
       localStorage.getItem("custSorting") === column.dataField ||
-      localStorage.getItem("prevcustpay1") === column.dataField
+      localStorage.getItem("prevCustSort") === column.dataField
     ) {
       isActive = true;
 
-      localStorage.setItem("prevcustpay1", column.dataField);
+      localStorage.setItem("prevCustSort", column.dataField);
     } else {
       isActive = false;
     }
@@ -224,7 +222,7 @@ function FeedbackData(props) {
       val: val,
       field: field,
     };
-    localStorage.setItem(`freezecustMsg`, JSON.stringify(obj));
+    localStorage.setItem(`allfeedSort`, JSON.stringify(obj));
     remainApiPath = `customers/getFeedback?id=${JSON.parse(
       userId
     )}&type_list=all&page=1&orderby=${val}&orderbyfield=${field}`;
