@@ -402,7 +402,7 @@ function Recording() {
                 userid={userid}
                 getRecording={getRecording}
                 page={page}
-                getData={getRecording}
+                // getData={getRecording}
                 big={big}
                 end={end}
                 setBig={setBig}

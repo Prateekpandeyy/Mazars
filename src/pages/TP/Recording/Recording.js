@@ -108,7 +108,6 @@ function Recording() {
             droppage.push(i);
           }
           setDefaultPage(droppage);
-          // setFeedBackData(res.data.result);
           setRecords(res.data.result.length);
           setCountNotification(res.data.total);
         }
@@ -413,7 +412,7 @@ function Recording() {
                 userid={userid}
                 getRecording={getRecording}
                 page={page}
-                getData={getRecording}
+                // getData={getRecording}
                 big={big}
                 end={end}
                 setBig={setBig}
