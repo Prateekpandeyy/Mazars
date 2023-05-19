@@ -84,11 +84,10 @@ function Recording() {
         //   setRecords(res.data.result.length);
         // }
         let droppage = [];
+
         if (res.data.code === 1) {
           let data = res.data.result;
-
-          setCountNotification(res.data.total);
-
+          setPage(e);
           let all = [];
           let customId = 1;
           if (e > 1) {
@@ -123,6 +122,8 @@ function Recording() {
             droppage.push(i);
           }
           setDefaultPage(droppage);
+          setRecords(res.data.result.length);
+          setCountNotification(res.data.total);
         }
       });
   };

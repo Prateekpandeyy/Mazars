@@ -43,6 +43,14 @@ function RecordingFilter(props) {
     defaultPage,
   } = props;
 
+  useEffect(() => {
+    console.log(searchText, "searchText");
+  }, [searchText]);
+
+  useEffect(() => {
+
+  }, []);
+
   //reset date
   const resetData = () => {
     localStorage.removeItem("sortedrecording");
@@ -126,7 +134,7 @@ function RecordingFilter(props) {
               setData(res.data.result);
               setRecords(res.data.result.length);
               updateResult(res);
-              
+
             }
           }
         });
@@ -239,100 +247,96 @@ function RecordingFilter(props) {
     localStorage.setItem(pageValue, defaultPage.at(-1));
   };
 
-  useEffect(() => {
-    console.log(searchText, "searchText");
-  }, [searchText]);
+
 
   return (
     <>
       <div className="row">
-        <div className="col-sm-12 d-flex">
-          <div className="d-flex w-100 justify-content-between">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-inline">
-                <input
-                  type="text"
-                  name="queryNo"
-                  ref={register}
-                  className="form-select form-control my-2"
-                />
-                <button type="submit" className="customBtn mx-2 my-2">
-                  Search
-                </button>
-                <Reset />
-                <div className="form-group mx-sm-1">
-                  <label className="form-select form-control">
-                    Total Records : {records}
-                  </label>
+            <Col md="6" align="left">
+              <div className="d-flex w-100 justify-content-between">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="form-inline">
+                    <input
+                      type="text"
+                      name="queryNo"
+                      ref={register}
+                      className="form-select form-control my-2"
+                    />
+                    <button type="submit" className="customBtn mx-2 my-2">
+                      Search
+                    </button>
+                    <Reset />
+                    <div className="form-group mx-sm-1">
+                      <label className="form-select form-control">
+                        Total Records : {records}
+                      </label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </Col>
+            <Col md="6" align="right">
+              <div className="customPagination">
+                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                  <span className="customPaginationSpan">
+                    {big}-{end} of {countNotification}
+                  </span>
+                  <span className="d-flex">
+                    {page > 1 ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => firstChunk()}
+                        >
+                          <KeyboardDoubleArrowLeftIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div className="navButtonSelectDiv">
+                      <select
+                        value={page}
+                        onChange={(e) => {
+                          setPage(Number(e.target.value));
+                          getData(Number(e.target.value));
+                          localStorage.setItem(pageValue, e.target.value);
+                        }}
+                        className="form-control"
+                      >
+                        {defaultPage?.map((i) => (
+                          <option value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {defaultPage?.length > page ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                        <button
+                          className="navButton"
+                          onClick={(e) => lastChunk()}
+                        >
+                          <KeyboardDoubleArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
                 </div>
               </div>
-            </form>
-            <Row>
-              <Col md="12" align="right">
-                <div className="customPagination">
-                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span className="customPaginationSpan">
-                      {big}-{end} of {countNotification}
-                    </span>
-                    <span className="d-flex">
-                      {page > 1 ? (
-                        <>
-                          <button
-                            className="navButton"
-                            onClick={(e) => firstChunk()}
-                          >
-                            <KeyboardDoubleArrowLeftIcon />
-                          </button>
-                          <button
-                            className="navButton"
-                            onClick={(e) => prevChunk()}
-                          >
-                            <KeyboardArrowLeftIcon />
-                          </button>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      <div className="navButtonSelectDiv">
-                        <select
-                          value={page}
-                          onChange={(e) => {
-                            setPage(Number(e.target.value));
-                            getData(Number(e.target.value));
-                            localStorage.setItem(pageValue, e.target.value);
-                          }}
-                          className="form-control"
-                        >
-                          {defaultPage?.map((i) => (
-                            <option value={i}>{i}</option>
-                          ))}
-                        </select>
-                      </div>
-                      {defaultPage?.length > page ? (
-                        <>
-                          <button
-                            className="navButton"
-                            onClick={(e) => nextChunk()}
-                          >
-                            <KeyboardArrowRightIcon />
-                          </button>
-                          <button
-                            className="navButton"
-                            onClick={(e) => lastChunk()}
-                          >
-                            <KeyboardDoubleArrowRightIcon />
-                          </button>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
+            </Col>
       </div>
     </>
   );

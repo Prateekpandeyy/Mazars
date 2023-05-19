@@ -67,15 +67,13 @@ function Recording() {
     let droppage = [];
     axios
       .get(
-        `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`,
+        `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(userid)}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
           let data = res.data.result;
-
-          setCountNotification(res.data.total);
-
+          setPage(e);
           let all = [];
           let customId = 1;
           if (e > 1) {
