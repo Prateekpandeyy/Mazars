@@ -33,6 +33,10 @@ function RecordingFilter(props) {
     // lastChunk,
     big,
     end,
+    localAccend,
+    localPrev,
+    localSorted,
+    index,
     // firstChunk,
     // prevChunk,
     // nextChunk,
@@ -122,6 +126,7 @@ function RecordingFilter(props) {
               setData(res.data.result);
               setRecords(res.data.result.length);
               updateResult(res);
+              
             }
           }
         });
@@ -145,6 +150,7 @@ function RecordingFilter(props) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
+              setCountNotification(res.data.total);
             }
           }
         });
@@ -167,6 +173,7 @@ function RecordingFilter(props) {
             if (res.data.result) {
               setData(res.data.result);
               setRecords(res.data.result.length);
+              setCountNotification(res.data.total);
             }
           }
         });

@@ -180,6 +180,7 @@ function Recording() {
           setEnd(Number(localStorage.getItem("tl_record_per_page")));
         }
         setFeedBackData(all);
+        setCountNotification(res.data.total);
       }
     });
   };
@@ -201,7 +202,7 @@ function Recording() {
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -214,7 +215,7 @@ function Recording() {
       text: "S.No",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return row.cid;
       },
       headerStyle: () => {
         return { fontSize: "12px", width: "8px", padding: "9px 5px" };
@@ -408,6 +409,8 @@ function Recording() {
                 setPage={setPage}
                 defaultPage={defaultPage}
                 setDefaultPage={setDefaultPage}
+                setCountNotification={setCountNotification}
+                countNotification={countNotification}
                 pageValue="tlrecording"
                 localAccend="accendtlrecording"
                 localPrev="prevtlrecording"
