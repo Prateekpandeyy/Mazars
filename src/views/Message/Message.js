@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../common/common";
 import { useHistory } from "react-router";
@@ -55,35 +55,7 @@ function Message(props) {
       uit: token,
     },
   };
-  // const firstChunk = () => {
-  //   if (atPage > 1) {
-  //     setAtpage(1);
-  //     setPage(1);
-  //     getMessage(1);
-  //   }
-  // };
-  // const prevChunk = () => {
-  //   if (atPage <= defaultPage.at(-1)) {
-  //     setAtpage((atPage) => atPage - 1);
-  //     setPage(Number(page) - 1);
-  //     getMessage(Number(page) - 1);
-  //   }
-  // };
-  // const nextChunk = () => {
-  //   if (atPage > 0 && atPage < defaultPage.at(-1)) {
-  //     setAtpage((atPage) => atPage + 1);
-  //     setPage(Number(page) + 1);
-  //     getMessage(Number(page) + 1);
-  //   }
-  // };
-  // const lastChunk = () => {
-  //   if (atPage < defaultPage.at(-1)) {
-  //     setPage(defaultPage.at(-1));
-  //     getMessage(defaultPage.at(-1));
-  //     setAtpage(defaultPage.at(-1));
-  //   }
-  // };
-
+  
   //page counter
   const firstChunk = () => {
     setAtpage(1);
@@ -149,7 +121,8 @@ function Message(props) {
   }
 
   useEffect(() => {
-    let arrow = localStorage.getItem("custArrowMsg");
+
+    let arrow = localStorage.getItem("custArrowMsg")
     if (arrow) {
       setAccend(arrow);
     }
@@ -161,17 +134,18 @@ function Message(props) {
     } else {
       setPage(1);
       getMessage(1);
-      if (count < allEnd) {
+      if ((count) < allEnd) {
         setEnd(count);
       } else {
         setEnd(allEnd);
       }
     }
+
   }, []);
 
   const getMessage = (e) => {
     localStorage.setItem(`custMessage`, e);
-    console.log(e, "page test");
+    // console.log(e, "page test");
     let pagetry = JSON.parse(localStorage.getItem("freezecustMsg"));
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -180,105 +154,118 @@ function Message(props) {
     if (pagetry) {
       remainApiPath = `customers/getNotification?id=${JSON.parse(
         userId
-      )}&type_list=all&page=${e}&orderby=${val}&orderbyfield=${field}`;
+      )}&type_list=all&page=${e}&orderby=${val
+        }&orderbyfield=${field}`
     } else {
       remainApiPath = `customers/getNotification?id=${JSON.parse(
         userId
-      )}&type_list=all&page=${e}`;
+      )}&type_list=all&page=${e}`
     }
-    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        let data = res.data.result;
-        let all = [];
-        let customId = 1;
-        if (e > 1) {
-          customId = allEnd * (e - 1) + 1;
-        }
-        data.map((i) => {
-          let data = {
-            ...i,
-            cid: customId,
-          };
-          customId++;
-          all.push(data);
-        });
-        setQuery(all);
-        setCount(res.data.total);
-        if (count < allEnd) {
-          setEnd(count);
-        } else {
-          setEnd(allEnd);
-        }
-        let dynamicPage = Math.round(res.data.total / allEnd);
-        let rem = (e - 1) * allEnd;
-        let end = e * allEnd;
-        if (dynamicPage > 1) {
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else if (e == dynamicPage) {
-            setBig(rem + 1);
-            setEnd(res.data.total);
-            // console.log("e at last page");
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        } else {
-          setBig(rem + e);
-          setEnd(res.data.total);
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setQuery(all);
+          setCount(res.data.total)
+          if ((count) < allEnd) {
+            setEnd(count);
+          } else {
+            setEnd(allEnd);
+          }
+          let dynamicPage = Math.round(res.data.total / allEnd);
+            let rem = (e - 1) * allEnd;
+            let end = e * allEnd;
+            if (dynamicPage > 1) {
+              if (e === 1) {
+                setBig(rem + e);
+                setEnd(end);
+              } else if ((e == (dynamicPage))) {
+                setBig(rem + 1);
+                setEnd(res.data.total);
+                // console.log("e at last page");
+              }
+              else {
+                setBig(rem + 1);
+                setEnd(end);
+              }
+            } else {
+              setBig(rem + e);
+              setEnd(res.data.total);
+            }
+            for (let i = 1; i <= dynamicPage; i++) {
+              droppage.push(i);
+            }
+            setDefaultPage(droppage);
         }
-        for (let i = 1; i <= dynamicPage; i++) {
-          droppage.push(i);
-        }
-        setDefaultPage(droppage);
-      }
-    });
+      });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-    localStorage.setItem(`custMessage`, 1);
+    localStorage.setItem(`custMessage`, 1)
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    };
+    }
     localStorage.setItem(`freezecustMsg`, JSON.stringify(obj));
     remainApiPath = `customers/getNotification?id=${JSON.parse(
       userId
-    )}&type_list=all&page=1&orderby=${val}&orderbyfield=${field}`;
-    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        let all = [];
-        let sortId = 1;
-        res.data.result.map((i) => {
-          let data = {
-            ...i,
-            cid: sortId,
-          };
-          sortId++;
-          all.push(data);
-        });
-        console.log("all", all);
-        setQuery(all);
-        setCount(res.data.total);
-        setAtpage(1);
-        setPage(1);
-        setBig(1);
-        if (count < allEnd) {
-          setEnd(count);
-        } else {
-          setEnd(allEnd);
+    )}&type_list=all&page=1&orderby=${val}&orderbyfield=${field}`
+    axios
+      .get(
+        `${baseUrl}/${remainApiPath}`,
+        myConfig
+      )
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let sortId = 1;
+          res.data.result.map((i) => {
+            let data = {
+              ...i,
+              cid: sortId,
+            };
+            sortId++;
+            all.push(data);
+          });
+          setQuery(all);
+          setCount(res.data.total);
+          setAtpage(1);
+          setPage(1);
+          setBig(1);
+          if ((count) < allEnd) {
+            setEnd(count);
+          } else {
+            setEnd(allEnd);
+          }
+          console.log(all,"allHere");
         }
-      }
-    });
+      });
   };
+
 
   const columns = [
     {
       text: "S.No",
-
+      dataField: "",
       formatter: (cellContent, row, rowIndex) => {
         return row.cid;
       },
@@ -363,7 +350,7 @@ function Message(props) {
     },
     {
       text: "Message",
-
+      
       headerStyle: () => {
         return {
           fontSize: "12px",
@@ -421,8 +408,8 @@ function Message(props) {
   const readNotification = (id) => {
     axios
       .get(`${baseUrl}/customers/markReadNotification?id=${id}`, myConfig)
-      .then(function (response) {})
-      .catch((error) => {});
+      .then(function (response) { })
+      .catch((error) => { });
   };
 
   return (
@@ -518,21 +505,20 @@ function Message(props) {
         <CardBody
           style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
         >
-          {query && (
-            <BootstrapTable
-              bootstrap4
-              keyField="id"
-              data={query}
-              columns={columns}
-              rowIndex
-            />
-          )}
+          <DataTablepopulated
+            // bootstrap4
+            // bgColor="#42566a"
+            keyField="id"
+            data={query}
+            columns={columns}
+            rowIndex
+          />
 
           <PaymentModal
             paymentHandler={paymentHandler}
             addPaymentModal={addPaymentModal}
-            // data={data}
-            // getProposalData={getAssignmentData}
+          // data={data}
+          // getProposalData={getAssignmentData}
           />
         </CardBody>
       </Card>
