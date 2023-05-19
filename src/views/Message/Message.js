@@ -145,7 +145,7 @@ function Message(props) {
 
   const getMessage = (e) => {
     localStorage.setItem(`custMessage`, e);
-    console.log(e, "page test");
+    // console.log(e, "page test");
     let pagetry = JSON.parse(localStorage.getItem("freezecustMsg"));
     let val = pagetry?.val;
     let field = pagetry?.field;
