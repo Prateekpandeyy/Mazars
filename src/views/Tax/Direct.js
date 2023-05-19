@@ -38,14 +38,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const Direct = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
-  const allEnd = 50;
+  const allEnd = 10;
 
   const classes = useStyles();
   const [count, setCount] = useState(0);
@@ -70,8 +69,6 @@ const Direct = () => {
 
   // console.log(searchText.length, "searchText");
   // console.log(filterValue.length, "searchText");
-
-
 
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
@@ -110,7 +107,7 @@ const Direct = () => {
   };
   const getData = (p) => {
     // let searchData = JSON.parse(localStorage.getItem("generated"));
-    localStorage.setItem(`Article`, JSON.stringify(p))
+    localStorage.setItem(`Article`, JSON.stringify(p));
     let remainApiPath = "";
     let val = sortVal;
     let field = sortField;
@@ -119,9 +116,9 @@ const Direct = () => {
     setAtpage(p);
 
     if (isActive == true) {
-      remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getarticles?page=${p}`
+      remainApiPath = `customers/getarticles?page=${p}`;
     }
 
     axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
@@ -165,7 +162,6 @@ const Direct = () => {
         setBig(rem + 1);
         setEnd(end);
       }
-
     });
   };
 
@@ -178,7 +174,7 @@ const Direct = () => {
 
   useEffect(() => {
     const dynamicPage = Math.ceil(count / allEnd);
-    setTotalPage(dynamicPage)
+    setTotalPage(dynamicPage);
   }, [count]);
 
   useEffect(() => {
@@ -189,34 +185,29 @@ const Direct = () => {
     setIsActive(false);
   }, []);
 
-
   //page counter
   const prevChunk = () => {
-    if (((atPage <= (totalPage)) && (atPage > 1))) {
+    if (atPage <= totalPage && atPage > 1) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
-      if (((searchText?.length) != 0) || ((filterValue?.length) != 0)) {
-        searchArticle(atPage - 1)
+      if (searchText?.length != 0 || filterValue?.length != 0) {
+        searchArticle(atPage - 1);
       } else {
         getData(atPage - 1);
       }
     }
-
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (totalPage))) {
+    if (atPage > 0 && atPage < totalPage) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
-      if (((searchText?.length) != 0) || ((filterValue?.length) != 0)) {
-        searchArticle(atPage + 1)
+      if (searchText?.length != 0 || filterValue?.length != 0) {
+        searchArticle(atPage + 1);
       } else {
         getData(atPage + 1);
       }
     }
-
   };
-
-
 
   const sortMessage = (val, field) => {
     let formData = new FormData();
@@ -232,10 +223,10 @@ const Direct = () => {
     let obj = {
       val: val,
       field: field,
-    }
+    };
     setAccend(!accend);
-    if (((searchText?.length) != 0) || ((filterValue?.length) != 0)) {
-      remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`
+    if (searchText?.length != 0 || filterValue?.length != 0) {
+      remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`;
       axios({
         method: "POST",
         url: `${baseUrl}/${remainApiPath}`,
@@ -274,49 +265,43 @@ const Direct = () => {
           }
         }
       });
+    } else {
+      remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`;
+      axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          let sortId = 1;
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+              cid: customId++,
+            };
+            dataList.push(dataObj);
+          });
+          console.log(dataList);
+          let end = 1 * allEnd;
+          // let dynamicPage = Math.ceil(res.data.total / allEnd);
+          setData(dataList);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          let rem = 0 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
+        }
+      });
     }
-    else {
-      remainApiPath = `customers/getarticles?page=1&orderby=${val}&orderbyfield=${field}`
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let all = [];
-            let dataObj = {};
-            let dataList = [];
-            let customId = 1;
-            let sortId = 1;
-            res.data.result.map((i, e) => {
-              dataObj = {
-                sn: ++e,
-                content: i.content,
-                file: i.file,
-                heading: i.heading,
-                id: i.id,
-                publish_date: i.publish_date,
-                status: i.status,
-                type: i.type,
-                writer: i.writer,
-                cid: customId++,
-              };
-              dataList.push(dataObj);
-            });
-            console.log(dataList);
-            let end = 1 * allEnd;
-            // let dynamicPage = Math.ceil(res.data.total / allEnd);
-            setData(dataList);
-            setCount(res.data.total);
-            setTurnGreen(true);
-            let rem = 0 * allEnd;
-            setBig(rem + 1);
-            setEnd(end);
-          }
-        });
-    }
-  }
-
+  };
 
   const searchArticle = (p) => {
     let formData = new FormData();
@@ -327,8 +312,8 @@ const Direct = () => {
     formData.append("article_type", filterValue);
     let obj = {
       content: searchText,
-      article_type: filterValue
-    }
+      article_type: filterValue,
+    };
     let val = sortVal;
     let field = sortField;
 
@@ -338,9 +323,9 @@ const Direct = () => {
     // let field = pagetry?.field;
 
     if (isActive == true) {
-      remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getarticles?page=${p}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getarticles?page=${p}`
+      remainApiPath = `customers/getarticles?page=${p}`;
     }
 
     // localStorage.setItem(`searchArticle`, JSON.stringify(obj));
@@ -448,39 +433,39 @@ const Direct = () => {
               </button>
             </SearchBtn>
             <SearchBtn>
-                  <div className="customPagination">
-                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                      <span>
-                        {big}-{end} of {count}
-                      </span>
-                      <span className="d-flex">
-                        {atPage > 1 ? (
-                          <>
-                            <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                        {atPage < totalPage ? (
-                          <>
-                             <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </span>
-                    </div>
-                  </div>
+              <div className="customPagination">
+                <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                  <span>
+                    {big}-{end} of {count}
+                  </span>
+                  <span className="d-flex">
+                    {atPage > 1 ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => prevChunk()}
+                        >
+                          <KeyboardArrowLeftIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    {atPage < totalPage ? (
+                      <>
+                        <button
+                          className="navButton"
+                          onClick={(e) => nextChunk()}
+                        >
+                          <KeyboardArrowRightIcon />
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+              </div>
             </SearchBtn>
             <MyContainer>
               <div className={classesCustom.articleContent}>
@@ -654,10 +639,10 @@ const Direct = () => {
                         {atPage > 1 ? (
                           <>
                             <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
+                              className="navButton"
+                              onClick={(e) => prevChunk()}
                             >
-                                <KeyboardArrowLeftIcon />
+                              <KeyboardArrowLeftIcon />
                             </button>
                           </>
                         ) : (
@@ -665,11 +650,11 @@ const Direct = () => {
                         )}
                         {atPage < totalPage ? (
                           <>
-                             <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
+                            <button
+                              className="navButton"
+                              onClick={(e) => nextChunk()}
                             >
-                                <KeyboardArrowRightIcon />
+                              <KeyboardArrowRightIcon />
                             </button>
                           </>
                         ) : (
@@ -688,21 +673,20 @@ const Direct = () => {
                         </TableCell>
                         <TableCell style={{ width: "200px" }}>
                           {accend == true ? (
-                            <SubHeading 
+                            <SubHeading
                             // onClick={() => sortMessage(1, 1)}
                             >
-                              Date of publishing  
+                              Date of publishing
                               {/* <ArrowDropDownIcon /> */}
                             </SubHeading>
                           ) : (
-                            <SubHeading 
+                            <SubHeading
                             // onClick={() => sortMessage(0, 1)}
                             >
-                              Date of publishing 
+                              Date of publishing
                               {/* <ArrowDropUpIcon /> */}
                             </SubHeading>
-                          )
-                          }
+                          )}
                         </TableCell>
                         <TableCell style={{ width: "150px" }}>
                           <SubHeading>Subject</SubHeading>
