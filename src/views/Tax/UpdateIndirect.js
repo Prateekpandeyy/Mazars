@@ -44,15 +44,15 @@ const UpdateIndirect = () => {
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
-// const allEnd = Number(localStorage.getItem("cust_record_per_page"));
-  const allEnd = 50;
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  const allEnd = 10;
   // const classes = useStyles();
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isSorted, setisSorted] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -69,15 +69,15 @@ const UpdateIndirect = () => {
     //   setPage(pageno);
     //   getData(pageno);
     // } else {
-      setAtpage(1);
-      setPage(1);
-      getData(1);
+    setAtpage(1);
+    setPage(1);
+    getData(1);
     // }
     // getData(1);
   }, []);
   useEffect(() => {
     const dynamicPage = Math.ceil(count / allEnd);
-    setTotalPage(dynamicPage)
+    setTotalPage(dynamicPage);
   }, [count]);
 
   // const onChangePage = (event, nextPage) => {
@@ -89,7 +89,7 @@ const UpdateIndirect = () => {
   const getData = (p) => {
     let dataObj = {};
     let dataList = [];
-    let remainApiPath =``;
+    let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
     // console.log(allEnd);
@@ -100,9 +100,9 @@ const UpdateIndirect = () => {
       customId = allEnd * (p - 1) + 1;
     }
     if (isActive == true) {
-      remainApiPath = `customers/getupdated?page=${p}&type=indirect&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getupdated?page=${p}&type=indirect&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getupdated?page=${p}&type=indirect`
+      remainApiPath = `customers/getupdated?page=${p}&type=indirect`;
     }
 
     axios
@@ -144,20 +144,20 @@ const UpdateIndirect = () => {
     let dataObj = {};
     let dataList = [];
     let customId = 1;
-    let remainApiPath =``;
+    let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
     if (p > 1) {
       customId = allEnd * (p - 1) + 1;
     }
     setAtpage(p);
-      setPage(p);
+    setPage(p);
     let formData = new FormData();
     formData.append("content", searchText);
     if (isActive == true) {
-      remainApiPath = `customers/getarticles?type=indirect&page=${p}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getarticles?type=indirect&page=${p}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getupdated?type=indirect&page=${p}`
+      remainApiPath = `customers/getupdated?type=indirect&page=${p}`;
     }
 
     axios({
@@ -199,28 +199,26 @@ const UpdateIndirect = () => {
 
   //page counter
   const prevChunk = () => {
-    if (((atPage < (totalPage)) && (atPage > 1)) || (atPage == totalPage)) {
+    if ((atPage < totalPage && atPage > 1) || atPage == totalPage) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
       if (searchText.length != 0) {
-        searchArticle(atPage - 1)
+        searchArticle(atPage - 1);
       } else {
         getData(atPage - 1);
       }
     }
-
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (totalPage))) {
+    if (atPage > 0 && atPage < totalPage) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
       if (searchText.length != 0) {
-        searchArticle(atPage + 1)
+        searchArticle(atPage + 1);
       } else {
         getData(atPage + 1);
       }
     }
-
   };
 
   const sortMessage = (val, field) => {
@@ -231,7 +229,7 @@ const UpdateIndirect = () => {
     setSortVal(val);
     setSortField(field);
     setAccend(!accend);
-    if (((searchText?.length) != 0)) {
+    if (searchText?.length != 0) {
       let formData = new FormData();
       formData.append("content", searchText);
       axios({
@@ -272,15 +270,9 @@ const UpdateIndirect = () => {
         }
       });
     } else {
-      remainApiPath = `customers/getupdated?type=indirect&page=1&orderby=${val}&orderbyfield=${field}&page=1`
-      axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-      )
-      .then((res) => 
-      {
-        if (res.data.code === 1) 
-        {
+      remainApiPath = `customers/getupdated?type=indirect&page=1&orderby=${val}&orderbyfield=${field}&page=1`;
+      axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
+        if (res.data.code === 1) {
           let all = [];
           let dataObj = {};
           let dataList = [];
@@ -312,8 +304,8 @@ const UpdateIndirect = () => {
           setPage(1);
         }
       });
-    } 
-  }
+    }
+  };
 
   return (
     <>
@@ -364,39 +356,39 @@ const UpdateIndirect = () => {
                         </SearchBtn>
                       </div>
                       <SearchBtn outer="outer">
-                      <div className="customPagination">
-                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                        <span>
-                          {big}-{end} of {count}
-                        </span>
-                        <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage  ? (
-                            <>
-                               <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                    </div>
+                        <div className="customPagination">
+                          <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                            <span>
+                              {big}-{end} of {count}
+                            </span>
+                            <span className="d-flex">
+                              {atPage > 1 ? (
+                                <>
+                                  <button
+                                    className="navButton"
+                                    onClick={(e) => prevChunk()}
+                                  >
+                                    <KeyboardArrowLeftIcon />
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {atPage < totalPage ? (
+                                <>
+                                  <button
+                                    className="navButton"
+                                    onClick={(e) => nextChunk()}
+                                  >
+                                    <KeyboardArrowRightIcon />
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          </div>
+                        </div>
                       </SearchBtn>
                       <div className={classes.articleContent}>
                         <div className={classes.articlesDetails}>
@@ -408,21 +400,20 @@ const UpdateIndirect = () => {
                                 </TableCell>
                                 <TableCell style={{ width: "200px" }}>
                                   {accend == true ? (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(1, 1)}
                                     >
-                                      Date of publishing  
+                                      Date of publishing
                                       {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(0, 1)}
                                     >
-                                      Date of publishing 
+                                      Date of publishing
                                       {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
-                                  )
-                                  }
+                                  )}
                                 </TableCell>
                                 <TableCell>
                                   <SubHeading>Heading</SubHeading>
@@ -499,7 +490,6 @@ const UpdateIndirect = () => {
                         </div>
                       </div>
                     </>
-
                   </TableContainer>
                 </div>
               </div>
@@ -554,40 +544,40 @@ const UpdateIndirect = () => {
                       </SearchBtn>
                     </div>
                     <SearchBtn outer="outer">
-                    <div className="customPagination">
-                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                      <span>
-                        {big}-{end} of {count}
-                      </span>
-                      <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton"
-                                onClick={(e) => prevChunk()}
-                            >
-                                <KeyboardArrowLeftIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage  ? (
-                            <>
-                               <button
-                                className="navButton"
-                                onClick={(e) => nextChunk()}
-                            >
-                                <KeyboardArrowRightIcon />
-                            </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                    </div>
-                  </div>
-                      </SearchBtn>
+                      <div className="customPagination">
+                        <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                          <span>
+                            {big}-{end} of {count}
+                          </span>
+                          <span className="d-flex">
+                            {atPage > 1 ? (
+                              <>
+                                <button
+                                  className="navButton"
+                                  onClick={(e) => prevChunk()}
+                                >
+                                  <KeyboardArrowLeftIcon />
+                                </button>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                            {atPage < totalPage ? (
+                              <>
+                                <button
+                                  className="navButton"
+                                  onClick={(e) => nextChunk()}
+                                >
+                                  <KeyboardArrowRightIcon />
+                                </button>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </SearchBtn>
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>
@@ -598,21 +588,20 @@ const UpdateIndirect = () => {
                               </TableCell>
                               <TableCell style={{ width: "200px" }}>
                                 {accend == true ? (
-                                  <SubHeading 
+                                  <SubHeading
                                   // onClick={() => sortMessage(1, 1)}
                                   >
-                                    Date of publishing  
+                                    Date of publishing
                                     {/* <ArrowDropDownIcon /> */}
                                   </SubHeading>
                                 ) : (
-                                  <SubHeading 
+                                  <SubHeading
                                   // onClick={() => sortMessage(0, 1)}
                                   >
                                     Date of publishing
-                                     {/* <ArrowDropUpIcon /> */}
+                                    {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
-                                )
-                                }
+                                )}
                               </TableCell>
                               <TableCell>
                                 <SubHeading>Heading</SubHeading>

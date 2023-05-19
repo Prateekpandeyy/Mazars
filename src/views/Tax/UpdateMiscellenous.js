@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const UpdateMiscellenous = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -44,15 +43,15 @@ const UpdateMiscellenous = () => {
   const [searchText, setSearchText] = useState("");
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
-// const allEnd = Number(localStorage.getItem("cust_record_per_page"));
-  const allEnd = 50;
+  // const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  const allEnd = 10;
   // const classes = useStyles();
   const [count, setCount] = useState(0);
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isSorted, setisSorted] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -77,7 +76,7 @@ const UpdateMiscellenous = () => {
   }, []);
   useEffect(() => {
     const dynamicPage = Math.ceil(count / allEnd);
-    setTotalPage(dynamicPage)
+    setTotalPage(dynamicPage);
   }, [count]);
 
   // const onChangePage = (event, nextPage) => {
@@ -88,7 +87,7 @@ const UpdateMiscellenous = () => {
   // };
   const getData = (p) => {
     let pagetry = JSON.parse(localStorage.getItem("freezeMis"));
-    localStorage.setItem(`misUpdate`, JSON.stringify(p))
+    localStorage.setItem(`misUpdate`, JSON.stringify(p));
     let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
@@ -102,43 +101,41 @@ const UpdateMiscellenous = () => {
       customId = allEnd * (p - 1) + 1;
     }
     if (isActive == true) {
-      remainApiPath = `customers/getupdated?page=${p}&type=miscellaneous&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getupdated?page=${p}&type=miscellaneous&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getupdated?page=${p}&type=miscellaneous`
+      remainApiPath = `customers/getupdated?page=${p}&type=miscellaneous`;
     }
-    axios
-      .get(`${baseUrl}/${remainApiPath}`)
-      .then((res) => {
-        res.data.result.map((i, e) => {
-          dataObj = {
-            sn: ++e,
-            content: i.content,
-            file: i.file,
-            heading: i.heading,
-            id: i.id,
-            publish_date: i.publish_date,
-            status: i.status,
-            type: i.type,
-            cid: customId++,
-          };
-          dataList.push(dataObj);
-        });
-        setData(dataList);
-        setCount(res?.data?.total);
-        let end = p * allEnd;
-
-        if (end > res.data.total) {
-          end = res.data.total;
-        }
-        let rem = (p - 1) * allEnd;
-        if (p === 1) {
-          setBig(rem + p);
-          setEnd(end);
-        } else {
-          setBig(rem + 1);
-          setEnd(end);
-        }
+    axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
+      res.data.result.map((i, e) => {
+        dataObj = {
+          sn: ++e,
+          content: i.content,
+          file: i.file,
+          heading: i.heading,
+          id: i.id,
+          publish_date: i.publish_date,
+          status: i.status,
+          type: i.type,
+          cid: customId++,
+        };
+        dataList.push(dataObj);
       });
+      setData(dataList);
+      setCount(res?.data?.total);
+      let end = p * allEnd;
+
+      if (end > res.data.total) {
+        end = res.data.total;
+      }
+      let rem = (p - 1) * allEnd;
+      if (p === 1) {
+        setBig(rem + p);
+        setEnd(end);
+      } else {
+        setBig(rem + 1);
+        setEnd(end);
+      }
+    });
   };
   const searchArticle = (p) => {
     setAtpage(p);
@@ -155,9 +152,9 @@ const UpdateMiscellenous = () => {
     let formData = new FormData();
     formData.append("content", searchText);
     if (isActive == true) {
-      remainApiPath = `customers/getarticles?type=miscellaneous&page=${p}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getarticles?type=miscellaneous&page=${p}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getupdated?type=miscellaneous&page=${p}`
+      remainApiPath = `customers/getupdated?type=miscellaneous&page=${p}`;
     }
 
     axios({
@@ -200,28 +197,26 @@ const UpdateMiscellenous = () => {
   };
   //page counter
   const prevChunk = () => {
-    if (((atPage < (totalPage)) && (atPage > 1))) {
+    if (atPage < totalPage && atPage > 1) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
       if (searchText.length != 0) {
-        searchArticle(atPage - 1)
+        searchArticle(atPage - 1);
       } else {
         getData(atPage - 1);
       }
     }
-
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (totalPage))) {
+    if (atPage > 0 && atPage < totalPage) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
       if (searchText.length != 0) {
-        searchArticle(atPage + 1)
+        searchArticle(atPage + 1);
       } else {
         getData(atPage + 1);
       }
     }
-
   };
 
   const sortMessage = (val, field) => {
@@ -232,7 +227,7 @@ const UpdateMiscellenous = () => {
     setSortVal(val);
     setSortField(field);
     setAccend(!accend);
-    if (((searchText?.length) != 0)) {
+    if (searchText?.length != 0) {
       let formData = new FormData();
       formData.append("content", searchText);
       axios({
@@ -273,47 +268,43 @@ const UpdateMiscellenous = () => {
         }
       });
     } else {
-      remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}&page=1`
-      axios
-        .get(
-          `${baseUrl}/${remainApiPath}`,
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            let all = [];
-            let dataObj = {};
-            let dataList = [];
-            let customId = 1;
-            let sortId = 1;
-            res.data.result.map((i, e) => {
-              dataObj = {
-                sn: ++e,
-                content: i.content,
-                file: i.file,
-                heading: i.heading,
-                id: i.id,
-                publish_date: i.publish_date,
-                status: i.status,
-                type: i.type,
-                writer: i.writer,
-                cid: customId++,
-              };
-              dataList.push(dataObj);
-            });
-            let end = 1 * allEnd;
-            // let dynamicPage = Math.ceil(res.data.total / allEnd);
-            setData(dataList);
-            setCount(res.data.total);
-            setTurnGreen(true);
-            let rem = 0 * allEnd;
-            setBig(rem + 1);
-            setEnd(end);
-            setAtpage(1);
-            setPage(1);
-          }
-        });
+      remainApiPath = `customers/getupdated?type=miscellaneous&page=1&orderby=${val}&orderbyfield=${field}&page=1`;
+      axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let dataObj = {};
+          let dataList = [];
+          let customId = 1;
+          let sortId = 1;
+          res.data.result.map((i, e) => {
+            dataObj = {
+              sn: ++e,
+              content: i.content,
+              file: i.file,
+              heading: i.heading,
+              id: i.id,
+              publish_date: i.publish_date,
+              status: i.status,
+              type: i.type,
+              writer: i.writer,
+              cid: customId++,
+            };
+            dataList.push(dataObj);
+          });
+          let end = 1 * allEnd;
+          // let dynamicPage = Math.ceil(res.data.total / allEnd);
+          setData(dataList);
+          setCount(res.data.total);
+          setTurnGreen(true);
+          let rem = 0 * allEnd;
+          setBig(rem + 1);
+          setEnd(end);
+          setAtpage(1);
+          setPage(1);
+        }
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -364,38 +355,38 @@ const UpdateMiscellenous = () => {
                         </SearchBtn>
                       </div>
                       <div className="customPagination">
-                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                        <span>
-                          {big}-{end} of {count}
-                        </span>
-                        <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => nextChunk()}
-                              >
-                                &gt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
+                        <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                          <span>
+                            {big}-{end} of {count}
+                          </span>
+                          <span className="d-flex">
+                            {atPage > 1 ? (
+                              <>
+                                <button
+                                  className="navButton mx-1"
+                                  onClick={(e) => prevChunk()}
+                                >
+                                  &lt;
+                                </button>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                            {atPage < totalPage ? (
+                              <>
+                                <button
+                                  className="navButton mx-1"
+                                  onClick={(e) => nextChunk()}
+                                >
+                                  &gt;
+                                </button>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </span>
+                        </div>
                       </div>
-                    </div>
                       <div className={classes.articleContent}>
                         <div className={classes.articlesDetails}>
                           <Table>
@@ -419,8 +410,7 @@ const UpdateMiscellenous = () => {
                                       Date of publishing
                                       {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
-                                  )
-                                  }
+                                  )}
                                 </TableCell>
                                 <TableCell>
                                   <SubHeading>Heading</SubHeading>
@@ -500,7 +490,6 @@ const UpdateMiscellenous = () => {
                   </TableContainer>
                 </div>
               </div>
-
             </MyContainer>
           </OuterloginContainer>
         </Layout>
@@ -552,38 +541,38 @@ const UpdateMiscellenous = () => {
                       </SearchBtn>
                     </div>
                     <div className="customPagination">
-                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                      <span>
-                        {big}-{end} of {count}
-                      </span>
-                      <span className="d-flex">
-                        {atPage > 1 ? (
-                          <>
-                            <button
-                              className="navButton mx-1"
-                              onClick={(e) => prevChunk()}
-                            >
-                              &lt;
-                            </button>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                        {atPage < totalPage ? (
-                          <>
-                            <button
-                              className="navButton mx-1"
-                              onClick={(e) => nextChunk()}
-                            >
-                              &gt;
-                            </button>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </span>
+                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                        <span>
+                          {big}-{end} of {count}
+                        </span>
+                        <span className="d-flex">
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => prevChunk()}
+                              >
+                                &lt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage ? (
+                            <>
+                              <button
+                                className="navButton mx-1"
+                                onClick={(e) => nextChunk()}
+                              >
+                                &gt;
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
                     </div>
-                  </div>
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>
@@ -607,8 +596,7 @@ const UpdateMiscellenous = () => {
                                     Date of publishing
                                     {/* <ArrowDropUpIcon /> */}
                                   </SubHeading>
-                                )
-                                }
+                                )}
                               </TableCell>
                               <TableCell>
                                 <SubHeading>Heading</SubHeading>
@@ -691,7 +679,6 @@ const UpdateMiscellenous = () => {
                       </div>
                     </div>
                   </>
-                  
                 </TableContainer>
               </div>
             </div>
