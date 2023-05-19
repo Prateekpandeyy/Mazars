@@ -24,6 +24,7 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { makeStyles } from "@material-ui/core/styles";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -57,19 +58,74 @@ function FeedbackData(props) {
   };
   useEffect(() => {
     getMessage(1);
+    setPage(1);
   }, []);
-  const sortMessage = (e) => {
-    console.log("done");
-  };
+
   const getMessage = (e) => {
+    let droppage = [];
+    let allEnd = Number(localStorage.getItem("cust_record_per_page"));
+    let sortVal = "";
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
     axios
       .get(
-        `${baseUrl}/customers/getMessage?uid=${JSON.parse(userId)}&page=${e}`,
+        `${baseUrl}/customers/getFeedback?uid=${JSON.parse(userId)}&page=${e}`,
         myConfig
       )
       .then((res) => {
         if (res.data.code === 1) {
-          setQuery(res.data.result);
+          let data = res.data.result;
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setQuery(all);
+          setCount(res.data.total);
+          if (count < allEnd) {
+            setEnd(count);
+          } else {
+            setEnd(allEnd);
+          }
+          let dynamicPage = Math.round(res.data.total / allEnd);
+          if (dynamicPage === 0) {
+            dynamicPage = 1;
+          }
+          let rem = (e - 1) * allEnd;
+          let end = e * allEnd;
+          if (dynamicPage > 1) {
+            if (e === 1) {
+              setBig(rem + e);
+              setEnd(end);
+            } else if (e == dynamicPage) {
+              setBig(rem + 1);
+              setEnd(res.data.total);
+              // console.log("e at last page");
+            } else {
+              setBig(rem + 1);
+              setEnd(end);
+            }
+          } else {
+            setBig(rem + e);
+            setEnd(res.data.total);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
   };
@@ -78,7 +134,7 @@ function FeedbackData(props) {
     let isActive = true;
 
     if (
-      localStorage.getItem("custArrowPay1") === column.dataField ||
+      localStorage.getItem("custSorting") === column.dataField ||
       localStorage.getItem("prevcustpay1") === column.dataField
     ) {
       isActive = true;
@@ -91,7 +147,7 @@ function FeedbackData(props) {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowPay1") === column.dataField ? (
+          {localStorage.getItem("custSorting") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -105,43 +161,104 @@ function FeedbackData(props) {
     );
   }
   //page counter
+  // const firstChunk = () => {
+  //   if (atPage > 0) {
+  //     setAtpage(1);
+  //     setPage(1);
+  //     getMessage(1);
+  //   } else {
+  //   }
+  // };
+  // const prevChunk = () => {
+  //   console.log(atPage, defaultPage.at(-1));
+  //   if (atPage > defaultPage.at(-1)) {
+  //     setAtpage((atPage) => atPage - 1);
+  //     setPage(Number(page) - 1);
+  //     getMessage(Number(page) - 1);
+  //   }
+  // };
+  // const nextChunk = () => {
+  //   console.log(atPage, defaultPage.at(-1));
+  //   if (atPage > 0 && atPage < defaultPage.at(-1)) {
+  //     setAtpage((atPage) => atPage + 1);
+  //     setPage(Number(page) + 1);
+  //     getMessage(Number(page) + 1);
+  //   }
+  // };
+  // const lastChunk = () => {
+  //   if (page < defaultPage.at(-1)) {
+  //     setPage(defaultPage.at(-1));
+  //     getMessage(defaultPage.at(-1));
+  //     setAtpage(totalPages);
+  //   }
+  // };
   const firstChunk = () => {
-    if (atPage > 0) {
-      setAtpage(1);
-      setPage(1);
-      getMessage(1);
-    } else {
-    }
+    setAtpage(1);
+    setPage(1);
+    getMessage(1);
   };
   const prevChunk = () => {
-    if (atPage < defaultPage.at(-1)) {
+    if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
-      setPage(Number(page) - 1);
-      getMessage(Number(page) - 1);
     }
+    setPage(Number(page) - 1);
+    getMessage(Number(page) - 1);
   };
   const nextChunk = () => {
-    if (atPage > 0 && atPage < defaultPage.at(-1)) {
+    if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
-      setPage(Number(page) + 1);
-      getMessage(Number(page) + 1);
     }
+    setPage(Number(page) + 1);
+    getMessage(Number(page) + 1);
   };
   const lastChunk = () => {
-    if (atPage < defaultPage.at(-1)) {
-      setPage(defaultPage.at(-1));
-      getMessage(defaultPage.at(-1));
-      setAtpage(totalPages);
-    }
+    setPage(defaultPage.at(-1));
+    getMessage(defaultPage.at(-1));
+    setAtpage(totalPages);
   };
-
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    localStorage.setItem(`custMessage`, 1);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    };
+    localStorage.setItem(`freezecustMsg`, JSON.stringify(obj));
+    remainApiPath = `customers/getFeedback?id=${JSON.parse(
+      userId
+    )}&type_list=all&page=1&orderby=${val}&orderbyfield=${field}`;
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        console.log("all", all);
+        setQuery(all);
+        setCount(res.data.total);
+        setAtpage(1);
+        setPage(1);
+        setBig(1);
+        if (count < allEnd) {
+          setEnd(count);
+        } else {
+          setEnd(allEnd);
+        }
+      }
+    });
+  };
   const columns = [
     {
       text: "S.No",
-      dataField: "",
-      formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
-      },
+      dataField: "cid",
+
       headerStyle: () => {
         return {
           fontSize: "12px",
@@ -162,10 +279,10 @@ function FeedbackData(props) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPay1", field);
+          localStorage.setItem("custSorting", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPay1");
+          localStorage.removeItem("custSorting");
         }
         if (accend === field) {
           val = 0;
@@ -211,10 +328,10 @@ function FeedbackData(props) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowPay1", field);
+          localStorage.setItem("custSorting", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowPay1");
+          localStorage.removeItem("custSorting");
         }
         if (accend === field) {
           val = 0;
@@ -337,7 +454,7 @@ function FeedbackData(props) {
           </Row>
         </CardHeader>
         <CardBody>
-          <BootstrapTable
+          <DataTablepopulated
             bootstrap4
             keyField="id"
             data={query}
