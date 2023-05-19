@@ -115,11 +115,11 @@ function RecordingFilter(props) {
     setSearchText(data);
     console.log(e, "e");
     console.log(e.typeof , "e.typeof");
-    // if (e == undefined) {
-    //   console.log(e, "e");
-    //   // page=${e}&
-    //   e = 1;
-    // }
+    if (e == undefined) {
+      console.log(e, "e");
+      // page=${e}&
+      e = 1;
+    }
     let obj = {};
     if (data.route) {
       obj = {
@@ -168,7 +168,9 @@ function RecordingFilter(props) {
         },
       };
       if (data.route) {
-        axios
+      }else{
+      }
+      axios
         .get(
           `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
             userid
@@ -221,55 +223,6 @@ function RecordingFilter(props) {
             }
           }
         });
-      }else{
-        axios
-        .get(
-          `${baseUrl}/tl/callRecordingPostlist?page=1&uid=${JSON.parse(
-            userid
-          )}&assign_id=${data.queryNo}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              let allEnd = Number(localStorage.getItem("tl_record_per_page"));
-              let droppage = [];
-              let data = res.data.result;
-              setPage(1);
-              let all = [];
-              let customId = 1;
-              data.map((i) => {
-                let data = {
-                  ...i,
-                  cid: customId,
-                };
-                customId++;
-                all.push(data);
-              });
-              let end = 1 * allEnd;
-
-              if (end > res.data.total) {
-                end = res.data.total;
-              }
-              let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-              let rem = allEnd;
-
-                setBig(rem + 1);
-                setEnd(end);
-              
-              for (let i = 1; i <= dynamicPage; i++) {
-                droppage.push(i);
-              }
-              setData(all);
-              setRecords(res.data.result.length);
-              setCountNotification(res.data.total);
-              setDefaultPage(droppage);
-            }
-          }
-        });
-      }
-      
     } else if (SearchQuery == "tpQuery") {
       const token = window.localStorage.getItem("tptoken");
       const myConfig = {
