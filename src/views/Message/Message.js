@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
+import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
 import PaymentModal from "./PaymentModal";
 import CommonServices from "../../common/common";
 import { useHistory } from "react-router";
@@ -55,35 +55,7 @@ function Message(props) {
       uit: token,
     },
   };
-  // const firstChunk = () => {
-  //   if (atPage > 1) {
-  //     setAtpage(1);
-  //     setPage(1);
-  //     getMessage(1);
-  //   }
-  // };
-  // const prevChunk = () => {
-  //   if (atPage <= defaultPage.at(-1)) {
-  //     setAtpage((atPage) => atPage - 1);
-  //     setPage(Number(page) - 1);
-  //     getMessage(Number(page) - 1);
-  //   }
-  // };
-  // const nextChunk = () => {
-  //   if (atPage > 0 && atPage < defaultPage.at(-1)) {
-  //     setAtpage((atPage) => atPage + 1);
-  //     setPage(Number(page) + 1);
-  //     getMessage(Number(page) + 1);
-  //   }
-  // };
-  // const lastChunk = () => {
-  //   if (atPage < defaultPage.at(-1)) {
-  //     setPage(defaultPage.at(-1));
-  //     getMessage(defaultPage.at(-1));
-  //     setAtpage(defaultPage.at(-1));
-  //   }
-  // };
-
+  
   //page counter
   const firstChunk = () => {
     setAtpage(1);
@@ -533,8 +505,9 @@ function Message(props) {
         <CardBody
           style={{ display: "flex", height: "80vh", overflowY: "scroll" }}
         >
-          <BootstrapTable
-            bootstrap4
+          <DataTablepopulated
+            // bootstrap4
+            // bgColor="#42566a"
             keyField="id"
             data={query}
             columns={columns}
