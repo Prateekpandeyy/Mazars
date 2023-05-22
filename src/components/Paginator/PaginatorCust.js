@@ -605,7 +605,7 @@ function PaginatorCust(props) {
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
-        }&status=2&pcat_id=${data.pcatId}`;
+        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -650,7 +650,6 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custAs5`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
         remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
@@ -680,7 +679,6 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custPay1`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
