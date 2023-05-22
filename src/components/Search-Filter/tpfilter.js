@@ -194,7 +194,7 @@ function TaxProfessionalFilter(props) {
         store: store2,
         fromDate: fromDate,
         toDate: toDate,
-        pcatId: selectedData,
+        pcatId: localStorage.getItem("pcat_id"),
         query_no: data?.query_no,
         p_status: data?.p_status,
         route: window.location.pathname,
