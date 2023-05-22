@@ -41,10 +41,16 @@ function CustomerFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const [showSubCat, setShowSubCat] = useState([]);
   const [catShowData, setCatShowData] = useState([]);
+  var current_date =
+    new Date().getFullYear() +
+    "-" +
+    ("0" + (new Date().getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + new Date().getDate()).slice(-2);
 
   const [status1, setStatus1] = useState("");
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [queryNo, setQueryNo] = useState("");
 
   const token = window.localStorage.getItem("clientToken");
@@ -139,7 +145,7 @@ function CustomerFilter(props) {
     setShowSubCat([]);
     setCatShowData([]);
     setFromDate("");
-    setToDate("");
+    setToDate(current_date);
     setStatus1("");
     setQueryNo("");
     localStorage.removeItem(`searchData${index}`);
@@ -1498,8 +1504,9 @@ function CustomerFilter(props) {
                   name="p_dateTo"
                   className="form-select form-control"
                   ref={register}
-                  defaultValue={current_date}
+                  // defaultValue={current_date}
                   max={current_date}
+                  value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
                 />
               </div>
