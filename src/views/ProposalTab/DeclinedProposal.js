@@ -123,7 +123,7 @@ function DeclinedProposal() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
@@ -542,7 +542,7 @@ function DeclinedProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.ProposedAmount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },
