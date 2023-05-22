@@ -163,13 +163,13 @@ function AcceptedProposal() {
 
     if (data && !pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-        id
+        userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${
         data.toDate
       }&status=2&pcat_id=${data.pcatId}`;
     } else if (data && pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-        id
+        userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${
         data.toDate
       }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
@@ -224,7 +224,7 @@ function AcceptedProposal() {
 
     if (data) {
       remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-        id
+        userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${
         data.toDate
       }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;

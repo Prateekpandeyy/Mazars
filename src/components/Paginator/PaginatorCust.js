@@ -716,7 +716,7 @@ function PaginatorCust(props) {
           data.toDate
         }&status=1&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
-        remainApiPath = `customecustomers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${
           data.toDate
