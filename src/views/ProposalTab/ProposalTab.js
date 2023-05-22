@@ -78,7 +78,7 @@ function Proposal(props) {
       .then((response) => {
         
         if (response.data.code === 1) {
-          setDeclinedProposalCount(response.data.result.length);
+          setDeclinedProposalCount(response.data.total);
         }
       })
   };
