@@ -33,11 +33,23 @@ function RecordingFilter(props) {
     // lastChunk,
     big,
     end,
+    localAccend,
+    localPrev,
+    localSorted,
+    index,
     // firstChunk,
     // prevChunk,
     // nextChunk,
     defaultPage,
   } = props;
+
+  useEffect(() => {
+    console.log(searchText, "searchText");
+  }, [searchText]);
+
+  useEffect(() => {
+
+  }, []);
 
   //reset date
   const resetData = () => {
@@ -101,7 +113,28 @@ function RecordingFilter(props) {
   };
   const onSubmit = (data, e) => {
     setSearchText(data);
-    if ((SearchQuery = "adminQuery")) {
+    console.log(e, "e");
+    console.log(e.typeof , "e.typeof");
+    if (e == undefined) {
+      console.log(e, "e");
+      // page=${e}&
+      e = 1;
+    }
+    let obj = {};
+    if (data.route) {
+      obj = {
+        queryNo:data?.queryNo,
+        route: window.location.pathname,
+      };
+    } else {
+      obj = {
+        queryNo:data?.queryNo,
+        route: window.location.pathname,
+      };
+    }
+    localStorage.setItem(`searchData${SearchQuery}`, JSON.stringify(obj));
+
+    if (SearchQuery == "adminQuery") {
       localStorage.setItem("recordingData", JSON.stringify(data));
       const token = window.localStorage.getItem("adminToken");
       const myConfig = {
@@ -122,12 +155,76 @@ function RecordingFilter(props) {
               setData(res.data.result);
               setRecords(res.data.result.length);
               updateResult(res);
+
             }
           }
         });
     } else if (SearchQuery == "tlQuery") {
       localStorage.setItem("recordingDatatl", JSON.stringify(data));
       const token = window.localStorage.getItem("tlToken");
+      const myConfig = {
+        headers: {
+          uit: token,
+        },
+      };
+      if (data.route) {
+      }else{
+      }
+      axios
+        .get(
+          `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
+            userid
+          )}&assign_id=${data.queryNo}`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            if (res.data.result) {
+              let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+              let droppage = [];
+              let data = res.data.result;
+              setPage(e);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              let end = e * allEnd;
+
+              if (end > res.data.total) {
+                end = res.data.total;
+              }
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+              let rem = (e - 1) * allEnd;
+
+              if (e === 1) {
+                setBig(rem + e);
+                setEnd(end);
+              } else {
+                setBig(rem + 1);
+                setEnd(end);
+              }
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+              setData(all);
+              setRecords(res.data.result.length);
+              setCountNotification(res.data.total);
+              setDefaultPage(droppage);
+            }
+          }
+        });
+    } else if (SearchQuery == "tpQuery") {
+      const token = window.localStorage.getItem("tptoken");
       const myConfig = {
         headers: {
           uit: token,
@@ -143,30 +240,46 @@ function RecordingFilter(props) {
         .then((res) => {
           if (res.data.code === 1) {
             if (res.data.result) {
-              setData(res.data.result);
+              let allEnd = Number(localStorage.getItem("tp_record_per_page"));
+              let droppage = [];
+              let data = res.data.result;
+              setPage(e);
+              let all = [];
+              let customId = 1;
+              if (e > 1) {
+                customId = allEnd * (e - 1) + 1;
+              }
+              data.map((i) => {
+                let data = {
+                  ...i,
+                  cid: customId,
+                };
+                customId++;
+                all.push(data);
+              });
+              let end = e * allEnd;
+
+              if (end > res.data.total) {
+                end = res.data.total;
+              }
+              let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+              let rem = (e - 1) * allEnd;
+
+              if (e === 1) {
+                setBig(rem + e);
+                setEnd(end);
+              } else {
+                setBig(rem + 1);
+                setEnd(end);
+              }
+              for (let i = 1; i <= dynamicPage; i++) {
+                droppage.push(i);
+              }
+              setData(all);
               setRecords(res.data.result.length);
-            }
-          }
-        });
-    } else if (SearchQuery == "tpQuery") {
-      const token = window.localStorage.getItem("tptoken");
-      const myConfig = {
-        headers: {
-          uit: token,
-        },
-      };
-      axios
-        .get(
-          `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(
-            userid
-          )}&assign_id=${data.queryNo}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            if (res.data.result) {
-              setData(res.data.result);
-              setRecords(res.data.result.length);
+              setCountNotification(res.data.total);
+              setDefaultPage(droppage);
             }
           }
         });
@@ -177,7 +290,7 @@ function RecordingFilter(props) {
     return (
       <>
         <button
-          type="submit"
+          type="reset"
           className="customBtn mx-sm-1 mx-2"
           onClick={() => resetData()}
         >
@@ -191,7 +304,7 @@ function RecordingFilter(props) {
     setAtpage(1);
     setPage(1);
     if (searchText) {
-      onsubmit(searchText, 1);
+      onSubmit(searchText, 1);
     } else {
       getData(1);
     }
@@ -203,7 +316,7 @@ function RecordingFilter(props) {
     }
     setPage(Number(page) - 1);
     if (searchText) {
-      onsubmit(searchText, page - 1);
+      onSubmit(searchText, page - 1);
     } else {
       getData(page - 1);
     }
@@ -216,7 +329,7 @@ function RecordingFilter(props) {
     setPage(Number(page) + 1);
     localStorage.setItem(pageValue, Number(page) + 1);
     if (searchText) {
-      onsubmit(searchText, page + 1);
+      onSubmit(searchText, page + 1);
     } else {
       getData(page + 1);
     }
@@ -225,21 +338,19 @@ function RecordingFilter(props) {
     setPage(defaultPage.at(-1));
     getData(defaultPage.at(-1));
     if (searchText) {
-      onsubmit(searchText, totalPages);
+      onSubmit(searchText, totalPages);
     } else {
       setAtpage(totalPages);
     }
     localStorage.setItem(pageValue, defaultPage.at(-1));
   };
 
-  useEffect(() => {
-    console.log(searchText, "searchText");
-  }, [searchText]);
+
 
   return (
     <>
       <div className="row">
-        <div className="col-sm-12 d-flex">
+        <Col md="6" align="left">
           <div className="d-flex w-100 justify-content-between">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-inline">
@@ -260,72 +371,70 @@ function RecordingFilter(props) {
                 </div>
               </div>
             </form>
-            <Row>
-              <Col md="12" align="right">
-                <div className="customPagination">
-                  <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
-                    <span className="customPaginationSpan">
-                      {big}-{end} of {countNotification}
-                    </span>
-                    <span className="d-flex">
-                      {page > 1 ? (
-                        <>
-                          <button
-                            className="navButton"
-                            onClick={(e) => firstChunk()}
-                          >
-                            <KeyboardDoubleArrowLeftIcon />
-                          </button>
-                          <button
-                            className="navButton"
-                            onClick={(e) => prevChunk()}
-                          >
-                            <KeyboardArrowLeftIcon />
-                          </button>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      <div className="navButtonSelectDiv">
-                        <select
-                          value={page}
-                          onChange={(e) => {
-                            setPage(Number(e.target.value));
-                            getData(Number(e.target.value));
-                            localStorage.setItem(pageValue, e.target.value);
-                          }}
-                          className="form-control"
-                        >
-                          {defaultPage?.map((i) => (
-                            <option value={i}>{i}</option>
-                          ))}
-                        </select>
-                      </div>
-                      {defaultPage?.length > page ? (
-                        <>
-                          <button
-                            className="navButton"
-                            onClick={(e) => nextChunk()}
-                          >
-                            <KeyboardArrowRightIcon />
-                          </button>
-                          <button
-                            className="navButton"
-                            onClick={(e) => lastChunk()}
-                          >
-                            <KeyboardDoubleArrowRightIcon />
-                          </button>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </Col>
-            </Row>
           </div>
-        </div>
+        </Col>
+        <Col md="6" align="right">
+          <div className="customPagination">
+            <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+              <span className="customPaginationSpan">
+                {big}-{end} of {countNotification}
+              </span>
+              <span className="d-flex">
+                {page > 1 ? (
+                  <>
+                    <button
+                      className="navButton"
+                      onClick={(e) => firstChunk()}
+                    >
+                      <KeyboardDoubleArrowLeftIcon />
+                    </button>
+                    <button
+                      className="navButton"
+                      onClick={(e) => prevChunk()}
+                    >
+                      <KeyboardArrowLeftIcon />
+                    </button>
+                  </>
+                ) : (
+                  ""
+                )}
+                <div className="navButtonSelectDiv">
+                  <select
+                    value={page}
+                    onChange={(e) => {
+                      setPage(Number(e.target.value));
+                      getData(Number(e.target.value));
+                      localStorage.setItem(pageValue, e.target.value);
+                    }}
+                    className="form-control"
+                  >
+                    {defaultPage?.map((i) => (
+                      <option value={i}>{i}</option>
+                    ))}
+                  </select>
+                </div>
+                {defaultPage?.length > page ? (
+                  <>
+                    <button
+                      className="navButton"
+                      onClick={(e) => nextChunk()}
+                    >
+                      <KeyboardArrowRightIcon />
+                    </button>
+                    <button
+                      className="navButton"
+                      onClick={(e) => lastChunk()}
+                    >
+                      <KeyboardDoubleArrowRightIcon />
+                    </button>
+                  </>
+                ) : (
+                  ""
+                )}
+              </span>
+            </div>
+          </div>
+        </Col>
       </div>
     </>
   );

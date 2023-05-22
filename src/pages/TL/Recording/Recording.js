@@ -84,11 +84,10 @@ function Recording() {
         //   setRecords(res.data.result.length);
         // }
         let droppage = [];
+
         if (res.data.code === 1) {
           let data = res.data.result;
-
-          setCountNotification(res.data.total);
-
+          setPage(e);
           let all = [];
           let customId = 1;
           if (e > 1) {
@@ -123,6 +122,8 @@ function Recording() {
             droppage.push(i);
           }
           setDefaultPage(droppage);
+          setRecords(res.data.result.length);
+          setCountNotification(res.data.total);
         }
       });
   };
@@ -180,6 +181,7 @@ function Recording() {
           setEnd(Number(localStorage.getItem("tl_record_per_page")));
         }
         setFeedBackData(all);
+        setCountNotification(res.data.total);
       }
     });
   };
@@ -201,7 +203,7 @@ function Recording() {
               className={isActive === true ? classes.isActive : ""}
             />
           ) : (
-            <ArrowDropUpIcon
+            <ArrowDropDownIcon
               className={isActive === true ? classes.isActive : ""}
             />
           )}
@@ -214,7 +216,7 @@ function Recording() {
       text: "S.No",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return row.cid;
       },
       headerStyle: () => {
         return { fontSize: "12px", width: "8px", padding: "9px 5px" };
@@ -400,7 +402,7 @@ function Recording() {
                 userid={userid}
                 getRecording={getRecording}
                 page={page}
-                getData={getRecording}
+                // getData={getRecording}
                 big={big}
                 end={end}
                 setBig={setBig}
@@ -408,6 +410,8 @@ function Recording() {
                 setPage={setPage}
                 defaultPage={defaultPage}
                 setDefaultPage={setDefaultPage}
+                setCountNotification={setCountNotification}
+                countNotification={countNotification}
                 pageValue="tlrecording"
                 localAccend="accendtlrecording"
                 localPrev="prevtlrecording"
