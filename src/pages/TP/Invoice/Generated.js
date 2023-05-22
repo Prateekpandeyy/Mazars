@@ -580,7 +580,7 @@ const Generated = () => {
     },
     {
       text: "Tds deducted",
-      dataField: "tds_amount",
+      dataField: "tds_amount1",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -603,7 +603,7 @@ const Generated = () => {
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
-        var x = row.tds_amount;
+        var x = row.tds_amount1;
 
         return (
           <>

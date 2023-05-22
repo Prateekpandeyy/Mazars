@@ -527,13 +527,6 @@ function AllPayment() {
         sortMessage(val, 7);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("en-US");
         var x = row.accepted_amount;
@@ -562,13 +555,6 @@ function AllPayment() {
           val = 1;
         }
         sortMessage(val, 8);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -600,13 +586,6 @@ function AllPayment() {
           val = 1;
         }
         sortMessage(val, 9);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
       },
 
       formatter: function nameFormatter(cell, row) {

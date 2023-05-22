@@ -135,7 +135,7 @@ const CreateInvoice = () => {
       console.log(e, "e");
       e = 1;
     }
-    let searchData = JSON.parse(localStorage.getItem(`tpcreate`));
+    let searchData = JSON.parse(localStorage.getItem("tpcreate"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     let orderBy = 0;
     let fieldBy = 0;
@@ -145,17 +145,12 @@ const CreateInvoice = () => {
     }
     if (pagetry) {
       orderBy = pagetry.orderBy;
+
       fieldBy = pagetry.fieldBy;
     }
-
-    if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-      if (!(searchData?.installment_no) && (searchData?.payment_plan)) {
-        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
-      }else if(searchData?.installment_no && searchData?.payment_plan){
-        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}`;
-      } else {
-        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&installment_no=${searchData?.installment_no}&payment_plan=${searchData?.payment_plan}`;
-      }
+    console.log("searchData", searchData);
+    if (searchData) {
+      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -218,41 +213,6 @@ const CreateInvoice = () => {
       }
     });
   };
-
-  // function headerLabelFormatter(column) {
-  //   // let reverse = "Exp_Delivery_Date"
-  //   return (
-  //     <div>
-  //       {column.dataField === isActive ?
-  //         (
-  //           <div className="d-flex text-white w-100 flex-wrap">
-  //             {column.text}
-  //             {accend === column.dataField ? (
-  //               <ArrowDropDownIcon
-  //                 className={turnGreen === true ? classes.isActive : ""}
-  //               />
-  //             ) : (
-  //               <ArrowDropUpIcon
-  //                 className={turnGreen === true ? classes.isActive : ""}
-  //               />
-  //             )}
-  //           </div>
-  //         )
-  //         :
-  //         (
-  //           <div className="d-flex text-white w-100 flex-wrap">
-  //             {column.text}
-  //             {accend === column.dataField ? (
-  //               <ArrowDropDownIcon />
-  //             ) : (
-  //               <ArrowDropUpIcon />
-  //             )}
-  //           </div>
-  //         )
-  //       }
-  //     </div>
-  //   )
-  // }
 
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
@@ -327,12 +287,10 @@ const CreateInvoice = () => {
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-      if (!(searchData?.installment_no) && searchData?.payment_plan) {
-        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&orderby=${val}&orderbyfield=${field}`;
-      }else if((searchData?.installment_no) && searchData?.payment_plan){
+      if (!searchData?.installment_no && searchData?.payment_plan) {
+      } else if (searchData?.installment_no && searchData?.payment_plan) {
         remainApiPath = `tl/getPaymentDetail?&invoice=0&page=1&orderby=${val}&orderbyfield=${field}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}`;
-      }
-       else {
+      } else {
         remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
       }
     } else {
@@ -365,7 +323,6 @@ const CreateInvoice = () => {
         setCountNotification(res.data.total);
         setCount(res.data.total);
         setresetTrigger(!resetTrigger);
-        console.log("proposal", all);
       }
     });
   };

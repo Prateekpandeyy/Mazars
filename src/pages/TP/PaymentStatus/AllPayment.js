@@ -236,7 +236,9 @@ function AllPayment() {
         userid
       )}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(userid)}`;
+      remainApiPath = `tl/getUploadedProposals?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
@@ -421,7 +423,6 @@ function AllPayment() {
     {
       dataField: "parent_id",
       text: "Category",
-    
     },
     {
       dataField: "cat_name",
@@ -535,13 +536,6 @@ function AllPayment() {
         sortMessage(val, 7);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
@@ -572,13 +566,6 @@ function AllPayment() {
         sortMessage(val, 8);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.paid_amount;
@@ -607,13 +594,6 @@ function AllPayment() {
           val = 1;
         }
         sortMessage(val, 9);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
       },
 
       formatter: function nameFormatter(cell, row) {

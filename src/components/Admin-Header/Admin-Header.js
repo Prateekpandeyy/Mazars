@@ -86,27 +86,27 @@ function AdminHeader({
       localStorage.removeItem(`freezecustPay3`);
       localStorage.removeItem("custArrowPay3");
       localStorage.removeItem("prevcustPay3");
-      localStorage.removeItem("searchDatacustAs1")
+      localStorage.removeItem("searchDatacustAs1");
       localStorage.removeItem("custAs1");
       localStorage.removeItem(`freezecustAs1`);
       localStorage.removeItem("custArrowAs1");
       localStorage.removeItem("prevcustAs1");
-      localStorage.removeItem("searchDatacustAs2")
+      localStorage.removeItem("searchDatacustAs2");
       localStorage.removeItem("custAs2");
       localStorage.removeItem(`freezecustAs2`);
       localStorage.removeItem("custArrowAs2");
       localStorage.removeItem("prevcustAs2");
-      localStorage.removeItem("searchDatacustAs3")
+      localStorage.removeItem("searchDatacustAs3");
       localStorage.removeItem("custAs3");
       localStorage.removeItem(`freezecustAs3`);
       localStorage.removeItem("custArrowAs3");
       localStorage.removeItem("prevcustAs3");
-      localStorage.removeItem("searchDatacustAs4")
+      localStorage.removeItem("searchDatacustAs4");
       localStorage.removeItem("custAs4");
       localStorage.removeItem(`freezecustAs4`);
       localStorage.removeItem("custArrowAs4");
       localStorage.removeItem("prevcustAs4");
-      localStorage.removeItem("searchDatacustAs5")
+      localStorage.removeItem("searchDatacustAs5");
       localStorage.removeItem("custAs5");
       localStorage.removeItem(`freezecustAs5`);
       localStorage.removeItem("custArrowAs5");
@@ -387,6 +387,11 @@ function AdminHeader({
       localStorage.removeItem("tpArrowPayment1");
       localStorage.removeItem("tpArrowPayment2");
       localStorage.removeItem("tpArrowPayment3");
+      localStorage.removeItem("tpInvoice2");
+      localStorage.removeItem("tpArrowInvoice2");
+      localStorage.removeItem("prevtpInvoice2");
+      localStorage.removeItem("freezetpInvoice2");
+      localStorage.removeItem("tpcreate");
       localStorage.removeItem("tpArrowAs1");
       localStorage.removeItem("tpArrowAs2");
       localStorage.removeItem("tpArrowAs3");
@@ -408,7 +413,11 @@ function AdminHeader({
       localStorage.removeItem("prevtpAs2");
       localStorage.removeItem("prevtpAs3");
       localStorage.removeItem("prevtpAs4");
-
+      localStorage.removeItem("tpInvoice1");
+      localStorage.removeItem("tpArrowInvoice1");
+      localStorage.removeItem("prevtpInvoice1");
+      localStorage.removeItem("freezetpInvoice1");
+      localStorage.removeItem("tpgenerated");
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tpcategoryData");
