@@ -123,7 +123,7 @@ function DeclinedProposal() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal4"));
@@ -137,13 +137,13 @@ function DeclinedProposal() {
 
     if (data && !pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-        id
+        userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${
         data.toDate
       }&status=3&pcat_id=${data.pcatId}`;
     } else if (data && pagetry) {
       remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
-        id
+        userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${
         data.toDate
       }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
@@ -212,7 +212,7 @@ function DeclinedProposal() {
 
     if (data) {
       remainApiPath = `customers/getProposals?page=1&uid=${JSON.parse(
-        id
+        userId
       )}&cat_id=${data.store}&from=${data.fromDate}&to=${
         data.toDate
       }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
@@ -542,7 +542,7 @@ function DeclinedProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.ProposedAmount;
-        console.log(nfObject.format(x));
+        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },

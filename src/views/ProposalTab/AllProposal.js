@@ -93,7 +93,7 @@ function ProposalTab() {
   }, [ViewDiscussion]);
 
   function headerLabelFormatter(column, colIndex) {
-    console.log("columnField", column.dataField);
+    // console.log("columnField", column.dataField);
     let isActive = true;
 
     if (
