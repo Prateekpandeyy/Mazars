@@ -537,47 +537,46 @@ const UpdateIndirect = () => {
                         />
                         <button
                           onClick={(e) => searchArticle(1)}
-                          className="customBtn mx-2"
+                          className="customBtn mx-2 w-100"
                         >
                           Search
                         </button>
+                        <div className="customPagination">
+                          <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                            <span>
+                              {big}-{end} of {count}
+                            </span>
+                            <span className="d-flex">
+                              {atPage > 1 ? (
+                                <>
+                                  <button
+                                    className="navButton"
+                                    onClick={(e) => prevChunk()}
+                                  >
+                                    <KeyboardArrowLeftIcon />
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {atPage < totalPage ? (
+                                <>
+                                  <button
+                                    className="navButton"
+                                    onClick={(e) => nextChunk()}
+                                  >
+                                    <KeyboardArrowRightIcon />
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          </div>
+                        </div>
                       </SearchBtn>
                     </div>
-                    <SearchBtn outer="outer">
-                      <div className="customPagination">
-                        <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                          <span>
-                            {big}-{end} of {count}
-                          </span>
-                          <span className="d-flex">
-                            {atPage > 1 ? (
-                              <>
-                                <button
-                                  className="navButton"
-                                  onClick={(e) => prevChunk()}
-                                >
-                                  <KeyboardArrowLeftIcon />
-                                </button>
-                              </>
-                            ) : (
-                              ""
-                            )}
-                            {atPage < totalPage ? (
-                              <>
-                                <button
-                                  className="navButton"
-                                  onClick={(e) => nextChunk()}
-                                >
-                                  <KeyboardArrowRightIcon />
-                                </button>
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    </SearchBtn>
+
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>

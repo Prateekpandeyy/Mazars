@@ -534,45 +534,46 @@ const UpdateMiscellenous = () => {
                         />
                         <button
                           onClick={(e) => searchArticle(1)}
-                          className="customBtn mx-2"
+                          className="customBtn mx-2 w-100"
                         >
                           Search
                         </button>
+                        <div className="customPagination">
+                          <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                            <span>
+                              {big}-{end} of {count}
+                            </span>
+                            <span className="d-flex">
+                              {atPage > 1 ? (
+                                <>
+                                  <button
+                                    className="navButton mx-1"
+                                    onClick={(e) => prevChunk()}
+                                  >
+                                    &lt;
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {atPage < totalPage ? (
+                                <>
+                                  <button
+                                    className="navButton mx-1"
+                                    onClick={(e) => nextChunk()}
+                                  >
+                                    &gt;
+                                  </button>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          </div>
+                        </div>
                       </SearchBtn>
                     </div>
-                    <div className="customPagination">
-                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                        <span>
-                          {big}-{end} of {count}
-                        </span>
-                        <span className="d-flex">
-                          {atPage > 1 ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => prevChunk()}
-                              >
-                                &lt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {atPage < totalPage ? (
-                            <>
-                              <button
-                                className="navButton mx-1"
-                                onClick={(e) => nextChunk()}
-                              >
-                                &gt;
-                              </button>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                    </div>
+
                     <div className={classes.articleContent}>
                       <div className={classes.articlesDetails}>
                         <Table>

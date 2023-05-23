@@ -47,9 +47,7 @@ function RecordingFilter(props) {
     console.log(searchText, "searchText");
   }, [searchText]);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   //reset date
   const resetData = () => {
@@ -60,6 +58,7 @@ function RecordingFilter(props) {
     localStorage.removeItem("recordingData");
     setPage(1);
     reset();
+    resetPaging();
     getRecording(1);
   };
   const updateResult = (res) => {
@@ -114,7 +113,7 @@ function RecordingFilter(props) {
   const onSubmit = (data, e) => {
     setSearchText(data);
     console.log(e, "e");
-    console.log(e.typeof , "e.typeof");
+    console.log(e.typeof, "e.typeof");
     if (e == undefined) {
       console.log(e, "e");
       // page=${e}&
@@ -123,12 +122,12 @@ function RecordingFilter(props) {
     let obj = {};
     if (data.route) {
       obj = {
-        queryNo:data?.queryNo,
+        queryNo: data?.queryNo,
         route: window.location.pathname,
       };
     } else {
       obj = {
-        queryNo:data?.queryNo,
+        queryNo: data?.queryNo,
         route: window.location.pathname,
       };
     }
@@ -155,7 +154,6 @@ function RecordingFilter(props) {
               setData(res.data.result);
               setRecords(res.data.result.length);
               updateResult(res);
-
             }
           }
         });
@@ -168,7 +166,7 @@ function RecordingFilter(props) {
         },
       };
       if (data.route) {
-      }else{
+      } else {
       }
       axios
         .get(
@@ -345,8 +343,6 @@ function RecordingFilter(props) {
     localStorage.setItem(pageValue, defaultPage.at(-1));
   };
 
-
-
   return (
     <>
       <div className="row">
@@ -382,16 +378,10 @@ function RecordingFilter(props) {
               <span className="d-flex">
                 {page > 1 ? (
                   <>
-                    <button
-                      className="navButton"
-                      onClick={(e) => firstChunk()}
-                    >
+                    <button className="navButton" onClick={(e) => firstChunk()}>
                       <KeyboardDoubleArrowLeftIcon />
                     </button>
-                    <button
-                      className="navButton"
-                      onClick={(e) => prevChunk()}
-                    >
+                    <button className="navButton" onClick={(e) => prevChunk()}>
                       <KeyboardArrowLeftIcon />
                     </button>
                   </>
@@ -415,16 +405,10 @@ function RecordingFilter(props) {
                 </div>
                 {defaultPage?.length > page ? (
                   <>
-                    <button
-                      className="navButton"
-                      onClick={(e) => nextChunk()}
-                    >
+                    <button className="navButton" onClick={(e) => nextChunk()}>
                       <KeyboardArrowRightIcon />
                     </button>
-                    <button
-                      className="navButton"
-                      onClick={(e) => lastChunk()}
-                    >
+                    <button className="navButton" onClick={(e) => lastChunk()}>
                       <KeyboardDoubleArrowRightIcon />
                     </button>
                   </>

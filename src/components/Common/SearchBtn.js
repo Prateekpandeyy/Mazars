@@ -1,7 +1,7 @@
 import styled from "styled-components";
 const SearchBtn = styled.div`
   display: flex;
-  max-width: 400px;
+  max-width: 850px;
   justify-content: center;
   align-items: flex-end;
   margin: ${(props) =>

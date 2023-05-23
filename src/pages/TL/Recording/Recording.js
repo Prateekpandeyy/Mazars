@@ -55,7 +55,22 @@ function Recording() {
   };
 
   useEffect(() => {
-    getRecording(1);
+    let localPage = Number(localStorage.getItem("recordingData"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("recordingSorttl"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("recordingSorttl", JSON.stringify(sort));
+    }
+    setPage(localPage);
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getRecording(localPage);
   }, []);
   const videoIcon = {
     display: "flex",
@@ -69,63 +84,74 @@ function Recording() {
     },
   };
   const getRecording = (e) => {
-    let sorted = localStorage.getItem("sortedrectl");
-    axios
-      .get(
-        `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
-          userid
-        )}`,
-        myConfig
-      )
-      .then((res) => {
-        let allEnd = Number(localStorage.getItem("tl_record_per_page"));
-        // if (res.data.code === 1) {
-        //   setFeedBackData(res.data.result);
-        //   setRecords(res.data.result.length);
-        // }
-        let droppage = [];
+    let sortVal = JSON.parse(localStorage.getItem("recordingSorttl"));
+    let orderBy = 0;
+    let fieldBy = 0;
 
-        if (res.data.code === 1) {
-          let data = res.data.result;
-          setPage(e);
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setFeedBackData(all);
-          let end = e * allEnd;
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`recordingData`));
 
-          if (end > res.data.total) {
-            end = res.data.total;
-          }
-          let dynamicPage = Math.ceil(res.data.total / allEnd);
+    if (searchData) {
+      remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
+        userid
+      )}&page=${e}&assign_id=${
+        searchData.queryNo
+      }&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    } else {
+      remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let allEnd = Number(localStorage.getItem("tl_record_per_page"));
 
-          let rem = (e - 1) * allEnd;
+      let droppage = [];
 
-          if (e === 1) {
-            setBig(rem + e);
-            setEnd(end);
-          } else {
-            setBig(rem + 1);
-            setEnd(end);
-          }
-          for (let i = 1; i <= dynamicPage; i++) {
-            droppage.push(i);
-          }
-          setDefaultPage(droppage);
-          setRecords(res.data.result.length);
-          setCountNotification(res.data.total);
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setPage(e);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setFeedBackData(all);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+        setRecords(res.data.result.length);
+        setCountNotification(res.data.total);
+      }
+    });
   };
 
   const editRecording = (participants, assign_id, message, id) => {
@@ -143,7 +169,7 @@ function Recording() {
       fieldBy: field,
     };
 
-    localStorage.setItem("sortedrectl", JSON.stringify(sort));
+    localStorage.setItem("recordingSorttl", JSON.stringify(sort));
 
     let queryNo = JSON.parse(localStorage.getItem(`recordingDatatl`));
     let remainApiPath = "";
@@ -376,7 +402,21 @@ function Recording() {
       },
     },
   ];
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
 
+    // localStorage.removeItem("adminpayt3");
+    // localStorage.removeItem("sortedValuepay3");
+    // localStorage.removeItem("accendpay3");
+    // localStorage.removeItem("prevpay3");
+    localStorage.removeItem("tlrecording");
+    localStorage.removeItem("accendtlrecording");
+    localStorage.removeItem("accendtlrec");
+    localStorage.removeItem("prevtlrecording");
+    localStorage.removeItem("recordingSorttl");
+    getRecording(1);
+  };
   return (
     <>
       <Layout TLDashboard="TLDashboard" TLuserId={userid}>
@@ -402,7 +442,7 @@ function Recording() {
                 userid={userid}
                 getRecording={getRecording}
                 page={page}
-                // getData={getRecording}
+                getData={getRecording}
                 big={big}
                 end={end}
                 setBig={setBig}
@@ -412,10 +452,11 @@ function Recording() {
                 setDefaultPage={setDefaultPage}
                 setCountNotification={setCountNotification}
                 countNotification={countNotification}
+                resetPaging={resetPaging}
                 pageValue="tlrecording"
                 localAccend="accendtlrecording"
                 localPrev="prevtlrecording"
-                localSorted="sortedValuetlrecording"
+                localSorted="recordingSorttl"
                 index="tlrecording"
               />
               <DataTablepopulated
