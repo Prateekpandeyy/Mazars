@@ -87,7 +87,7 @@ function PaginatorCust(props) {
   // console.log(pageno, "pageno");
 
   const renderCheck = () => {
-    console.log("render being");
+    console.log("render being",index);
     if (index === "custQuery1") {
       let page = JSON.parse(localStorage.getItem("custQuery1"));
       if (page) {
@@ -109,7 +109,15 @@ function PaginatorCust(props) {
       } else {
         localStorage.setItem("custQuery3", JSON.stringify(1));
       }
-    } else if (index === "custProposal1") {
+    }else if (index == "custQuery4") {
+      let page = JSON.parse(localStorage.getItem("custQuery4"));
+      if (page) {
+        setPageno(page);
+      } else {
+        localStorage.setItem("custQuery4", JSON.stringify(1));
+      }
+    }
+     else if (index === "custProposal1") {
       let page = JSON.parse(localStorage.getItem("custProposal1"));
       if (page) {
         setPageno(page);
