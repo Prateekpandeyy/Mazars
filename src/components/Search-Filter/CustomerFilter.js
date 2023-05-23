@@ -181,7 +181,7 @@ function CustomerFilter(props) {
           store: showSubCat,
           fromDate: data.p_dateFrom,
           toDate: data.p_dateTo,
-          pcatId: status1,
+          pcatId: selectedData,
           query_no: data?.query_no,
           p_status: data?.p_status,
           route: window.location.pathname,
@@ -260,7 +260,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${status1}`,
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
@@ -364,7 +364,7 @@ function CustomerFilter(props) {
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
                 data.p_dateTo
-              }&status=${data.p_status}&pcat_id=${status1}`,
+              }&status=${data.p_status}&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -399,7 +399,7 @@ function CustomerFilter(props) {
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
                 data.p_dateTo
-              }&status=1&pcat_id=${status1}`,
+              }&status=1&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -544,7 +544,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&pcat_id=${status1}&status=${data.p_status}`,
+            }&pcat_id=${selectedData}&status=${data.p_status}`,
             myConfig
           )
           .then((res) => {
@@ -616,7 +616,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${status1}`,
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
@@ -724,7 +724,7 @@ function CustomerFilter(props) {
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
                 data.p_dateTo
-              }&status=${data.p_status}&pcat_id=${status1}`,
+              }&status=${data.p_status}&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -759,7 +759,7 @@ function CustomerFilter(props) {
                 id
               )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
                 data.p_dateTo
-              }&status=1&pcat_id=${status1}`,
+              }&status=1&pcat_id=${selectedData}`,
               myConfig
             )
             .then((res) => {
@@ -966,7 +966,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${status1}`,
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
@@ -1271,7 +1271,7 @@ function CustomerFilter(props) {
               id
             )}&cat_id=${showSubCat}&from=${data.p_dateFrom}&to=${
               data.p_dateTo
-            }&status=${data.p_status}&pcat_id=${status1}`,
+            }&status=${data.p_status}&pcat_id=${selectedData}`,
             myConfig
           )
           .then((res) => {
