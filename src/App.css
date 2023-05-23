@@ -1031,6 +1031,7 @@ border: 0.5px;
   display: flex;
   width: 100%;
   align-items: center;
+  white-space: nowrap;
 }
 .customPagination{
   display: flex;

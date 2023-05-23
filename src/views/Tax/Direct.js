@@ -391,8 +391,9 @@ const Direct = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
+            <p className="m-0 updatesLink">Direct tax</p>
             <SearchBtn>
-              <diiv
+              <div
                 style={{
                   display: "flex",
                   maxWidth: "150px",
@@ -417,7 +418,7 @@ const Direct = () => {
                   <option value="DT">DT</option>
                   <option value="IDT">IDT</option>
                 </select>
-              </diiv>
+              </div>
               <input
                 placeholder="Please enter text"
                 className="form-control"
@@ -427,12 +428,10 @@ const Direct = () => {
               />
               <button
                 onClick={(e) => searchArticle(1)}
-                className="customBtn mx-2"
+                className="customBtn mx-2 w-100"
               >
                 Search
               </button>
-            </SearchBtn>
-            <SearchBtn>
               <div className="customPagination">
                 <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
                   <span>
@@ -467,6 +466,7 @@ const Direct = () => {
                 </div>
               </div>
             </SearchBtn>
+
             <MyContainer>
               <div className={classesCustom.articleContent}>
                 <div className={classesCustom.articlesDetails}>
@@ -587,8 +587,9 @@ const Direct = () => {
             <div className={classesCustom.articleContent}>
               <div className={classesCustom.articlesDetails}>
                 <div className="bredcrubmWrapperarticle">
+                  <p className="m-0 updatesLink">Direct tax</p>
                   <SearchBtn outer="outer">
-                    <diiv
+                    <div
                       style={{
                         display: "flex",
                         maxWidth: "150px",
@@ -613,7 +614,7 @@ const Direct = () => {
                         <option value="DT">DT</option>
                         <option value="IDT">IDT</option>
                       </select>
-                    </diiv>
+                    </div>
                     <input
                       placeholder="Please enter text"
                       className="form-control"
@@ -622,48 +623,47 @@ const Direct = () => {
                       value={searchText}
                     />
                     <button
-                      className="customBtn mx-2"
+                      className="customBtn mx-2 w-100"
                       onClick={(e) => searchArticle(1)}
                     >
                       Search
                     </button>
+                    <div className="customPagination">
+                      <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
+                        <span>
+                          {big}-{end} of {count}
+                        </span>
+                        <span className="d-flex">
+                          {atPage > 1 ? (
+                            <>
+                              <button
+                                className="navButton"
+                                onClick={(e) => prevChunk()}
+                              >
+                                <KeyboardArrowLeftIcon />
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {atPage < totalPage ? (
+                            <>
+                              <button
+                                className="navButton"
+                                onClick={(e) => nextChunk()}
+                              >
+                                <KeyboardArrowRightIcon />
+                              </button>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
+                    </div>
                   </SearchBtn>
                 </div>
-                <SearchBtn outer="outer">
-                  <div className="customPagination">
-                    <div className="ml-auto mt-3 d-flex w-100 align-items-center justify-content-end">
-                      <span>
-                        {big}-{end} of {count}
-                      </span>
-                      <span className="d-flex">
-                        {atPage > 1 ? (
-                          <>
-                            <button
-                              className="navButton"
-                              onClick={(e) => prevChunk()}
-                            >
-                              <KeyboardArrowLeftIcon />
-                            </button>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                        {atPage < totalPage ? (
-                          <>
-                            <button
-                              className="navButton"
-                              onClick={(e) => nextChunk()}
-                            >
-                              <KeyboardArrowRightIcon />
-                            </button>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </SearchBtn>
+
                 <TableContainer>
                   <Table>
                     <TableHead>

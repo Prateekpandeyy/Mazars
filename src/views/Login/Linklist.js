@@ -57,19 +57,18 @@ function Linklist() {
 
   useEffect(() => {
     const dynamicPage = Math.ceil(count / allEnd);
-    setTotalPage(dynamicPage)
+    setTotalPage(dynamicPage);
   }, [count]);
 
   const showLinkData = (p) => {
-
     let remainApiPath = "";
     let val = sortVal;
     let field = sortField;
     setAtpage(p);
     if (isActive == true) {
-      remainApiPath = `customers/getimportantlink?page=${p}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/getimportantlink?page=${p}`
+      remainApiPath = `customers/getimportantlink?page=${p}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/getimportantlink?page=${p}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
       console.log("res", res);
@@ -105,12 +104,12 @@ function Linklist() {
         }
         let rem = (p - 1) * allEnd;
         if (p === 1) {
-          if((res.data.total)< allEnd){
+          if (res.data.total < allEnd) {
             setBig(1);
             setEnd(end);
-          }else{
-          setBig(rem + p);
-          setEnd(end);
+          } else {
+            setBig(rem + p);
+            setEnd(end);
           }
         } else {
           setBig(rem + 1);
@@ -122,14 +121,14 @@ function Linklist() {
 
   //page counter
   const prevChunk = () => {
-    if (((atPage <= (totalPage)) && (atPage > 1))) {
+    if (atPage <= totalPage && atPage > 1) {
       setAtpage((atPage) => atPage - 1);
       setPage(atPage - 1);
       showLinkData(atPage - 1);
     }
   };
   const nextChunk = () => {
-    if ((atPage > 0) && (atPage < (totalPage))) {
+    if (atPage > 0 && atPage < totalPage) {
       setAtpage((atPage) => atPage + 1);
       setPage(atPage + 1);
       showLinkData(atPage + 1);
@@ -145,11 +144,11 @@ function Linklist() {
     let obj = {
       val: val,
       field: field,
-    }
+    };
     setAccend(!accend);
     axios
       .get(
-        `${baseUrl}/customers/getimportantlink?page=1&orderby=${val}&orderbyfield=${field}`,
+        `${baseUrl}/customers/getimportantlink?page=1&orderby=${val}&orderbyfield=${field}`
       )
       .then((res) => {
         if (res.data.code === 1) {
@@ -180,17 +179,16 @@ function Linklist() {
           setLinkData(dataList);
           setCount(res.data.total);
           let rem = 0 * allEnd;
-          if((res.data.total)< allEnd){
+          if (res.data.total < allEnd) {
             setBig(1);
             setEnd(res.data.total);
-          }else{
-          setBig(rem + 1);
-          setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
           }
         }
       });
-
-  }
+  };
 
   return (
     <>
@@ -203,24 +201,8 @@ function Linklist() {
                 <TableContainer>
                   {linkData22 === true ? (
                     <>
-                      <Breadcrumbs
-                        separator="<"
-                        maxItems={3}
-                        aria-label="breadcrumb"
-                        style={{ fontSize: "18px" }}
-                      >
-                        <Link
-                          underline="hover"
-                          color="inherit"
-                          to={{
-                            pathname: "/customer/updates",
-                            index: 3,
-                          }}
-                        >
-                          Important links
-                        </Link>
-                      </Breadcrumbs>
                       <div className="customPagination">
+                        <p className="m-0 updatesLink">Important link</p>
                         <div className="ml-auto mt-1 d-flex w-100 align-items-center justify-content-end">
                           <span>
                             {big}-{end} of {count}
@@ -263,21 +245,20 @@ function Linklist() {
                                 </TableCell>
                                 <TableCell style={{ width: "400px" }}>
                                   {accend == true ? (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(1, 1)}
                                     >
-                                      Website  
+                                      Website
                                       {/* <ArrowDropDownIcon /> */}
                                     </SubHeading>
                                   ) : (
-                                    <SubHeading 
+                                    <SubHeading
                                     // onClick={() => sortMessage(0, 1)}
                                     >
-                                      Website 
+                                      Website
                                       {/* <ArrowDropUpIcon /> */}
                                     </SubHeading>
-                                  )
-                                  }
+                                  )}
                                 </TableCell>
                                 <TableCell>
                                   <SubHeading>URL</SubHeading>
