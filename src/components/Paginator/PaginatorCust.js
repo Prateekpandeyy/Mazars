@@ -21,6 +21,7 @@ function PaginatorCust(props) {
   const [pageno, setPageno] = useState(1);
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const [result, setResult] = useState([]);
+  const [searchResult, setSearchResult] = useState(true);
 
   const userId = window.localStorage.getItem("userid");
   const token = window.localStorage.getItem("clientToken");
@@ -87,7 +88,7 @@ function PaginatorCust(props) {
   // console.log(pageno, "pageno");
 
   const renderCheck = () => {
-    console.log("render being");
+    console.log("render being", index);
     if (index === "custQuery1") {
       let page = JSON.parse(localStorage.getItem("custQuery1"));
       if (page) {
@@ -109,7 +110,15 @@ function PaginatorCust(props) {
       } else {
         localStorage.setItem("custQuery3", JSON.stringify(1));
       }
-    } else if (index === "custProposal1") {
+    } else if (index == "custQuery4") {
+      let page = JSON.parse(localStorage.getItem("custQuery4"));
+      if (page) {
+        setPageno(page);
+      } else {
+        localStorage.setItem("custQuery4", JSON.stringify(1));
+      }
+    }
+    else if (index === "custProposal1") {
       let page = JSON.parse(localStorage.getItem("custProposal1"));
       if (page) {
         setPageno(page);
@@ -275,17 +284,14 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${
-          data.pcatId
-        }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId
+          }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -305,33 +311,27 @@ function PaginatorCust(props) {
         if (data.p_status.length > 0) {
           remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
             id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}`;
         } else {
           remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
             id
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=1&pcat_id=${data.pcatId}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=1&pcat_id=${data.pcatId}`;
         }
       } else if (data && pagetry) {
         if (data.p_status.length > 0) {
           remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
             userId
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=${data.p_status}&pcat_id=${
-            data.pcatId
-          }&orderby=${val}&orderbyfield=${field}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId
+            }&orderby=${val}&orderbyfield=${field}`;
         } else {
           remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
             userId
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=1&pcat_id=${
-            data.pcatId
-          }&orderby=${val}&orderbyfield=${field}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=1&pcat_id=${data.pcatId
+            }&orderby=${val}&orderbyfield=${field}`;
         }
       } else if (!data && pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
@@ -351,15 +351,13 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&pcat_id=${data.pcatId}`;
+        )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&status=2&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -378,17 +376,14 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&pcat_id=${data.pcatId}&status=${data.p_status}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&pcat_id=${data.pcatId}&status=${data.p_status}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&pcat_id=${data.pcatId}&status=${
-          data.p_status
-        }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&pcat_id=${data.pcatId}&status=${data.p_status
+          }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/declinedQueries?page=${e}&uid=${JSON.parse(
           userId
@@ -407,17 +402,14 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${
-          data.pcatId
-        }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId
+          }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
@@ -437,33 +429,27 @@ function PaginatorCust(props) {
         if (data.p_status) {
           remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
             userId
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=${data.p_status}&pcat_id=${
-            data.pcatId
-          }&orderby=${val}&orderbyfield=${field}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId
+            }&orderby=${val}&orderbyfield=${field}`;
         } else {
           remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
             userId
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=1&pcat_id=${
-            data.pcatId
-          }&orderby=${val}&orderbyfield=${field}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=1&pcat_id=${data.pcatId
+            }&orderby=${val}&orderbyfield=${field}`;
         }
       } else if (data && !pagetry) {
         if (data.p_status) {
           remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
             userId
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=${data.p_status}&pcat_id=${data.pcatId}`;
         } else {
           remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
             userId
-          )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-            data.toDate
-          }&status=1&pcat_id=${data.pcatId}`;
+          )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+            }&status=1&pcat_id=${data.pcatId}`;
         }
       } else if (!data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
@@ -484,15 +470,13 @@ function PaginatorCust(props) {
         console.log("if data inpagination");
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (data && !pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=2&pcat_id=${data.pcatId}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
@@ -512,15 +496,13 @@ function PaginatorCust(props) {
         console.log("if data inpagination");
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=3&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=3&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
@@ -540,17 +522,14 @@ function PaginatorCust(props) {
         console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${
-          data.pcatId
-        }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId
+          }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -569,15 +548,13 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=1&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=1&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -597,15 +574,13 @@ function PaginatorCust(props) {
         console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=2&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -625,15 +600,13 @@ function PaginatorCust(props) {
         console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=3&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=3&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=3&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
@@ -652,17 +625,14 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${
-          data.pcatId
-        }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId
+          }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/completeAssignmentspermission?page=${e}&user=${JSON.parse(
           userId
@@ -681,17 +651,14 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=${data.p_status}&pcat_id=${
-          data.pcatId
-        }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=${data.p_status}&pcat_id=${data.pcatId
+          }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
@@ -710,15 +677,13 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=1&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=1&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
@@ -738,15 +703,13 @@ function PaginatorCust(props) {
       if (data && !pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=2&pcat_id=${data.pcatId}`;
       } else if (data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
-          data.toDate
-        }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
+          }&status=2&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
@@ -782,6 +745,12 @@ function PaginatorCust(props) {
           });
           setData(all);
           console.log(all);
+          console.log(data.length,"length");
+          if (data.length > 0) {
+            setSearchResult(true);
+          } else {
+            setSearchResult(false);
+          }
           setOnPage(e);
           setAtpage(e);
           // setRecords(res.data.result.length);
@@ -851,7 +820,7 @@ function PaginatorCust(props) {
 
   return (
     <div className="customPagination">
-      <div className="customPagination">
+      {count > 0 ? (
         <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
           {count > 0 ? (
             <span className="customPaginationSpan">
@@ -860,9 +829,6 @@ function PaginatorCust(props) {
           ) : (
             <span className="customPaginationSpan">0-0 of 0</span>
           )}
-          {/* <span className="customPaginationSpan">
-                        {big}-{end} of {count}
-                    </span> */}
           <span className="d-flex">
             {page > 1 ? (
               <button className="navButton" onClick={(e) => firstChunk()}>
@@ -909,7 +875,11 @@ function PaginatorCust(props) {
             )}
           </span>
         </div>
-      </div>
+      ) : (
+        <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+          <span className="customPaginationSpan nullClass">0 - 0 of 0</span>
+        </div>
+      )}
     </div>
   );
 }
