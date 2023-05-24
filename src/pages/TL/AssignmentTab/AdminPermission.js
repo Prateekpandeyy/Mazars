@@ -883,169 +883,170 @@ function AdminPermission(props) {
     <div>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-inline">
-              <div className="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+          <Row>
+            <Col md="12">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-inline">
+                  <div className="form-group mb-2">
+                    <Select
+                      style={{ width: 130 }}
+                      placeholder="Select Category"
+                      defaultValue={[]}
+                      onChange={handleCategory}
+                      value={selectedData}
+                    >
+                      {categoryData.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
-                </button>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <Select
+                      mode="multiple"
+                      style={{ width: 250 }}
+                      placeholder="Select Sub Category"
+                      defaultValue={[]}
+                      onChange={handleSubCategory}
+                      value={store2}
+                      allowClear
+                    >
+                      {tax2.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      className="btnSearch mb-2 ml-3"
+                      onClick={resetCategory}
+                    >
+                      X
+                    </button>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">From</label>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  max={item}
-                  onChange={(e) => setFromDate(e.target.value)}
-                  value={fromDate}
-                />
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateFrom"
+                      className="form-select form-control"
+                      ref={register}
+                      max={item}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      value={fromDate}
+                    />
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">To</label>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  onChange={(e) => setToDate(e.target.value)}
-                  value={toDate}
-                  max={item}
-                />
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateTo"
+                      className="form-select form-control"
+                      ref={register}
+                      onChange={(e) => setToDate(e.target.value)}
+                      value={toDate}
+                      max={item}
+                    />
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <select
-                  className="form-select form-control"
-                  name="p_status"
-                  ref={register}
-                  style={{ height: "33px" }}
-                  value={hide}
-                  onChange={(e) => disabledHandler(e)}
-                >
-                  <option value="">--select--</option>
-                  <option value="1">Inprogress</option>
-                  <option value="2">Completed</option>
-                  <option value="3">Payment Declined</option>
-                </select>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <select
+                      className="form-select form-control"
+                      name="p_status"
+                      ref={register}
+                      style={{ height: "33px" }}
+                      value={hide}
+                      onChange={(e) => disabledHandler(e)}
+                    >
+                      <option value="">--select--</option>
+                      <option value="1">Inprogress</option>
+                      <option value="2">Completed</option>
+                      <option value="3">Payment Declined</option>
+                    </select>
+                  </div>
 
-              {hide !== "3" ? (
-                <div className="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="single"
-                    style={{ width: 210 }}
-                    placeholder="Select stages"
-                    defaultValue={[]}
-                    onChange={assingmentStatus}
-                    value={status}
-                    allowClear
-                    className={error ? "customError" : ""}
-                  >
-                    <Option value="Client_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Client Discussion
-                      </div>
-                    </Option>
-                    <Option value="Draft_Report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Draft reports
-                      </div>
-                    </Option>
-                    <Option value="Final_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Final Discussion
-                      </div>
-                    </Option>
-                    <Option value="Delivery_of_report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Delivery of Final Reports
-                      </div>
-                    </Option>
-                    <Option value="Completed" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Awaiting Completion
-                      </div>
-                    </Option>
-                  </Select>
+                  {hide !== "3" ? (
+                    <div className="form-group mx-sm-1  mb-2">
+                      <Select
+                        mode="single"
+                        style={{ width: 210 }}
+                        placeholder="Select stages"
+                        defaultValue={[]}
+                        onChange={assingmentStatus}
+                        value={status}
+                        allowClear
+                        className={error ? "customError" : ""}
+                      >
+                        <Option value="Client_Discussion" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Client Discussion
+                          </div>
+                        </Option>
+                        <Option value="Draft_Report" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Draft reports
+                          </div>
+                        </Option>
+                        <Option value="Final_Discussion" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Final Discussion
+                          </div>
+                        </Option>
+                        <Option value="Delivery_of_report" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Delivery of Final Reports
+                          </div>
+                        </Option>
+                        <Option value="Completed" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Awaiting Completion
+                          </div>
+                        </Option>
+                      </Select>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="text"
+                      name="query_no"
+                      ref={register}
+                      placeholder="Enter Query Number"
+                      className="form-control"
+                      onChange={(e) => setQueryNo(e.target.value)}
+                      value={queryNo}
+                    />
+                  </div>
+                  {loading ? (
+                    // <Loader />
+                    <div class="col-md-12">
+                      <Spinner color="primary" />
+                    </div>
+                  ) : (
+                    <button type="submit" className="customBtn">
+                      Search
+                    </button>
+                  )}
+
+                  <Reset />
                 </div>
-              ) : (
-                ""
-              )}
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                  onChange={(e) => setQueryNo(e.target.value)}
-                  value={queryNo}
-                />
-              </div>
-              {loading ? (
-                // <Loader />
-                <div class="col-md-12">
-                  <Spinner color="primary" />
-                </div>
-              ) : (
-                <button type="submit" className="customBtn">
-                  Search
-                </button>
-              )}
-
-              <Reset />
-            </div>
-          </form>
-        </CardHeader>
-
-        <CardBody className="card-body">
+              </form>
+            </Col>
+          </Row>
           <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorTL
@@ -1061,6 +1062,9 @@ function AdminPermission(props) {
               />
             </Col>
           </Row>
+        </CardHeader>
+
+        <CardBody className="card-body">
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}

@@ -689,9 +689,9 @@ function AssignmentTab(props) {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "inprogress" &&
-                  row.final_discussion == "inprogress" &&
-                  row.paid_status != 2 ? (
+                    row.draft_report == "inprogress" &&
+                    row.final_discussion == "inprogress" &&
+                    row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -706,9 +706,9 @@ function AssignmentTab(props) {
                     </p>
                   ) : null}
                   {row.client_discussion == "completed" &&
-                  row.draft_report == "completed" &&
-                  row.final_discussion == "completed" &&
-                  row.delivery_report == "inprogress" ? (
+                    row.draft_report == "completed" &&
+                    row.final_discussion == "completed" &&
+                    row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -950,167 +950,168 @@ function AssignmentTab(props) {
     <>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+          <Row>
+            <Col md="12">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div class="form-inline">
+                  <div class="form-group mb-2">
+                    <Select
+                      style={{ width: 130 }}
+                      placeholder="Select Category"
+                      defaultValue={[]}
+                      onChange={handleCategory}
+                      value={selectedData}
+                    >
+                      {categoryData.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  class="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
-                </button>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <Select
+                      mode="multiple"
+                      style={{ width: 250 }}
+                      placeholder="Select Sub Category"
+                      defaultValue={[]}
+                      onChange={handleSubCategory}
+                      value={store2}
+                      allowClear
+                    >
+                      {tax2.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      class="btnSearch mb-2 ml-3"
+                      onClick={resetCategory}
+                    >
+                      X
+                    </button>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">From</label>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  max={current_date}
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                />
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateFrom"
+                      className="form-select form-control"
+                      ref={register}
+                      max={current_date}
+                      value={fromDate}
+                      onChange={(e) => setFromDate(e.target.value)}
+                    />
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">To</label>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
-                  max={current_date}
-                />
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateTo"
+                      className="form-select form-control"
+                      ref={register}
+                      value={toDate}
+                      onChange={(e) => setToDate(e.target.value)}
+                      max={current_date}
+                    />
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <select
-                  className="form-select form-control"
-                  name="p_status"
-                  ref={register}
-                  style={{ height: "33px" }}
-                  value={hide}
-                  onChange={(e) => disabledHandler(e)}
-                >
-                  <option value="">--select--</option>
-                  <option value="1">Inprogress</option>
-                  <option value="2">Completed</option>
-                  <option value="3">Payment Declined</option>
-                </select>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <select
+                      className="form-select form-control"
+                      name="p_status"
+                      ref={register}
+                      style={{ height: "33px" }}
+                      value={hide}
+                      onChange={(e) => disabledHandler(e)}
+                    >
+                      <option value="">--select--</option>
+                      <option value="1">Inprogress</option>
+                      <option value="2">Completed</option>
+                      <option value="3">Payment Declined</option>
+                    </select>
+                  </div>
 
-              {hide !== "3" ? (
-                <div className="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="single"
-                    style={{ width: 210 }}
-                    placeholder="Select stages"
-                    defaultValue={[]}
-                    onChange={assingmentStatus}
-                    value={status}
-                    allowClear
-                    className={error ? "customError" : ""}
-                  >
-                    <Option value="Client_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Client Discussion
-                      </div>
-                    </Option>
-                    <Option value="Draft_Report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Draft reports
-                      </div>
-                    </Option>
-                    <Option value="Final_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Final Discussion
-                      </div>
-                    </Option>
-                    <Option value="Delivery_of_report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Delivery of Final Reports
-                      </div>
-                    </Option>
-                    <Option value="Completed" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Awaiting Completion
-                      </div>
-                    </Option>
-                  </Select>
-                </div>
-              ) : (
-                " "
-              )}
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                  value={queryNo}
-                  onChange={(e) => setQueryNo(e.target.value)}
-                />
-              </div>
-              {/* <div class="form-group mx-sm-1  mb-2">
+                  {hide !== "3" ? (
+                    <div className="form-group mx-sm-1  mb-2">
+                      <Select
+                        mode="single"
+                        style={{ width: 210 }}
+                        placeholder="Select stages"
+                        defaultValue={[]}
+                        onChange={assingmentStatus}
+                        value={status}
+                        allowClear
+                        className={error ? "customError" : ""}
+                      >
+                        <Option value="Client_Discussion" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Client Discussion
+                          </div>
+                        </Option>
+                        <Option value="Draft_Report" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Draft reports
+                          </div>
+                        </Option>
+                        <Option value="Final_Discussion" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Final Discussion
+                          </div>
+                        </Option>
+                        <Option value="Delivery_of_report" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Delivery of Final Reports
+                          </div>
+                        </Option>
+                        <Option value="Completed" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Awaiting Completion
+                          </div>
+                        </Option>
+                      </Select>
+                    </div>
+                  ) : (
+                    " "
+                  )}
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="text"
+                      name="query_no"
+                      ref={register}
+                      placeholder="Enter Query Number"
+                      className="form-control"
+                      value={queryNo}
+                      onChange={(e) => setQueryNo(e.target.value)}
+                    />
+                  </div>
+                  {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
                 </div> */}
-              <button type="submit" class="customBtn mx-sm-1 mb-2">
-                Search
-              </button>
+                  <button type="submit" class="customBtn mx-sm-1 mb-2">
+                    Search
+                  </button>
 
-              <Reset />
-            </div>
-          </form>
-        </CardHeader>
-
-        <CardBody>
+                  <Reset />
+                </div>
+              </form>
+            </Col>
+          </Row>
           <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorTL
@@ -1125,6 +1126,9 @@ function AssignmentTab(props) {
               />
             </Col>
           </Row>
+        </CardHeader>
+
+        <CardBody>
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}

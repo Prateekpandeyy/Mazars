@@ -746,7 +746,7 @@ function AssignmentTab() {
 
   const onSubmit = (data, e) => {
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
-    localStorage.setItem(`tlAssignment2`,e);
+    localStorage.setItem(`tlAssignment2`, e);
     // if (pageno) {
     //   let e = pageno;
     // } else {
@@ -881,113 +881,114 @@ function AssignmentTab() {
     <>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-inline">
-              <div class="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-
-              <div class="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.length > 0 ? (
-                    <>
-                      {tax2.map((p, index) => (
+          <Row>
+            <Col md="12">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div class="form-inline">
+                  <div class="form-group mb-2">
+                    <Select
+                      style={{ width: 130 }}
+                      placeholder="Select Category"
+                      defaultValue={[]}
+                      onChange={handleCategory}
+                      value={selectedData}
+                    >
+                      {categoryData.map((p, index) => (
                         <Option value={p.id} key={index}>
                           {p.details}
                         </Option>
                       ))}
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  class="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
-                </button>
-              </div>
+                    </Select>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <Select
+                      mode="multiple"
+                      style={{ width: 250 }}
+                      placeholder="Select Sub Category"
+                      defaultValue={[]}
+                      onChange={handleSubCategory}
+                      value={store2}
+                      allowClear
+                    >
+                      {tax2.length > 0 ? (
+                        <>
+                          {tax2.map((p, index) => (
+                            <Option value={p.id} key={index}>
+                              {p.details}
+                            </Option>
+                          ))}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </Select>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      class="btnSearch mb-2 ml-3"
+                      onClick={resetCategory}
+                    >
+                      X
+                    </button>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  onChange={(e) => setFromDate(e.target.value)}
-                  value={fromDate}
-                  max={item}
-                />
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">From</label>
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateFrom"
+                      className="form-select form-control"
+                      ref={register}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      value={fromDate}
+                      max={item}
+                    />
+                  </div>
 
-              <div class="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  onChange={(e) => setToDate(e.target.value)}
-                  value={toDate}
-                  max={item}
-                />
-              </div>
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  onChange={(e) => setQueryNo(e.target.value)}
-                  value={queryNo}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                />
-              </div>
-              {/* <div class="form-group mx-sm-1  mb-2">
+                  <div class="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">To</label>
+                  </div>
+
+                  <div class="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateTo"
+                      className="form-select form-control"
+                      ref={register}
+                      onChange={(e) => setToDate(e.target.value)}
+                      value={toDate}
+                      max={item}
+                    />
+                  </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="text"
+                      name="query_no"
+                      ref={register}
+                      onChange={(e) => setQueryNo(e.target.value)}
+                      value={queryNo}
+                      placeholder="Enter Query Number"
+                      className="form-control"
+                    />
+                  </div>
+                  {/* <div class="form-group mx-sm-1  mb-2">
                   <label className="form-select form-control">
                     Total Records : {records}
                   </label>
                 </div> */}
-              <button type="submit" class="customBtn mx-sm-1 mb-2">
-                Search
-              </button>
-              <Reset />
-            </div>
-          </form>
-        </CardHeader>
-
-        <CardBody>
+                  <button type="submit" class="customBtn mx-sm-1 mb-2">
+                    Search
+                  </button>
+                  <Reset />
+                </div>
+              </form>
+            </Col>
+          </Row>
           <Row className="mb-2">
             <Col md="12" align="right">
               <PaginatorTL
@@ -1002,6 +1003,9 @@ function AssignmentTab() {
               />
             </Col>
           </Row>
+        </CardHeader>
+
+        <CardBody>
           <DataTablepopulated
             bgColor="#7c887c"
             keyField={"assign_no"}
