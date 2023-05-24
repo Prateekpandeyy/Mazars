@@ -391,7 +391,7 @@ const Direct = () => {
       {userId ? (
         <Layout custDashboard="custDashboard" custUserId={userId}>
           <OuterloginContainer>
-            <p className="m-0 updatesLink">Direct tax</p>
+            <p className="m-0 updatesLink">Article</p>
             <SearchBtn>
               <div
                 style={{
@@ -587,7 +587,7 @@ const Direct = () => {
             <div className={classesCustom.articleContent}>
               <div className={classesCustom.articlesDetails}>
                 <div className="bredcrubmWrapperarticle">
-                  <p className="m-0 updatesLink">Direct tax</p>
+                  <p className="m-0 updatesLink">Article</p>
                   <SearchBtn outer="outer">
                     <div
                       style={{
