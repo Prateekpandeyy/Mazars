@@ -47,7 +47,7 @@ function RecordingFilter(props) {
     console.log(searchText, "searchText");
   }, [searchText]);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   //reset date
   const resetData = () => {
@@ -56,6 +56,7 @@ function RecordingFilter(props) {
     localStorage.removeItem("adminRecording");
     localStorage.removeItem("prevrecord");
     localStorage.removeItem("recordingData");
+    localStorage.removeItem(`searchData${SearchQuery}`)
     setPage(1);
     reset();
     resetPaging();
@@ -114,24 +115,24 @@ function RecordingFilter(props) {
     setSearchText(data);
     console.log(e, "e");
     console.log(e.typeof, "e.typeof");
-    if (e == undefined) {
-      console.log(e, "e");
-      // page=${e}&
-      e = 1;
-    }
-    let obj = {};
-    if (data.route) {
-      obj = {
-        queryNo: data?.queryNo,
-        route: window.location.pathname,
-      };
-    } else {
-      obj = {
-        queryNo: data?.queryNo,
-        route: window.location.pathname,
-      };
-    }
-    localStorage.setItem(`searchData${SearchQuery}`, JSON.stringify(obj));
+    // if (e == undefined) {
+    //   console.log(e, "e");
+    //   // page=${e}&
+    e = 1;
+    // }
+    // let obj = {};
+    // if (data.route) {
+    //   obj = {
+    //     queryNo: data?.queryNo,
+    //     route: window.location.pathname,
+    //   };
+    // } else {
+    //   obj = {
+    //     queryNo: data?.queryNo,
+    //     route: window.location.pathname,
+    //   };
+    // }
+    localStorage.setItem(`searchData${SearchQuery}`, JSON.stringify(data.queryNo));
 
     if (SearchQuery == "adminQuery") {
       localStorage.setItem("recordingData", JSON.stringify(data));
@@ -230,7 +231,7 @@ function RecordingFilter(props) {
       };
       axios
         .get(
-          `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
+          `${baseUrl}/tl/callRecordingPostlist?page=1&uid=${JSON.parse(
             userid
           )}&assign_id=${data.queryNo}`,
           myConfig
@@ -261,15 +262,14 @@ function RecordingFilter(props) {
                 end = res.data.total;
               }
               let dynamicPage = Math.ceil(res.data.total / allEnd);
-
-              let rem = (e - 1) * allEnd;
-
-              if (e === 1) {
-                setBig(rem + e);
-                setEnd(end);
+              setBig(1)
+              if (
+                Number(all.length) <
+                Number(localStorage.getItem("tp_record_per_page"))
+              ) {
+                setEnd(all.length);
               } else {
-                setBig(rem + 1);
-                setEnd(end);
+                setEnd(Number(localStorage.getItem("tp_record_per_page")));
               }
               for (let i = 1; i <= dynamicPage; i++) {
                 droppage.push(i);
@@ -278,6 +278,11 @@ function RecordingFilter(props) {
               setRecords(res.data.result.length);
               setCountNotification(res.data.total);
               setDefaultPage(droppage);
+              localStorage.removeItem("tprecording");
+              localStorage.removeItem("accendtprecording");
+              localStorage.removeItem("accendtprec");
+              localStorage.removeItem("prevtprecording");
+              localStorage.removeItem("recordingSorttp");
             }
           }
         });
@@ -301,11 +306,11 @@ function RecordingFilter(props) {
   const firstChunk = () => {
     setAtpage(1);
     setPage(1);
-    if (searchText) {
-      onSubmit(searchText, 1);
-    } else {
-      getData(1);
-    }
+    // if (searchText) {
+    //   onSubmit(searchText, 1);
+    // } else {
+    getData(1);
+    // }
     localStorage.setItem(pageValue, 1);
   };
   const prevChunk = () => {
@@ -313,11 +318,11 @@ function RecordingFilter(props) {
       setAtpage((atPage) => atPage - 1);
     }
     setPage(Number(page) - 1);
-    if (searchText) {
-      onSubmit(searchText, page - 1);
-    } else {
-      getData(page - 1);
-    }
+    // if (searchText) {
+    //   onSubmit(searchText, page - 1);
+    // } else {
+    getData(page - 1);
+    // }
     localStorage.setItem(pageValue, Number(page) - 1);
   };
   const nextChunk = () => {
@@ -326,20 +331,20 @@ function RecordingFilter(props) {
     }
     setPage(Number(page) + 1);
     localStorage.setItem(pageValue, Number(page) + 1);
-    if (searchText) {
-      onSubmit(searchText, page + 1);
-    } else {
-      getData(page + 1);
-    }
+    // if (searchText) {
+    //   onSubmit(searchText, page + 1);
+    // } else {
+    getData(page + 1);
+    // }
   };
   const lastChunk = () => {
     setPage(defaultPage.at(-1));
     getData(defaultPage.at(-1));
-    if (searchText) {
-      onSubmit(searchText, totalPages);
-    } else {
-      setAtpage(totalPages);
-    }
+    // if (searchText) {
+    //   onSubmit(searchText, totalPages);
+    // } else {
+    setAtpage(totalPages);
+    // }
     localStorage.setItem(pageValue, defaultPage.at(-1));
   };
 

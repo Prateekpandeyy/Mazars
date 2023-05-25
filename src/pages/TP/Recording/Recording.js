@@ -53,7 +53,22 @@ function Recording() {
   };
 
   useEffect(() => {
-    getRecording(1);
+    // getRecording(1);
+    let localPage = Number(localStorage.getItem("tprecordingData"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("recordingSorttp"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("recordingSorttp", JSON.stringify(sort));
+    }
+    setPage(localPage);
+    setEnd(Number(localStorage.getItem("tp_record_per_page")));
+    getRecording(localPage);
   }, []);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
@@ -62,12 +77,32 @@ function Recording() {
     },
   };
   const getRecording = (e) => {
-    let sorted = localStorage.getItem("sortedrectp");
     let allEnd = Number(localStorage.getItem("tp_record_per_page"));
     let droppage = [];
+    let sortVal = JSON.parse(localStorage.getItem("recordingSorttp"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatpQuery`));
+    if (searchData) {
+      remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
+        userid
+      )}&page=${e}&assign_id=${
+        searchData
+      }&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    } else {
+      remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+
     axios
       .get(
-        `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(userid)}`,
+        `${baseUrl}/${remainApiPath}`,
         myConfig
       )
       .then((res) => {
@@ -108,7 +143,7 @@ function Recording() {
             droppage.push(i);
           }
           setDefaultPage(droppage);
-          setRecords(res.data.result.length);
+          setRecords(res.data.total);
           setCountNotification(res.data.total);
         }
       });
@@ -155,9 +190,10 @@ function Recording() {
       fieldBy: field,
     };
 
-    localStorage.setItem("sortedrectp", JSON.stringify(sort));
+    localStorage.setItem("recordingSorttp", JSON.stringify(sort));
 
-    let queryNo = JSON.parse(localStorage.getItem(`recordingDatatp`));
+    let queryNo = JSON.parse(localStorage.getItem(`searchDatatpQuery`));
+    console.log(queryNo,"searchdata");
     let remainApiPath = "";
     if (queryNo) {
       remainApiPath = `tl/callRecordingPostlist?id=${JSON.parse(
@@ -387,6 +423,17 @@ function Recording() {
     },
   ];
 
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
+    localStorage.removeItem("tprecording");
+    localStorage.removeItem("accendtprecording");
+    localStorage.removeItem("accendtprec");
+    localStorage.removeItem("prevtprecording");
+    localStorage.removeItem("recordingSorttp");
+    getRecording(1);
+  };
+
   return (
     <>
       <Layout TPDashboard="TPDashboard" TPuserId={userid}>
@@ -405,14 +452,13 @@ function Recording() {
             <CardBody>
               <RecordingFilter
                 setData={setFeedBackData}
-                //    getData={getInCompleteAssingment}
+                getData={getRecording}
                 SearchQuery="tpQuery"
                 setRecords={setRecords}
                 records={records}
                 userid={userid}
                 getRecording={getRecording}
                 page={page}
-                // getData={getRecording}
                 big={big}
                 end={end}
                 setBig={setBig}
@@ -422,10 +468,11 @@ function Recording() {
                 setDefaultPage={setDefaultPage}
                 countNotification={countNotification}
                 setCountNotification={setCountNotification}
+                resetPaging={resetPaging}
                 pageValue="tprecording"
                 localAccend="accendtprecording"
                 localPrev="prevtprecording"
-                localSorted="sortedValuetprecording"
+                localSorted="recordingSorttp"
                 index="tprecording"
               />
               <DataTablepopulated
