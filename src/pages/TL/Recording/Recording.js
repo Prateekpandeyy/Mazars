@@ -93,7 +93,7 @@ function Recording() {
       fieldBy = sortVal.fieldBy;
     }
     let remainApiPath = "";
-    let searchData = JSON.parse(localStorage.getItem(`recordingData`));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlQuery`));
 
     if (searchData) {
       remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
@@ -176,7 +176,7 @@ function Recording() {
     if (queryNo) {
       remainApiPath = `/tl/callRecordingPostlist?id=${JSON.parse(
         userid
-      )}&assign_id=${queryNo}&orderby=${val}&orderbyfield=${field}`;
+      )}&assign_id=${queryNo.queryNo}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `/tl/callRecordingPostlist?id=${JSON.parse(
         userid

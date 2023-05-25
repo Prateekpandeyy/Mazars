@@ -92,7 +92,7 @@ function Recording() {
       remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
         userid
       )}&page=${e}&assign_id=${
-        searchData
+        searchData.queryNo
       }&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     } else {
       remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
@@ -198,7 +198,7 @@ function Recording() {
     if (queryNo) {
       remainApiPath = `tl/callRecordingPostlist?id=${JSON.parse(
         userid
-      )}&assign_id=${queryNo}&orderby=${val}&orderbyfield=${field}`;
+      )}&assign_id=${queryNo.queryNo}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/callRecordingPostlist?id=${JSON.parse(
         userid
