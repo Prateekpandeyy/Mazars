@@ -181,7 +181,7 @@ function AssignmentTab(props) {
           all.push(data);
         });
         setAssignment(all);
-        props.setAllAssignmentCount(res.data.result.length);
+
         setRecords(res.data.result.length);
         setCount(res.data.total);
       }
@@ -689,9 +689,9 @@ function AssignmentTab(props) {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                    row.draft_report == "inprogress" &&
-                    row.final_discussion == "inprogress" &&
-                    row.paid_status != 2 ? (
+                  row.draft_report == "inprogress" &&
+                  row.final_discussion == "inprogress" &&
+                  row.paid_status != 2 ? (
                     <p
                       style={{
                         display: "flex",
@@ -706,9 +706,9 @@ function AssignmentTab(props) {
                     </p>
                   ) : null}
                   {row.client_discussion == "completed" &&
-                    row.draft_report == "completed" &&
-                    row.final_discussion == "completed" &&
-                    row.delivery_report == "inprogress" ? (
+                  row.draft_report == "completed" &&
+                  row.final_discussion == "completed" &&
+                  row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",

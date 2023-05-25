@@ -93,7 +93,7 @@ function Recording() {
       fieldBy = sortVal.fieldBy;
     }
     let remainApiPath = "";
-    let searchData = JSON.parse(localStorage.getItem(`recordingData`));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlQuery`));
 
     if (searchData) {
       remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(

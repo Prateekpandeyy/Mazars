@@ -51,6 +51,8 @@ function RecordingFilter(props) {
 
   //reset date
   const resetData = () => {
+    setSearchText("");
+    localStorage.removeItem(`searchData${SearchQuery}`);
     localStorage.removeItem("sortedrecording");
     localStorage.removeItem("accendrecording");
     localStorage.removeItem("adminRecording");
@@ -111,12 +113,10 @@ function RecordingFilter(props) {
     }
   };
   const onSubmit = (data, e) => {
+    console.log("Dataaa", data);
     setSearchText(data);
-    console.log(e, "e");
-    console.log(e.typeof, "e.typeof");
-    if (e == undefined) {
-      console.log(e, "e");
-      // page=${e}&
+    console.log("eeee", e.target.value);
+    if (e?.target?.value == undefined) {
       e = 1;
     }
     let obj = {};
@@ -132,7 +132,6 @@ function RecordingFilter(props) {
       };
     }
     localStorage.setItem(`searchData${SearchQuery}`, JSON.stringify(obj));
-
     if (SearchQuery == "adminQuery") {
       localStorage.setItem("recordingData", JSON.stringify(data));
       const token = window.localStorage.getItem("adminToken");
@@ -145,7 +144,7 @@ function RecordingFilter(props) {
         .get(
           `${baseUrl}/admin/callRecordingPostlist?uid=${JSON.parse(
             userid
-          )}&assign_id=${data.queryNo}`,
+          )}&assign_id=${obj.queryNo}`,
           myConfig
         )
         .then((res) => {
@@ -158,21 +157,18 @@ function RecordingFilter(props) {
           }
         });
     } else if (SearchQuery == "tlQuery") {
-      localStorage.setItem("recordingDatatl", JSON.stringify(data));
       const token = window.localStorage.getItem("tlToken");
       const myConfig = {
         headers: {
           uit: token,
         },
       };
-      if (data.route) {
-      } else {
-      }
+
       axios
         .get(
           `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
             userid
-          )}&assign_id=${data.queryNo}`,
+          )}&assign_id=${obj.queryNo}`,
           myConfig
         )
         .then((res) => {
@@ -232,7 +228,7 @@ function RecordingFilter(props) {
         .get(
           `${baseUrl}/tl/callRecordingPostlist?page=${e}&uid=${JSON.parse(
             userid
-          )}&assign_id=${data.queryNo}`,
+          )}&assign_id=${obj.queryNo}`,
           myConfig
         )
         .then((res) => {
@@ -326,6 +322,7 @@ function RecordingFilter(props) {
     }
     setPage(Number(page) + 1);
     localStorage.setItem(pageValue, Number(page) + 1);
+
     if (searchText) {
       onSubmit(searchText, page + 1);
     } else {
