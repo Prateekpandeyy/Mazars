@@ -418,6 +418,8 @@ function AdminHeader({
       localStorage.removeItem("prevtpInvoice1");
       localStorage.removeItem("freezetpInvoice1");
       localStorage.removeItem("tpgenerated");
+      localStorage.removeItem("recordingSorttp");
+      
       axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
         if (res.data.code === 1) {
           localStorage.removeItem("tpcategoryData");
