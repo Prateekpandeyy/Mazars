@@ -381,6 +381,26 @@ function SignUp(props) {
     }
   };
 
+  function getCategory() {
+    axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        data.map((i) => {
+          getSubCategory(i);
+        });
+        localStorage.setItem("categoryData", JSON.stringify(data));
+      }
+    });
+  }
+
+  const getSubCategory = (e) => {
+    axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
+      if (res.data.code === 1) {
+        localStorage.setItem(`${e.details}`, JSON.stringify(res.data.result));
+      }
+    });
+  };
+
   const onSubmit = (value) => {
     if (!dstate && estate.length < 1) {
       Swal.fire({
@@ -464,6 +484,9 @@ function SignUp(props) {
         })
           .then(function (response) {
             if (response.data.code === 1) {
+              async function loginSuccess() {
+              let categoryData = await getCategory();
+
               setLoading(false);
 
               setLoad(false);
@@ -497,7 +520,13 @@ function SignUp(props) {
                 "clientLoginId",
                 JSON.stringify(response.data.loginuid)
               );
+              localStorage.setItem(
+                "cust_record_per_page",
+                response.data.record_per_page
+              );
               props.history.push("/customer/select-category");
+            }
+            loginSuccess();
             } else if (response.data.code === 0) {
               setLoading(false);
 
