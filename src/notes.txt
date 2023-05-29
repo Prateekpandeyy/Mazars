@@ -1,0 +1,3 @@
+page reload, after upload draft in tl.
+download draft on click,
+create new tl, tp, client

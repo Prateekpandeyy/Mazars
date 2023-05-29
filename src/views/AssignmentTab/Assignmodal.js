@@ -90,7 +90,7 @@ function Assignmodal({
   return (
     <div>
       <Modal isOpen={additionalQuery} toggle={additionalHandler} size="md">
-        <ModalHeader toggle={additionalHandler}>UPLOAD DOCUMENTS</ModalHeader>
+        <ModalHeader toggle={additionalHandler}>Upload document</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
