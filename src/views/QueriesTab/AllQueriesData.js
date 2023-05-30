@@ -68,13 +68,12 @@ function AllQueriesData({
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
   const [prev, setPrev] = useState("");
-
 
   let des = false;
   const additionalHandler = (key) => {
@@ -88,7 +87,7 @@ function AllQueriesData({
       setAdditionalQuery(!additionalQuery);
       setAssignNo(key);
       console.log("2");
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
@@ -126,11 +125,11 @@ function AllQueriesData({
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
-}, [additionalQuery]);
+  }, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
     // console.log(tableId);
@@ -138,16 +137,16 @@ function AllQueriesData({
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
   }, [ViewDiscussion]);
 
@@ -158,9 +157,9 @@ function AllQueriesData({
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustQuery1`));
     let pageno = JSON.parse(localStorage.getItem("custQuery1"));
-    let arrow = localStorage.getItem("custArrowQuery1")
-    let pre =localStorage.getItem("prevcustq1")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowQuery1");
+    let pre = localStorage.getItem("prevcustq1");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -169,18 +168,18 @@ function AllQueriesData({
       setTurnGreen(true);
     }
     // if (!local) {
-      if (pageno) {
-        CountAllQuery(pageno);
-      } else {
-        CountAllQuery(1);
-      }
+    if (pageno) {
+      CountAllQuery(pageno);
+    } else {
+      CountAllQuery(1);
+    }
     // }
   }, []);
 
   const CountAllQuery = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustQuery1"));
@@ -190,98 +189,97 @@ function AllQueriesData({
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
-      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(userId)}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setAllQueriesCount(all);
-          setCount(res.data.total);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setAllQueriesCount(all);
+        setCount(res.data.total);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custQuery1`, JSON.stringify(1))
+    localStorage.setItem(`custQuery1`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustQuery1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
 
     if (data) {
       remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setAllQueriesCount(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setAllQueriesCount(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -289,8 +287,14 @@ function AllQueriesData({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no}
-          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -414,26 +418,27 @@ function AllQueriesData({
     },
     {
       text: "Status",
-      // sort: true,
-      // headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     setIsActive(field);
-      //     localStorage.setItem("custArrowQuery1", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("custArrowQuery1");
-      //   }
-      //   if (accend === field) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 5);
-      // },
+      dataField: "status",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -531,8 +536,8 @@ function AllQueriesData({
             ) : (
               <>
                 {row.status_code == "0" ||
-                  row.status_code == "1" ||
-                  row.status_code == "3" ? (
+                row.status_code == "1" ||
+                row.status_code == "3" ? (
                   <>
                     <span className="ml-1">
                       <Link to={`/customer_edit-query/${row.id}`}>
@@ -570,8 +575,8 @@ function AllQueriesData({
                 ) : null}
 
                 {row.status_code == "4" ||
-                  8 < parseInt(row.status_code) ||
-                  row.status_code == "2" ? (
+                8 < parseInt(row.status_code) ||
+                row.status_code == "2" ? (
                   <>
                     {dateMnsFive > curDate === true ? (
                       <span className="ml-1">
@@ -663,9 +668,7 @@ function AllQueriesData({
     localStorage.removeItem("custArrowQuery1");
     localStorage.removeItem("prevcustq1");
     setPrev("");
-    
-  }
-
+  };
 
   return (
     <Card ref={tableId}>

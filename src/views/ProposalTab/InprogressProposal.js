@@ -136,7 +136,7 @@ function InprogressProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowProposall2") === column.dataField ? (
+          {localStorage.getItem("custArrowProposal2") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -531,6 +531,7 @@ function InprogressProposal() {
     },
     {
       text: "Status",
+      dataField: "status",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {

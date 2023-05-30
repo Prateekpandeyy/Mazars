@@ -191,7 +191,9 @@ function AllProposal({ setAllProposal }) {
         if (res.data.code === 1) {
           let droppage = [];
           let data = res.data.result;
-          setAllProposal(res.data.total);
+          if (!searchData) {
+            setAllProposal(res.data.total);
+          }
           setCountNotification(res.data.total);
           setRecords(res.data.total);
           let all = [];
