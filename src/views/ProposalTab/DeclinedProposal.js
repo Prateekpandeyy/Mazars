@@ -85,8 +85,7 @@ function DeclinedProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowProposalllll4") ===
-          column.dataField ? (
+          {localStorage.getItem("custArrowProposal4") === column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -281,7 +280,7 @@ function DeclinedProposal() {
           localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposalll4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -371,7 +370,7 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposalllllll4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
           localStorage.removeItem("custArrowProposal4");
@@ -436,10 +435,10 @@ function DeclinedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposall4", field);
+          localStorage.setItem("custArrowProposal4", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposall4");
+          localStorage.removeItem("custArrowProposal4");
         }
         if (accend === field) {
           val = 0;
@@ -490,7 +489,6 @@ function DeclinedProposal() {
     },
     {
       text: "Status",
-      headerFormatter: headerLabelFormatter,
 
       formatter: function nameFormatter(cell, row) {
         return (

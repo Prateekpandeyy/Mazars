@@ -335,7 +335,7 @@ function AcceptedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposall3", field);
+          localStorage.setItem("custArrowProposal3", field);
         } else {
           setAccend("");
           localStorage.removeItem("custArrowProposal3");
@@ -345,7 +345,7 @@ function AcceptedProposal() {
         } else {
           val = 1;
         }
-        sortMessage(val, 4);
+        sortMessage(val, 3);
       },
     },
     {
@@ -361,7 +361,7 @@ function AcceptedProposal() {
           localStorage.setItem("custArrowProposal3", field);
         } else {
           setAccend("");
-          localStorage.removeItem("custArrowProposall3");
+          localStorage.removeItem("custArrowProposal3");
         }
         if (accend === field) {
           val = 0;
@@ -526,7 +526,7 @@ function AcceptedProposal() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          localStorage.setItem("custArrowProposall3", field);
+          localStorage.setItem("custArrowProposal3", field);
         } else {
           setAccend("");
           localStorage.removeItem("custArrowProposal3");
