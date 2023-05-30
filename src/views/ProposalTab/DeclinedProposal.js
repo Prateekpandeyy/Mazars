@@ -85,7 +85,8 @@ function DeclinedProposal() {
       <div className="d-flex text-white w-100 flex-wrap">
         <div style={{ display: "flex", color: "#fff" }}>
           {column.text}
-          {localStorage.getItem("custArrowProposalllll4") === column.dataField ? (
+          {localStorage.getItem("custArrowProposalllll4") ===
+          column.dataField ? (
             <ArrowDropUpIcon
               className={isActive === true ? classes.isActive : ""}
             />
@@ -490,24 +491,7 @@ function DeclinedProposal() {
     {
       text: "Status",
       headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowProposall4", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowProposallll4");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 8);
-      },
+
       formatter: function nameFormatter(cell, row) {
         return (
           <>

@@ -1,3 +1,8 @@
 page reload, after upload draft in tl.
 download draft on click,
 create new tl, tp, client
+feedback calling in timeout (2000)
+get uplaod in assignment.
+sorting in query status
+client declined , category sorting.
+remove sorting from expected date of delivery (client declined query)

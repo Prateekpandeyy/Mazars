@@ -265,7 +265,7 @@ export const CmsCont = (props) => {
   };
 
   const myLink = (e) => {
-    if (Cookies.get("accept")) {
+    if (Cookies.get("accept") || localStorage.getItem("clientToken")) {
       if (e === "direct") {
         history.push("/customer/direct");
       } else if (e === "indirect") {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import Layout from "../../components/Layout/Layout";
@@ -60,7 +60,7 @@ function Paid() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -120,22 +120,22 @@ function Paid() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustPay2`));
     let pageno = JSON.parse(localStorage.getItem("custPay2"));
-    let arrow = localStorage.getItem("custArrowPay2")
-    let pre =localStorage.getItem("prevcustpay2")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowPay2");
+    let pre = localStorage.getItem("prevcustpay2");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -145,9 +145,9 @@ function Paid() {
     }
     if (pageno) {
       getPaymentStatus(pageno);
-      }else{
+    } else {
       getPaymentStatus(1);
-      }
+    }
   }, []);
 
   function headerLabelFormatter(column, colIndex) {
@@ -182,9 +182,9 @@ function Paid() {
   }
 
   const getPaymentStatus = (e) => {
-    if ((e === undefined)) {
+    if (e === undefined) {
       // console.log(e,'e');
-      e=1;
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustPay2"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustPay2"));
@@ -195,53 +195,50 @@ function Paid() {
     setOnPage(e);
     setLoading(true);
 
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=1&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=1&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
-      )}&status=1&orderby=${val}&orderbyfield=${field}`
-    }else{
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
+    } else {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
-      )}&status=1`
+      )}&status=1`;
     }
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      } else if (res.data.code === 0) {
+        CommonServices.clientLogout(history);
+      }
+    });
   };
 
   const toggle = (key) => {
@@ -264,53 +261,49 @@ function Paid() {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custPay2`, JSON.stringify(1))
+    localStorage.setItem(`custPay2`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustPay2`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustPay2"));
 
     if (data) {
       remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
         userId
-      )}&status=1&orderby=${val}&orderbyfield=${field}`
+      )}&status=1&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -318,8 +311,14 @@ function Paid() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -477,25 +476,6 @@ function Paid() {
     {
       text: "Status",
       dataField: "",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowPay2", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowPay2");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 6);
-      },
 
       formatter: function (cell, row) {
         return (
@@ -745,7 +725,7 @@ function Paid() {
     localStorage.removeItem("custArrowPay2");
     localStorage.removeItem("prevcustpay2");
     setPrev("");
-  }
+  };
 
   return (
     <>
@@ -806,14 +786,14 @@ function Paid() {
                   </thead>
                   {pay.length > 0
                     ? pay.map((p, i) => (
-                      <tbody>
-                        <tr>
-                          <td>{i + 1}</td>
-                          <td>{CommonServices.removeTime(p.payment_date)}</td>
-                          <td>{p.paid_amount}</td>
-                        </tr>
-                      </tbody>
-                    ))
+                        <tbody>
+                          <tr>
+                            <td>{i + 1}</td>
+                            <td>{CommonServices.removeTime(p.payment_date)}</td>
+                            <td>{p.paid_amount}</td>
+                          </tr>
+                        </tbody>
+                      ))
                     : null}
                 </table>
               </ModalBody>

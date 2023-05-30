@@ -174,27 +174,31 @@ function InprogressAllocation({
       if (data.p_status.length > 0) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=${data.p_status}&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=${data.p_status}&pcat_id=${data.pcatId}`;
       } else {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=1&pcat_id=${data.pcatId}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=1&pcat_id=${data.pcatId}`;
       }
     } else if (data && pagetry) {
       if (data.p_status.length > 0) {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=${data.p_status}&pcat_id=${data.pcatId
-          }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=${data.p_status}&pcat_id=${
+          data.pcatId
+        }&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
           userId
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&status=1&pcat_id=${data.pcatId
-          }&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&status=1&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
       }
     } else if (!data && pagetry) {
       remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
@@ -406,26 +410,26 @@ function InprogressAllocation({
     },
     {
       text: "Status",
-      dataField: "",
-      // headerFormatter: headerLabelFormatter,
-      // sort: true,
-      // onSort: (field, order) => {
-      //   let val = 0;
-      //   if (accend !== field) {
-      //     setAccend(field);
-      //     setIsActive(field);
-      //     localStorage.setItem("custArrowQuery2", field);
-      //   } else {
-      //     setAccend("");
-      //     localStorage.removeItem("custArrowQuery2");
-      //   }
-      //   if (accend === field) {
-      //     val = 0;
-      //   } else {
-      //     val = 1;
-      //   }
-      //   sortMessage(val, 5);
-      // },
+      dataField: "status",
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery2", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery2");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (

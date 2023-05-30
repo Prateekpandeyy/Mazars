@@ -538,7 +538,25 @@ function ProposalTab() {
     {
       text: "Status",
       dataField: "status",
-
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowProposal1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowProposall1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>
