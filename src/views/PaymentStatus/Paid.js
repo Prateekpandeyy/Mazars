@@ -472,14 +472,8 @@ function Unpaid() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
 
-      style: {
-        fontSize: "11px",
-      },
-      headerStyle: () => {
-        return { fontSize: "11px" };
-      },
       formatter: function (cell, row) {
         return (
           <>

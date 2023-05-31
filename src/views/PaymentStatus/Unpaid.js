@@ -475,7 +475,7 @@ function Paid() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
 
       formatter: function (cell, row) {
         return (

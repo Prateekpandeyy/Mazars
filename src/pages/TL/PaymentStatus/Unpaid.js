@@ -500,7 +500,7 @@ function AllPayment() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
       // sort: true,
       // headerFormatter: headerLabelFormatter,
 

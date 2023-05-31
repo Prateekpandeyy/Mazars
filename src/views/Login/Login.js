@@ -24,6 +24,7 @@ import { styled, makeStyles } from "@material-ui/styles";
 import CookieConsent from "react-cookie-consent";
 import MainContainer from "../../components/Common/MainContainer";
 import MyContainer from "../../components/Common/MyContainer";
+import SndImage from "../dFile/snd_logo.png";
 import FlashSection from "../../components/Common/FlashSection";
 import MainContent from "../../components/Common/MainContent";
 import CloseIcon from "@material-ui/icons/Close";

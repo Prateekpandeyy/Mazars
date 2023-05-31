@@ -27,8 +27,19 @@ function QueriesTab(props) {
 
   useEffect(() => {
     getPaid();
+    getAllPaid();
     getUnpaid();
   }, []);
+  const getAllPaid = () => {
+    axios
+      .get(
+        `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(userId)}&count=1`,
+        myConfig
+      )
+      .then((res) => {
+        setAllPayment(res?.data?.result?.recordcount);
+      });
+  };
 
   const getPaid = () => {
     axios
@@ -100,7 +111,7 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllPayment setAllPayment={setAllPayment} />
+          <AllPayment />
         </TabPanel>
 
         <TabPanel>
