@@ -235,7 +235,7 @@ function InprogressAssignment() {
       field: field,
     }
     localStorage.setItem(`freezecustAs2`, JSON.stringify(obj));
-    let data = JSON.parse(localStorage.getItem("searchDatacustAs3"));
+    let data = JSON.parse(localStorage.getItem("searchDatacustAs2"));
 
     if (data) {
       remainApiPath = `customers/completeAssignments?page=1&user=${JSON.parse(
