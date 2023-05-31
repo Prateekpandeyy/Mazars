@@ -262,6 +262,8 @@ function AllAssignment() {
             sortId++;
             all.push(data);
           });
+          console.log('result',res.data.result);
+          console.log('all',all);
           setAssignmentDisplay(all);
           setTurnGreen(true);
           setresetTrigger(!resetTrigger);
