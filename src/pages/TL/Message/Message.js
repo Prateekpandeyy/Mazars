@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -53,9 +53,12 @@ function Message(props) {
   useEffect(() => {
     let pageno = Number(JSON.parse(localStorage.getItem("tlMsg")));
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    if ((history.action == 'POP')) {
     setAccend(localStorage.getItem("accendtlmsg"));
+    }
     setPrev(localStorage.getItem("prevtlmsg"));
-    if (pageno) {
+    console.log('History',history);
+    if ((history.action == 'POP')&& (pageno)) {
       setPage(pageno);
       getMessage(pageno);
     } else {

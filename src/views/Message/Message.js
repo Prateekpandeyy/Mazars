@@ -55,7 +55,7 @@ function Message(props) {
       uit: token,
     },
   };
-  
+
   //page counter
   const firstChunk = () => {
     setAtpage(1);
@@ -123,12 +123,12 @@ function Message(props) {
   useEffect(() => {
 
     let arrow = localStorage.getItem("custArrowMsg")
-    if (arrow) {
+    if ((history.action == 'POP') && (arrow)) {
       setAccend(arrow);
     }
 
     let pageno = JSON.parse(localStorage.getItem("custMessage"));
-    if (pageno) {
+    if ((history.action == 'POP') && (pageno)) {
       getMessage(pageno);
       setPage(pageno);
     } else {
@@ -190,29 +190,29 @@ function Message(props) {
             setEnd(allEnd);
           }
           let dynamicPage = Math.round(res.data.total / allEnd);
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (dynamicPage > 1) {
-              if (e === 1) {
-                setBig(rem + e);
-                setEnd(end);
-              } else if ((e == (dynamicPage))) {
-                setBig(rem + 1);
-                setEnd(res.data.total);
-                // console.log("e at last page");
-              }
-              else {
-                setBig(rem + 1);
-                setEnd(end);
-              }
-            } else {
+          let rem = (e - 1) * allEnd;
+          let end = e * allEnd;
+          if (dynamicPage > 1) {
+            if (e === 1) {
               setBig(rem + e);
+              setEnd(end);
+            } else if ((e == (dynamicPage))) {
+              setBig(rem + 1);
               setEnd(res.data.total);
+              // console.log("e at last page");
             }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
+            else {
+              setBig(rem + 1);
+              setEnd(end);
             }
-            setDefaultPage(droppage);
+          } else {
+            setBig(rem + e);
+            setEnd(res.data.total);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
   };
@@ -256,7 +256,7 @@ function Message(props) {
           } else {
             setEnd(allEnd);
           }
-          console.log(all,"allHere");
+          console.log(all, "allHere");
         }
       });
   };
@@ -350,7 +350,7 @@ function Message(props) {
     },
     {
       text: "Message",
-      
+
       headerStyle: () => {
         return {
           fontSize: "12px",

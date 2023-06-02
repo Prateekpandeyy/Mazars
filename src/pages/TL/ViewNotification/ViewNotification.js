@@ -24,6 +24,7 @@ function ViewNotification() {
   const [data, setData] = useState({});
 
   useEffect(() => {
+    console.log('History2',history);
     getChatting();
   }, [id]);
 
@@ -51,6 +52,10 @@ function ViewNotification() {
       });
   };
 
+  // const backfn = () => {
+  //   history.goBack();
+    
+  // }
 
 
   return (
