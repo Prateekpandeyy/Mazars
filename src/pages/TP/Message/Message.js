@@ -87,12 +87,12 @@ function Message(props) {
   useEffect(() => {
 
     let arrow = localStorage.getItem("tpArrowMsg")
-    if (arrow) {
+    if ((history.action == 'POP') && (arrow)) {
       setAccend(arrow);
     }
 
     let pageno = JSON.parse(localStorage.getItem("tpMessage"));
-    if (pageno) {
+    if ((history.action == 'POP') && (pageno)) {
       getMessage(pageno);
       setPage(pageno);
     } else {
