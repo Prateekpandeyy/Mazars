@@ -51,10 +51,23 @@ function Message(props) {
     setPaymentModal(!addPaymentModal);
   };
   useEffect(() => {
-    let pageno = 1;
+    let pageno = Number(JSON.parse(localStorage.getItem("tlMsg")));
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
-    setPage(1);
-    getMessage(1);
+    if ((history.action == 'POP')) {
+    setAccend(localStorage.getItem("accendtlmsg"));
+    setTurnGreen(true);
+    }
+    setPrev(localStorage.getItem("prevtlmsg"));
+    if ((history.action == 'POP')&& (pageno)) {
+      setPage(pageno);
+      getMessage(pageno);
+    } else {
+      localStorage.removeItem(`freezetlMsg`);
+      localStorage.removeItem("prevtlmsg");
+      localStorage.removeItem("tlArrowMsg");
+      setPage(1);
+      getMessage(1);
+    }
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -67,10 +80,12 @@ function Message(props) {
     let isActive = true;
 
     if (
-      localStorage.getItem("tlArrowMsg") === column.dataField ||
-      localStorage.getItem("tlArrowMsgDown") === column.dataField
+      ((localStorage.getItem("tlArrowMsg") === column.dataField)&& (turnGreen == true)) ||
+      ((localStorage.getItem("prevtlmsg") === column.dataField) && (turnGreen == true))
     ) {
       isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlmsg", column.dataField);
     } else {
       isActive = false;
     }
@@ -153,6 +168,7 @@ function Message(props) {
   };
 
   const sortMessage = (val, field) => {
+    let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -252,11 +268,9 @@ function Message(props) {
           setAccend(field);
           setIsActive(field);
           localStorage.setItem("tlArrowMsg", field);
-          localStorage.setItem("tlArrowMsgDown", "");
         } else {
           setAccend("");
           localStorage.removeItem("tlArrowMsg");
-          localStorage.setItem("tlArrowMsgDown", field);
         }
         if (accend === field) {
           val = 0;
@@ -294,11 +308,9 @@ function Message(props) {
           setAccend(field);
           setIsActive(field);
           localStorage.setItem("tlArrowMsg", field);
-          localStorage.setItem("tlArrowMsgDown", "");
         } else {
           setAccend("");
           localStorage.removeItem("tlArrowMsg");
-          localStorage.setItem("tlArrowMsgDown", field);
         }
         if (accend === field) {
           val = 0;
