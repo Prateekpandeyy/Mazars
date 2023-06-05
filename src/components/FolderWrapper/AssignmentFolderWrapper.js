@@ -119,7 +119,7 @@ const AssignmentFolderWrapper = (props) => {
                     <span
                       onContextMenu={(e) => props.moveTo(e, i, props.basePath)}
                       onDoubleClick={(e) =>
-                        props.downloadFile(e, i.assign_no, i.id, i.name)
+                        props.downloadFile(e, i.assign_no, i.id, i.document)
                       }
                     >
                       <span style={{ cursor: "pointer" }}>

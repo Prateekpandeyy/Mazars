@@ -438,25 +438,7 @@ function CompletedQuery({ updateTab }) {
     {
       text: "Status",
       dataField: "status",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          localStorage.setItem("accendtlq4", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("accendtlq4");
-        }
 
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 7);
-      },
       formatter: function nameFormatter(cell, row) {
         return (
           <>

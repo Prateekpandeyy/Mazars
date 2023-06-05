@@ -444,10 +444,7 @@ const Invoice = (updateTab) => {
   };
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
-    if (
-      localStorage.getItem("accendcreatedtl") === column.dataField ||
-      localStorage.getItem("tlprevint2") === column.dataField
-    ) {
+    if (localStorage.getItem("accendcreatedtl") === column.dataField) {
       isActive = true;
       setPrev(column.dataField);
       localStorage.setItem("tlprevint2", column.dataField);

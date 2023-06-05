@@ -51,17 +51,10 @@ function Message(props) {
     setPaymentModal(!addPaymentModal);
   };
   useEffect(() => {
-    let pageno = Number(JSON.parse(localStorage.getItem("tlMsg")));
+    let pageno = 1;
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
-    setAccend(localStorage.getItem("accendtlmsg"));
-    setPrev(localStorage.getItem("prevtlmsg"));
-    if (pageno) {
-      setPage(pageno);
-      getMessage(pageno);
-    } else {
-      setPage(1);
-      getMessage(1);
-    }
+    setPage(1);
+    getMessage(1);
   }, []);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -73,13 +66,8 @@ function Message(props) {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (
-      localStorage.getItem("tlArrowMsg") === column.dataField ||
-      localStorage.getItem("prevtlmsg") === column.dataField
-    ) {
+    if (localStorage.getItem("tlArrowMsg") === column.dataField) {
       isActive = true;
-      setPrev(column.dataField);
-      localStorage.setItem("prevtlmsg", column.dataField);
     } else {
       isActive = false;
     }

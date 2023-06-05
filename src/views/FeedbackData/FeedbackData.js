@@ -319,25 +319,7 @@ function FeedbackData(props) {
     {
       text: "Feedback",
       dataField: "feedback",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custSorting", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custSorting");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 1);
-      },
+
       headerStyle: () => {
         return {
           fontSize: "12px",

@@ -422,6 +422,7 @@ function Tds(props) {
       url: `${baseUrl}/tl/generateInvoive`,
     }).then((res) => {
       setLoading(false);
+      props.getProposalList(1);
       props.addTdsToggle();
       setDiscription("");
       if (res.data.code === 1) {
@@ -431,7 +432,6 @@ function Tds(props) {
           html: "Invoice generated successfully",
           icon: "success",
         });
-        props.getProposalList();
       } else {
         props.addTdsToggle();
         Swal.fire({

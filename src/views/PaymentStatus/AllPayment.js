@@ -532,13 +532,6 @@ function Paid() {
         sortMessage(val, 7);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
@@ -567,13 +560,6 @@ function Paid() {
           val = 1;
         }
         sortMessage(val, 8);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -609,12 +595,6 @@ function Paid() {
       //  headerStyle: () => {
       //    return({padding: "5px"})
       //  },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");

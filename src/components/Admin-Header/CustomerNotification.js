@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Link, useHistory } from "react-router-dom";
-
+import { clientLogout } from "../Logout/ClientLogout";
 function CustomerNotification({ tokenKey, name, panel }) {
   const [countNotification, setCountNotification] = useState("");
 
@@ -14,20 +14,7 @@ function CustomerNotification({ tokenKey, name, panel }) {
   }, [tokenKey]);
 
   const custLogout = () => {
-    const token = window.localStorage.getItem("clientToken");
-    const myConfig = {
-      headers: {
-        uit: token,
-      },
-    };
-
-    axios.get(`${baseUrl}/customers/logout`, myConfig).then((res) => {
-      localStorage.removeItem("userid");
-      localStorage.removeItem("custEmail");
-      localStorage.removeItem("category");
-      localStorage.removeItem("clientToken");
-      history.push("/");
-    });
+    clientLogout(axios, history);
   };
 
   const adminLogout = () => {

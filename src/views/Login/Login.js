@@ -32,6 +32,7 @@ import CustomHeading from "../../components/Common/CustomHeading";
 import MainHeading from "../../components/Common/MainHeading";
 import CustomTypography from "../../components/Common/CustomTypography";
 import SubHeading from "../../components/Common/SubHeading";
+import { clientLogout } from "../../components/Logout/ClientLogout";
 import GetEmail from "../GetEmail/GetEmail";
 const Schema = yup.object().shape({
   p_email: yup.string().email("invalid email").required(""),
@@ -197,19 +198,7 @@ function LoginForm() {
     }
   };
   const custLogout = () => {
-    const token = window.localStorage.getItem("clientToken");
-    const myConfig = {
-      headers: {
-        uit: token,
-      },
-    };
-    axios.get(`${baseUrl}/customers/logout`, myConfig).then((res) => {
-      localStorage.removeItem("userid");
-      localStorage.removeItem("custEmail");
-      localStorage.removeItem("category");
-      localStorage.removeItem("clientToken");
-      history.push("/");
-    });
+    clientLogout(axios, history);
   };
   if (
     window.location.origin === "http://advisorysolutions.mazars.co.in/" &&
