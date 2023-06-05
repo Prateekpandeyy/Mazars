@@ -55,13 +55,16 @@ function Message(props) {
     setEnd(Number(localStorage.getItem("tl_record_per_page")));
     if ((history.action == 'POP')) {
     setAccend(localStorage.getItem("accendtlmsg"));
+    setTurnGreen(true);
     }
     setPrev(localStorage.getItem("prevtlmsg"));
-    console.log('History',history);
     if ((history.action == 'POP')&& (pageno)) {
       setPage(pageno);
       getMessage(pageno);
     } else {
+      localStorage.removeItem(`freezetlMsg`);
+      localStorage.removeItem("prevtlmsg");
+      localStorage.removeItem("tlArrowMsg");
       setPage(1);
       getMessage(1);
     }
@@ -77,8 +80,8 @@ function Message(props) {
     let isActive = true;
 
     if (
-      localStorage.getItem("tlArrowMsg") === column.dataField ||
-      localStorage.getItem("prevtlmsg") === column.dataField
+      ((localStorage.getItem("tlArrowMsg") === column.dataField)&& (turnGreen == true)) ||
+      ((localStorage.getItem("prevtlmsg") === column.dataField) && (turnGreen == true))
     ) {
       isActive = true;
       setPrev(column.dataField);
@@ -111,7 +114,6 @@ function Message(props) {
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
-    console.log(allEnd);
     setAtpage(e);
 
     if (e) {
@@ -184,6 +186,7 @@ function Message(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setTurnGreen(true);
           let all = [];
           let droppage = [];
           let sortId = 1;
@@ -197,7 +200,6 @@ function Message(props) {
           });
           setQuery(all);
           setCount(res.data.total);
-          setTurnGreen(true);
           // setting(1);
           setAtpage(1);
           setPage(1);

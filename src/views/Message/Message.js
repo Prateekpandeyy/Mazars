@@ -93,8 +93,8 @@ function Message(props) {
     let isActive = true;
 
     if (
-      localStorage.getItem("custArrowMsg") === column.dataField ||
-      localStorage.getItem("prevcustmsg") === column.dataField
+      ((localStorage.getItem("custArrowMsg") === column.dataField) && (turnGreen == true) ) ||
+      ((localStorage.getItem("prevcustmsg") === column.dataField) && (turnGreen == true))
     ) {
       isActive = true;
       setPrev(column.dataField);
@@ -125,6 +125,7 @@ function Message(props) {
     let arrow = localStorage.getItem("custArrowMsg")
     if ((history.action == 'POP') && (arrow)) {
       setAccend(arrow);
+      setTurnGreen(true);
     }
 
     let pageno = JSON.parse(localStorage.getItem("custMessage"));
@@ -132,6 +133,9 @@ function Message(props) {
       getMessage(pageno);
       setPage(pageno);
     } else {
+      localStorage.removeItem(`freezecustMsg`);
+      localStorage.removeItem("prevcustmsg");
+      localStorage.removeItem("custArrowMsg");
       setPage(1);
       getMessage(1);
       if ((count) < allEnd) {
@@ -236,6 +240,7 @@ function Message(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setTurnGreen(true);
           let all = [];
           let sortId = 1;
           res.data.result.map((i) => {
