@@ -447,11 +447,11 @@ function Paginator(props) {
           data.query_no
         }&orderby=${val}&orderbyfield=${field}`;
       } else if (!data && pagetry) {
-        remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        remainApiPath = `tl/getProposalTl?page=${e}&status=1&tp_id=${JSON.parse(
           userid
         )}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
+        remainApiPath = `tl/getProposalTl?page=${e}&status=1&tp_id=${JSON.parse(
           userid
         )}`;
       }
