@@ -191,9 +191,7 @@ function AllPayment({ setAllPayment }) {
         if (res.data.code === 1) {
           let droppage = [];
           let data = res.data.result;
-          if (!searchData) {
-            setAllPayment(res.data.total);
-          }
+
           setCountNotification(res.data.total);
           setRecords(res.data.total);
           let all = [];

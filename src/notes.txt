@@ -6,3 +6,41 @@ get uplaod in assignment.
 sorting in query status
 client declined , category sorting.
 remove sorting from expected date of delivery (client declined query)
+uniform highlight with underline in tab selection.
+Admin inprogress allocation sorting issue by default.
+Invoice search filter result go back to invoice from another page.
+name on file hover (basic query folder)
+double click to download (tooltip on hover (basic query folder)).
+by default to date in (tp invoice).
+tds dedcuted in invoice. 
+Query sorting in click of 
+sorting not working when redirect back to page.
+by default date in assignment (tp)
+remove status sorting in TP.(assignment).
+client disucssion in message box.
+19-05-2023
+localstorage clear after logout (tp incoice) (done)
+status in all query (sorting , tp)(will be fixed by backend)
+inprogress assignmeent. (tp)
+status all proposal , inprogress proposal (tp) (will be fixed by backend)
+tds sorting in tp view incoice. (fixed)
+create invoice total number issue sorting with paging.(done)
+amount sorting in paid.(done)
+label twice in paid (same label)
+create invoice (data is not loading when come back to create invoice)
+category icon in declined query.
+Remove sorting from accepted amount (declined proposal)
+unpaid sorting (check properly)
+expected date of delivery in all assignment
+all assignment sorting not working.
+Tp (payment - paid sorting , accepted amount)
+Tp invoice filter.
+by default order should be based on due date in invoice filter
+checking symbol of accending and ddecending in invoice filter.
+
+Issue - 
+Proposal edit api error.
+Invoice is not coming after accepting proposal.
+If I upload pdf in client assignment got error.
+If I tried to upload same file again and again, It's not showing erroe.
+In client feedback , by default feedabck icon in coming sorting

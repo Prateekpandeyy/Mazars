@@ -57,7 +57,7 @@ function Paid() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -117,14 +117,14 @@ function Paid() {
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
+    runTo?.scrollIntoView({ block: "center" });
   }, [ViewDiscussion]);
 
   function headerLabelFormatter(column, colIndex) {
@@ -161,9 +161,9 @@ function Paid() {
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustPay1`));
     let pageno = JSON.parse(localStorage.getItem("custPay1"));
-    let arrow = localStorage.getItem("custArrowPay1")
-    let pre =localStorage.getItem("prevcustpay1")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowPay1");
+    let pre = localStorage.getItem("prevcustpay1");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -173,11 +173,11 @@ function Paid() {
     }
 
     // if (!local) {
-      if (pageno) {
+    if (pageno) {
       getPaymentStatus(pageno);
-      }else{
+    } else {
       getPaymentStatus(1);
-      }
+    }
     // }
   }, []);
 
@@ -198,9 +198,9 @@ function Paid() {
   };
 
   const getPaymentStatus = (e) => {
-    if ((e === undefined)) {
+    if (e === undefined) {
       // console.log(e,'e');
-      e=1;
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustPay1"));
@@ -210,101 +210,100 @@ function Paid() {
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
-      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(userId)}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
+        userId
+      )}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 0) {
-          CommonServices.clientLogout(history);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      } else if (res.data.code === 0) {
+        CommonServices.clientLogout(history);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custPay1`, JSON.stringify(1))
+    localStorage.setItem(`custPay1`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustPay1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustPay1"));
 
     if (data) {
       remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/getUploadedProposals?page=1&cid=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          // let record =Number(localStorage.getItem("tp_record_per_page"))
-          // let startAt = 1;
-          // if (onPage > 1) {
-          //   sortId = 1;
-          // }
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          setPayment(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -312,8 +311,14 @@ function Paid() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no}
-          ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
 
       headerStyle: () => {
@@ -471,7 +476,7 @@ function Paid() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -527,13 +532,6 @@ function Paid() {
         sortMessage(val, 7);
       },
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
-
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
@@ -562,13 +560,6 @@ function Paid() {
           val = 1;
         }
         sortMessage(val, 8);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -604,12 +595,6 @@ function Paid() {
       //  headerStyle: () => {
       //    return({padding: "5px"})
       //  },
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
@@ -755,7 +740,7 @@ function Paid() {
     localStorage.removeItem("custArrowPay1");
     localStorage.removeItem("prevcustpay1");
     setPrev("");
-  }
+  };
 
   return (
     <>
@@ -780,20 +765,20 @@ function Paid() {
         <CardBody>
           {/* <Records records={records} /> */}
           <Row className="mb-2">
-          <Col md="12" align="right">
-            <PaginatorCust
-              count={count}
-              id={userId}
-              setData={setPayment}
-              getData={getPaymentStatus}
-              allPayment="allPayment"
-              index="custPay1"
-              setOnPage={setOnPage}
-              resetTrigger={resetTrigger}
-              setresetTrigger={setresetTrigger}
-            />
-          </Col>
-        </Row>
+            <Col md="12" align="right">
+              <PaginatorCust
+                count={count}
+                id={userId}
+                setData={setPayment}
+                getData={getPaymentStatus}
+                allPayment="allPayment"
+                index="custPay1"
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
 
           <DataTablepopulated
             bgColor="#2b5f55"
@@ -836,14 +821,14 @@ function Paid() {
             </thead>
             {pay.length > 0
               ? pay.map((p, i) => (
-                <tbody>
-                  <tr>
-                    <td>{i + 1}</td>
-                    <td>{CommonServices.removeTime(p.payment_date)}</td>
-                    <td>{p.paid_amount}</td>
-                  </tr>
-                </tbody>
-              ))
+                  <tbody>
+                    <tr>
+                      <td>{i + 1}</td>
+                      <td>{CommonServices.removeTime(p.payment_date)}</td>
+                      <td>{p.paid_amount}</td>
+                    </tr>
+                  </tbody>
+                ))
               : null}
           </table>
         </ModalBody>

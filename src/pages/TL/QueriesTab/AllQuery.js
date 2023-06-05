@@ -157,9 +157,7 @@ function AllQuery({ setAllQuery }) {
         let droppage = [];
         if (res.data.code === 1) {
           let data = res.data.result;
-          if (!searchData) {
-            setAllQuery(res.data.total);
-          }
+
           setCountNotification(res.data.total);
           setRecords(res.data.total);
           let all = [];

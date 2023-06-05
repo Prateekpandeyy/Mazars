@@ -1,7 +1,7 @@
-import React, { useState, useEffect,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-import { Card, CardHeader, CardBody,Col,Row} from "reactstrap";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -48,7 +48,7 @@ function AllAssignment() {
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState("");
   const [resetTrigger, setresetTrigger] = useState(false);
   const [accend, setAccend] = useState(false);
   const [turnGreen, setTurnGreen] = useState(false);
@@ -75,8 +75,8 @@ function AllAssignment() {
     //   document.documentElement.style.setProperty('--scroll-y', `${body.scrollY}px`);
     // });
     setReportModal(!reportModal);
-    if(reportModal === false){
-      setScrolledTo(key.assign_no)
+    if (reportModal === false) {
+      setScrolledTo(key.assign_no);
     }
     setReport(key.assign_no);
     setDataItem(key);
@@ -88,10 +88,10 @@ function AllAssignment() {
   };
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [reportModal]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [reportModal]);
 
   const ViewDiscussionToggel = (key) => {
     setViewDiscussion(!ViewDiscussion);
@@ -102,7 +102,7 @@ function AllAssignment() {
       document.getElementById("veRep").style.overflowY = "auto";
     }
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
@@ -138,17 +138,17 @@ function AllAssignment() {
   }
 
   useEffect(() => {
-    let runTo = myRef.current[scrolledTo]
+    let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
-    runTo?.scrollIntoView({ block: 'center' });
-}, [ViewDiscussion]);
+    runTo?.scrollIntoView({ block: "center" });
+  }, [ViewDiscussion]);
 
   useEffect(() => {
     let local = JSON.parse(localStorage.getItem(`searchDatacustAs1`));
     let pageno = JSON.parse(localStorage.getItem("custAs1"));
-    let arrow = localStorage.getItem("custArrowAs1")
-    let pre =localStorage.getItem("prevcustAs1")
-    if(pre){
+    let arrow = localStorage.getItem("custArrowAs1");
+    let pre = localStorage.getItem("prevcustAs1");
+    if (pre) {
       setPrev(pre);
     }
     if (arrow) {
@@ -158,15 +158,15 @@ function AllAssignment() {
     }
     if (pageno) {
       getAssignmentData(pageno);
-      }else{
-        getAssignmentData(1);
-      }
+    } else {
+      getAssignmentData(1);
+    }
   }, []);
 
   const getAssignmentData = (e) => {
-    if ((e === undefined)) {
-      console.log(e,'e');
-      e=1;
+    if (e === undefined) {
+      console.log(e, "e");
+      e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustAs1"));
     let pagetry = JSON.parse(localStorage.getItem("freezecustAs1"));
@@ -177,98 +177,95 @@ function AllAssignment() {
     setOnPage(e);
     setLoading(true);
 
-    if ((data) && (!pagetry)){
+    if (data && !pagetry) {
       remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}`
-    }else if ((data) && (pagetry)){
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
       remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
-    }else if ((!data) && (pagetry)){
-      remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
-    }else{
-      remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(userId)}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let customId = 1;
-          if (e > 1) {
-            customId = allEnd * (e - 1) + 1;
-          }
-          let data = res.data.result;
-          data.map((i) => {
-            let data = {
-              ...i,
-              cid: customId,
-            };
-            customId++;
-            all.push(data);
-          });
-          setAssignmentDisplay(all);
-          setCount(res.data.total);
-          setRecords(res.data.result.length);
-        } else if (res.data.code === 2) {
-          CommonServices.clientLogout(history);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setAssignmentDisplay(all);
+        setCount(res.data.total);
+        setRecords(res.data.result.length);
+      } else if (res.data.code === 2) {
+        CommonServices.clientLogout(history);
+      }
+    });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
-    localStorage.setItem(`custAs1`, JSON.stringify(1))
+    localStorage.setItem(`custAs1`, JSON.stringify(1));
     let obj = {
       // pageno: pageno,
       val: val,
       field: field,
-    }
+    };
     localStorage.setItem(`freezecustAs1`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatacustAs1"));
 
     if (data) {
       remainApiPath = `customers/completeAssignments?page=1&user=${JSON.parse(
         userId
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-      }&status=${data.p_status}&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `customers/completeAssignments?page=1&user=${JSON.parse(userId)}&orderby=${val}&orderbyfield=${field}`
+      remainApiPath = `customers/completeAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
     }
 
-    axios
-      .get(
-        `${baseUrl}/${remainApiPath}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          let all = [];
-          let sortId = 1;
-          res.data.result.map((i) => {
-            let data = {
-              ...i,
-              cid: sortId,
-            };
-            sortId++;
-            all.push(data);
-          });
-          console.log('result',res.data.result);
-          console.log('all',all);
-          setAssignmentDisplay(all);
-          setTurnGreen(true);
-          setresetTrigger(!resetTrigger);
-        }
-      });
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setAssignmentDisplay(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -276,8 +273,14 @@ function AllAssignment() {
       dataField: "",
       text: "S.No",
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -488,18 +491,12 @@ function AllAssignment() {
         sortMessage(val, 6);
       },
 
-      formatter: function dateFormat(cell, row) {
-        var oldDate1 = row.final_date;
-        if (oldDate1 == null || oldDate1 === "0000-00-00") {
-          return null;
-        }
-        let finalDate = oldDate1.toString().split("-").reverse().join("-");
-        var oldDate2 = row.created;
-        if (oldDate2 == null || oldDate2 === "0000-00-00") {
-          return null;
-        }
-        let expectedDate = oldDate2.toString().split("-").reverse().join("-");
-        return <>{finalDate ? <p>{finalDate}</p> : <p>{expectedDate}</p>}</>;
+      formatter: function (cell, row) {
+        return row.final_discussion === "completed" ? (
+          <p>{row.final_date.split("-").reverse().join("-")}</p>
+        ) : (
+          row.Exp_Delivery_Date.split("-").reverse().join("-")
+        );
       },
     },
     {
@@ -597,7 +594,7 @@ function AllAssignment() {
     localStorage.removeItem("custArrowAs1");
     localStorage.removeItem("prevcustAs1");
     setPrev("");
-  }
+  };
 
   return (
     <>
@@ -623,20 +620,20 @@ function AllAssignment() {
         <CardBody>
           {/* <Records records={records} /> */}
           <Row className="mb-2">
-          <Col md="12" align="right">
-            <PaginatorCust
-              count={count}
-              id={userId}
-              setData={setAssignmentDisplay}
-              getData={getAssignmentData}
-              assignment="assignment"
-              index="custAs1"
-              setOnPage={setOnPage}
-              resetTrigger={resetTrigger}
-              setresetTrigger={setresetTrigger}
-            />
-          </Col>
-        </Row>
+            <Col md="12" align="right">
+              <PaginatorCust
+                count={count}
+                id={userId}
+                setData={setAssignmentDisplay}
+                getData={getAssignmentData}
+                assignment="assignment"
+                index="custAs1"
+                setOnPage={setOnPage}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+              />
+            </Col>
+          </Row>
           <Modal isOpen={openManual} toggle={needHelp} size="lg">
             <ModalHeader toggle={needHelp}>Mazars</ModalHeader>
             <ModalBody>

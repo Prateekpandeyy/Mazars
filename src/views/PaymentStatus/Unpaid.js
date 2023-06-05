@@ -475,7 +475,7 @@ function Paid() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
 
       formatter: function (cell, row) {
         return (
@@ -509,14 +509,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 6);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
+        sortMessage(val, 7);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -546,14 +539,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 7);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -584,14 +570,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 8);
-      },
-
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
+        sortMessage(val, 9);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -621,7 +600,7 @@ function Paid() {
         } else {
           val = 1;
         }
-        sortMessage(val, 9);
+        sortMessage(val, 10);
       },
 
       formatter: function dateFormat(cell, row) {

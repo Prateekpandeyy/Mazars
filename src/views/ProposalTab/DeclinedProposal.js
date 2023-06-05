@@ -531,25 +531,6 @@ function DeclinedProposal() {
     {
       text: "Accepted Amount",
       dataField: "accepted_amount",
-      headerFormatter: headerLabelFormatter,
-      sort: true,
-      onSort: (field, order) => {
-        let val = 0;
-        if (accend !== field) {
-          setAccend(field);
-          setIsActive(field);
-          localStorage.setItem("custArrowProposal4", field);
-        } else {
-          setAccend("");
-          localStorage.removeItem("custArrowProposal4");
-        }
-        if (accend === field) {
-          val = 0;
-        } else {
-          val = 1;
-        }
-        sortMessage(val, 10);
-      },
 
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");

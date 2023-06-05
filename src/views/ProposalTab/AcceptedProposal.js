@@ -114,7 +114,6 @@ function AcceptedProposal() {
   }
 
   useEffect(() => {
-    let local = JSON.parse(localStorage.getItem(`searchDatacustProposal3`));
     let pageno = JSON.parse(localStorage.getItem("custProposal3"));
     let arrow = localStorage.getItem("custArrowProposal3");
     let pre = localStorage.getItem("prevcustp3");
