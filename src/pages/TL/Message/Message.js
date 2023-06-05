@@ -66,7 +66,10 @@ function Message(props) {
   function headerLabelFormatter(column, colIndex) {
     let isActive = true;
 
-    if (localStorage.getItem("tlArrowMsg") === column.dataField) {
+    if (
+      localStorage.getItem("tlArrowMsg") === column.dataField ||
+      localStorage.getItem("tlArrowMsgDown") === column.dataField
+    ) {
       isActive = true;
     } else {
       isActive = false;
@@ -151,7 +154,6 @@ function Message(props) {
   };
 
   const sortMessage = (val, field) => {
-    let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -251,9 +253,11 @@ function Message(props) {
           setAccend(field);
           setIsActive(field);
           localStorage.setItem("tlArrowMsg", field);
+          localStorage.setItem("tlArrowMsgDown", "");
         } else {
           setAccend("");
           localStorage.removeItem("tlArrowMsg");
+          localStorage.setItem("tlArrowMsgDown", field);
         }
         if (accend === field) {
           val = 0;
@@ -291,9 +295,11 @@ function Message(props) {
           setAccend(field);
           setIsActive(field);
           localStorage.setItem("tlArrowMsg", field);
+          localStorage.setItem("tlArrowMsgDown", "");
         } else {
           setAccend("");
           localStorage.removeItem("tlArrowMsg");
+          localStorage.setItem("tlArrowMsgDown", field);
         }
         if (accend === field) {
           val = 0;
