@@ -525,7 +525,7 @@ function CompletedQuery({ updateTab }) {
             if (res.data.code === 1) {
               //  hist.push(`/teamleader/proposal`)
               updateTab(3);
-              getInCompleteAssingment();
+              getInCompleteAssingment(1);
             }
           });
       }

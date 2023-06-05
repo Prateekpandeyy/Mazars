@@ -55,7 +55,7 @@ function Message(props) {
       uit: token,
     },
   };
-  
+
   //page counter
   const firstChunk = () => {
     setAtpage(1);
@@ -93,8 +93,8 @@ function Message(props) {
     let isActive = true;
 
     if (
-      localStorage.getItem("custArrowMsg") === column.dataField ||
-      localStorage.getItem("prevcustmsg") === column.dataField
+      ((localStorage.getItem("custArrowMsg") === column.dataField) && (turnGreen == true) ) ||
+      ((localStorage.getItem("prevcustmsg") === column.dataField) && (turnGreen == true))
     ) {
       isActive = true;
       setPrev(column.dataField);
@@ -123,15 +123,19 @@ function Message(props) {
   useEffect(() => {
 
     let arrow = localStorage.getItem("custArrowMsg")
-    if (arrow) {
+    if ((history.action == 'POP') && (arrow)) {
       setAccend(arrow);
+      setTurnGreen(true);
     }
 
     let pageno = JSON.parse(localStorage.getItem("custMessage"));
-    if (pageno) {
+    if ((history.action == 'POP') && (pageno)) {
       getMessage(pageno);
       setPage(pageno);
     } else {
+      localStorage.removeItem(`freezecustMsg`);
+      localStorage.removeItem("prevcustmsg");
+      localStorage.removeItem("custArrowMsg");
       setPage(1);
       getMessage(1);
       if ((count) < allEnd) {
@@ -190,29 +194,29 @@ function Message(props) {
             setEnd(allEnd);
           }
           let dynamicPage = Math.round(res.data.total / allEnd);
-            let rem = (e - 1) * allEnd;
-            let end = e * allEnd;
-            if (dynamicPage > 1) {
-              if (e === 1) {
-                setBig(rem + e);
-                setEnd(end);
-              } else if ((e == (dynamicPage))) {
-                setBig(rem + 1);
-                setEnd(res.data.total);
-                // console.log("e at last page");
-              }
-              else {
-                setBig(rem + 1);
-                setEnd(end);
-              }
-            } else {
+          let rem = (e - 1) * allEnd;
+          let end = e * allEnd;
+          if (dynamicPage > 1) {
+            if (e === 1) {
               setBig(rem + e);
+              setEnd(end);
+            } else if ((e == (dynamicPage))) {
+              setBig(rem + 1);
               setEnd(res.data.total);
+              // console.log("e at last page");
             }
-            for (let i = 1; i <= dynamicPage; i++) {
-              droppage.push(i);
+            else {
+              setBig(rem + 1);
+              setEnd(end);
             }
-            setDefaultPage(droppage);
+          } else {
+            setBig(rem + e);
+            setEnd(res.data.total);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
         }
       });
   };
@@ -236,6 +240,7 @@ function Message(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setTurnGreen(true);
           let all = [];
           let sortId = 1;
           res.data.result.map((i) => {
@@ -256,7 +261,7 @@ function Message(props) {
           } else {
             setEnd(allEnd);
           }
-          console.log(all,"allHere");
+          console.log(all, "allHere");
         }
       });
   };
@@ -350,7 +355,7 @@ function Message(props) {
     },
     {
       text: "Message",
-      
+
       headerStyle: () => {
         return {
           fontSize: "12px",

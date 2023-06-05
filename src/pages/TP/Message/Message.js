@@ -42,6 +42,7 @@ function Message(props) {
   const [accend, setAccend] = useState(false);
   const [page, setPage] = useState(1);
   const [prev, setPrev] = useState("");
+  const [turnGreen,setTurnGreen]= useState(false);
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const myConfig = {
     headers: {
@@ -55,10 +56,11 @@ function Message(props) {
 
 
   function headerLabelFormatter(column) {
+    console.log(turnGreen,"greeen");
     let isActive = null;
     if (
-      localStorage.getItem("tpArrowMsg") === column.dataField ||
-      localStorage.getItem("preMessage") === column.dataField
+      ((localStorage.getItem("tpArrowMsg") === column.dataField) && (turnGreen == true)) ||
+      ((localStorage.getItem("preMessage") === column.dataField) && (turnGreen == true))
     ) {
       isActive = true;
       setPrev(column.dataField);
@@ -87,15 +89,18 @@ function Message(props) {
   useEffect(() => {
 
     let arrow = localStorage.getItem("tpArrowMsg")
-    if (arrow) {
+    if ((history.action == 'POP') && (arrow)) {
       setAccend(arrow);
+      setTurnGreen(true);
     }
-
     let pageno = JSON.parse(localStorage.getItem("tpMessage"));
-    if (pageno) {
+    if ((history.action == 'POP') && (pageno)) {
       getMessage(pageno);
       setPage(pageno);
     } else {
+      localStorage.removeItem(`freezetpMsg`);
+      localStorage.removeItem("preMessage");
+      localStorage.removeItem("tpArrowMsg");
       setPage(1);
       getMessage(1);
       if((count) < allEnd){
@@ -104,10 +109,6 @@ function Message(props) {
       setEnd(allEnd);
       }
     }
-
-    // setPage(1);
-    // setEnd(allEnd);
-    // getMessage(1);
   }, []);
 
   // set intial query here
@@ -199,6 +200,7 @@ function Message(props) {
         if (res.data.code === 1) {
           let all = [];
           let sortId = 1;
+          setTurnGreen(true);
           // let record =Number(localStorage.getItem("tp_record_per_page"))
           // let startAt = 1;
           // if (onPage > 1) {

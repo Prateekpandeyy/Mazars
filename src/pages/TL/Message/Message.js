@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
@@ -99,7 +99,6 @@ function Message(props) {
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
-    console.log(allEnd);
     setAtpage(e);
 
     if (e) {
@@ -171,6 +170,7 @@ function Message(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setTurnGreen(true);
           let all = [];
           let droppage = [];
           let sortId = 1;
@@ -184,7 +184,6 @@ function Message(props) {
           });
           setQuery(all);
           setCount(res.data.total);
-          setTurnGreen(true);
           // setting(1);
           setAtpage(1);
           setPage(1);

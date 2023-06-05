@@ -51,6 +51,10 @@ function ViewNotification() {
       });
   };
 
+  // const backfn = () => {
+  //   history.goBack();
+    
+  // }
 
 
   return (
