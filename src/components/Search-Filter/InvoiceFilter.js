@@ -184,6 +184,7 @@ const InvoiceFilter = (props) => {
     setToDate(current_date);
     setStatus("");
     props.resetPaging();
+    localStorage.removeItem(props.sortedValuetl);
     localStorage.removeItem(props.invoice);
     props.getData(1);
   };
@@ -406,8 +407,8 @@ const InvoiceFilter = (props) => {
             ""
           )}
           {props.invoice == "tlcreate" ||
-            props.invoice == "tpcreate" ||
-            props.invoice === "admincreate" ? (
+          props.invoice == "tpcreate" ||
+          props.invoice === "admincreate" ? (
             ""
           ) : (
             <>

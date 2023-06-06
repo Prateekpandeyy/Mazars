@@ -487,6 +487,7 @@ const Invoice = (updateTab) => {
             setPage={setPage}
             setBig={setBig}
             setEnd={setEnd}
+            sortedValuetl="sortedValuetl2"
           />
           {proposal.length > 0 ? (
             <Row>

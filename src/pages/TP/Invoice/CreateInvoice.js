@@ -599,6 +599,7 @@ const CreateInvoice = () => {
             setPage={setPage}
             setBig={setBig}
             setEnd={setEnd}
+            sortedValuetl="freezetpInvoice2"
           />
         </CardHeader>
 

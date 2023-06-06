@@ -43,7 +43,7 @@ const UpdateDetails = () => {
   useEffect(() => {
     getData();
   }, []);
-  const downloadPdf = (e) => {
+  const downloadPdf = (e, name) => {
     const myConfig2 = {
       headers: {
         uit: token,
@@ -56,7 +56,6 @@ const UpdateDetails = () => {
         myConfig2
       )
       .then((res) => {
-        let name = "Updates";
         if (res.status === 200) {
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
@@ -162,7 +161,7 @@ const UpdateDetails = () => {
                     )}
                   </ArticleWrapper>
                   <a
-                    onClick={(e) => downloadPdf(i.id)}
+                    onClick={(e) => downloadPdf(i.id, i.heading)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={classes.myLink}

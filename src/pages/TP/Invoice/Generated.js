@@ -841,6 +841,7 @@ const Generated = () => {
             page={page}
             setBig={setBig}
             setEnd={setEnd}
+            sortedValuetl="freezetpInvoice1"
           />
         </CardHeader>
 
