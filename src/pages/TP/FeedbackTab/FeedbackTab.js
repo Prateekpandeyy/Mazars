@@ -316,7 +316,6 @@ function FeedbackTab() {
             for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
-            console.log(droppage,"drop");
             setDefaultPage(droppage);
           }
         });
