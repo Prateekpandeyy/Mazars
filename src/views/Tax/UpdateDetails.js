@@ -43,6 +43,33 @@ const UpdateDetails = () => {
   useEffect(() => {
     getData();
   }, []);
+  const downloadPdf = (e, name) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=1`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+
+          a.download = name;
+          a.target = "_blank";
+          a.click();
+        }
+      });
+  };
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <>
@@ -134,7 +161,7 @@ const UpdateDetails = () => {
                     )}
                   </ArticleWrapper>
                   <a
-                    href={`${baseUrl3}/${i.file}`}
+                    onClick={(e) => downloadPdf(i.id, i.heading)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={classes.myLink}

@@ -718,6 +718,7 @@ const Generated = ({ updateTab }) => {
             setPage={setPage}
             page={page}
             setBig={setBig}
+            sortedValuetl="sortedValuetl1"
             setEnd={setEnd}
           />
         </CardHeader>
