@@ -2,14 +2,13 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
-
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
-
 import AllQueriesData from "./AllQueriesData";
 import InprogressAllocation from "./InprogressAllocation";
 import InprogressProposal from "./InprogressProposal";
 import DeclinedQueries from "./DeclinedQueries";
-
+import { clientLogout } from "../../components/Logout/ClientLogout";
+import { useHistory } from "react-router-dom";
 function QueriesTab(props) {
   const userId = window.localStorage.getItem("userid");
 
@@ -35,6 +34,7 @@ function QueriesTab(props) {
       uit: token,
     },
   };
+  let history = useHistory();
   useEffect(() => {
     CountAllQuery();
     CountInprogressAllocation();
@@ -43,7 +43,7 @@ function QueriesTab(props) {
   }, []);
 
   const CountAllQuery = (data) => {
-    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery1`));
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery1`));
     axios
       .get(
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(userId)}`,
@@ -58,12 +58,14 @@ function QueriesTab(props) {
               allQuery: res.data.total,
             };
           });
+        } else if (res.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
 
   const CountInprogressAllocation = () => {
-    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery2`));
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery2`));
     axios
       .get(
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -80,12 +82,14 @@ function QueriesTab(props) {
               inprogressQuery: res.data.total,
             };
           });
+        } else if (res.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
 
   const CountInprogressProposal = () => {
-    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery3`));
     axios
       .get(
         `${baseUrl}/customers/incompleteAssignments?user=${JSON.parse(
@@ -104,12 +108,14 @@ function QueriesTab(props) {
               completeQuery: res.data.total,
             };
           });
+        } else if (res.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
 
   const CountDeclined = () => {
-    let local =JSON.parse(localStorage.getItem(`searchDatacustQuery4`));
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery4`));
     axios
       .get(
         `${baseUrl}/customers/declinedQueries?uid=${JSON.parse(userId)}`,
@@ -126,6 +132,8 @@ function QueriesTab(props) {
           });
 
           setLoading(true);
+        } else if (res.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
