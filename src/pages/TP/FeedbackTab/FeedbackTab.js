@@ -186,18 +186,15 @@ function FeedbackTab() {
     setAtpage(1);
     setPage(1);
     getFeedback(1);
-    // console.log(1);
   };
   const prevChunk = () => {
     if (atPage > 1) {
       setAtpage((atPage) => atPage - 1);
     }
-    console.log("prev");
     setPage(Number(page) - 1);
     getFeedback(Number(page) - 1);
   };
   const nextChunk = () => {
-    console.log("next");
     if (atPage < totalPages) {
       setAtpage((atPage) => atPage + 1);
     }
@@ -205,7 +202,6 @@ function FeedbackTab() {
     getFeedback(Number(page) + 1);
   };
   const lastChunk = () => {
-    console.log("last");
     setPage(defaultPage.at(-1));
     getFeedback(defaultPage.at(-1));
     setAtpage(totalPages);
@@ -317,7 +313,7 @@ function FeedbackTab() {
               setBig(rem + e);
               setEnd(res.data.total);
             }
-            for (let i = 1; i < (dynamicPage); i++) {
+            for (let i = 1; i <= dynamicPage; i++) {
               droppage.push(i);
             }
             setDefaultPage(droppage);
@@ -349,11 +345,9 @@ function FeedbackTab() {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          console.log("This is sorting 1");
           localStorage.setItem("tpArrowFeed", field);
         } else {
           setAccend("");
-          console.log("This is sorting 2");
           localStorage.removeItem("tpArrowFeed");
         }
         if (accend === field) {

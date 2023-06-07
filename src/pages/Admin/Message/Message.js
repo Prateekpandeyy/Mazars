@@ -33,19 +33,28 @@ function Message(props) {
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState(0);
   const [defaultPage, setDefaultPage] = useState([]);
+  const [turnGreen, setTurnGreen] = useState(false);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
   const history = useHistory();
   useEffect(() => {
     let localPage = Number(localStorage.getItem("adminMessage"));
-    if (!localPage) {
-      localPage = 1;
-    }
-    setPrev(localStorage.getItem("adminMessage"));
-    setPage(localPage);
     setEnd(Number(localStorage.getItem("admin_record_per_page")));
-    setAccend(localStorage.getItem("accendMessage"));
-    getMessage(localPage);
+    if ((history.action == 'POP')) {
+      setAccend(localStorage.getItem("accendMessage"));
+      setTurnGreen(true);
+      }
+      setPrev(localStorage.getItem("adminMessage"));
+      if ((history.action == 'POP')&& (localPage)) {
+        setPage(localPage);
+        getMessage(localPage);
+      } else {
+        localStorage.removeItem(`sortedMessage`);
+        localStorage.removeItem("prevMessage");
+        localStorage.removeItem("accendMessage");
+        setPage(1);
+        getMessage(1);
+      }
   }, []);
   // function headerLabelFormatter(column, colIndex) {
   //   let isActive = true;
@@ -80,8 +89,8 @@ function Message(props) {
     let isActive = null;
 
     if (
-      localStorage.getItem("accendMessage") === column.dataField ||
-      localStorage.getItem("prevMessage") === column.dataField
+      ((localStorage.getItem("accendMessage") === column.dataField)&& (turnGreen == true)) ||
+      ((localStorage.getItem("prevMessage") === column.dataField)&& (turnGreen == true))
     ) {
       isActive = true;
       setPrev(column.dataField);
@@ -185,6 +194,7 @@ function Message(props) {
       )
       .then((res) => {
         if (res.data.code === 1) {
+          setTurnGreen(true);
           let all = [];
           setPage(1);
           setBig(1);
@@ -372,18 +382,21 @@ function Message(props) {
             <Col md="6"></Col>
             <Col md="6" align="right">
               <div className="customPagination">
-                <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
+                <div className="ml-auto  d-flex w-100 align-items-center justify-content-end">
                   <span>
                     {big}-{end} of {countNotification}
                   </span>
-                  <span className="d-flex">
+                  <span className="d-flex ml-2">
+                  {page > 1 ? (
                     <button
                       className="navButton mx-1"
                       onClick={(e) => firstChunk()}
                     >
                       &lt; &lt;
                     </button>
-
+                    ) : (
+                      ""
+                    )}
                     {page > 1 ? (
                       <button
                         className="navButton mx-1"
@@ -428,12 +441,16 @@ function Message(props) {
                     ) : (
                       ""
                     )}
+                    {defaultPage.length > page ? (
                     <button
                       className="navButton mx-1"
                       onClick={(e) => lastChunk()}
                     >
                       &gt; &gt;
                     </button>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>

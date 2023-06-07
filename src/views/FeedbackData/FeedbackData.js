@@ -93,15 +93,11 @@ function FeedbackData(props) {
         });
         setQuery(all);
         setCount(res.data.total);
-        if (count < allEnd) {
-          setEnd(count);
-        } else {
-          setEnd(allEnd);
-        }
-        let dynamicPage = Math.round(res.data.total / allEnd);
-        if (dynamicPage === 0) {
-          dynamicPage = 1;
-        }
+
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+        // if (dynamicPage === 0) {
+        //   dynamicPage = 1;
+        // }
         let rem = (e - 1) * allEnd;
         let end = e * allEnd;
         if (dynamicPage > 1) {
@@ -118,11 +114,17 @@ function FeedbackData(props) {
           }
         } else {
           setBig(rem + e);
-          setEnd(res.data.total);
+          if (res.data.total < allEnd) {
+            setEnd(res.data.total);
+          } else {
+            setEnd(allEnd);
+          }
         }
+        console.log('dym',dynamicPage);
         for (let i = 1; i <= dynamicPage; i++) {
           droppage.push(i);
         }
+        console.log('drop',droppage);
         setDefaultPage(droppage);
       }
     });
