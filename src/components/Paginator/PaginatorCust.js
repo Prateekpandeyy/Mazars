@@ -75,20 +75,20 @@ function PaginatorCust(props) {
     unpaid,
   } = props;
 
-  // console.log(props, "props is logged");
-  // console.log(props.count, "count at beginning of pagination");
-  // console.log(defaultPage);
-  // console.log(big, "big");
-  // console.log(end, "end");
-  // console.log(count, "count");
-  // console.log(index, "index");
+  // // console.log(props, "props is logged");
+  // // console.log(props.count, "count at beginning of pagination");
+  // // console.log(defaultPage);
+  // // console.log(big, "big");
+  // // console.log(end, "end");
+  // // console.log(count, "count");
+  // // console.log(index, "index");
 
   // let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
 
-  // console.log(pageno, "pageno");
+  // // console.log(pageno, "pageno");
 
   const renderCheck = () => {
-    console.log("render being", index);
+    // console.log("render being", index);
     if (index === "custQuery1") {
       let page = JSON.parse(localStorage.getItem("custQuery1"));
       if (page) {
@@ -203,7 +203,7 @@ function PaginatorCust(props) {
         localStorage.setItem("custAs5", JSON.stringify(1));
       }
     } else {
-      console.log("in setPageno Void");
+      // console.log("in setPageno Void");
     }
   };
 
@@ -241,7 +241,7 @@ function PaginatorCust(props) {
   const setting = (e) => {
     let droppage = [];
     const dynamicPage = Math.ceil(count / allEnd);
-    console.log(dynamicPage, "to check dynamic page");
+    // console.log(dynamicPage, "to check dynamic page");
     setTotalPages(dynamicPage);
     let rem = (e - 1) * allEnd;
     let end = e * allEnd;
@@ -249,15 +249,15 @@ function PaginatorCust(props) {
       if (e == 1) {
         setBig(rem + e);
         setEnd(allEnd);
-        // console.log("e at 1", big, end);
+        // // console.log("e at 1", big, end);
       } else if (e == dynamicPage) {
         setBig(rem + 1);
         setEnd(count);
-        // console.log("e at last page");
+        // // console.log("e at last page");
       } else {
         setBig(rem + 1);
         setEnd(end);
-        // console.log(`e at between page ${e}`, big, end);
+        // // console.log(`e at between page ${e}`, big, end);
       }
     } else {
       setBig(rem + 1);
@@ -271,7 +271,7 @@ function PaginatorCust(props) {
 
   //on click
   const getNewPage = (e) => {
-    console.log("getting new page", e);
+    // // console.log("getting new page", e);
     setLoading(true);
     let remainApiPath = "";
 
@@ -467,7 +467,7 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custProposal3`, JSON.stringify(e));
       if (data && pagetry) {
-        console.log("if data inpagination");
+        // // console.log("if data inpagination");
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -493,7 +493,7 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custProposal4`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
+        // console.log("if data inpagination");
         remainApiPath = `customers/getProposals?page=${e}&uid=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -519,7 +519,7 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custAs1`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
+        // console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -571,7 +571,7 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custAs3`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
+        // console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -597,7 +597,7 @@ function PaginatorCust(props) {
       let field = pagetry?.field;
       localStorage.setItem(`custAs4`, JSON.stringify(e));
       if (data && !pagetry) {
-        console.log("if data inpagination");
+        // console.log("if data inpagination");
         remainApiPath = `customers/completeAssignments?page=${e}&user=${JSON.parse(
           userId
         )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
@@ -689,7 +689,7 @@ function PaginatorCust(props) {
           userId
         )}&status=1&orderby=${val}&orderbyfield=${field}`;
       } else {
-        console.log("else in pagination");
+        // console.log("else in pagination");
         remainApiPath = `customers/getUploadedProposals?page=${e}&cid=${JSON.parse(
           userId
         )}&status=1`;
@@ -720,7 +720,7 @@ function PaginatorCust(props) {
         )}&status=2`;
       }
     } else {
-      console.log("into else void of pagination");
+      // console.log("into else void of pagination");
     }
 
     if (e) {
@@ -729,7 +729,7 @@ function PaginatorCust(props) {
         if (res.data.code === 1) {
           let all = [];
           let customId = 1;
-          console.log(e);
+          // console.log(e);
           if (e > 1) {
             customId = allEnd * (e - 1) + 1;
           }
@@ -744,8 +744,8 @@ function PaginatorCust(props) {
             all.push(data);
           });
           setData(all);
-          console.log(all);
-          console.log(data.length,"length");
+          // console.log(all);
+          // console.log(data.length,"length");
           if (data.length > 0) {
             setSearchResult(true);
           } else {
@@ -755,7 +755,7 @@ function PaginatorCust(props) {
           setAtpage(e);
           // setRecords(res.data.result.length);
           const dynamicPage = Math.ceil(count / allEnd);
-          console.log(dynamicPage, "to check dynamic page");
+          // console.log(dynamicPage, "to check dynamic page");
           setTotalPages(dynamicPage);
           let rem = (e - 1) * allEnd;
           let end = e * allEnd;
@@ -802,7 +802,7 @@ function PaginatorCust(props) {
   }, [resetTrigger]);
 
   useEffect(() => {
-    console.log("useEffect count", count);
+    // console.log("useEffect count", count);
     if (count > 0) {
       if (pageno > 1) {
         setPage(pageno);
