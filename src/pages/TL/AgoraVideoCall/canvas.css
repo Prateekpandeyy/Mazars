@@ -57,7 +57,7 @@
 
 .ag-btn-group {
   height: 45px;
-  width: calc(100% - 60px);
+  width: calc(100% - 20px);
   margin: 0 auto;
   position: absolute;
   bottom: 0;

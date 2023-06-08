@@ -394,7 +394,7 @@ function AllQueriesData() {
     },
     {
       text: "Delivery due date   / Acutal delivery date",
-      dataField: "Exp_Delivery_Date",
+      dataField: "exp_Delivery_Date",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
@@ -415,7 +415,7 @@ function AllQueriesData() {
         sortMessage(val, 6);
       },
       formatter: function dateFormat(cell, row) {
-        var oldDate = row.Exp_Delivery_Date;
+        var oldDate = row.exp_Delivery_Date;
 
         if (oldDate == "0000-00-00") {
           return null;
