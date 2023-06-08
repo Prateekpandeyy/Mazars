@@ -77,7 +77,7 @@ const Details = () => {
           a.style = "display: none";
           a.href = url;
 
-          a.download = name;
+          a.download = `${name}.pdf`;
           a.target = "_blank";
           a.click();
         }
