@@ -464,13 +464,17 @@ function Recording() {
               getRecording={getRecording}
               setDefaultPage={setDefaultPage}
               resetPaging={resetPaging}
-              setCountNotification={setCountNotification}
-              setPage={setPage}
-              page={page}
+              big={big}
+              end={end}
               setBig={setBig}
               setEnd={setEnd}
+              setPage={setPage}
+              defaultPage={defaultPage}
+              setCountNotification={setCountNotification}
+              countNotification={countNotification}
+              page={page}
             />
-            <Row>
+            {/* <Row>
               <Col md="12" align="right">
                 <div className="customPagination">
                   <div className="ml-auto d-flex w-100 align-items-center justify-content-end">
@@ -536,7 +540,7 @@ function Recording() {
                   </div>
                 </div>
               </Col>
-            </Row>
+            </Row> */}
             <DataTablepopulated
               bgColor="#42566a"
               keyField={"assign_no"}
