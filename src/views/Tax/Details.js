@@ -33,6 +33,7 @@ const Details = () => {
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userid");
   const token = window.localStorage.getItem("clientToken");
+  const [pdfUrl, setPdfUrl] = useState("");
   const myConfig = {
     headers: {
       uit: token,
@@ -48,6 +49,7 @@ const Details = () => {
         )
         .then((res) => {
           setData(res.data.result);
+          getPdf(res.data.result[0].id);
         });
     }
   };
@@ -78,6 +80,26 @@ const Details = () => {
           a.download = name;
           a.target = "_blank";
           a.click();
+        }
+      });
+  };
+  const getPdf = (e) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=0`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          console.log("Response123", res.config.url);
+          let data = window.URL.createObjectURL(res.data);
+          setPdfUrl(data);
         }
       });
   };
@@ -127,9 +149,13 @@ const Details = () => {
                     )}
                     {i.content_type === "0" || i.content_type === "1" ? (
                       <div id="artContent">
-                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                          <Viewer fileUrl={`${baseUrl3}/${i.file}`}></Viewer>
-                        </Worker>
+                        {pdfUrl?.length > 0 ? (
+                          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                            <Viewer fileUrl={pdfUrl}></Viewer>
+                          </Worker>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ) : (
                       ""

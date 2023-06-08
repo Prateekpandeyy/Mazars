@@ -35,7 +35,7 @@ const UpdateDetails = () => {
   };
   const getData = (e) => {
     axios
-      .get(`${baseUrl}//customers/getupdatesdetail?id=${id.id}`, myConfig)
+      .get(`${baseUrl}/customers/getupdatesdetail?id=${id.id}`, myConfig)
       .then((res) => {
         setData(res.data.result);
       });
@@ -43,6 +43,25 @@ const UpdateDetails = () => {
   useEffect(() => {
     getData();
   }, []);
+  const getPdf = (e) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=1`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          let data = window.URL.createObjectURL(res.data);
+          return data;
+        }
+      });
+  };
   const downloadPdf = (e, name) => {
     const myConfig2 = {
       headers: {
@@ -139,7 +158,7 @@ const UpdateDetails = () => {
                     {i.content_type === "0" || i.content_type === "1" ? (
                       <div id="artContent">
                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                          <Viewer fileUrl={`${baseUrl3}/${i.file}`}></Viewer>
+                          <Viewer fileUrl={getPdf(i.id)}></Viewer>
                         </Worker>
                       </div>
                     ) : (
