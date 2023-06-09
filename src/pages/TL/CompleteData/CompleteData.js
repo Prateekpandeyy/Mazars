@@ -91,7 +91,7 @@ function CompletedQuery({ updateTab }) {
   };
 
   useEffect(() => {
-    let localPage = Number(localStorage.getItem("tlqp3"));
+    let localPage = Number(localStorage.getItem("tlqp4"));
     if (!localPage) {
       localPage = 1;
     }
