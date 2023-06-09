@@ -27,6 +27,7 @@ const UpdateDetails = () => {
   let id = useParams();
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
+  const [pdfUrl, setPdfUrl] = useState("");
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -38,6 +39,7 @@ const UpdateDetails = () => {
       .get(`${baseUrl}/customers/getupdatesdetail?id=${id.id}`, myConfig)
       .then((res) => {
         setData(res.data.result);
+        getPdf(res.data.result[0].id);
       });
   };
   useEffect(() => {
@@ -57,8 +59,9 @@ const UpdateDetails = () => {
       )
       .then((res) => {
         if (res.status === 200) {
+          console.log("Response123", res.config.url);
           let data = window.URL.createObjectURL(res.data);
-          return data;
+          setPdfUrl(data);
         }
       });
   };
@@ -83,7 +86,7 @@ const UpdateDetails = () => {
           a.style = "display: none";
           a.href = url;
 
-          a.download = name;
+          a.download = `${name}.pdf`;
           a.target = "_blank";
           a.click();
         }
@@ -157,9 +160,13 @@ const UpdateDetails = () => {
                     )}
                     {i.content_type === "0" || i.content_type === "1" ? (
                       <div id="artContent">
-                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                          <Viewer fileUrl={getPdf(i.id)}></Viewer>
-                        </Worker>
+                        {pdfUrl?.length > 0 ? (
+                          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                            <Viewer fileUrl={pdfUrl}></Viewer>
+                          </Worker>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ) : (
                       ""
