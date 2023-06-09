@@ -210,6 +210,7 @@ const CreateInvoice = () => {
           droppage.push(i);
         }
         setDefaultPage(droppage);
+        localStorage.setItem("tpInvoice2", e);
       }
     });
   };
