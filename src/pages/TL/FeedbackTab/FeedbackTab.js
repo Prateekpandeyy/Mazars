@@ -149,7 +149,8 @@ function FeedbackTab() {
         });
         setFeedBackData(all);
         setCount(res.data.total);
-        let dynamicPage = Math.round(res.data.total / allEnd);
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+        // console.log(res.data.total/allEnd);
         let rem = (e - 1) * allEnd;
         let end = e * allEnd;
         if (e === 1) {
