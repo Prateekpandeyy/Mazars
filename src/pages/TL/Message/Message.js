@@ -144,7 +144,7 @@ function Message(props) {
           setQuery(all);
 
           setCountNotification(res.data.total);
-          let dynamicPage = Math.round(res.data.total / allEnd);
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
           let rem = (e - 1) * allEnd;
           let end = e * allEnd;
           if (e === 1) {
@@ -203,7 +203,7 @@ function Message(props) {
           // setting(1);
           setAtpage(1);
           setPage(1);
-          let dynamicPage = Math.round(res.data.total / allEnd);
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
           let rem = (1 - 1) * allEnd;
           let end = 1 * allEnd;
           setBig(rem + 1);

@@ -243,7 +243,7 @@ function FeedbackTab() {
           setTurnGreen(true);
           setAtpage(1);
           setPage(1);
-          let dynamicPage = Math.round(res.data.total / allEnd);
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
           let rem = (1 - 1) * allEnd;
           let end = 1 * allEnd;
           setBig(rem + 1);

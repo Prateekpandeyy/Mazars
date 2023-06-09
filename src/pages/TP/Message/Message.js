@@ -152,7 +152,7 @@ function Message(props) {
             setQuery(all);
             setCount(res.data.total)
             // setCountNotification(res.data.total);
-            let dynamicPage = Math.round(res.data.total / allEnd);
+            let dynamicPage = Math.ceil(res.data.total / allEnd);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
             if (dynamicPage > 1) {
