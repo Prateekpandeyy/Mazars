@@ -563,7 +563,7 @@ function TeamFilter(props) {
               `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${data.store
               }&from=${dateFormat(data.fromDate)}&to=${dateFormat(
                 data.toDate
-              )}&status=1&pcat_id=${data.pcatId}`,
+              )}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {
@@ -601,7 +601,7 @@ function TeamFilter(props) {
               )}&to=${dateFormat(
                 toDate,
                 "toDate"
-              )}&status=1&pcat_id=${selectedData}`,
+              )}&status=1&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
             .then((res) => {

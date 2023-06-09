@@ -568,15 +568,18 @@ const CreateInvoice = () => {
   };
 
   const gettingAftertds = () => {
-    let dif = countNotification - allEnd * page;
+    let dif = countNotification - (allEnd * (Number(page)-1))  ;
     if (page > 1) {
       if (dif == 1) {
         getProposalList(Number(page - 1));
+        setPage(Number(page) - 1);
       } else {
         getProposalList(page);
+        setPage(Number(page));
       }
     } else {
       getProposalList(1);
+      setPage(1);
     }
   };
 
