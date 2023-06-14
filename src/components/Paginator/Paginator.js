@@ -333,11 +333,15 @@ function Paginator(props) {
       let val = pagetry?.val;
       let field = pagetry?.field;
       localStorage.setItem(`tpQuery3`, JSON.stringify(e));
+      let status = "1";
+      if (data.p_status) {
+        status = data.p_status;
+      }
       if (data && !pagetry) {
         //if Data then Api Path
         remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
           userid
-        )}&status=1&cat_id=${data.store}&from=${data.fromDate
+        )}&status=${status}&cat_id=${data.store}&from=${data.fromDate
           ?.split("-")
           .reverse()
           .join("-")}&to=${data.toDate
@@ -347,7 +351,7 @@ function Paginator(props) {
       } else if (data && pagetry) {
         remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
           userid
-        )}&status=1&cat_id=${data.store}&from=${data.fromDate
+        )}&status=${status}&cat_id=${data.store}&from=${data.fromDate
           ?.split("-")
           .reverse()
           .join("-")}&to=${data.toDate
@@ -359,12 +363,12 @@ function Paginator(props) {
       } else if (!data && pagetry) {
         remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
           userid
-        )}&page=${e}&orderby=${val}&orderbyfield=${field}&status=1`;
+        )}&page=${e}&orderby=${val}&orderbyfield=${field}&status=${status}`;
       } else {
         //else if Empty then api path
         remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
           userid
-        )}&page=${e}&status=1`;
+        )}&page=${e}&status=${status}`;
       }
     } else if (DeclinedQuery == "DeclinedQuery") {
       let data = JSON.parse(localStorage.getItem(""));

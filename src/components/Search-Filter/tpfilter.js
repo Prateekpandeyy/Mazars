@@ -353,10 +353,10 @@ function TaxProfessionalFilter(props) {
 
     if (InprogressQuery == "InprogressQuery") {
       let status = "1";
-      if (data.p_status) {
+      if (data?.p_status) {
         status = data.p_status;
       }
-      console.log("getting new page", data);
+      // console.log("getting new page", data);
       let customId = 1;
       if (data.route) {
         axios
