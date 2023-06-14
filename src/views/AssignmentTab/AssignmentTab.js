@@ -4,15 +4,16 @@ import axios from "axios";
 import { baseUrl } from "../../config/config";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 import AdminAssignment from "./AdminAssignment";
-
 import AllAssignment from "./AllAssignment";
 import InprogressAssignment from "./InprogressAssignment";
 import CompletedAssignment from "./CompletedAssignment";
 import CustomerDeclinedPayment from "./CustomerDeclinedPayment";
+import { useHistory } from "react-router-dom";
+import { clientLogout } from "../../components/Logout/ClientLogout";
 
 function AssignmentTab(props) {
   const userId = window.localStorage.getItem("userid");
-
+  let history = useHistory();
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
@@ -47,7 +48,11 @@ function AssignmentTab(props) {
         myConfig
       )
       .then((res) => {
-        setAllAssignment(res.data.total);
+        if (res.data.code === 1) {
+          setAllAssignment(res.data.total);
+        } else if (res.data.code === 102) {
+          clientLogout(axios, history);
+        }
       });
   };
 
@@ -62,6 +67,8 @@ function AssignmentTab(props) {
       .then((response) => {
         if (response.data.code === 1) {
           setInprogressAssignmentCount(response.data.total);
+        } else if (response.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
@@ -77,6 +84,8 @@ function AssignmentTab(props) {
       .then((res) => {
         if (res.data.code === 1) {
           setCompleteAssignment(res.data.total);
+        } else if (res.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
@@ -92,6 +101,8 @@ function AssignmentTab(props) {
       .then((response) => {
         if (response.data.code === 1) {
           setDeclinedAssignment(response.data.total);
+        } else if (response.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };
@@ -107,6 +118,8 @@ function AssignmentTab(props) {
       .then((response) => {
         if (response.data.code === 1) {
           setAdminDecliend(response.data.total);
+        } else if (response.data.code === 102) {
+          clientLogout(axios, history);
         }
       });
   };

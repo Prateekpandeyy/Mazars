@@ -7,6 +7,8 @@ import { Spinner } from "reactstrap";
 import ShowError from "../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
 import { current_date } from "../../common/globalVeriable";
+import { useHistory } from "react-router-dom";
+import { clientLogout } from "../Logout/ClientLogout";
 function CustomerFilter(props) {
   const { Option } = Select;
   const { handleSubmit, register, errors, reset } = useForm();
@@ -52,7 +54,7 @@ function CustomerFilter(props) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState(current_date);
   const [queryNo, setQueryNo] = useState("");
-
+  let history = useHistory();
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -156,30 +158,29 @@ function CustomerFilter(props) {
   const onSubmit = (data) => {
     setLoading(true);
     let obj = {};
-      if (data.route) {
-        obj = {
-          store: data.store,
-          fromDate: data.fromDate,
-          toDate: data.toDate,
-          pcatId: data.pcatId,
-          query_no: data?.query_no,
-          p_status: data?.p_status,
-          route: window.location.pathname,
-          index: index,
-        };
-      } else {
-        obj = {
-          store: showSubCat,
-          fromDate: data.p_dateFrom,
-          toDate: data.p_dateTo,
-          pcatId: selectedData,
-          query_no: data?.query_no,
-          p_status: data?.p_status,
-          route: window.location.pathname,
-          index: index,
-        };
-      }
-    
+    if (data.route) {
+      obj = {
+        store: data.store,
+        fromDate: data.fromDate,
+        toDate: data.toDate,
+        pcatId: data.pcatId,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+        index: index,
+      };
+    } else {
+      obj = {
+        store: showSubCat,
+        fromDate: data.p_dateFrom,
+        toDate: data.p_dateTo,
+        pcatId: selectedData,
+        query_no: data?.query_no,
+        p_status: data?.p_status,
+        route: window.location.pathname,
+        index: index,
+      };
+    }
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     // console.log("Obj", obj);
@@ -215,6 +216,8 @@ function CustomerFilter(props) {
                 // setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -250,6 +253,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custQuery1`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -286,8 +291,11 @@ function CustomerFilter(props) {
                   setCount(res.data.total);
                   // setRecords(res.data.result.length);
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
+
             .catch((error) => {
               ShowError.LoadingError(setLoading);
             });
@@ -354,6 +362,8 @@ function CustomerFilter(props) {
                   resetTriggerFunc();
                   localStorage.setItem(`custQuery2`, JSON.stringify(1));
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
             .catch((error) => {
@@ -389,6 +399,8 @@ function CustomerFilter(props) {
                   resetTriggerFunc();
                   localStorage.setItem(`custQuery2`, JSON.stringify(1));
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
             .catch((error) => {
@@ -427,6 +439,8 @@ function CustomerFilter(props) {
                 setCount(res.data.total);
                 // setRecords(res.data.result.length);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -462,6 +476,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custQuery3`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -499,6 +515,8 @@ function CustomerFilter(props) {
                 setCount(res.data.total);
                 // setRecords(res.data.result.length);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -534,6 +552,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custQuery4`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -571,6 +591,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -606,6 +628,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custProp1`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -644,6 +668,8 @@ function CustomerFilter(props) {
                   setRecords(res.data.result.length);
                   setCount(res.data.total);
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
             .catch((error) => {
@@ -677,6 +703,8 @@ function CustomerFilter(props) {
                   setRecords(res.data.result.length);
                   setCount(res.data.total);
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
             .catch((error) => {
@@ -714,6 +742,8 @@ function CustomerFilter(props) {
                   resetTriggerFunc();
                   localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
             .catch((error) => {
@@ -749,6 +779,8 @@ function CustomerFilter(props) {
                   resetTriggerFunc();
                   localStorage.setItem(`custPropsosal2`, JSON.stringify(1));
                 }
+              } else if (res.data.code === 102) {
+                clientLogout(axios, history);
               }
             })
             .catch((error) => {
@@ -787,6 +819,8 @@ function CustomerFilter(props) {
                 setCount(res.data.total);
                 setRecords(res.data.result.length);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -822,6 +856,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custPropsosal3`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -859,6 +895,8 @@ function CustomerFilter(props) {
                 setCount(res.data.total);
                 setRecords(res.data.result.length);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -894,6 +932,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custPropsosal4`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -921,6 +961,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -956,6 +998,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custAs1`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -982,6 +1026,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1017,6 +1063,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custAs1`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1043,6 +1091,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1078,6 +1128,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custAs3`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1104,6 +1156,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1139,6 +1193,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custAs4`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1165,6 +1221,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1200,6 +1258,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custAs5`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1226,6 +1286,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1261,6 +1323,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custPay1`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1287,6 +1351,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1322,6 +1388,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custPay2`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1348,6 +1416,8 @@ function CustomerFilter(props) {
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {
@@ -1383,6 +1453,8 @@ function CustomerFilter(props) {
                 resetTriggerFunc();
                 localStorage.setItem(`custPay3`, JSON.stringify(1));
               }
+            } else if (res.data.code === 102) {
+              clientLogout(axios, history);
             }
           })
           .catch((error) => {

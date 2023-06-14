@@ -421,7 +421,7 @@ function AllQueriesData({
       dataField: "status",
       sort: true,
       headerFormatter: headerLabelFormatter,
-      sort: true,
+
       onSort: (field, order) => {
         let val = 0;
         if (accend !== field) {

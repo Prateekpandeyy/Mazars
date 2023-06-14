@@ -270,7 +270,14 @@ function AllQueriesData() {
         return { width: "50px" };
       },
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} ref={el => (myRef.current[row.assign_no] = el)}>{row.cid}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
     },
     {
@@ -422,7 +429,7 @@ function AllQueriesData() {
         if (oldDate == "0000-00-00") {
           return null;
         } else {
-          return oldDate.toString().split("-").reverse().join("-");
+          return oldDate?.toString().split("-").reverse().join("-");
         }
       },
     },
