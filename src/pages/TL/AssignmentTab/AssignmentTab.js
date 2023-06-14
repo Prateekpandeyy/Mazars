@@ -128,7 +128,7 @@ function QueriesTab(props) {
           <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Delivery of final report({final})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
             Permission; to issue invoice ({permission})
           </Tab>
         </TabList>

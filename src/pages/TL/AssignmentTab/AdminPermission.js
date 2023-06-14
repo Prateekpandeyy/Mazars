@@ -118,22 +118,25 @@ function AdminPermission(props) {
 
   //handleCategory
   const handleCategory = (value) => {
+    console.log(value);
     setSelectedData(value);
-    if (value == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
+    } else if (selectedData == 2) {
+      console.log("value2", JSON.parse(localStorage.getItem("tlIndirect tax")));
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     } else {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
     }
+    // setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
+    setError(false);
   };
 
   useEffect(() => {
-    console.log(selectedData, "selected data");
     if (selectedData == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
     } else if (selectedData == 2) {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
-    } else {
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     }
   }, [selectedData]);
 
@@ -254,16 +257,6 @@ function AdminPermission(props) {
     setTax2([]);
   };
 
-  useEffect(() => {
-    // setTax2(JSON.parse(localStorage.getItem(selectedData)));
-    if (selectedData == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
-    } else if (selectedData == 2) {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
-    } else {
-    }
-  }, [selectedData]);
-
   //reset date
   const resetData = () => {
     reset();
@@ -365,7 +358,7 @@ function AdminPermission(props) {
       }
     });
   };
-
+  console.log("tax222", tax2);
   const columns = [
     {
       text: "S.no",
@@ -887,7 +880,7 @@ function AdminPermission(props) {
             <Col md="12">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-inline">
-                  <div className="form-group mb-2">
+                  <div class="form-group mb-2">
                     <Select
                       style={{ width: 130 }}
                       placeholder="Select Category"
@@ -903,7 +896,7 @@ function AdminPermission(props) {
                     </Select>
                   </div>
 
-                  <div className="form-group mx-sm-1  mb-2">
+                  <div class="form-group mx-sm-1  mb-2">
                     <Select
                       mode="multiple"
                       style={{ width: 250 }}
@@ -913,7 +906,7 @@ function AdminPermission(props) {
                       value={store2}
                       allowClear
                     >
-                      {tax2.map((p, index) => (
+                      {tax2?.map((p, index) => (
                         <Option value={p.id} key={index}>
                           {p.details}
                         </Option>

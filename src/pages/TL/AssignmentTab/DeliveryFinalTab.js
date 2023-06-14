@@ -195,10 +195,10 @@ function AssignmentTab() {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    if (value == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
-    } else {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     }
     // setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
@@ -206,9 +206,9 @@ function AssignmentTab() {
 
   useEffect(() => {
     if (selectedData == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
     } else if (selectedData == 2) {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     } else {
     }
   }, [selectedData]);
@@ -328,9 +328,11 @@ function AssignmentTab() {
     if (data) {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
         userid
-      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
-        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+        data.toDate
+      }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${
+        data.pcatId
+      }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getAssignments?page=1&tl_id=${JSON.parse(
         userid
@@ -692,9 +694,9 @@ function AssignmentTab() {
               {row.paid_status == "2" ? null : (
                 <>
                   {row.client_discussion == "completed" &&
-                    row.draft_report == "completed" &&
-                    row.final_discussion == "completed" &&
-                    row.delivery_report == "inprogress" ? (
+                  row.draft_report == "completed" &&
+                  row.final_discussion == "completed" &&
+                  row.delivery_report == "inprogress" ? (
                     <p
                       style={{
                         display: "flex",
@@ -777,15 +779,19 @@ function AssignmentTab() {
       if (pagetry) {
         remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
           userid
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${
+          data.pcatId
+        }&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
       } else {
         remainApiPath = `tl/getAssignments?page=${e}&tl_id=${JSON.parse(
           userid
-        )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${data.pcatId
-          }&qno=${data.query_no}`;
+        )}&cat_id=${data.store}&from=${data.fromDate}&to=${
+          data.toDate
+        }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${
+          data.pcatId
+        }&qno=${data.query_no}`;
       }
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
         if (res.data.code === 1) {
@@ -816,8 +822,10 @@ function AssignmentTab() {
         .get(
           `${baseUrl}/tl/getAssignments?page=1&tl_id=${JSON.parse(
             userid
-          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo
-          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${data.query_no
+          )}&cat_id=${store2}&from=${data.p_dateFrom}&to=${
+            data.p_dateTo
+          }&assignment_status=Delivery_of_report&stages_status=1&pcat_id=${selectedData}&qno=${
+            data.query_no
           }`,
           myConfig
         )
@@ -902,9 +910,9 @@ function AssignmentTab() {
                       value={store2}
                       allowClear
                     >
-                      {tax2.length > 0 ? (
+                      {tax2?.length > 0 ? (
                         <>
-                          {tax2.map((p, index) => (
+                          {tax2?.map((p, index) => (
                             <Option value={p.id} key={index}>
                               {p.details}
                             </Option>
