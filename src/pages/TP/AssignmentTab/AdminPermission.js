@@ -982,7 +982,7 @@ function AdminPermission(props) {
             });
             setAssignment(all);
             setRecords(res.data.result.length);
-            setCount(res.data.result.length);
+            setCount(res.data.total);
           }
         }
       });

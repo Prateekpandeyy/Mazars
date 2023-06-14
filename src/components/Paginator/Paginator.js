@@ -1049,7 +1049,7 @@ function Paginator(props) {
   }, [resetTrigger]);
 
   useEffect(() => {
-    // console.log("useEffect count", count);
+    console.log("useEffect count", count);
     if (count > 0) {
       if (pageno > 1) {
         setPage(pageno);

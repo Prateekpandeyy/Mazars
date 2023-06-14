@@ -74,6 +74,16 @@ function TaxProfessionalFilter(props) {
     }
   }, [catShowData]);
 
+  useEffect(() => {
+    // setTax2(JSON.parse(localStorage.getItem(selectedData)));
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("tpDirect tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("tpIndirect tax")));
+    } else {
+    }
+  }, [selectedData]);
+
   //handleSubCategory
   const handleSubCategory = (value) => {
     setShowSubCat(value);
