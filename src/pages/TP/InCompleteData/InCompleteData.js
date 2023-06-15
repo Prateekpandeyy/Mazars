@@ -184,10 +184,14 @@ function InCompleteData({ data }) {
     let field = pagetry?.field;
     let remainApiPath = "";
     setLoading(true);
+    let status = "1";
+    if (data?.p_status) {
+      status = data.p_status;
+    }
     if (data && !pagetry) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=1&cat_id=${data.store}&from=${data.fromDate
+      )}&status=${status}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate?.split("-").reverse().join("-")}&pcat_id=${
@@ -196,7 +200,7 @@ function InCompleteData({ data }) {
     } else if (data && pagetry) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
-      )}&status=1&cat_id=${data.store}&from=${data.fromDate
+      )}&status=${status}&cat_id=${data.store}&from=${data.fromDate
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate?.split("-").reverse().join("-")}&pcat_id=${
@@ -205,11 +209,11 @@ function InCompleteData({ data }) {
     } else if (!data && pagetry) {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
         userid
-      )}&page=${e}&orderby=${val}&orderbyfield=${field}&status=1`;
+      )}&page=${e}&orderby=${val}&orderbyfield=${field}&status=${status}`;
     } else {
       remainApiPath = `tl/getIncompleteQues?tp_id=${JSON.parse(
         userid
-      )}&page=${e}&status=1`;
+      )}&page=${e}&status=${status}`;
     }
     if (e) {
       axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
@@ -249,6 +253,10 @@ function InCompleteData({ data }) {
     localStorage.setItem(`freezetpQuery3`, JSON.stringify(obj));
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     setresetTrigger(!resetTrigger);
+    let status = "1";
+    if (data?.p_status) {
+      status = data.p_status;
+    }
 
     if (data) {
       remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${
@@ -256,11 +264,11 @@ function InCompleteData({ data }) {
       }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
         ?.split("-")
         .reverse()
-        .join("-")}&status=1&pcat_id=${data.pcatId}&qno=${
+        .join("-")}&status=${status}&pcat_id=${data.pcatId}&qno=${
         data?.query_no
       }&orderby=${val}&orderbyfield=${field}`;
     } else {
-      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `tl/getIncompleteQues?page=1&orderby=${val}&orderbyfield=${field}&status=${status}`;
     }
 
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
