@@ -141,7 +141,7 @@ const FlashContent = () => {
     }
   };
 
-  console.log("setContentType", contentType);
+  // console.log("setContentType", contentType);
   return (
     <Layout cmsDashboard="cmsDashboard">
       <Container maxWidth="xl">
