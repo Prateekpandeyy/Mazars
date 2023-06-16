@@ -57,6 +57,7 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
     if (!cate) {
       getCategory();
     }
+    setTax(cate);
   }, []);
   function getCategory() {
     axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
