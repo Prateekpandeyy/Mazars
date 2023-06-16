@@ -288,11 +288,13 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
+            `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
+              data.p_status
             }&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${data.pcatId
+            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${
+              data.pcatId
             }&qno=${data.query_no}`,
             myConfig
           )
@@ -305,11 +307,13 @@ function TeamFilter(props) {
         console.log("hidding");
         axios
           .get(
-            `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${data.p_status
+            `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
+              data.p_status
             }&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${data.query_no
+            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -325,7 +329,8 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}&cat_id=${data.store
+            `${baseUrl}/tl/pendingQues?id=${JSON.parse(userid)}&cat_id=${
+              data.store
             }from=${dateFormat(data.fromDate, "fromDate")}&to=${dateFormat(
               data.toDate,
               "toDate"
@@ -342,10 +347,11 @@ function TeamFilter(props) {
           .get(
             `${baseUrl}/tl/pendingQues?id=${JSON.parse(
               userid
-            )}&cat_id=${store2}&from=${dateFormat(
+            )}&status=1&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${data.query_no
+            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -366,7 +372,8 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${data.pcatId
+            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${
+              data.pcatId
             }&qno=${data.query_no}`,
             myConfig
           )
@@ -382,7 +389,8 @@ function TeamFilter(props) {
               userid
             )}&status=${status}&cat_id=${store2}&from=${dateFormat(
               fromDate
-            )}&to=${dateFormat(toDate)}&pcat_id=${selectedData}&qno=${data.query_no
+            )}&to=${dateFormat(toDate)}&pcat_id=${selectedData}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -402,7 +410,8 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${data.pcatId
+            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${
+              data.pcatId
             }&qno=${data.query_no}`,
             myConfig
           )
@@ -419,7 +428,8 @@ function TeamFilter(props) {
             )}&status=${status}&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${data.query_no
+            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -435,11 +445,13 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status
+            `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${
+              data.p_status
             }&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${data.pcatId
+            )}&to=${dateFormat(data.toDate, "toDate")}&pcat_id=${
+              data.pcatId
             }&qno=${data.query_no}`,
             myConfig
           )
@@ -451,11 +463,13 @@ function TeamFilter(props) {
       } else {
         axios
           .get(
-            `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${data.p_status
+            `${baseUrl}/tl/declinedQueries?id=${JSON.parse(userid)}&status=${
+              data.p_status
             }&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${data.query_no
+            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -471,7 +485,8 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(userid)}&cat_id=${data.store
+            `${baseUrl}/tl/getCompleteQues?id=${JSON.parse(userid)}&cat_id=${
+              data.store
             }from=${dateFormat(data.fromDate, "fromDate")}&to=${dateFormat(
               data.toDate,
               "toDate"
@@ -491,7 +506,8 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${data.query_no
+            )}&to=${dateFormat(toDate, "toDate")}&pcat_id=${selectedData}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -507,11 +523,13 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${data.store
+            `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
+              data.store
             }from=${dateFormat(data.fromDate, "fromDate")}&to=${dateFormat(
               data.toDate,
               "toDate"
-            )}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+            )}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+              data.query_no
             }`,
             myConfig
           )
@@ -528,7 +546,8 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&status=${data.p_status
+            )}&to=${dateFormat(toDate, "toDate")}&status=${
+              data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -545,10 +564,12 @@ function TeamFilter(props) {
         if (data.p_status.length > 0) {
           axios
             .get(
-              `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${data.store
+              `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
+                data.store
               }&from=${dateFormat(data.fromDate)}&to=${dateFormat(
                 data.toDate
-              )}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+              )}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
+                data.query_no
               }`,
               myConfig
             )
@@ -560,7 +581,8 @@ function TeamFilter(props) {
         } else {
           axios
             .get(
-              `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${data.store
+              `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
+                data.store
               }&from=${dateFormat(data.fromDate)}&to=${dateFormat(
                 data.toDate
               )}&status=1&pcat_id=${data.pcatId}&qno=${data.query_no}`,
@@ -581,7 +603,8 @@ function TeamFilter(props) {
               )}&cat_id=${store2}&from=${dateFormat(
                 fromDate,
                 "fromDate"
-              )}&to=${dateFormat(toDate, "toDate")}&status=${data.p_status
+              )}&to=${dateFormat(toDate, "toDate")}&status=${
+                data.p_status
               }&pcat_id=${selectedData}&qno=${data.query_no}`,
               myConfig
             )
@@ -616,7 +639,8 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${data.store
+            `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
+              data.store
             }from=${dateFormat(data.fromDate, "fromDate")}&to=${dateFormat(
               data.toDate,
               "toDate"
@@ -654,7 +678,8 @@ function TeamFilter(props) {
       if (data.route) {
         axios
           .get(
-            `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${data.store
+            `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&cat_id=${
+              data.store
             }from=${dateFormat(data.fromDate, "fromDate")}&to=${dateFormat(
               data.toDate,
               "toDate"
@@ -697,7 +722,8 @@ function TeamFilter(props) {
             )}&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&status=${data.p_status
+            )}&to=${dateFormat(data.toDate, "toDate")}&status=${
+              data.p_status
             }&pcat_id=${data.pcatId}&qno=${data.query_no}`,
             myConfig
           )
@@ -714,7 +740,8 @@ function TeamFilter(props) {
             )}&cat_id=${store2}&from=${dateFormat(
               fromDate,
               "fromDate"
-            )}&to=${dateFormat(toDate, "toDate")}&status=${data.p_status
+            )}&to=${dateFormat(toDate, "toDate")}&status=${
+              data.p_status
             }&pcat_id=${selectedData}&qno=${data.query_no}`,
             myConfig
           )
@@ -735,7 +762,8 @@ function TeamFilter(props) {
             )}&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&status=1&pcat_id=${data.pcatId
+            )}&to=${dateFormat(data.toDate, "toDate")}&status=1&pcat_id=${
+              data.pcatId
             }&qno=${data.query_no}`,
             myConfig
           )
@@ -775,7 +803,8 @@ function TeamFilter(props) {
             )}&cat_id=${data.store}&from=${dateFormat(
               data.fromDate,
               "fromDate"
-            )}&to=${dateFormat(data.toDate, "toDate")}&status=2&pcat_id=${data.pcatId
+            )}&to=${dateFormat(data.toDate, "toDate")}&status=2&pcat_id=${
+              data.pcatId
             }&qno=${data.query_no}`,
             myConfig
           )

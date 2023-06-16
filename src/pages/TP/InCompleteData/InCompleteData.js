@@ -185,9 +185,9 @@ function InCompleteData({ data }) {
     let remainApiPath = "";
     setLoading(true);
     let status = "1";
-      if (data?.p_status) {
-        status = data.p_status;
-      }
+    if (data?.p_status) {
+      status = data.p_status;
+    }
     if (data && !pagetry) {
       remainApiPath = `tl/getIncompleteQues?page=${e}&tp_id=${JSON.parse(
         userid
@@ -254,9 +254,9 @@ function InCompleteData({ data }) {
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
     setresetTrigger(!resetTrigger);
     let status = "1";
-      if (data?.p_status) {
-        status = data.p_status;
-      }
+    if (data?.p_status) {
+      status = data.p_status;
+    }
 
     if (data) {
       remainApiPath = `tl/getIncompleteQues?page=1&cat_id=${

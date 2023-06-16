@@ -132,7 +132,7 @@ const EditFaq = () => {
             </div>
 
             <div className="col-md-12">
-              <CustomQuillEditor content={det}/>
+              <CustomQuillEditor content={det} />
             </div>
           </div>
           <div className="row">

@@ -195,10 +195,11 @@ function AssignmentTab(props) {
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    if (value == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     } else {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
     }
     // setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
@@ -209,9 +210,9 @@ function AssignmentTab(props) {
   useEffect(() => {
     console.log(selectedData, "selected data");
     if (selectedData == 1) {
-      setTax2(JSON.parse(localStorage.getItem("Direct tax")));
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
     } else if (selectedData == 2) {
-      setTax2(JSON.parse(localStorage.getItem("Indirect tax")));
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     } else {
     }
     // const getSubCategory = () => {
