@@ -53,8 +53,26 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
   const [store, setStore] = useState("");
   const [store2, setStore2] = useState(null);
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("categoryData"));
-    setTax(data);
+    function getCategory() {
+      axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+        if (res.data.code === 1) {
+          let data = res.data.result;
+          setTax(data);
+          data.map((i) => {
+            getSubCategory(i);
+          });
+          localStorage.setItem("categoryData", JSON.stringify(data));
+        }
+      });
+    }
+
+    const getSubCategory = (e) => {
+      axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
+        if (res.data.code === 1) {
+          localStorage.setItem(`${e.details}`, JSON.stringify(res.data.result));
+        }
+      });
+    };
   }, []);
 
   const handleCategory = (value) => {
