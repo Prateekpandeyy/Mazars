@@ -485,48 +485,48 @@ function SignUp(props) {
           .then(function (response) {
             if (response.data.code === 1) {
               async function loginSuccess() {
-              let categoryData = await getCategory();
+                let categoryData = await getCategory();
 
-              setLoading(false);
+                setLoading(false);
 
-              setLoad(false);
+                setLoad(false);
 
-              var variable = "Sign up successful.";
-              Alerts.SuccessNormal(variable);
+                var variable = "Sign up successful.";
+                Alerts.SuccessNormal(variable);
 
-              localStorage.setItem(
-                "isMail",
-                JSON.stringify(response.data.is_mail)
-              );
-              localStorage.setItem(
-                "userid",
-                JSON.stringify(response.data.user_id)
-              );
-              sessionStorage.setItem(
-                "userIdsession",
-                JSON.stringify(response.data.user_id)
-              );
-              localStorage.setItem(
-                "custEmail",
-                JSON.stringify(response.data.name)
-              );
-              localStorage.setItem(
-                "clientName",
-                JSON.stringify(response.data.displayname)
-              );
-              localStorage.setItem("custName", response.data.displayname);
-              localStorage.setItem("clientToken", response.data.token);
-              localStorage.setItem(
-                "clientLoginId",
-                JSON.stringify(response.data.loginuid)
-              );
-              localStorage.setItem(
-                "cust_record_per_page",
-                response.data.record_per_page
-              );
-              props.history.push("/customer/select-category");
-            }
-            loginSuccess();
+                localStorage.setItem(
+                  "isMail",
+                  JSON.stringify(response.data.is_mail)
+                );
+                localStorage.setItem(
+                  "userid",
+                  JSON.stringify(response.data.user_id)
+                );
+                sessionStorage.setItem(
+                  "userIdsession",
+                  JSON.stringify(response.data.user_id)
+                );
+                localStorage.setItem(
+                  "custEmail",
+                  JSON.stringify(response.data.name)
+                );
+                localStorage.setItem(
+                  "clientName",
+                  JSON.stringify(response.data.displayname)
+                );
+                localStorage.setItem("custName", response.data.displayname);
+                localStorage.setItem("clientToken", response.data.token);
+                localStorage.setItem(
+                  "clientLoginId",
+                  JSON.stringify(response.data.loginuid)
+                );
+                localStorage.setItem(
+                  "cust_record_per_page",
+                  response.data.record_per_page
+                );
+                props.history.push("/customer/select-category");
+              }
+              loginSuccess();
             } else if (response.data.code === 0) {
               setLoading(false);
 
