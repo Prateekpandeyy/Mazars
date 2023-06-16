@@ -57,8 +57,9 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
     let cate = JSON.parse(localStorage.getItem("categoryData"));
     if (!cate) {
       getCategory();
+    } else {
+      setTax(cate);
     }
-    setTax(cate);
   }, []);
   function getCategory() {
     axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
