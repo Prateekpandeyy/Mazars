@@ -52,11 +52,13 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
 
   const [store, setStore] = useState("");
   const [store2, setStore2] = useState(null);
+  console.log("fixed");
   useEffect(() => {
     let cate = JSON.parse(localStorage.getItem("categoryData"));
     if (!cate) {
       getCategory();
     }
+    setTax(cate);
   }, []);
   function getCategory() {
     axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {

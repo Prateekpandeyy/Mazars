@@ -49,6 +49,7 @@ function InprogressProposal() {
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
   const [prev, setPrev] = useState("");
+  const [checkNum,setChecknum]=useState(false);
 
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -179,9 +180,9 @@ function InprogressProposal() {
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
     } else if (data && pagetry) {
       remainApiPath = `tl/getProposalTl?page=${e}&tp_id=${JSON.parse(
         userid
@@ -189,11 +190,10 @@ function InprogressProposal() {
         ?.split("-")
         .reverse()
         .join("-")}&to=${data.toDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-        data.query_no
-      }&orderby=${val}&orderbyfield=${field}`;
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+        }&orderby=${val}&orderbyfield=${field}`;
     } else if (!data && pagetry) {
       remainApiPath = `tl/getProposalTl?page=${e}&status=1&tp_id=${JSON.parse(
         userid
@@ -228,6 +228,15 @@ function InprogressProposal() {
     });
   };
 
+  const checkNumber = () => {
+    let pageno = JSON.parse(localStorage.getItem("tpProposal2"));
+    if (pageno) {
+      if (pageno > 1) {
+        console.log('count', count);
+      }else{}
+    }
+  };
+
   const sortMessage = (val, field) => {
     console.log("Sorting...");
     let remainApiPath = "";
@@ -243,14 +252,12 @@ function InprogressProposal() {
     localStorage.setItem(`tpProposal2`, JSON.stringify(1));
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
     if (data) {
-      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${
-        data.store
-      }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
-        ?.split("-")
-        .reverse()
-        .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${
-        data.query_no
-      }&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `tl/getProposalTl?tp_id=${JSON.parse(userid)}&cat_id=${data.store
+        }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
+          ?.split("-")
+          .reverse()
+          .join("-")}&status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no
+        }&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `tl/getProposalTl?status=1&tp_id=${JSON.parse(
         userid
@@ -612,7 +619,7 @@ function InprogressProposal() {
                 <ViewDiscussionIcon />
               </div>
 
-              <div className="ml-2">
+              <div className="ml-2" onClick={(e) => checkNumber()}>
                 {row.status_code == "4" ? (
                   <Link
                     to={{
@@ -693,6 +700,8 @@ function InprogressProposal() {
               // resetPaging={resetPaging}
               resetTrigger={resetTrigger}
               setresetTrigger={setresetTrigger}
+              // checkNum={checkNum}
+              // setChecknum={setChecknum}
             />
           </Col>
         </Row>
