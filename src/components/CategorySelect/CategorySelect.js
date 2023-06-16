@@ -67,112 +67,126 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
 
   return (
     <>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
-      >
-        <div className="col-sm-3" style={{ marginTop: "38px" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label>
-                Category <span className="declined">*</span>
-              </label>
-              <select
-                name="p_tax"
-                className={classNames("form-control", {
-                  "is-invalid": errors.p_tax,
-                })}
-                ref={register}
-                onChange={(e) => handleCategory(e.target.value)}
-              >
-                <option value="">--Select category--</option>
-                {tax.map((p, index) => (
-                  <option key={index} value={p.details}>
-                    {p.details}
-                  </option>
-                ))}
-              </select>
-              {errors.p_tax && (
-                <div className="invalid-feedback">{errors.p_tax.message}</div>
-              )}
+      {tax.length > 0 ? (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "15px",
+            }}
+          >
+            <div className="col-sm-3" style={{ marginTop: "38px" }}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-group">
+                  <label>
+                    Category <span className="declined">*</span>
+                  </label>
+                  <select
+                    name="p_tax"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_tax,
+                    })}
+                    ref={register}
+                    onChange={(e) => handleCategory(e.target.value)}
+                  >
+                    <option value="">--Select category--</option>
+                    {tax?.map((p, index) => (
+                      <option key={index} value={p.details}>
+                        {p.details}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.p_tax && (
+                    <div className="invalid-feedback">
+                      {errors.p_tax.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label>
+                    Sub category <span className="declined">*</span>
+                  </label>
+                  <select
+                    name="p_tax2"
+                    className={classNames("form-control", {
+                      "is-invalid": errors.p_tax2,
+                    })}
+                    ref={register}
+                    onChange={(e) => setStore2(e.target.value)}
+                  >
+                    <option value="">--Select sub-category--</option>
+                    {tax2.map((p, index) => (
+                      <option key={index} value={p.id}>
+                        {p.details}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.p_tax2 && (
+                    <div className="invalid-feedback">
+                      {errors.p_tax2.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  {startbtn && (
+                    <button
+                      type="submit"
+                      className="customBtn"
+                      onClick={(e) => validation()} //
+                    >
+                      Submit
+                    </button>
+                  )}
+
+                  {addfreshbtn && (
+                    <button
+                      type="submit"
+                      className="customBtn"
+                      onClick={(e) => validation2()} //
+                    >
+                      Submit
+                    </button>
+                  )}
+                </div>
+              </form>
+
+              <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>
+                  <img
+                    src={mazars}
+                    style={{ height: "auto", width: "25%" }}
+                    alt=""
+                  />
+                </ModalHeader>
+
+                <ModalBody>
+                  <div className="modal-body">
+                    <h4>Would you like to post a Query ?</h4>
+                  </div>
+                </ModalBody>
+
+                <div className="modal-footer m-auto">
+                  <Link
+                    to="/customer/register-yourself"
+                    className="btn btn-primary"
+                  >
+                    Yes
+                  </Link>
+                  <Link to="/customer/signin" className="btn btn-secondary">
+                    No
+                  </Link>
+                </div>
+              </Modal>
             </div>
-
-            <div className="form-group">
-              <label>
-                Sub category <span className="declined">*</span>
-              </label>
-              <select
-                name="p_tax2"
-                className={classNames("form-control", {
-                  "is-invalid": errors.p_tax2,
-                })}
-                ref={register}
-                onChange={(e) => setStore2(e.target.value)}
-              >
-                <option value="">--Select sub-category--</option>
-                {tax2.map((p, index) => (
-                  <option key={index} value={p.id}>
-                    {p.details}
-                  </option>
-                ))}
-              </select>
-              {errors.p_tax2 && (
-                <div className="invalid-feedback">{errors.p_tax2.message}</div>
-              )}
-            </div>
-
-            <div className="form-group">
-              {startbtn && (
-                <button
-                  type="submit"
-                  className="customBtn"
-                  onClick={(e) => validation()} //
-                >
-                  Submit
-                </button>
-              )}
-
-              {addfreshbtn && (
-                <button
-                  type="submit"
-                  className="customBtn"
-                  onClick={(e) => validation2()} //
-                >
-                  Submit
-                </button>
-              )}
-            </div>
-          </form>
-
-          <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>
-              <img
-                src={mazars}
-                style={{ height: "auto", width: "25%" }}
-                alt=""
-              />
-            </ModalHeader>
-
-            <ModalBody>
-              <div className="modal-body">
-                <h4>Would you like to post a Query ?</h4>
-              </div>
-            </ModalBody>
-
-            <div className="modal-footer m-auto">
-              <Link
-                to="/customer/register-yourself"
-                className="btn btn-primary"
-              >
-                Yes
-              </Link>
-              <Link to="/customer/signin" className="btn btn-secondary">
-                No
-              </Link>
-            </div>
-          </Modal>
-        </div>
-      </div>
-      <Mandatory />
+          </div>
+          <Mandatory />
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }

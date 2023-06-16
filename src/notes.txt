@@ -37,10 +37,24 @@ Tp (payment - paid sorting , accepted amount)
 Tp invoice filter.
 by default order should be based on due date in invoice filter
 checking symbol of accending and ddecending in invoice filter.
-
+expected / Actual delivery date (assignmeent)
 Issue - 
 Proposal edit api error.
-Invoice is not coming after accepting proposal.
-If I upload pdf in client assignment got error.
-If I tried to upload same file again and again, It's not showing erroe.
-In client feedback , by default feedabck icon in coming sorting
+(1) - Invoice is not coming after accepting proposal.
+(2) - If I upload pdf in client assignment got error.
+(3) - If I tried to upload same file again and again, It's not showing erroe.
+(4) - In client feedback , by default feedabck icon in coming sorting.
+(5) - In edit query - when we show uploaded document, it's alignment of icon and text is not proper.
+(6) - In admin feedback, when i click on feedback, it's icon not marked read(green)
+(7) - Client : Query tab message history dailoug box popup heading is not visible.
+(8) - Query rejection by admin, when admin click on reject query, he will get black page, instead of modal box.
+(9) - Pending for acceptence, tl category sorting (https://stagingapi-advisorysolutions.mazars.co.in/v1/tl/pendingQues?id=153&status=1&page=2&orderby=0&orderbyfield=4)
+(10) - Issue when user return back to Improgress assignmeent to TP, he face pafing number issue.
+(11) - When tl assign any query to himself, in that case, he get NAN in paging.
+(12) - Counting is not reflecting, when we click on tab.
+(13) - Not visible query, when come back to query page (TP)
+(14) - inprogress assignmeent to TP, when it come back from assigning query to tp, it redirect to first page, even, if he goes from second page.
+(15) - After uploading draft , it goes to 1st page. in TL.
+
+(16) query - all query, inprogress, status sorting, order is going correctly but backend is not coming properly.
+/components/MarketGraph/MarketIndices/MarketDetail/stockchart.tsx

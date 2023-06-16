@@ -215,13 +215,11 @@ function AssignmentTab(props) {
 
   useEffect(() => {
     console.log(catShowData, "final tax2");
-    if (catShowData == "Direct tax")
-      setSelectedData(1);
+    if (catShowData == "Direct tax") setSelectedData(1);
     else {
       setSelectedData(2);
     }
   }, [catShowData]);
-
 
   useEffect(() => {
     let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
@@ -342,7 +340,7 @@ function AssignmentTab(props) {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(value,"value is ")
+    console.log(value, "value is ");
     setError(false);
     // setStore2(value);
     setShowSubCat(value);
@@ -475,7 +473,7 @@ function AssignmentTab(props) {
           all.push(data);
         });
         setAssignment(all);
-        setRecords(res.data.result.length);
+        setRecords(res.data.total);
         setCount(res.data.total);
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
@@ -585,7 +583,6 @@ function AssignmentTab(props) {
     {
       dataField: "status",
       text: "Status",
-    
 
       headerStyle: () => {
         return { width: "200px" };
@@ -904,7 +901,7 @@ function AssignmentTab(props) {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
     console.log("dkk", dk);
-    let fixedCat = (localStorage.getItem("fixedCat"));
+    let fixedCat = localStorage.getItem("fixedCat");
     if (dk) {
       if (dk.route === window.location.pathname) {
         setCatShowData(fixedCat);
