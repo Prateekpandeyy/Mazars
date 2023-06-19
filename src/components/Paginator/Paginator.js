@@ -230,9 +230,10 @@ function Paginator(props) {
   };
 
   const setting = (e) => {
+    setAtpage(e);
+    setPage(e);
     let droppage = [];
     const dynamicPage = Math.ceil(count / allEnd);
-    // console.log(dynamicPage, "to check dynamic page");
     setTotalPages(dynamicPage);
     let rem = (e - 1) * allEnd;
     let end = e * allEnd;
@@ -998,6 +999,16 @@ function Paginator(props) {
     renderCheck();
   }, []);
 
+  useEffect(() => {
+    if(big>count){
+      console.log('not right');
+      if ((atPage > 1) && ((InprogressProposal == "InprogressProposal"))) {
+        getNewPage((Number(atPage)-1));
+        setOnPage((Number(atPage)-1));
+        setPage((Number(atPage)-1));
+      }
+    }
+  }, [big]);
 
   useEffect(() => {
     if (resetTrigger == true) {
