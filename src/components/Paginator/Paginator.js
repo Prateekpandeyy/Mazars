@@ -1001,7 +1001,7 @@ function Paginator(props) {
 
   useEffect(() => {
     if(big>count){
-      console.log('not right');
+      // console.log('not right');
       if ((atPage > 1) && ((InprogressProposal == "InprogressProposal"))) {
         getNewPage((Number(atPage)-1));
         setOnPage((Number(atPage)-1));
