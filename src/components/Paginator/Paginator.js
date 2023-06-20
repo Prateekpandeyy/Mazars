@@ -996,6 +996,7 @@ function Paginator(props) {
   };
 
   useEffect(() => {
+    console.log('this',this);
     renderCheck();
   }, []);
 

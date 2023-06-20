@@ -76,7 +76,7 @@ function TeamFilter(props) {
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
-    console.log(data, "category ");
+    // console.log(data, "category ");
   }, []);
 
   //handleCategory
@@ -157,13 +157,13 @@ function TeamFilter(props) {
         let catData = JSON.parse(localStorage.getItem("tlcategoryData"));
         catData.forEach((element) => {
           if (element.id === dk.pcatId) {
-            console.log("eleent", element.details);
+            // console.log("eleent", element.details);
             setCatShowData(element.details);
             parentId = element.details;
           }
         });
         let subCat = JSON.parse(localStorage.getItem(`tl${parentId}`));
-        console.log("parentId", catData);
+        // console.log("parentId", catData);
         setTax2(subCat);
         if (subCat && subCat.length > 0) {
           subCat?.map((i) => {
@@ -188,7 +188,7 @@ function TeamFilter(props) {
     }
   }, []);
   const updateResult = (res) => {
-    console.log("allData", res);
+    // console.log("allData", res);
 
     localStorage.removeItem(pageValue);
     localStorage.removeItem(localAccend);
@@ -257,7 +257,7 @@ function TeamFilter(props) {
     }
   };
   const onSubmit = (data) => {
-    console.log("toDate", toDate);
+    // console.log("toDate", toDate);
     let obj = {};
     if (data.route) {
       obj = {
@@ -282,7 +282,7 @@ function TeamFilter(props) {
         index: index,
       };
     }
-    console.log("toDate", toDate);
+    // console.log("toDate", toDate);
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
     if (AllQuery == "AllQuery") {
       if (data.route) {
@@ -304,7 +304,7 @@ function TeamFilter(props) {
             }
           });
       } else {
-        console.log("hidding");
+        // console.log("hidding");
         axios
           .get(
             `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}&status=${
@@ -886,6 +886,16 @@ function TeamFilter(props) {
       setSearchResult(true);
     }
   }, [countNotification]);
+
+  // useEffect(() => {
+  //   if(big>countNotification){
+  //     // console.log('not right');
+  //     if ((atPage > 1) && ((InprogressProposal == "InprogressProposal"))) {
+  //       getData((Number(atPage)-1));
+  //       setPage((Number(atPage)-1));
+  //     }
+  //   }
+  // }, [big]);
 
   // console.log("selectedData", selectedData);
   return (
