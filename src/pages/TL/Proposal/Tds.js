@@ -117,7 +117,7 @@ function Tds(props) {
               setTds(parseFloat(i.tds_amount));
               setgrandTotal(parseFloat(i.payable_amount));
               setTotal(parseFloat(i.invoice_amount));
-              setGst(parseFloat(i.gst));
+              setGst(parseFloat(i.cgst_amount + i.igst_amount + i.sgst_amount));
               setDisabled(true);
             });
           }
