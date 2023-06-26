@@ -564,7 +564,7 @@ const Generated = () => {
     setFiledBy("");
     localStorage.removeItem("admininvt1");
     localStorage.removeItem("sortedValuevt1");
-    localStorage.removeItem("accendcreated");
+    localStorage.removeItem("accendgenerated");
     localStorage.removeItem("previnv1");
     getProposalList(1);
   };

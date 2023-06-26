@@ -446,7 +446,7 @@ function AllPayment(props) {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
       headerFormatter: headerLabelFormatter,
       sort: true,
       onSort: (field, order) => {
