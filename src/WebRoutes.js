@@ -9,12 +9,12 @@ import ClientRoute from "./RouteFolder/ClientRoute/ClientRoute";
 function WebRoutes() {
   const getLayout = () => {
     let comp;
-
-    if (window.location.pathname.split("/")[1] === "taxprofessional") {
+    console.log("window", window.location.pathname.split("/"));
+    if (window.location.pathname.split("/")[1] === "taxprofessional" || window.location.pathname.split("/")[1] === "tp_queries") {
       comp = <TpRoute />;
-    } else if (window.location.pathname.split("/")[1] === "teamleader") {
+    } else if (window.location.pathname.split("/")[1] === "teamleader" || window.location.pathname.split("/")[1] === "tl_queries") {
       comp = <TlRoute />;
-    } else if (window.location.pathname.split("/")[1] === "admin") {
+    } else if (window.location.pathname.split("/")[1] === "admin" || window.location.pathname.split("/")[1] === "admin_queries") {
       comp = <AdminRoute />;
     } else if (window.location.pathname.split("/")[1] === "cms") {
       comp = <CmsRoute />;

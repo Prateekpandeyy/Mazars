@@ -5,9 +5,7 @@ import AssignmentDetails from "./AssignmentDetails";
 import QueryRecording from "./QueryRecording";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Card } from "reactstrap";
-import classnames from "classnames";
 import Feedback from "./Feedback";
-import { TabPane } from "reactstrap";
 
 function QueryDetails({
   overDue,

@@ -4,32 +4,21 @@ import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link, useParams, useHistory } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from "reactstrap";
+import { CardHeader, Row, Col } from "reactstrap";
 import CustomHeading from "../../../components/Common/CustomHeading";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
 import moment from "moment";
 function QueriesRecevied(props) {
   const { id } = useParams();
-  const history = useHistory();
-
+  let history = useHistory();
   const userid = window.localStorage.getItem("adminkey");
   const [submitData, setSubmitData] = useState([]);
   const [assingNo, setAssingmentNo] = useState();
-  const [displayQuery, setDisplayQuery] = useState([]);
   const [diaplaySpecific, setDisplaySpecific] = useState([]);
   const [queryDocs, setQueryDocs] = useState([]);
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [feedback, setFeedback] = useState([]);
   const [reports, setReports] = useState([]);
-
   const [purpose, setPurpose] = useState([]);
   const [year, setYear] = useState([]);
   const [accept, setAccept] = useState();
@@ -40,7 +29,6 @@ function QueriesRecevied(props) {
   const [declinedStatus, setDeclinedStatus] = useState(false);
   const [finalDate, setFinalDate] = useState();
   const [qstatus, setqStatus] = useState();
-  const [adminVoice, setAdminVoice] = useState(null);
   const [overDue, setOverDue] = useState("");
   const [diaplayProposal, setDisplayProposal] = useState({
     amount: "",
@@ -216,8 +204,6 @@ function QueriesRecevied(props) {
     getSubmittedAssingment();
   }, [assingNo]);
 
-  console.log("props", props);
-
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
       <div className="row mt-3">
@@ -249,7 +235,6 @@ function QueriesRecevied(props) {
                 diaplayProposal={diaplayProposal}
                 diaplayHistory={diaplayHistory}
                 diaplayAssignment={diaplayAssignment}
-                displayQuery={displayQuery}
                 qstatus={qstatus}
                 assingNo={assingNo}
                 queryDocs={queryDocs}

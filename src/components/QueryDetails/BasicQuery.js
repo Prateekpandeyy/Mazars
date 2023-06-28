@@ -40,7 +40,7 @@ function BasicQuery({
   const [innerFiles, setInnerFiles] = useState([]);
   const [clientFolder, setclientFolder] = useState([]);
   const [clientFile, setclientFile] = useState([]);
-  const [leftFolder, setLeftFolder] = useState([]);
+
   const [sub_folder, set_sub_folder] = useState([]);
   const [isLeft, setIsLeft] = useState(true);
   const [mFold, setMfold] = useState([]);
@@ -311,7 +311,6 @@ function BasicQuery({
           });
 
           setMovedFolder(kk);
-          setLeftFolder(leftFold);
         }
       });
   };
