@@ -480,7 +480,7 @@ function Dashboard() {
                     <tr>
                       <td className="left_side">
                         <CustomTypography>
-                          client declined; assignments
+                          Client declined; assignments
                         </CustomTypography>
                       </td>
                       <td>

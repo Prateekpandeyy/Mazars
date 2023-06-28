@@ -57,6 +57,8 @@ function CategorySelect({ addfreshbtn, startbtn }, props) {
     let cate = JSON.parse(localStorage.getItem("categoryData"));
     if (!cate) {
       getCategory();
+    } else {
+      setTax(cate);
     }
     setTax(cate);
   }, []);
