@@ -61,7 +61,7 @@ function TeamFilter(props) {
   const [toDate, setToDate] = useState("");
   const [queryNo, setQueryNo] = useState("");
   const [status, setStatus] = useState("");
-  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
+  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(0, "days");
   const [categoryData, setCategory] = useState([]);
   const [showSubCat, setShowSubCat] = useState([]);
   const [catShowData, setCatShowData] = useState([]);

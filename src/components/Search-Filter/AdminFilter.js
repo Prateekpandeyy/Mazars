@@ -110,14 +110,13 @@ function AdminFilter(props) {
     setCatShowData([]);
     setStore2([]);
     setTax2([]);
-
     setFromDate("");
     setStatus("");
     setQueryNo("");
     resetPaging();
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
-    setToDate(fullDate);
+    setToDate("");
     getData(1);
     // dateValue.current.clearValue();
   };
