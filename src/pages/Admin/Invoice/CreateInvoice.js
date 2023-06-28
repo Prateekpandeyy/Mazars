@@ -130,8 +130,7 @@ const CreateInvoice = () => {
     let searchData = JSON.parse(localStorage.getItem(`admincreate`));
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}
-      &installment_no=${searchData?.installment_no}`;
+      remainApiPath = `/admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&installment_no=${searchData?.installment_no}`;
     } else {
       remainApiPath = `admin/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }

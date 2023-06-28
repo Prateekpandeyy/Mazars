@@ -48,7 +48,7 @@ function AdminFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const [showSubCat, setShowSubCat] = useState([]);
   const [catShowData, setCatShowData] = useState([]);
-  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(1, "days");
+  const maxDate = moment(new Date().toISOString().slice(0, 10)).add(0, "days");
   const dateValue = useRef();
   var allEnd = Number(localStorage.getItem("admin_record_per_page"));
   const token = window.localStorage.getItem("adminToken");
