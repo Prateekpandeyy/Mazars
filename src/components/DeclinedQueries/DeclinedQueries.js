@@ -457,7 +457,7 @@ function DeclinedQueries() {
     localStorage.removeItem("adminqp4");
     localStorage.removeItem("accendq4");
     localStorage.removeItem("prevq4");
-    getPendingForPayment(1);
+    // getPendingForPayment(1);
   };
 
   return (
