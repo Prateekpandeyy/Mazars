@@ -40,7 +40,7 @@ const Details = () => {
     },
   };
   const getData = (e) => {
-    console.log("history", history.location);
+    // console.log("history", history.location);
     if (history.location) {
       axios
         .get(
@@ -97,7 +97,7 @@ const Details = () => {
       )
       .then((res) => {
         if (res.status === 200) {
-          console.log("Response123", res.config.url);
+          // console.log("Response123", res.config.url);
           let data = window.URL.createObjectURL(res.data);
           setPdfUrl(data);
         }

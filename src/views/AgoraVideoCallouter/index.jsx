@@ -490,7 +490,7 @@ if(item.player === undefined){
   };
 
   addStream = (stream, push = false) => {
-   console.log("arrr")
+  //  console.log("arrr")
     this.hostId = stream.getId()
  
   
@@ -725,7 +725,7 @@ encodedString = "N2VmMGY4ODg4NjI4NDFhYWIwNWY1NzFjNDM5MzE4OTc6NjU0ZDViYWM5ZDU2NGY
 
 
   render() {
-console.log("meetDetails", this.meetdetails)
+// console.log("meetDetails", this.meetdetails)
     const style = {
       display: "grid",
       gridGap: "50px 26px",

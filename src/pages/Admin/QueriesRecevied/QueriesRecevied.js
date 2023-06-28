@@ -216,7 +216,7 @@ function QueriesRecevied(props) {
     getSubmittedAssingment();
   }, [assingNo]);
 
-  console.log("props", props);
+  // console.log("props", props);
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>

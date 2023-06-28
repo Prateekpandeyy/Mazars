@@ -67,7 +67,7 @@ function TaxProfessionalFilter(props) {
   }, []);
 
   useEffect(() => {
-    console.log(catShowData, "final tax2");
+    // console.log(catShowData, "final tax2");
     if (catShowData == "Direct tax") setSelectedData(1);
     else {
       setSelectedData(2);
@@ -129,7 +129,7 @@ function TaxProfessionalFilter(props) {
     setStatus1("");
     setQueryNo("");
     // resetPaging();
-    console.log("reset is triggred in tpfilter");
+    // console.log("reset is triggred in tpfilter");
     let date = moment().format("DD-MM-YYYY");
 
     setToDate("");

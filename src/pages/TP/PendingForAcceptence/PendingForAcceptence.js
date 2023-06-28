@@ -169,17 +169,17 @@ function PendingForAcceptence(props) {
 
   const getPendingforAcceptance = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpquery2"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpQuery2"));
     localStorage.setItem(`tpQuery2`, JSON.stringify(e));
-    console.log(pagetry, "getsort");
+    // console.log(pagetry, "getsort");
     let val = pagetry?.val;
     let field = pagetry?.field;
-    console.log(val, "if getsort val");
-    console.log(field, "if getsort field");
+    // console.log(val, "if getsort val");
+    // console.log(field, "if getsort field");
     let remainApiPath = "";
     setOnPage(e);
     setLoading(true);

@@ -64,7 +64,7 @@ function ViewReport({
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
-          console.log(res.headers);
+          // console.log(res.headers);
           a.download = name;
           a.target = "_blank";
           a.click();
@@ -95,7 +95,7 @@ function ViewReport({
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
-          console.log(res.headers);
+          // console.log(res.headers);
           a.download = name;
           a.target = "_blank";
           a.click();
@@ -156,7 +156,7 @@ function ViewReport({
       .catch((error) => {});
   };
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     <div>

@@ -135,7 +135,7 @@ function AcceptedProposal() {
   }, []);
 
   const showProposalModal2 = (e) => {
-    console.log(e.assign_no, "eeee");
+    // console.log(e.assign_no, "eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.q_id);
     setScrolledTo(e.assign_no);
@@ -148,7 +148,7 @@ function AcceptedProposal() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));

@@ -173,7 +173,7 @@ function InCompleteData({ data }) {
 
   const getInCompleteAssingment = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpquery3"));
@@ -399,11 +399,11 @@ function InCompleteData({ data }) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          console.log("This is sorting 1");
+          // console.log("This is sorting 1");
           localStorage.setItem("tpArrowQuery3", field);
         } else {
           setAccend("");
-          console.log("This is sorting 2");
+          // console.log("This is sorting 2");
           localStorage.removeItem("tpArrowQuery3");
         }
 
@@ -425,11 +425,11 @@ function InCompleteData({ data }) {
         if (accend !== field) {
           setAccend(field);
           setIsActive(field);
-          console.log("This is sorting 1");
+          // console.log("This is sorting 1");
           localStorage.setItem("tpArrowQuery3", field);
         } else {
           setAccend("");
-          console.log("This is sorting 2");
+          // console.log("This is sorting 2");
           localStorage.removeItem("tpArrowQuery3");
         }
         if (accend === field) {

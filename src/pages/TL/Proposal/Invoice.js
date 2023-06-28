@@ -81,7 +81,6 @@ const Invoice = (updateTab) => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    console.log("There is myRef here");
   }, [tdsForm]);
 
   const ViewDiscussionToggel = (key) => {

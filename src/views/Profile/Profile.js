@@ -119,7 +119,7 @@ const Profile = () => {
       setAddEmail(!addEmail)
     }
   }
-console.log("mainUser", mainUser)
+// console.log("mainUser", mainUser)
     return (
         <Layout custDashboard="custDashboard" custUserId={userId}>
         <Card style={{margin: "10px"}}>

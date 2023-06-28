@@ -64,7 +64,7 @@ function QueriesTab(props) {
           myConfig
         )
         .then((res) => {
-          console.log("called", res.data.total);
+          // console.log("called", res.data.total);
           if (res.data.code === 1) {
             setAllAssignmentCount(res?.data?.total);
           }

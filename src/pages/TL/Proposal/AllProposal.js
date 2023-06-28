@@ -115,7 +115,7 @@ function AllProposal({ setAllProposal }) {
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.id);
-    console.log(e);
+    // console.log(e);
     setScrolledTo(e.assign_no);
   };
 

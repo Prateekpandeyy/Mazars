@@ -220,7 +220,7 @@ const CreateInvoice = () => {
         });
 
         setProposal(all);
-        console.log("proposal", all);
+        // console.log("proposal", all);
       }
     });
   };

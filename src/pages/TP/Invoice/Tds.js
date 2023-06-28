@@ -83,14 +83,14 @@ function Tds(props) {
       setGst(parseInt(props.paidAmount * 0 / 100))
       setTds(parseInt(props.paidAmount * tdsRate / 100))
       let tot = Number(props.paidAmount) + Number(props.paidAmount * cgetRate / 100)
-      console.log("totl", isNaN(parseInt(props.paidAmount)), parseInt(props.paidAmount * cgetRate / 100))
+      // console.log("totl", isNaN(parseInt(props.paidAmount)), parseInt(props.paidAmount * cgetRate / 100))
       setTotal(parseInt(props.paidAmount))
       // setTotal(Number(parseInt(props.paidAmount) + parseInt(props.paidAmount * cgetRate / 100)))
       setgrandTotal(parseInt(parseInt(props.paidAmount) + parseInt(props.paidAmount * 0 / 100)) - parseInt(props.paidAmount * tdsRate / 100))
     }
   }, [props.paidAmount])
   const { handleSubmit, register, errors, getValues, reset } = useForm();
-  console.log("propAmount", total)
+  // console.log("propAmount", total)
   const getDataild = () => {
     axios
       .get(`${baseUrl}/tl/getPaymentDetail?tp_id=${JSON.parse(userid)}&invoice=1&invoice_id=${props.id}`, myConfig)
@@ -378,7 +378,7 @@ function Tds(props) {
   const basicFun = (e) => {
 
     let a = parseFloat((parseInt(e.target.value)) + parseFloat(pocketExp));
-    console.log("etargetValue", parseInt(e.target.value) + pocketExp)
+    // console.log("etargetValue", parseInt(e.target.value) + pocketExp)
     let tdsamount = parseInt(Math.round(a * tdsR / 100))
     setBasicAmount(e.target.value);
     if (e.target.value > 0) {

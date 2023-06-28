@@ -65,7 +65,7 @@ function DeclinedProposal() {
     setId(key.assign_no);
   };
   const showProposalModal2 = (e) => {
-    console.log("eeee");
+    // console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.id);
     setScrolledTo(e.assign_no);
@@ -193,7 +193,7 @@ function DeclinedProposal() {
 
   const getProposalList = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal4"));

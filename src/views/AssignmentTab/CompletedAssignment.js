@@ -78,7 +78,7 @@ function CompleteAssignment() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-    console.log('work');
+    // console.log('work');
   }, [reportModal]);
 
   var clcomp = {
@@ -100,7 +100,7 @@ function CompleteAssignment() {
     let runTo = myRef.current[scrolledTo]
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: 'center' });
-    console.log("work");
+    // console.log("work");
   }, [ViewDiscussion]);
 
   useEffect(() => {

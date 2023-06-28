@@ -65,7 +65,7 @@ function PaginatorTL(props) {
   } = props;
 
   const renderCheck = () => {
-    console.log("render being");
+    // console.log("render being");
     if (index === "tlquery1") {
       let page = JSON.parse(localStorage.getItem("tlQuery1"));
       if (page) {
@@ -215,7 +215,7 @@ function PaginatorTL(props) {
   const setting = (e) => {
     let droppage = [];
     const dynamicPage = Math.ceil(count / allEnd);
-    console.log(dynamicPage, "to check dynamic page");
+    // console.log(dynamicPage, "to check dynamic page");
     setTotalPages(dynamicPage);
     let rem = (e - 1) * allEnd;
     let end = e * allEnd;
@@ -244,7 +244,7 @@ function PaginatorTL(props) {
   };
 
   const getNewPage = (e) => {
-    console.log("getting new page", e);
+    // console.log("getting new page", e);
     setLoading(true);
     let remainApiPath = "";
 
@@ -374,7 +374,7 @@ function PaginatorTL(props) {
         if (res.data.code === 1) {
           let all = [];
           let customId = 1;
-          console.log(e);
+          // console.log(e);
           if (e > 1) {
             customId = allEnd * (e - 1) + 1;
           }
@@ -390,7 +390,7 @@ function PaginatorTL(props) {
               all.push(data);
             });
             setData(all);
-            console.log(all);
+            // console.log(all);
             setOnPage(e);
             setAtpage(e);
             // setRecords(res.data.result.length);
@@ -435,12 +435,12 @@ function PaginatorTL(props) {
               all.push(data);
             });
             setData(all);
-            console.log(all);
+            // console.log(all);
             setOnPage(e);
             setAtpage(e);
             // setRecords(res.data.result.length);
             const dynamicPage = Math.ceil(count / allEnd);
-            console.log(dynamicPage, "to check dynamic page");
+            // console.log(dynamicPage, "to check dynamic page");
             setTotalPages(dynamicPage);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
@@ -494,7 +494,7 @@ function PaginatorTL(props) {
   }, [resetTrigger]);
 
   useEffect(() => {
-    console.log("useEffect count", count);
+    // console.log("useEffect count", count);
     if (count > 0) {
       if (pageno > 1) {
         setPage(pageno);

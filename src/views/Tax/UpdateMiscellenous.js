@@ -92,7 +92,7 @@ const UpdateMiscellenous = () => {
     let val = sortVal;
     let field = sortField;
     // console.log(allEnd);
-    console.log("pageNo.", p);
+    // console.log("pageNo.", p);
     setAtpage(p);
     let dataObj = {};
     let dataList = [];

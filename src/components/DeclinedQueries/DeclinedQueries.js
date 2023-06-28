@@ -392,6 +392,7 @@ function DeclinedQueries() {
 
     {
       text: "Status",
+      dataField: "status",
       sort: true,
       headerFormatter: headerLabelFormatter,
       onSort: (field, order) => {
@@ -446,6 +447,7 @@ function DeclinedQueries() {
       },
     },
   ];
+
   const resetPaging = () => {
     setPage(1);
     setBig(1);

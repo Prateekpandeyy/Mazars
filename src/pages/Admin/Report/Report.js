@@ -819,7 +819,7 @@ const Report = () => {
 
   // Category
   const category2 = (v) => {
-    console.log("vvvv", v);
+    // console.log("vvvv", v);
 
     setCatValue(v);
     setError("");
@@ -1058,7 +1058,7 @@ const Report = () => {
                     ref={register}
                     value={fromDate}
                     onChange={(e) => {
-                      console.log(e.target.value);
+                      // console.log(e.target.value);
                       setFromDate(e.target.value);
                       filterQuery({
                         name: "fromdate",

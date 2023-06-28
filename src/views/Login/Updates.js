@@ -92,14 +92,14 @@ function Updates() {
   const showLinkData = () => {
     if (getId === 3) {
       axios.get(`${baseUrl}/customers/getimportantlink`).then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setLinkData(res.data.result);
         showLinkData22(true);
         isUpdates(false);
       });
     } else if (getId === 4) {
       axios.get(`${baseUrl}/customers/getpage?page=${getId}`).then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setLinkData([res.data.result]);
         isUpdates(false);
       });

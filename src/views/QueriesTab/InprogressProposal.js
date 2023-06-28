@@ -44,7 +44,7 @@ function InprogressProposal({
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key);
-      console.log(key, "set");
+      // console.log(key, "set");
     }
   };
   const allEnd = Number(localStorage.getItem("cust_record_per_page"));
@@ -72,7 +72,7 @@ function InprogressProposal({
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    console.log("object");
+    // console.log("object");
   }, [ViewDiscussion]);
 
   const needHelp = () => {
@@ -134,7 +134,7 @@ function InprogressProposal({
 
   const CountInprogressProposal = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery3"));
@@ -185,8 +185,8 @@ function InprogressProposal({
         });
         setInprogressProposal(all);
         setCount(res.data.total);
-        console.log("all", all);
-        console.log("all.cid", all.cid);
+        // console.log("all", all);
+        // console.log("all.cid", all.cid);
       }
     });
   };

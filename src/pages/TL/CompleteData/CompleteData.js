@@ -111,7 +111,7 @@ function CompletedQuery({ updateTab }) {
     getInCompleteAssingment(localPage);
   }, []);
   const toggle = (key) => {
-    console.log("keyyyy", typeof key);
+    // console.log("keyyyy", typeof key);
     setModal(!modal);
     if (modal === false) {
       setScrolledTo(key);
@@ -224,7 +224,7 @@ function CompletedQuery({ updateTab }) {
     localStorage.setItem("sortedValuetlq4", JSON.stringify(sort));
 
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery4`));
-    console.log("searchData", searchData);
+    // console.log("searchData", searchData);
     let remainApiPath = "";
     if (searchData) {
       remainApiPath = `/tl/pendingAllocation?id=${JSON.parse(

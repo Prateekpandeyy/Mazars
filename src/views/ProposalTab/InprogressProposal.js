@@ -85,10 +85,10 @@ function InprogressProposal() {
   }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
-    console.log("eeee");
+    // console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
-    console.log(e);
+    // console.log(e);
   };
 
   useEffect(() => {
@@ -152,7 +152,7 @@ function InprogressProposal() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal2"));

@@ -216,7 +216,7 @@ function AllPayment(props) {
             end = res.data.total;
           }
           let dynamicPage = Math.ceil(res.data.total / allEnd);
-          console.log("dynamicPage", dynamicPage);
+          // console.log("dynamicPage", dynamicPage);
           let rem = (e - 1) * allEnd;
 
           if (e === 1) {

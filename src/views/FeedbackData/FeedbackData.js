@@ -120,11 +120,11 @@ function FeedbackData(props) {
             setEnd(allEnd);
           }
         }
-        console.log('dym',dynamicPage);
+        // console.log('dym',dynamicPage);
         for (let i = 1; i <= dynamicPage; i++) {
           droppage.push(i);
         }
-        console.log('drop',droppage);
+        // console.log('drop',droppage);
         setDefaultPage(droppage);
       }
     });

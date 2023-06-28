@@ -160,7 +160,9 @@ const Generated = ({ updateTab }) => {
     }
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`generated`));
-
+    if(searchData){
+    console.log('Length',Object.values(searchData));
+    }
     if (searchData && Object.values(searchData).length > 0) {
       remainApiPath = `/tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
     } else {
@@ -657,7 +659,7 @@ const Generated = ({ updateTab }) => {
     setSwing(!swing);
     if (swing === false) {
       setScrolledTo(id);
-      console.log("object");
+      // console.log("object");
     }
   };
 
@@ -665,7 +667,7 @@ const Generated = ({ updateTab }) => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    console.log("work");
+    // console.log("work");
   }, [swing]);
 
   rowStyle2 = (row, index) => {

@@ -83,7 +83,7 @@ function AssignmentTab(props) {
     setDataItem(key);
     if (reportModal === false) {
       setScrolledTo(key.assign_no);
-      console.log(key.assign_no);
+      // console.log(key.assign_no);
     }
   };
 
@@ -144,10 +144,10 @@ function AssignmentTab(props) {
   };
   const getAssignmentList = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
-    console.log(e, "e");
+    // console.log(e, "e");
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment1"));
     localStorage.setItem(`tlAssignment1`, JSON.stringify(e));
@@ -208,7 +208,7 @@ function AssignmentTab(props) {
 
   //get category
   useEffect(() => {
-    console.log(selectedData, "selected data");
+    // console.log(selectedData, "selected data");
     if (selectedData == 1) {
       setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
     } else if (selectedData == 2) {

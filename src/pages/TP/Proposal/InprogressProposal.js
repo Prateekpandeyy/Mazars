@@ -116,7 +116,7 @@ function InprogressProposal() {
   }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
-    console.log("eeee");
+    // console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.id);
     setScrolledTo(e.assign_no);
@@ -162,7 +162,7 @@ function InprogressProposal() {
 
   const getProposalList = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
@@ -232,13 +232,13 @@ function InprogressProposal() {
     let pageno = JSON.parse(localStorage.getItem("tpProposal2"));
     if (pageno) {
       if (pageno > 1) {
-        console.log('count', count);
+        // console.log('count', count);
       }else{}
     }
   };
 
   const sortMessage = (val, field) => {
-    console.log("Sorting...");
+    // console.log("Sorting...");
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);

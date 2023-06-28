@@ -93,7 +93,7 @@ const Direct = () => {
           };
           dataList.push(dataObj);
         });
-        console.log(res);
+        // console.log(res);
         setData(dataList);
         setCount(res?.data?.total);
       });
@@ -112,7 +112,7 @@ const Direct = () => {
     let val = sortVal;
     let field = sortField;
     // console.log(allEnd);
-    console.log("pageNo.", p);
+    // console.log("pageNo.", p);
     setAtpage(p);
 
     if (isActive == true) {
@@ -144,7 +144,7 @@ const Direct = () => {
         dataList.push(dataObj);
       });
       setData(dataList);
-      console.log(dataList);
+      // console.log(dataList);
       setCount(res?.data?.total);
       // getLimit();
       let end = p * allEnd;
@@ -214,7 +214,7 @@ const Direct = () => {
     setAtpage(1);
     setPage(1);
     setIsActive(true);
-    console.log(formData, "formData");
+    // console.log(formData, "formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
     let remainApiPath = "";
@@ -253,7 +253,7 @@ const Direct = () => {
               dataList.push(dataObj);
             });
             setData(dataList);
-            console.log(dataList);
+            // console.log(dataList);
             setCount(res?.data?.total);
             let end = 1 * allEnd;
             if (end > res.data.total) {
@@ -289,7 +289,7 @@ const Direct = () => {
             };
             dataList.push(dataObj);
           });
-          console.log(dataList);
+          // console.log(dataList);
           let end = 1 * allEnd;
           // let dynamicPage = Math.ceil(res.data.total / allEnd);
           setData(dataList);
@@ -307,7 +307,7 @@ const Direct = () => {
     let formData = new FormData();
     setAtpage(p);
     setPage(p);
-    console.log(formData, "formData");
+    // console.log(formData, "formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
     let obj = {
@@ -358,7 +358,7 @@ const Direct = () => {
             dataList.push(dataObj);
           });
           setData(dataList);
-          console.log(dataList);
+          // console.log(dataList);
           setCount(res?.data?.total);
           // getLimit();
           let end = p * allEnd;

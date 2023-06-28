@@ -590,7 +590,7 @@ function Customer() {
       },
     },
   ];
-  console.log("data1111", data);
+  // console.log("data1111", data);
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>

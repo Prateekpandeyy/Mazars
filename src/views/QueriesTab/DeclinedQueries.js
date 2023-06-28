@@ -62,7 +62,7 @@ function DeclinedQueries({ CountAllQuery }) {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key);
-      console.log(key, "set");
+      // console.log(key, "set");
     }
   };
 
@@ -70,7 +70,6 @@ function DeclinedQueries({ CountAllQuery }) {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    console.log("object");
   }, [ViewDiscussion]);
 
   useEffect(() => {
@@ -128,7 +127,7 @@ function DeclinedQueries({ CountAllQuery }) {
 
   const CountDeclined = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery4"));

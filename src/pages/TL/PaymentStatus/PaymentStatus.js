@@ -18,6 +18,7 @@ function QueriesTab(props) {
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
+  
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {

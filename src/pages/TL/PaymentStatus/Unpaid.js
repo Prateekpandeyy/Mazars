@@ -284,7 +284,7 @@ function AllPayment() {
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-    console.log("searchData", val);
+    // console.log("searchData", val);
     let sort = {
       orderBy: val,
       fieldBy: field,

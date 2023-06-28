@@ -243,7 +243,7 @@ function AllPayment({ setAllPayment }) {
     localStorage.setItem("tlprot1", 1);
     localStorage.setItem("sortedValuetlpay1", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlpayment1`));
-    console.log("searchData", searchData);
+    // console.log("searchData", searchData);
     if (searchData) {
       remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
         userid

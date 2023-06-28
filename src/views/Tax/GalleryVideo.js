@@ -79,7 +79,7 @@ const GalleryVideo = () => {
       setImages(obj);
     }
   };
-  console.log("Images", window.location);
+  // console.log("Images", window.location);
   return (
     <>
       <>

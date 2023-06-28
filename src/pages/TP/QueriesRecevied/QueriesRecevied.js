@@ -183,7 +183,7 @@ function QueriesRecevied(props) {
   }, [assingNo]);
 
   const getQuery = () => {
-  console.log("done")
+  // console.log("done")
   };
 
   return (

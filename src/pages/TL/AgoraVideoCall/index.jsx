@@ -633,7 +633,7 @@ if(item.player === undefined){
         ? this.localStream.muteAudio()
         : this.localStream.unmuteAudio();
     }
-   console.log('clicked');
+  //  console.log('clicked');
   };
 
   switchDisplay = (e) => {

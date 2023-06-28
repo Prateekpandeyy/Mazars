@@ -82,11 +82,11 @@ function AllQueriesData({
       des = true;
       setLoading2(false);
       return false;
-      console.log("1");
+      // console.log("1");
     } else {
       setAdditionalQuery(!additionalQuery);
       setAssignNo(key);
-      console.log("2");
+      // console.log("2");
       setScrolledTo(key);
     }
   };

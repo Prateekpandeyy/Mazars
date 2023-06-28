@@ -149,7 +149,7 @@ function ViewReport({
            document.body.appendChild(a);
            a.style = "display: none";
            a.href = url;
-           console.log(res.headers)
+          //  console.log(res.headers)
            a.download = name;
            a.target = '_blank';
            a.click();
@@ -176,7 +176,7 @@ function ViewReport({
            var url = window.URL.createObjectURL(res.data);
            var a = document.createElement("a");
            document.body.appendChild(a);
-           console.log(res.headers)
+          //  console.log(res.headers)
            a.style = "display: none";
            a.href = url;
            a.download = name;

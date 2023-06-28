@@ -130,7 +130,7 @@ function InprogressAssignment() {
 
   const getAssignmentData = (e) => {
     if ((e === undefined)) {
-      console.log(e,'e');
+      // console.log(e,'e');
       e=1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustAs2"));

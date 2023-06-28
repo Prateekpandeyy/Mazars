@@ -68,17 +68,17 @@ function Paginator(props) {
     // setChecknum,
   } = props;
 
-  // // console.log(props, "props is logged");
-  // // console.log(props.count, "count at beginning of pagination");
-  // // console.log(defaultPage);
-  // // console.log(big, "big");
-  // // console.log(end, "end");
-  // // console.log(count, "count");
-  // // console.log(index, "index");
+  // console.log(props, "props is logged");
+  // console.log(props.count, "count at beginning of pagination");
+  // console.log(defaultPage);
+  // console.log(big, "big");
+  // console.log(end, "end");
+  // console.log(count, "count");
+  // console.log(index, "index");
 
   // let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
 
-  // // console.log(pageno, "pageno");
+  // console.log(pageno, "pageno");
 
   const renderCheck = () => {
     // console.log("render being");
@@ -971,15 +971,15 @@ function Paginator(props) {
               if (e == 1) {
                 setBig(rem + e);
                 setEnd(allEnd);
-                // // console.log("e at 1", big, end);
+                // console.log("e at 1", big, end);
               } else if (e == dynamicPage) {
                 setBig(rem + 1);
                 setEnd(res.data.total);
-                // // console.log("e at last page");
+                // console.log("e at last page");
               } else {
                 setBig(rem + 1);
                 setEnd(end);
-                // // console.log(`e at between page ${e}`, big, end);
+                // console.log(`e at between page ${e}`, big, end);
               }
             } else {
               setBig(rem + e);
@@ -996,7 +996,7 @@ function Paginator(props) {
   };
 
   useEffect(() => {
-    console.log('this',this);
+    // console.log('this',this);
     renderCheck();
   }, []);
 

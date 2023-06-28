@@ -214,7 +214,7 @@ function AssignmentTab(props) {
   }, []);
 
   useEffect(() => {
-    console.log(catShowData, "final tax2");
+    // console.log(catShowData, "final tax2");
     if (catShowData == "Direct tax") setSelectedData(1);
     else {
       setSelectedData(2);
@@ -255,7 +255,7 @@ function AssignmentTab(props) {
 
   const getAssignmentList = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
+      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
@@ -340,7 +340,7 @@ function AssignmentTab(props) {
 
   //handleSubCategory
   const handleSubCategory = (value) => {
-    console.log(value, "value is ");
+    // console.log(value, "value is ");
     setError(false);
     // setStore2(value);
     setShowSubCat(value);
@@ -374,7 +374,7 @@ function AssignmentTab(props) {
 
   //reset category
   const resetCategory = () => {
-    console.log(error);
+    // console.log(error);
     setShowSubCat([]);
     setSelectedData([]);
     setStore2([]);
@@ -860,7 +860,7 @@ function AssignmentTab(props) {
   };
 
   const uploadDraftReport = (id) => {
-    console.log("sss", id.id);
+    // console.log("sss", id.id);
     if (id.id !== undefined) {
       setQid(id.q_id);
       setId(id.id);
@@ -870,7 +870,7 @@ function AssignmentTab(props) {
       setDraftModal(!draftModal);
       setLoading(false);
       setId(id.id);
-      console.log(id, "defined Draft");
+      // console.log(id, "defined Draft");
     }
   };
 
@@ -886,7 +886,7 @@ function AssignmentTab(props) {
   // final modal
 
   const uploadFinalReport = (id) => {
-    console.log("iddd", id);
+    // console.log("iddd", id);
     if (id && id.id === undefined) {
       setLoading(false);
       setFianlModal(!fianlModal);
@@ -900,7 +900,7 @@ function AssignmentTab(props) {
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment1"));
-    console.log("dkk", dk);
+    // console.log("dkk", dk);
     let fixedCat = localStorage.getItem("fixedCat");
     if (dk) {
       if (dk.route === window.location.pathname) {

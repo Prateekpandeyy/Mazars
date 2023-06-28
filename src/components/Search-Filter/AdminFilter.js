@@ -170,7 +170,7 @@ function AdminFilter(props) {
     }
   };
   const onSubmit = (data) => {
-    console.log("data", data);
+    // console.log("data", data);
     let obj = {};
     if (data.route) {
       obj = {

@@ -120,7 +120,7 @@ function FeedbackTab() {
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
-    console.log(allEnd);
+    // console.log(allEnd);
 
     if (pagetry) {
       remainApiPath = `tl/getFeedback?tl_id=${JSON.parse(
