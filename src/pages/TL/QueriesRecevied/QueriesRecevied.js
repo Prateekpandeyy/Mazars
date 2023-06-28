@@ -3,14 +3,14 @@ import Layout from "../../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link , useHistory} from "react-router-dom";
 import QueryDetails from "../../../components/QueryDetails/QueryDetails";
 import moment from "moment";
 import { CardHeader, Row, Col } from "reactstrap";
 import CustomHeading from "../../../components/Common/CustomHeading";
 function QueriesRecevied(props) {
   const { id } = useParams();
-
+  let history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
   const [submitData, setSubmitData] = useState([]);
   const [assingNo, setAssingmentNo] = useState();
@@ -199,14 +199,20 @@ function QueriesRecevied(props) {
             <CardHeader>
               <Row>
                 <Col md="4">
-                  <Link
-                    to={{
-                      pathname: `/teamleader/${props.location.routes}`,
-                      index: props.location.index,
-                    }}
-                  >
-                    <button class="autoWidthBtn ml-3">Go Back</button>
-                  </Link>
+                  {props.location.index ? (
+                    <Link
+                      to={{
+                        pathname: `/teamleader/${props.location.routes}`,
+                        index: props.location.index,
+                      }}
+                    >
+                      <button class="customBtn">Go Back</button>
+                    </Link>
+                  ) : (
+                    <button class="customBtn" onClick={() => history.goBack()}>
+                      Go Back
+                    </button>
+                  )}
                 </Col>
                 <Col md="4">
                   <CustomHeading>Query details</CustomHeading>
