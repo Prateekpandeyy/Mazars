@@ -213,14 +213,20 @@ function QueriesRecevied(props) {
             <CardHeader>
               <Row>
                 <Col md="4">
-                  <Link
-                    to={{
-                      pathname: `/admin/${props.location.routes}`,
-                      index: props.location.index,
-                    }}
-                  >
-                    <button className="autoWidthBtn ml-3">Go Back</button>
-                  </Link>
+                  {props.location.index ? (
+                    <Link
+                      to={{
+                        pathname: `/admin/${props.location.routes}`,
+                        index: props.location.index,
+                      }}
+                    >
+                      <button class="customBtn">Go Back</button>
+                    </Link>
+                  ) : (
+                    <button class="customBtn" onClick={() => history.goBack()}>
+                      Go Back
+                    </button>
+                  )}
                 </Col>
                 <Col md="4">
                   <CustomHeading>Query details</CustomHeading>

@@ -10,11 +10,20 @@ function WebRoutes() {
   const getLayout = () => {
     let comp;
     console.log("window", window.location.pathname.split("/"));
-    if (window.location.pathname.split("/")[1] === "taxprofessional" || window.location.pathname.split("/")[1] === "tp_queries") {
+    if (
+      window.location.pathname.split("/")[1] === "taxprofessional" ||
+      window.location.pathname.split("/")[1] === "taxprofessional_queries"
+    ) {
       comp = <TpRoute />;
-    } else if (window.location.pathname.split("/")[1] === "teamleader" || window.location.pathname.split("/")[1] === "tl_queries") {
+    } else if (
+      window.location.pathname.split("/")[1] === "teamleader" ||
+      window.location.pathname.split("/")[1] === "teamleader_queries"
+    ) {
       comp = <TlRoute />;
-    } else if (window.location.pathname.split("/")[1] === "admin" || window.location.pathname.split("/")[1] === "admin_queries") {
+    } else if (
+      window.location.pathname.split("/")[1] === "admin" ||
+      window.location.pathname.split("/")[1] === "admin_queries"
+    ) {
       comp = <AdminRoute />;
     } else if (window.location.pathname.split("/")[1] === "cms") {
       comp = <CmsRoute />;
