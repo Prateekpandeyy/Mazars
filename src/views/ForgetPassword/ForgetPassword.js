@@ -89,7 +89,6 @@ function ForgetPassword(props) {
     }
   };
   const valueHandlerUser = () => {
-    // console.log("props", props);
     var item = props.location.userId;
     if (item == "undefined") {
     } else {

@@ -116,7 +116,6 @@ function InprogressProposal() {
   }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
-    // console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.id);
     setScrolledTo(e.assign_no);
@@ -162,7 +161,6 @@ function InprogressProposal() {
 
   const getProposalList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal2"));
@@ -238,7 +236,6 @@ function InprogressProposal() {
   };
 
   const sortMessage = (val, field) => {
-    // console.log("Sorting...");
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);

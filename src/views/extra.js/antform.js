@@ -240,7 +240,6 @@ const CmsCont = (props) => {
     };
   });
   const getScreenWidth = () => {
-    // console.log(window.screen.width);
     if (window.screen.width > 768) {
       setIsMobile(false);
     } else {

@@ -149,7 +149,6 @@ function Message(props) {
 
   const getMessage = (e) => {
     localStorage.setItem(`custMessage`, e);
-    // console.log(e, "page test");
     let pagetry = JSON.parse(localStorage.getItem("freezecustMsg"));
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -203,7 +202,6 @@ function Message(props) {
             } else if ((e == (dynamicPage))) {
               setBig(rem + 1);
               setEnd(res.data.total);
-              // console.log("e at last page");
             }
             else {
               setBig(rem + 1);
@@ -261,7 +259,6 @@ function Message(props) {
           } else {
             setEnd(allEnd);
           }
-          console.log(all, "allHere");
         }
       });
   };

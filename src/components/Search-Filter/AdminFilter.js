@@ -66,7 +66,6 @@ function AdminFilter(props) {
     let date = moment().format("DD-MM-YYYY");
     let fullDate = date;
     if(toDate.length == 0){
-      console.log("this is zero Now")
       setToDate(fullDate);
     }
   }, [toDate]);
@@ -178,7 +177,6 @@ function AdminFilter(props) {
     }
   };
   const onSubmit = (data) => {
-    // console.log("data", data);
     let obj = {};
     if (data.route) {
       obj = {

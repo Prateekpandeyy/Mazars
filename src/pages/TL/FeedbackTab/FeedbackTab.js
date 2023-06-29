@@ -120,7 +120,7 @@ function FeedbackTab() {
     let remainApiPath = "";
     let val = pagetry?.val;
     let field = pagetry?.field;
-    // console.log(allEnd);
+
 
     if (pagetry) {
       remainApiPath = `tl/getFeedback?tl_id=${JSON.parse(
@@ -150,7 +150,6 @@ function FeedbackTab() {
         setFeedBackData(all);
         setCount(res.data.total);
         let dynamicPage = Math.ceil(res.data.total / allEnd);
-        // console.log(res.data.total/allEnd);
         let rem = (e - 1) * allEnd;
         let end = e * allEnd;
         if (e === 1) {
@@ -159,7 +158,6 @@ function FeedbackTab() {
         } else if (e == dynamicPage) {
           setBig(rem + 1);
           setEnd(res.data.total);
-          // console.log("e at last page");
         } else {
           setBig(rem + 1);
           setEnd(end);

@@ -46,7 +46,6 @@ function ViewNotification() {
       data: formData,
     })
       .then(function (response) {
-        // console.log("res-", response);
         if (response.data.code === 1) {
           setData(response.data.result[0]);
         }
@@ -56,7 +55,6 @@ function ViewNotification() {
       });
   };
 
-  // console.log("data-", data);
 
   return (
     <Layout TPDashboard="TPDashboard" TPuserId={userid}>

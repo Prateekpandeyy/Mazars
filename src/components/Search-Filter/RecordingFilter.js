@@ -114,7 +114,6 @@ function RecordingFilter(props) {
     }
   };
   const onSubmit = (data, e) => {
-    // console.log("Dataaa", data);
     setSearchText(data);
     if (e?.target?.value == undefined) {
       e = 1;
@@ -158,7 +157,6 @@ function RecordingFilter(props) {
         });
     } else if (SearchQuery == "tlQuery") {
       const token = window.localStorage.getItem("tlToken");
-      // console.log('eeee', e);
       const myConfig = {
         headers: {
           uit: token,
@@ -220,7 +218,6 @@ function RecordingFilter(props) {
         });
     } else if (SearchQuery == "tpQuery") {
       const token = window.localStorage.getItem("tptoken");
-      // console.log('eeee', e);
       const myConfig = {
         headers: {
           uit: token,

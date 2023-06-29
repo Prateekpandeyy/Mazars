@@ -88,7 +88,6 @@ function PendingForProposals(props) {
         .catch((error) => console.log(error));
     } else {
       setModal(!modal);
-      console.log(key, " else more");
     }
   };
 

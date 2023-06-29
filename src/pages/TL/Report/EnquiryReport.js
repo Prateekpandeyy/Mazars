@@ -67,11 +67,6 @@ const Report = () => {
         `${dateIn2Digit}`;
 
 
-    // console.log(yr);
-    // console.log(monthIn2Digit);
-    // console.log(dateIn2Digit);
-
-
 
     const handleCategory = (value) => {
         setSelectedData(value);
@@ -80,7 +75,6 @@ const Report = () => {
 
     const resetCategory = () => {
         setSelectedData([]);
-        // console.log(selectedData);
     };
 
     const onSubmit = () => {
@@ -98,7 +92,6 @@ const Report = () => {
                 "fromdate": fromDate,
                 "todate": toDate,
             }
-            // console.log(formData, "formData");
             axios({
                 method: "POST",
                 url: `${baseUrl}/report/generateenquiry?t=${JSON.stringify(
@@ -109,7 +102,6 @@ const Report = () => {
                 },
                 data: formData
             }).then((res) => {
-                // console.log("response", res.config.data);
                 if (res.data.code === 1) {
                     Swal.fire({
                         title: "success",

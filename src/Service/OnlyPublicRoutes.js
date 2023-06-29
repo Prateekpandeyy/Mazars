@@ -8,7 +8,6 @@ const OnlyPublicRoutes = ({ component: Component, ...rest }) => {
             {...rest}
             component={(props) => {
                 const token = window.localStorage.getItem("token");
-                // console.log(token)
                 // const role = window.localStorage.getItem("role")
                 // var previousLoginTime = window.localStorage.getItem("adminloginTime")
                 // var nextLogin = Number(previousLoginTime) + Number(600000)

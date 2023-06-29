@@ -659,7 +659,6 @@ const Generated = ({ updateTab }) => {
     setSwing(!swing);
     if (swing === false) {
       setScrolledTo(id);
-      // console.log("object");
     }
   };
 
@@ -667,7 +666,6 @@ const Generated = ({ updateTab }) => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    // console.log("work");
   }, [swing]);
 
   rowStyle2 = (row, index) => {

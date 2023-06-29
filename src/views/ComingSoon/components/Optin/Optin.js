@@ -20,7 +20,6 @@ class Optin extends Component {
   y = -50;
  
   modal() {
-      // console.log("click modal")
     this.setState({
         isOpen : !this.state.isOpen
     })

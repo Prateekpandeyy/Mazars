@@ -98,7 +98,6 @@ function Proposal(props) {
 
   const tableIndex = (index) => {
     setTabIndex(index);
-    // console.log(index);
     if (index === 0) {
       setbgColor("#42566a");
     } else if (index === 1) {

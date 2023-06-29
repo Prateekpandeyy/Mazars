@@ -109,7 +109,6 @@ function AssignmentTab() {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    // console.log("work");
   }, [ViewDiscussion]);
 
   const uploadFinalReport = (id) => {
@@ -130,7 +129,6 @@ function AssignmentTab() {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    // console.log("ref");
   }, [fianlModal]);
 
   useEffect(() => {
@@ -140,7 +138,6 @@ function AssignmentTab() {
   }, []);
 
   useEffect(() => {
-    // console.log(catShowData, "final tax2");
     if (catShowData == "Direct tax")
       setSelectedData(1);
     else {
@@ -183,7 +180,6 @@ function AssignmentTab() {
 
   const getAssignmentList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
@@ -335,7 +331,6 @@ function AssignmentTab() {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    // console.log("work report");
   }, [reportModal]);
 
   // function headerLabelFormatter(column) {
@@ -811,7 +806,6 @@ function AssignmentTab() {
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatpAssignment3"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment3"));
-    // console.log("dkk3", dk);
     let fixedCat = (localStorage.getItem("fixedCat"));
     if (dk) {
       if (dk.route === window.location.pathname) {

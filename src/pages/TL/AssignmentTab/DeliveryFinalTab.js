@@ -77,7 +77,6 @@ function AssignmentTab() {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key);
-      // console.log(key);
     }
   };
 
@@ -123,7 +122,6 @@ function AssignmentTab() {
 
   const getAssignmentList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment3"));
@@ -261,7 +259,6 @@ function AssignmentTab() {
 
   useEffect(() => {
     let runTo = myRef.current[scrolledTo];
-    // console.log("ref");
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [fianlModal]);
@@ -273,7 +270,6 @@ function AssignmentTab() {
     setDataItem(key);
     if (reportModal === false) {
       setScrolledTo(key);
-      // console.log(key);
     }
   };
 

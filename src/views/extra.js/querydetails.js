@@ -64,7 +64,6 @@ function MyAssingment() {
   useEffect(() => {
     const getSubmittedAssingment = () => {
       axios.get(`${baseUrl}/customers/getQueryDetails?id=${id}`).then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           setSubmitData(res.data.result);
           setDisplaySpecific(res.data.additional_queries);
@@ -101,13 +100,11 @@ function MyAssingment() {
     getSubmittedAssingment();
   }, [assingNo]);
 
-  // console.log(diaplaySpecific);
 
   const getQuery = () => {
     axios
       .get(`${baseUrl}/tl/GetAdditionalQueries?assignno=${assingNo}`)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 1) {
           setDisplayQuery(res.data.result);
         }
@@ -115,7 +112,6 @@ function MyAssingment() {
   };
 
   const onSubmit = (value) => {
-    console.log("value :", value);
 
     let formData = new FormData();
     formData.append("assign_no", assingNo);
@@ -128,7 +124,6 @@ function MyAssingment() {
       data: formData,
     })
       .then(function (response) {
-        console.log("res-", response);
         if (response.data.code === 1) {
           Swal.fire({
             title : "success",
@@ -157,7 +152,6 @@ function MyAssingment() {
 
 
   function proposalStatus(accepted) {
-    console.log("accepted", accepted);
     if (accepted == 1) {
       return "accepted";
     } else {
@@ -167,7 +161,6 @@ function MyAssingment() {
 
   //change date format
   function ChangeFormateDate(oldDate) {
-    console.log("date", oldDate);
     if (oldDate == null) {
       return null;
     }
@@ -176,17 +169,14 @@ function MyAssingment() {
 
   //remove time with date
   function RemoveTime(oldDate) {
-    console.log("RemoveTime - ", oldDate);
 
     var updatedate = oldDate.split(" ")[0];
-    console.log(updatedate);
     if (updatedate == null) {
       return null;
     }
     return updatedate.toString().split("-").reverse().join("-");
   }
 
-  // console.log("diaplayProposal -", amount);
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <div class="row mt-3">

@@ -67,9 +67,6 @@ const Direct = () => {
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
 
-  // console.log(searchText.length, "searchText");
-  // console.log(filterValue.length, "searchText");
-
   const onChangePage = (event, nextPage) => {
     setPage(nextPage);
     localStorage.setItem("prevPage", nextPage);
@@ -93,7 +90,6 @@ const Direct = () => {
           };
           dataList.push(dataObj);
         });
-        // console.log(res);
         setData(dataList);
         setCount(res?.data?.total);
       });
@@ -111,8 +107,6 @@ const Direct = () => {
     let remainApiPath = "";
     let val = sortVal;
     let field = sortField;
-    // console.log(allEnd);
-    // console.log("pageNo.", p);
     setAtpage(p);
 
     if (isActive == true) {
@@ -144,7 +138,6 @@ const Direct = () => {
         dataList.push(dataObj);
       });
       setData(dataList);
-      // console.log(dataList);
       setCount(res?.data?.total);
       // getLimit();
       let end = p * allEnd;
@@ -166,10 +159,8 @@ const Direct = () => {
   };
 
   // const getLimit = () => {
-  //   console.log('Count', count);
   //   const dynamicPage = Math.ceil(count / allEnd);
   //   setTotalPage(dynamicPage)
-  //   console.log(totalPage, "Total Pages");
   // }
 
   useEffect(() => {
@@ -214,7 +205,6 @@ const Direct = () => {
     setAtpage(1);
     setPage(1);
     setIsActive(true);
-    // console.log(formData, "formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
     let remainApiPath = "";
@@ -253,7 +243,6 @@ const Direct = () => {
               dataList.push(dataObj);
             });
             setData(dataList);
-            // console.log(dataList);
             setCount(res?.data?.total);
             let end = 1 * allEnd;
             if (end > res.data.total) {
@@ -289,7 +278,6 @@ const Direct = () => {
             };
             dataList.push(dataObj);
           });
-          // console.log(dataList);
           let end = 1 * allEnd;
           // let dynamicPage = Math.ceil(res.data.total / allEnd);
           setData(dataList);
@@ -307,7 +295,6 @@ const Direct = () => {
     let formData = new FormData();
     setAtpage(p);
     setPage(p);
-    // console.log(formData, "formData");
     formData.append("content", searchText);
     formData.append("article_type", filterValue);
     let obj = {
@@ -358,7 +345,6 @@ const Direct = () => {
             dataList.push(dataObj);
           });
           setData(dataList);
-          // console.log(dataList);
           setCount(res?.data?.total);
           // getLimit();
           let end = p * allEnd;

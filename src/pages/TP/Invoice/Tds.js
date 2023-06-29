@@ -90,7 +90,6 @@ function Tds(props) {
     }
   }, [props.paidAmount]);
   const { handleSubmit, register, errors, getValues, reset } = useForm();
-  // console.log("propAmount", total)
   const getDataild = () => {
     axios
       .get(

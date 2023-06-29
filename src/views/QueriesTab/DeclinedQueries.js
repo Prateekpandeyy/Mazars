@@ -62,7 +62,6 @@ function DeclinedQueries({ CountAllQuery }) {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key);
-      // console.log(key, "set");
     }
   };
 
@@ -127,7 +126,6 @@ function DeclinedQueries({ CountAllQuery }) {
 
   const CountDeclined = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery4"));

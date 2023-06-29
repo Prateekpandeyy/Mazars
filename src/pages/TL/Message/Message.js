@@ -153,7 +153,6 @@ function Message(props) {
           } else if (e == dynamicPage) {
             setBig(rem + 1);
             setEnd(res.data.total);
-            // console.log("e at last page");
           } else {
             setBig(rem + 1);
             setEnd(end);

@@ -92,8 +92,6 @@ const UpdateIndirect = () => {
     let remainApiPath = ``;
     let val = sortVal;
     let field = sortField;
-    // console.log(allEnd);
-    // console.log("pageNo.", p);
     setAtpage(p);
     let customId = 1;
     if (p > 1) {

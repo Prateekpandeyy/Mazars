@@ -85,10 +85,8 @@ function InprogressProposal() {
   }, [ViewDiscussion]);
 
   const showProposalModal2 = (e) => {
-    // console.log("eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e);
-    // console.log(e);
   };
 
   useEffect(() => {
@@ -152,7 +150,6 @@ function InprogressProposal() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal2"));
@@ -603,7 +600,6 @@ function InprogressProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.ProposedAmount;
-        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },
@@ -633,7 +629,6 @@ function InprogressProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
-        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },

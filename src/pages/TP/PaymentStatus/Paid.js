@@ -205,7 +205,6 @@ function AllPayment() {
 
   const getPaymentStatus = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatppayment3"));

@@ -230,7 +230,6 @@ function EditQuery(props) {
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
-          // console.log(res.headers);
           a.download = name;
           a.target = "_blank";
           a.click();

@@ -193,7 +193,6 @@ function Recording() {
     localStorage.setItem("recordingSorttp", JSON.stringify(sort));
 
     let queryNo = JSON.parse(localStorage.getItem(`searchDatatpQuery`));
-    // console.log(queryNo,"searchdata");
     let remainApiPath = "";
     if (queryNo) {
       remainApiPath = `tl/callRecordingPostlist?id=${JSON.parse(

@@ -25,7 +25,6 @@ function QueriesTab(props) {
 
   const tableIndex = (index) => {
     setTabIndex(index);
-    // console.log(index);
     if (index === 0) {
       setbgColor("#55425F");
     } else if (index === 1) {

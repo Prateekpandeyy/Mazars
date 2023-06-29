@@ -118,12 +118,10 @@ function AdminPermission(props) {
 
   //handleCategory
   const handleCategory = (value) => {
-    // console.log(value);
     setSelectedData(value);
     if (selectedData == 1) {
       setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
     } else if (selectedData == 2) {
-      // console.log("value2", JSON.parse(localStorage.getItem("tlIndirect tax")));
       setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
     } else {
     }
@@ -176,7 +174,6 @@ function AdminPermission(props) {
   };
   const getAssignmentData = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
@@ -358,7 +355,6 @@ function AdminPermission(props) {
       }
     });
   };
-  // console.log("tax222", tax2);
   const columns = [
     {
       text: "S.no",

@@ -84,7 +84,6 @@ const Generated = () => {
     }
     if (key) {
       setGstinNo(key.gstin_no);
-      console.log(key.assign_no);
       setAssignNo(key.assign_no);
       setPaidAmount(key.paid_amount);
       setId(key.id);
@@ -130,7 +129,6 @@ const Generated = () => {
 
   const getProposalList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice1"));
@@ -228,10 +226,8 @@ const Generated = () => {
         myConfig2
       )
       .then((res) => {
-        // console.log("res", res);
         if (res.status === 200) {
           //    window.open(URL.createObjectURL(res.data));
-          // console.log(URL.createObjectURL(res.data));
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
           var a = document.createElement("a");
@@ -728,7 +724,6 @@ const Generated = () => {
     setSwing(!swing);
     if (swing === false) {
       setScrolledTo(id);
-      // console.log("object");
     }
   };
 
@@ -736,7 +731,6 @@ const Generated = () => {
     let runTo = myRef.current[scrolledTo];
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
-    // console.log("work");
   }, [swing]);
 
   rowStyle2 = (row, index) => {

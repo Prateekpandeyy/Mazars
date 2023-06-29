@@ -67,7 +67,6 @@ function TaxProfessionalFilter(props) {
   }, []);
 
   useEffect(() => {
-    // console.log(catShowData, "final tax2");
     if (catShowData == "Direct tax") setSelectedData(1);
     else {
       setSelectedData(2);
@@ -127,7 +126,6 @@ function TaxProfessionalFilter(props) {
     setStatus1("");
     setQueryNo("");
     // resetPaging();
-    // console.log("reset is triggred in tpfilter");
     let date = moment().format("DD-MM-YYYY");
 
     setToDate("");
@@ -146,7 +144,6 @@ function TaxProfessionalFilter(props) {
         let fixedCat = localStorage.getItem("fixedCat");
         // fixedCat.forEach((element) => {
         //   if (element.id === dk.pcatId) {
-        //     console.log("eleent", element.details);
         //     setCatShowData(element.details);
         //     parentId = element.details;
         //   }
@@ -241,7 +238,6 @@ function TaxProfessionalFilter(props) {
               });
               setData(all);
               // setCount(res.data.total);
-              // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
             }
           });
@@ -274,10 +270,8 @@ function TaxProfessionalFilter(props) {
                   all.push(data);
                 });
                 setData(all);
-                // console.log(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
-                // console.log(res.data.total, "count updated");
                 // resetPaging();
                 resetTriggerFunc();
                 localStorage.setItem(`tpQuery1`, JSON.stringify(1));
@@ -354,7 +348,6 @@ function TaxProfessionalFilter(props) {
       if (data?.p_status) {
         status = data.p_status;
       }
-      // console.log("getting new page", data);
       let customId = 1;
       if (data.route) {
         axios
@@ -384,7 +377,6 @@ function TaxProfessionalFilter(props) {
               });
               setData(all);
               // setCount(res.data.total);
-              // console.log(res.data.total, "count updated");
               setRecords(res.data.result.length);
               localStorage.setItem(`tpQuery3`, JSON.stringify(1));
             }
@@ -420,7 +412,6 @@ function TaxProfessionalFilter(props) {
                 setData(all);
                 setRecords(res.data.result.length);
                 setCount(res.data.total);
-                // console.log(res.data.total, "count updated");
                 // resetPaging();
                 resetTriggerFunc();
                 localStorage.setItem(`tpQuery3`, JSON.stringify(1));

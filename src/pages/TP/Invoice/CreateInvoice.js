@@ -132,7 +132,6 @@ const CreateInvoice = () => {
 
   const getProposalList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
@@ -148,7 +147,6 @@ const CreateInvoice = () => {
 
       fieldBy = pagetry.fieldBy;
     }
-    // console.log("searchData", searchData);
     if (searchData) {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
     } else {

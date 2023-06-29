@@ -36,8 +36,6 @@ const GetEmail = () => {
     }
   };
   const closeButton = () => {
-    // console.log(window);
-
     window.close();
   };
   return (

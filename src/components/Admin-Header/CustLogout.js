@@ -115,14 +115,11 @@ export const CustLogout = () => {
 
     })
   logoutChannel.postMessage("Logout")
-  // console.log("Posting Done");
 };
 
 export const LogOutAllCustTabs = () => {
   logoutChannel.onmessage = () => {
-    // console.log("Sending....")
     CustLogout();
-    // console.log("About to Close XXXXXXXXXX")
     logoutChannel.close();
   }
 }

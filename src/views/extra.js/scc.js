@@ -34,8 +34,6 @@ const getData = (setData, setLoading) => {
       `${baseUrl}/customers/videoScheduler?customer_id=${JSON.parse(userId)}`
     )
     .then((res) => {
-      console.log("res -", res);
-      console.log("result -", res.data.result.items);
       setData(res.data.result.items);
       setLoading(false);
     });
@@ -73,7 +71,6 @@ const mapAppointmentData = (appointment) => ({
 });
 
 var date = new Date();
-console.log("date-", convert(date));
 
 function convert(str) {
   var date = new Date(str),
@@ -146,7 +143,6 @@ export default () => {
   );
 
   const changeFormat = (d) => {
-    console.log(d);
     return (
       d.getFullYear() +
       "-" +
@@ -160,7 +156,6 @@ export default () => {
   
   const commitChanges = ({ added, changed, deleted }) => {
     if (added) {
-      console.log("added - ", added);
       var startDate = added.startDate;
       var endDate = added.endDate;
 
@@ -177,7 +172,6 @@ export default () => {
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
           getData(setData, setLoading);
         })
         .catch((error) => {
@@ -186,7 +180,6 @@ export default () => {
     }
 
     if (changed) {
-      console.log("changed", changed);
 
       let valuesArray = Object.entries(changed);
       const obj = {
@@ -199,7 +192,6 @@ export default () => {
       };
 
       for (let value of valuesArray) {
-        // console.log("value", value);
         obj.id = value[0];
         obj.title = value[1].title;
         obj.notes = value[1].notes;
@@ -223,7 +215,6 @@ export default () => {
         data: formData,
       })
         .then(function (response) {
-          console.log("res post-", response);
           getData(setData, setLoading);
         })
         .catch((error) => {
@@ -232,9 +223,7 @@ export default () => {
     }
 
     // if (deleted !== undefined) {
-    //   console.log("deleted f", deleted);
     //   axios.get(`${baseUrl}/customers/freeslot?id=${deleted}`).then((res) => {
-    //     console.log("res -", res);
     //     getData(setData, setLoading);
     //   });
     // }

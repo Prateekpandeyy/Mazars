@@ -600,7 +600,6 @@ const Generated = () => {
   const copyFun = (e, id) => {
     setCopy(id);
     setCopiedHere(!copiedHere);
-    // console.log(id);
     setJumpTo(id);
     navigator.clipboard.writeText(e);
   };

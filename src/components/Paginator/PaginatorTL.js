@@ -65,7 +65,6 @@ function PaginatorTL(props) {
   } = props;
 
   const renderCheck = () => {
-    // console.log("render being");
     if (index === "tlquery1") {
       let page = JSON.parse(localStorage.getItem("tlQuery1"));
       if (page) {
@@ -215,7 +214,6 @@ function PaginatorTL(props) {
   const setting = (e) => {
     let droppage = [];
     const dynamicPage = Math.ceil(count / allEnd);
-    // console.log(dynamicPage, "to check dynamic page");
     setTotalPages(dynamicPage);
     let rem = (e - 1) * allEnd;
     let end = e * allEnd;
@@ -223,15 +221,12 @@ function PaginatorTL(props) {
       if (e == 1) {
         setBig(rem + e);
         setEnd(allEnd);
-        // console.log("e at 1", big, end);
       } else if (e == dynamicPage) {
         setBig(rem + 1);
         setEnd(count);
-        // console.log("e at last page");
       } else {
         setBig(rem + 1);
         setEnd(end);
-        // console.log(`e at between page ${e}`, big, end);
       }
     } else {
       setBig(rem + 1);
@@ -244,7 +239,6 @@ function PaginatorTL(props) {
   };
 
   const getNewPage = (e) => {
-    // console.log("getting new page", e);
     setLoading(true);
     let remainApiPath = "";
 
@@ -374,7 +368,6 @@ function PaginatorTL(props) {
         if (res.data.code === 1) {
           let all = [];
           let customId = 1;
-          // console.log(e);
           if (e > 1) {
             customId = allEnd * (e - 1) + 1;
           }
@@ -390,7 +383,6 @@ function PaginatorTL(props) {
               all.push(data);
             });
             setData(all);
-            // console.log(all);
             setOnPage(e);
             setAtpage(e);
             // setRecords(res.data.result.length);
@@ -435,12 +427,10 @@ function PaginatorTL(props) {
               all.push(data);
             });
             setData(all);
-            // console.log(all);
             setOnPage(e);
             setAtpage(e);
             // setRecords(res.data.result.length);
             const dynamicPage = Math.ceil(count / allEnd);
-            // console.log(dynamicPage, "to check dynamic page");
             setTotalPages(dynamicPage);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
@@ -453,15 +443,12 @@ function PaginatorTL(props) {
               if (e == 1) {
                 setBig(rem + e);
                 setEnd(allEnd);
-                // console.log("e at 1", big, end);
               } else if (e == dynamicPage) {
                 setBig(rem + 1);
                 setEnd(res.data.total);
-                // console.log("e at last page");
               } else {
                 setBig(rem + 1);
                 setEnd(end);
-                // console.log(`e at between page ${e}`, big, end);
               }
             } else {
               setBig(rem + e);
@@ -472,8 +459,6 @@ function PaginatorTL(props) {
             }
             setDefaultPage(droppage);
           }
-
-          // console.log(defaultPage, "in submit of defaultPage");
         }
       });
     }
@@ -494,7 +479,6 @@ function PaginatorTL(props) {
   }, [resetTrigger]);
 
   useEffect(() => {
-    // console.log("useEffect count", count);
     if (count > 0) {
       if (pageno > 1) {
         setPage(pageno);

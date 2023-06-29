@@ -132,7 +132,6 @@ function AllQuery({ setAllQuery }) {
     let remainApiPath = "";
 
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery1`));
-    // console.log("searchData", searchData);
     if (searchData) {
       remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(
         userid

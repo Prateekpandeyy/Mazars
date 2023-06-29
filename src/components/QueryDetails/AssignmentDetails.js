@@ -298,7 +298,6 @@ function AssignmentDetails({
   };
   const rightClick = (e, a, b, c) => {
     e.preventDefault();
-    console.log(a, b, c);
     downloadpdf(a, b, c);
   };
   const getSubFile = (e) => {

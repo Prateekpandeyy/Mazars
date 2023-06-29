@@ -56,7 +56,6 @@ function Message(props) {
 
 
   function headerLabelFormatter(column) {
-    // console.log(turnGreen,"greeen");
     let isActive = null;
     if (
       ((localStorage.getItem("tpArrowMsg") === column.dataField) && (turnGreen == true)) ||
@@ -114,7 +113,6 @@ function Message(props) {
   // set intial query here
   const getMessage = (e) => {
     localStorage.setItem(`tpMessage`, e);
-    // console.log(e, "page test");
     let pagetry = JSON.parse(localStorage.getItem("freezetpMsg"));
     let val = pagetry?.val;
     let field = pagetry?.field;
@@ -162,7 +160,6 @@ function Message(props) {
               } else if ((e == (dynamicPage))) {
                 setBig(rem + 1);
                 setEnd(res.data.total);
-                // console.log("e at last page");
               }
               else {
                 setBig(rem + 1);
@@ -280,11 +277,9 @@ function Message(props) {
         let val = 0;
         if (accend !== field) {
           setAccend(field);
-          // console.log("This is sorting 1");
           localStorage.setItem("tpArrowMsg", field);
         } else {
           setAccend("");
-          // console.log("This is sorting 2");
           localStorage.removeItem("tpArrowMsg");
         }
         if (accend === field) {

@@ -75,7 +75,6 @@ function CustomerFilter(props) {
         let parentId = "";
         let catData = JSON.parse(localStorage.getItem("categoryData"));
         catData.forEach((element) => {
-          // console.log("eleent", element.id, dk);
           if (element.id === dk.pcatId) {
             setCatShowData(element.details);
             parentId = element.details;
@@ -183,7 +182,6 @@ function CustomerFilter(props) {
     }
 
     localStorage.setItem(`searchData${index}`, JSON.stringify(obj));
-    // console.log("Obj", obj);
     let customId = 1;
     let remainApiPath = ` `;
 

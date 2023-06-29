@@ -66,7 +66,6 @@ function AddFreshAssingment(props) {
   };
 
   const onSubmit = (value) => {
-    // console.log("deyy", det === undefined);
     let timer;
     const a = value.p_fact;
 
@@ -148,7 +147,6 @@ function AddFreshAssingment(props) {
             reset();
             var message = response.data.message;
             var query_no = response.data.query_no;
-            // console.log("message", message.length);
             if (message.length === 0) {
               Swal.fire({
                 title: "Success !",

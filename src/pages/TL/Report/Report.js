@@ -447,12 +447,10 @@ const Report = () => {
           let remainQu = [];
           b.forEach((i) => {
             selectQuery.forEach((q) => {
-              // console.log(q);
               if (q.value === i.assign_no) {
                 remainQu.push(q);
               }
             });
-            // console.log("remainQu", remainQu);
           });
 
           setSelectedQuery(remainQu);

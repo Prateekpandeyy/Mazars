@@ -131,7 +131,7 @@ const EditProfile = () => {
       states.map((i) => {
        
         if(i.name === res.data.result.state){
-          // console.log("iiiiState", i)
+
           cities.filter((data) => {
             if (data.state_id === i.id) {
              
@@ -287,7 +287,6 @@ const EditProfile = () => {
 
   //get city
   const getCity = (key) => {
-    // console.log("key", key)
     setCityValue2("")
    setAddress("")
    

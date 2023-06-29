@@ -713,7 +713,6 @@ function DraftReport() {
     return style;
   };
   const onSubmit = (data) => {
-    // console.log("eeeee");
     let obj = {};
     if (data.route) {
       obj = {

@@ -64,7 +64,6 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
   //   axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
   //     if (res.data.code === 1) {
   //       let data = res.data.result;
-  //       console.log(res.data.result,"in getCategory");
   //       data.map((i) => {
   //         getSubCategory(i);
   //       });
@@ -76,8 +75,6 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
   // const getSubCategory = (e) => {
   //   axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
   //     if (res.data.code === 1) {
-  //       console.log(`${e.details}`,"in getSubCategory");
-  //       console.log(res.data.result,"get subCategory second");
   //       let obj=res.data.result
   //       localStorage.setItem(`${e.details}`, JSON.stringify(obj));
   //     }

@@ -82,11 +82,9 @@ function AllQueriesData({
       des = true;
       setLoading2(false);
       return false;
-      // console.log("1");
     } else {
       setAdditionalQuery(!additionalQuery);
       setAssignNo(key);
-      // console.log("2");
       setScrolledTo(key);
     }
   };
@@ -132,7 +130,6 @@ function AllQueriesData({
   }, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
-    // console.log(tableId);
     // document.getElementById("root").scrollIntoView(false);
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
@@ -178,7 +175,6 @@ function AllQueriesData({
 
   const CountAllQuery = (e) => {
     if (e === undefined) {
-      console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));

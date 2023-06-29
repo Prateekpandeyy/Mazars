@@ -98,7 +98,6 @@ getprevPraticipants()
       })
     }
     const getClient2 = (k) => {
-      // console.log("allParticipants", k)
       let collectData = []
       axios.get(
         `${baseUrl}/tl/querycustomers?query_id=${inviteData.question_id}`, myConfig
@@ -108,7 +107,6 @@ getprevPraticipants()
         
         res.data.result.map((i) => {
        if(k.includes(i.email)){
-        //  console.log("fixe", i)
        }
          else{
           email = {
@@ -164,7 +162,7 @@ const addParticipants = () => {
    }
    else if(particiapnts.length === 0 && estate.length > 0 && emailError === false){
     var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//  console.log("estate", estate)
+
    if(estate.match(validRegex)){
     setAllParticipants((oldData) => {
     
@@ -279,7 +277,6 @@ const delprevUser = (data) => {
     }
     )
 }
-console.log("invitet", invitedParticipant)
 
     return (
      <>

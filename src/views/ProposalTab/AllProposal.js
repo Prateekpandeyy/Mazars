@@ -82,7 +82,6 @@ function ProposalTab() {
     setAssignNo(key);
     if (ViewDiscussion === false) {
       setScrolledTo(key);
-      // console.log(key);
     }
   };
 
@@ -93,7 +92,6 @@ function ProposalTab() {
   }, [ViewDiscussion]);
 
   function headerLabelFormatter(column, colIndex) {
-    // console.log("columnField", column.dataField);
     let isActive = true;
 
     if (
@@ -140,7 +138,6 @@ function ProposalTab() {
       .get(`${baseUrl}/customers/dounloadpdf?id=${e}&viewpdf=1`, myConfig)
       .then((res) => {
         if (res.status === 200) {
-          // console.log(URL.createObjectURL(res.data));
           window.URL = window.URL || window.webkitURL;
           var url = window.URL.createObjectURL(res.data);
           var a = document.createElement("a");
@@ -178,7 +175,6 @@ function ProposalTab() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal1"));

@@ -98,7 +98,6 @@ function CustomerListFilter(props) {
               let allEnd = Number(
                 localStorage.getItem("admin_record_per_page")
               );
-              // console.log(Number(allEnd) < Number(res.data.total));
               if (allEnd > Number(res.data.total)) {
                 setEnd(Number(res.data.total));
               } else {

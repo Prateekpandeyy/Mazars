@@ -68,20 +68,9 @@ function Paginator(props) {
     // setChecknum,
   } = props;
 
-  // console.log(props, "props is logged");
-  // console.log(props.count, "count at beginning of pagination");
-  // console.log(defaultPage);
-  // console.log(big, "big");
-  // console.log(end, "end");
-  // console.log(count, "count");
-  // console.log(index, "index");
-
   // let pageno = JSON.parse(localStorage.getItem("tpQuery1"));
 
-  // console.log(pageno, "pageno");
-
   const renderCheck = () => {
-    // console.log("render being");
     if (index === "tpquery1") {
       let page = JSON.parse(localStorage.getItem("tpQuery1"));
       if (page) {
@@ -248,11 +237,9 @@ function Paginator(props) {
       } else if (e == dynamicPage) {
         setBig(rem + 1);
         setEnd(count);
-        // // console.log("e at last page");
       } else {
         setBig(rem + 1);
-        setEnd(end);
-        // // console.log(`e at between page ${e}`, big, end);
+        setEnd(end);;
       }
     } else {
       setBig(rem + 1);
@@ -276,7 +263,6 @@ function Paginator(props) {
       let field = pagetry?.field;
       localStorage.setItem(`tpQuery1`, JSON.stringify(e));
       if (data && !pagetry) {
-        // console.log("if data inpagination");
         remainApiPath = `tl/getIncompleteQues?page=${e}&cat_id=${data.store
           }&from=${data.fromDate?.split("-").reverse().join("-")}&to=${data.toDate
             ?.split("-")
@@ -293,7 +279,6 @@ function Paginator(props) {
       } else if (!data && pagetry) {
         remainApiPath = `tl/getIncompleteQues?page=${e}&orderby=${val}&orderbyfield=${field}`;
       } else {
-        // console.log("else in pagination");
         remainApiPath = `tl/getIncompleteQues?page=${e}`;
       }
     } else if (pendingForAcceptence == "pendingForAcceptence") {
@@ -875,7 +860,6 @@ function Paginator(props) {
         )}`;
       }
     } else {
-      // console.log("into else void of pagination");
     }
 
     if (e) {
@@ -884,7 +868,6 @@ function Paginator(props) {
         if (res.data.code === 1) {
           let all = [];
           let customId = 1;
-          // console.log(e);
           if (e > 1) {
             customId = allEnd * (e - 1) + 1;
           }
@@ -901,7 +884,6 @@ function Paginator(props) {
               all.push(data);
             });
             setData(all);
-            // console.log(all);
             if (data.length > 0) {
               setSearchResult(true);
             } else {
@@ -911,7 +893,6 @@ function Paginator(props) {
             setAtpage(e);
             // setRecords(res.data.result.length);
             const dynamicPage = Math.ceil(count / allEnd);
-            // console.log(dynamicPage, "to check dynamic page");
             setTotalPages(dynamicPage);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
@@ -923,15 +904,12 @@ function Paginator(props) {
                 } else {
                   setEnd(allEnd);
                 }
-                // // console.log("e at 1", big, end);
               } else if (e == dynamicPage) {
                 setBig(rem + 1);
                 setEnd(res.data.total);
-                // // console.log("e at last page");
               } else {
                 setBig(rem + 1);
                 setEnd(end);
-                // // console.log(`e at between page ${e}`, big, end);
               }
             } else {
               setBig(rem + e);
@@ -958,12 +936,10 @@ function Paginator(props) {
             } else {
               setSearchResult(false);
             }
-            // console.log(all);
             setOnPage(e);
             setAtpage(e);
             // setRecords(res.data.result.length);
             const dynamicPage = Math.ceil(count / allEnd);
-            // console.log(dynamicPage, "to check dynamic page");
             setTotalPages(dynamicPage);
             let rem = (e - 1) * allEnd;
             let end = e * allEnd;
@@ -971,15 +947,12 @@ function Paginator(props) {
               if (e == 1) {
                 setBig(rem + e);
                 setEnd(allEnd);
-                // console.log("e at 1", big, end);
               } else if (e == dynamicPage) {
                 setBig(rem + 1);
                 setEnd(res.data.total);
-                // console.log("e at last page");
               } else {
                 setBig(rem + 1);
                 setEnd(end);
-                // console.log(`e at between page ${e}`, big, end);
               }
             } else {
               setBig(rem + e);
@@ -996,13 +969,11 @@ function Paginator(props) {
   };
 
   useEffect(() => {
-    // console.log('this',this);
     renderCheck();
   }, []);
 
   useEffect(() => {
     if(big>count){
-      // console.log('not right');
       if ((atPage > 1) && ((InprogressProposal == "InprogressProposal"))) {
         getNewPage((Number(atPage)-1));
         setOnPage((Number(atPage)-1));

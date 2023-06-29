@@ -208,7 +208,6 @@
 //     var dateMnsFive = moment(query[0].exp_delivery_date).add(15, 'day');  
 //     var date = dateMnsFive.format("YYYY-MM-DD");
 // if(qdate != date){
-//     console.log("fined")
 // }
 
 // var feedbackdate;  
@@ -223,5 +222,5 @@
 
 // console.log(moment().diff(date));
 //     }
-11 pro 11inch
-add fresh query shold be in right
+// 11 pro 11inch
+// add fresh query shold be in right

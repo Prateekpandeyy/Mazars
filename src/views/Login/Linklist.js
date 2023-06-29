@@ -71,7 +71,6 @@ function Linklist() {
       remainApiPath = `customers/getimportantlink?page=${p}`;
     }
     axios.get(`${baseUrl}/${remainApiPath}`).then((res) => {
-      // console.log("res", res);
       let dataObj = {};
       let dataList = [];
       let customId = 1;
@@ -173,7 +172,6 @@ function Linklist() {
             };
             dataList.push(dataObj);
           });
-          // console.log(dataList);
           let end = 1 * allEnd;
           // let dynamicPage = Math.ceil(res.data.total / allEnd);
           setLinkData(dataList);

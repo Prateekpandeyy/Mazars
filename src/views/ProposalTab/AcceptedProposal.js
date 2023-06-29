@@ -135,7 +135,6 @@ function AcceptedProposal() {
   }, []);
 
   const showProposalModal2 = (e) => {
-    // console.log(e.assign_no, "eeee");
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.q_id);
     setScrolledTo(e.assign_no);
@@ -148,7 +147,6 @@ function AcceptedProposal() {
 
   const getProposalData = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatacustProposal3"));
@@ -511,7 +509,6 @@ function AcceptedProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.ProposedAmount;
-        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },
@@ -541,7 +538,6 @@ function AcceptedProposal() {
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.accepted_amount;
-        // console.log(nfObject.format(x));
         return <p className="rightAli">{nfObject.format(x)}</p>;
       },
     },

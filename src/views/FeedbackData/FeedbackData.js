@@ -107,7 +107,6 @@ function FeedbackData(props) {
           } else if (e == dynamicPage) {
             setBig(rem + 1);
             setEnd(res.data.total);
-            // console.log("e at last page");
           } else {
             setBig(rem + 1);
             setEnd(end);
@@ -120,11 +119,9 @@ function FeedbackData(props) {
             setEnd(allEnd);
           }
         }
-        // console.log('dym',dynamicPage);
         for (let i = 1; i <= dynamicPage; i++) {
           droppage.push(i);
         }
-        // console.log('drop',droppage);
         setDefaultPage(droppage);
       }
     });
@@ -170,7 +167,6 @@ function FeedbackData(props) {
   //   }
   // };
   // const prevChunk = () => {
-  //   console.log(atPage, defaultPage.at(-1));
   //   if (atPage > defaultPage.at(-1)) {
   //     setAtpage((atPage) => atPage - 1);
   //     setPage(Number(page) - 1);
@@ -178,7 +174,6 @@ function FeedbackData(props) {
   //   }
   // };
   // const nextChunk = () => {
-  //   console.log(atPage, defaultPage.at(-1));
   //   if (atPage > 0 && atPage < defaultPage.at(-1)) {
   //     setAtpage((atPage) => atPage + 1);
   //     setPage(Number(page) + 1);
@@ -240,7 +235,6 @@ function FeedbackData(props) {
           sortId++;
           all.push(data);
         });
-        console.log("all", all);
         setQuery(all);
         setCount(res.data.total);
         setAtpage(1);

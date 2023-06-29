@@ -86,7 +86,6 @@ function AllPayment() {
     setAssignNo(key.assign_no);
     if (addPaymentModal === false) {
       setScrolledTo(key.assign_no);
-      // console.log(key.assign_no);
     }
   };
   useEffect(() => {
@@ -202,7 +201,6 @@ function AllPayment() {
 
   const getPaymentStatus = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatppayment1"));

@@ -19,7 +19,6 @@ function PaymentModal({
 useEffect(() => {
   axios.get(`${baseUrl}/customers/dounloadpdf?id=${id}&viewpdf=1` , myConfig)
   .then((res) => {
-    // console.log("res", res)
     if(res.status === 200){
      
       setUrl(URL.createObjectURL(res.data))

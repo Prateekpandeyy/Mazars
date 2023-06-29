@@ -68,7 +68,6 @@ function AllProposal() {
   const showProposalModal2 = (e) => {
     setViewProposalModal(!viewProposalModal);
     setProposalId(e.id);
-    // console.log(e.assign_no);
     setScrolledTo(e.assign_no);
   };
 
@@ -199,7 +198,6 @@ function AllProposal() {
 
   const getProposalList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpproposal1"));

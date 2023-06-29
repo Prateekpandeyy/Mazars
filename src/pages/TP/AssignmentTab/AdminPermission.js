@@ -198,7 +198,6 @@ function AdminPermission(props) {
   }, []);
 
   useEffect(() => {
-    // console.log(catShowData, "final tax2");
     if (catShowData == "Direct tax")
       setSelectedData(1);
     else {
@@ -242,7 +241,6 @@ function AdminPermission(props) {
 
   const getAssignmentList = (e) => {
     if (e === undefined) {
-      // console.log(e, "e");
       e = 1;
     }
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment4"));
@@ -342,7 +340,6 @@ function AdminPermission(props) {
 
   //reset category
   const resetCategory = () => {
-    // console.log(error);
     setSelectedData([]);
     setStore2([]);
     getAssignmentList();
@@ -826,7 +823,6 @@ function AdminPermission(props) {
   };
 
   const uploadDraftReport = (id) => {
-    // console.log("sss", id.id);
     if (id.id !== undefined) {
       setQid(id.q_id);
 
@@ -842,7 +838,6 @@ function AdminPermission(props) {
   // final modal
 
   const uploadFinalReport = (id) => {
-    // console.log("iddd", id);
     if (id && id.id === undefined) {
       setLoading(false);
       setFianlModal(!fianlModal);

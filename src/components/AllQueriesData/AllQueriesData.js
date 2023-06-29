@@ -422,8 +422,6 @@ function AllQueriesData() {
         sortMessage(val, 6);
       },
       formatter: function dateFormat(cell, row) {
-        // console.log('row',row);
-        // console.log('row',row.exp_Delivery_Date);
         var oldDate = row.exp_delivery_date;
 
         if (oldDate == "0000-00-00") {

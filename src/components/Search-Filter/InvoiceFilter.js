@@ -44,7 +44,6 @@ const InvoiceFilter = (props) => {
     let formData = new FormData();
     formData.append("qno", data.query_no);
     formData.append("payment_plan", data.payment_plan);
-    console.log('Length',Object.values(data));
     if (
       props.invoice == "tlcreate" ||
       props.invoice === "tpcreate" ||
@@ -176,7 +175,6 @@ const InvoiceFilter = (props) => {
     }
   };
   const resetData = () => {
-    // console.log("Props", props);
     // reset();
     setQueryNo("");
     setInstallmentNo("");
@@ -229,7 +227,6 @@ const InvoiceFilter = (props) => {
       props.setData(all);
       props.setPage(1);
       props.setRec(res.data.total);
-      // console.log(returnData);
       if (returnData === null) {
         props.resetPaging();
       }

@@ -59,7 +59,6 @@ const UpdateDetails = () => {
       )
       .then((res) => {
         if (res.status === 200) {
-          // console.log("Response123", res.config.url);
           let data = window.URL.createObjectURL(res.data);
           setPdfUrl(data);
         }

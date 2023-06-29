@@ -215,8 +215,6 @@ function FeedbackTab() {
       field: field,
     }
     localStorage.setItem(`freezetpFeedback`, JSON.stringify(obj));
-
-    // console.log("sort", val, field);
     setLoading(true);
     axios
       .get(
