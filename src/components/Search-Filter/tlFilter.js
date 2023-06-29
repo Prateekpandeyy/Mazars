@@ -79,6 +79,14 @@ function TeamFilter(props) {
     // console.log(data, "category ");
   }, []);
 
+  useEffect(() => {
+    let date = moment().format("DD-MM-YYYY");
+    let fullDate = date;
+    if(toDate.length == 0){
+      setToDate(fullDate);
+    }
+  }, [toDate]);
+
   //handleCategory
   const handleCategory = (value) => {
     categoryData.map((i) => {

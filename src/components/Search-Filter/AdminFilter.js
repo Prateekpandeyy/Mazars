@@ -61,6 +61,15 @@ function AdminFilter(props) {
     let data = JSON.parse(localStorage.getItem("admincategoryData"));
     setCategory(data);
   }, []);
+  
+  useEffect(() => {
+    let date = moment().format("DD-MM-YYYY");
+    let fullDate = date;
+    if(toDate.length == 0){
+      console.log("this is zero Now")
+      setToDate(fullDate);
+    }
+  }, [toDate]);
 
   //handleCategory
   const handleCategory = (value) => {

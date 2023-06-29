@@ -108,9 +108,7 @@ function TaxProfessionalFilter(props) {
   const resetCategory = () => {
     setSelectedData([]);
     setStore2([]);
-
     setShowSubCat([]);
-
     getData();
   };
 
