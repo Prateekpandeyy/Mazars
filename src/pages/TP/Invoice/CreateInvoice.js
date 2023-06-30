@@ -147,8 +147,15 @@ const CreateInvoice = () => {
 
       fieldBy = pagetry.fieldBy;
     }
+    if((searchData) && (!searchData.installment_no)){
+      console.log('This');
+    }
     if (searchData) {
-      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      if(!searchData.installment_no){
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      }else{
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      }
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
