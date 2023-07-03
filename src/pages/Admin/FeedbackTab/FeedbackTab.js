@@ -361,7 +361,7 @@ function FeedbackTab() {
     })
       .then(function (response) {
         if (response.data.code === 1) {
-          getFeedback();
+          getFeedback(page);
         }
       })
       .catch((error) => {});

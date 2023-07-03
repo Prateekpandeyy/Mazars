@@ -287,6 +287,7 @@ const PayDetails = (props) => {
       text: "Payment details",
 
       formatter: function dateFormat(cell, row) {
+        console.log("row",row);
         return (
           <>
             {row.invoice_generated == "1" ? (

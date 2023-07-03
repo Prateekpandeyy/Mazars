@@ -456,7 +456,7 @@ function FeedbackTab() {
 
         if (response.data.code === 1) {
           // alert.success("successfully read!");
-          getFeedback()
+          getFeedback(page)
 
         }
       })
