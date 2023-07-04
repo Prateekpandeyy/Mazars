@@ -193,14 +193,7 @@ const Report = () => {
           <CardHeader>
             <div className="TlForm my-2">
               <Row>
-                <Col md="4">
-                  <button
-                    className="autoWidthBtn"
-                    onClick={() => history.goBack()}
-                  >
-                    Go Back
-                  </button>
-                </Col>
+                <Col md="4"></Col>
                 <Col md="4">
                   <h4>Enquiry Report</h4>
                 </Col>
