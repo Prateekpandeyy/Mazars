@@ -202,7 +202,7 @@ function QueriesRecevied(props) {
                   {props.location.index ? (
                     <Link
                       to={{
-                        pathname: `/teamleader/${props.location.routes}`,
+                        pathname: `/admin/${props.location.routes}`,
                         index: props.location.index,
                       }}
                     >
