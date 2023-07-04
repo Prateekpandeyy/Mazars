@@ -162,7 +162,13 @@ const Generated = ({ updateTab }) => {
     let searchData = JSON.parse(localStorage.getItem(`generated`));
 
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${
+        searchData.query_no
+      }&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${
+        searchData.opt
+      }&installment_no=${
+        searchData.installment_no !== undefined ? searchData.installment_no : ""
+      }&payment_plan=${searchData.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=1&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -221,7 +227,15 @@ const Generated = ({ updateTab }) => {
     localStorage.setItem("sortedValuetl1", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`generated`));
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&from=${searchData.p_dateFrom}&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=1&qno=${
+        searchData.query_no
+      }&payment_plan=${searchData.payment_plan}&from=${
+        searchData.p_dateFrom
+      }&to=${searchData.p_dateTo}&status=${searchData.opt}&installment_no=${
+        searchData?.installment_no !== undefined
+          ? searchData?.installment_no
+          : ""
+      }&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `/tl/getPaymentDetail?&invoice=1&orderby=${val}&orderbyfield=${field}`;
     }

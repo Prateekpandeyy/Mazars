@@ -127,7 +127,13 @@ const Invoice = (updateTab) => {
     let remainApiPath = "";
 
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&installment_no=${searchData?.installment_no}&payment_plan=${searchData.payment_plan}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${
+        searchData.query_no
+      }&installment_no=${
+        searchData?.installment_no !== undefined
+          ? searchData?.installment_no
+          : ""
+      }&payment_plan=${searchData.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -187,7 +193,13 @@ const Invoice = (updateTab) => {
     localStorage.setItem("sortedValuetl2", JSON.stringify(sort));
     let searchData = JSON.parse(localStorage.getItem(`tlcreate`));
     if (searchData && Object.values(searchData).length > 0) {
-      remainApiPath = `/tl/getPaymentDetail?&invoice=0&qno=${searchData.query_no}&payment_plan=${searchData.payment_plan}&installment_no=${searchData?.installment_no}&orderby=${val}&orderbyfield=${field}`;
+      remainApiPath = `/tl/getPaymentDetail?&invoice=0&qno=${
+        searchData.query_no
+      }&payment_plan=${searchData.payment_plan}&installment_no=${
+        searchData?.installment_no !== undefined
+          ? searchData?.installment_no
+          : ""
+      }&orderby=${val}&orderbyfield=${field}`;
     } else {
       remainApiPath = `/tl/getPaymentDetail?&invoice=0&orderby=${val}&orderbyfield=${field}`;
     }
