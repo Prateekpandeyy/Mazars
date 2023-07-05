@@ -11,7 +11,6 @@ import CustomHeading from "../../../components/Common/CustomHeading";
 function QueriesRecevied(props) {
   const { id } = useParams();
   const history = useHistory();
-
   const userid = window.localStorage.getItem("tpkey");
   const [submitData, setSubmitData] = useState([]);
   const [assingNo, setAssingmentNo] = useState();
@@ -37,7 +36,6 @@ function QueriesRecevied(props) {
     cust_accept_date: "",
     proposal_date: "",
     description: "",
-
     amount_type: "",
     amount_fixed: "",
     amount_hourly: "",
