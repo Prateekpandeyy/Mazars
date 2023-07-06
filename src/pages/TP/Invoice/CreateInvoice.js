@@ -150,7 +150,7 @@ const CreateInvoice = () => {
     }
     console.log("searchData", searchData);
     if (searchData) {
-      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }

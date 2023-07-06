@@ -57,4 +57,7 @@ Proposal edit api error.
 (15) - After uploading draft , it goes to 1st page. in TL.
 
 (16) query - all query, inprogress, status sorting, order is going correctly but backend is not coming properly.
-/components/MarketGraph/MarketIndices/MarketDetail/stockchart.tsx
+
+Make query details page active,
+create invoice go back,
+Admin enquiry go back button
