@@ -148,12 +148,13 @@ const CreateInvoice = () => {
       fieldBy = pagetry.fieldBy;
     }
     if (searchData) {
-        remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
-          userid
-        )}&invoice=0&page=${e
-        }&orderby=${orderBy}&orderbyfield=${fieldBy}&query_no=${searchData.query_no
-        }&installment_no=${searchData.installment_no !== undefined ? searchData.installment_no : ""}&payment_plan=${
-          searchData.payment_plan !== undefined ? searchData.payment_plan: ""}`;
+      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${
+        searchData?.installment_no !== undefined
+          ? searchData?.installment_no
+          : ""
+      }&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${
+        searchData.query_no
+      }&payment_plan=${searchData?.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
         userid
@@ -293,10 +294,18 @@ const CreateInvoice = () => {
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
 
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
-        remainApiPath = `tl/getPaymentDetail?tp_id=${JSON.parse(
-          userid)}&invoice=0&page=1&orderby=${val}&orderbyfield=${
-        field}&query_no=${searchData.query_no}&installment_no=${searchData.installment_no !== undefined ? searchData.installment_no : ""}&payment_plan=${
-          searchData.payment_plan !== undefined ? searchData.payment_plan: ""}`;
+      if (!searchData?.installment_no && searchData?.payment_plan) {
+      } else if (searchData?.installment_no && searchData?.payment_plan) {
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=1&orderby=${val}&orderbyfield=${field}&query_no=${
+          searchData.query_no
+        }&payment_plan=${searchData?.payment_plan}&installment_no=${
+          searchData?.installment_no !== undefined
+            ? searchData?.installment_no
+            : ""
+        }`;
+      } else {
+        remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
+      }
     } else {
       remainApiPath = `tl/getPaymentDetail?page=1&tp_id=${JSON.parse(
         userid
@@ -305,7 +314,6 @@ const CreateInvoice = () => {
     axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
       if (res.data.code === 1) {
         setPage(1);
-        setBig(1);
         if (res.data.total < allEnd) {
           setEnd(res.data.total);
         } else {

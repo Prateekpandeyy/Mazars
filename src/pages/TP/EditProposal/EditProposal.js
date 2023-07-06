@@ -139,6 +139,10 @@ function EditComponent(props) {
       .get(`${baseUrl}/tl/getProposalDetail?id=${id}`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
+          if (res.data.result.proposal_status !== "0") {
+            history.push("/taxprofessional/proposal");
+            return false;
+          }
           mainAmount = res.data.result.installment_amount.split(",");
           mainDueDate = res.data.result.due_date.split(",");
 
