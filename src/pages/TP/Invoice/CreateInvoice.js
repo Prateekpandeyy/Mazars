@@ -150,7 +150,13 @@ const CreateInvoice = () => {
     }
     console.log("searchData", searchData);
     if (searchData) {
-      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${searchData.installment_no}&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${searchData.query_no}&payment_plan=${searchData?.payment_plan}`;
+      remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&installment_no=${
+        searchData?.installment_no !== undefined
+          ? searchData?.installment_no
+          : ""
+      }&orderby=${orderBy}&orderbyfield=${fieldBy}&qno=${
+        searchData.query_no
+      }&payment_plan=${searchData?.payment_plan}`;
     } else {
       remainApiPath = `tl/getPaymentDetail?&invoice=0&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
     }
@@ -289,7 +295,13 @@ const CreateInvoice = () => {
     if (searchData?.installment_no || searchData?.opt || searchData?.query_no) {
       if (!searchData?.installment_no && searchData?.payment_plan) {
       } else if (searchData?.installment_no && searchData?.payment_plan) {
-        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=1&orderby=${val}&orderbyfield=${field}&query_no=${searchData.query_no}&payment_plan=${searchData?.payment_plan}&installment_no=${searchData?.installment_no}`;
+        remainApiPath = `tl/getPaymentDetail?&invoice=0&page=1&orderby=${val}&orderbyfield=${field}&query_no=${
+          searchData.query_no
+        }&payment_plan=${searchData?.payment_plan}&installment_no=${
+          searchData?.installment_no !== undefined
+            ? searchData?.installment_no
+            : ""
+        }`;
       } else {
         remainApiPath = `tl/getPaymentDetail?&page=1&invoice=0&qno=${searchData.query_no}&orderby=${val}&orderbyfield=${field}`;
       }
