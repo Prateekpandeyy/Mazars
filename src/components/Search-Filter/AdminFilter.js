@@ -160,7 +160,7 @@ function AdminFilter(props) {
       setRecords(res.data.total);
 
       setDefaultPage(droppage);
-      resetPaging();
+      // resetPaging();
       // if (
       //   Object.keys(returnData).length === 0 &&
       //   returnData.constructor === Object
@@ -170,7 +170,6 @@ function AdminFilter(props) {
     }
   };
   const onSubmit = (data) => {
-    console.log("data", data);
     let obj = {};
     if (data.route) {
       obj = {

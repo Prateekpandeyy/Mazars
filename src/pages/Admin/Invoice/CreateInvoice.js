@@ -427,7 +427,7 @@ const CreateInvoice = () => {
     localStorage.removeItem("accendcreated");
     localStorage.removeItem("sortedValuevt2");
     localStorage.removeItem("previn2");
-    getProposalList(1);
+    // getProposalList(1);
   };
   const firstChunk = () => {
     setAtpage(1);

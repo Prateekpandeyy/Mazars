@@ -566,7 +566,7 @@ const Generated = () => {
     localStorage.removeItem("sortedValuevt1");
     localStorage.removeItem("accendcreated");
     localStorage.removeItem("previnv1");
-    getProposalList(1);
+    // getProposalList(1);
   };
   const firstChunk = () => {
     setAtpage(1);
