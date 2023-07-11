@@ -20,7 +20,8 @@ function QueriesTab(props) {
   const [allQueriesCount, setAllQueriesCount] = useState("");
   const [pendingProposalCount, setPendingProposalCount] = useState("");
   const [declined, setDeclined] = useState("");
-  const [inprogressAllocation, setInprogressAllocation] = useState();
+  const [inprogressAllocation, setInprogressAllocation] = useState("");
+  const [loading, setLoading] = useState(true);
   const [bgColor, setbgColor] = useState("#55425F");
   const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
@@ -37,10 +38,12 @@ function QueriesTab(props) {
   };
 
   const CountAllQuery = (data) => {
+    setLoading(false);
     axios
       .get(`${baseUrl}/admin/getAllQueries?count=1`, myConfig)
       .then((res) => {
         if (res.data.code === 1) {
+          setLoading(true);
           setAllQueriesCount(res?.data?.result?.recordcount);
         }
       });
@@ -103,6 +106,10 @@ function QueriesTab(props) {
 
     color: "#55425f",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (
@@ -125,19 +132,19 @@ function QueriesTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllQueriesData />
+          <AllQueriesData count={allQueriesCount} />
         </TabPanel>
 
         <TabPanel>
-          <PendingForAllocation />
+          <PendingForAllocation count={inprogressAllocation} />
         </TabPanel>
 
         <TabPanel>
-          <PendingForProposals />
+          <PendingForProposals count={pendingProposalCount} />
         </TabPanel>
 
         <TabPanel>
-          <DeclinedQueries />
+          <DeclinedQueries count={declined} />
         </TabPanel>
       </Tabs>
     </Layout>

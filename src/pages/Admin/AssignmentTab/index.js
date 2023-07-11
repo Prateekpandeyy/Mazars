@@ -99,6 +99,10 @@ function AssignmentTab(props) {
 
     color: "#5a625a",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (
@@ -116,7 +120,7 @@ function AssignmentTab(props) {
           </Tab>
 
           <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-            Permission; Issue to invoice({adminPermission})
+            Permission; to issue invoice ({adminPermission})
           </Tab>
         </TabList>
 

@@ -29,6 +29,7 @@ const EditFaq = () => {
   const [det, addDet] = useState();
   const [question, setQuestion] = useState(" ");
   const [stats, setStats] = useState(false);
+  const [showEditor, setShowEditor] = useState(true);
   let history = useHistory();
   let getId = useParams();
   const userId = localStorage.getItem("adminkey");

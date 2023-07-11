@@ -32,11 +32,33 @@ const InvoiceTab = () => {
 
     color: "#42566a",
     fontWeight: 1000,
+    fontSize: "18px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userid}>
-      <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
+      <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <TabList className="fixedTab">
+          <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
+            View invoice
+          </Tab>
+          <Tab style={tabIndex == 1 ? myStyle2 : myStyle1} className="tabHover">
+            Create invoice
+          </Tab>
+        </TabList>
+
+        <TabPanel>
+          <Generated />
+        </TabPanel>
+
+        <TabPanel>
+          <CreateInvoice />
+        </TabPanel>
+      </Tabs>
+      {/* <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
         <TabList className="fixedTab">
           <Tab style={tabIndex == 0 ? myStyle2 : myStyle1} className="tabHover">
             View invoice
@@ -52,7 +74,7 @@ const InvoiceTab = () => {
         <TabPanel>
           <CreateInvoice />
         </TabPanel>
-      </Tabs>
+      </Tabs> */}
     </Layout>
   );
 };

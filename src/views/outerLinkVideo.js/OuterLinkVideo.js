@@ -24,7 +24,6 @@ const OuterLinkVideo = () => {
   const [videoProfile] = useState("240p_4");
   let history = useHistory();
   let id = useParams();
-  console.log("id", id);
 
   let key2 = history.location.search.split("=")[1];
   const handleClose = () => {

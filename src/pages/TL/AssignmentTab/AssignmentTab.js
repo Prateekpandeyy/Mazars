@@ -46,6 +46,10 @@ function QueriesTab(props) {
     fontSize: "18px",
     cursor: "pointer",
     color: "#5a625a",
+    fontWeight: "bold",
+    textDecoration: "underline",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {
@@ -53,6 +57,19 @@ function QueriesTab(props) {
   }, [props.location.index]);
 
   useEffect(() => {
+    const getAllAssigments = () => {
+      axios
+        .get(
+          `${baseUrl}/tl/getAssignments?tl_id=${JSON.parse(userid)}&count=1`,
+          myConfig
+        )
+        .then((res) => {
+          if (res.data.code === 1) {
+            setAllAssignmentCount(res?.data?.total);
+          }
+        });
+    };
+
     const getDraftReports = () => {
       axios
         .get(
@@ -63,7 +80,7 @@ function QueriesTab(props) {
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setDraft(res?.data?.result?.recordcount);
+            setDraft(res?.data?.total);
           }
         });
     };
@@ -78,7 +95,7 @@ function QueriesTab(props) {
         )
         .then((res) => {
           if (res.data.code === 1) {
-            setFinal(res?.data?.result?.recordcount);
+            setFinal(res?.data?.total);
           }
         });
     };
@@ -87,11 +104,11 @@ function QueriesTab(props) {
         .get(`${baseUrl}/tl/getadminpermissiona?count=1`, myConfig)
         .then((res) => {
           if (res.data.code === 1) {
-            setPermission(res?.data?.result?.recordcount);
+            setPermission(res?.data?.total);
           }
         });
     };
-
+    getAllAssigments();
     getDraftReports();
     getFinalReports();
     getAdminPermissionCount();
@@ -110,8 +127,8 @@ function QueriesTab(props) {
           <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
             Inprogress; Delivery of final report({final})
           </Tab>
-          <Tab style={tabIndex == 2 ? myStyle2 : myStyle1} className="tabHover">
-            Permission; issue to invoice({permission})
+          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+            Permission; to issue invoice ({permission})
           </Tab>
         </TabList>
 

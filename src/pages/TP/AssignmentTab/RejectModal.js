@@ -30,7 +30,6 @@ function RejectedModal({
  
 
   const onSubmit = (value) => {
-   console.log(value)
     setLoading(true)
 
     let formData = new FormData();

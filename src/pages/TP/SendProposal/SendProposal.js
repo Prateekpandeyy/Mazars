@@ -7,7 +7,6 @@ import ProposalComponent from "./ProposalComponent";
 function SendProposal() {
     const { id } = useParams();
   const userid = window.localStorage.getItem("tpkey");
-  console.log("userid", userid)
   return (
     <>
    <Layout TPDashboard="TPDashboard" TPuserId={userid}>

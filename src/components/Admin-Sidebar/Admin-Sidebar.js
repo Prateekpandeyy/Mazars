@@ -24,6 +24,7 @@ import PermMediaOutlinedIcon from "@mui/icons-material/PermMediaOutlined";
 import MissedVideoCallIcon from "@mui/icons-material/MissedVideoCall";
 import MediaBluetoothOffIcon from "@mui/icons-material/MediaBluetoothOff";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+
 function Sidebar({
   adminDashboard,
   cmsDashboard,
@@ -125,7 +126,7 @@ function Sidebar({
           }
           if (res.data.code === 1) {
             if (res.data.result != undefined) {
-              setfeedbackNumber2(res.data.result[0].total);
+              setfeedbackNumber2(res.data.result[0]?.total);
               if (role === "cms") {
                 setLogo("/cms/cms");
               } else {
@@ -162,7 +163,7 @@ function Sidebar({
           setLogo("teamleader/dashboard");
           if (res.data.result != undefined) {
             if (res.data.result[0]) {
-              setfeedbackNumbertl(res.data.result[0].total);
+              setfeedbackNumbertl(res.data.result[0]?.total);
             }
             setLogo("/teamleader/dashboard");
           } else if (res.data.code === 102) {
@@ -198,7 +199,8 @@ function Sidebar({
         .then((res) => {
           setLogo("taxprofessional/dashboard");
           if (res.data.result != undefined) {
-            setfeedbackNumbertp(res.data.result[0].total);
+            setfeedbackNumbertp(res.data.result[0]?.total);
+            localStorage.setItem("TPfeedbacks", res.data.result[0]?.total);
             setLogo("/taxprofessional/dashboard");
           } else if (res.data.code === 102) {
             history.push("/taxprofessional/login");
@@ -238,9 +240,7 @@ function Sidebar({
         <div className="navbar-header">
           <ul className="nav navbar-nav flex-row">
             <li className="nav-item mr-auto">
-              <a
-                className="navbar-brand"
-                href={logo}
+              <NavLink
                 style={{
                   display: "flex",
                   height: "75px",
@@ -248,6 +248,7 @@ function Sidebar({
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                to={logo}
               >
                 <img
                   className="brand-logo"
@@ -260,7 +261,7 @@ function Sidebar({
                     objectFit: "contain",
                   }}
                 />
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item d-md-none">
               <a className="nav-link close-navbar">
@@ -281,9 +282,7 @@ function Sidebar({
                 <div className="navbar-header">
                   <ul className="nav navbar-nav flex-row">
                     <li className="nav-item mr-auto">
-                      <a
-                        className="navbar-brand"
-                        href={logo}
+                      <NavLink
                         style={{
                           display: "flex",
                           height: "75px",
@@ -291,6 +290,7 @@ function Sidebar({
                           justifyContent: "center",
                           alignItems: "center",
                         }}
+                        to={logo}
                       >
                         <img
                           className="brand-logo"
@@ -303,7 +303,7 @@ function Sidebar({
                             objectFit: "contain",
                           }}
                         />
-                      </a>
+                      </NavLink>
                     </li>
                     <li className="nav-item d-md-none">
                       <a className="nav-link close-navbar">

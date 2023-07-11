@@ -33,13 +33,13 @@ const Details = () => {
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userid");
   const token = window.localStorage.getItem("clientToken");
+  const [pdfUrl, setPdfUrl] = useState("");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
   const getData = (e) => {
-    console.log("history", history.location);
     if (history.location) {
       axios
         .get(
@@ -48,12 +48,59 @@ const Details = () => {
         )
         .then((res) => {
           setData(res.data.result);
+          getPdf(res.data.result[0].id);
         });
     }
   };
   useEffect(() => {
     getData();
   }, []);
+  const downloadPdf = (e, name) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=0`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+
+          a.download = `${name}.pdf`;
+          a.target = "_blank";
+          a.click();
+        }
+      });
+  };
+  const getPdf = (e) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=0`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          let data = window.URL.createObjectURL(res.data);
+          setPdfUrl(data);
+        }
+      });
+  };
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <>
@@ -100,9 +147,13 @@ const Details = () => {
                     )}
                     {i.content_type === "0" || i.content_type === "1" ? (
                       <div id="artContent">
-                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                          <Viewer fileUrl={`${baseUrl3}/${i.file}`}></Viewer>
-                        </Worker>
+                        {pdfUrl?.length > 0 ? (
+                          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                            <Viewer fileUrl={pdfUrl}></Viewer>
+                          </Worker>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ) : (
                       ""
@@ -123,7 +174,7 @@ const Details = () => {
                     )}
                   </ArticleWrapper>
                   <a
-                    href={`${baseUrl3}/${i.file}`}
+                    onClick={(e) => downloadPdf(i.id, i.heading)}
                     target="_blank"
                     className={classes.myLink}
                   >

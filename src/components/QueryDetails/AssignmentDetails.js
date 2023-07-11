@@ -557,7 +557,7 @@ function AssignmentDetails({
   };
   // Admin file
   const getAdminFile = (e) => {
-    if (window.location.pathname.split("/")[1] === "admin") {
+    if (window.location.pathname.split("/")[1] === "admin_queries") {
       let id = [];
       axios
         .get(

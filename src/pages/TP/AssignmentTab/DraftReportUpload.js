@@ -31,22 +31,18 @@ function DraftReport({
   };
 
   const getClient = () => {
-    console.log("done");
     let collectData = [];
     axios
       .get(`${baseUrl}/tl/querycustomers?query_id=${qno}`, myConfig)
       .then((res) => {
         let email = {};
-        console.log("response", res);
         res.data.result.map((i) => {
-          console.log("iii", i);
           email = {
             label: i.email,
             value: i.email,
           };
           collectData.push(email);
         });
-        console.log("data", collectData);
         setClient(collectData);
       });
   };
@@ -57,9 +53,7 @@ function DraftReport({
         .get(`${baseUrl}/tl/getreportemail?id=${qno}`, myConfig)
         .then((res) => {
           let email = {};
-          console.log("response", res);
           res.data.result.map((i) => {
-            console.log("iii", i);
             email = {
               label: i.email,
               value: i.email,
@@ -140,7 +134,6 @@ function DraftReport({
     e.map((i) => {
       a.push(i.value);
     });
-    console.log("eee", e);
     setEmail(a);
   };
   return (

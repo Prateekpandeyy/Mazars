@@ -10,7 +10,6 @@ export default class Payment extends React.Component {
     }
 
     handleChange1(i, e) {
-        console.log("iiii", i, e.target.value)
         if (isNaN(e.target.value)) {
             this.setState({ error: "Please insert only digit" })
         }
@@ -37,7 +36,6 @@ export default class Payment extends React.Component {
             })
     }
 // componentDidMount(){
-//     console.log("propsAmount", this.props.allAmount)
 //     // this.setState({
 //     //     values : this.props
 //     // })
@@ -54,7 +52,6 @@ componentDidUpdate(prevProps, prevState){
     
 }
     render() {
-  console.log("props", this.props.allAmount[2])
         var fieldsArray = [];
 
         for (var i = 0; i < this.props.installment; i++) {

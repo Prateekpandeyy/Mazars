@@ -27,6 +27,7 @@ const UpdateDetails = () => {
   let id = useParams();
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
+  const [pdfUrl, setPdfUrl] = useState("");
   const token = window.localStorage.getItem("clientToken");
   const myConfig = {
     headers: {
@@ -35,14 +36,61 @@ const UpdateDetails = () => {
   };
   const getData = (e) => {
     axios
-      .get(`${baseUrl}//customers/getupdatesdetail?id=${id.id}`, myConfig)
+      .get(`${baseUrl}/customers/getupdatesdetail?id=${id.id}`, myConfig)
       .then((res) => {
         setData(res.data.result);
+        getPdf(res.data.result[0].id);
       });
   };
   useEffect(() => {
     getData();
   }, []);
+  const getPdf = (e) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=1`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          let data = window.URL.createObjectURL(res.data);
+          setPdfUrl(data);
+        }
+      });
+  };
+  const downloadPdf = (e, name) => {
+    const myConfig2 = {
+      headers: {
+        uit: token,
+      },
+      responseType: "blob",
+    };
+    axios
+      .get(
+        `${baseUrl}/customers/viewclientdocument?id=${e}&doctype=1`,
+        myConfig2
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          window.URL = window.URL || window.webkitURL;
+          var url = window.URL.createObjectURL(res.data);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+
+          a.download = `${name}.pdf`;
+          a.target = "_blank";
+          a.click();
+        }
+      });
+  };
   return (
     <Layout custDashboard="custDashboard" custUserId={userId}>
       <>
@@ -111,9 +159,13 @@ const UpdateDetails = () => {
                     )}
                     {i.content_type === "0" || i.content_type === "1" ? (
                       <div id="artContent">
-                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                          <Viewer fileUrl={`${baseUrl3}/${i.file}`}></Viewer>
-                        </Worker>
+                        {pdfUrl?.length > 0 ? (
+                          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                            <Viewer fileUrl={pdfUrl}></Viewer>
+                          </Worker>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ) : (
                       ""
@@ -134,7 +186,7 @@ const UpdateDetails = () => {
                     )}
                   </ArticleWrapper>
                   <a
-                    href={`${baseUrl3}/${i.file}`}
+                    onClick={(e) => downloadPdf(i.id, i.heading)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={classes.myLink}

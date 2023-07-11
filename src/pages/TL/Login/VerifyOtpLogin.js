@@ -91,6 +91,10 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             "sessionTlid",
             JSON.stringify(response.data.user_id)
           );
+          localStorage.setItem(
+            "tl_record_per_page",
+            response.data.record_per_page
+          );
           history.push("/teamleader/dashboard");
         } else {
           setLoading(false);

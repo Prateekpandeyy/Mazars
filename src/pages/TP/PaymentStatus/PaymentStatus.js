@@ -74,7 +74,6 @@ function QueriesTab(props) {
 
   const tableIndex = (index) => {
     setTabIndex(index);
-    console.log(index);
     if (index === 0) {
       setbgColor("#2b5f55");
     } else if (index === 1) {
@@ -95,6 +94,8 @@ function QueriesTab(props) {
     margin: "10px auto",
     fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   return (

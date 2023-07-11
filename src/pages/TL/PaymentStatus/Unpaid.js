@@ -6,9 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
-  Row,
-  Col,
   Modal,
   ModalHeader,
   ModalBody,
@@ -19,10 +16,7 @@ import DiscardReport from "../AssignmentTab/DiscardReport";
 
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
-import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
-import ChangeHistoryIcon from "@material-ui/icons/ChangeHistory";
-import PaymentIcon from "@material-ui/icons/Payment";
 import RejectedModal from "./RejectedModal";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
@@ -30,11 +24,19 @@ import MessageIcon, {
   PaymentDecline,
   Payment,
   ViewDiscussionIcon,
-  DiscussProposal,
-  HelpIcon,
 } from "../../../components/Common/MessageIcon";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AllPayment() {
+  const classes = useStyles();
   const { id } = useParams();
   const userid = window.localStorage.getItem("tlkey");
   const cust_id = window.localStorage.getItem("userid");
@@ -49,8 +51,65 @@ function AllPayment() {
   const [addPaymentModal, setPaymentModal] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
   const [lastDown, setLastDown] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
   const myRef = useRef([]);
   const myRefs = useRef([]);
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendtlpay3") === column.dataField ||
+      localStorage.getItem("prevtlpay3") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlpay3", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlpay3") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+  useEffect(() => {
+    let localPage = Number(localStorage.getItem("tlpay3"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlpay3"));
+    setPrev(localStorage.getItem("prevtlpay3"));
+
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlpay3"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlpay3", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getPaymentStatus(localPage);
+  }, []);
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -67,7 +126,7 @@ function AllPayment() {
     setAssignNo(key.assign_no);
     if (addPaymentModal === false) {
       setScrolledTo(key.assign_no);
-      }
+    }
   };
 
   useEffect(() => {
@@ -86,33 +145,90 @@ function AllPayment() {
       setScrolledTo(key);
     }
   };
-  useEffect(() => {
-    getPaymentStatus();
-  }, []);
+
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  const getPaymentStatus = () => {
-    let data = JSON.parse(localStorage.getItem("searchDatatlpayment3"));
-    if (!data) {
-      axios
-        .get(
-          `${baseUrl}/tl/getUploadedProposals?uid=${JSON.parse(
-            userid
-          )}&status=1`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setPayment(res.data.result);
-            setCount(res.data.result.length);
-            setRecords(res.data.result.length);
-          }
-        });
+  const getPaymentStatus = (e) => {
+    let searchData = JSON.parse(localStorage.getItem("searchDatatlpayment3"));
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuepay3"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
     }
+    let remainApiPath = "";
+
+    if (searchData) {
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
+        userid
+      )}&page=${e}&status=1&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let droppage = [];
+        let data = res.data.result;
+
+        setCountNotification(res.data.total);
+        setRecords(res.data.total);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
+        }
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setPayment(all);
+        setRecords(res.data.result.length);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+      }
+    });
   };
 
   const toggle = (key) => {
@@ -166,10 +282,67 @@ function AllPayment() {
 
     return style;
   };
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlprot1", 1);
+    localStorage.setItem("sortedValuepay3", JSON.stringify(sort));
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlpayment3`));
+    if (searchData) {
+      remainApiPath = `/tl/getUploadedProposals?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&&status=1&pcat_id=${searchData.pcatId}&qno=${
+        searchData?.query_no
+      }`;
+    } else {
+      remainApiPath = `tl/getUploadedProposals?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}&status=1`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+        if (
+          Number(
+            res.data.total > Number(localStorage.getItem("tl_record_per_page"))
+          )
+        ) {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        } else {
+          setEnd(res.data.total);
+        }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+
+        setPayment(all);
+      }
+    });
+  };
 
   const columns = [
     {
-      dataField: "",
+      dataField: "cid",
       text: "S.no",
       formatter: (cellContent, row, rowIndex) => {
         return (
@@ -177,7 +350,7 @@ function AllPayment() {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -190,7 +363,26 @@ function AllPayment() {
       dataField: "query_created_date",
       text: "Query date",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.query_created_date;
         if (oldDate == null) {
@@ -227,17 +419,76 @@ function AllPayment() {
       dataField: "parent_id",
       text: "Category",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       dataField: "cat_name",
       text: "Sub category",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Date of acceptance of proposal",
       dataField: "cust_accept_date",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_accept_date;
         if (oldDate == null) {
@@ -248,8 +499,27 @@ function AllPayment() {
     },
     {
       text: "Status",
-      dataField: "",
+      dataField: "status",
+      // sort: true,
+      // headerFormatter: headerLabelFormatter,
 
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     localStorage.setItem("accendtlpay3", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("accendtlpay3");
+      //   }
+
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 5);
+      // },
       formatter: function (cell, row) {
         return (
           <>
@@ -266,7 +536,26 @@ function AllPayment() {
       dataField: "accepted_amount",
       text: "Accepted amount ",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
       sortFunc: (a, b, order, dataField) => {
         if (order === "asc") {
           return b - a;
@@ -285,12 +574,25 @@ function AllPayment() {
       text: "Amount paid",
       dataField: "paid_amount",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
         }
-        return a - b; // desc
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
       },
 
       formatter: function nameFormatter(cell, row) {
@@ -306,13 +608,26 @@ function AllPayment() {
       dataField: "amount_outstanding",
       sort: true,
 
-      sortFunc: (a, b, order, dataField) => {
-        if (order === "asc") {
-          return b - a;
-        }
-        return a - b; // desc
-      },
+      sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 9);
+      },
       formatter: function nameFormatter(cell, row) {
         var nfObject = new Intl.NumberFormat("hi-IN");
         var x = row.amount_outstanding;
@@ -324,7 +639,26 @@ function AllPayment() {
       text: "Date of payment",
       dataField: "cust_paid_date",
       sort: true,
+      sort: true,
+      headerFormatter: headerLabelFormatter,
 
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlpay3", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlpay3");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 10);
+      },
       formatter: function dateFormat(cell, row) {
         var oldDate = row.cust_paid_date;
         if (oldDate == null) {
@@ -394,6 +728,20 @@ function AllPayment() {
             Unpaid="Unpaid"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlpay3"
+            localAccend="accendtlpay3"
+            localPrev="prevtlpay3"
+            localSorted="sortedValuetlpay3"
             index="tlpayment3"
           />
         </CardHeader>

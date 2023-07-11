@@ -117,7 +117,13 @@ function Tds(props) {
               setTds(parseFloat(i.tds_amount));
               setgrandTotal(parseFloat(i.payable_amount));
               setTotal(parseFloat(i.invoice_amount));
-              setGst(parseFloat(i.gst));
+              setGst(
+                parseFloat(
+                  parseFloat(i.cgst_amount) +
+                    parseFloat(i.igst_amount) +
+                    parseFloat(i.sgst_amount)
+                )
+              );
               setDisabled(true);
             });
           }
@@ -422,6 +428,7 @@ function Tds(props) {
       url: `${baseUrl}/tl/generateInvoive`,
     }).then((res) => {
       setLoading(false);
+      props.getProposalList(1);
       props.addTdsToggle();
       setDiscription("");
       if (res.data.code === 1) {
@@ -431,7 +438,6 @@ function Tds(props) {
           html: "Invoice generated successfully",
           icon: "success",
         });
-        props.getProposalList();
       } else {
         props.addTdsToggle();
         Swal.fire({

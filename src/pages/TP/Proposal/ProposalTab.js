@@ -28,7 +28,6 @@ function ProposalTab(props) {
 
   const tableIndex = (index) => {
     setTabIndex(index);
-    console.log(index);
     if (index === 0) {
       setbgColor("#42566a");
     } else if (index === 1) {
@@ -46,10 +45,11 @@ function ProposalTab(props) {
   };
   const myStyle2 = {
     margin: "10px auto",
-
     color: "#42566a",
     fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {
@@ -140,16 +140,16 @@ function ProposalTab(props) {
         </TabList>
 
         <TabPanel>
-          <AllProposal />
+          <AllProposal count={allProposal} />
         </TabPanel>
         <TabPanel>
-          <InprogressProposal />
+          <InprogressProposal count={inprogressProposal} />
         </TabPanel>
         <TabPanel>
-          <AcceptedProposal />
+          <AcceptedProposal count={acceptedProposal} />
         </TabPanel>
         <TabPanel>
-          <DeclinedProposal />
+          <DeclinedProposal count={declinedProposal} />
         </TabPanel>
       </Tabs>
     </Layout>

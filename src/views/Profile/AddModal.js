@@ -15,7 +15,6 @@ const AddModal = ({ addEmailFun, addEmail, addedEmail, token, getData }) => {
     useForm();
 
   const emailHandler = (e) => {
-    console.log("eee", e.target.value);
     setEmail(e.target.value);
     if (e.target.value.length < 1) {
       setWemail("");

@@ -10,8 +10,18 @@ import RecordingFilter from "../../../components/Search-Filter/RecordingFilter";
 import { Link } from "react-router-dom";
 import "./recording.css";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function Recording() {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [feedbackData, setFeedBackData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,13 +34,43 @@ function Recording() {
     assignid: "",
     id: "",
   });
+
+  const [lastDown, setLastDown] = useState("");
+  const [countNotification, setCountNotification] = useState("");
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState("");
+  const [sortField, setSortField] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1"]);
   const openModal = (videoContent) => {
     setIsOpen(true);
     setVideoId(videoContent);
   };
 
   useEffect(() => {
-    getRecording();
+    let localPage = Number(localStorage.getItem("recordingData"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    let sortVal = JSON.parse(localStorage.getItem("recordingSorttl"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("recordingSorttl", JSON.stringify(sort));
+    }
+    setPage(localPage);
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getRecording(localPage);
   }, []);
   const videoIcon = {
     display: "flex",
@@ -43,40 +83,77 @@ function Recording() {
       uit: token,
     },
   };
-  const getRecording = () => {
-    axios
-      .get(
-        `${baseUrl}/tl/callRecordingPostlist?uid=${JSON.parse(userid)}`,
-        myConfig
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          setFeedBackData(res.data.result);
-          setRecords(res.data.result.length);
+  const getRecording = (e) => {
+    let sortVal = JSON.parse(localStorage.getItem("recordingSorttl"));
+    let orderBy = 0;
+    let fieldBy = 0;
+
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlQuery`));
+
+    if (searchData) {
+      remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
+        userid
+      )}&page=${e}&assign_id=${
+        searchData.queryNo
+      }&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    } else {
+      remainApiPath = `tl/callRecordingPostlist?uid=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+
+      let droppage = [];
+
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setPage(e);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
         }
-      });
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setFeedBackData(all);
+        let end = e * allEnd;
+
+        if (end > res.data.total) {
+          end = res.data.total;
+        }
+        let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+        let rem = (e - 1) * allEnd;
+
+        if (e === 1) {
+          setBig(rem + e);
+          setEnd(end);
+        } else {
+          setBig(rem + 1);
+          setEnd(end);
+        }
+        for (let i = 1; i <= dynamicPage; i++) {
+          droppage.push(i);
+        }
+        setDefaultPage(droppage);
+        setRecords(res.data.result.length);
+        setCountNotification(res.data.total);
+      }
+    });
   };
-  const modalBox = {
-    display: "flex",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "auto",
-    flexDirection: "column",
-  };
-  const canBtn = {
-    display: "flex",
-    width: "50vw",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-    padding: "20px",
-    cursor: "pointer",
-    color: "red",
-  };
+
   const editRecording = (participants, assign_id, message, id) => {
     setShowEditModal(!showEditModal);
     setEditData({
@@ -86,13 +163,86 @@ function Recording() {
       id: id,
     });
   };
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
 
+    localStorage.setItem("recordingSorttl", JSON.stringify(sort));
+
+    let queryNo = JSON.parse(localStorage.getItem(`recordingDatatl`));
+    let remainApiPath = "";
+    if (queryNo) {
+      remainApiPath = `/tl/callRecordingPostlist?id=${JSON.parse(
+        userid
+      )}&assign_id=${queryNo.queryNo}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `/tl/callRecordingPostlist?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        if (
+          Number(all.length) <
+          Number(localStorage.getItem("tl_record_per_page"))
+        ) {
+          setEnd(all.length);
+        } else {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        }
+        setFeedBackData(all);
+        setCountNotification(res.data.total);
+      }
+    });
+  };
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (localStorage.getItem("accendtlrec") === column.dataField) {
+      isActive = true;
+      setPrev(column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlrec") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   const columns = [
     {
       text: "S.No",
       dataField: "",
       formatter: (cellContent, row, rowIndex) => {
-        return rowIndex + 1;
+        return row.cid;
       },
       headerStyle: () => {
         return { fontSize: "12px", width: "8px", padding: "9px 5px" };
@@ -100,8 +250,28 @@ function Recording() {
     },
     {
       text: "Date",
-      sort: true,
+
       dataField: "created_date",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlrec", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlrec");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       headerStyle: () => {
         return { fontSize: "12px", width: "30px" };
       },
@@ -134,6 +304,26 @@ function Recording() {
       dataField: "participants",
       headerStyle: () => {
         return { fontSize: "12px", width: "40px" };
+      },
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlrec", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlrec");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
       },
       formatter: function formatterName(cell, row) {
         return <p>{row.participants}</p>;
@@ -212,7 +402,21 @@ function Recording() {
       },
     },
   ];
+  const resetPaging = () => {
+    setPage(1);
+    setBig(1);
 
+    // localStorage.removeItem("adminpayt3");
+    // localStorage.removeItem("sortedValuepay3");
+    // localStorage.removeItem("accendpay3");
+    // localStorage.removeItem("prevpay3");
+    localStorage.removeItem("tlrecording");
+    localStorage.removeItem("accendtlrecording");
+    localStorage.removeItem("accendtlrec");
+    localStorage.removeItem("prevtlrecording");
+    localStorage.removeItem("recordingSorttl");
+    getRecording(1);
+  };
   return (
     <>
       <Layout TLDashboard="TLDashboard" TLuserId={userid}>
@@ -237,6 +441,23 @@ function Recording() {
                 records={records}
                 userid={userid}
                 getRecording={getRecording}
+                page={page}
+                getData={getRecording}
+                big={big}
+                end={end}
+                setBig={setBig}
+                setEnd={setEnd}
+                setPage={setPage}
+                defaultPage={defaultPage}
+                setDefaultPage={setDefaultPage}
+                setCountNotification={setCountNotification}
+                countNotification={countNotification}
+                resetPaging={resetPaging}
+                pageValue="tlrecording"
+                localAccend="accendtlrecording"
+                localPrev="prevtlrecording"
+                localSorted="recordingSorttl"
+                index="tlrecording"
               />
               <DataTablepopulated
                 bgColor="#42566a"

@@ -5,9 +5,7 @@ import AssignmentDetails from "./AssignmentDetails";
 import QueryRecording from "./QueryRecording";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Card } from "reactstrap";
-import classnames from "classnames";
 import Feedback from "./Feedback";
-import { TabPane } from "reactstrap";
 
 function QueryDetails({
   overDue,
@@ -43,11 +41,13 @@ function QueryDetails({
   };
   const myStyle2 = {
     margin: "10px auto",
-
     color: "#42566a",
     fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
+  
   return (
     <>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>

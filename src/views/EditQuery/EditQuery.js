@@ -120,7 +120,6 @@ function EditQuery(props) {
   };
 
   const onSubmit = (value) => {
-    console.log("done21");
 
     if (purposeOption < 1) {
       setSelectError("At least one value should be enter");
@@ -231,7 +230,6 @@ function EditQuery(props) {
           document.body.appendChild(a);
           a.style = "display: none";
           a.href = url;
-          console.log(res.headers);
           a.download = name;
           a.target = "_blank";
           a.click();

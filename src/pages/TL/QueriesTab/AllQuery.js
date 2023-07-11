@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
@@ -9,10 +9,19 @@ import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel
 import MessageIcon, {
   ViewDiscussionIcon,
 } from "../../../components/Common/MessageIcon";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 10px",
+  },
+}));
 function AllQuery({ setAllQuery }) {
+  const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
 
   const [incompleteData, setInCompleteData] = useState([]);
@@ -21,9 +30,49 @@ function AllQuery({ setAllQuery }) {
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
-  const [open, setOpen] = useState(true);
+
+  const [countNotification, setCountNotification] = useState("");
+
+  const [big, setBig] = useState(1);
+  const [end, setEnd] = useState(50);
+  const [page, setPage] = useState(0);
+
+  const [accend, setAccend] = useState(false);
+  const [prev, setPrev] = useState("");
+  const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
+
   const myRef = useRef([]);
-  const myRefs = useRef([]);
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("accendtlq1") === column.dataField ||
+      localStorage.getItem("prevtlq1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevtlq1", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("accendtlq1") === column.dataField ? (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -47,40 +96,179 @@ function AllQuery({ setAllQuery }) {
     }
   };
 
+  // useEffect(() => {
+  //   getInCompleteAssingment();
+  // }, []);
   useEffect(() => {
-    getInCompleteAssingment();
-  }, []);
+    let localPage = Number(localStorage.getItem("tlqp1"));
+    if (!localPage) {
+      localPage = 1;
+    }
+    setAccend(localStorage.getItem("accendtlq1"));
+    setPrev(localStorage.getItem("prevtlq1"));
 
-  const getInCompleteAssingment = () => {
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq1"));
+    if (!sortVal) {
+      let sort = {
+        orderBy: 0,
+        fieldBy: 0,
+      };
+      localStorage.setItem("sortedValuetlq1", JSON.stringify(sort));
+    }
+
+    setEnd(Number(localStorage.getItem("tl_record_per_page")));
+    getInCompleteAssingment(localPage);
+  }, []);
+  const getInCompleteAssingment = (e) => {
+    setPage(e);
+    let allEnd = Number(localStorage.getItem("tl_record_per_page"));
+    let orderBy = 0;
+    let fieldBy = 0;
+    let sortVal = JSON.parse(localStorage.getItem("sortedValuetlq1"));
+    if (sortVal) {
+      orderBy = sortVal.orderBy;
+      fieldBy = sortVal.fieldBy;
+    }
+    let remainApiPath = "";
+
     let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery1`));
-    if (!searchData) {
-      axios
-        .get(
-          `${baseUrl}/tl/getIncompleteQues?id=${JSON.parse(userid)}`,
-          myConfig
-        )
-        .then((res) => {
-          if (res.data.code === 1) {
-            setInCompleteData(res.data.result);
-            setAllQuery(res.data.result.length);
-            setRecords(res.data.result.length);
-            setOpen(false);
+    if (searchData) {
+      remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}`;
+    } else {
+      remainApiPath = `tl/getIncompleteQues?id=${JSON.parse(
+        userid
+      )}&page=${e}&orderby=${orderBy}&orderbyfield=${fieldBy}`;
+    }
+    if (e) {
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        let droppage = [];
+        if (res.data.code === 1) {
+          let data = res.data.result;
+
+          setCountNotification(res.data.total);
+          setRecords(res.data.total);
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
           }
-        });
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setInCompleteData(all);
+          let end = e * allEnd;
+
+          if (end > res.data.total) {
+            end = res.data.total;
+          }
+          let dynamicPage = Math.ceil(res.data.total / allEnd);
+
+          let rem = (e - 1) * allEnd;
+
+          if (e === 1) {
+            setBig(rem + e);
+            setEnd(end);
+          } else {
+            setBig(rem + 1);
+            setEnd(end);
+          }
+          for (let i = 1; i <= dynamicPage; i++) {
+            droppage.push(i);
+          }
+          setDefaultPage(droppage);
+        }
+        // if (res.data.code === 1) {
+
+        //   setAllQuery(res.data.result.length);
+        //   setRecords(res.data.result.length);
+        //   setOpen(false);
+        // }
+      });
     }
   };
+  const sortMessage = (val, field) => {
+    let sort = {
+      orderBy: val,
+      fieldBy: field,
+    };
+    localStorage.setItem("tlqp1", 1);
+    localStorage.setItem("sortedValuetlq1", JSON.stringify(sort));
 
+    let searchData = JSON.parse(localStorage.getItem(`searchDatatlquery1`));
+    let remainApiPath = "";
+    if (searchData) {
+      remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(userid)}&cat_id=${
+        searchData.store
+      }&from=${searchData.fromDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&to=${searchData.toDate
+        ?.split("-")
+        .reverse()
+        .join("-")}&status=${searchData?.p_status}&pcat_id=${
+        searchData.pcatId
+      }&qno=${searchData?.query_no}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `/tl/getIncompleteQues?id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        setPage(1);
+        setBig(1);
+
+        let all = [];
+        let sortId = 1;
+
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        if (
+          Number(all.length) <
+          Number(localStorage.getItem("tl_record_per_page"))
+        ) {
+          setEnd(all.length);
+        } else {
+          setEnd(Number(localStorage.getItem("tl_record_per_page")));
+        }
+        setInCompleteData(all);
+      }
+    });
+  };
   const columns = [
     {
       text: "S.no",
-      dataField: "",
+      dataField: "cid",
       formatter: (cellContent, row, rowIndex) => {
         return (
           <div
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -92,7 +280,25 @@ function AllQuery({ setAllQuery }) {
     {
       text: "Query date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function (cell, row) {
         let dueDate = row.created.split("-").reverse().join("-");
@@ -124,22 +330,94 @@ function AllQuery({ setAllQuery }) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Client name",
       dataField: "name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
     },
     {
       text: "Delivery due date   / Acutal delivery date",
       dataField: "Exp_Delivery_Date",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          localStorage.setItem("accendtlq1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("accendtlq1");
+        }
+
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -153,6 +431,7 @@ function AllQuery({ setAllQuery }) {
     },
     {
       text: "Status",
+      dataField: "status",
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -218,7 +497,7 @@ function AllQuery({ setAllQuery }) {
 
   return (
     <>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: "#000",
           zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -226,7 +505,7 @@ function AllQuery({ setAllQuery }) {
         open={open}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
       <Card>
         <CardHeader>
           <TeamFilter
@@ -235,7 +514,21 @@ function AllQuery({ setAllQuery }) {
             AllQuery="AllQuery"
             setRecords={setRecords}
             records={records}
+            setCountNotification={setCountNotification}
+            countNotification={countNotification}
+            big={big}
+            end={end}
+            setBig={setBig}
+            setEnd={setEnd}
+            setPage={setPage}
+            page={page}
+            defaultPage={defaultPage}
+            setDefaultPage={setDefaultPage}
+            pageValue="tlqp1"
             index="tlquery1"
+            localAccend="accendtlq1"
+            localPrev="prevtlq1"
+            localSorted="sortedValuetlq1"
           />
         </CardHeader>
         <CardBody>

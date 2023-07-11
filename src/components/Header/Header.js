@@ -11,6 +11,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import CustomTypography from "../Common/CustomTypography";
 import SubHeading from "../Common/SubHeading";
 import CustomHeading from "../Common/CustomHeading";
+import { clientLogout } from "../Logout/ClientLogout";
+import axios from "axios";
 function Header({
   id,
   cust_sign,
@@ -29,11 +31,7 @@ function Header({
   let history = useHistory();
 
   const custLogout = () => {
-    localStorage.removeItem("userid");
-    localStorage.removeItem("name");
-    localStorage.removeItem("uid");
-    localStorage.removeItem("category");
-    history.push("/customer/signin");
+    clientLogout(axios, history);
   };
   useEffect(() => {
     if (
@@ -265,7 +263,7 @@ export const CmsCont = (props) => {
   };
 
   const myLink = (e) => {
-    if (Cookies.get("accept")) {
+    if (Cookies.get("accept") || localStorage.getItem("clientToken")) {
       if (e === "direct") {
         history.push("/customer/direct");
       } else if (e === "indirect") {

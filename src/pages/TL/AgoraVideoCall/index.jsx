@@ -599,7 +599,7 @@ if(item.player === undefined){
       }
       else if(res.data.length > 0 && this.state.getAdId === stream.getId()){
          var praticipantVar = document.getElementById("name" + stream.getId())
-         praticipantVar.setAttribute("value", "You");
+         praticipantVar.setAttribute("value", `You (Channel-${res.data[0].channel_name})`);
          praticipantVar.setAttribute("disabled", true)
        }
        
@@ -633,7 +633,6 @@ if(item.player === undefined){
         ? this.localStream.muteAudio()
         : this.localStream.unmuteAudio();
     }
-   
   };
 
   switchDisplay = (e) => {

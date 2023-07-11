@@ -4,7 +4,6 @@ import Meeting from "../../components/meeting/index";
 
 function MeetingComponent(props) {
   const userId = window.localStorage.getItem("userid");
-console.log("propsId", props)
   return (
     
       <Meeting id={props.match.params.id}/>

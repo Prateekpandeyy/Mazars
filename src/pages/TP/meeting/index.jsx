@@ -37,7 +37,7 @@ class Meeting extends React.Component {
                  
          {this.state.showmeetingScreen === true ?
              <div style={{ display : "flex", flexDirection: "column" , height: "100%" }}>
-          <div
+          {/* <div
           className="ag-header"
           style={{ color: "green", fontWeight: "bold" }}
         >
@@ -47,7 +47,7 @@ class Meeting extends React.Component {
           <div className="ag-header-msg">
             &nbsp;<span id="room-name">{this.channel}</span>
           </div>
-        </div>
+        </div> */}
         <div className="ag-main">
           <div className="ag-container">
             <AgoraVideoCall

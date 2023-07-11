@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { getErrorMessage } from "../../../constants";
 import Loader from "../../../components/Loader/Loader";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
@@ -20,6 +20,18 @@ import MessageIcon, {
   Payment,
 } from "../../../components/Common/MessageIcon";
 import { Spinner } from "reactstrap";
+
+import PaginatorTL from "../../../components/Paginator/PaginatorTL";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AdminPermission(props) {
   const [loading, setLoading] = useState(false);
@@ -41,7 +53,7 @@ function AdminPermission(props) {
   const [lastDown, setLastDown] = useState("");
   const myRef = useRef([]);
   const myRefs = useRef([]);
-  
+
   var current_date =
     new Date().getFullYear() +
     "-" +
@@ -53,7 +65,7 @@ function AdminPermission(props) {
   var rowStyle2 = {};
   const [reportModal, setReportModal] = useState(false);
   const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [toDate, setToDate] = useState(current_date);
   const [queryNo, setQueryNo] = useState("");
   const ViewReport = (key) => {
     setReportModal(!reportModal);
@@ -62,6 +74,16 @@ function AdminPermission(props) {
       setScrolledTo(key);
     }
   };
+  const allEnd = Number(localStorage.getItem("tl_record_per_page"));
+  const classes = useStyles();
+  const [count, setCount] = useState("0");
+  const [onPage, setOnPage] = useState(1);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState("");
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
 
   const [assignNo, setAssignNo] = useState(null);
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -79,6 +101,7 @@ function AdminPermission(props) {
     let data = JSON.parse(localStorage.getItem("tlcategoryData"));
     setCategory(data);
   }, []);
+
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
@@ -92,51 +115,129 @@ function AdminPermission(props) {
     runTo?.scrollIntoView(false);
     runTo?.scrollIntoView({ block: "center" });
   }, [reportModal]);
-  
+
   //handleCategory
   const handleCategory = (value) => {
     setSelectedData(value);
-    setTax2(JSON.parse(localStorage.getItem(value)));
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
+    } else {
+    }
+    // setTax2(JSON.parse(localStorage.getItem(value)));
     setStore2([]);
+    setError(false);
   };
 
   useEffect(() => {
-    getAssignmentData();
+    if (selectedData == 1) {
+      setTax2(JSON.parse(localStorage.getItem("tlDirect tax")));
+    } else if (selectedData == 2) {
+      setTax2(JSON.parse(localStorage.getItem("tlIndirect tax")));
+    }
+  }, [selectedData]);
+
+  useEffect(() => {
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
+    let arrow = localStorage.getItem("tlArrowAs4");
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // let sortVal = JSON.parse(localStorage.getItem("freezetlAssignment4"));
+    // if (!sortVal) {
+    //   let sort = {
+    //     orderBy: 0,
+    //     fieldBy: 0,
+    //   };
+    //   localStorage.setItem("freezetlAssignment4", JSON.stringify(sort));
+    // }
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
+    if (!data) {
+      if (pageno) {
+        getAssignmentData(pageno);
+      } else {
+        getAssignmentData(1);
+        localStorage.setItem(`tlAssignment4`, JSON.stringify(1));
+      }
+    }
+    // getAssignmentData();
   }, []);
+
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
       uit: token,
     },
   };
-  const getAssignmentData = () => {
+  const getAssignmentData = (e) => {
+    if (e === undefined) {
+      e = 1;
+    }
     let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
-    if (!data) {
-      axios.get(`${baseUrl}/tl/getadminpermissiona`, myConfig).then((res) => {
-        if (res.data.code === 1) {
-          setAssignmentDisplay(res.data.result);
-          setCountAssignment(res.data.result.length);
-          setRecords(res.data.result.length);
-        }
-      });
+    let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment4"));
+    localStorage.setItem(`tlAssignment4`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    // setLoading(true);
+    if (pagetry) {
+      remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `tl/getadminpermissiona?page=${e}&tp_id=${JSON.parse(
+        userid
+      )}`;
     }
-  };
-  useEffect(() => {
-    let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
 
-    if (dk) {
-      if (dk.route === window.location.pathname) {
-        setStore2(dk.store);
-        setToDate(dk.toDate);
-        setFromDate(dk.fromDate);
-        setSelectedData(dk.pcatId);
-        setStatus(dk.stage_status);
-        setQueryNo(dk.query_no);
-        setHide(dk.p_status);
-        onSubmit(dk);
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        setRecords(res.data.result.length);
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
+        }
+        data?.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setAssignmentDisplay(all);
+        setCount(res.data.total);
+        setCountAssignment(res.data.result.length);
+        setRecords(res.data.result.length);
       }
-    }
-  }, []);
+    });
+  };
+  // useEffect(() => {
+  //   let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
+  //   let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
+  //   if (dk) {
+  //     if (dk.route === window.location.pathname) {
+  //       setStore2(dk.store);
+  //       setToDate(dk.toDate);
+  //       setFromDate(dk.fromDate);
+  //       setSelectedData(dk.pcatId);
+  //       setStatus(dk.stage_status);
+  //       setQueryNo(dk.query_no);
+  //       setHide(dk.p_status);
+  //       if (pageno) {
+  //         onSubmit(dk, pageno);
+  //       } else {
+  //         onSubmit(dk, 1);
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   //handleSubCategory
   const handleSubCategory = (value) => {
@@ -162,20 +263,98 @@ function AdminPermission(props) {
     setStatus("");
     setSelectedData([]);
     setStore2([]);
-    setToDate("");
+    setToDate(current_date);
     setFromDate("");
     setQueryNo("");
     localStorage.removeItem("searchDatatlAssignment4");
-    getAssignmentData();
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("tlAssignment4");
+    localStorage.removeItem(`freezetlAssignment4`);
+    localStorage.removeItem("tlArrowAs4");
+    getAssignmentData(1);
   };
 
   //assingmentStatus
   const assingmentStatus = (value) => {
     setError(false);
-
     setStatus(value);
   };
 
+  function headerLabelFormatter(column) {
+    return (
+      <div>
+        {column.dataField === isActive ? (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            ) : (
+              <ArrowDropDownIcon
+                className={turnGreen === true ? classes.isActive : ""}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="d-flex text-white w-100 flex-wrap">
+            {column.text}
+            {accend === column.dataField ? (
+              <ArrowDropUpIcon />
+            ) : (
+              <ArrowDropDownIcon />
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    };
+    localStorage.setItem(`tlAssignment4`, JSON.stringify(1));
+    localStorage.setItem(`freezetlAssignment4`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
+    if (data) {
+      if (data?.stage_status?.length > 0) {
+        remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+      } else {
+        remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+      }
+    } else {
+      remainApiPath = `tl/getadminpermissiona?page=1&tp_id=${JSON.parse(
+        userid
+      )}&orderby=${val}&orderbyfield=${field}`;
+    }
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        res.data.result?.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setAssignmentDisplay(all);
+        setRecords(res.data.result.length);
+        setCount(res.data.total);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
+  };
   const columns = [
     {
       text: "S.no",
@@ -186,7 +365,7 @@ function AdminPermission(props) {
             id={row.assign_no}
             ref={(el) => (myRef.current[row.assign_no] = el)}
           >
-            {rowIndex + 1}
+            {row.cid}
           </div>
         );
       },
@@ -198,7 +377,25 @@ function AdminPermission(props) {
     {
       text: "Date",
       dataField: "date_of_query",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.date_of_query;
@@ -231,12 +428,48 @@ function AdminPermission(props) {
     {
       text: "Category",
       dataField: "parent_id",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       dataField: "status",
@@ -321,7 +554,25 @@ function AdminPermission(props) {
     {
       dataField: "Exp_Delivery_Date",
       text: "Expected date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.Exp_Delivery_Date;
@@ -334,7 +585,25 @@ function AdminPermission(props) {
     {
       dataField: "final_date",
       text: "Actual date of delivery",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 7);
+      },
 
       formatter: function dateFormat(cell, row) {
         var oldDate = row.final_date;
@@ -371,7 +640,25 @@ function AdminPermission(props) {
     {
       text: "TL name",
       dataField: "tl_name",
+      headerFormatter: headerLabelFormatter,
       sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("tlArrowAs4", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("tlArrowAs4");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 8);
+      },
     },
     {
       text: "Action",
@@ -428,6 +715,7 @@ function AdminPermission(props) {
   };
   useEffect(() => {
     let dk = JSON.parse(localStorage.getItem("searchDatatlAssignment4"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
 
     if (dk) {
       if (dk.route === window.location.pathname) {
@@ -438,11 +726,26 @@ function AdminPermission(props) {
         setStatus(dk.stage_status);
         setQueryNo(dk.query_no);
         setHide(dk.p_status);
-        onSubmit(dk);
+        if (pageno) {
+          onSubmit(dk, pageno);
+        } else {
+          onSubmit(dk, 1);
+        }
       }
     }
   }, []);
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
+    let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment4"));
+    let pageno = JSON.parse(localStorage.getItem("tlAssignment4"));
+    if (pageno) {
+      let e = pageno;
+    } else {
+      let e = 1;
+    }
+    let remainApiPath = "";
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+
     let obj = {};
     if (data.route) {
       obj = {
@@ -452,7 +755,7 @@ function AdminPermission(props) {
         pcatId: data.pcatId,
         query_no: data?.query_no,
         p_status: data?.p_status,
-        stage_status: data?.assignment_status,
+        stage_status: data?.stage_status,
         route: window.location.pathname,
       };
     } else {
@@ -468,66 +771,80 @@ function AdminPermission(props) {
       };
     }
     localStorage.setItem(`searchDatatlAssignment4`, JSON.stringify(obj));
+
     if (data.route) {
       if (status.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
+        if (pagetry) {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+        } else {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+        }
       } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
+        if (pagetry) {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}&orderby=${val}&orderbyfield=${field}`;
+        } else {
+          remainApiPath = `tl/getadminpermissiona?page=${e}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&assignment_status=${data.stage_status}&stages_status=${data.p_status}&pcat_id=${data.pcatId}&qno=${data.query_no}`;
+        }
       }
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data?.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignmentDisplay(all);
+            setRecords(res.data.result.length);
+            setCount(res.data.total);
+          }
+        }
+      });
     } else {
-      if (status.length > 0) {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
+      if (status?.length > 0) {
+        remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`;
       } else {
-        axios
-          .get(
-            `${baseUrl}/tl/getadminpermissiona?cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`,
-            myConfig
-          )
-          .then((res) => {
-            if (res.data.code === 1) {
-              if (res.data.result) {
-                setAssignmentDisplay(res.data.result);
-                setRecords(res.data.result.length);
-              }
-            }
-          });
+        remainApiPath = `tl/getadminpermissiona?page=1&cat_id=${store2}&from=${data.p_dateFrom}&to=${data.p_dateTo}&assignment_status=${status}&stages_status=${data.p_status}&pcat_id=${selectedData}&qno=${data.query_no}`;
       }
+      axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+        if (res.data.code === 1) {
+          if (res.data.result) {
+            let data = res.data.result;
+            setRecords(res.data.result.length);
+            let all = [];
+            let customId = 1;
+            if (e > 1) {
+              customId = allEnd * (e - 1) + 1;
+            }
+            data?.map((i) => {
+              let data = {
+                ...i,
+                cid: customId,
+              };
+              customId++;
+              all.push(data);
+            });
+            setAssignmentDisplay(all);
+            setRecords(res.data.result.length);
+            setCount(res.data.total);
+            setresetTrigger(!resetTrigger);
+            localStorage.removeItem(`freezetlAssignment4`);
+            localStorage.removeItem("tlArrowAs4");
+            setAccend("");
+            setTurnGreen(false);
+          }
+        }
+      });
     }
   };
 
@@ -555,170 +872,188 @@ function AdminPermission(props) {
     <div>
       <Card>
         <CardHeader>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-inline">
-              <div className="form-group mb-2">
-                <Select
-                  style={{ width: 130 }}
-                  placeholder="Select Category"
-                  defaultValue={[]}
-                  onChange={handleCategory}
-                  value={selectedData}
-                >
-                  {categoryData.map((p, index) => (
-                    <Option value={p.details} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
+          <Row>
+            <Col md="12">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-inline">
+                  <div class="form-group mb-2">
+                    <Select
+                      style={{ width: 130 }}
+                      placeholder="Select Category"
+                      defaultValue={[]}
+                      onChange={handleCategory}
+                      value={selectedData}
+                    >
+                      {categoryData.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <Select
-                  mode="multiple"
-                  style={{ width: 250 }}
-                  placeholder="Select Sub Category"
-                  defaultValue={[]}
-                  onChange={handleSubCategory}
-                  value={store2}
-                  allowClear
-                >
-                  {tax2.map((p, index) => (
-                    <Option value={p.id} key={index}>
-                      {p.details}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className="btnSearch mb-2 ml-3"
-                  onClick={resetCategory}
-                >
-                  X
-                </button>
-              </div>
+                  <div class="form-group mx-sm-1  mb-2">
+                    <Select
+                      mode="multiple"
+                      style={{ width: 250 }}
+                      placeholder="Select Sub Category"
+                      defaultValue={[]}
+                      onChange={handleSubCategory}
+                      value={store2}
+                      allowClear
+                    >
+                      {tax2?.map((p, index) => (
+                        <Option value={p.id} key={index}>
+                          {p.details}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      className="btnSearch mb-2 ml-3"
+                      onClick={resetCategory}
+                    >
+                      X
+                    </button>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">From</label>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">From</label>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateFrom"
-                  className="form-select form-control"
-                  ref={register}
-                  max={item}
-                  onChange={(e) => setFromDate(e.target.value)}
-                  value={fromDate}
-                />
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateFrom"
+                      className="form-select form-control"
+                      ref={register}
+                      max={item}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      value={fromDate}
+                    />
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <label className="form-select form-control">To</label>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <label className="form-select form-control">To</label>
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="date"
-                  name="p_dateTo"
-                  className="form-select form-control"
-                  ref={register}
-                  onChange={(e) => setToDate(e.target.value)}
-                  value={toDate}
-                  max={item}
-                />
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="date"
+                      name="p_dateTo"
+                      className="form-select form-control"
+                      ref={register}
+                      onChange={(e) => setToDate(e.target.value)}
+                      value={toDate}
+                      max={item}
+                    />
+                  </div>
 
-              <div className="form-group mx-sm-1  mb-2">
-                <select
-                  className="form-select form-control"
-                  name="p_status"
-                  ref={register}
-                  style={{ height: "33px" }}
-                  value={hide}
-                  onChange={(e) => disabledHandler(e)}
-                >
-                  <option value="">--select--</option>
-                  <option value="1">Inprogress</option>
-                  <option value="2">Completed</option>
-                  <option value="3">Payment Declined</option>
-                </select>
-              </div>
+                  <div className="form-group mx-sm-1  mb-2">
+                    <select
+                      className="form-select form-control"
+                      name="p_status"
+                      ref={register}
+                      style={{ height: "33px" }}
+                      value={hide}
+                      onChange={(e) => disabledHandler(e)}
+                    >
+                      <option value="">--select--</option>
+                      <option value="1">Inprogress</option>
+                      <option value="2">Completed</option>
+                      <option value="3">Payment Declined</option>
+                    </select>
+                  </div>
 
-              {hide !== "3" ? (
-                <div className="form-group mx-sm-1  mb-2">
-                  <Select
-                    mode="single"
-                    style={{ width: 210 }}
-                    placeholder="Select stages"
-                    defaultValue={[]}
-                    onChange={assingmentStatus}
-                    value={status}
-                    allowClear
-                    className={error ? "customError" : ""}
-                  >
-                    <Option value="Client_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Client Discussion
-                      </div>
-                    </Option>
-                    <Option value="Draft_Report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Draft reports
-                      </div>
-                    </Option>
-                    <Option value="Final_Discussion" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Final Discussion
-                      </div>
-                    </Option>
-                    <Option value="Delivery_of_report" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Delivery of Final Reports
-                      </div>
-                    </Option>
-                    <Option value="Completed" label="Compilance">
-                      <div className="demo-option-label-item">
-                        Awaiting Completion
-                      </div>
-                    </Option>
-                  </Select>
+                  {hide !== "3" ? (
+                    <div className="form-group mx-sm-1  mb-2">
+                      <Select
+                        mode="single"
+                        style={{ width: 210 }}
+                        placeholder="Select stages"
+                        defaultValue={[]}
+                        onChange={assingmentStatus}
+                        value={status}
+                        allowClear
+                        className={error ? "customError" : ""}
+                      >
+                        <Option value="Client_Discussion" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Client Discussion
+                          </div>
+                        </Option>
+                        <Option value="Draft_Report" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Draft reports
+                          </div>
+                        </Option>
+                        <Option value="Final_Discussion" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Final Discussion
+                          </div>
+                        </Option>
+                        <Option value="Delivery_of_report" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Delivery of Final Reports
+                          </div>
+                        </Option>
+                        <Option value="Completed" label="Compilance">
+                          <div className="demo-option-label-item">
+                            Awaiting Completion
+                          </div>
+                        </Option>
+                      </Select>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="form-group mx-sm-1  mb-2">
+                    <input
+                      type="text"
+                      name="query_no"
+                      ref={register}
+                      placeholder="Enter Query Number"
+                      className="form-control"
+                      onChange={(e) => setQueryNo(e.target.value)}
+                      value={queryNo}
+                    />
+                  </div>
+                  {loading ? (
+                    // <Loader />
+                    <div class="col-md-12">
+                      <Spinner color="primary" />
+                    </div>
+                  ) : (
+                    <button type="submit" className="customBtn">
+                      Search
+                    </button>
+                  )}
+
+                  <Reset />
                 </div>
-              ) : (
-                ""
-              )}
-              <div className="form-group mx-sm-1  mb-2">
-                <input
-                  type="text"
-                  name="query_no"
-                  ref={register}
-                  placeholder="Enter Query Number"
-                  className="form-control"
-                  onChange={(e) => setQueryNo(e.target.value)}
-                  value={queryNo}
-                />
-              </div>
-              {loading ? (
-                // <Loader />
-                <div class="col-md-12">
-                  <Spinner color="primary" />
-                </div>
-              ) : (
-                <button type="submit" className="customBtn">
-                  Search
-                </button>
-              )}
-
-              <Reset />
-            </div>
-          </form>
+              </form>
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <Col md="12" align="right">
+              <PaginatorTL
+                count={count}
+                setOnPage={setOnPage}
+                // resetPaging={resetPaging}
+                resetTrigger={resetTrigger}
+                setresetTrigger={setresetTrigger}
+                index="tlAssignment4"
+                setData={setAssignmentDisplay}
+                getData={getAssignmentData}
+                tlAsAdminPermission="tlAsAdminPermission"
+              />
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody className="card-body">
-          <Records records={records} />
           <DataTablepopulated
             bgColor="#5a625a"
             keyField={"assign_no"}

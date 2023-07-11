@@ -336,7 +336,7 @@ function Dashboard() {
                             </tr>
                             <tr>
                               <td className="left_side">
-                                client declined; assignments
+                                Client declined; assignments
                               </td>
                               <td>{clientDeclinedp}</td>
                             </tr>

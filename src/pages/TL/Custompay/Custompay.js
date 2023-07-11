@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 function Custompay(props) {
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm();
-
+  
   const userId = window.localStorage.getItem("tlkey");
 
   const [loading, setLoading] = useState(false);
@@ -38,6 +38,7 @@ function Custompay(props) {
     "-" +
     ("0" + new Date().getDate()).slice(-2);
   const [item] = useState(current_date);
+  const [min, setMin] = useState();
   const [showTl, setShowTl] = useState(false);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
@@ -57,6 +58,7 @@ function Custompay(props) {
         .then((res) => {
           if (res.data.code === 1) {
             setData(res.data.payment_detail[0]);
+            setMin(res.data.payment_detail[0].invoice_date)
           }
         });
     }
@@ -123,6 +125,7 @@ function Custompay(props) {
       }
     });
   };
+
   const amountCredit = (e) => {
     if (Number(e.target.value) < Number(data.payable_amount)) {
       Swal.fire({
@@ -133,6 +136,10 @@ function Custompay(props) {
       setReceiveAmount(data.payable_amount);
     }
   };
+
+  useEffect(() => {
+    // console.log('min',min);
+  }, [min])  
 
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userId}>
@@ -248,6 +255,7 @@ function Custompay(props) {
                           ref={register({
                             required: true,
                           })}
+                          min={min}
                           max={item}
                         />
                       </div>

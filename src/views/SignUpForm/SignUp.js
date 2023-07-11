@@ -381,6 +381,26 @@ function SignUp(props) {
     }
   };
 
+  function getCategory() {
+    axios.get(`${baseUrl}/customers/getCategory?pid=0`).then((res) => {
+      if (res.data.code === 1) {
+        let data = res.data.result;
+        data.map((i) => {
+          getSubCategory(i);
+        });
+        localStorage.setItem("categoryData", JSON.stringify(data));
+      }
+    });
+  }
+
+  const getSubCategory = (e) => {
+    axios.get(`${baseUrl}/customers/getCategory?pid=${e.id}`).then((res) => {
+      if (res.data.code === 1) {
+        localStorage.setItem(`${e.details}`, JSON.stringify(res.data.result));
+      }
+    });
+  };
+
   const onSubmit = (value) => {
     if (!dstate && estate.length < 1) {
       Swal.fire({
@@ -464,40 +484,49 @@ function SignUp(props) {
         })
           .then(function (response) {
             if (response.data.code === 1) {
-              setLoading(false);
+              async function loginSuccess() {
+                let categoryData = await getCategory();
 
-              setLoad(false);
+                setLoading(false);
 
-              var variable = "Sign up successful.";
-              Alerts.SuccessNormal(variable);
+                setLoad(false);
 
-              localStorage.setItem(
-                "isMail",
-                JSON.stringify(response.data.is_mail)
-              );
-              localStorage.setItem(
-                "userid",
-                JSON.stringify(response.data.user_id)
-              );
-              sessionStorage.setItem(
-                "userIdsession",
-                JSON.stringify(response.data.user_id)
-              );
-              localStorage.setItem(
-                "custEmail",
-                JSON.stringify(response.data.name)
-              );
-              localStorage.setItem(
-                "clientName",
-                JSON.stringify(response.data.displayname)
-              );
-              localStorage.setItem("custName", response.data.displayname);
-              localStorage.setItem("clientToken", response.data.token);
-              localStorage.setItem(
-                "clientLoginId",
-                JSON.stringify(response.data.loginuid)
-              );
-              props.history.push("/customer/select-category");
+                var variable = "Sign up successful.";
+                Alerts.SuccessNormal(variable);
+
+                localStorage.setItem(
+                  "isMail",
+                  JSON.stringify(response.data.is_mail)
+                );
+                localStorage.setItem(
+                  "userid",
+                  JSON.stringify(response.data.user_id)
+                );
+                sessionStorage.setItem(
+                  "userIdsession",
+                  JSON.stringify(response.data.user_id)
+                );
+                localStorage.setItem(
+                  "custEmail",
+                  JSON.stringify(response.data.name)
+                );
+                localStorage.setItem(
+                  "clientName",
+                  JSON.stringify(response.data.displayname)
+                );
+                localStorage.setItem("custName", response.data.displayname);
+                localStorage.setItem("clientToken", response.data.token);
+                localStorage.setItem(
+                  "clientLoginId",
+                  JSON.stringify(response.data.loginuid)
+                );
+                localStorage.setItem(
+                  "cust_record_per_page",
+                  response.data.record_per_page
+                );
+                props.history.push("/customer/select-category");
+              }
+              loginSuccess();
             } else if (response.data.code === 0) {
               setLoading(false);
 

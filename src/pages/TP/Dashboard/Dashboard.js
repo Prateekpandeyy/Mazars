@@ -276,19 +276,6 @@ function Dashboard() {
                 </table>
 
                 <table className="table table-striped third main_table mb-1">
-                  {/* <thead className="query_thead1">
-              <tr>
-                <th className="left_side"></th>
-                <CustomTypography color="#ffffff">
-                Completed; queries
-                </CustomTypography>
-                <th>
-                  <CustomTypography color="#ffffff">
-                  {complete_query}
-                  </CustomTypography>
-                </th>
-              </tr>
-            </thead> */}
                   <thead className="query_thead1">
                     <tr>
                       <th className="left_side">
@@ -493,7 +480,7 @@ function Dashboard() {
                     <tr>
                       <td className="left_side">
                         <CustomTypography>
-                          client declined; assignments
+                          Client declined; assignments
                         </CustomTypography>
                       </td>
                       <td>

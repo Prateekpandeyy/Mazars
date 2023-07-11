@@ -57,7 +57,6 @@ function Chatting(props) {
     setItem(data2.message_type)
   }, [item]);
 
-console.log("data", data)
 
   const onSubmit = (value) => {
    

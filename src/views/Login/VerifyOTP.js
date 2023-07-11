@@ -100,6 +100,10 @@ function VerifyOTP({
               "custEmail",
               JSON.stringify(response.data.name)
             );
+            localStorage.setItem(
+              "cust_record_per_page",
+              response.data.record_per_page
+            );
             localStorage.setItem("custName", response.data.dispalyname);
             history.push("customer/dashboard");
             localStorage.setItem("clientToken", response.data.token);

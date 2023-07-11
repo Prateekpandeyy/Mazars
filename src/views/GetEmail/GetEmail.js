@@ -35,6 +35,9 @@ const GetEmail = () => {
       setIsError(true);
     }
   };
+  const closeButton = () => {
+    window.close();
+  };
   return (
     <>
       <Dialog
@@ -44,22 +47,21 @@ const GetEmail = () => {
             opacity: 0.9,
             maxHeight: 335,
           },
-          "& .MuiDialog-backdrop": {
-            backgroundColor: "#000",
-          },
         }}
         open={open}
+        className="twitterLink"
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <div className="form-group passForm ">
               <label className="form-label">
-                Please provide your email<span className="declined">*</span>
+                Please provide your email address
+                <span className="declined">*</span>
               </label>
               <input
                 type="email"
                 name="p_user"
-                placeholder="Enter Email"
+                placeholder="Enter email address"
                 onChange={(e) => {
                   setEmail(e.target.value);
                   setIsError(false);
@@ -78,6 +80,13 @@ const GetEmail = () => {
             className="customBtn my-2"
           >
             Submit
+          </button>
+          <button
+            type="button"
+            onClick={(e) => closeButton()}
+            className="customBtn my-2"
+          >
+            Cancel
           </button>
         </DialogActions>
       </Dialog>

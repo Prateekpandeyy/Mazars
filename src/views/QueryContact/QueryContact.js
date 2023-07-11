@@ -42,7 +42,6 @@ const QueryContact = () => {
   }, []);
 
   const onSubmit = (value) => {
-    console.log("data", captchValue.length);
     if (captchValue.length === 0) {
       setCaptchaError(true);
       // Swal.fire({
@@ -62,7 +61,6 @@ const QueryContact = () => {
         url: `${baseUrl}/customers/enquirysubmit`,
         data: formData,
       }).then((res) => {
-        console.log("response", res);
         if (res.data.code === 1) {
           Swal.fire({
             title: "success",
@@ -82,7 +80,6 @@ const QueryContact = () => {
       });
     }
   };
-  console.log("captchaError", captchaError);
   return (
     <>
       <OuterloginContainer>

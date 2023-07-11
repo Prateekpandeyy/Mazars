@@ -1,8 +1,10 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card, CardHeader, CardBody, Row, Col, Table } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../../config/config";
 import CustomerFilter from "../../components/Search-Filter/CustomerFilter";
 import Swal from "sweetalert2";
 import Records from "../../components/Records/Records";
@@ -11,6 +13,7 @@ import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import RejectedModal from "./RejectedModal";
 import ModalManual from "../ModalManual/AllComponentManual";
+
 import MessageIcon, {
   DeleteIcon,
   EditQuery,
@@ -20,13 +23,30 @@ import MessageIcon, {
   FeedBackICon,
 } from "../../components/Common/MessageIcon";
 import DataTablepopulated from "../../components/DataTablepopulated/DataTabel";
+import PaginatorCust from "../../components/Paginator/PaginatorCust";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  isActive: {
+    backgroundColor: "green",
+    color: "#fff",
+    margin: "0px 2px",
+  },
+}));
 
 function AllQueriesData({
   allQueriesCount,
   setAllQueriesCount,
-  CountAllQuery,
+  // CountAllQuery,
 }) {
   const userId = window.localStorage.getItem("userid");
+  const token = window.localStorage.getItem("clientToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
 
   const [assignNo2, setAssignNo2] = useState();
   const [records, setRecords] = useState([]);
@@ -39,6 +59,22 @@ function AllQueriesData({
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
   const tableId = React.createRef("");
+  const classes = useStyles();
+
+  const allEnd = Number(localStorage.getItem("cust_record_per_page"));
+  // const classes = useStyles();
+  // const allEnd = 50;
+  const [count, setCount] = useState(0);
+  const [onPage, setOnPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [sortVal, setSortVal] = useState(0);
+  const [sortField, setSortField] = useState("");
+  const [resetTrigger, setresetTrigger] = useState(false);
+  const [accend, setAccend] = useState(false);
+  const [turnGreen, setTurnGreen] = useState(false);
+  const [isActive, setIsActive] = useState("");
+  const [prev, setPrev] = useState("");
+
   let des = false;
   const additionalHandler = (key) => {
     if (typeof key == "object") {
@@ -46,45 +82,200 @@ function AllQueriesData({
       des = true;
       setLoading2(false);
       return false;
-      console.log("1");
     } else {
       setAdditionalQuery(!additionalQuery);
       setAssignNo(key);
-      console.log("2");
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
+
+  function headerLabelFormatter(column, colIndex) {
+    let isActive = true;
+
+    if (
+      localStorage.getItem("custArrowQuery1") === column.dataField ||
+      localStorage.getItem("prevcustq1") === column.dataField
+    ) {
+      isActive = true;
+      setPrev(column.dataField);
+      localStorage.setItem("prevcustq1", column.dataField);
+    } else {
+      isActive = false;
+    }
+    return (
+      <div className="d-flex text-white w-100 flex-wrap">
+        <div style={{ display: "flex", color: "#fff" }}>
+          {column.text}
+          {localStorage.getItem("custArrowQuery1") === column.dataField ? (
+            <ArrowDropUpIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          ) : (
+            <ArrowDropDownIcon
+              className={isActive === true ? classes.isActive : ""}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
-}, [additionalQuery]);
+  }, [additionalQuery]);
 
   const ViewDiscussionToggel = (key) => {
-    // console.log(tableId);
     // document.getElementById("root").scrollIntoView(false);
     setViewDiscussion(!ViewDiscussion);
     setAssignNo(key);
     if (ViewDiscussion === false) {
-      setScrolledTo(key)
+      setScrolledTo(key);
     }
   };
 
   useEffect(() => {
     var element = document.getElementById(scrolledTo);
     if (element) {
-      let runTo = myRef.current[scrolledTo]
+      let runTo = myRef.current[scrolledTo];
       runTo?.scrollIntoView(false);
-      runTo?.scrollIntoView({ block: 'center' });
+      runTo?.scrollIntoView({ block: "center" });
     }
-}, [ViewDiscussion]);
+  }, [ViewDiscussion]);
 
   const needHelp = () => {
     setManual(!openManual);
+  };
+
+  useEffect(() => {
+    let local = JSON.parse(localStorage.getItem(`searchDatacustQuery1`));
+    let pageno = JSON.parse(localStorage.getItem("custQuery1"));
+    let arrow = localStorage.getItem("custArrowQuery1");
+    let pre = localStorage.getItem("prevcustq1");
+    if (pre) {
+      setPrev(pre);
+    }
+    if (arrow) {
+      setAccend(arrow);
+      setIsActive(arrow);
+      setTurnGreen(true);
+    }
+    // if (!local) {
+    if (pageno) {
+      CountAllQuery(pageno);
+    } else {
+      CountAllQuery(1);
+    }
+    // }
+  }, []);
+
+  const CountAllQuery = (e) => {
+    if (e === undefined) {
+      e = 1;
+    }
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
+    let pagetry = JSON.parse(localStorage.getItem("freezecustQuery1"));
+    localStorage.setItem(`custQuery1`, JSON.stringify(e));
+    let val = pagetry?.val;
+    let field = pagetry?.field;
+    let remainApiPath = "";
+    setOnPage(e);
+    setLoading(true);
+    if (data && !pagetry) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}`;
+    } else if (data && pagetry) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else if (!data && pagetry) {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=${e}&user=${JSON.parse(
+        userId
+      )}`;
+    }
+
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let customId = 1;
+        if (e > 1) {
+          customId = allEnd * (e - 1) + 1;
+        }
+        let data = res.data.result;
+        data.map((i) => {
+          let data = {
+            ...i,
+            cid: customId,
+          };
+          customId++;
+          all.push(data);
+        });
+        setAllQueriesCount(all);
+        setCount(res.data.total);
+      }
+    });
+  };
+
+  const sortMessage = (val, field) => {
+    let remainApiPath = "";
+    setSortVal(val);
+    setSortField(field);
+    localStorage.setItem(`custQuery1`, JSON.stringify(1));
+    let obj = {
+      // pageno: pageno,
+      val: val,
+      field: field,
+    };
+    localStorage.setItem(`freezecustQuery1`, JSON.stringify(obj));
+    let data = JSON.parse(localStorage.getItem("searchDatacustQuery1"));
+
+    if (data) {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&cat_id=${data.store}&from=${data.fromDate}&to=${data.toDate}&status=${
+        data.p_status
+      }&pcat_id=${data.pcatId}&orderby=${val}&orderbyfield=${field}`;
+    } else {
+      remainApiPath = `customers/incompleteAssignments?page=1&user=${JSON.parse(
+        userId
+      )}&orderby=${val}&orderbyfield=${field}`;
+    }
+
+    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
+      if (res.data.code === 1) {
+        let all = [];
+        let sortId = 1;
+        // let record =Number(localStorage.getItem("tp_record_per_page"))
+        // let startAt = 1;
+        // if (onPage > 1) {
+        //   sortId = 1;
+        // }
+        res.data.result.map((i) => {
+          let data = {
+            ...i,
+            cid: sortId,
+          };
+          sortId++;
+          all.push(data);
+        });
+        setAllQueriesCount(all);
+        setTurnGreen(true);
+        setresetTrigger(!resetTrigger);
+      }
+    });
   };
 
   const columns = [
@@ -92,8 +283,14 @@ function AllQueriesData({
       text: "S.No",
 
       formatter: (cellContent, row, rowIndex) => {
-        return <div id={row.assign_no} 
-        ref={el => (myRef.current[row.assign_no] = el)}>{rowIndex + 1}</div>;
+        return (
+          <div
+            id={row.assign_no}
+            ref={(el) => (myRef.current[row.assign_no] = el)}
+          >
+            {row.cid}
+          </div>
+        );
       },
       headerStyle: () => {
         return {
@@ -104,8 +301,25 @@ function AllQueriesData({
     {
       text: "Date",
       dataField: "created",
+      headerFormatter: headerLabelFormatter,
       sort: true,
-
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 1);
+      },
       formatter: function dateFormatter(cell, row) {
         return <>{CommonServices.changeFormateDate(row.created)}</>;
       },
@@ -113,6 +327,26 @@ function AllQueriesData({
     {
       text: "Query No",
       dataField: "assign_no",
+      // sort: true,
+      // headerFormatter: headerLabelFormatter,
+      // sort: true,
+      // onSort: (field, order) => {
+      //   let val = 0;
+      //   if (accend !== field) {
+      //     setAccend(field);
+      //     setIsActive(field);
+      //     localStorage.setItem("custArrowQuery1", field);
+      //   } else {
+      //     setAccend("");
+      //     localStorage.removeItem("custArrowQuery1");
+      //   }
+      //   if (accend === field) {
+      //     val = 0;
+      //   } else {
+      //     val = 1;
+      //   }
+      //   sortMessage(val, 2);
+      // },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -134,14 +368,73 @@ function AllQueriesData({
       text: "Category",
       dataField: "parent_id",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 3);
+      },
     },
     {
       text: "Sub category",
       dataField: "cat_name",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 4);
+      },
     },
     {
       text: "Status",
+      dataField: "status",
+      sort: true,
+      headerFormatter: headerLabelFormatter,
+
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 5);
+      },
 
       formatter: function nameFormatter(cell, row) {
         return (
@@ -164,6 +457,25 @@ function AllQueriesData({
       text: "Expected / Actual delivery date",
       dataField: "exp_delivery_date",
       sort: true,
+      headerFormatter: headerLabelFormatter,
+      sort: true,
+      onSort: (field, order) => {
+        let val = 0;
+        if (accend !== field) {
+          setAccend(field);
+          setIsActive(field);
+          localStorage.setItem("custArrowQuery1", field);
+        } else {
+          setAccend("");
+          localStorage.removeItem("custArrowQuery1");
+        }
+        if (accend === field) {
+          val = 0;
+        } else {
+          val = 1;
+        }
+        sortMessage(val, 6);
+      },
 
       formatter: function dateFormat(cell, row) {
         return (
@@ -343,6 +655,17 @@ function AllQueriesData({
     showRejectedBox(!rejectedBox);
   };
 
+  const resetTriggerFunc = () => {
+    setresetTrigger(!resetTrigger);
+    setAccend("");
+    setTurnGreen(false);
+    localStorage.removeItem("custQuery1");
+    localStorage.removeItem(`freezecustQuery1`);
+    localStorage.removeItem("custArrowQuery1");
+    localStorage.removeItem("prevcustq1");
+    setPrev("");
+  };
+
   return (
     <Card ref={tableId}>
       <CardHeader>
@@ -357,15 +680,44 @@ function AllQueriesData({
           query="query"
           records={allQueriesCount.length}
           setRecords={setRecords}
+          index="custQuery1"
+          resetTriggerFunc={resetTriggerFunc}
+          setCount={setCount}
         />
       </CardHeader>
       <CardBody>
-        <Row>
+        {/* <Row>
           <Col md="3"></Col>
           <Col md="9">
             <Records records={allQueriesCount.length} />
           </Col>
+        </Row> */}
+        <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              id={userId}
+              setData={setAllQueriesCount}
+              getData={CountAllQuery}
+              index="custQuery1"
+              query="query"
+              setOnPage={setOnPage}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
         </Row>
+        {/* <Row className="mb-2">
+          <Col md="12" align="right">
+            <PaginatorCust
+              count={count}
+              setOnPage={setOnPage}
+              // resetPaging={resetPaging}
+              resetTrigger={resetTrigger}
+              setresetTrigger={setresetTrigger}
+            />
+          </Col>
+        </Row> */}
         <DataTablepopulated
           bgColor="#55425f"
           keyField={"assign_no"}

@@ -21,8 +21,9 @@ const PayDetails = (props) => {
   const [paymentDetail, setPaymentDetail] = useState();
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState();
-
   const [showTable, setShowTable] = useState(null);
+  const [propAdd, setPropAdd] = useState("");
+  const [propIndex, setPropIndex] = useState();
   const [showPayment, setShowPayment] = useState(false);
   const [invoiceData, setInvoiceData] = useState(null);
   const token = window.localStorage.getItem("tlToken");
@@ -31,6 +32,18 @@ const PayDetails = (props) => {
       uit: token,
     },
   };
+
+  useEffect(() => {
+    if ((history.action == 'PUSH')) {
+    setPropAdd(props.location.routes);
+    setPropIndex(props.location.index);
+    }else{
+      setPropAdd(`paymentstatus`);
+      setPropIndex(0);
+    }
+  }, [])
+  
+
   const paydetails2 = () => {
     axios
       .get(`${baseUrl}/tl/getPaymentDetail?id=${id}`, myConfig)
@@ -292,6 +305,8 @@ const PayDetails = (props) => {
     align-items: center;
     color: red;
   `;
+
+
   return (
     <>
       <Layout TLDashboard="TLDashboard" TLuserId={userId}>
@@ -304,11 +319,13 @@ const PayDetails = (props) => {
                 <Col md="4">
                   <Link
                     to={{
-                      pathname: `/teamleader/${props.location.routes}`,
-                      index: props.location.index,
+                      pathname: `/teamleader/${propAdd}`,
+                      index: propIndex,
                     }}
                   >
-                    <button class="autoWidthBtn ml-3">Go Back</button>
+                    <button class="autoWidthBtn ml-3" 
+                    // onClick={() => history.goBack()}
+                    >Go Back</button>
                   </Link>
                 </Col>
                 <Col md="8">

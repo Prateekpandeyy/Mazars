@@ -36,7 +36,6 @@ admin client (scroll)
 total in fiter 
 paging in staging (last)us
 assignment search (tp)
-console.log("eeee", i,  e)
 
 unauthorizate user message in cms
 admin customer points

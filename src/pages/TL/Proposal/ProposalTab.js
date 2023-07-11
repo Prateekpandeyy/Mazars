@@ -50,12 +50,26 @@ function ProposalTab(props) {
     color: "#42566a",
     fontSize: "18px",
     cursor: "pointer",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
   useLayoutEffect(() => {
     setTabIndex(props.location.index || 0);
   }, [props.location.index]);
 
   useEffect(() => {
+    const AllPropoData = () => {
+      axios
+        .get(
+          `${baseUrl}/tl/getProposalTl?id=${JSON.parse(userid)}&count=1`,
+          myConfig
+        )
+        .then((response) => {
+          if (response.data.code === 1) {
+            setAllProposal(response?.data?.result?.recordcount);
+          }
+        });
+    };
     const InprogressProposal = () => {
       axios
         .get(
@@ -100,7 +114,7 @@ function ProposalTab(props) {
           }
         });
     };
-
+    AllPropoData();
     InprogressProposal();
     AcceptedProposal();
     DeclinedProposal();

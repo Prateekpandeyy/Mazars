@@ -107,13 +107,12 @@ allrecording;
     // init AgoraRTC local client
     this.client = AgoraRTC.createClient({ mode: $.transcode });
     this.client.init($.appId, () => {
-      console.log("AgoraRTC client initialized");
       this.subscribeStreamEvents();
 
       this.client.join($.appId, $.channel, $.uid, (uid) => {
         this.state.uid = uid;
-        console.log("User " + uid + " join channel successfully");
-        console.log("At " + new Date().toLocaleTimeString());
+        // console.log("User " + uid + " join channel successfully");
+        // console.log("At " + new Date().toLocaleTimeString());
         // create local stream
         // It is not recommended to setState in function addStream
         this.localStream = this.streamInit(uid, $.attendeeMode, $.videoProfile);

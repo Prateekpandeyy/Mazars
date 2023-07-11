@@ -25,7 +25,6 @@ function QueriesTab(props) {
   };
   const tableIndex = (index) => {
     setTabIndex(index);
-    console.log(index);
     if (index === 0) {
       setbgColor("#615339");
     } else if (index === 1) {
@@ -47,6 +46,8 @@ function QueriesTab(props) {
     fontSize: "18px",
     cursor: "pointer",
     color: "#5a625a",
+    fontWeight: "bold",
+    textDecoration: "underline",
   };
 
   useLayoutEffect(() => {
@@ -130,7 +131,7 @@ function QueriesTab(props) {
             Inprogress; Delivery of final report ({final})
           </Tab>
           <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
-            Permission; Issue to invoice ({adminCount})
+            Permission; to issue invoice ({adminCount})
           </Tab>
         </TabList>
 

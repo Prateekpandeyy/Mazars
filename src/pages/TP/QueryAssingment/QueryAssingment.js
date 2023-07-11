@@ -83,7 +83,7 @@ function QueryAssingment() {
         }
       });
   };
-console.log("done22")
+// console.log("done22")
   const getQueryData = () => {
     axios.get(`${baseUrl}/tp/GetQueryDetails?id=${id}`).then((res) => {
      
