@@ -132,8 +132,8 @@ const Generated = ({ updateTab }) => {
     setPrev(localStorage.getItem("tlprevint1"));
     if (!sortVal) {
       let sort = {
-        orderBy: 0,
-        fieldBy: 0,
+        orderBy: 1,
+        fieldBy: 5,
       };
       localStorage.setItem("sortedValuetl1", JSON.stringify(sort));
     }
@@ -151,8 +151,8 @@ const Generated = ({ updateTab }) => {
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuetl1"));
-    let orderBy = 0;
-    let fieldBy = 0;
+    let orderBy = 1;
+    let fieldBy = 5;
 
     if (sortVal) {
       orderBy = sortVal.orderBy;

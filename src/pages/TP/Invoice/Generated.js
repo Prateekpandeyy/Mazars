@@ -791,6 +791,7 @@ const Generated = () => {
     localStorage.removeItem("tpArrowInvoice1");
     localStorage.removeItem("prevtpInvoice1");
     setPrev("");
+    getProposalList(1);
   };
 
   useEffect(() => {

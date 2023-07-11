@@ -113,8 +113,8 @@ const CreateInvoice = () => {
     let sortVal = JSON.parse(localStorage.getItem("freezetpInvoice2"));
     if (!sortVal) {
       let sort = {
-        orderBy: 0,
-        fieldBy: 0,
+        orderBy: 1,
+        fieldBy: 4,
       };
       localStorage.setItem("freezetpInvoice2", JSON.stringify(sort));
     }
@@ -136,8 +136,8 @@ const CreateInvoice = () => {
     }
     let searchData = JSON.parse(localStorage.getItem("tpcreate"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpInvoice2"));
-    let orderBy = 0;
-    let fieldBy = 0;
+    let orderBy = 1;
+    let fieldBy = 4;
     let remainApiPath = "";
     if (e.length == 0) {
       let e = 1;
@@ -577,6 +577,7 @@ const CreateInvoice = () => {
     localStorage.removeItem("tpArrowInvoice2");
     localStorage.removeItem("prevtpInvoice2");
     setPrev("");
+    getProposalList(1);
   };
 
   const gettingAftertds = () => {

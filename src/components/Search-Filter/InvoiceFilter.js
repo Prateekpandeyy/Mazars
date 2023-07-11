@@ -184,7 +184,7 @@ const InvoiceFilter = (props) => {
     props.resetPaging();
     localStorage.removeItem(props.sortedValuetl);
     localStorage.removeItem(props.invoice);
-    props.getData(1);
+    // props.getData(1);
   };
   const updateResult = (res) => {
     let allEnd = perPage;

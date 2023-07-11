@@ -104,8 +104,8 @@ const CreateInvoice = () => {
     setPrev(localStorage.getItem("previnv2"));
     if (!sortVal) {
       let sort = {
-        orderBy: 0,
-        fieldBy: 0,
+        orderBy: 1,
+        fieldBy: 6,
       };
       localStorage.setItem("sortedValuevt2", JSON.stringify(sort));
     }
@@ -118,8 +118,8 @@ const CreateInvoice = () => {
   const getProposalList = (e) => {
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuevt2"));
-    let orderBy = 0;
-    let fieldBy = 0;
+    let orderBy = 1;
+    let fieldBy = 6;
 
     if (sortVal) {
       orderBy = sortVal.orderBy;
@@ -424,8 +424,8 @@ const CreateInvoice = () => {
     localStorage.removeItem("admininvt2");
     localStorage.removeItem("accendcreated");
     localStorage.removeItem("sortedValuevt2");
-    localStorage.removeItem("previn2");
-    // getProposalList(1);
+    localStorage.removeItem("previnv2");
+    getProposalList(1);
   };
   const firstChunk = () => {
     setAtpage(1);

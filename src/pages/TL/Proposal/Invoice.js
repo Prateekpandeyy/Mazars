@@ -96,8 +96,8 @@ const Invoice = (updateTab) => {
     setPrev(localStorage.getItem("tlprevint2"));
     if (!sortVal) {
       let sort = {
-        orderBy: 0,
-        fieldBy: 0,
+        orderBy: 1,
+        fieldBy: 4,
       };
       localStorage.setItem("sortedValuetl2", JSON.stringify(sort));
     }
@@ -116,8 +116,8 @@ const Invoice = (updateTab) => {
     let searchData = JSON.parse(localStorage.getItem("tlcreate"));
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuetl2"));
-    let orderBy = 0;
-    let fieldBy = 0;
+    let orderBy = 1;
+    let fieldBy = 4;
 
     if (sortVal) {
       orderBy = sortVal.orderBy;
@@ -418,7 +418,6 @@ const Invoice = (updateTab) => {
   const resetPaging = () => {
     setPage(1);
     setBig(1);
-
     localStorage.removeItem("tlint2");
     localStorage.removeItem("accendcreatedtl");
     localStorage.removeItem("sortedValuetl2");
