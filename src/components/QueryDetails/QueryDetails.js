@@ -47,7 +47,7 @@ function QueryDetails({
     fontWeight: "bold",
     textDecoration: "underline",
   };
-  
+
   return (
     <>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
@@ -64,7 +64,7 @@ function QueryDetails({
           <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
             Feedback
           </Tab>
-          <Tab style={tabIndex == 3 ? myStyle2 : myStyle1} className="tabHover">
+          <Tab style={tabIndex == 4 ? myStyle2 : myStyle1} className="tabHover">
             Recording
           </Tab>
         </TabList>
