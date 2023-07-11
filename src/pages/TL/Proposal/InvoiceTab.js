@@ -11,7 +11,6 @@ const InvoiceTab = () => {
   const [bgColor, setbgColor] = useState("#42566a");
   const tableIndex = (index) => {
     setTabIndex(index);
-
     if (index === 0) {
       setbgColor("#42566a");
     } else if (index === 1) {
