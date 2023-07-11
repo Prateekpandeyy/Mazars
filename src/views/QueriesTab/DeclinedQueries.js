@@ -19,6 +19,7 @@ import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -158,27 +159,32 @@ function DeclinedQueries({ CountAllQuery }) {
       )}`;
     }
 
-    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        let all = [];
-        let customId = 1;
-        if (e > 1) {
-          customId = allEnd * (e - 1) + 1;
+    axios
+      .get(`${baseUrl}/${remainApiPath}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setDeclined(all);
+          setCount(res.data.total);
+          setLoading(true);
         }
-        let data = res.data.result;
-        data.map((i) => {
-          let data = {
-            ...i,
-            cid: customId,
-          };
-          customId++;
-          all.push(data);
-        });
-        setDeclined(all);
-        setCount(res.data.total);
-        setLoading(true);
-      }
-    });
+      })
+      .catch((err) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   const needHelp = () => {

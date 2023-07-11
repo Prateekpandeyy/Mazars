@@ -9,6 +9,7 @@ import InprogressProposal from "./InprogressProposal";
 import DeclinedQueries from "./DeclinedQueries";
 import { clientLogout } from "../../components/Logout/ClientLogout";
 import { useHistory } from "react-router-dom";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 function QueriesTab(props) {
   const userId = window.localStorage.getItem("userid");
 
@@ -61,6 +62,9 @@ function QueriesTab(props) {
         } else if (res.data.code === 102) {
           clientLogout(axios, history);
         }
+      })
+      .catch((err) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -85,6 +89,9 @@ function QueriesTab(props) {
         } else if (res.data.code === 102) {
           clientLogout(axios, history);
         }
+      })
+      .catch((err) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -111,6 +118,9 @@ function QueriesTab(props) {
         } else if (res.data.code === 102) {
           clientLogout(axios, history);
         }
+      })
+      .catch((err) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -135,6 +145,9 @@ function QueriesTab(props) {
         } else if (res.data.code === 102) {
           clientLogout(axios, history);
         }
+      })
+      .catch((err) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const tableIndex = (index) => {

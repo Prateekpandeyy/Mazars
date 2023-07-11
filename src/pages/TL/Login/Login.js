@@ -65,7 +65,7 @@ const Login = (props) => {
       data: formData,
       timeout: 30000,
     })
-      .then(function (response) {
+      .then((response) => {
         if (response.data.code === 1) {
           logout();
           // flag = true;
@@ -96,7 +96,7 @@ const Login = (props) => {
           });
         }
       })
-      .catch((error) => {
+      .catch((response) => {
         Swal.fire({
           title: "Error",
           html: "Please try again Later",

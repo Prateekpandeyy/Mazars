@@ -108,7 +108,12 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
             response.data.record_per_page
           );
           history.push("/teamleader/dashboard");
-        } else {
+        }
+        else if (response.data.code === 0) {
+          setLoading(false);
+          Alerts.ErrorNormal("Some thing went wrong, please try again");
+        } 
+        else {
           setLoading(false);
           // flag = true;
           Alerts.ErrorNormal("Incorrect OTP, please try again.");

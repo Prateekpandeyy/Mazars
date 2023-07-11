@@ -47,7 +47,7 @@ function QueryDetails({
     fontWeight: "bold",
     textDecoration: "underline",
   };
-  
+
   return (
     <>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>

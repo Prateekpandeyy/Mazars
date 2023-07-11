@@ -145,7 +145,7 @@ function LoginForm() {
       url: `${baseUrl}/customers/login`,
       data: formData,
     })
-      .then(function (response) {
+      .then((response) => {
         if (response.data.code === 1) {
           setLoading(false);
           Alerts.SuccessNormal(
@@ -164,7 +164,7 @@ function LoginForm() {
           Alerts.ErrorNormal(response.data.result);
         }
       })
-      .catch((error) => {
+      .catch((response) => {
         ShowError.LoadingError(setLoading);
       });
   };

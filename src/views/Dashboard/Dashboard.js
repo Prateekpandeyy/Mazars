@@ -6,6 +6,7 @@ import { baseUrl } from "../../config/config";
 import { Container, Grid, Paper, Box } from "@material-ui/core";
 import { clientLogout } from "../../components/Logout/ClientLogout";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 function Dashboard() {
   const userId = window.localStorage.getItem("userid");
   let history = useHistory();
@@ -137,7 +138,9 @@ function Dashboard() {
             clientLogout(axios, history);
           }
         })
-        .catch((error) => {});
+        .catch((err) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     getAllQueries();
