@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
@@ -23,6 +24,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
   const [time, setTime] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [num, changeNum] = useState(false);
+  var flag = false;
 
   useEffect(() => {
     LoadingTime.timer2(setTime, setDisabled);
@@ -63,19 +65,29 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
     let formData = new FormData();
     formData.append("email", email);
     formData.append("otp", value.p_otp);
-
+    // setTimeout(function(){
+    //   if(flag == false){
+    //     Swal.fire({
+    //       title: "Error",
+    //       html: "Please try again Later",
+    //       icon: "error",
+    //     });
+        
+    //     throw new Error("Please try again Later");}}, 30000);
+    
     axios({
       method: "POST",
       url: `${baseUrl}/tl/verifyloginotp`,
       data: formData,
+      timeout: 30000,
     })
       .then(function (response) {
         if (response.data.code == 1) {
+          // flag = true;
           var timeStampInMs = Date.now();
           localStorage.setItem("tlloginTime", timeStampInMs);
           setLoading(false);
           Cookies.set("tlName", response.data.displayname);
-
           Alerts.SuccessLogin("Logged in successfully.");
           localStorage.setItem("tlkey", JSON.stringify(response.data.user_id));
           localStorage.setItem(
@@ -98,11 +110,18 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
           history.push("/teamleader/dashboard");
         } else {
           setLoading(false);
+          // flag = true;
           Alerts.ErrorNormal("Incorrect OTP, please try again.");
           reset();
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          html: "Please try again Later",
+          icon: "error",
+        });
+      });
   };
 
   const resendOtp = () => {

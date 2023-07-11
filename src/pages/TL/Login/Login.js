@@ -26,6 +26,7 @@ const Login = (props) => {
   const [isPasswordShow, setPasswordShow] = useState(false);
   const [password, setPassword] = useState("");
   let history = useHistory();
+  var flag = false;
   const { handleSubmit, register, reset, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -49,15 +50,25 @@ const Login = (props) => {
     formData.append("id", value.p_email);
     formData.append("password", value.password);
     formData.append("type", "tl");
+    // setTimeout(function(){
+    //   if(flag == false){
+    //     Swal.fire({
+    //       title: "Error",
+    //       html: "Please try again Later",
+    //       icon: "error",
+    //     });
+    //     throw new Error("Please try again Later");}}, 30000);
 
     axios({
       method: "POST",
       url: `${baseUrl}/tl/login`,
       data: formData,
+      timeout: 30000,
     })
       .then(function (response) {
         if (response.data.code === 1) {
           logout();
+          // flag = true;
           setShow(true);
           setLoading(false);
           Cookies.set("tlName", response.data.displayname);
@@ -69,6 +80,7 @@ const Login = (props) => {
           setUid(response.data.user_id);
         } else if (response.data.code === 0) {
           setLoading(false);
+          // flag = true;
           Swal.fire({
             title: "error",
             html: "Invalid email or password.",
@@ -76,6 +88,7 @@ const Login = (props) => {
           });
         } else if (response.data.code === 2) {
           setLoading(false);
+          // flag = true;
           Swal.fire({
             title: "error",
             html: response.data.message,
@@ -83,7 +96,13 @@ const Login = (props) => {
           });
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          html: "Please try again Later",
+          icon: "error",
+        });
+      });
   };
   if (
     window.location.origin === "http://advisorysolutions.mazars.co.in/" &&

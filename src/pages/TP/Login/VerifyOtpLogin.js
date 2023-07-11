@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
@@ -124,7 +125,13 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
           reset();
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          html: "Please try again Later",
+          icon: "error",
+        });
+      });
   };
 
   const resendOtp = () => {
