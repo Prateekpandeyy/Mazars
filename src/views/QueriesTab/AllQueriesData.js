@@ -13,7 +13,6 @@ import CommonServices from "../../common/common";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import RejectedModal from "./RejectedModal";
 import ModalManual from "../ModalManual/AllComponentManual";
-
 import MessageIcon, {
   DeleteIcon,
   EditQuery,
@@ -27,6 +26,7 @@ import PaginatorCust from "../../components/Paginator/PaginatorCust";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -211,26 +211,31 @@ function AllQueriesData({
       )}`;
     }
 
-    axios.get(`${baseUrl}/${remainApiPath}`, myConfig).then((res) => {
-      if (res.data.code === 1) {
-        let all = [];
-        let customId = 1;
-        if (e > 1) {
-          customId = allEnd * (e - 1) + 1;
+    axios
+      .get(`${baseUrl}/${remainApiPath}`, myConfig)
+      .then((res) => {
+        if (res.data.code === 1) {
+          let all = [];
+          let customId = 1;
+          if (e > 1) {
+            customId = allEnd * (e - 1) + 1;
+          }
+          let data = res.data.result;
+          data.map((i) => {
+            let data = {
+              ...i,
+              cid: customId,
+            };
+            customId++;
+            all.push(data);
+          });
+          setAllQueriesCount(all);
+          setCount(res.data.total);
         }
-        let data = res.data.result;
-        data.map((i) => {
-          let data = {
-            ...i,
-            cid: customId,
-          };
-          customId++;
-          all.push(data);
-        });
-        setAllQueriesCount(all);
-        setCount(res.data.total);
-      }
-    });
+      })
+      .catch((err) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   const sortMessage = (val, field) => {
