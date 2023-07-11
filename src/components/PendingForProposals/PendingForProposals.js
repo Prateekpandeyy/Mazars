@@ -44,10 +44,11 @@ function PendingForProposals(props) {
   const [nonpendingData, setNonPendingData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [records, setRecords] = useState([]);
-  const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
-  const [jumpTo, setJumpTo] = useState("");
   const myRefs = useRef([]);
+  const [scrolledTo, setScrolledTo] = useState("");
+  const [jumpTo, setJumpTo] = useState("");
+  
 
   const [history, setHistory] = useState([]);
   const [modal, setModal] = useState(false);
@@ -72,7 +73,9 @@ function PendingForProposals(props) {
     if (key.length > 0) {
       setModal(!modal);
       if (modal === false) {
+        console.log('key',key);
         setJumpTo(key);
+        setScrolledTo(key);
       }
       fetch(`${baseUrl}/admin/getQueryHistory?q_id=${key}`, {
         method: "GET",
@@ -484,6 +487,7 @@ function PendingForProposals(props) {
               type="button"
               className="autoWidthBtn"
               id={row.id}
+              ref={(el) => (myRefs.current[row.id] = el)}
               onClick={() => toggle(row.id)}
             >
               History

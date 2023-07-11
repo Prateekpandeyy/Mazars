@@ -167,7 +167,7 @@ function AdminFilter(props) {
       setRecords(res.data.total);
 
       setDefaultPage(droppage);
-      resetPaging();
+      // resetPaging();
       // if (
       //   Object.keys(returnData).length === 0 &&
       //   returnData.constructor === Object

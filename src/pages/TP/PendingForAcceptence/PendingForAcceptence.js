@@ -460,6 +460,9 @@ function PendingForAcceptence(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/tp/AcceptRejectQuery`,
+      headers: {
+        uit: localStorage.getItem("tptoken"),
+      },
       data: formData,
     })
       .then(function (response) {
