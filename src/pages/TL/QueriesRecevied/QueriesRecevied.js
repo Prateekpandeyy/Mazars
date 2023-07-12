@@ -190,7 +190,7 @@ function QueriesRecevied(props) {
 
     getSubmittedAssingment();
   }, [assingNo]);
-
+  console.log("propss", props);
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <div class="row mt-3">

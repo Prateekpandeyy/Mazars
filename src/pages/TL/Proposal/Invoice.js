@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px 10px",
   },
 }));
-const Invoice = (updateTab) => {
+const Invoice = ({ updateTab }) => {
   const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
