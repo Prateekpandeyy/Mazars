@@ -166,7 +166,7 @@ function InprogressProposal({
     }
 
     axios
-      .get(`${baseUrl}/${remainApiPath}`, myConfig)
+      .get(`${baseUrl}/${remainApiPath}`, myConfig,{timeout : 30000})
       .then((res) => {
         if (res.data.code === 1) {
           let all = [];

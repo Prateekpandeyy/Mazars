@@ -72,7 +72,6 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
     //       html: "Please try again Later",
     //       icon: "error",
     //     });
-        
     //     throw new Error("Please try again Later");}}, 30000);
     
     axios({
