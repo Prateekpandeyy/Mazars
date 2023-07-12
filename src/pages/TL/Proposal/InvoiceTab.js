@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Invoice from "./Invoice";
 import Generated from "./Generated";
-const InvoiceTab = () => {
+const InvoiceTab = (props) => {
   const userid = window.localStorage.getItem("tlkey");
   const [tabIndex, setTabIndex] = useState(0);
   const [bgColor, setbgColor] = useState("#42566a");
@@ -39,6 +39,9 @@ const InvoiceTab = () => {
   const updateTab = (key) => {
     setTabIndex(key);
   };
+  useLayoutEffect(() => {
+    setTabIndex(props.location.index || 0);
+  }, [props.location.index]);
   return (
     <Layout TLDashboard="TLDashboard" TLuserId={userid}>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => tableIndex(index)}>
