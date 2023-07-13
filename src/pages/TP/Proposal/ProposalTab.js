@@ -3,22 +3,24 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 
 import AllProposal from "./AllProposal";
 import InprogressProposal from "./InprogressProposal";
 import AcceptedProposal from "./AcceptedProposal";
 import DeclinedProposal from "./DeclinedProposal";
 
+
 function ProposalTab(props) {
   const userid = window.localStorage.getItem("tpkey");
   const [tabIndex, setTabIndex] = useState(0);
-
   const [allProposal, setAllProposal] = useState("");
   const [inprogressProposal, setInprogressProposal] = useState("");
   const [acceptedProposal, setAcceptedProposal] = useState("");
   const [declinedProposal, setDeclinedProposal] = useState("");
   const [bgColor, setbgColor] = useState("#42566a");
-
+  const [loading, setLoading] = useState(false);
+  
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {

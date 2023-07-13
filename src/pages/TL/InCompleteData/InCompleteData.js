@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -43,7 +44,7 @@ function InCompleteData() {
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
@@ -199,6 +200,8 @@ function InCompleteData() {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
@@ -257,6 +260,8 @@ function InCompleteData() {
         }
         setInCompleteData(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [

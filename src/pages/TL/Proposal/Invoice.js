@@ -14,6 +14,7 @@ import Tds from "./Tds";
 import OutlinedInputIcons from "@mui/material/OutlinedInput";
 import InvoiceFilter from "../../../components/Search-Filter/InvoiceFilter";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import MessageIcon, {
   ActionIcon,
 } from "../../../components/Common/MessageIcon";
@@ -39,7 +40,7 @@ const Invoice = ({ updateTab }) => {
   const [count, setCount] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
-
+  const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
   const [tds, setTds] = useState(false);
   const [assignNo, setAssignNo] = useState("");
@@ -113,6 +114,7 @@ const Invoice = ({ updateTab }) => {
     },
   };
   const getProposalList = (e) => {
+    setLoading(true);
     let searchData = JSON.parse(localStorage.getItem("tlcreate"));
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuetl2"));
@@ -178,12 +180,14 @@ const Invoice = ({ updateTab }) => {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -221,6 +225,8 @@ const Invoice = ({ updateTab }) => {
 
         setProposal(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [

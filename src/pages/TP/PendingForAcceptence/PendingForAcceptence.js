@@ -12,6 +12,7 @@ import { useHistory } from "react-router";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import MessageIcon, {
   Accept,
   Reject,
@@ -168,6 +169,7 @@ function PendingForAcceptence(props) {
   }, []);
 
   const getPendingforAcceptance = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -226,11 +228,14 @@ function PendingForAcceptence(props) {
         setCount(res.data?.total);
         setLoading(false);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     setresetTrigger(!resetTrigger);
@@ -276,6 +281,8 @@ function PendingForAcceptence(props) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -450,7 +457,6 @@ function PendingForAcceptence(props) {
 
   const acceptHandler = (key) => {
     setLoading(true);
-
     let formData = new FormData();
     formData.append("set", 1);
     formData.append("tp_id", JSON.parse(userid));
@@ -477,7 +483,9 @@ function PendingForAcceptence(props) {
           setLoading(false);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   const resetTriggerFunc = () => {

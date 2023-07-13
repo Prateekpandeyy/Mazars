@@ -10,6 +10,7 @@ import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import MessageIcon, {
   EyeIcon,
   ViewDiscussionIcon,
@@ -39,7 +40,7 @@ function AcceptedProposal() {
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [assignNo, setAssignNo] = useState("");
   const [scrolledTo, setScrolledTo] = useState("");
-
+  
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -186,6 +187,7 @@ function AcceptedProposal() {
   }, []);
 
   const getProposalList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -249,10 +251,14 @@ function AcceptedProposal() {
         setCount(res.data.total);
         setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
+    
   };
 
   const sortMessage = (val, field) => {
+    setLoading(true);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
@@ -298,6 +304,8 @@ function AcceptedProposal() {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

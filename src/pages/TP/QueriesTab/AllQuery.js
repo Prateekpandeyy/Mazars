@@ -13,6 +13,7 @@ import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -30,7 +31,7 @@ function AllQuery(props) {
   const [records, setRecords] = useState([]);
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
-
+  
   const [count, setCount] = useState("0");
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -128,6 +129,7 @@ function AllQuery(props) {
   }, []);
 
   const getInCompleteAssingment = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -185,11 +187,14 @@ function AllQuery(props) {
           setRecords(res.data.result.length);
           setCount(res.data.total);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
 
   const sortMessage = (val, field) => {
+    setLoading(true);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
@@ -236,6 +241,8 @@ function AllQuery(props) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

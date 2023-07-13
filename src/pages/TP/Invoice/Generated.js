@@ -19,6 +19,7 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -35,7 +36,7 @@ const Generated = () => {
   const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-
+  
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -128,6 +129,7 @@ const Generated = () => {
   }, []);
 
   const getProposalList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -218,6 +220,8 @@ const Generated = () => {
         }
         setDefaultPage(droppage);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -317,6 +321,7 @@ const Generated = () => {
   }
 
   const sortMessage = (val, field) => {
+    setLoading(true);
     let remainApiPath = "";
     setOrderBy(val);
     setFiledBy(field);
@@ -368,6 +373,8 @@ const Generated = () => {
         setTurnGreen(true);
         setCount(res.data.total);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

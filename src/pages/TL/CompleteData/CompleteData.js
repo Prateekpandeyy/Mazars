@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import History from "../../../components/PendingForAllocation/History";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import Swal from "sweetalert2";
 import { useParams, useHistory } from "react-router-dom";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
@@ -44,7 +45,7 @@ function CompletedQuery({ updateTab }) {
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
@@ -125,6 +126,8 @@ function CompletedQuery({ updateTab }) {
           if (res.data.code === 1) {
             setHistory(res.data.result);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -137,7 +140,7 @@ function CompletedQuery({ updateTab }) {
 
   const getInCompleteAssingment = (e) => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery4"));
-
+    setLoading(true);
     setPage(e);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
@@ -267,6 +270,8 @@ function CompletedQuery({ updateTab }) {
         }
         setInCompleteData(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [
@@ -525,6 +530,8 @@ function CompletedQuery({ updateTab }) {
               updateTab(3);
               getInCompleteAssingment(1);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     });

@@ -15,6 +15,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -32,7 +33,7 @@ function Message(props) {
   const [query, setQuery] = useState([]);
   const [atPage, setAtpage] = useState(1);
   const [count, setCount] = useState("0");
-
+  const [loading, setLoading] = useState(false);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(allEnd);
   const history = useHistory();
@@ -112,6 +113,7 @@ function Message(props) {
 
   // set intial query here
   const getMessage = (e) => {
+    setLoading(true);
     localStorage.setItem(`tpMessage`, e);
     let pagetry = JSON.parse(localStorage.getItem("freezetpMsg"));
     let val = pagetry?.val;
@@ -174,12 +176,15 @@ function Message(props) {
             }
             setDefaultPage(droppage);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     localStorage.setItem(`tpMessage`, 1)
     let obj = {
       // pageno: pageno,
@@ -222,6 +227,8 @@ function Message(props) {
           setEnd(allEnd);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 

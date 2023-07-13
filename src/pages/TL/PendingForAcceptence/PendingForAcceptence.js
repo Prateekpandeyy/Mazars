@@ -4,6 +4,7 @@ import { baseUrl } from "../../../config/config";
 import { Link } from "react-router-dom";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import RejectedModal from "./RejectedModal";
 import Alerts from "../../../common/Alerts";
 import { Spinner } from "reactstrap";
@@ -113,6 +114,7 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
   }, []);
 
   const getPendingforAcceptance = (e) => {
+    setLoading(true);
     let searchData = JSON.parse(localStorage.getItem("searchDatatlquery3"));
 
     setPage(e);
@@ -187,10 +189,13 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
   const sortMessage = (val, field) => {
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -243,6 +248,8 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
         }
         setPendingData(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [
@@ -486,7 +493,9 @@ function PendingForAcceptence({ CountPendingForAcceptence, updateTab }) {
           setLoading(false);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   return (

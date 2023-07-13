@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 
 import PendingForAcceptence from "../PendingForAcceptence/PendingForAcceptence";
 import InCompleteData from "../InCompleteData/InCompleteData";
@@ -22,6 +23,7 @@ function QueriesTab(props) {
   const [declined, setDeclined] = useState("");
   const [bgColor, setbgColor] = useState("#55425F");
   const [pendingData, setPendingData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const tableIndex = (index) => {
     setTabIndex(index);
@@ -72,7 +74,7 @@ function QueriesTab(props) {
           setAllQuery(res?.data?.result?.recordcount);
           setAllQdata(res.data.result);
         }
-      });
+      })
   };
   useEffect(() => {
     const getPendindForAccepttence = () => {

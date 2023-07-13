@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import AllQuery from "./AllQuery";
 import PendingForAcceptence from "../PendingForAcceptence/PendingForAcceptence";
 import InCompleteData from "../InCompleteData/InCompleteData";
@@ -16,6 +17,7 @@ function QueriesTab(props) {
   const [complete, setcomplete] = useState("");
 
   const [allQuery, setAllQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [bgColor, setbgColor] = useState("#55425F");
 
@@ -70,6 +72,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setAllQuery(res?.data?.result?.recordcount);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
 
@@ -83,6 +87,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setPendingForAcceptence(res?.data?.result?.recordcount);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
 
@@ -98,6 +104,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setIncomplete(res?.data?.result?.recordcount);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
 
@@ -111,6 +119,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setcomplete(res?.data?.result?.recordcount);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
 

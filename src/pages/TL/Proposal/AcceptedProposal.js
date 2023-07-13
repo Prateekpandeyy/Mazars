@@ -3,6 +3,7 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
@@ -35,7 +36,7 @@ function AcceptedProposal() {
   const [scrolledTo, setScrolledTo] = useState("");
   const [lastDown, setLastDown] = useState("");
   const [countNotification, setCountNotification] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
@@ -137,7 +138,7 @@ function AcceptedProposal() {
   };
   const getProposalList = (e) => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlproposal3"));
-
+    setLoading(true);
     setPage(e);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
@@ -212,6 +213,8 @@ function AcceptedProposal() {
         }
         setDefaultPage(droppage);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -575,7 +578,7 @@ function AcceptedProposal() {
   ];
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -629,6 +632,8 @@ function AcceptedProposal() {
 
         setProposal(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   return (

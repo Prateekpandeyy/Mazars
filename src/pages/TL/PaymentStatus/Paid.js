@@ -15,7 +15,7 @@ import {
   ModalFooter,
   Button,
 } from "reactstrap";
-
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function AllPayment() {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const userid = window.localStorage.getItem("tlkey");
   const cust_id = window.localStorage.getItem("userid");
   const [records, setRecords] = useState([]);
@@ -222,6 +223,8 @@ function AllPayment() {
         }
         setDefaultPage(droppage);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -690,6 +693,8 @@ function AllPayment() {
 
         setPayment(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

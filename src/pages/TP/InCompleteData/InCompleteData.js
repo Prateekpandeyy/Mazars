@@ -21,6 +21,7 @@ import MessageIcon, {
 import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   isActive: {
@@ -46,7 +47,7 @@ function InCompleteData({ data }) {
   const [turnGreen, setTurnGreen] = useState(false);
   const [isActive, setIsActive] = useState("");
   const [prev, setPrev] = useState("");
-
+  
   const [count, setCount] = useState("0");
   const [onPage, setOnPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -171,6 +172,7 @@ function InCompleteData({ data }) {
   }, []);
 
   const getInCompleteAssingment = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -234,12 +236,15 @@ function InCompleteData({ data }) {
           setRecords(res.data.result.length);
           setCount(res.data.total);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -290,6 +295,8 @@ function InCompleteData({ data }) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

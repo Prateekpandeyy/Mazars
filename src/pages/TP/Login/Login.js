@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import classNames from "classnames";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
@@ -73,7 +74,9 @@ function Login() {
           Alerts.ErrorNormal(response.data.result);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
   const logout = () => {
     setTimeout(() => {

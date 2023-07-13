@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime"
 import { baseUrl } from "../../config/config";
 import BootstrapTable from "react-bootstrap-table-next";
 import ReactPlayer from "react-player";
@@ -12,6 +13,7 @@ function QueryRecording(assingNo) {
   const [feedbackData, setFeedBackData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [videoid, setVideoId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const openModal = (videoContent) => {
     setIsOpen(true);
@@ -29,6 +31,7 @@ function QueryRecording(assingNo) {
   };
 
   const getRecording = () => {
+    setLoading(true);
     var confToken = "";
     let apipath = "";
     if (window.location.pathname.split("/")[1] === "teamleader_queries") {
@@ -57,6 +60,8 @@ function QueryRecording(assingNo) {
         if (res.data.code === 1) {
           setFeedBackData(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 

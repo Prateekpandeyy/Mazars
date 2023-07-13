@@ -3,6 +3,7 @@ import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
 import PaymentModal from "./PaymentModal";
 import { useHistory } from "react-router";
@@ -162,6 +163,8 @@ function Message(props) {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
@@ -211,6 +214,8 @@ function Message(props) {
             droppage.push(i);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 

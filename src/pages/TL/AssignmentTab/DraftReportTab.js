@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
-
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import DraftReportModal from "./DraftReportUpload";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 function AssignmentTab() {
   const history = useHistory();
   const userid = window.localStorage.getItem("tlkey");
-
+  
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
   const [count, setCount] = useState("");
@@ -182,6 +182,7 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -224,6 +225,8 @@ function AssignmentTab() {
         setCount(res.data.total);
         setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -322,6 +325,7 @@ function AssignmentTab() {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -363,6 +367,8 @@ function AssignmentTab() {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -747,6 +753,7 @@ function AssignmentTab() {
   }, []);
 
   const onSubmit = (data, e) => {
+    setLoading(true);
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment2"));
     localStorage.setItem(`tlAssignment2`, e);
     // if (pageno) {
@@ -825,6 +832,8 @@ function AssignmentTab() {
             setCount(res.data.total);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
       axios
@@ -866,6 +875,8 @@ function AssignmentTab() {
               setTurnGreen(false);
             }
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };

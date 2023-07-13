@@ -37,6 +37,7 @@ import Paginator from "../../../components/Paginator/Paginator";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -52,7 +53,7 @@ function AllPayment() {
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const classes = useStyles();
   const [records, setRecords] = useState([]);
-
+  
   const [pay, setPay] = useState([]);
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
@@ -204,6 +205,7 @@ function AllPayment() {
   }, [ViewDiscussion]);
 
   const getPaymentStatus = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -267,6 +269,8 @@ function AllPayment() {
         setCount(res.data.total);
         setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -288,6 +292,7 @@ function AllPayment() {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -331,6 +336,8 @@ function AllPayment() {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

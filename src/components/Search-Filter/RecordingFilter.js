@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -12,6 +13,7 @@ function RecordingFilter(props) {
   const [atPage, setAtpage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     records,
@@ -115,6 +117,7 @@ function RecordingFilter(props) {
   };
   const onSubmit = (data, e) => {
     setSearchText(data);
+    setLoading(true);
     if (e?.target?.value == undefined) {
       e = 1;
     }
@@ -154,6 +157,8 @@ function RecordingFilter(props) {
               updateResult(res);
             }
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (SearchQuery == "tlQuery") {
       const token = window.localStorage.getItem("tlToken");
@@ -215,6 +220,8 @@ function RecordingFilter(props) {
               setDefaultPage(droppage);
             }
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (SearchQuery == "tpQuery") {
       const token = window.localStorage.getItem("tptoken");
@@ -280,6 +287,8 @@ function RecordingFilter(props) {
               localStorage.removeItem("recordingSorttp");
             }
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };

@@ -7,6 +7,7 @@ import AllAssignment from "./AllAssignment";
 import DraftReportTab from "./DraftReportTab";
 import DeliveryFinalTab from "./DeliveryFinalTab";
 import AdminPermission from "./AdminPermission";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 
 function QueriesTab(props) {
   const userid = window.localStorage.getItem("tlkey");
@@ -16,6 +17,7 @@ function QueriesTab(props) {
   const [final, setFinal] = useState();
   const [permission, setPermission] = useState(0);
   const [bgColor, setbgColor] = useState("#615339");
+  const [loading, setLoading] = useState(false);
   const token = window.localStorage.getItem("tlToken");
   const myConfig = {
     headers: {
@@ -67,6 +69,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setAllAssignmentCount(res?.data?.total);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
 
@@ -82,6 +86,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setDraft(res?.data?.total);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
 
@@ -97,6 +103,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setFinal(res?.data?.total);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
     const getAdminPermissionCount = () => {
@@ -106,6 +114,8 @@ function QueriesTab(props) {
           if (res.data.code === 1) {
             setPermission(res?.data?.total);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
     getAllAssigments();

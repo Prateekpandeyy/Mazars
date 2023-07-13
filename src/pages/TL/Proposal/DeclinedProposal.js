@@ -4,6 +4,7 @@ import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
@@ -42,6 +43,7 @@ function DeclinedProposal() {
   const [page, setPage] = useState(0);
   const [accend, setAccend] = useState(false);
   const [prev, setPrev] = useState("");
+  const [loading, setLoading] = useState(false);
   const [defaultPage, setDefaultPage] = useState(["1", "2", "3", "4", "5"]);
 
   function headerLabelFormatter(column, colIndex) {
@@ -202,6 +204,8 @@ function DeclinedProposal() {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
@@ -261,6 +265,8 @@ function DeclinedProposal() {
 
         setProposal(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [

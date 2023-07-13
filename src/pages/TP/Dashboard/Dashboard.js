@@ -5,11 +5,13 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { useHistory } from "react-router-dom";
 import { Container } from "@material-ui/core";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import CustomTypography from "../../../components/Common/CustomTypography";
 function Dashboard() {
   const userid = window.localStorage.getItem("tpkey");
   const sessionTpid = window.sessionStorage.getItem("sessionTpid");
   let history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [allQueries, setAllQueries] = useState({
     total: "",
     inprogress_queries: "",
@@ -138,7 +140,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     const getAssignment = () => {
@@ -162,7 +166,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     const getPayment = () => {
@@ -182,7 +188,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     getAllQueries();

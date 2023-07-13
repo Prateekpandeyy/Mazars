@@ -6,6 +6,7 @@ import { Select } from "antd";
 import "antd/dist/antd.css";
 import { DatePicker } from "antd";
 import moment from "moment";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
 function TaxProfessionalFilter(props) {
@@ -48,7 +49,7 @@ function TaxProfessionalFilter(props) {
   const [categoryData, setCategory] = useState([]);
   const maxDate = moment(new Date().toISOString().slice(0, 10)).add(0, "days");
   const dateValue = useRef(null);
-
+  const [loading, setLoading] = useState(false);
   const token = window.localStorage.getItem("tptoken");
   const myConfig = {
     headers: {
@@ -182,6 +183,7 @@ function TaxProfessionalFilter(props) {
   }, [toDate]);
 
   const onSubmit = (data) => {
+    setLoading(true);
     let obj = {};
     if (data.route) {
       obj = {
@@ -240,6 +242,8 @@ function TaxProfessionalFilter(props) {
               // setCount(res.data.total);
               setRecords(res.data.result.length);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -277,6 +281,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpQuery1`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -303,6 +309,8 @@ function TaxProfessionalFilter(props) {
                 // localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -339,6 +347,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpQuery2`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -380,6 +390,8 @@ function TaxProfessionalFilter(props) {
               setRecords(res.data.result.length);
               localStorage.setItem(`tpQuery3`, JSON.stringify(1));
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -417,6 +429,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpQuery3`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -442,6 +456,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -476,6 +492,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpQuery4`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -501,6 +519,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -523,6 +543,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -549,6 +571,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -583,6 +607,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpProposal1`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -609,6 +635,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -643,6 +671,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpProposal2`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -668,6 +698,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -705,6 +737,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpProposal3`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -730,6 +764,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -767,6 +803,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpProposal4`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -805,6 +843,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -839,6 +879,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpPayment1`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -876,6 +918,8 @@ function TaxProfessionalFilter(props) {
                 setRecords(res.data.result.length);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -913,6 +957,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpPayment2`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -951,6 +997,8 @@ function TaxProfessionalFilter(props) {
                 setCount(res.data.total);
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -988,6 +1036,8 @@ function TaxProfessionalFilter(props) {
                 localStorage.setItem(`tpPayment3`, JSON.stringify(1));
               }
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }

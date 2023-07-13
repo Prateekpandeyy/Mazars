@@ -11,6 +11,7 @@ import {
   Col,
   Table,
 } from "reactstrap";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import CommonServices from "../../../common/common";
 import BootstrapTable from "react-bootstrap-table-next";
 import { useHistory } from "react-router";
@@ -114,6 +115,7 @@ function FeedbackTab() {
   }, [count]);
 
   const getFeedback = (e) => {
+    setLoading(true);
     localStorage.setItem(`tlFeedback`, JSON.stringify(e));
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let pagetry = JSON.parse(localStorage.getItem("freezetlFeedback"));
@@ -167,6 +169,8 @@ function FeedbackTab() {
         }
         setDefaultPage(droppage);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

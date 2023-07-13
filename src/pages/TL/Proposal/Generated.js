@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import BootstrapTable from "react-bootstrap-table-next";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChatHistory from "./ChatHistory";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -45,6 +46,7 @@ const Generated = ({ updateTab }) => {
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
   const [count, setCount] = useState("");
+  const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
@@ -149,6 +151,7 @@ const Generated = ({ updateTab }) => {
     },
   };
   const getProposalList = (e) => {
+    setLoading(true);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuetl1"));
     let orderBy = 1;
@@ -215,12 +218,14 @@ const Generated = ({ updateTab }) => {
         }
         setDefaultPage(droppage);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -260,6 +265,8 @@ const Generated = ({ updateTab }) => {
 
         setProposal(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const downloadpdf = (qno, id, installmentNumber) => {
@@ -288,6 +295,8 @@ const Generated = ({ updateTab }) => {
           a.target = "_blank";
           a.click();
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const resetPaging = () => {

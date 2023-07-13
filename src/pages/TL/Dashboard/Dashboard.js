@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import "./index.css";
 import axios from "axios";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { baseUrl } from "../../../config/config";
 import { useHistory } from "react-router-dom";
 import { Container, Grid, Paper, Box } from "@material-ui/core";
@@ -81,6 +82,7 @@ function Dashboard() {
   } = assignment;
   const [clientDeclinedp, setClientDeclinedp] = useState("");
   const [clientDeclineda, setClientDeclineda] = useState("");
+  const [loading, setLoading] = useState(false);
   const [permission_to_issue_invoice, setpermission_to_issue_invoice] =
     useState("");
   const { paid, unpaid, totalpayment } = payment;
@@ -138,7 +140,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     const getAssignment = () => {
@@ -162,7 +166,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     const getPayment = () => {
@@ -182,7 +188,9 @@ function Dashboard() {
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          ShowError.LoadingError(setLoading);
+        });
     };
 
     getAllQueries();

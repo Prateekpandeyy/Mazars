@@ -24,6 +24,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -51,6 +52,7 @@ function FeedbackTab() {
   const [sortVal, setSortVal] = useState('');
   const [sortField, setSortField] = useState('');
   const [prev, setPrev] = useState("");
+  
   const [defaultPage, setDefaultPage] = useState(["1"]);
   const token = window.localStorage.getItem("tptoken");
 
@@ -208,7 +210,7 @@ function FeedbackTab() {
   };
 
   const sortFeedback = (val, field) => {
-
+    setLoading(true);
     let obj = {
       // pageno: atPage,
       val: val,
@@ -249,6 +251,8 @@ function FeedbackTab() {
           }
           setTurnGreen(true);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
 
   };
@@ -256,7 +260,6 @@ function FeedbackTab() {
 
   const getFeedback = (e) => {
     localStorage.setItem(`tpFeedback`, e);
-
     setLoading(true);
     let pagetry = JSON.parse(localStorage.getItem("freezetpFeedback"));
     let val = pagetry?.val;
@@ -316,6 +319,8 @@ function FeedbackTab() {
             }
             setDefaultPage(droppage);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     };
   };
@@ -439,7 +444,7 @@ function FeedbackTab() {
   // readnotification
   const readNotification = (id) => {
 
-
+    setLoading(true);
     let formData = new FormData();
     formData.append("id", id);
     formData.append("type", "tp");
@@ -461,7 +466,7 @@ function FeedbackTab() {
         }
       })
       .catch((error) => {
-
+        ShowError.LoadingError(setLoading);
       });
   };
 

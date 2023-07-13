@@ -15,6 +15,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import Paginator from "../../../components/Paginator/Paginator";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -32,7 +33,7 @@ const CreateInvoice = () => {
   const classes = useStyles();
   const [scrolledTo, setScrolledTo] = useState("");
   const myRef = useRef([]);
-
+  
   const [id, setId] = useState();
   const [tds, setTds] = useState(false);
 
@@ -131,6 +132,7 @@ const CreateInvoice = () => {
   }, []);
 
   const getProposalList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -218,6 +220,8 @@ const CreateInvoice = () => {
         setDefaultPage(droppage);
         localStorage.setItem("tpInvoice2", e);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -336,6 +340,8 @@ const CreateInvoice = () => {
         setCount(res.data.total);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

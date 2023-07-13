@@ -3,6 +3,7 @@ import CommonServices from "../../common/common";
 import { baseUrl, baseUrl3 } from "../../config/config";
 import Swal from "sweetalert2";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import { Markup } from "interweave";
 import ViewPayment from "../ViewPayment/ViewPayment";
 import MainText from "../Common/MainText";
@@ -45,6 +46,7 @@ function ProposalDetails({
   } = diaplayProposal;
   const [successDisabled, setSucessDisabled] = useState(false);
   const [currentDate] = useState(convert(date));
+  const [loading, setLoading] = useState(false);
   const [invoiceData, setInvoiceData] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const { tlname, date_of_allocation } = diaplayHistory;
@@ -53,7 +55,7 @@ function ProposalDetails({
 
   const downloadpdf = () => {
     const token = window.localStorage.getItem("adminToken");
-
+    setLoading(true);
     const myConfig = {
       headers: {
         uit: token,
@@ -76,6 +78,8 @@ function ProposalDetails({
             a.click();
             document.body.removeChild(a);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (panel === "teamleader") {
       const token = window.localStorage.getItem("tlToken");
@@ -101,6 +105,8 @@ function ProposalDetails({
             a.click();
             document.body.removeChild(a);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (panel === "taxprofessional") {
       const token = window.localStorage.getItem("tptoken");
@@ -127,6 +133,8 @@ function ProposalDetails({
             a.click();
             document.body.removeChild(a);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (panel === "client") {
       const token = window.localStorage.getItem("clientToken");
@@ -151,6 +159,8 @@ function ProposalDetails({
             a.target = "_blank";
             a.click();
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -273,6 +283,8 @@ function ProposalDetails({
               });
               setInvoiceData(null);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         setInvoiceData([]);
@@ -298,6 +310,8 @@ function ProposalDetails({
               });
               setInvoiceData(null);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         setInvoiceData([]);
@@ -323,6 +337,8 @@ function ProposalDetails({
               });
               setInvoiceData(null);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         setInvoiceData([]);
@@ -348,6 +364,8 @@ function ProposalDetails({
               });
               setInvoiceData(null);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         setInvoiceData([]);

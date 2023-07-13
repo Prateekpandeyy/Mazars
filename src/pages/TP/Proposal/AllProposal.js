@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import CommonShowProposal from "../../../components/commonShowProposal/CommonShowProposal";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import MessageIcon, {
   EyeIcon,
   ViewDiscussionIcon,
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 function AllProposal() {
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
+  
   const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
@@ -197,6 +199,7 @@ function AllProposal() {
   }
 
   const getProposalList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -252,10 +255,13 @@ function AllProposal() {
         setCount(res.data?.total);
         // setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
   const sortMessage = (val, field) => {
+    setLoading(true);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
@@ -296,6 +302,8 @@ function AllProposal() {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

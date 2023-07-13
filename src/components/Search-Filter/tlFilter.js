@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../config/config";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import { useForm } from "react-hook-form";
 import { Select } from "antd";
 import "antd/dist/antd.css";
@@ -55,6 +56,7 @@ function TeamFilter(props) {
   const userid = window.localStorage.getItem("tlkey");
 
   const [selectedData, setSelectedData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
   const [fromDate, setFromDate] = useState("");
@@ -261,6 +263,7 @@ function TeamFilter(props) {
     }
   };
   const onSubmit = (data) => {
+    setLoading(true);
     let obj = {};
     if (data.route) {
       obj = {
@@ -304,6 +307,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -322,6 +327,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -342,6 +349,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -360,6 +369,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -382,6 +393,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -399,6 +412,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -420,6 +435,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -438,6 +455,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -460,6 +479,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -478,6 +499,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -498,6 +521,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -516,6 +541,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -538,6 +565,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -556,6 +585,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -578,6 +609,8 @@ function TeamFilter(props) {
               if (res.data.code === 1) {
                 updateResult(res);
               }
+            }).catch((error) => {
+              ShowError.LoadingError(setLoading);
             });
         } else {
           axios
@@ -593,6 +626,8 @@ function TeamFilter(props) {
               if (res.data.code === 1) {
                 updateResult(res);
               }
+            }).catch((error) => {
+              ShowError.LoadingError(setLoading);
             });
         }
       } else {
@@ -613,6 +648,8 @@ function TeamFilter(props) {
               if (res.data.code === 1) {
                 updateResult(res);
               }
+            }).catch((error) => {
+              ShowError.LoadingError(setLoading);
             });
         } else {
           axios
@@ -632,6 +669,8 @@ function TeamFilter(props) {
               if (res.data.code === 1) {
                 updateResult(res);
               }
+            }).catch((error) => {
+              ShowError.LoadingError(setLoading);
             });
         }
       }
@@ -652,6 +691,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -671,6 +712,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -691,6 +734,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -710,6 +755,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -732,6 +779,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -750,6 +799,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -772,6 +823,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -791,6 +844,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }
@@ -813,6 +868,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       } else {
         axios
@@ -832,6 +889,8 @@ function TeamFilter(props) {
             if (res.data.code === 1) {
               updateResult(res);
             }
+          }).catch((error) => {
+            ShowError.LoadingError(setLoading);
           });
       }
     }

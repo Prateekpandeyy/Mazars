@@ -15,6 +15,7 @@ import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import MessageIcon, {
   ViewDiscussionIcon,
   Payment,
@@ -216,6 +217,8 @@ function AdminPermission(props) {
         setCountAssignment(res.data.result.length);
         setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   // useEffect(() => {
@@ -353,6 +356,8 @@ function AdminPermission(props) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [
@@ -809,6 +814,8 @@ function AdminPermission(props) {
             setCount(res.data.total);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
       if (status?.length > 0) {
@@ -844,6 +851,8 @@ function AdminPermission(props) {
             setTurnGreen(false);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

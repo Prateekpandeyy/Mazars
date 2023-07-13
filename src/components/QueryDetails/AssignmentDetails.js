@@ -5,6 +5,7 @@ import { baseUrl } from "../../config/config";
 import axios from "axios";
 import MainText from "../Common/MainText";
 import CreateFolder from "./Folder/CreateFolder";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import Select from "react-select";
 import styled from "styled-components";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -66,6 +67,7 @@ function AssignmentDetails({
   const [folderId, setFolderId] = useState("0");
   const [clientAssign, setClientAssign] = useState(null);
   const [leftFolder, setLeftFolder] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [isLeft, setIsLeft] = useState(true);
   const [sub_folder, set_sub_folder] = useState([]);
   const [subFile, setSubFile] = useState([]);
@@ -109,6 +111,7 @@ function AssignmentDetails({
 
   const showFolder = () => {
     var confToken = "";
+    setLoading(true);
     if (window.location.pathname.split("/")[1] === "teamleader_queries") {
       confToken = window.localStorage.getItem("tlToken");
     } else if (
@@ -145,6 +148,8 @@ function AssignmentDetails({
             setFolder(res.data.result);
             getMoveToList();
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -190,6 +195,8 @@ function AssignmentDetails({
           setMovedFolder(kk);
           setLeftFolder(leftFold);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -222,6 +229,8 @@ function AssignmentDetails({
           if (res.data.code === 1) {
             setFiles(res.data.result);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -294,7 +303,7 @@ function AssignmentDetails({
           html: error,
           icons: "error",
         });
-      });
+      })
   };
   const rightClick = (e, a, b, c) => {
     e.preventDefault();
@@ -430,6 +439,8 @@ function AssignmentDetails({
             a.target = "_blank";
             a.click();
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (panel === "taxprofessional") {
       userId = window.localStorage.getItem("tpkey");
@@ -458,6 +469,8 @@ function AssignmentDetails({
             a.target = "_blank";
             a.click();
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     } else if (panel === "client") {
       userId = window.localStorage.getItem("userid");
@@ -486,6 +499,8 @@ function AssignmentDetails({
             a.target = "_blank";
             a.click();
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -544,6 +559,8 @@ function AssignmentDetails({
           } else {
             setShowSubFolderData(false);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -571,6 +588,8 @@ function AssignmentDetails({
         })
         .then((res) => {
           getadminFiles2();
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -584,6 +603,8 @@ function AssignmentDetails({
         if (res.data.code === 1) {
           setadminFolder(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const getInnerFileFileadmin = (e) => {
@@ -604,6 +625,8 @@ function AssignmentDetails({
         setMainFoldName(e.folder);
         setFolderName("");
         setadminFile(res.data.result);
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const get_sub_innerFileAdmin = (e) => {
@@ -624,6 +647,8 @@ function AssignmentDetails({
           setShowAdSubFolder(true);
         } else {
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   // Client file
@@ -638,6 +663,8 @@ function AssignmentDetails({
         if (res.data.code === 1) {
           setclientFolder(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const getClientFile = (e) => {
@@ -656,6 +683,8 @@ function AssignmentDetails({
         })
         .then((res) => {
           getClientFiles2();
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -680,6 +709,8 @@ function AssignmentDetails({
         if (res.data.code === 1) {
           setclientFile(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const get_sub_innerFileClient = (e) => {
@@ -698,6 +729,8 @@ function AssignmentDetails({
           setClientInnerFiles(res.data.result);
         } else {
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const renameFolder = (e, fold) => {

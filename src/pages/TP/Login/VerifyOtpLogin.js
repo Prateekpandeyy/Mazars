@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { useHistory } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
@@ -126,11 +127,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
         }
       })
       .catch((error) => {
-        Swal.fire({
-          title: "Error",
-          html: "Please try again Later",
-          icon: "error",
-        });
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -157,7 +154,9 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
           Alerts.ErrorNormal("Some thing went wrong, please try again");
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   return (

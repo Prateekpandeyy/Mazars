@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import ChatHistory from "./ChatHistory";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -28,6 +29,7 @@ function InprogressProposal() {
   const classes = useStyles();
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [proposal, setProposal] = useState([]);
   const [id, setId] = useState(null);
   const [addPaymentModal, setPaymentModal] = useState(false);
@@ -140,6 +142,7 @@ function InprogressProposal() {
     },
   };
   const getProposalList = (e) => {
+    setLoading(true);
     let searchData = JSON.parse(localStorage.getItem("searchDatatlproposal2"));
     setPage(e);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
@@ -219,12 +222,14 @@ function InprogressProposal() {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -278,6 +283,8 @@ function InprogressProposal() {
 
         setProposal(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [

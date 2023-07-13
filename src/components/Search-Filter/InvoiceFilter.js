@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import { current_date } from "../../common/globalVeriable";
@@ -15,6 +16,7 @@ const InvoiceFilter = (props) => {
     ("0" + new Date().getDate()).slice(-2);
 
   const [perPage, setPerPage] = useState(5);
+  const [loading, setLoading] = useState(false);
   const [toDate, setToDate] = useState(current_date);
   const [status, setStatus] = useState("");
   const [installmentno, setInstallmentNo] = useState("");
@@ -41,6 +43,7 @@ const InvoiceFilter = (props) => {
     }
   }, []);
   const onSubmit = (data) => {
+    setLoading(true);
     let formData = new FormData();
     formData.append("qno", data.query_no);
     formData.append("payment_plan", data.payment_plan);
@@ -109,6 +112,8 @@ const InvoiceFilter = (props) => {
         //   props.setData(res.data.payment_detail);
         //   props.setRec(res.data.payment_detail.length);
         // }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else if (props.invoice == "tpgenerated") {
       const token = window.localStorage.getItem("tptoken");
@@ -127,6 +132,8 @@ const InvoiceFilter = (props) => {
         //   props.setData(res.data.payment_detail);
         //   props.setRec(res.data.payment_detail.length);
         // }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else if (props.invoice == "admingenerated" && formData) {
       const token = window.localStorage.getItem("adminToken");
@@ -171,6 +178,8 @@ const InvoiceFilter = (props) => {
         data: formData,
       }).then((res) => {
         updateResult(res);
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

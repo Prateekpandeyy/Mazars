@@ -10,6 +10,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import BootstrapTable from "react-bootstrap-table-next";
 import TaxProfessionalFilter from "../../../components/Search-Filter/tpfilter";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
@@ -41,7 +42,7 @@ function AssignmentTab(props) {
   const history = useHistory();
   const userid = window.localStorage.getItem("tpkey");
   const classes = useStyles();
-
+  
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
 
@@ -256,6 +257,7 @@ function AssignmentTab(props) {
     if (e === undefined) {
       e = 1;
     }
+    setLoading(true);
     let data = JSON.parse(localStorage.getItem("searchDatatpAssignment1"));
     let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment1"));
     localStorage.setItem(`tpAssignment1`, JSON.stringify(e));
@@ -289,6 +291,8 @@ function AssignmentTab(props) {
           setRecords(res.data.result.length);
           setCount(res.data.total);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else if (!data && !pagetry) {
       remainApiPath = `tl/getAssignments?page=${e}&tp_id=${JSON.parse(userid)}`;
@@ -313,6 +317,8 @@ function AssignmentTab(props) {
           setRecords(res.data.result.length);
           setCount(res.data.total);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
     }
@@ -419,6 +425,7 @@ function AssignmentTab(props) {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -474,6 +481,8 @@ function AssignmentTab(props) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -1029,6 +1038,8 @@ function AssignmentTab(props) {
             setCount(res.data.total);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
       if (status?.length > 0) {
@@ -1078,6 +1089,8 @@ function AssignmentTab(props) {
             setTurnGreen(false);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

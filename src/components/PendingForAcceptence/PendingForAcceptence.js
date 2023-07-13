@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import { baseUrl } from "../../config/config";
 import "antd/dist/antd.css";
 import { Link } from "react-router-dom";
@@ -40,6 +41,7 @@ function PendingForAcceptence() {
   const [viewProposalModal, setViewProposalModal] = useState(false);
   const [proposalId, setProposalId] = useState(0);
   const [countNotification, setCountNotification] = useState("");
+  const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
@@ -159,6 +161,7 @@ function PendingForAcceptence() {
   };
 
   const getPendingAcceptedProposal = (e) => {
+    setLoading(true);
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let sortVal = JSON.parse(localStorage.getItem("sortedValuepro2"));
     let orderBy = 0;
@@ -232,6 +235,8 @@ function PendingForAcceptence() {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

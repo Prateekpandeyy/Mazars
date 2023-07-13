@@ -4,6 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { baseUrl } from "../../config/config";
 import { first } from "lodash";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -964,6 +965,8 @@ function Paginator(props) {
             setDefaultPage(droppage);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

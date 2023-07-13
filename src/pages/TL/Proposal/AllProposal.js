@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
@@ -34,7 +35,7 @@ function AllProposal({ setAllProposal }) {
   const userid = window.localStorage.getItem("tlkey");
   const [records, setRecords] = useState([]);
   const [proposal, setProposal] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [id, setId] = useState(null);
   const [id2, setId2] = useState(null);
   const [tds, setTds] = useState(false);
@@ -154,7 +155,7 @@ function AllProposal({ setAllProposal }) {
   };
   const getProposalList = (e) => {
     let searchData = JSON.parse(localStorage.getItem("searchDatatlproposal1"));
-
+    setLoading(true);
     setPage(e);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
@@ -231,12 +232,14 @@ function AllProposal({ setAllProposal }) {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
-
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -290,6 +293,8 @@ function AllProposal({ setAllProposal }) {
 
         setProposal(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

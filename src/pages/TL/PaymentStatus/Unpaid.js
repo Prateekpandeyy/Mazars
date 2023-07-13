@@ -13,7 +13,7 @@ import {
   Button,
 } from "reactstrap";
 import DiscardReport from "../AssignmentTab/DiscardReport";
-
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Link, useParams } from "react-router-dom";
 import CommonServices from "../../../common/common";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
@@ -41,7 +41,7 @@ function AllPayment() {
   const userid = window.localStorage.getItem("tlkey");
   const cust_id = window.localStorage.getItem("userid");
   const [records, setRecords] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [pay, setPay] = useState([]);
   const [count, setCount] = useState("");
   const [payment, setPayment] = useState([]);
@@ -153,6 +153,7 @@ function AllPayment() {
     },
   };
   const getPaymentStatus = (e) => {
+    setLoading(true);
     let searchData = JSON.parse(localStorage.getItem("searchDatatlpayment3"));
     setPage(e);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
@@ -228,6 +229,8 @@ function AllPayment() {
         }
         setDefaultPage(droppage);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -284,6 +287,7 @@ function AllPayment() {
   };
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -337,6 +341,8 @@ function AllPayment() {
 
         setPayment(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import "antd/dist/antd.css";
 import { Select } from "antd";
 import AdminFilter from "../../components/Search-Filter/AdminFilter";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import Records from "../../components/Records/Records";
 import DataTablepopulated from "../DataTablepopulated/DataTabel";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -54,6 +55,7 @@ function PendingForProposals(props) {
   const [modal, setModal] = useState(false);
   const [countNotification, setCountNotification] = useState("");
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [big, setBig] = useState(1);
   const [end, setEnd] = useState(50);
   const [page, setPage] = useState(0);
@@ -178,6 +180,7 @@ function PendingForProposals(props) {
     localStorage.setItem("adminqp3", defaultPage.at(-1));
   };
   const getPendingForProposals = (e) => {
+    setLoading(true);
     let allEnd = Number(localStorage.getItem("admin_record_per_page"));
     let remainApiPath = "";
     let searchData = JSON.parse(localStorage.getItem(`searchDataadquery3`));
@@ -244,6 +247,8 @@ function PendingForProposals(props) {
           }
           setDefaultPage(droppage);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
@@ -292,6 +297,8 @@ function PendingForProposals(props) {
 
         setNonPendingData(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

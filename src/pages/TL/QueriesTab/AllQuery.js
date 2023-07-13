@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Link } from "react-router-dom";
 import TeamFilter from "../../../components/Search-Filter/tlFilter";
 import DiscardReport from "../AssignmentTab/DiscardReport";
@@ -30,7 +31,7 @@ function AllQuery({ setAllQuery }) {
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [scrolledTo, setScrolledTo] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [countNotification, setCountNotification] = useState("");
 
   const [big, setBig] = useState(1);
@@ -121,6 +122,7 @@ function AllQuery({ setAllQuery }) {
   }, []);
   const getInCompleteAssingment = (e) => {
     setPage(e);
+    setLoading(true);
     let allEnd = Number(localStorage.getItem("tl_record_per_page"));
     let orderBy = 0;
     let fieldBy = 0;
@@ -200,10 +202,13 @@ function AllQuery({ setAllQuery }) {
         //   setRecords(res.data.result.length);
         //   setOpen(false);
         // }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };
   const sortMessage = (val, field) => {
+    setLoading(true);
     let sort = {
       orderBy: val,
       fieldBy: field,
@@ -256,6 +261,8 @@ function AllQuery({ setAllQuery }) {
         }
         setInCompleteData(all);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const columns = [

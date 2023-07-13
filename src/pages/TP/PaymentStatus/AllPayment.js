@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
 import Layout from "../../../components/Layout/Layout";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import {
   Card,
   CardHeader,
@@ -51,7 +52,7 @@ function AllPayment() {
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
   const classes = useStyles();
   const [records, setRecords] = useState([]);
-
+  
   const [pay, setPay] = useState([]);
   const [payment, setPayment] = useState([]);
   const [modal, setModal] = useState(false);
@@ -200,6 +201,7 @@ function AllPayment() {
   }, []);
 
   const getPaymentStatus = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -259,6 +261,8 @@ function AllPayment() {
         setCount(res.data.total);
         setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -302,6 +306,7 @@ function AllPayment() {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     localStorage.setItem(`tpPayment1`, JSON.stringify(1));
@@ -345,6 +350,8 @@ function AllPayment() {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 

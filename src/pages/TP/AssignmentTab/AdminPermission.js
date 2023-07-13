@@ -27,6 +27,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Paginator from "../../../components/Paginator/Paginator";
 import { makeStyles } from "@material-ui/core/styles";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 const useStyles = makeStyles((theme) => ({
   isActive: {
     backgroundColor: "green",
@@ -41,7 +42,7 @@ function AdminPermission(props) {
   const classes = useStyles();
   const userid = window.localStorage.getItem("tpkey");
   const allEnd = Number(localStorage.getItem("tp_record_per_page"));
-
+  
   const { handleSubmit, register, errors, reset } = useForm();
   const { Option, OptGroup } = Select;
   const [assignment, setAssignment] = useState([]);
@@ -240,6 +241,7 @@ function AdminPermission(props) {
   }, []);
 
   const getAssignmentList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -283,6 +285,8 @@ function AdminPermission(props) {
         setCount(res.data.total);
         setRecords(res.data.result.length);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -389,6 +393,7 @@ function AdminPermission(props) {
 
   const sortMessage = (val, field) => {
     let remainApiPath = "";
+    setLoading(true);
     setSortVal(val);
     setSortField(field);
     let obj = {
@@ -444,6 +449,8 @@ function AdminPermission(props) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -879,6 +886,7 @@ function AdminPermission(props) {
     }
   }, []);
   const onSubmit = (data, e) => {
+    setLoading(true);
     let pagetry = JSON.parse(localStorage.getItem("freezetpAssignment4"));
     let pageno = JSON.parse(localStorage.getItem("tpAssignment4"));
     if (pageno) {
@@ -980,6 +988,8 @@ function AdminPermission(props) {
             setCount(res.data.total);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
       if (status.length > 0) {
@@ -1028,6 +1038,8 @@ function AdminPermission(props) {
             setTurnGreen(false);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

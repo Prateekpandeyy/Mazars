@@ -12,6 +12,7 @@ import ViewAllReportModal from "./ViewAllReport";
 import DiscardReport from "../AssignmentTab/DiscardReport";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import PaginatorTL from "../../../components/Paginator/PaginatorTL";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -182,6 +183,8 @@ function AssignmentTab(props) {
         setRecords(res.data.result.length);
         setCount(res.data.total);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   useEffect(() => {
@@ -300,6 +303,7 @@ function AssignmentTab(props) {
   }
 
   const sortMessage = (val, field) => {
+    setLoading(true);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
@@ -340,6 +344,8 @@ function AssignmentTab(props) {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -784,6 +790,7 @@ function AssignmentTab(props) {
     }
   };
   const onSubmit = (data, e) => {
+    setLoading(true);
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment1"));
     let pageno = JSON.parse(localStorage.getItem("tlAssignment1"));
     if (pageno) {
@@ -861,6 +868,8 @@ function AssignmentTab(props) {
             setTurnGreen(true);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
       if (status?.length > 0) {
@@ -897,6 +906,8 @@ function AssignmentTab(props) {
             setTurnGreen(false);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     }
   };

@@ -9,6 +9,7 @@ import classNames from "classnames";
 import { useHistory } from "react-router-dom";
 import Alerts from "../../../common/Alerts";
 import Mandatory from "../../../components/Common/Mandatory";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import { Spinner } from "reactstrap";
 import LoadingTime from "../../../components/LoadingTime/LoadingTime";
 import Cookies from "js-cookie";
@@ -25,7 +26,6 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
   const [disabled, setDisabled] = useState(false);
   const [num, changeNum] = useState(false);
   var flag = false;
-
   useEffect(() => {
     LoadingTime.timer2(setTime, setDisabled);
   }, [num]);
@@ -43,6 +43,8 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
         });
         localStorage.setItem("tlcategoryData", JSON.stringify(data));
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   }
 
@@ -51,6 +53,8 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
       if (res.data.code === 1) {
         localStorage.setItem(`tl${e.details}`, JSON.stringify(res.data.result));
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const validOtp = (e) => {
@@ -120,11 +124,7 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
         }
       })
       .catch((error) => {
-        Swal.fire({
-          title: "Error",
-          html: "Please try again Later",
-          icon: "error",
-        });
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -153,7 +153,9 @@ function VerifyOtp({ email, uid, loading, setLoading, password }) {
           Alerts.ErrorNormal("Some thing went wrong, please try again");
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   return (

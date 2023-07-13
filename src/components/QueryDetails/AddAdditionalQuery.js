@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime";
 import { baseUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import Alerts from "../../common/Alerts";
@@ -9,7 +10,6 @@ import Swal from "sweetalert2";
 
 function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
   const { handleSubmit, register, reset } = useForm();
-
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (value) => {
@@ -45,7 +45,9 @@ function AddAdditionalQuery({ addHandler, addModal, assingNo, getQuery }) {
           setLoading(false);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   return (

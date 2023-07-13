@@ -4,6 +4,7 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import {
   Card,
   CardHeader,
@@ -17,7 +18,7 @@ import CustomHeading from "../../../components/Common/CustomHeading";
 import DataTablepopulated from '../../../components/DataTablepopulated/DataTabel';
 import Swal from 'sweetalert2';
 function AddTeamProf() {
-
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [count, setCount] = useState("");
   const userid = window.localStorage.getItem("tlkey");
@@ -32,6 +33,7 @@ function AddTeamProf() {
   }, []);
 
   const getTaxProf = () => {
+    setLoading(true);
     axios
       .get(`${baseUrl}/tl/getTaxProfessional?tl_id=${JSON.parse(userid)}`, myConfig)
       .then((res) => {
@@ -40,6 +42,8 @@ function AddTeamProf() {
           setData(res.data.result);
           setCount(res.data.result.length);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -160,7 +164,7 @@ function AddTeamProf() {
   // delete data
   const del = (id) => {
     
-
+    setLoading(true);
     axios
       .get(`${baseUrl}/delete/TaxLead/${id}`)
       .then(function (response) {
@@ -174,7 +178,8 @@ function AddTeamProf() {
         getTaxProf();
       })
       .catch((error) => {
-              });
+        ShowError.LoadingError(setLoading);
+      });
   };
 
   return (

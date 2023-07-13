@@ -12,6 +12,7 @@ import ViewAllReportModal from "./ViewAllReport";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import moment from "moment";
 import DataTablepopulated from "../../../components/DataTablepopulated/DataTabel";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import MessageIcon, {
   ViewDiscussionIcon,
   FinalReportUploadIcon,
@@ -40,7 +41,7 @@ function AssignmentTab() {
   const [selectedData, setSelectedData] = useState([]);
   const [tax2, setTax2] = useState([]);
   const [store2, setStore2] = useState([]);
-
+  
   const [assignNo, setAssignNo] = useState("");
   const [ViewDiscussion, setViewDiscussion] = useState(false);
   const [fianlModal, setFianlModal] = useState(false);
@@ -121,6 +122,7 @@ function AssignmentTab() {
   }, []);
 
   const getAssignmentList = (e) => {
+    setLoading(true);
     if (e === undefined) {
       e = 1;
     }
@@ -164,6 +166,8 @@ function AssignmentTab() {
         setRecords(res.data.result.length);
         setCount(res.data.total);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -310,6 +314,7 @@ function AssignmentTab() {
   }
 
   const sortMessage = (val, field) => {
+    setLoading(true);
     let remainApiPath = "";
     setSortVal(val);
     setSortField(field);
@@ -352,6 +357,8 @@ function AssignmentTab() {
         setTurnGreen(true);
         setresetTrigger(!resetTrigger);
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
 
@@ -736,6 +743,7 @@ function AssignmentTab() {
   };
 
   const onSubmit = (data, e) => {
+    setLoading(true);
     let pagetry = JSON.parse(localStorage.getItem("freezetlAssignment3"));
     let pageno = JSON.parse(localStorage.getItem("tlAssignment3"));
     if (pageno) {
@@ -812,6 +820,8 @@ function AssignmentTab() {
             setCount(res.data.total);
           }
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
     } else {
       axios
@@ -854,6 +864,8 @@ function AssignmentTab() {
               setTurnGreen(false);
             }
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };

@@ -6,8 +6,10 @@ import { baseUrl } from "../../../config/config";
 import AllPayment from "./AllPayment";
 import Unpaid from "./Unpaid";
 import Paid from "./Paid";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 
 function QueriesTab(props) {
+  const [loading, setLoading] = useState(false);
   const userId = window.localStorage.getItem("tlkey");
   const [tabIndex, setTabIndex] = useState(0);
   const [allPayment, setAllPayment] = useState("");
@@ -39,6 +41,8 @@ function QueriesTab(props) {
       )
       .then((res) => {
         setAllPayment(res?.data?.result?.recordcount);
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -52,6 +56,8 @@ function QueriesTab(props) {
       )
       .then((res) => {
         setPaid(res?.data?.result?.recordcount);
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -65,6 +71,8 @@ function QueriesTab(props) {
       )
       .then((res) => {
         setUnpaid(res?.data?.result?.recordcount);
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 

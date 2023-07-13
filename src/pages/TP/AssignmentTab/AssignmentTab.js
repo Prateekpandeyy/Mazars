@@ -7,11 +7,12 @@ import AllAssignment from "./AllAssignment";
 import DraftReportTab from "./DraftReportTab";
 import DeliveryFinalTab from "./DeliveryFinalTab";
 import AdminPermission from "./AdminPermission";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 
 function QueriesTab(props) {
   const userid = window.localStorage.getItem("tpkey");
   const [tabIndex, setTabIndex] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [allAssignmentCount, setAllAssignmentCount] = useState("");
   const [draft, setDraft] = useState("");
   const [final, setFinal] = useState();
@@ -67,7 +68,6 @@ function QueriesTab(props) {
           }
         });
     };
-
     const getDraftReports = () => {
       axios
         .get(
@@ -82,7 +82,6 @@ function QueriesTab(props) {
           }
         });
     };
-
     const getFinalReports = () => {
       axios
         .get(

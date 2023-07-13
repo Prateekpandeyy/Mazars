@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { baseUrl } from "../../../config/config";
+import ShowError from "../../../components/LoadingTime/LoadingTime";
 import classNames from "classnames";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
@@ -96,12 +97,8 @@ const Login = (props) => {
           });
         }
       })
-      .catch((response) => {
-        Swal.fire({
-          title: "Error",
-          html: "Please try again Later",
-          icon: "error",
-        });
+      .catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   if (

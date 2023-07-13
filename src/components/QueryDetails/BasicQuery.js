@@ -3,6 +3,7 @@ import CommonServices from "../../common/common";
 import { useParams } from "react-router-dom";
 import { Markup } from "interweave";
 import axios from "axios";
+import ShowError from "../../components/LoadingTime/LoadingTime"
 import { baseUrl } from "../../config/config";
 import "./queryStyle.css";
 import MainText from "../Common/MainText";
@@ -40,7 +41,7 @@ function BasicQuery({
   const [innerFiles, setInnerFiles] = useState([]);
   const [clientFolder, setclientFolder] = useState([]);
   const [clientFile, setclientFile] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [sub_folder, set_sub_folder] = useState([]);
   const [isLeft, setIsLeft] = useState(true);
   const [mFold, setMfold] = useState([]);
@@ -94,6 +95,7 @@ function BasicQuery({
   };
   const renameFolder = (e, fold) => {
     var confToken = "";
+    setLoading(true);
     if (window.location.pathname.split("/")[1] === "teamleader_queries") {
       confToken = window.localStorage.getItem("tlToken");
     } else if (
@@ -145,6 +147,8 @@ function BasicQuery({
           icon: "error",
         });
       }
+    }).catch((error) => {
+      ShowError.LoadingError(setLoading);
     });
   };
   const getClientFiles2 = (e) => {
@@ -158,6 +162,8 @@ function BasicQuery({
         if (res.data.code === 1) {
           setclientFolder(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const getClientFile = (e) => {
@@ -176,6 +182,8 @@ function BasicQuery({
         })
         .then((res) => {
           getClientFiles2();
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -205,6 +213,8 @@ function BasicQuery({
         if (res.data.code === 1) {
           setadminFolder(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const getAdminFile = (e) => {
@@ -219,6 +229,8 @@ function BasicQuery({
         })
         .then((res) => {
           getadminFiles2();
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -268,6 +280,8 @@ function BasicQuery({
           if (res.data.code === 1) {
             setFiles(res.data.result);
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -312,6 +326,8 @@ function BasicQuery({
 
           setMovedFolder(kk);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
 
@@ -344,6 +360,8 @@ function BasicQuery({
             setFolder(res.data.result);
             getMoveToList();
           }
+        }).catch((error) => {
+          ShowError.LoadingError(setLoading);
         });
     }
   };
@@ -460,6 +478,8 @@ function BasicQuery({
 
           setInnerFiles(res.data.result);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const get_sub_innerFile = (e) => {
@@ -495,6 +515,8 @@ function BasicQuery({
         } else {
           setShowSubFolderData(false);
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const getInnerFileFile = (e) => {
@@ -530,6 +552,8 @@ function BasicQuery({
       })
       .then((res) => {
         getSubFile(e);
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const openFolder = (e) => {
@@ -581,6 +605,8 @@ function BasicQuery({
           a.target = "_blank";
           a.click();
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const rightClick = (e, a, b, c) => {
@@ -609,6 +635,8 @@ function BasicQuery({
           setClientInnerFiles(res.data.result);
         } else {
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const get_sub_innerFileAdmin = (e) => {
@@ -626,6 +654,8 @@ function BasicQuery({
           setAdminInnerFiles(res.data.result);
         } else {
         }
+      }).catch((error) => {
+        ShowError.LoadingError(setLoading);
       });
   };
   const goBackFun = () => {
