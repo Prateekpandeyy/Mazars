@@ -22,8 +22,7 @@ import Mandatory from "../../../components/Common/Mandatory";
 import Loader from "../../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 import CustomHeading from "../../../components/Common/CustomHeading";
-import Swal from 'sweetalert2';
-
+import Swal from "sweetalert2";
 
 const Schema = yup.object().shape({
   message_type: yup.string().required(""),
@@ -31,13 +30,7 @@ const Schema = yup.object().shape({
   p_to: yup.string().required(""),
 });
 
-
-
 function Chatting(props) {
-
- 
-
-  
   const history = useHistory();
   const { handleSubmit, register, errors, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -47,35 +40,29 @@ function Chatting(props) {
   const [loading, setLoading] = useState(false);
 
   const [item, setItem] = useState("");
-  const [data, setData] = useState({})
-  const { query_id, query_No, routes } = data
-  const token = window.localStorage.getItem("adminToken")
-    const myConfig = {
-        headers : {
-         "uit" : token
-        }
-      }
-
-
+  const [data, setData] = useState({});
+  const { query_id, query_No, routes } = data;
+  const token = window.localStorage.getItem("adminToken");
+  const myConfig = {
+    headers: {
+      uit: token,
+    },
+  };
 
   useEffect(() => {
-
-    const dataItem = props.location.obj
+    const dataItem = props.location.obj;
 
     if (dataItem) {
       localStorage.setItem("myDataAdmin", JSON.stringify(dataItem));
     }
     var myData = localStorage.getItem("myDataAdmin");
-    var data2 = JSON.parse(myData)
-    setData(data2)
-    setItem(data2.message_type)
+    var data2 = JSON.parse(myData);
+    setData(data2);
+    setItem(data2.message_type);
   }, [item]);
 
-
-
   const onSubmit = (value) => {
-    
-    setLoading(true)
+    setLoading(true);
     let formData = new FormData();
     formData.append("uid", JSON.parse(userId));
     formData.append("assign_id", query_id);
@@ -86,162 +73,165 @@ function Chatting(props) {
     axios({
       method: "POST",
       url: `${baseUrl}/admin/messageSent`,
-      headers : {
-        uit : token
+      headers: {
+        uit: token,
       },
       data: formData,
     })
       .then(function (response) {
-      
         if (response.data.code === 1) {
           reset();
-          setLoading(false)
+          setLoading(false);
           Swal.fire({
-            title : "success",
-            html : "Message sent successfully",
-            icon : "success"
-          })
-         
+            title: "success",
+            html: "Message sent successfully",
+            icon: "success",
+          });
+
           props.history.push(routes);
         } else if (response.data.code === 0) {
           Swal.fire({
-            title : "error",
-            html : "Something went wrong, please try again",
-            icon : "error"
-          })
-          setLoading(false)
+            title: "error",
+            html: "Something went wrong, please try again",
+            icon: "error",
+          });
+          setLoading(false);
         }
       })
-      .catch((error) => {
-       
-      });
+      .catch((error) => {});
   };
 
   return (
     <Layout adminDashboard="adminDashboard" adminUserId={userId}>
-       <Card>
+      <Card>
         <CardHeader>
           <Row>
-          <Col md="4">
-            <Link
+            <Col md="4">
+              {props.location.index ? (
+                <Link
                   to={{
                     pathname: `/admin/${props.location.routes}`,
                     index: props.location.index,
                   }}
                 >
-                  <button className = "autoWidthBtn ml-2">Go Back</button>
+                  <button class="customBtn">Go Back</button>
                 </Link>
-              
+              ) : (
+                <button class="customBtn" onClick={() => history.goBack()}>
+                  Go Back
+                </button>
+              )}
             </Col>
             <Col md="8">
-            <CustomHeading>
-                Message
-            </CustomHeading>
+              <CustomHeading>Message</CustomHeading>
             </Col>
           </Row>
         </CardHeader>
         <CardBody>
-          {
-            loading ?
-              <Loader />
-              :
-              <>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="row" style={{ display: "flex", justifyContent: "center" }}>
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label>Query No.</label>
-                        <input
-                          type="text"
-                          name="p_query"
-                          className="form-control"
-                          ref={register}
-                          value={query_No}
-                          disabled
-                        />
-                      </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div
+                  className="row"
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Query No.</label>
+                      <input
+                        type="text"
+                        name="p_query"
+                        className="form-control"
+                        ref={register}
+                        value={query_No}
+                        disabled
+                      />
+                    </div>
 
-                      <div className="form-group">
-                        <label>Message Type</label>
-                        {
-                          item &&
-                          <select
-                            className={classNames("form-control", {
-                              "is-invalid": errors.message_type,
-                            })}
-                            name="message_type"
-                            ref={register}
-                            style={{ height: "33px" }}
-                            defaultValue={item}
-                          >
-                            <option value="">--select--</option>
-                            <option value="4">Query discussion</option>
-                            <option value="2">Proposal discussion</option>
-                            <option value="5">Payment discussion</option>
-                            <option value="3">Assignment discussion</option>
-                            <option value="1">Others</option>
-                          </select>
-                        }
-                        {errors.message_type && (
-                          <div className="invalid-feedback">
-                            {errors.message_type.message}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="form-group">
-                        <label>To<span className="declined">*</span></label>
+                    <div className="form-group">
+                      <label>Message Type</label>
+                      {item && (
                         <select
                           className={classNames("form-control", {
-                            "is-invalid": errors.p_to,
+                            "is-invalid": errors.message_type,
                           })}
-                          name="p_to"
+                          name="message_type"
                           ref={register}
                           style={{ height: "33px" }}
+                          defaultValue={item}
                         >
                           <option value="">--select--</option>
-                          <option value="customer">Client</option>
-                          <option value="tl">Team leader</option>
-                          <option value="both">Both</option>
+                          <option value="4">Query discussion</option>
+                          <option value="2">Proposal discussion</option>
+                          <option value="5">Payment discussion</option>
+                          <option value="3">Assignment discussion</option>
+                          <option value="1">Others</option>
                         </select>
-                        {errors.p_to && (
-                          <div className="invalid-feedback">
-                            {errors.p_to.message}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="form-group">
-                        <label>Message<span className="declined">*</span></label>
-                        <textarea
-                          className={classNames("form-control", {
-                            "is-invalid": errors.p_message,
-                          })}
-                          placeholder="Message text here"
-                          rows="5"
-                          ref={register}
-                          name="p_message"
-                        ></textarea>
-                        {errors.p_message && (
-                          <div className="invalid-feedback">
-                            {errors.p_message.message}
-                          </div>
-                        )}
-                      </div>
-                      <button type="submit" className="customBtn">
-                        Send
-                      </button>
+                      )}
+                      {errors.message_type && (
+                        <div className="invalid-feedback">
+                          {errors.message_type.message}
+                        </div>
+                      )}
                     </div>
+
+                    <div className="form-group">
+                      <label>
+                        To<span className="declined">*</span>
+                      </label>
+                      <select
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_to,
+                        })}
+                        name="p_to"
+                        ref={register}
+                        style={{ height: "33px" }}
+                      >
+                        <option value="">--select--</option>
+                        <option value="customer">Client</option>
+                        <option value="tl">Team leader</option>
+                        <option value="both">Both</option>
+                      </select>
+                      {errors.p_to && (
+                        <div className="invalid-feedback">
+                          {errors.p_to.message}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group">
+                      <label>
+                        Message<span className="declined">*</span>
+                      </label>
+                      <textarea
+                        className={classNames("form-control", {
+                          "is-invalid": errors.p_message,
+                        })}
+                        placeholder="Message text here"
+                        rows="5"
+                        ref={register}
+                        name="p_message"
+                      ></textarea>
+                      {errors.p_message && (
+                        <div className="invalid-feedback">
+                          {errors.p_message.message}
+                        </div>
+                      )}
+                    </div>
+                    <button type="submit" className="customBtn">
+                      Send
+                    </button>
                   </div>
-
-                </form>
-                <Mandatory />
-              </>
-          }
+                </div>
+              </form>
+              <Mandatory />
+            </>
+          )}
         </CardBody>
-
       </Card>
-    </Layout >
+    </Layout>
   );
 }
 
