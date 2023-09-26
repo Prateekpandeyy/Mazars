@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import classNames from "classnames";
 import Alerts from "../../../common/Alerts";
-import { Spinner } from 'reactstrap';
+import { Spinner } from "reactstrap";
 
 const Schema = yup.object().shape({
   p_chat: yup.string().required(""),
@@ -26,11 +26,8 @@ function RejectedModal({
   const [loading, setLoading] = useState(false);
   const { id, allocation_id } = pay;
 
-  
-
   const onSubmit = (value) => {
-  
-    setLoading(true)
+    setLoading(true);
 
     let formData = new FormData();
     formData.append("set", 0);
@@ -42,28 +39,28 @@ function RejectedModal({
     axios({
       method: "POST",
       url: `${baseUrl}/tp/AcceptRejectQuery`,
+      headers: {
+        Uit: localStorage.getItem("tpToken"),
+      },
       data: formData,
     })
       .then(function (response) {
-      
         if (response.data.code === 1) {
-          setLoading(false)
-          Alerts.SuccessNormal("Query rejected successfully.")
+          setLoading(false);
+          Alerts.SuccessNormal("Query rejected successfully.");
           getPendingforAcceptance();
           rejectHandler();
         } else if (response.data.code === 0) {
-          setLoading(false)
+          setLoading(false);
         }
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   };
 
   return (
     <div>
       <Modal isOpen={addPaymentModal} toggle={rejectHandler} size="md">
-        <ModalHeader toggle={rejectHandler}>Rejected Reason</ModalHeader>
+        <ModalHeader toggle={rejectHandler}>Rejection Reason</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
@@ -80,14 +77,13 @@ function RejectedModal({
             </div>
 
             <div class="modal-footer">
-              {
-                loading ?
-                  <Spinner color="primary" />
-                  :
-                  <button type="submit" className="btn btn-primary">
-                    Submit
-                  </button>
-              }
+              {loading ? (
+                <Spinner color="primary" />
+              ) : (
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </ModalBody>

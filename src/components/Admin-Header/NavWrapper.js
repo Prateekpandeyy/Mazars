@@ -188,6 +188,26 @@ function NavWrapper(props) {
                             <span style={{ marginLeft: "6px" }}>Profile</span>
                           </div>
                         </Link>
+                        <a href="https://complyany.com/">
+                          <div
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <CgProfile style={{ fontSize: "20px" }} />
+
+                            <span style={{ marginLeft: "6px" }}>Complyany</span>
+                          </div>
+                        </a>
+                        <a href="https://cref.com/">
+                          <div
+                            className="dropdown-item"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <CgProfile style={{ fontSize: "20px" }} />
+
+                            <span style={{ marginLeft: "6px" }}>CREF</span>
+                          </div>
+                        </a>
                       </>
                     )}
 
