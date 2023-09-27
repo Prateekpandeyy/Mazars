@@ -3,41 +3,39 @@ import { Grid, Box, Button } from "@material-ui/core";
 import LogoutHeader from "./LogoutHeader";
 
 const CompliAny = (props) => {
-  const userId = window.localStorage.getItem("userid");
   return (
     <Grid container spacing={2}>
       <Grid item lg={12}>
         <LogoutHeader />
       </Grid>
-      <Grid item lg={12}>
-        <Grid container style={{ margin: "0px 25px" }}>
-          <Grid item lg={4}>
+      <Grid item lg={12} align="center">
+        <Grid item lg={4}>
+          <Button
+            onClick={(e) => (window.location.href = "https://complyany.com/")}
+            variant="contained"
+            size="lg"
+            color="secondary"
+            style={{ margin: "10px 0px", color: "#fff" }}
+          >
+            Compli Any
+          </Button>
+        </Grid>
+        <Grid item lg={4}>
+          <Box>
             <Button
-              onClick={(e) => (window.location.href = "https://complyany.com/")}
+              onClick={(e) => (window.location.href = "https://cref.com/")}
               variant="contained"
-              m={4}
               size="lg"
+              style={{ margin: "10px 0px" }}
             >
-              Compli Any
+              CREF
             </Button>
-          </Grid>
-          <Grid item lg={4}>
-            <Box>
-              <Button
-                onClick={(e) => (window.location.href = "https://cref.com/")}
-                variant="contained"
-                m={4}
-                size="lg"
-              >
-                CREF
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item lg={4}>
-            <Button variant="contained" m={4} size="lg">
-              Mazars
-            </Button>
-          </Grid>
+          </Box>
+        </Grid>
+        <Grid item lg={4}>
+          <Button variant="contained" style={{ margin: "10px 0px" }} size="lg">
+            Mazars
+          </Button>
         </Grid>
       </Grid>
     </Grid>

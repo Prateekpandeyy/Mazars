@@ -20,14 +20,13 @@ const LogoutHeader = (props) => {
             <Link to="/customer/dashboard">
               <img src={mazars} alt="mazar" className="logo" />
             </Link>
-            <div
-              className="dropdown-item"
+            <button
+              type="button"
               onClick={logout}
-              style={{ cursor: "pointer" }}
+              className="autoWidthBtn logBtn"
             >
-              <LockOpenIcon style={{ fontSize: "20px" }} />
-              <span style={{ marginLeft: "6px" }}>Logout</span>
-            </div>
+              Logout
+            </button>
           </div>
         </Grid>
       </Grid>

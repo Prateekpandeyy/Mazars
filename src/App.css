@@ -1206,3 +1206,10 @@ th.sortable::after {
   font-size: 600;
   font-size: 18px;
 }
+.logBtn{
+  height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 5px;
+}

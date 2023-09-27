@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import FolderIcon from "@mui/icons-material/Folder";
 import CustomTypography from "../Common/CustomTypography";
 import { FileIcon } from "../Common/MessageIcon";
 import FolderRename from "./FolderRename";
+import axios from "axios";
+import { baseUrl } from "../../config/config";
+import { DeleteIcon } from "../Common/MessageIcon";
+import Swal from "sweetalert2";
 const AssignmentFolderWrapper = (props) => {
+  const [show, setShow] = useState(true);
+  const deleteFile = (e) => {
+    console.log("eee", e);
+    let formData = new FormData();
+    formData.append("assign_no", e.assign_no);
+    formData.append("id", e.id);
+    formData.append("document", e.document);
+
+    axios({
+      method: "POST",
+      url: `${baseUrl}/tl/deletereportdocument`,
+      data: formData,
+    }).then((res) => {
+      if (res.data.code === 1) {
+        props.getFolerSubFile();
+        Swal.fire({
+          title: "success",
+          html: "File deleted successfully",
+          icon: "success",
+        });
+      }
+      console.log("Response", res);
+    });
+  };
   return (
     <>
       <div className="myFolderWrapper">
@@ -76,6 +104,13 @@ const AssignmentFolderWrapper = (props) => {
                       <span className="folderLabel">
                         <CustomTypography> {i.document}</CustomTypography>
                       </span>
+                      {show === true ? (
+                        <span onClick={(e) => deleteFile(i)}>
+                          <DeleteIcon />
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 ) : (
