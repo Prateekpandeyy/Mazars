@@ -9,10 +9,11 @@ import Swal from "sweetalert2";
 const FolderWrapper = (props) => {
   const [show, setShow] = useState(false);
   const deleteFile = (e) => {
+    console.log("eee", e);
     let formData = new FormData();
     formData.append("assign_no", e.assign_no);
     formData.append("id", e.id);
-    formData.append("document", e.document);
+
     axios({
       method: "POST",
       url: `${baseUrl}/tl/deletereportdocument`,
@@ -91,7 +92,7 @@ const FolderWrapper = (props) => {
                         props.downloadFile(e, i.assign_no, i.id, i.name)
                       }
                     >
-                      <div onMouseOver={(e) => setShow(!show)}>
+                      <div onMouseOver={(e) => setShow(true)}>
                         <span style={{ cursor: "pointer" }}>
                           <FileIcon
                             name={i.name}
@@ -103,7 +104,9 @@ const FolderWrapper = (props) => {
                           <CustomTypography> {i.name}</CustomTypography>
                         </span>
                         {show === true ? (
-                          <DeleteIcon onClick={(e) => deleteFile(i)} />
+                          <span onClick={(e) => deleteFile(i)}>
+                            <DeleteIcon />
+                          </span>
                         ) : (
                           ""
                         )}
