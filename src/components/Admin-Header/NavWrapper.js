@@ -188,7 +188,7 @@ function NavWrapper(props) {
                             <span style={{ marginLeft: "6px" }}>Profile</span>
                           </div>
                         </Link>
-                        <a href="https://complyany.com/">
+                        {/* <a href="https://complyany.com/">
                           <div
                             className="dropdown-item"
                             style={{ cursor: "pointer" }}
@@ -197,8 +197,8 @@ function NavWrapper(props) {
 
                             <span style={{ marginLeft: "6px" }}>Complyany</span>
                           </div>
-                        </a>
-                        <a href="https://cref.com/">
+                        </a> */}
+                        {/* <a href="https://cref.com/">
                           <div
                             className="dropdown-item"
                             style={{ cursor: "pointer" }}
@@ -207,18 +207,27 @@ function NavWrapper(props) {
 
                             <span style={{ marginLeft: "6px" }}>CREF</span>
                           </div>
-                        </a>
+                        </a> */}
                       </>
                     )}
+                    <Link to="/customer/compliany">
+                      <div
+                        className="dropdown-item"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <LockOpenIcon style={{ fontSize: "20px" }} />
 
-                    <div
+                        <span style={{ marginLeft: "6px" }}>Logout</span>
+                      </div>
+                    </Link>
+                    {/* <div
                       className="dropdown-item"
                       onClick={logout}
                       style={{ cursor: "pointer" }}
                     >
                       <LockOpenIcon style={{ fontSize: "20px" }} />
                       <span style={{ marginLeft: "6px" }}>Logout</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </li>

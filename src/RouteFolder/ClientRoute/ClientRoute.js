@@ -63,6 +63,7 @@ import PrivateRouteUser from "../../Service/PrivateRouteUser";
 import PageNotFound from "../../components/PageNotFound/PageNotFound";
 import Videogallery from "../../views/Tax/VideoGallary";
 import GetEmail from "../../views/GetEmail/GetEmail";
+import CompliAny from "../../components/CompliAny/CompliAny";
 const ClientRoute = () => {
   return (
     <BrowserRouter>
@@ -282,6 +283,11 @@ const ClientRoute = () => {
           exact
           path="/customer/editprofile"
           component={EditProfile}
+        />
+        <PrivateRouteUser
+          exact
+          path="/customer/compliAny"
+          component={CompliAny}
         />
 
         <Route path="/*" component={PageNotFound} />
